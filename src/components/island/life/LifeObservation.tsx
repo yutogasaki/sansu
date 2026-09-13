@@ -85,6 +85,14 @@ export default function LifeObservation({ record, state, item, initialResidentId
         try { return await createDiscoveryScene(record.profileId, visible, rule, 'current-context-test', crypto.randomUUID(), Date.now(), residents); }
         catch (cause) { if (alive.current) setError(cause instanceof Error ? cause.message : 'もういちど ためしてね。'); return undefined; }
     };
+    const prepareEncounter = async (visible: LifeState, candidate: RuleEligibility) => {
+        if (!alive.current || pending.current) return undefined;
+        const rule = evaluateDiscovery(visible, record.profileId).find(r => r.ruleId === candidate.ruleId
+            && r.participantIds.length === candidate.participantIds.length && candidate.participantIds.every(id => r.participantIds.includes(id)));
+        if (!rule) return undefined;
+        setShown(undefined); setError('');
+        return createDiscoveryScene(record.profileId, visible, rule, 'current-context-test', crypto.randomUUID(), Date.now());
+    };
     const prepareShadow = async (visible: LifeState, candidate: RuleEligibility, residents: ResidentId[]) => {
         if (!alive.current || pending.current) return undefined;
         const rule = evaluateDiscovery(visible, record.profileId).find(r => r.ruleId === 'M3' && candidate.participantIds.every(id => r.participantIds.includes(id)));
@@ -120,7 +128,7 @@ export default function LifeObservation({ record, state, item, initialResidentId
     return <div ref={panel} tabIndex={-1} className="life-observation" role="dialog" aria-modal="false" aria-label={gathering ? 'いまの あつまり' : isFacility(item.kind) ? `${CATALOG[item.kind].label}の ようす` : isBench ? 'いまの ベンチ' : item.kind === 'sapling' ? 'いまの 木' : item.kind === 'water-bowl' ? 'いまの 水ばち' : 'いまの おはな'} data-life-observation={item.id} data-life-observation-resident={residentId}>
         <header><b>{gathering ? 'いまの あつまり' : isFacility(item.kind) ? `${CATALOG[item.kind].label}の ようす` : isBench ? 'いまの ベンチ' : item.kind === 'sapling' ? 'いまの 木' : item.kind === 'water-bowl' ? 'いまの 水ばち' : 'いまの おはな'}</b><button type="button" aria-label="みてみるを とじる" onClick={close}><X size={20} /></button></header>
         <div className="life-observation-body">
-            {gathering ? <RelationObservationView state={state} gathering={gathering} prepare={prepareGathering} presented={presented} /> : isRelation ? <>
+            {gathering ? <RelationObservationView state={state} gathering={gathering} encounterPrepare={prepareEncounter} encounterPresented={presented} prepare={prepareGathering} presented={presented} /> : isRelation ? <>
                 <RelationObservationView state={state} benchId={item.id} residentId={residentId} selectedTarget={setTargetId} shadowPrepare={item.kind === 'bench' ? prepareShadow : undefined} shadowPresented={presented} prepare={prepareRelation} presented={presented} status={setStatus} target={!selecting && !busy && !pending.current && residentId ? id => { void selectTarget(id); } : undefined} />
                 <p className="life-observation-hint" role="status">{status === 'bench' ? item.kind === 'garden-hut' ? 'ここで おていれ' : item.kind === 'library' ? 'ここで よんでいる' : 'ここで ひとやすみ' : status === 'walking' ? 'みちを とおって くるよ' : 'いまは、ほかのことを しているよ'}</p>
                 {isRelation && <label className="life-observation-target">みるもの <select aria-label={isBench ? "ベンチから みるもの" : "たてものから みるもの"} value={targetId ?? ''} disabled={selecting || busy || Boolean(pending.current) || !residentId} onChange={event => { void selectTarget(event.target.value || undefined); }}>

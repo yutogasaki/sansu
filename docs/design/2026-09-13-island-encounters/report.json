@@ -1,0 +1,1139 @@
+{
+  "startHash": "b765ad293e28748564dd989c985c9c4ed26de7e825a56c1988abf85c543fc3ba",
+  "revision": "62c6e13d7cb01b2e624b069fa3eed7cb8177e935",
+  "target": "http://127.0.0.1:5223",
+  "flags": "DEV VITE_ISLAND_ENABLED=true VITE_ISLAND_LIFE_PREVIEW=true",
+  "candidate": "group-encounters-v1",
+  "fixture": "20 QA credits; purchases and 18-hour maturity seeded through domain commands in a fresh DEV database. Subsequent inputs, placement, storage, save, and replay use actual UI.",
+  "humanN": 0,
+  "cases": [
+    {
+      "device": "phone",
+      "kind": "flower",
+      "event": {
+        "eventId": "0233f587-fa98-4398-b1b2-531826322882",
+        "profileId": "9bc823ed-2871-40e6-acae-1c94bfedf0d4",
+        "ruleId": "X1",
+        "ruleVersion": "discovery-v3.0-rc1",
+        "semanticSignature": "[\"[\\\"9bc823ed-2871-40e6-acae-1c94bfedf0d4\\\",\\\"discovery-v3.0-rc1\\\",\\\"X1\\\",[[\\\"qa-plant-0\\\",\\\"flower\\\",0,2,2,\\\"adjacent\\\"],[\\\"qa-plant-1\\\",\\\"flower\\\",1,2,2,\\\"adjacent\\\"],[\\\"qa-plant-2\\\",\\\"flower\\\",2,2,2,\\\"adjacent\\\"],[\\\"qa-plant-3\\\",\\\"flower\\\",0,3,2,\\\"adjacent\\\"],[\\\"qa-plant-4\\\",\\\"flower\\\",1,3,2,\\\"adjacent\\\"],[\\\"qa-plant-5\\\",\\\"flower\\\",2,3,2,\\\"adjacent\\\"],[\\\"qa-water\\\",\\\"water-bowl\\\",4,2,2,\\\"adjacent\\\"]]]\",[]]",
+        "createdAt": 1789309456442,
+        "source": "current-context-test",
+        "focalResidentIds": [],
+        "snapshot": {
+          "contentVersion": 1,
+          "scene": {
+            "now": 1789309454781.6,
+            "activityVersion": 2,
+            "tourVersion": 1,
+            "roamRound": 0,
+            "scenePose": "captured-v1",
+            "encounterVersion": 1,
+            "encounterTouch": {
+              "ruleId": "X1",
+              "waterId": "qa-water",
+              "plantId": "qa-plant-2",
+              "normalRuleId": "GF6",
+              "normalGroupIds": [
+                "qa-plant-0",
+                "qa-plant-1",
+                "qa-plant-2",
+                "qa-plant-3",
+                "qa-plant-4",
+                "qa-plant-5"
+              ]
+            },
+            "footstepMagicVersion": 1,
+            "shadowMagicVersion": 1,
+            "waterMagicVersion": 1,
+            "facilityPresentation": "carry-care-v1",
+            "relationSelectionVersion": 1,
+            "facilityTripVersion": 1,
+            "poseReducedMotion": false,
+            "relationVersion": "water-bench-v1",
+            "landscapeVersion": "groves-water-v1",
+            "worldStyle": "canopy-dots-c3-v1",
+            "items": [
+              {
+                "id": "qa-plant-0",
+                "kind": "flower",
+                "cell": {
+                  "x": 0,
+                  "z": 2
+                },
+                "growth": 6,
+                "style": "original",
+                "paidDrops": 2
+              },
+              {
+                "id": "qa-plant-1",
+                "kind": "flower",
+                "cell": {
+                  "x": 1,
+                  "z": 2
+                },
+                "growth": 6,
+                "style": "original",
+                "paidDrops": 2
+              },
+              {
+                "id": "qa-plant-2",
+                "kind": "flower",
+                "cell": {
+                  "x": 2,
+                  "z": 2
+                },
+                "growth": 6,
+                "style": "original",
+                "paidDrops": 2
+              },
+              {
+                "id": "qa-plant-3",
+                "kind": "flower",
+                "cell": {
+                  "x": 0,
+                  "z": 3
+                },
+                "growth": 6,
+                "style": "original",
+                "paidDrops": 2
+              },
+              {
+                "id": "qa-plant-4",
+                "kind": "flower",
+                "cell": {
+                  "x": 1,
+                  "z": 3
+                },
+                "growth": 6,
+                "style": "original",
+                "paidDrops": 2
+              },
+              {
+                "id": "qa-plant-5",
+                "kind": "flower",
+                "cell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "growth": 6,
+                "style": "original",
+                "paidDrops": 2
+              },
+              {
+                "id": "qa-water",
+                "kind": "water-bowl",
+                "cell": {
+                  "x": 4,
+                  "z": 2
+                },
+                "growth": 0,
+                "style": "original",
+                "paidDrops": 4
+              }
+            ],
+            "residents": [
+              {
+                "id": "pokomoko",
+                "cell": {
+                  "x": 0,
+                  "z": 4
+                },
+                "enjoyed": 36,
+                "enjoyedBy": {
+                  "flower": 36
+                },
+                "visit": {
+                  "itemId": "qa-water",
+                  "path": [
+                    {
+                      "x": 0,
+                      "z": 4
+                    },
+                    {
+                      "x": 1,
+                      "z": 4
+                    },
+                    {
+                      "x": 2,
+                      "z": 4
+                    },
+                    {
+                      "x": 3,
+                      "z": 4
+                    },
+                    {
+                      "x": 4,
+                      "z": 4
+                    },
+                    {
+                      "x": 4,
+                      "z": 3
+                    }
+                  ],
+                  "from": {
+                    "x": 0,
+                    "z": 4
+                  },
+                  "start": 1789309435290,
+                  "end": 1789311235290
+                },
+                "discovery": {
+                  "itemId": "qa-plant-3",
+                  "at": 1789244635290,
+                  "mood": "curious"
+                }
+              },
+              {
+                "id": "rabbit",
+                "cell": {
+                  "x": 3,
+                  "z": 3
+                },
+                "enjoyed": 36,
+                "enjoyedBy": {
+                  "flower": 36
+                },
+                "visit": {
+                  "itemId": "qa-plant-0",
+                  "path": [
+                    {
+                      "x": 3,
+                      "z": 3
+                    },
+                    {
+                      "x": 3,
+                      "z": 2
+                    },
+                    {
+                      "x": 3,
+                      "z": 1
+                    },
+                    {
+                      "x": 2,
+                      "z": 1
+                    },
+                    {
+                      "x": 1,
+                      "z": 1
+                    },
+                    {
+                      "x": 0,
+                      "z": 1
+                    }
+                  ],
+                  "from": {
+                    "x": 3,
+                    "z": 3
+                  },
+                  "start": 1789309435290,
+                  "end": 1789311235290
+                },
+                "discovery": {
+                  "itemId": "qa-water",
+                  "at": 1789244635290,
+                  "mood": "notice"
+                }
+              },
+              {
+                "id": "otter",
+                "cell": {
+                  "x": 1,
+                  "z": 1
+                },
+                "enjoyed": 36,
+                "enjoyedBy": {
+                  "water-bowl": 3,
+                  "flower": 33
+                },
+                "visit": {
+                  "itemId": "qa-plant-3",
+                  "path": [
+                    {
+                      "x": 1,
+                      "z": 1
+                    },
+                    {
+                      "x": 2,
+                      "z": 1
+                    },
+                    {
+                      "x": 3,
+                      "z": 1
+                    },
+                    {
+                      "x": 3,
+                      "z": 2
+                    },
+                    {
+                      "x": 3,
+                      "z": 3
+                    },
+                    {
+                      "x": 3,
+                      "z": 4
+                    },
+                    {
+                      "x": 2,
+                      "z": 4
+                    },
+                    {
+                      "x": 1,
+                      "z": 4
+                    },
+                    {
+                      "x": 0,
+                      "z": 4
+                    }
+                  ],
+                  "from": {
+                    "x": 1,
+                    "z": 1
+                  },
+                  "start": 1789309435290,
+                  "end": 1789311235290
+                },
+                "discovery": {
+                  "itemId": "qa-water",
+                  "at": 1789244635290,
+                  "mood": "notice"
+                }
+              }
+            ],
+            "heroStyle": "original",
+            "target": "qa-water"
+          },
+          "immutableHash": "13148ee23377bf3463d54eef47b01f8434efcd072e82c64520bbede44d1f6ec1"
+        }
+      },
+      "version": 13,
+      "delivery": {
+        "url": "http://127.0.0.1:5223/#/island",
+        "builds": [
+          {
+            "revision": "development-local",
+            "delivery": "snap-root-v1"
+          },
+          {
+            "revision": "development-local",
+            "version": "development-local:42bba105-01c2-4a95-8185-3a8eb67c7303",
+            "delivery": "mystic-island-v1"
+          }
+        ],
+        "world": "canopy-dots-c3-v1"
+      },
+      "drops": 24,
+      "light": 8,
+      "pass": true
+    },
+    {
+      "device": "phone",
+      "kind": "sapling",
+      "event": {
+        "eventId": "7bf8dfaf-3bdb-4ab3-9f33-708ceab8de61",
+        "profileId": "9c88016d-563d-4fcf-8723-751489b596da",
+        "ruleId": "X2",
+        "ruleVersion": "discovery-v3.0-rc1",
+        "semanticSignature": "[\"[\\\"9c88016d-563d-4fcf-8723-751489b596da\\\",\\\"discovery-v3.0-rc1\\\",\\\"X2\\\",[[\\\"qa-plant-0\\\",\\\"sapling\\\",0,2,2,\\\"adjacent\\\"],[\\\"qa-plant-1\\\",\\\"sapling\\\",1,2,2,\\\"adjacent\\\"],[\\\"qa-plant-2\\\",\\\"sapling\\\",2,2,2,\\\"adjacent\\\"],[\\\"qa-water\\\",\\\"water-bowl\\\",4,2,2,\\\"adjacent\\\"]]]\",[]]",
+        "createdAt": 1789309556857,
+        "source": "current-context-test",
+        "focalResidentIds": [],
+        "snapshot": {
+          "contentVersion": 1,
+          "scene": {
+            "now": 1789309548033.5,
+            "activityVersion": 2,
+            "tourVersion": 1,
+            "roamRound": 0,
+            "scenePose": "captured-v1",
+            "encounterVersion": 1,
+            "encounterTouch": {
+              "ruleId": "X2",
+              "waterId": "qa-water",
+              "plantId": "qa-plant-2",
+              "normalRuleId": "GT3",
+              "normalGroupIds": [
+                "qa-plant-0",
+                "qa-plant-1",
+                "qa-plant-2"
+              ]
+            },
+            "footstepMagicVersion": 1,
+            "shadowMagicVersion": 1,
+            "waterMagicVersion": 1,
+            "facilityPresentation": "carry-care-v1",
+            "relationSelectionVersion": 1,
+            "facilityTripVersion": 1,
+            "poseReducedMotion": false,
+            "relationVersion": "water-bench-v1",
+            "landscapeVersion": "groves-water-v1",
+            "worldStyle": "canopy-dots-c3-v1",
+            "items": [
+              {
+                "id": "qa-plant-0",
+                "kind": "sapling",
+                "cell": {
+                  "x": 0,
+                  "z": 2
+                },
+                "growth": 18,
+                "style": "original",
+                "paidDrops": 4
+              },
+              {
+                "id": "qa-plant-1",
+                "kind": "sapling",
+                "cell": {
+                  "x": 1,
+                  "z": 2
+                },
+                "growth": 18,
+                "style": "original",
+                "paidDrops": 4
+              },
+              {
+                "id": "qa-plant-2",
+                "kind": "sapling",
+                "cell": {
+                  "x": 2,
+                  "z": 2
+                },
+                "growth": 18,
+                "style": "original",
+                "paidDrops": 4
+              },
+              {
+                "id": "qa-water",
+                "kind": "water-bowl",
+                "cell": {
+                  "x": 4,
+                  "z": 2
+                },
+                "growth": 0,
+                "style": "original",
+                "paidDrops": 4
+              }
+            ],
+            "residents": [
+              {
+                "id": "pokomoko",
+                "cell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "enjoyed": 36,
+                "enjoyedBy": {
+                  "sapling": 28,
+                  "water-bowl": 8
+                },
+                "visit": {
+                  "itemId": "qa-water",
+                  "path": [
+                    {
+                      "x": 2,
+                      "z": 3
+                    },
+                    {
+                      "x": 3,
+                      "z": 3
+                    },
+                    {
+                      "x": 4,
+                      "z": 3
+                    }
+                  ],
+                  "from": {
+                    "x": 2,
+                    "z": 3
+                  },
+                  "start": 1789309544521,
+                  "end": 1789311344521
+                },
+                "discovery": {
+                  "itemId": "qa-plant-1",
+                  "at": 1789244744521,
+                  "mood": "notice"
+                }
+              },
+              {
+                "id": "rabbit",
+                "cell": {
+                  "x": 4,
+                  "z": 3
+                },
+                "enjoyed": 36,
+                "enjoyedBy": {
+                  "sapling": 30,
+                  "water-bowl": 6
+                },
+                "visit": {
+                  "itemId": "qa-plant-0",
+                  "path": [
+                    {
+                      "x": 4,
+                      "z": 3
+                    },
+                    {
+                      "x": 3,
+                      "z": 3
+                    },
+                    {
+                      "x": 2,
+                      "z": 3
+                    },
+                    {
+                      "x": 1,
+                      "z": 3
+                    },
+                    {
+                      "x": 0,
+                      "z": 3
+                    }
+                  ],
+                  "from": {
+                    "x": 4,
+                    "z": 3
+                  },
+                  "start": 1789309544521,
+                  "end": 1789311344521
+                },
+                "discovery": {
+                  "itemId": "qa-water",
+                  "at": 1789244744521,
+                  "mood": "notice"
+                }
+              },
+              {
+                "id": "otter",
+                "cell": {
+                  "x": 0,
+                  "z": 3
+                },
+                "enjoyed": 36,
+                "enjoyedBy": {
+                  "water-bowl": 8,
+                  "sapling": 28
+                },
+                "visit": {
+                  "itemId": "qa-plant-2",
+                  "path": [
+                    {
+                      "x": 0,
+                      "z": 3
+                    },
+                    {
+                      "x": 1,
+                      "z": 3
+                    },
+                    {
+                      "x": 2,
+                      "z": 3
+                    }
+                  ],
+                  "from": {
+                    "x": 0,
+                    "z": 3
+                  },
+                  "start": 1789309544521,
+                  "end": 1789311344521
+                },
+                "discovery": {
+                  "itemId": "qa-water",
+                  "at": 1789244744521,
+                  "mood": "notice"
+                }
+              }
+            ],
+            "heroStyle": "original",
+            "target": "qa-water"
+          },
+          "immutableHash": "9a99cd74f05b2e59e32b1b0f9f5b38d725df27bfcc450b91f8c6677cf54ce44d"
+        }
+      },
+      "version": 13,
+      "delivery": {
+        "url": "http://127.0.0.1:5223/#/island",
+        "builds": [
+          {
+            "revision": "development-local",
+            "delivery": "snap-root-v1"
+          },
+          {
+            "revision": "development-local",
+            "version": "development-local:42bba105-01c2-4a95-8185-3a8eb67c7303",
+            "delivery": "mystic-island-v1"
+          }
+        ],
+        "world": "canopy-dots-c3-v1"
+      },
+      "drops": 24,
+      "light": 8,
+      "pass": true
+    },
+    {
+      "device": "tablet",
+      "kind": "flower",
+      "event": {
+        "eventId": "845f4ff4-3b09-489b-8608-542e69fc6f68",
+        "profileId": "0a16b826-ff4c-45fd-bd5f-c232c623e0d8",
+        "ruleId": "X1",
+        "ruleVersion": "discovery-v3.0-rc1",
+        "semanticSignature": "[\"[\\\"0a16b826-ff4c-45fd-bd5f-c232c623e0d8\\\",\\\"discovery-v3.0-rc1\\\",\\\"X1\\\",[[\\\"qa-plant-0\\\",\\\"flower\\\",0,2,2,\\\"adjacent\\\"],[\\\"qa-plant-1\\\",\\\"flower\\\",1,2,2,\\\"adjacent\\\"],[\\\"qa-plant-2\\\",\\\"flower\\\",2,2,2,\\\"adjacent\\\"],[\\\"qa-plant-3\\\",\\\"flower\\\",0,3,2,\\\"adjacent\\\"],[\\\"qa-plant-4\\\",\\\"flower\\\",1,3,2,\\\"adjacent\\\"],[\\\"qa-plant-5\\\",\\\"flower\\\",2,3,2,\\\"adjacent\\\"],[\\\"qa-water\\\",\\\"water-bowl\\\",4,2,2,\\\"adjacent\\\"]]]\",[]]",
+        "createdAt": 1789309654039,
+        "source": "current-context-test",
+        "focalResidentIds": [],
+        "snapshot": {
+          "contentVersion": 1,
+          "scene": {
+            "now": 1789309652247.9,
+            "activityVersion": 2,
+            "tourVersion": 1,
+            "roamRound": 0,
+            "scenePose": "captured-v1",
+            "encounterVersion": 1,
+            "encounterTouch": {
+              "ruleId": "X1",
+              "waterId": "qa-water",
+              "plantId": "qa-plant-2",
+              "normalRuleId": "GF6",
+              "normalGroupIds": [
+                "qa-plant-0",
+                "qa-plant-1",
+                "qa-plant-2",
+                "qa-plant-3",
+                "qa-plant-4",
+                "qa-plant-5"
+              ]
+            },
+            "footstepMagicVersion": 1,
+            "shadowMagicVersion": 1,
+            "waterMagicVersion": 1,
+            "facilityPresentation": "carry-care-v1",
+            "relationSelectionVersion": 1,
+            "facilityTripVersion": 1,
+            "poseReducedMotion": true,
+            "relationVersion": "water-bench-v1",
+            "landscapeVersion": "groves-water-v1",
+            "worldStyle": "canopy-dots-c3-v1",
+            "items": [
+              {
+                "id": "qa-plant-0",
+                "kind": "flower",
+                "cell": {
+                  "x": 0,
+                  "z": 2
+                },
+                "growth": 6,
+                "style": "original",
+                "paidDrops": 2
+              },
+              {
+                "id": "qa-plant-1",
+                "kind": "flower",
+                "cell": {
+                  "x": 1,
+                  "z": 2
+                },
+                "growth": 6,
+                "style": "original",
+                "paidDrops": 2
+              },
+              {
+                "id": "qa-plant-2",
+                "kind": "flower",
+                "cell": {
+                  "x": 2,
+                  "z": 2
+                },
+                "growth": 6,
+                "style": "original",
+                "paidDrops": 2
+              },
+              {
+                "id": "qa-plant-3",
+                "kind": "flower",
+                "cell": {
+                  "x": 0,
+                  "z": 3
+                },
+                "growth": 6,
+                "style": "original",
+                "paidDrops": 2
+              },
+              {
+                "id": "qa-plant-4",
+                "kind": "flower",
+                "cell": {
+                  "x": 1,
+                  "z": 3
+                },
+                "growth": 6,
+                "style": "original",
+                "paidDrops": 2
+              },
+              {
+                "id": "qa-plant-5",
+                "kind": "flower",
+                "cell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "growth": 6,
+                "style": "original",
+                "paidDrops": 2
+              },
+              {
+                "id": "qa-water",
+                "kind": "water-bowl",
+                "cell": {
+                  "x": 4,
+                  "z": 2
+                },
+                "growth": 0,
+                "style": "original",
+                "paidDrops": 4
+              }
+            ],
+            "residents": [
+              {
+                "id": "pokomoko",
+                "cell": {
+                  "x": 0,
+                  "z": 4
+                },
+                "enjoyed": 36,
+                "enjoyedBy": {
+                  "flower": 36
+                },
+                "visit": {
+                  "itemId": "qa-water",
+                  "path": [
+                    {
+                      "x": 0,
+                      "z": 4
+                    },
+                    {
+                      "x": 1,
+                      "z": 4
+                    },
+                    {
+                      "x": 2,
+                      "z": 4
+                    },
+                    {
+                      "x": 3,
+                      "z": 4
+                    },
+                    {
+                      "x": 4,
+                      "z": 4
+                    },
+                    {
+                      "x": 4,
+                      "z": 3
+                    }
+                  ],
+                  "from": {
+                    "x": 0,
+                    "z": 4
+                  },
+                  "start": 1789309629860,
+                  "end": 1789311429860
+                },
+                "discovery": {
+                  "itemId": "qa-plant-3",
+                  "at": 1789244829860,
+                  "mood": "curious"
+                }
+              },
+              {
+                "id": "rabbit",
+                "cell": {
+                  "x": 3,
+                  "z": 3
+                },
+                "enjoyed": 36,
+                "enjoyedBy": {
+                  "flower": 36
+                },
+                "visit": {
+                  "itemId": "qa-plant-0",
+                  "path": [
+                    {
+                      "x": 3,
+                      "z": 3
+                    },
+                    {
+                      "x": 3,
+                      "z": 2
+                    },
+                    {
+                      "x": 3,
+                      "z": 1
+                    },
+                    {
+                      "x": 2,
+                      "z": 1
+                    },
+                    {
+                      "x": 1,
+                      "z": 1
+                    },
+                    {
+                      "x": 0,
+                      "z": 1
+                    }
+                  ],
+                  "from": {
+                    "x": 3,
+                    "z": 3
+                  },
+                  "start": 1789309629860,
+                  "end": 1789311429860
+                },
+                "discovery": {
+                  "itemId": "qa-water",
+                  "at": 1789244829860,
+                  "mood": "notice"
+                }
+              },
+              {
+                "id": "otter",
+                "cell": {
+                  "x": 1,
+                  "z": 1
+                },
+                "enjoyed": 36,
+                "enjoyedBy": {
+                  "water-bowl": 3,
+                  "flower": 33
+                },
+                "visit": {
+                  "itemId": "qa-plant-3",
+                  "path": [
+                    {
+                      "x": 1,
+                      "z": 1
+                    },
+                    {
+                      "x": 2,
+                      "z": 1
+                    },
+                    {
+                      "x": 3,
+                      "z": 1
+                    },
+                    {
+                      "x": 3,
+                      "z": 2
+                    },
+                    {
+                      "x": 3,
+                      "z": 3
+                    },
+                    {
+                      "x": 3,
+                      "z": 4
+                    },
+                    {
+                      "x": 2,
+                      "z": 4
+                    },
+                    {
+                      "x": 1,
+                      "z": 4
+                    },
+                    {
+                      "x": 0,
+                      "z": 4
+                    }
+                  ],
+                  "from": {
+                    "x": 1,
+                    "z": 1
+                  },
+                  "start": 1789309629860,
+                  "end": 1789311429860
+                },
+                "discovery": {
+                  "itemId": "qa-water",
+                  "at": 1789244829860,
+                  "mood": "notice"
+                }
+              }
+            ],
+            "heroStyle": "original",
+            "target": "qa-water"
+          },
+          "immutableHash": "b6c871a9fc3ea2be121743eb3d23ddcfdefa97763feb2722f1c3dc7ab78de1e4"
+        }
+      },
+      "version": 13,
+      "delivery": {
+        "url": "http://127.0.0.1:5223/#/island",
+        "builds": [
+          {
+            "revision": "development-local",
+            "delivery": "snap-root-v1"
+          },
+          {
+            "revision": "development-local",
+            "version": "development-local:42bba105-01c2-4a95-8185-3a8eb67c7303",
+            "delivery": "mystic-island-v1"
+          }
+        ],
+        "world": "canopy-dots-c3-v1"
+      },
+      "drops": 24,
+      "light": 8,
+      "pass": true
+    },
+    {
+      "device": "tablet",
+      "kind": "sapling",
+      "event": {
+        "eventId": "7ab7a43b-6234-4e8d-94ef-8ea3724e84c6",
+        "profileId": "b8c5db16-1500-415a-835a-579969b7ee0f",
+        "ruleId": "X2",
+        "ruleVersion": "discovery-v3.0-rc1",
+        "semanticSignature": "[\"[\\\"b8c5db16-1500-415a-835a-579969b7ee0f\\\",\\\"discovery-v3.0-rc1\\\",\\\"X2\\\",[[\\\"qa-plant-0\\\",\\\"sapling\\\",0,2,2,\\\"adjacent\\\"],[\\\"qa-plant-1\\\",\\\"sapling\\\",1,2,2,\\\"adjacent\\\"],[\\\"qa-plant-2\\\",\\\"sapling\\\",2,2,2,\\\"adjacent\\\"],[\\\"qa-water\\\",\\\"water-bowl\\\",4,2,2,\\\"adjacent\\\"]]]\",[]]",
+        "createdAt": 1789309769937,
+        "source": "current-context-test",
+        "focalResidentIds": [],
+        "snapshot": {
+          "contentVersion": 1,
+          "scene": {
+            "now": 1789309759015.7,
+            "activityVersion": 2,
+            "tourVersion": 1,
+            "roamRound": 0,
+            "scenePose": "captured-v1",
+            "encounterVersion": 1,
+            "encounterTouch": {
+              "ruleId": "X2",
+              "waterId": "qa-water",
+              "plantId": "qa-plant-2",
+              "normalRuleId": "GT3",
+              "normalGroupIds": [
+                "qa-plant-0",
+                "qa-plant-1",
+                "qa-plant-2"
+              ]
+            },
+            "footstepMagicVersion": 1,
+            "shadowMagicVersion": 1,
+            "waterMagicVersion": 1,
+            "facilityPresentation": "carry-care-v1",
+            "relationSelectionVersion": 1,
+            "facilityTripVersion": 1,
+            "poseReducedMotion": true,
+            "relationVersion": "water-bench-v1",
+            "landscapeVersion": "groves-water-v1",
+            "worldStyle": "canopy-dots-c3-v1",
+            "items": [
+              {
+                "id": "qa-plant-0",
+                "kind": "sapling",
+                "cell": {
+                  "x": 0,
+                  "z": 2
+                },
+                "growth": 18,
+                "style": "original",
+                "paidDrops": 4
+              },
+              {
+                "id": "qa-plant-1",
+                "kind": "sapling",
+                "cell": {
+                  "x": 1,
+                  "z": 2
+                },
+                "growth": 18,
+                "style": "original",
+                "paidDrops": 4
+              },
+              {
+                "id": "qa-plant-2",
+                "kind": "sapling",
+                "cell": {
+                  "x": 2,
+                  "z": 2
+                },
+                "growth": 18,
+                "style": "original",
+                "paidDrops": 4
+              },
+              {
+                "id": "qa-water",
+                "kind": "water-bowl",
+                "cell": {
+                  "x": 4,
+                  "z": 2
+                },
+                "growth": 0,
+                "style": "original",
+                "paidDrops": 4
+              }
+            ],
+            "residents": [
+              {
+                "id": "pokomoko",
+                "cell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "enjoyed": 36,
+                "enjoyedBy": {
+                  "sapling": 28,
+                  "water-bowl": 8
+                },
+                "visit": {
+                  "itemId": "qa-water",
+                  "path": [
+                    {
+                      "x": 2,
+                      "z": 3
+                    },
+                    {
+                      "x": 3,
+                      "z": 3
+                    },
+                    {
+                      "x": 4,
+                      "z": 3
+                    }
+                  ],
+                  "from": {
+                    "x": 2,
+                    "z": 3
+                  },
+                  "start": 1789309754825,
+                  "end": 1789311554825
+                },
+                "discovery": {
+                  "itemId": "qa-plant-1",
+                  "at": 1789244954825,
+                  "mood": "notice"
+                }
+              },
+              {
+                "id": "rabbit",
+                "cell": {
+                  "x": 4,
+                  "z": 3
+                },
+                "enjoyed": 36,
+                "enjoyedBy": {
+                  "sapling": 30,
+                  "water-bowl": 6
+                },
+                "visit": {
+                  "itemId": "qa-plant-0",
+                  "path": [
+                    {
+                      "x": 4,
+                      "z": 3
+                    },
+                    {
+                      "x": 3,
+                      "z": 3
+                    },
+                    {
+                      "x": 2,
+                      "z": 3
+                    },
+                    {
+                      "x": 1,
+                      "z": 3
+                    },
+                    {
+                      "x": 0,
+                      "z": 3
+                    }
+                  ],
+                  "from": {
+                    "x": 4,
+                    "z": 3
+                  },
+                  "start": 1789309754825,
+                  "end": 1789311554825
+                },
+                "discovery": {
+                  "itemId": "qa-water",
+                  "at": 1789244954825,
+                  "mood": "notice"
+                }
+              },
+              {
+                "id": "otter",
+                "cell": {
+                  "x": 0,
+                  "z": 3
+                },
+                "enjoyed": 36,
+                "enjoyedBy": {
+                  "water-bowl": 8,
+                  "sapling": 28
+                },
+                "visit": {
+                  "itemId": "qa-plant-2",
+                  "path": [
+                    {
+                      "x": 0,
+                      "z": 3
+                    },
+                    {
+                      "x": 1,
+                      "z": 3
+                    },
+                    {
+                      "x": 2,
+                      "z": 3
+                    }
+                  ],
+                  "from": {
+                    "x": 0,
+                    "z": 3
+                  },
+                  "start": 1789309754825,
+                  "end": 1789311554825
+                },
+                "discovery": {
+                  "itemId": "qa-water",
+                  "at": 1789244954825,
+                  "mood": "notice"
+                }
+              }
+            ],
+            "heroStyle": "original",
+            "target": "qa-water"
+          },
+          "immutableHash": "bbd9651574811f9f7bde6876834fb29653e2e7612c7b641abfcfea495d53df3e"
+        }
+      },
+      "version": 13,
+      "delivery": {
+        "url": "http://127.0.0.1:5223/#/island",
+        "builds": [
+          {
+            "revision": "development-local",
+            "delivery": "snap-root-v1"
+          },
+          {
+            "revision": "development-local",
+            "version": "development-local:42bba105-01c2-4a95-8185-3a8eb67c7303",
+            "delivery": "mystic-island-v1"
+          }
+        ],
+        "world": "canopy-dots-c3-v1"
+      },
+      "drops": 24,
+      "light": 8,
+      "pass": true
+    }
+  ],
+  "pass": true,
+  "endHash": "b765ad293e28748564dd989c985c9c4ed26de7e825a56c1988abf85c543fc3ba",
+  "rawReportSha256": "d0afe2c219e4b7e2681c449401ecf3a34631dc625bdc386f97fe96e73cd5d6de",
+  "rawReportLocation": "/tmp/sansu-encounters-ui13/report.json"
+}

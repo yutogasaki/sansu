@@ -20,6 +20,8 @@ export function discoveryTitle(event: DiscoveryScene) {
         const plant = discoveryParticipants(event)[0];
         return plant?.kind === 'flower' && growthStage(plant) === 2 ? 'はなびらが うえへ' : 'はっぱが うえへ';
     }
+    if (event.ruleId === 'X1') return 'しろい ちょう';
+    if (event.ruleId === 'X2') return 'まるもようの ことり';
     if (event.ruleId === 'M1') return 'ほしの あしあと';
     if (event.ruleId === 'M3') return 'かげが あいさつ';
     if (event.ruleId === 'M4') return '水の なかの 星空';
@@ -31,6 +33,7 @@ export function discoveryTitle(event: DiscoveryScene) {
 /** Explicit comparisons return to their original anchor and named observer. */
 export function discoverySubject(event: DiscoveryScene) {
     const participants = discoveryParticipants(event), snapshot = event.snapshot.scene;
+    if (event.ruleId === 'X1' || event.ruleId === 'X2') return participants.find(i => i.id === snapshot.encounterTouch?.plantId);
     if (event.ruleId === 'M1') return participants.find(i => i.id === snapshot.footstepTouch?.targetId);
     const anchor = snapshot.residents.find(r => r.id === snapshot.observationResidentId)?.visit?.observationSubjectId;
     return participants.find(item => item.id === anchor) ?? participants.find(item => event.ruleId === 'M2'

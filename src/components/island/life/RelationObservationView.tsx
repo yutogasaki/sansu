@@ -1,3 +1,4 @@
+import { makeEncounterObservation } from './encounterObservation';
 import { makeShadowObservation } from './shadowObservation';
 import { facilityRelations } from './facilityRelations';
 import { visibleRelationObject } from './relationVisibility';
@@ -12,6 +13,7 @@ import { buildLifeScene } from './scene';
 
 type Prepared = (state: LifeState, rule: RuleEligibility, residents: ResidentId[]) => Promise<DiscoveryScene | undefined>;
 type Props = { state: LifeState; residentId?: ResidentId; selectedTarget?: (id?: string) => void; benchId?: string; gathering?: { ruleId: RuleEligibility['ruleId']; participantIds: string[] }; frozen?: boolean; prepare: Prepared;
+    encounterPrepare?: Prepared; encounterPresented?: (event: DiscoveryScene, evidence: PresentationEvidence) => void; encounterReplay?: boolean;
     shadowPrepare?: Prepared; shadowPresented?: (event: DiscoveryScene, evidence: PresentationEvidence) => void;
     presented: (event: DiscoveryScene, evidence: PresentationEvidence) => void; target?: (id: string) => void; status?: (status: 'bench' | 'walking' | 'busy') => void };
 
@@ -20,6 +22,8 @@ type Props = { state: LifeState; residentId?: ResidentId; selectedTarget?: (id?:
 export default function RelationObservationView(props: Props) {
     const host = useRef<HTMLDivElement>(null), latest = useRef(props), update = useRef<(() => void) | undefined>(undefined);
     const [failed, setFailed] = useState(false), [shadowReady, setShadowReady] = useState(false);
+    const [encounterHint, setEncounterHint] = useState<'X1' | 'X2'>();
+    const encounterTrigger = useRef<(() => void) | undefined>(undefined);
     const shadowTrigger = useRef<(() => void) | undefined>(undefined);
     useEffect(() => { latest.current = props; update.current?.(); }, [props]);
     useEffect(() => {
@@ -43,6 +47,10 @@ export default function RelationObservationView(props: Props) {
             presented: (event,evidence) => latest.current.shadowPresented?.(event,evidence), ready: setShadowReady,
         });
         shadowTrigger.current = shadow.start;
+        const encounter = makeEncounterObservation(node,scene,camera,{
+            prepare: (state,rule) => latest.current.encounterPrepare?.(state,rule,[]) ?? Promise.resolve(undefined),
+            presented: (event,evidence) => latest.current.encounterPresented?.(event,evidence), hint: setEncounterHint,
+        }); encounterTrigger.current = encounter.start;
         let content: ReturnType<typeof buildLifeScene> | undefined, source: LifeState | undefined, benchId = '', start = performance.now();
         let previousTarget: string | undefined;
         let key = '', epoch = 0, pending = false, event: DiscoveryScene | undefined, collector: DiscoveryPresentation | undefined;
@@ -50,6 +58,7 @@ export default function RelationObservationView(props: Props) {
         const cancel = () => { epoch++; key = ''; pending = false; event = undefined; delivered = false; preparation = ''; maxGap = 0; lastFrame = performance.now(); collector?.cancel(); collector = undefined; };
         const subjectObjects = () => {
             if (!source || !content) return [];
+            if (encounter.active()) return encounter.focusObjects();
             const selectedVisit = source.residents.find(r => r.id === latest.current.residentId)?.visit;
             const targetId = selectedVisit?.relationTargetId ?? source.relationTarget?.targetId;
             const relation = benchRelation(source, '', benchId, targetId);
@@ -57,7 +66,7 @@ export default function RelationObservationView(props: Props) {
             const ids = new Set(latest.current.gathering?.participantIds ?? [benchId, ...(relation?.participantIds ?? []), ...(targetId ? [targetId] : []), ...(trip ? [trip.facilityId, trip.targetId] : [])]);
             return [...ids].flatMap(id => { const object = content!.root.getObjectByName(`life-item-${id}`); return object ? [object] : []; })
                 .concat(source.residents.filter(resident => resident.id === latest.current.residentId || resident.visit && ids.has(resident.visit.itemId))
-                    .flatMap(resident => { const object = content!.root.getObjectByName(`life-resident-${resident.id}`); return object ? [object] : []; })).concat(shadow.objects());
+                    .flatMap(resident => { const object = content!.root.getObjectByName(`life-resident-${resident.id}`); return object ? [object] : []; })).concat(shadow.objects()).concat(encounter.extraObjects());
         };
         const resize = () => {
             const width = Math.max(1, node.clientWidth), height = Math.max(1, node.clientHeight), aspect = width / height;
@@ -67,8 +76,11 @@ export default function RelationObservationView(props: Props) {
             const bounds = boxes.reduce((box, current) => box.union(current), new T.Box3());
             if (bounds.isEmpty()) return;
             const center = bounds.getCenter(new T.Vector3());
-            const directions = shadow.objects().length ? [new T.Vector3(3,10,7),new T.Vector3(-6,10,4),new T.Vector3(0,12,-5)] : latest.current.gathering ? [new T.Vector3(4.5, 7.8, 11)] : [new T.Vector3(4.5, 5, 7)];
+            const directions = encounter.active() ? [new T.Vector3(4,8,9),new T.Vector3(-4,8,7),new T.Vector3(0,10,-7),new T.Vector3(-8,9,-4),new T.Vector3(8,9,-4)] : shadow.objects().length ? [new T.Vector3(3,10,7),new T.Vector3(-6,10,4),new T.Vector3(0,12,-5)] : latest.current.gathering ? [new T.Vector3(4.5, 7.8, 11),new T.Vector3(-5,10,7),new T.Vector3(5,10,-7),new T.Vector3(-5,10,-7),new T.Vector3(0,15,1)] : [new T.Vector3(4.5, 5, 7)];
             const visible = content.snapshot();
+            const gathering = latest.current.gathering;
+            const group = gathering && displayedGatherings(visible, '').find(r => r.ruleId === gathering.ruleId
+                && r.participantIds.length === gathering.participantIds.length && r.participantIds.every(id => gathering.participantIds.includes(id)));
             const transporting = visible.residents.some(r => r.facilityTrip && [r.facilityTrip.facilityId, r.facilityTrip.targetId].includes(benchId));
             if (transporting) directions.push(new T.Vector3(-8,10,1),new T.Vector3(8,10,1),new T.Vector3(0,10,-8));
             const fit = (direction: T.Vector3) => {
@@ -77,13 +89,14 @@ export default function RelationObservationView(props: Props) {
                 new T.Vector3(x, y, z).applyMatrix4(camera.matrixWorldInverse)))));
             const minX = Math.min(...points.map(p => p.x)), maxX = Math.max(...points.map(p => p.x));
             const minY = Math.min(...points.map(p => p.y)), maxY = Math.max(...points.map(p => p.y));
-            const half = Math.max(.9, (maxY - minY) / 2, (maxX - minX) / aspect / 2) * (shadow.objects().length ? 1.35 : 1.18);
+            const half = Math.max(.9, (maxY - minY) / 2, (maxX - minX) / aspect / 2) * (shadow.objects().length || encounter.active() ? 1.35 : 1.18);
             camera.left = (minX + maxX) / 2 - half * aspect; camera.right = (minX + maxX) / 2 + half * aspect;
             camera.bottom = (minY + maxY) / 2 - half; camera.top = (minY + maxY) / 2 + half; camera.updateProjectionMatrix();
             };
             for (const direction of directions) {
                 fit(direction);
-                if (shadow.objects().length ? shadow.coreVisible() : !transporting || facilityRelations(visible, '', content, camera, () => true, true).some(c => c.core && c.rule.participantIds.includes(benchId))) return;
+                if (encounter.active() ? encounter.routeVisible() : group ? gatheringVisible(visible, group, content.root, camera, content.point, () => true)
+                    && (!encounter.extraObjects().length || encounter.cueVisible()) : shadow.objects().length ? shadow.coreVisible() : !transporting || facilityRelations(visible, '', content, camera, () => true, true).some(c => c.core && c.rule.participantIds.includes(benchId))) return;
             }
             fit(directions[0]);
         };
@@ -104,6 +117,7 @@ export default function RelationObservationView(props: Props) {
                 content.animate(at, matchMedia('(prefers-reduced-motion: reduce)').matches, latest.current.frozen ? source.now + Math.min(3000, mono - start) : at);
                 const poses = content.audit(), stateAtFrame = content.snapshot();
                 if (shadow.update(stateAtFrame,content.root,benchId,latest.current.residentId,mono,matchMedia('(prefers-reduced-motion: reduce)').matches)) resize();
+                if (encounter.update(stateAtFrame,content,latest.current.encounterPrepare ? latest.current.gathering : undefined,Boolean(latest.current.encounterReplay),mono,matchMedia('(prefers-reduced-motion: reduce)').matches)) resize();
                 const selectedVisit = stateAtFrame.residents.find(r => r.id === latest.current.residentId)?.visit;
                 const selectedTarget = selectedVisit?.observationSubjectId === benchId ? selectedVisit.relationTargetId : undefined;
                 if (selectedTarget !== previousTarget) { previousTarget = selectedTarget; latest.current.selectedTarget?.(selectedTarget); }
@@ -134,7 +148,7 @@ export default function RelationObservationView(props: Props) {
                 const uncovered = onscreen && [[.1, .1], [.9, .1], [.5, .5], [.1, .9], [.9, .9]].every(([x, y]) => node.contains(document.elementFromPoint(rect.left + x * rect.width, rect.top + y * rect.height)));
                 const visibleObject = (object: T.Object3D, focus?: T.Vector3) => visibleRelationObject(object, content!.root, camera, ndc =>
                     node.contains(document.elementFromPoint(rect.left + (ndc.x + 1) / 2 * rect.width, rect.top + (1 - ndc.y) / 2 * rect.height)), focus);
-                shadow.sample(mono,foreground,onscreen,uncovered);
+                shadow.sample(mono,foreground,onscreen,uncovered); encounter.sample(mono,foreground,onscreen,uncovered);
                 let core = Boolean(gathering && rule && uncovered && gatheringVisible(stateAtFrame, rule, content.root, camera, content.point, ndc =>
                     node.contains(document.elementFromPoint(rect.left + (ndc.x + 1) / 2 * rect.width, rect.top + (1 - ndc.y) / 2 * rect.height))));
                 if (transport) core = uncovered && transport.core;
@@ -161,20 +175,20 @@ export default function RelationObservationView(props: Props) {
                     }).catch(cause => { if (alive && token === epoch) preparation = String(cause); });
                 }
                 const evidence = collector?.sample(mono, Date.now(), { rendered: true, foreground, onScreen: onscreen, unoccluded: uncovered, preview: false, coreShown: core });
-                if (event && evidence) { delivered = true; latest.current.presented(event, evidence); }
+                if (event && evidence) { delivered = true; encounter.normalPresented(event); latest.current.presented(event, evidence); }
                 if (mono - auditAt > 200) { node.dataset.relationView = JSON.stringify({ at, core, status: nextStatus, poses, preparation, eventId: event?.eventId, delivered, maxGap, epoch, camera: { projection: camera.projectionMatrix.elements, view: camera.matrixWorldInverse.elements } }); auditAt = mono; }
             } else cancel();
             raf = requestAnimationFrame(frame);
         };
-        const hidden = () => { if (document.visibilityState !== 'visible') { cancel(); shadow.cancel(); } };
-        const lost = (event: Event) => { event.preventDefault(); cancel(); shadow.cancel(); setFailed(true); delete node.dataset.rendered; };
+        const hidden = () => { if (document.visibilityState !== 'visible') { cancel(); shadow.cancel(); encounter.cancel(); } };
+        const lost = (event: Event) => { event.preventDefault(); cancel(); shadow.cancel(); encounter.cancel(); setFailed(true); delete node.dataset.rendered; };
         const restored = () => { setFailed(false); resize(); };
         document.addEventListener('visibilitychange', hidden); renderer.domElement.addEventListener('webglcontextlost', lost); renderer.domElement.addEventListener('webglcontextrestored', restored);
         const pick = (event: MouseEvent) => {
             if (!content || !source) return;
             const rect = renderer.domElement.getBoundingClientRect();
             ray.setFromCamera(new T.Vector2((event.clientX - rect.left) / rect.width * 2 - 1, 1 - (event.clientY - rect.top) / rect.height * 2), camera);
-            if (shadow.pick(ray)) return;
+            if (encounter.pick(ray) || shadow.pick(ray)) return;
             if (!latest.current.target) return;
             const hit = ray.intersectObject(content.root, true).find(hit => {
                 for (let object: T.Object3D | null = hit.object; object; object = object.parent) if (!object.visible) return false;
@@ -192,9 +206,9 @@ export default function RelationObservationView(props: Props) {
         // Parent persistence guards must finish mounting (including StrictMode's
         // cleanup/setup cycle) before an automatically visible scene is prepared.
         raf = requestAnimationFrame(frame);
-        return () => { alive = false; cancel(); update.current = undefined; cancelAnimationFrame(raf); observer.disconnect(); shadow.dispose(); shadowTrigger.current = undefined; content?.dispose();
+        return () => { alive = false; cancel(); update.current = undefined; cancelAnimationFrame(raf); observer.disconnect(); encounter.dispose(); encounterTrigger.current = undefined; shadow.dispose(); shadowTrigger.current = undefined; content?.dispose();
             renderer.domElement.removeEventListener('click', pick); document.removeEventListener('visibilitychange', hidden); renderer.domElement.removeEventListener('webglcontextlost', lost); renderer.domElement.removeEventListener('webglcontextrestored', restored);
             targetRing.geometry.dispose(); targetRing.material.dispose(); light.shadow.dispose(); renderer.dispose(); renderer.forceContextLoss(); renderer.domElement.remove(); };
     }, []);
-    return <><div ref={host} className={`life-relation-view${props.gathering ? ' life-gathering-view' : ''}`} role="img" aria-label={props.gathering ? props.frozen ? 'あのときの あつまり' : 'あつまりの いまの ようす' : props.state.items.some(i => i.id === props.benchId && (i.kind === 'library' || i.kind === 'garden-hut')) ? props.frozen ? 'あのときの ようす' : 'たてものの いまの ようす' : props.frozen ? 'あのときの ベンチ' : 'ベンチの いまの ようす'} />{shadowReady && props.shadowPrepare && <button type="button" className="life-shadow-touch" onClick={() => shadowTrigger.current?.()}>かげに ふれる</button>}{failed && <p role="status">景色をひらけなかったよ。とじて、もういちど ためしてね。</p>}</>;
+    return <><div ref={host} className={`life-relation-view${props.gathering ? ' life-gathering-view' : ''}`} role="img" aria-label={props.gathering ? props.frozen ? 'あのときの あつまり' : 'あつまりの いまの ようす' : props.state.items.some(i => i.id === props.benchId && (i.kind === 'library' || i.kind === 'garden-hut')) ? props.frozen ? 'あのときの ようす' : 'たてものの いまの ようす' : props.frozen ? 'あのときの ベンチ' : 'ベンチの いまの ようす'} />{encounterHint && props.encounterPrepare && <button type="button" className="life-shadow-touch" onClick={() => encounterTrigger.current?.()}>{encounterHint === 'X1' ? 'はねの けはい' : 'えだの けはい'}</button>}{shadowReady && props.shadowPrepare && <button type="button" className="life-shadow-touch" onClick={() => shadowTrigger.current?.()}>かげに ふれる</button>}{failed && <p role="status">景色をひらけなかったよ。とじて、もういちど ためしてね。</p>}</>;
 }

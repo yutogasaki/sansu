@@ -17,9 +17,11 @@ import type { PlacementPreview } from './placement';
 import { LifePresentationClock } from './presentationClock';
 
 type Content = ReturnType<typeof buildLifeScene>;
-type LifeWorldProps = { footstepInput?: FootstepInput; prepareFootstepReplay?: () => Promise<DiscoveryScene | undefined>; profileId?: string; presented?: (event: DiscoveryScene, evidence: PresentationEvidence) => void; state: LifeState; selected?: string; cell?: Cell; placement?: PlacementPreview; onCell: (cell: Cell) => void; controlsVisible: boolean; children: ReactNode };
+type LifeWorldProps = { observationOpen?: boolean; footstepInput?: FootstepInput; prepareFootstepReplay?: () => Promise<DiscoveryScene | undefined>; profileId?: string; presented?: (event: DiscoveryScene, evidence: PresentationEvidence) => void; state: LifeState; selected?: string; cell?: Cell; placement?: PlacementPreview; onCell: (cell: Cell) => void; controlsVisible: boolean; children: ReactNode };
 
-export default function LifeWorld({ footstepInput, prepareFootstepReplay, profileId, presented, state, selected, cell, placement, onCell, controlsVisible, children }: LifeWorldProps) {
+export default function LifeWorld({ observationOpen = false, footstepInput, prepareFootstepReplay, profileId, presented, state, selected, cell, placement, onCell, controlsVisible, children }: LifeWorldProps) {
+    const behindObservation = useRef(observationOpen);
+    useEffect(() => { behindObservation.current = observationOpen; }, [observationOpen]);
     const footsteps = useRef({ input: footstepInput, prepareReplay: prepareFootstepReplay });
     useEffect(() => { footsteps.current = { input: footstepInput, prepareReplay: prepareFootstepReplay }; }, [footstepInput, prepareFootstepReplay]);
     const host = useRef<HTMLDivElement>(null), choose = useRef(onCell);
@@ -169,9 +171,13 @@ export default function LifeWorld({ footstepInput, prepareFootstepReplay, profil
         renderer.domElement.addEventListener('lostpointercapture', lostPointerCapture);
         renderer.domElement.addEventListener('wheel', wheel, { passive: false });
         const media = window.matchMedia('(prefers-reduced-motion: reduce)');
-        let raf = 0, auditAt = 0, discoveryAt = 0, discoveryOwner: string | undefined;
+        let raf = 0, auditAt = 0, discoveryAt = 0, discoveryOwner: string | undefined, lastBackgroundFrame = -Infinity;
         let collector: GatheringCollector | undefined;
         const frame = () => {
+            // The foreground observation owns the full render cadence. The background
+            // still samples the same world clock; closing the panel resumes immediately.
+            if (behindObservation.current && performance.now() - lastBackgroundFrame < 125) { raf = requestAnimationFrame(frame); return; }
+            lastBackgroundFrame = performance.now();
             // Background/context-loss time must age reactions, not replay them on return.
             if (document.visibilityState !== 'visible' || renderer.getContext().isContextLost()) presentationClock.resume(performance.now(), true);
             const logicalAt = presentationClock.sample(performance.now());

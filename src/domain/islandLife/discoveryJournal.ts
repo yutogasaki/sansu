@@ -4,7 +4,7 @@ import { DISCOVERY_RULE_VERSION, evaluateDiscovery, type DiscoveryRuleId, type R
 import { LIFE_STEP_MS, type LifeState, type ResidentId } from './model';
 
 export type SceneSource = 'live' | 'current-context-test' | 'replay' | 'simulated';
-export type SceneSnapshot = Pick<LifeState, 'now' | 'activityVersion' | 'items' | 'residents' | 'heroStyle' | 'expanded' | 'extraLand' | 'target' | 'relationTarget' | 'worldStyle' | 'landscapeVersion' | 'relationVersion' | 'waterFocus' | 'poseReducedMotion' | 'tourVersion' | 'roamRound' | 'scenePose' | 'facilityTripVersion' | 'relationSelectionVersion' | 'waterMagicVersion' | 'waterTouch' | 'shadowMagicVersion' | 'shadowTouch' | 'footstepMagicVersion' | 'footstepTouch'> & { observationResidentId?: ResidentId };
+export type SceneSnapshot = Pick<LifeState, 'now' | 'activityVersion' | 'items' | 'residents' | 'heroStyle' | 'expanded' | 'extraLand' | 'target' | 'relationTarget' | 'worldStyle' | 'landscapeVersion' | 'relationVersion' | 'waterFocus' | 'poseReducedMotion' | 'tourVersion' | 'roamRound' | 'scenePose' | 'facilityTripVersion' | 'relationSelectionVersion' | 'waterMagicVersion' | 'waterTouch' | 'shadowMagicVersion' | 'shadowTouch' | 'footstepMagicVersion' | 'footstepTouch' | 'encounterVersion' | 'encounterTouch'> & { observationResidentId?: ResidentId };
 export interface DiscoveryScene {
     eventId: string; profileId: string; ruleId: DiscoveryRuleId; ruleVersion: typeof DISCOVERY_RULE_VERSION;
     semanticSignature: string; createdAt: number; source: SceneSource; originEventId?: string;
@@ -33,6 +33,14 @@ export async function createDiscoveryScene(profileId: string, state: LifeState, 
     const current = evaluateDiscovery(state, profileId).find(candidate => candidate.semanticSignature === rule.semanticSignature);
     if (!current || current.ruleId !== rule.ruleId || rule.ruleVersion !== DISCOVERY_RULE_VERSION
         || !eventId || !Number.isFinite(createdAt) || createdAt < 0) throw new Error('この場面は もういちど たしかめてね。');
+    if (rule.ruleId === 'X1' || rule.ruleId === 'X2') {
+        const touch = state.encounterTouch;
+        const normal = touch && evaluateDiscovery(state, profileId).find(r => r.ruleId === touch.normalRuleId
+            && r.participantIds.length === touch.normalGroupIds.length && r.participantIds.every(id => touch.normalGroupIds.includes(id)));
+        if (!touch || touch.ruleId !== rule.ruleId || !normal || !normal.participantIds.includes(touch.plantId)
+            || !rule.participantIds.includes(touch.waterId) || !state.items.some(i => i.id === touch.waterId && i.kind === 'water-bowl')
+            || rule.participantIds.length !== normal.participantIds.length + 1 || !normal.participantIds.every(id => rule.participantIds.includes(id))) throw new Error('Missing observed group and encounter input');
+    }
     if (rule.ruleId === 'M1' && !focalResidentIds.includes('pokomoko')) throw new Error('Missing walking resident');
     if (rule.ruleId === 'M4' && (!state.waterTouch || !validWaterPoint(state.waterTouch.point)
         || !rule.participantIds.some(id => id === state.waterTouch!.itemId && state.items.some(i => i.id === id && i.kind === 'water-bowl')))) throw new Error('水に もういちど ふれてね。');
@@ -43,6 +51,8 @@ export async function createDiscoveryScene(profileId: string, state: LifeState, 
     const observationResidentId = source === 'current-context-test' && state.residents.find(r => r.id === focalResidentIds[0])?.visit?.observationSubjectId ? focalResidentIds[0] : undefined;
     const scene: SceneSnapshot = structuredClone({ ...(observationResidentId ? { observationResidentId } : {}), now: state.now, activityVersion: state.activityVersion,
         ...(state.tourVersion ? { tourVersion: state.tourVersion, roamRound: state.roamRound, scenePose: 'captured-v1' as const } : {}),
+        ...(state.encounterVersion ? { encounterVersion: state.encounterVersion } : {}),
+        ...(state.encounterTouch ? { encounterTouch: state.encounterTouch } : {}),
         ...(state.footstepMagicVersion ? { footstepMagicVersion: state.footstepMagicVersion } : {}),
         ...(state.footstepTouch ? { footstepTouch: state.footstepTouch } : {}),
         ...(state.shadowMagicVersion ? { shadowMagicVersion: state.shadowMagicVersion } : {}),

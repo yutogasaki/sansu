@@ -10,7 +10,7 @@ import type { LifeSeat } from './residentMotion';
 export const tint = (style: Style) => style === 'sunshine' ? '#f5bf60' : style === 'starlight' ? '#a998d8' : '#eb8f9e';
 
 /** Shared catalog and placed-item model. Growth is always supplied by the caller. */
-export function buildLifeItem(item: LifeItem, materials: IslandMaterials, showSoil = true) {
+export function buildLifeItem(item: LifeItem, materials: IslandMaterials, showSoil = true, encounterBranch = false) {
     if (isFacility(item.kind)) return { root: buildFacility(item.kind, materials, item.style), seat: undefined, pivot: undefined, picnic: undefined, rotor: undefined, sandbox: undefined };
     if (item.kind === 'sandbox') return { ...buildSandbox(materials, item.style), seat: undefined, pivot: undefined, picnic: undefined, rotor: undefined };
     if (item.kind === 'pinwheel' || item.kind === 'flower-arch') return { ...buildWindArch(item.kind, materials, item.style), seat: undefined, pivot: undefined, picnic: undefined, sandbox: undefined };
@@ -58,6 +58,14 @@ export function buildLifeItem(item: LifeItem, materials: IslandMaterials, showSo
         }
         // The mature canopy stays within its own cell; adjacent approaches stay clear.
         batch(g);
+        if (encounterBranch && stage === 2) {
+            const branch = new T.Mesh(new T.TubeGeometry(new T.CatmullRomCurve3([
+                new T.Vector3(.015, .65, 0), new T.Vector3(.29, .80, 0), new T.Vector3(.365, .82, .012),
+            ]), 12, .026, 8, false), paint('#a47c4c'));
+            branch.castShadow = branch.receiveShadow = true; g.add(branch);
+            const perch = new T.Mesh(new T.TubeGeometry(new T.LineCurve3(new T.Vector3(.365, .82, .012), new T.Vector3(.46, .845, .03)), 4, .02, 8, false), paint('#a47c4c'));
+            perch.name = 'life-tree-perch'; perch.castShadow = perch.receiveShadow = true; g.add(perch);
+        }
     } else if (item.kind === 'water-bowl') {
         const profile = [[.03, .035], [.23, .035], [.32, .10], [.38, .28], [.37, .32], [.33, .32], [.29, .14], [.04, .105]];
         const bowl = new T.Mesh(new T.LatheGeometry(profile.map(([x, y]) => new T.Vector2(x, y)), 40), materials.surface('#ead6af', .48));

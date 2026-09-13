@@ -62,7 +62,7 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
         const preview = item === placement?.item;
         const g = new T.Group(); g.position.copy(point(item.cell)); root.add(g);
         g.name = preview ? 'life-placement-ghost' : `life-item-${item.id}`;
-        const model = buildLifeItem(item, content.m, !bedIds.has(item.id) || preview);
+        const model = buildLifeItem(item, content.m, !bedIds.has(item.id) || preview, Boolean(state.encounterVersion));
         g.add(model.root);
         if (model.sandbox && !preview) sandboxes.set(item.id, model.sandbox);
         if (model.rotor && !preview) rotors.push(model.rotor);
