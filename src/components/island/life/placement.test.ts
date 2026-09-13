@@ -15,7 +15,8 @@ describe('placement preview', () => {
         const r = record(), state = replayLife(r);
         const preview = previewPlacement(state, 'flower', { x: 0, z: 3 });
         expect(preview.valid).toBe(false);
-        expect(preview.reason).toContain('とおりみち');
+        expect(preview.reason).toContain('ベンチまで あるけなくなる');
+        expect(preview.path).toContainEqual({ x: 0, z: 3 });
         for (const kind of ['flower', 'bench', 'swing', 'lantern'] as const) {
             const allowed = previewPlacement(state, kind).allowed;
             for (const cell of landCells(state)) {

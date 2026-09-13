@@ -88,8 +88,8 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
     }
     const path = new T.Group(); path.name = 'life-placement-path'; root.add(path);
     placement?.path?.forEach(c => {
-        const dot = new T.Mesh(new T.CircleGeometry(.075, 16), paint('#fff9db')); dot.rotation.x = -Math.PI / 2;
-        dot.position.copy(point(c)); dot.position.y += .035; path.add(dot);
+        const dot = new T.Mesh(new T.CircleGeometry(.12, 16), paint(placement?.valid ? '#fff9db' : '#715637')); dot.rotation.x = -Math.PI / 2;
+        dot.position.copy(point(c)); dot.position.y = .10; path.add(dot);
     });
     const scarf = new T.Mesh(new T.TorusGeometry(.18, .047, 8, 32), paint(tint(state.heroStyle)));
     scarf.name = 'life-scarf';

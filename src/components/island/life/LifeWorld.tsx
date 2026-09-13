@@ -73,7 +73,7 @@ export default function LifeWorld({ inspectShadow, observationOpen = false, foot
         });
         let resize: () => void = () => {};
         const cameraControls = new IslandCameraControls(view => { setCameraView(view); resize(); });
-        controlCamera.current = action => { if (!currentPlacement) cameraControls.action(action); };
+        controlCamera.current = action => cameraControls.action(action);
         const project = (point: T.Vector3): CameraPanPoint => {
             const projected = point.clone().applyMatrix4(camera.matrixWorldInverse);
             return { x: projected.x, y: projected.y };
@@ -128,7 +128,6 @@ export default function LifeWorld({ inspectShadow, observationOpen = false, foot
             if (document.visibilityState !== 'visible' || renderer.getContext().isContextLost()) presentationClock.resume(performance.now(), true);
             if (Boolean(preview) !== Boolean(currentPlacement)) cameraControls.reset(false);
             currentState = next; currentPlacement = preview;
-            if (preview) cameraControls.cancel();
             if (content) { scene.remove(content.root); content.dispose(); }
             content = buildLifeScene(next, selection, point, preview); scene.add(content.root);
             node.dataset.lifeWorldStyle = content.root.userData.worldStyle;
@@ -157,27 +156,24 @@ export default function LifeWorld({ inspectShadow, observationOpen = false, foot
             selectAt(e.clientX, e.clientY);
         };
         const pointerDown = (e: PointerEvent) => {
-            if (currentPlacement || e.pointerType === 'mouse' && e.button !== 0) return;
+            if (e.pointerType === 'mouse' && e.button !== 0) return;
             suppressClick = false; cameraControls.down(e.pointerId, { x: e.clientX, y: e.clientY }); renderer.domElement.setPointerCapture(e.pointerId);
         };
         const pointerMove = (e: PointerEvent) => {
-            if (currentPlacement) return;
             cameraControls.move(e.pointerId, { x: e.clientX, y: e.clientY }, renderer.domElement.getBoundingClientRect());
         };
         const pointerUp = (e: PointerEvent) => {
-            if (currentPlacement) return;
             const tap = cameraControls.up(e.pointerId, { x: e.clientX, y: e.clientY });
             if (renderer.domElement.hasPointerCapture(e.pointerId)) renderer.domElement.releasePointerCapture(e.pointerId);
             if (!tap || e.button !== 0) suppressClick = true;
         };
         const pointerCancel = (e: PointerEvent) => {
-            if (!currentPlacement && cameraControls.hasPointer(e.pointerId)) { cameraControls.cancel(); suppressClick = true; }
+            if (cameraControls.hasPointer(e.pointerId)) { cameraControls.cancel(); suppressClick = true; }
         };
         const lostPointerCapture = (e: PointerEvent) => {
             if (cameraControls.hasPointer(e.pointerId)) { cameraControls.cancel(); suppressClick = true; }
         };
         const wheel = (e: WheelEvent) => {
-            if (currentPlacement) return;
             const delta = e.deltaY * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? node.clientHeight : 1);
             if (cameraControls.wheel(delta, { x: e.clientX, y: e.clientY }, renderer.domElement.getBoundingClientRect())) e.preventDefault();
         };
@@ -273,6 +269,10 @@ export default function LifeWorld({ inspectShadow, observationOpen = false, foot
     }, []);
     useEffect(() => { update.current?.(state, selected, cell, placement); }, [state, selected, cell, placement]);
     return <><div ref={host} className="life-world" data-placing={Boolean(placement)} />
+        {placement && <div className="life-placement-camera">
+            <IslandCameraToolbar view={cameraView} onAction={action => controlCamera.current?.(action)} />
+            <p>タップで ばしょ・なぞって 移動・2本指で 拡大と回転</p>
+        </div>}
         {!placement && controlsVisible && !prepareFootstepReplay && <div className="life-home-tools" role="group" aria-label="しまの あそび">
         {children}
         <details className="life-camera-tools" onKeyDown={event => {

@@ -1,5 +1,5 @@
 import { occupiedCells } from '../../../domain/islandLife/footprint';
-import type { Cell, ItemKind, LifeItem, LifeState } from '../../../domain/islandLife/model';
+import { CATALOG, type Cell, type ItemKind, type LifeItem, type LifeState } from '../../../domain/islandLife/model';
 import { cellKey, homeCell, isHouse, landCells, pathToActivity, usablePlacement, vacant } from '../../../domain/islandLife/space';
 
 export function previewPlacement(state: LifeState, source: ItemKind | LifeItem, cell?: Cell) {
@@ -12,12 +12,16 @@ export function previewPlacement(state: LifeState, source: ItemKind | LifeItem, 
     const valid = Boolean(cell && allowed.includes(cellKey(cell)));
     const trial = { ...base, items: base.items.map(i => i.id === item.id ? { ...item, cell } : i) };
     const path = cell ? pathToActivity(trial, homeCell, { ...item, cell }) : undefined;
+    const blocked = cell && !valid ? trial.items.find(i => i.cell && !pathToActivity(trial, homeCell, i)) : undefined;
+    const previous = blocked && base.items.find(i => i.id === blocked.id);
+    const blockedPath = previous?.cell ? pathToActivity(base, homeCell, previous) : undefined;
     const reason = !cell ? 'しまを タップして ばしょを えらぼう。'
-        : valid ? 'ここなら おけるよ。てんてんは とおりみち。'
+        : valid ? 'ここなら おけるよ。'
         : isHouse(cell) ? 'ここは おうちの ばしょだよ。'
         : !occupiedCells({ ...item, cell }).every(p => vacant(base, p, item.id)) ? 'ここには ほかの ものが あるよ。'
         : item.access === 'front' && !vacant(trial, { x: cell.x, z: cell.z + 1 }) ? 'まえを ひとマス あけて おこう。'
-        : 'みんなの とおりみちを あけて おこう。';
-    return { item: { ...item, cell }, allowed, valid, reason, path: valid ? path : undefined };
+        : blocked ? `${CATALOG[blocked.kind].label}まで あるけなくなるよ。べつの マスを えらぼう。`
+        : 'ここまで あるけないよ。べつの マスを えらぼう。';
+    return { item: { ...item, cell }, allowed, valid, reason, path: valid ? path : blockedPath };
 }
 export type PlacementPreview = ReturnType<typeof previewPlacement>;

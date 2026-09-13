@@ -79,7 +79,7 @@
 @keyframes life-earned-in { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:translateY(0); } }
 
 .life-world canvas { touch-action:none; cursor:grab; }
-.life-world[data-placing=true] canvas { touch-action:pan-y; cursor:default; }
+.life-world[data-placing=true] canvas { touch-action:none; cursor:grab; }
 .life-world:has(.life-camera-tools[open]) canvas:active { cursor:grabbing; }
 .life-camera-tools { position:absolute; z-index:4; right:12px; bottom:12px; margin:0; color:var(--pokomoko-ink); }
 .life-camera-tools>summary { display:flex; align-items:center; min-height:44px; padding:0 13px; border:1px solid var(--pokomoko-edge); border-radius:16px; background:var(--pokomoko-paper); box-shadow:0 4px 12px #26314522; font-size:12px; font-weight:800; cursor:pointer; list-style:none; }
@@ -639,3 +639,7 @@
         bottom: max(8px, env(safe-area-inset-bottom));
     }
 }
+
+.life-placement-camera { position:absolute; top:100px; right:12px; z-index:5; max-width:calc(100% - 24px); padding:6px; border:1px solid var(--pokomoko-edge); border-radius:16px; background:var(--pokomoko-paper); color:var(--pokomoko-ink); }
+.life-placement-camera p { margin:4px 2px 0; font-size:11px; }
+.life-placement-camera .island-camera { flex-wrap:wrap; }

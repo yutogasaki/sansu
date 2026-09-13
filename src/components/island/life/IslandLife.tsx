@@ -275,6 +275,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
         {placement && <div className="life-placement life-controls" data-life-placement-valid={placement.valid} data-life-placement-cell={cell && cellKey(cell)}>
             <h3>{CATALOG[placement.item.kind].label}を {moving ? 'うごかす' : 'おく'}</h3>
             <p role="status">{cell && (placement.valid ? <Check size={18} /> : <X size={18} />)}{placement.reason}</p>
+            <p className="life-placement-guide">あかるい マスに おけるよ。{placement.path?.length ? 'てんてんは おうちから あるく ばしょ。' : 'おうちから あるける すきまを あけよう。'}</p>
             <div className="life-placement-actions"><button className="island-primary" disabled={locked || !placement.valid} onClick={() => cell && void doAction(kind ? { type: 'buy', kind, cell } : { type: 'move', itemId: selected!, cell }, 'ここに おいたよ。どんな くらしに なるかな？')}>ここに おく</button>
                 <button disabled={locked} onClick={() => { setKind(undefined); setMoving(false); setCell(undefined); }}>やめる</button></div>
             <button className="life-grid-toggle" aria-expanded={gridOpen} onClick={() => setGridOpen(!gridOpen)}>マスから えらぶ</button>
