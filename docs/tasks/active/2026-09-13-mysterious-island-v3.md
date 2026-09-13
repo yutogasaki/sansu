@@ -131,3 +131,21 @@
 
 - 最終reviewで短いvisibility/context-lossにも即時pauseを追加。対象18テストPASS。補強後の全6ケースを再実行しPASS、最終artifactを同じsourceで更新。最終verify:coreもPASS（361 files / 3717 tests、docs/lint/typecheck/build/assets、PWA precache10.79MiB/12MiB）。
 - 次の統合範囲: 通常島のR1/R3 live、GP3の順に巡る動作、24h成長・有限ひかり・土地/所有上限のcheckpoint、B。今回のGP3記録の中核は表示された3台以上の床で、巡回の達成を記録文で主張しない。現行arrangeVisitsは地区の重みを上げる既存方式で、順に巡るv3の動作契約の完了証拠にはしない。
+
+## 継続時のコミット運用（2026-09-13のユーザー指示）
+
+「いいところでコミットメインプッシュしつつ継続」に従い、検証済みのまとまりでmainへcommit/pushし、仕様実装を続ける。このタスクの変更だけを含め、並行するデザイン検討の変更は混ぜない。
+
+最初のcheckpointは `e0aac1b5c7e396c57372acb51be434cc5dcc4c59`、origin/mainへのpush成功を確認。ソースは最終検証のSHA-256と一致し、コミット対象だけをexportしたdocs:checkもPASS。原文ZIPの末尾空白/Markdown改行は原文保持のため変更していない。仕様全体・移行・releaseの完了commitではない。
+
+### 段階9: 通常島のR1/R3 live記録
+
+- `liveRelations.ts` は実描画の着席/視線readyから候補を作る。観察面から切り出した実mesh/顔/画角/DOM遮蔽の判定を共用。R3の実利用者も参加者へ保存する。
+- collectorは参加住人と訪問の開始/終了を含むepisodeキーを扱い、別訪問の可視時間を混ぜない。snapshotはそのフレームの論理時計を使用。背景/context loss/配置preview/メニューの既存pauseを維持。
+- reviewで無料観察訪問の閉じた後の出典混同を防ぐガードを追加。着席前/期限切れ/実遮蔽/画角外/DOM遮蔽/非表示mesh/訪問交代/試験訪問を実Threeモデルで検査。保存queueのPWA hold、失敗した元evidenceのretry、owner切替、退出後callbackを追加テストし対象8件PASS。
+- 最初の実UI/全体coreは診断として実行中。並行reviewで上記ガードとテストを追加したため、開始/終了sourceが一致する最終候補としては扱わない。最終候補はコードを固定して再検査する。
+- 初回coreは362 files / 3723 tests PASSだが、追加hookテストは開始後のため未包含。次のcoreはhook用関数名のReact lintエラーで停止し、コンポーネント名へ修正、対象lint PASS。
+- 実UI初回はphone2ケースPASS後、tablet花の初期画角で実際に花が住人に隠れ、core=false・live未記録でFAIL。`/tmp/sansu-v3-live-relations-runtime-1` の失敗画面/DB reportを保持。判定を緩めず、ハーネスで実「ながめ」の回転操作を行い、見える角度に変えた後だけ記録を待つよう修正。固定sourceのtablet診断とphone最終を実行中。
+- 既存の視線/観察ハーネスは通常liveが存在し得る契約へ更新。観察の早期退出ではcurrent-context-testの未発行を検査し、別sourceのliveを観察完了へ数えない。今回その旧ハーネス全体の再PASSとは主張しない。
+
+- 最終DEV4ケースPASS、両実行のsource開始/終了 `78fa1893fc823eb0a4837d7ce879b407bd5e1ceac386f4faa4426b03afa0ee80` 一致。[実画像とreport](../../design/2026-09-13-island-live-relations/README.md)。最終verify:core PASS（363 files / 3726 tests、lint/typecheck/build/assets、precache10.79MiB）。Human N=0、release全体は未完。次はGP3巡回とv3の成長/有限ひかり/土地checkpoint、Bを継続する。

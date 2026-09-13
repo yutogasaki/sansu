@@ -1,3 +1,4 @@
+import { liveRelations } from './liveRelations';
 import { GatheringCollector } from './gatheringCollector';
 import { displayedGatherings, gatheringVisible } from './gatheringVisibility';
 import type { DiscoveryScene, PresentationEvidence } from '../../../domain/islandLife/discoveryJournal';
@@ -174,13 +175,18 @@ export default function LifeWorld({ profileId, presented, state, selected, cell,
                     collector = discoveryOwner ? new GatheringCollector(discoveryOwner, (event, evidence) => discovery.current.presented?.(event, evidence)) : undefined;
                 }
                 if (collector && discovery.current.enabled && !currentPlacement && performance.now() - discoveryAt >= 100) {
-                    const rules = displayedGatherings(currentState, discoveryOwner!), rect = node.getBoundingClientRect();
-                    const shown = new Map(rules.map(rule => [rule.semanticSignature, gatheringVisible(currentState, rule, content!.root, camera, content!.point, ndc => {
+                    const stateAtFrame = { ...currentState, now: logicalAt };
+                    const rules = displayedGatherings(stateAtFrame, discoveryOwner!), rect = node.getBoundingClientRect();
+                    const onScreen = (ndc: T.Vector3) => {
                         const x = rect.left + (ndc.x + 1) / 2 * rect.width, y = rect.top + (1 - ndc.y) / 2 * rect.height;
-                        return x >= 0 && x <= innerWidth && y >= 0 && y <= innerHeight && node.contains(document.elementFromPoint(x, y));
-                    })]));
-                    collector.sample({ ...currentState, now: logicalAt }, rules, rule => shown.get(rule.semanticSignature) ?? false, performance.now(), Date.now());
-                    node.dataset.lifeGatherings = JSON.stringify(rules.map(rule => ({ ruleId: rule.ruleId, ids: rule.participantIds, core: shown.get(rule.semanticSignature) })));
+                        return rect.width > 0 && rect.height > 0 && x >= 0 && x <= innerWidth && y >= 0 && y <= innerHeight && node.contains(document.elementFromPoint(x, y));
+                    };
+                    const gatherings = rules.map(rule => ({ rule, key: rule.semanticSignature,
+                        core: gatheringVisible(stateAtFrame, rule, content!.root, camera, content!.point, onScreen) }));
+                    const relations = liveRelations(stateAtFrame, discoveryOwner!, content, camera, onScreen);
+                    collector.sampleCandidates(stateAtFrame, [...gatherings, ...relations], performance.now(), Date.now());
+                    node.dataset.lifeGatherings = JSON.stringify(gatherings.map(({ rule, core }) => ({ ruleId: rule.ruleId, ids: rule.participantIds, core })));
+                    node.dataset.lifeRelations = JSON.stringify(relations.map(({ rule, core, focalResidentIds }) => ({ ruleId: rule.ruleId, ids: rule.participantIds, core, focalResidentIds })));
                     discoveryAt = performance.now();
                 } else if (currentPlacement || !discovery.current.enabled) collector?.pause();
                 const poses = content.audit();

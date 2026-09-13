@@ -5,7 +5,7 @@ import { execFileSync } from 'node:child_process';
 import { mkdir, writeFile, readFile } from 'node:fs/promises';
 import { readNative } from './island-e2e-helpers.mjs';
 import { attempt } from './island-learning-checks.mjs';
-const candidate = process.env.SANSU_DISCOVERY_CANDIDATE ?? 'island-life-discovery-a-gatherings-v1';
+const candidate = process.env.SANSU_DISCOVERY_CANDIDATE ?? 'island-life-discovery-a-live-relations-v1';
 const base = process.env.SANSU_DISCOVERY_DEV_URL ?? 'http://127.0.0.1:5223';
 const out = process.env.SANSU_DISCOVERY_OUTPUT;
 assert(out, 'Specify a fresh SANSU_DISCOVERY_OUTPUT directory');

@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { seedDev, readNative } from './island-e2e-helpers.mjs';
 
-const candidate = process.env.SANSU_DISCOVERY_CANDIDATE ?? 'island-life-discovery-a-gatherings-v1';
+const candidate = process.env.SANSU_DISCOVERY_CANDIDATE ?? 'island-life-discovery-a-live-relations-v1';
 const base = process.env.SANSU_DISCOVERY_DEV_URL ?? 'http://127.0.0.1:5223';
 const out = process.env.SANSU_DISCOVERY_OUTPUT;
 assert(out, 'Specify a fresh SANSU_DISCOVERY_OUTPUT directory');
@@ -72,7 +72,7 @@ try {
                 await page.getByRole('navigation', { name: 'メインメニュー' }).getByRole('button', { name: 'まなぶ', exact: true }).click();
                 await page.locator('.island-learning[data-input-ready="true"]').waitFor();
                 assert.equal(await page.locator('.life-relation-view').count(), 0);
-                assert.equal(await readJournal(), undefined);
+                assert(!(await readJournal())?.entries.some(entry => entry.event.source === 'current-context-test')); // Ordinary live scenes may already exist.
                 assert.deepEqual((await readNative(page, profileId)).logs, native.logs);
                 await page.screenshot({ path: `${out}/${name}-early-exit.png` });
                 await page.getByRole('button', { name: 'とじる', exact: true }).click();
@@ -81,8 +81,8 @@ try {
                 await observe();
                 await page.getByRole('button', { name: 'のこす', exact: true }).waitFor({ timeout: 30000 });
                 await page.screenshot({ path: `${out}/${name}-observation.png` });
-                const shown = await readJournal(); assert.equal(shown.firstPresented.length, 1); assert.equal(shown.entries[0].event.ruleId, rule);
-                assert.equal(shown.entries[0].event.source, 'current-context-test');
+                const shown = await readJournal(); assert.equal(shown.firstPresented.length, 1);
+                assert(shown.entries.some(entry => entry.event.ruleId === rule && entry.event.source === 'current-context-test'));
                 await page.getByRole('button', { name: 'のこす', exact: true }).click();
                 await page.getByRole('button', { name: 'のこした', exact: true }).waitFor();
                 const memoryId = (await readJournal()).savedIds[0];

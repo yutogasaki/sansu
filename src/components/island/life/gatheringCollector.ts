@@ -1,22 +1,26 @@
 import type { RuleEligibility } from '../../../domain/islandLife/discovery';
 import { createDiscoveryScene, type DiscoveryScene, type PresentationEvidence } from '../../../domain/islandLife/discoveryJournal';
 import { DiscoveryPresentation } from '../../../domain/islandLife/discoveryPresentation';
-import type { LifeState } from '../../../domain/islandLife/model';
+import type { LifeState, ResidentId } from '../../../domain/islandLife/model';
+
+export type LiveDiscoveryCandidate = { rule: RuleEligibility; key: string; core: boolean; focalResidentIds?: ResidentId[] };
 
 type Episode = { event?: DiscoveryScene; collector?: DiscoveryPresentation; pending?: boolean; cancelled?: boolean };
 export class GatheringCollector {
     private episodes = new Map<string, Episode>();
     constructor(private readonly profileId: string, private readonly presented: (event: DiscoveryScene, evidence: PresentationEvidence) => void) {}
     sample(state: LifeState, rules: RuleEligibility[], shown: (rule: RuleEligibility) => boolean, mono: number, wall: number) {
-        const current = new Set(rules.map(rule => rule.semanticSignature));
+        this.sampleCandidates(state, rules.map(rule => ({ rule, key: rule.semanticSignature, core: shown(rule) })), mono, wall);
+    }
+    sampleCandidates(state: LifeState, candidates: LiveDiscoveryCandidate[], mono: number, wall: number) {
+        const current = new Set(candidates.map(candidate => candidate.key));
         for (const [key, episode] of this.episodes) if (!current.has(key)) { episode.cancelled = true; episode.collector?.cancel(); this.episodes.delete(key); }
-        for (const rule of rules) {
-            const core = shown(rule);
-            let episode = this.episodes.get(rule.semanticSignature);
-            if (!episode) { episode = {}; this.episodes.set(rule.semanticSignature, episode); }
+        for (const { rule, key, core, focalResidentIds } of candidates) {
+            let episode = this.episodes.get(key);
+            if (!episode) { episode = {}; this.episodes.set(key, episode); }
             if (core && !episode.pending && !episode.event) {
                 const active = episode; active.pending = true;
-                void createDiscoveryScene(this.profileId, state, rule, 'live', crypto.randomUUID(), wall).then(event => {
+                void createDiscoveryScene(this.profileId, state, rule, 'live', crypto.randomUUID(), wall, focalResidentIds).then(event => {
                     if (active.cancelled) return;
                     active.event = event; active.collector = new DiscoveryPresentation(event);
                 }).catch(() => { if (!active.cancelled) active.pending = false; });

@@ -21,6 +21,7 @@ const report = { startHash, revision: execFileSync('git', ['rev-parse', 'HEAD'],
 const browser = await chromium.launch();
 try {
     for (const [device, viewport] of [['phone', { width: 390, height: 844 }], ['tablet', { width: 768, height: 1024 }]]) {
+        if (process.env.SANSU_RELATION_DEVICE && process.env.SANSU_RELATION_DEVICE !== device) continue;
         for (const kind of ['flower', 'swing']) {
             const name = `${device}-${kind}`;
             const context = await browser.newContext({ viewport, hasTouch: true, reducedMotion: device === 'tablet' ? 'reduce' : 'no-preference' });
@@ -38,8 +39,13 @@ try {
                     record = commandLife(record, { type: 'buy', kind: 'bench', cell: { x: 0, z: 2 } }, 'qa-bench', at);
                     record = commandLife(record, { type: 'buy', kind, cell: { x: 2, z: 2 } }, 'qa-target', at);
                     record = commandLife(record, { type: 'visit', itemId: 'qa-bench' }, 'qa-visit', at);
-                    await lifeDb.worlds.put(record);
+                    await lifeDb.worlds.put(record); sessionStorage.setItem('qa-cover', 'on');
                 }, { profileId, kind });
+                await page.addInitScript(() => {
+                    if (sessionStorage.getItem('qa-cover') !== 'on') return;
+                    const cover = () => { const node = document.createElement('div'); node.id = 'qa-cover'; node.style.cssText = 'position:fixed;inset:0;z-index:999999;background:#fff'; document.body.append(node); };
+                    if (document.body) cover(); else document.addEventListener('DOMContentLoaded', cover, { once: true });
+                });
                 await page.reload();
                 await page.locator(`[data-life-candidate="${candidate}"] .life-world[data-rendered="true"]`).waitFor();
                 const poses = () => page.locator('.life-world').evaluate(node => JSON.parse(node.dataset.lifePoses || '[]'));
@@ -52,6 +58,31 @@ try {
                 };
                 const rule = kind === 'flower' ? 'R1' : 'R3';
                 await ready(rule);
+                const read = () => page.evaluate(async profileId => {
+                    const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); return await lifeDb.worlds.get(profileId);
+                }, profileId);
+                const coveredRecord = await read();
+                await page.waitForTimeout(1600); assert.equal((await read()).discoveryJournal, undefined);
+                await page.evaluate(() => { document.querySelector('#qa-cover').remove(); sessionStorage.setItem('qa-cover', 'off'); });
+                const waitJournal = async predicate => {
+                    for (let i = 0; i < 160; i++) { const journal = (await read()).discoveryJournal; if (predicate(journal)) return journal; await page.waitForTimeout(150); }
+                    throw new Error(`Journal missing: ${await page.locator('.life-world').getAttribute('data-life-relations')}`);
+                };
+                let cameraTurns = 0;
+                for (; cameraTurns < 12; cameraTurns++) {
+                    await page.waitForTimeout(350);
+                    const visible = await page.locator('.life-world').evaluate(node => JSON.parse(node.dataset.lifeRelations || '[]').some(relation => relation.core));
+                    if (visible) break;
+                    await page.locator('.life-camera-tools summary').click();
+                    await page.getByRole('button', { name: 'しまを ひだりに まわす', exact: true }).click();
+                    await page.locator('.life-camera-tools summary').click();
+                }
+                const first = await waitJournal(j => j?.firstPresented.some(entry => entry.ruleId === rule));
+                const entry = first.entries.find(entry => entry.event.ruleId === rule);
+                assert.equal(entry.event.source, 'live'); assert(entry.evidence.visibleDurationMs >= 1000);
+                assert(entry.event.focalResidentIds.length >= 1);
+                assert.deepEqual((await read()).actions, coveredRecord.actions);
+                assert.deepEqual((await read()).credits, coveredRecord.credits);
                 const near = await poses(), native = await readNative(page, profileId);
                 await page.screenshot({ path: `${out}/${name}-near.png` });
                 const move = async (x, z) => {
@@ -68,8 +99,20 @@ try {
                     await page.getByRole('button', { name: 'ここに おく', exact: true }).click();
                     await page.locator('.life-placement').waitFor({ state: 'hidden' });
                 };
+                await page.getByRole('button', { name: 'しまの ようす', exact: true }).click();
+                await page.getByRole('button', { name: 'しまの おもいで', exact: true }).click();
+                await page.getByRole('button', { name: 'みえた ばめん', exact: true }).click();
+                await page.locator('[data-life-memory]').first().click();
+                await page.locator('.life-relation-view[data-rendered="true"]').waitFor();
+                await waitJournal(j => j?.entries.some(e => e.event.source === 'replay' && e.event.originEventId === entry.event.eventId));
+                await page.getByRole('button', { name: 'のこす', exact: true }).click();
+                await page.getByRole('button', { name: 'のこすのを やめる', exact: true }).waitFor();
+                await page.screenshot({ path: `${out}/${name}-memory.png` });
+                await page.getByRole('button', { name: 'おもいでを とじる', exact: true }).click();
                 await move(5, kind === 'flower' ? 4 : 3); await ready(null);
-                const far = await poses(); await page.screenshot({ path: `${out}/${name}-far.png` });
+                const far = await poses();
+                const atFar = (await read()).discoveryJournal;
+                await page.waitForTimeout(1600); assert.deepEqual((await read()).discoveryJournal, atFar); await page.screenshot({ path: `${out}/${name}-far.png` });
                 await move(2, 2); await ready(rule);
                 const restored = await poses(); await page.screenshot({ path: `${out}/${name}-restored.png` });
                 assert(near.some(pose => Math.abs(pose.headYaw) > .1 && pose.relation?.ruleId === rule));
@@ -90,7 +133,7 @@ try {
                 await page.locator('.island-learning[data-input-ready="true"]').waitFor();
                 await page.screenshot({ path: `${out}/${name}-learning.png` });
                 assert.equal(errors.length, 0, errors.join('\n'));
-                report.scenarios.push({ name, pass: true, near, far, restored, errors });
+                report.scenarios.push({ name, pass: true, cameraTurns, event: entry, near, far, restored, errors });
             } catch (error) { await page.screenshot({ path: `${out}/${name}-failure.png` }); report.scenarios.push({ name, pass: false, error: error.stack, errors }); throw error; }
             finally { await context.close(); }
         }

@@ -26,4 +26,21 @@ describe('live gathering collection', () => {
         collector.sample(state, rules, () => true, 100100, 110100); collector.cancel();
         await new Promise(resolve => setTimeout(resolve, 20)); expect(presented).not.toHaveBeenCalled();
     });
+    it('does not combine different visits and captures the residents of the visible episode', async () => {
+        const presented = vi.fn(), collector = new GatheringCollector('p', presented);
+        let t = 0;
+        const sample = (key: string) => {
+            collector.sampleCandidates(state, [{ rule: rules[0], key, core: true, focalResidentIds: ['rabbit'] }], t, 10000 + t); t += 100;
+        };
+        sample('first'); await new Promise(resolve => setTimeout(resolve, 20));
+        for (let i = 0; i < 7; i++) sample('first');
+        sample('second'); await new Promise(resolve => setTimeout(resolve, 20));
+        for (let i = 0; i < 7; i++) sample('second');
+        expect(presented).not.toHaveBeenCalled();
+        for (let i = 0; i < 5; i++) sample('second');
+        expect(presented).toHaveBeenCalledTimes(1);
+        expect(presented.mock.calls[0][0].focalResidentIds).toEqual(['rabbit']);
+        expect(presented.mock.calls[0][0].source).toBe('live');
+    });
+
 });

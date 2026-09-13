@@ -1,0 +1,707 @@
+{
+  "startHash": "78fa1893fc823eb0a4837d7ce879b407bd5e1ceac386f4faa4426b03afa0ee80",
+  "revision": "e0aac1b5c7e396c57372acb51be434cc5dcc4c59",
+  "flags": "VITE_ISLAND_ENABLED=true; VITE_ISLAND_LIFE_PREVIEW=true; DEV",
+  "cache": "fresh browser context; DEV; no production SW claim",
+  "target": "http://127.0.0.1:5223",
+  "candidate": "island-life-discovery-a-live-relations-v1",
+  "source": "explicit DEV two-item ownership fixture; no earned acquisition claim",
+  "humanN": 0,
+  "scenarios": [
+    {
+      "name": "tablet-flower",
+      "pass": true,
+      "cameraTurns": 2,
+      "event": {
+        "event": {
+          "eventId": "ff7082d0-9a69-4ffa-9fce-13fca2123705",
+          "profileId": "2514f561-1c98-4fc4-ab50-42f327b03f8f",
+          "ruleId": "R1",
+          "ruleVersion": "discovery-v3.0-rc1",
+          "semanticSignature": "[\"[\\\"2514f561-1c98-4fc4-ab50-42f327b03f8f\\\",\\\"discovery-v3.0-rc1\\\",\\\"R1\\\",[[\\\"qa-bench\\\",\\\"bench\\\",0,2,null,\\\"front\\\"],[\\\"qa-target\\\",\\\"flower\\\",2,2,null,\\\"adjacent\\\"]]]\",[[\"pokomoko\",\"qa-bench\",\"using\"]]]",
+          "createdAt": 1789271339436,
+          "source": "live",
+          "focalResidentIds": [
+            "pokomoko"
+          ],
+          "snapshot": {
+            "contentVersion": 1,
+            "scene": {
+              "now": 1789271337258.1,
+              "activityVersion": 2,
+              "items": [
+                {
+                  "id": "qa-bench",
+                  "kind": "bench",
+                  "cell": {
+                    "x": 0,
+                    "z": 2
+                  },
+                  "growth": 0,
+                  "style": "original",
+                  "paidDrops": 4,
+                  "access": "front"
+                },
+                {
+                  "id": "qa-target",
+                  "kind": "flower",
+                  "cell": {
+                    "x": 2,
+                    "z": 2
+                  },
+                  "growth": 0.00013111111111111111,
+                  "style": "original",
+                  "paidDrops": 2
+                }
+              ],
+              "residents": [
+                {
+                  "id": "pokomoko",
+                  "cell": {
+                    "x": 2,
+                    "z": 1
+                  },
+                  "enjoyed": 0,
+                  "enjoyedBy": {},
+                  "visit": {
+                    "itemId": "qa-bench",
+                    "path": [
+                      {
+                        "x": 2,
+                        "z": 1
+                      },
+                      {
+                        "x": 1,
+                        "z": 1
+                      },
+                      {
+                        "x": 1,
+                        "z": 2
+                      },
+                      {
+                        "x": 1,
+                        "z": 3
+                      },
+                      {
+                        "x": 0,
+                        "z": 3
+                      }
+                    ],
+                    "from": {
+                      "x": 2,
+                      "z": 1
+                    },
+                    "start": 1789271322722,
+                    "end": 1789273122722
+                  },
+                  "discovery": {
+                    "itemId": "qa-bench",
+                    "at": 1789271322722,
+                    "mood": "notice"
+                  }
+                },
+                {
+                  "id": "rabbit",
+                  "cell": {
+                    "x": 3,
+                    "z": 1
+                  },
+                  "enjoyed": 0,
+                  "enjoyedBy": {},
+                  "visit": {
+                    "itemId": "qa-target",
+                    "path": [
+                      {
+                        "x": 3,
+                        "z": 1
+                      },
+                      {
+                        "x": 3,
+                        "z": 2
+                      }
+                    ],
+                    "from": {
+                      "x": 3,
+                      "z": 1
+                    },
+                    "start": 1789271322722,
+                    "end": 1789273122722
+                  },
+                  "discovery": {
+                    "itemId": "qa-target",
+                    "at": 1789271322722,
+                    "mood": "notice"
+                  }
+                },
+                {
+                  "id": "otter",
+                  "cell": {
+                    "x": 3,
+                    "z": 2
+                  },
+                  "enjoyed": 0,
+                  "enjoyedBy": {},
+                  "visit": {
+                    "itemId": "qa-target",
+                    "path": [
+                      {
+                        "x": 3,
+                        "z": 2
+                      },
+                      {
+                        "x": 3,
+                        "z": 3
+                      },
+                      {
+                        "x": 2,
+                        "z": 3
+                      }
+                    ],
+                    "from": {
+                      "x": 3,
+                      "z": 2
+                    },
+                    "start": 1789271322722,
+                    "end": 1789273122722
+                  },
+                  "discovery": {
+                    "itemId": "qa-target",
+                    "at": 1789271322722,
+                    "mood": "notice"
+                  }
+                }
+              ],
+              "heroStyle": "original",
+              "target": "qa-bench"
+            },
+            "immutableHash": "0cfd2d788f02f75a7213347f2fc0ebf42193293a7a42ddd1669142f39077b17b"
+          }
+        },
+        "evidence": {
+          "eventId": "ff7082d0-9a69-4ffa-9fce-13fca2123705",
+          "firstVisibleAt": 1789271339720,
+          "visibleDurationMs": 1022.4000000357628,
+          "coreShown": true,
+          "presentationKind": "live"
+        }
+      },
+      "near": [
+        {
+          "id": "pokomoko",
+          "itemId": "qa-bench",
+          "phase": "bench",
+          "position": [
+            -2.5,
+            0.34199999999999997,
+            0
+          ],
+          "seatGap": 5.551115123125783e-17,
+          "hop": 0,
+          "headPitch": 0.2905391109692999,
+          "headRoll": 0,
+          "relation": {
+            "ruleId": "R1",
+            "targetId": "qa-target",
+            "focus": [
+              -0.5,
+              0.2,
+              0
+            ],
+            "ready": true
+          },
+          "headYaw": 1.5707963267948966
+        },
+        {
+          "id": "rabbit",
+          "itemId": "qa-target",
+          "phase": "flower",
+          "position": [
+            0.020000000000000018,
+            0.04,
+            0
+          ],
+          "hop": 0,
+          "headPitch": 0.09,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "otter",
+          "itemId": "qa-target",
+          "phase": "flower",
+          "position": [
+            -0.5,
+            0.04,
+            0.52
+          ],
+          "hop": 0,
+          "headPitch": 0.09,
+          "headRoll": 0,
+          "headYaw": 0
+        }
+      ],
+      "far": [
+        {
+          "id": "pokomoko",
+          "itemId": "qa-bench",
+          "phase": "bench",
+          "position": [
+            -2.5,
+            0.34199999999999997,
+            0
+          ],
+          "seatGap": 5.551115123125783e-17,
+          "reaction": "♪",
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "rabbit",
+          "itemId": "qa-target",
+          "phase": "walking",
+          "position": [
+            1.5,
+            0.04,
+            0.12579923198041598
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "otter",
+          "itemId": "qa-target",
+          "phase": "walking",
+          "position": [
+            0.625799231980416,
+            0.04,
+            1
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        }
+      ],
+      "restored": [
+        {
+          "id": "pokomoko",
+          "itemId": "qa-bench",
+          "phase": "bench",
+          "position": [
+            -2.5,
+            0.34199999999999997,
+            0
+          ],
+          "seatGap": 5.551115123125783e-17,
+          "reaction": "♪",
+          "hop": 0,
+          "headPitch": 0.2905391109692999,
+          "headRoll": 0,
+          "relation": {
+            "ruleId": "R1",
+            "targetId": "qa-target",
+            "focus": [
+              -0.5,
+              0.2,
+              0
+            ],
+            "ready": true
+          },
+          "headYaw": 1.5707963267948966
+        },
+        {
+          "id": "rabbit",
+          "itemId": "qa-target",
+          "phase": "walking",
+          "position": [
+            0.6000312449383388,
+            0.04,
+            2
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "otter",
+          "itemId": "qa-target",
+          "phase": "walking",
+          "position": [
+            1.600031244938339,
+            0.04,
+            1
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "tablet-swing",
+      "pass": true,
+      "cameraTurns": 0,
+      "event": {
+        "event": {
+          "eventId": "01ecc518-b824-4ad5-aaef-375ec7c01525",
+          "profileId": "38b9a76e-3bf5-4793-aefe-674141018d18",
+          "ruleId": "R3",
+          "ruleVersion": "discovery-v3.0-rc1",
+          "semanticSignature": "[\"[\\\"38b9a76e-3bf5-4793-aefe-674141018d18\\\",\\\"discovery-v3.0-rc1\\\",\\\"R3\\\",[[\\\"qa-bench\\\",\\\"bench\\\",0,2,null,\\\"front\\\"],[\\\"qa-target\\\",\\\"swing\\\",2,2,null,\\\"front\\\"]]]\",[[\"otter\",\"qa-target\",\"using\"],[\"pokomoko\",\"qa-bench\",\"using\"]]]",
+          "createdAt": 1789271501316,
+          "source": "live",
+          "focalResidentIds": [
+            "otter",
+            "pokomoko"
+          ],
+          "snapshot": {
+            "contentVersion": 1,
+            "scene": {
+              "now": 1789271498501.3,
+              "activityVersion": 2,
+              "items": [
+                {
+                  "id": "qa-bench",
+                  "kind": "bench",
+                  "cell": {
+                    "x": 0,
+                    "z": 2
+                  },
+                  "growth": 0,
+                  "style": "original",
+                  "paidDrops": 4,
+                  "access": "front"
+                },
+                {
+                  "id": "qa-target",
+                  "kind": "swing",
+                  "cell": {
+                    "x": 2,
+                    "z": 2
+                  },
+                  "growth": 0,
+                  "style": "original",
+                  "paidDrops": 6,
+                  "access": "front"
+                }
+              ],
+              "residents": [
+                {
+                  "id": "pokomoko",
+                  "cell": {
+                    "x": 2,
+                    "z": 1
+                  },
+                  "enjoyed": 0,
+                  "enjoyedBy": {},
+                  "visit": {
+                    "itemId": "qa-bench",
+                    "path": [
+                      {
+                        "x": 2,
+                        "z": 1
+                      },
+                      {
+                        "x": 1,
+                        "z": 1
+                      },
+                      {
+                        "x": 1,
+                        "z": 2
+                      },
+                      {
+                        "x": 1,
+                        "z": 3
+                      },
+                      {
+                        "x": 0,
+                        "z": 3
+                      }
+                    ],
+                    "from": {
+                      "x": 2,
+                      "z": 1
+                    },
+                    "start": 1789271489680,
+                    "end": 1789273289680
+                  },
+                  "discovery": {
+                    "itemId": "qa-bench",
+                    "at": 1789271489680,
+                    "mood": "notice"
+                  }
+                },
+                {
+                  "id": "rabbit",
+                  "cell": {
+                    "x": 3,
+                    "z": 1
+                  },
+                  "enjoyed": 0,
+                  "enjoyedBy": {},
+                  "visit": {
+                    "itemId": "roam:rabbit:994039",
+                    "path": [
+                      {
+                        "x": 3,
+                        "z": 1
+                      },
+                      {
+                        "x": 4,
+                        "z": 1
+                      },
+                      {
+                        "x": 5,
+                        "z": 1
+                      },
+                      {
+                        "x": 5,
+                        "z": 2
+                      },
+                      {
+                        "x": 5,
+                        "z": 3
+                      },
+                      {
+                        "x": 5,
+                        "z": 4
+                      }
+                    ],
+                    "from": {
+                      "x": 3,
+                      "z": 1
+                    },
+                    "start": 1789271489680,
+                    "end": 1789273289680
+                  },
+                  "discovery": {
+                    "itemId": "qa-target",
+                    "at": 1789271489680,
+                    "mood": "notice"
+                  }
+                },
+                {
+                  "id": "otter",
+                  "cell": {
+                    "x": 3,
+                    "z": 2
+                  },
+                  "enjoyed": 0,
+                  "enjoyedBy": {},
+                  "visit": {
+                    "itemId": "qa-target",
+                    "path": [
+                      {
+                        "x": 3,
+                        "z": 2
+                      },
+                      {
+                        "x": 3,
+                        "z": 3
+                      },
+                      {
+                        "x": 2,
+                        "z": 3
+                      }
+                    ],
+                    "from": {
+                      "x": 3,
+                      "z": 2
+                    },
+                    "start": 1789271489680,
+                    "end": 1789273289680
+                  },
+                  "discovery": {
+                    "itemId": "qa-target",
+                    "at": 1789271489680,
+                    "mood": "notice"
+                  }
+                }
+              ],
+              "heroStyle": "original",
+              "target": "qa-bench"
+            },
+            "immutableHash": "ee71f49725c0d73d2762e47e2cb873453a694dc2c98ec218cb8dfac6099aa3f5"
+          }
+        },
+        "evidence": {
+          "eventId": "01ecc518-b824-4ad5-aaef-375ec7c01525",
+          "firstVisibleAt": 1789271501490,
+          "visibleDurationMs": 1010.0999999642372,
+          "coreShown": true,
+          "presentationKind": "live"
+        }
+      },
+      "near": [
+        {
+          "id": "pokomoko",
+          "itemId": "qa-bench",
+          "phase": "bench",
+          "position": [
+            -2.5,
+            0.34199999999999997,
+            0
+          ],
+          "seatGap": 5.551115123125783e-17,
+          "hop": 0,
+          "headPitch": -0.04496966185232773,
+          "headRoll": 0,
+          "relation": {
+            "ruleId": "R3",
+            "targetId": "qa-target",
+            "targetResidentId": "otter",
+            "focus": [
+              -0.5,
+              0.8880000000000001,
+              0
+            ],
+            "ready": true
+          },
+          "headYaw": 1.5707963267948966
+        },
+        {
+          "id": "rabbit",
+          "itemId": "roam:display:rabbit:1",
+          "phase": "roaming",
+          "position": [
+            2.5,
+            0.04,
+            -2
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "otter",
+          "itemId": "qa-target",
+          "phase": "swing",
+          "position": [
+            -0.5,
+            0.33000000000000007,
+            0
+          ],
+          "seatGap": 0,
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        }
+      ],
+      "far": [
+        {
+          "id": "pokomoko",
+          "itemId": "qa-bench",
+          "phase": "bench",
+          "position": [
+            -2.5,
+            0.34199999999999997,
+            0
+          ],
+          "seatGap": 5.551115123125783e-17,
+          "reaction": "♪",
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "rabbit",
+          "itemId": "qa-target",
+          "phase": "swing",
+          "position": [
+            2.5,
+            0.30600000000000005,
+            1
+          ],
+          "seatGap": 0,
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "otter",
+          "itemId": "roam:display:otter:0",
+          "phase": "walking",
+          "position": [
+            0.01952001191430419,
+            0.04,
+            1
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        }
+      ],
+      "restored": [
+        {
+          "id": "pokomoko",
+          "itemId": "qa-bench",
+          "phase": "bench",
+          "position": [
+            -2.5,
+            0.34199999999999997,
+            0
+          ],
+          "seatGap": 5.551115123125783e-17,
+          "reaction": "♪",
+          "hop": 0,
+          "headPitch": 0.028991874433100483,
+          "headRoll": 0,
+          "relation": {
+            "ruleId": "R3",
+            "targetId": "qa-target",
+            "focus": [
+              -0.5,
+              0.74,
+              0
+            ],
+            "ready": true
+          },
+          "headYaw": 1.5707963267948966
+        },
+        {
+          "id": "rabbit",
+          "itemId": "qa-target",
+          "phase": "walking",
+          "position": [
+            1.8552932503994,
+            0.04,
+            2
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "otter",
+          "itemId": "roam:display:otter:0",
+          "phase": "walking",
+          "position": [
+            1.8552932503994,
+            0.04,
+            -2
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "pass": true,
+  "endHash": "78fa1893fc823eb0a4837d7ce879b407bd5e1ceac386f4faa4426b03afa0ee80"
+}
