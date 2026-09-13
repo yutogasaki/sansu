@@ -6,26 +6,58 @@ export function buildFacility(kind: 'library' | 'garden-hut', materials: IslandM
     const box = (color: string, x: number, y: number, z: number, w: number, h: number, d: number) => {
         const mesh = new T.Mesh(new T.BoxGeometry(w, h, d), paint(color)); mesh.position.set(x,y,z); mesh.castShadow = mesh.receiveShadow = true; root.add(mesh); return mesh;
     };
-    box(kind === 'library' ? '#f3dfb4' : '#b8d7b1', .5, .57, .5, 1.72, 1.14, 1.68);
     const colors = style === 'starlight' ? ['#a398bf','#709fc0','#d6be8f'] : ['#e9be59','#dc879e','#469dbe'];
-    for (const side of [-1, 1]) for (let row = 0; row < 4; row++) {
-        const tile = box(colors[(row + (side > 0 ? 1 : 0)) % 3], .5 + side * .43, 1.23, -.17 + row * .44, 1.02, .10, .42);
-        tile.rotation.z = side * -.36;
-    }
-    // Door and entrance share the saved anchor's x coordinate; the second
-    // front cell holds a window, never a second activity slot.
-    box('#a37650', 0, .48, 1.351, .48, .95, .045);
-    box('#f5e9c9', 0, .08, 1.43, .60, .12, .12);
-    cylinder(root, paint('#f1ce63'), [.16,.48,1.39], .028, .025).rotation.x = Math.PI / 2;
-    box('#f4e5bf', .91, .69, 1.355, .52, .52, .045);
-    box('#77b9c3', .91, .69, 1.384, .41, .41, .025);
-    box('#f4e5bf', .91, .69, 1.406, .025, .43, .015);
     if (kind === 'library') {
-        for (const side of [-1,1]) { const page = box('#fff1d1', side*.09, 1.01, 1.39, .17,.12,.025); page.rotation.z=side*.12; }
+        // A rounded reading room, with a barrel roof and books visible from outside.
+        const wall = cylinder(root, paint('#f3dfb4'), [.5,.54,.48], .84, 1.08);
+        wall.castShadow = wall.receiveShadow = true;
+        const roofShape = new T.Shape();
+        roofShape.moveTo(-.94,0);
+        roofShape.absellipse(0,0,.94,.61,Math.PI,0,true,0);
+        roofShape.lineTo(-.94,0);
+        const roof = new T.Mesh(new T.ExtrudeGeometry(roofShape, { depth:1.8, bevelEnabled:false, curveSegments:24 }), paint(colors[2]));
+        roof.position.set(.5,1.05,-.42); roof.castShadow = roof.receiveShadow = true; root.add(roof);
+        // Broad curved roof bands, not repeated tiny ornament.
+        for (let band=0; band<3; band++) {
+            const shape = new T.Shape();
+            shape.moveTo(-.955,0);
+            shape.absellipse(0,0,.955,.625,Math.PI,0,true,0);
+            shape.lineTo(-.955,0);
+            const tile = new T.Mesh(new T.ExtrudeGeometry(shape,{depth:.36,bevelEnabled:false,curveSegments:24}),paint(colors[band]));
+            tile.position.set(.5,1.05,-.36+band*.60); tile.castShadow=true; root.add(tile);
+        }
+        box('#496b70',.94,.63,1.19,.60,.69,.12);
+        for (const y of [.31,.64,.98]) box('#b1804c',.94,y,1.28,.68,.055,.22);
+        for (let row=0; row<2; row++) for (let book=0; book<4; book++) {
+            const volume=box(colors[(book+row)%3],.71+book*.15,.48+row*.33,1.29,.105,.24-(book%2)*.045,.13);
+            volume.rotation.z=book===3 ? -.10 : 0;
+        }
+        const sign=buildHeldWork('library',materials); sign.name='life-library-sign'; sign.visible=true;
+        sign.position.set(.02,1.26,1.41); sign.rotation.x=Math.PI/2; sign.scale.setScalar(1.45); root.add(sign);
     } else {
-        box('#a57850', .92,.22,1.41,.55,.06,.10);
-        for (const x of [.80,1.04]) { cylinder(root,paint('#b28352'),[x,.38,1.42],.02,.30); box('#7ba097',x,.55,1.42,.09,.10,.03); }
+        // Open potting shed: low single slope, exposed frame and a working ledge.
+        box('#97b8a0',.5,.48,-.25,1.64,.96,.12);
+        box('#97b8a0',-.29,.48,.48,.12,.96,1.50);
+        for (const x of [-.29,1.29]) for (const z of [-.25,1.23]) box('#a57850',x,.60,z,.11,1.20,.11);
+        for (let row=0;row<4;row++) {
+            const roof=box(colors[row%3],.5,1.29-row*.105,-.18+row*.43,1.92,.095,.46);
+            roof.rotation.x=.24;
+        }
+        box('#567e70',.91,.51,.90,.64,.70,.53);
+        box('#c89962',.91,.89,1.01,.80,.10,.67);
+        for (const x of [.70,1.12]) {
+            cylinder(root,paint('#c9815c'),[x,1.03,1.05],.10,.18);
+            const leaf=new T.Mesh(new T.SphereGeometry(.13,12,8),paint('#72a36e'));
+            leaf.scale.set(.75,1.4,.65); leaf.position.set(x,1.20,1.05); root.add(leaf);
+        }
+        for (const x of [.63,.96]) {
+            box('#b78651',x,.53,1.30,.035,.38,.035);
+            box('#719aa1',x,.30,1.30,.13,.14,.035);
+        }
     }
+    // Both retain the same entrance and saved footprint; walking has one front slot.
+    box('#537777',0,.44,1.20,.48,.86,.045);
+    box('#f5e9c9',0,.08,1.43,.60,.12,.12);
     return root;
 }
 /** Separate held objects; no resident mesh, fabric or proportions are replaced. */

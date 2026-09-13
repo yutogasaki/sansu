@@ -1,0 +1,39 @@
+{
+  "target": "http://127.0.0.1:5250",
+  "scope": "DEV actual onboarding, catalog, tab navigation and close; no purchase or persistence acceptance",
+  "results": [
+    {
+      "name": "phone",
+      "width": 390,
+      "height": 844,
+      "styles": {
+        "border": "0px",
+        "shadow": "none",
+        "background": "rgba(0, 0, 0, 0)"
+      },
+      "pageErrors": []
+    },
+    {
+      "name": "tablet",
+      "width": 768,
+      "height": 1024,
+      "styles": {
+        "border": "0px",
+        "shadow": "none",
+        "background": "rgba(0, 0, 0, 0)"
+      },
+      "pageErrors": []
+    },
+    {
+      "name": "short",
+      "width": 390,
+      "height": 640,
+      "styles": {
+        "border": "0px",
+        "shadow": "none",
+        "background": "rgba(0, 0, 0, 0)"
+      },
+      "pageErrors": []
+    }
+  ]
+}

@@ -26,3 +26,35 @@
 .island-page[data-life-home="true"] .life-menu .life-catalog button > b { font-size:15px; }
 .island-page[data-life-home="true"] .life-menu .life-catalog button > span { font-size:12px; }
 @media(max-height:700px) { .life-product-preview { height:60px; } }
+
+/* One open work surface: objects carry the choice, without nested cards. */
+.island-page[data-life-home="true"] .island-life .life-menu {
+    left:0; right:0; bottom:0; max-width:560px; padding:10px 22px 16px;
+    border:0; border-radius:0; box-shadow:none;
+    background:linear-gradient(to bottom, #fffdf800, var(--pokomoko-paper) 22px);
+    padding-top:24px;
+}
+.island-page[data-life-home="true"] .life-menu .life-menu-tabs button {
+    border:0; border-radius:0; background:transparent; box-shadow:none;
+    font-size:11px; color:var(--pokomoko-muted);
+}
+.island-page[data-life-home="true"] .life-menu .life-menu-tabs button[aria-pressed="true"] {
+    color:var(--pokomoko-blue-deep); box-shadow:inset 0 -2px var(--pokomoko-blue);
+}
+.island-page[data-life-home="true"] .life-menu .life-menu-heading > button {
+    border:0; border-radius:50%; background:transparent; box-shadow:none;
+}
+.island-page[data-life-home="true"] .life-menu .life-catalog button {
+    border:0; border-radius:0; background:transparent; box-shadow:none;
+    padding:0 4px 8px; text-align:center; align-items:center; gap:6px;
+}
+.island-page[data-life-home="true"] .life-menu .life-catalog button > b,
+.island-page[data-life-home="true"] .life-menu .life-catalog button > span { align-self:auto; }
+.life-catalog .life-product-preview {
+    height:140px; border-radius:0; background:transparent; overflow:visible;
+}
+.life-catalog .life-product-story { max-width:17em; min-height:2.8em; }
+.island-page[data-life-home="true"] .life-menu .life-menu-hint {
+    background:transparent; border:0; border-radius:0; padding:4px 0; text-align:center;
+}
+@media(max-height:700px) { .life-catalog .life-product-preview { height:96px; } }
