@@ -1,0 +1,41 @@
+{
+  "candidate": "canopy-bark-study-v2",
+  "evidence": "Standalone geometry diagnostic; not app acceptance",
+  "target": "http://127.0.0.1:5223",
+  "appSourceHash": "74514aaad4483288a65ec4e85e8c576a832fcf64d813fad4e2762c37fea6bfec",
+  "reference": "docs/design/references/2026-09-13-canopy-dots/reference-c3.png",
+  "sourceImages": [
+    "exec-623b79f4-70c2-4179-85e6-a16715096ebf.png",
+    "exec-ddb0134d-15ac-4a7d-aaae-2a9ba2889401.png"
+  ],
+  "files": [
+    {
+      "path": "docs/design/2026-09-14-canopy-materials/bark-albedo-candidate-1.png",
+      "sha256": "8e6c78254f63e4a6cf8dc425d8450a6bd3c5eb2b1afd2ce1940976a6a72474e5"
+    },
+    {
+      "path": "docs/design/2026-09-14-canopy-materials/bark-albedo-candidate-2.png",
+      "sha256": "13baa423e52b7e755bac10458d44d028f88c28e08bdb1d939a8fc22431ad8731"
+    },
+    {
+      "path": "docs/design/2026-09-14-canopy-materials/fixture-state.json",
+      "sha256": "8bd4c7040968540c2741e6b37538fc8aa9bda716a5fb326158e7203a7011d157"
+    },
+    {
+      "path": "docs/design/2026-09-14-canopy-materials/geometry-comparison-1.png",
+      "sha256": "4726eb9bba90d9c77c3c962a2f93584a6a24c82f0d63a0ac333ac50fdd81fd37"
+    },
+    {
+      "path": "docs/design/2026-09-14-canopy-materials/geometry-comparison-2.png",
+      "sha256": "c925e940ba870657bec8e6f89efd3b8f9c756f424cf29e3739f5e9cf30335d47"
+    },
+    {
+      "path": "docs/design/2026-09-14-canopy-materials/geometry-comparison-3.png",
+      "sha256": "96bdc988e03d779122d1bb625cc498c8b62f94a003ad86b29b12f77de6f668d0"
+    },
+    {
+      "path": "tools/preview-island-canopy-material.mjs",
+      "sha256": "62ca00e64d64f051f2337f0226b0be4db16b470398687061daa84f9140825002"
+    }
+  ]
+}
