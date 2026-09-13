@@ -1,3 +1,5 @@
+import { makeSandboxMotion } from './sandboxMotion';
+import type { SandScene } from './sandboxGeometry';
 import { makeWindGaze } from './windGaze';
 import { makePicnicMotion, picnicRole } from './picnicMotion';
 import { makeWaterGaze } from './waterGaze';
@@ -13,19 +15,21 @@ import { makeLifeStateProjection } from './stateProjection';
 
 export type LifeSeat = { seat: T.Mesh; pivot?: T.Group; picnic?: { seats: T.Mesh[]; snacks: T.Group[] } };
 export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, state: LifeState,
-    point: (cell: Cell) => T.Vector3, seats: Map<string, LifeSeat>) {
+    point: (cell: Cell) => T.Vector3, seats: Map<string, LifeSeat>, sandboxes = new Map<string, SandScene>()) {
     const project = makeLifeStateProjection(state);
     let visible = state, renderedAt = state.now, renderedReduced = false;
     const actors = [content.hero, content.rabbit.pose, content.otter.pose];
     const bodies = [content.heroBody, content.rabbit.body, content.otter.body];
     const heads = [makeLifeHeroHead(content.heroBody), content.rabbit.head, content.otter.head];
+    const heroArms = content.heroBody.children.filter(part => Math.abs(part.position.x) === .27 && part.position.y === .46);
+    const sandMotion = makeSandboxMotion(sandboxes, heads, point);
     const gaze = makeRelationGaze(state, heads, point);
     const picnic = makePicnicMotion(state, heads, seats, point);
     const windGaze = makeWindGaze(state, heads, point);
     const waterGaze = makeWaterGaze(state, heads, point);
     const feet = [content.heroFeet, content.rabbit.feet, content.otter.feet];
     const neutralFeet = feet.map(pair => pair.map(foot => foot.position.clone()));
-    let audit: { windLook?: ReturnType<typeof windGaze>; picnic?: ReturnType<typeof picnic.finish>; waterLook?: ReturnType<ReturnType<typeof makeWaterGaze>>; id: string; itemId?: string; phase: string; position: number[]; seatGap?: number; reaction?: string; hop: number; headPitch: number; headRoll: number; headYaw?: number; relation?: ReturnType<ReturnType<typeof makeRelationGaze>> }[] = [];
+    let audit: { sandWork?: { form: 'mountain' | 'castle'; partnerId?: string; progress: number }; windLook?: ReturnType<typeof windGaze>; picnic?: ReturnType<typeof picnic.finish>; waterLook?: ReturnType<ReturnType<typeof makeWaterGaze>>; id: string; itemId?: string; phase: string; position: number[]; seatGap?: number; reaction?: string; hop: number; headPitch: number; headRoll: number; headYaw?: number; relation?: ReturnType<ReturnType<typeof makeRelationGaze>> }[] = [];
     return {
         audit: () => audit,
         snapshot: () => ({ ...(state.tourVersion ? visible : state), now: renderedAt,
@@ -41,7 +45,7 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
             renderedReduced = reduced; picnic.clear();
             visible = project(now); renderedAt = now;
             heads.forEach(head => { head.rotation.order = 'XYZ'; });
-            heads[0].rotation.set(0, 0, 0);
+            heads[0].rotation.set(0, 0, 0); heroArms.forEach(arm => { arm.rotation.x = 0; });
             for (const { pivot } of seats.values()) if (pivot) pivot.rotation.x = 0;
             audit = visible.residents.map((resident, index) => {
                 const actor = actors[index], body = bodies[index], visit = resident.visit;
@@ -86,6 +90,12 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                             position.lerp(target, (item.kind === 'water-bowl' ? .38 : .48) * settling);
                             body.rotation.x = (.18 + (reduced ? 0 : Math.sin((now - walkedAt) / 950) * .045)) * settling;
                             flowerLean = settling;
+                        } else if (item.kind === 'sandbox') {
+                            const facing = Math.atan2(target.x - position.x, target.z - position.z);
+                            actor.rotation.y = reduced ? facing : turnToward(heading, facing, (now - walkedAt) / 900);
+                            position.lerp(target, .30 * settling); body.rotation.x = .4 * settling;
+                            const work = (-.9 + (reduced ? 0 : Math.sin((now - walkedAt) / 550) * .18)) * settling;
+                            (rig?.shoulders ?? heroArms).forEach(arm => { arm.rotation.x = work; });
                         } else if (item.kind === 'sapling') {
                             const shaded = state.landscapeVersion === 'groves-water-v1' && growthStage(item) === 2;
                             const facing = shaded ? 0 : Math.atan2(target.x - position.x, target.z - position.z);
@@ -150,7 +160,9 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                     headPitch: rig?.head.rotation.x ?? 0, headRoll: rig?.head.rotation.z ?? 0 };
             });
             content.world.updateMatrixWorld(true);
+            const sandWork = sandMotion(visible, now, reduced);
             audit.forEach((pose, index) => {
+                pose.sandWork = sandWork.get(pose.id);
                 pose.relation = gaze(visible, now, reduced, index);
                 pose.picnic = picnic.finish(visible, now, index, reduced);
                 if (pose.picnic?.relation) pose.relation = pose.picnic.relation;

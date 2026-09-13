@@ -1,3 +1,4 @@
+import { buildSandbox } from './sandboxGeometry';
 import { buildWindArch } from './windArchGeometry';
 import * as T from 'three';
 import { batch, cylinder, ellipsoid, IslandMaterials } from '../three/primitives';
@@ -8,7 +9,8 @@ export const tint = (style: Style) => style === 'sunshine' ? '#f5bf60' : style =
 
 /** Shared catalog and placed-item model. Growth is always supplied by the caller. */
 export function buildLifeItem(item: LifeItem, materials: IslandMaterials, showSoil = true) {
-    if (item.kind === 'pinwheel' || item.kind === 'flower-arch') return { ...buildWindArch(item.kind, materials, item.style), seat: undefined, pivot: undefined, picnic: undefined };
+    if (item.kind === 'sandbox') return { ...buildSandbox(materials, item.style), seat: undefined, pivot: undefined, picnic: undefined, rotor: undefined };
+    if (item.kind === 'pinwheel' || item.kind === 'flower-arch') return { ...buildWindArch(item.kind, materials, item.style), seat: undefined, pivot: undefined, picnic: undefined, sandbox: undefined };
     const g = new T.Group();
     const result: Partial<LifeSeat> = {};
     const paint = (color: string) => materials.surface(color, .85);
@@ -93,5 +95,5 @@ export function buildLifeItem(item: LifeItem, materials: IslandMaterials, showSo
         ellipsoid(g, materials.surface('#fff2a1', .4, 0, true), [0, .92, 0], [.18, .18, .18]);
         for (const x of [-.13, .13]) box(g, '#dab46a', x, .91, 0, .025, .38, .2);
     }
-    return { root: g, seat: result.seat, pivot: result.pivot, picnic: result.picnic, rotor: undefined };
+    return { root: g, seat: result.seat, pivot: result.pivot, picnic: result.picnic, rotor: undefined, sandbox: undefined };
 }

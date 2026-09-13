@@ -34,7 +34,8 @@ export function gatheringVisible(state: LifeState, rule: RuleEligibility, root: 
     if (!ground || !visible(ground)) return reject('ground');
     const grove = ['GT3', 'GT6'].includes(rule.ruleId);
     const joins = new Map<string, string[]>();
-    const joinSamples = grove ? [0, -.3, .3, -.42, .42, -.54, .54] : [0, -.3, .3, -.42, .42];
+    const sandGroup = state.items.some(i => i.kind === 'sandbox' && rule.participantIds.includes(i.id));
+    const joinSamples = sandGroup ? [0, -.3, .3, -.43, .43, -.53, .53] : grove ? [0, -.3, .3, -.42, .42, -.54, .54] : [0, -.3, .3, -.42, .42];
     const items = rule.participantIds.map(id => state.items.find(item => item.id === id));
     for (const item of items) {
         if (!item?.cell) return reject('item-missing');
@@ -53,7 +54,8 @@ export function gatheringVisible(state: LifeState, rule: RuleEligibility, root: 
         if (water) for (const [x, y] of [[.2, 0], [-.2, 0], [0, .2], [0, -.2], [.14, .14], [-.14, .14]]) samples.push(water.localToWorld(new T.Vector3(x, y, 0)));
         if (!samples.some(sample => hitAt(sample, object))) return reject(`item-occluded:${item.id}`);
         const center = point(item.cell);
-        if (![[.43, .43], [-.43, .43], [.43, -.43], [-.43, -.43], [0, .43], [0, -.43], [.43, 0], [-.43, 0]].some(([x, z]) => hitAt(new T.Vector3(center.x + x, .065, center.z + z), ground))) return reject(`soil-occluded:${item.id}`);
+        const edge = item.kind === 'sandbox' ? .53 : .43;
+        if (![[edge, edge], [-edge, edge], [edge, -edge], [-edge, -edge], [0, edge], [0, -edge], [edge, 0], [-edge, 0]].some(([x, z]) => hitAt(new T.Vector3(center.x + x, .065, center.z + z), ground))) return reject(`soil-occluded:${item.id}`);
         for (const other of items) {
             if (!other?.cell || other.id <= item.id) continue;
             const dx = other.cell.x - item.cell.x, dz = other.cell.z - item.cell.z;

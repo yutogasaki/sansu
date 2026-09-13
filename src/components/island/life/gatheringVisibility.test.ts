@@ -46,4 +46,16 @@ describe('rendered gathering evidence', () => {
         finally { scene.dispose(); }
     });
 
+    it('sees exposed shared ground around a sandbox instead of sampling underneath its rim', () => {
+        const state = world([0, 1, 2].map(x => ({ id: `p${x}`, kind: x === 2 ? 'sandbox' : 'swing', cell: { x: x + 2, z: 2 }, growth: 0, style: 'original' })));
+        const scene = buildLifeScene(state), camera = new T.OrthographicCamera(-4, 4, 4, -4, .1, 100);
+        camera.position.set(4, 8, 11); camera.lookAt(0, .1, 0); camera.updateMatrixWorld(true); scene.animate(0, true); scene.root.updateMatrixWorld(true);
+        const rule = displayedGatherings(state, 'p')[0]; let reason = '';
+        try {
+            expect(gatheringVisible(state, rule, scene.root, camera, scene.point, () => true, r => { reason = r; }), reason).toBe(true);
+            scene.root.getObjectByName('life-district-ground')!.visible = false;
+            expect(gatheringVisible(state, rule, scene.root, camera, scene.point, () => true)).toBe(false);
+        } finally { scene.dispose(); }
+    });
+
 });

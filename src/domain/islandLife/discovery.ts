@@ -26,7 +26,7 @@ function eligibility(profileId: string, ruleId: DiscoveryRuleId, items: LifeItem
 /** Actual usable ground points, including the front-only legacy access contract. */
 export function discoveryAccessPoints(state: LifeState, item: LifeItem): Cell[] {
     if (!item.cell) return [];
-    const directions = item.kind === 'picnic-table' ? [{ x: 0, z: 1 }, { x: 0, z: -1 }] : item.access === 'front' ? [{ x: 0, z: 1 }]
+    const directions = (item.kind === 'picnic-table' || item.kind === 'sandbox') ? [{ x: 0, z: 1 }, { x: 0, z: -1 }] : item.access === 'front' ? [{ x: 0, z: 1 }]
         : [{ x: 0, z: 1 }, { x: 1, z: 0 }, { x: -1, z: 0 }, { x: 0, z: -1 }];
     return directions.map(d => ({ x: item.cell!.x + d.x, z: item.cell!.z + d.z }))
         .filter(point => vacant(state, point) && Boolean(route(state, homeCell, point)));
@@ -52,7 +52,7 @@ export function evaluateDiscovery(state: LifeState, profileId: string): RuleElig
             result.push(eligibility(profileId, 'GF6', group));
         }
     }
-    for (const group of components(state.items.filter(item => item.kind === 'swing'))) {
+    for (const group of components(state.items.filter(item => (item.kind === 'swing' || item.kind === 'sandbox')))) {
         if (group.length >= 2) result.push(eligibility(profileId, 'GP2', group));
         if (group.length >= 3) result.push(eligibility(profileId, 'GP3', group));
     }
@@ -61,7 +61,7 @@ export function evaluateDiscovery(state: LifeState, profileId: string): RuleElig
         if (group.kind === 'trees' && group.wide) result.push(eligibility(profileId, 'GT6', group.items));
     }
     for (const bench of state.items.filter(item => item.kind === 'bench' && item.cell)) {
-        for (const target of state.items.filter(item => item.cell && (item.kind === 'flower' || item.kind === 'swing' || (state.relationVersion === 'water-bench-v1' && item.kind === 'water-bowl')))) {
+        for (const target of state.items.filter(item => item.cell && (item.kind === 'flower' || (item.kind === 'swing' || item.kind === 'sandbox') || (state.relationVersion === 'water-bench-v1' && item.kind === 'water-bowl')))) {
             const distance = relationDistance(state, bench, target);
             if (distance !== undefined && distance <= 4) result.push(eligibility(profileId, target.kind === 'flower' ? 'R1' : target.kind === 'water-bowl' ? 'R4' : 'R3', [bench, target], distance));
         }

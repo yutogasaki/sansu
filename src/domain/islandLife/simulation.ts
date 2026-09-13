@@ -126,7 +126,7 @@ export function arrangeVisits(s: LifeState) {
         if (r.visit || r.playTour) continue;
         const choices = s.items.filter(i => i.cell && i.kind !== 'lantern' && i.kind !== 'pinwheel').flatMap(i => {
             if (i.kind === 'flower-arch' && (r.archCooldownUntil ?? 0) > s.now) return [];
-            const reserved = s.activityVersion === 2 || i.kind === 'picnic-table' || i.kind === 'flower-arch' ? s.residents.filter(other => other !== r && other.visit).map(other => other.visit!.path[other.visit!.path.length - 1]) : [];
+            const reserved = s.activityVersion === 2 || i.kind === 'picnic-table' || i.kind === 'flower-arch' || i.kind === 'sandbox' ? s.residents.filter(other => other !== r && other.visit).map(other => other.visit!.path[other.visit!.path.length - 1]) : [];
             const path = pathToActivity(s, r.cell, i, reserved); if (!path) return [];
             const crowd = s.residents.filter(other => other.visit?.itemId === i.id).length;
             if (crowd >= (isPlantsWater(i.kind) || i.kind === 'flower-arch' || i.kind === 'swing' || s.activityVersion === 2 && i.kind === 'bench' ? 1 : 2)) return [];
@@ -282,8 +282,9 @@ export function replayLife(record: LifeRecord, to = record.now): LifeState {
     if (!readableLifeVersion(record.version)) throw new Error('この島のデータは新しい版で開いてください。');
     const checkpoint = record.economyCheckpoint;
     assertCheckpointBoundary(record); assertTourCutover(record);
-    if (record.actions.some(action => action.landReceipt) && ![5, 6, 7, 8].includes(record.version)) throw new Error('土地の保存版を確認できません。');
-    if (record.actions.some(action => action.command.type === 'buy' && isWindArch(action.command.kind)) && record.version !== 8) throw new Error('風車とアーチの保存版を確認できません。');
+    if (record.actions.some(action => action.command.type === 'buy' && action.command.kind === 'sandbox') && record.version < 9) throw new Error('砂場の保存版を確認できません。');
+    if (record.actions.some(action => action.landReceipt) && ![5, 6, 7, 8, 9].includes(record.version)) throw new Error('土地の保存版を確認できません。');
+    if (record.actions.some(action => action.command.type === 'buy' && isWindArch(action.command.kind)) && record.version < 8) throw new Error('風車とアーチの保存版を確認できません。');
     if (record.actions.some(action => action.command.type === 'buy' && action.command.kind === 'picnic-table') && record.version < 7) throw new Error('テーブルの保存版を確認できません。');
     if (record.actions.some(action => action.command.type === 'buy' && isPlantsWater(action.command.kind)) && record.version < 6) throw new Error('新しい物の保存版を確認できません。');
     if (checkpoint && to < checkpoint.cutoverAt) return replayLife(checkpointLegacyRecord(checkpoint), to);
@@ -330,10 +331,10 @@ export function commandLife(record: LifeRecord, command: LifeCommand, id: string
         if (!inverse || commandFingerprint(inverse) !== commandFingerprint(command)) throw new Error('しまが かわったよ。もういちど えらんでね。');
     }
     const event: LifeAction = { id, at: now, command, ...(undoOf === undefined ? {} : { undoOf }) };
-    if (command.type === 'buy' && (isPlantsWater(command.kind) || command.kind === 'picnic-table' || isWindArch(command.kind)) && !record.tourCutover) throw new Error('島をよみなおしてから えらんでね。');
+    if (command.type === 'buy' && (isPlantsWater(command.kind) || command.kind === 'picnic-table' || isWindArch(command.kind) || command.kind === 'sandbox') && !record.tourCutover) throw new Error('島をよみなおしてから えらんでね。');
     if (command.type === 'buy') event.purchaseReceipt = purchaseReceipt(event);
     const state = replayLife(record, now);
     if (command.type === 'expand' && record.tourCutover) event.landReceipt = landReceipt(state, event);
     applyCommand(state, event);
-    return { ...record, version: record.version === 8 || command.type === 'buy' && isWindArch(command.kind) ? 8 : record.version === 7 || command.type === 'buy' && command.kind === 'picnic-table' ? 7 : record.version === 6 || command.type === 'buy' && isPlantsWater(command.kind) ? 6 : event.landReceipt ? 5 : command.type === 'observe' && record.version === 1 ? 2 : record.version, now, revision: record.revision + 1, actions: [...record.actions, event] };
+    return { ...record, version: record.version === 9 || command.type === 'buy' && command.kind === 'sandbox' ? 9 : record.version === 8 || command.type === 'buy' && isWindArch(command.kind) ? 8 : record.version === 7 || command.type === 'buy' && command.kind === 'picnic-table' ? 7 : record.version === 6 || command.type === 'buy' && isPlantsWater(command.kind) ? 6 : event.landReceipt ? 5 : command.type === 'observe' && record.version === 1 ? 2 : record.version, now, revision: record.revision + 1, actions: [...record.actions, event] };
 }

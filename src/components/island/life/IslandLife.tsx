@@ -32,7 +32,7 @@ import './life-belongings.css';
 import './life-resources.css';
 import './life-world-first.css';
 
-const productStories = { flower: 'めを そだてて おはなに', bench: 'ひとやすみの ばしょ', swing: 'すわって ゆらゆら', lantern: 'あかりの そばに あつまるかな', sapling: '木かげに そだつ なえ', 'water-bowl': '水を のぞく うつわ', 'picnic-table': 'おやつと おしゃべりの ばしょ', pinwheel: 'かぜと くるくる', 'flower-arch': 'おはなの したを くぐろう' };
+const productStories = { flower: 'めを そだてて おはなに', bench: 'ひとやすみの ばしょ', swing: 'すわって ゆらゆら', lantern: 'あかりの そばに あつまるかな', sapling: '木かげに そだつ なえ', 'water-bowl': '水を のぞく うつわ', 'picnic-table': 'おやつと おしゃべりの ばしょ', pinwheel: 'かぜと くるくる', 'flower-arch': 'おはなの したを くぐろう', sandbox: 'すなで おやまや おしろを' };
 const tabOptions = [
     ['build', 'つくる', Sprout],
     ['items', 'もちもの', Archive],
@@ -219,7 +219,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
         if (error) { setMenuOpen(true); setDockOpen(false); return; }
         setDockOpen(true);
     };
-    const products = (Object.keys(CATALOG) as ItemKind[]).filter(kind => !['sapling', 'water-bowl', 'picnic-table', 'pinwheel', 'flower-arch'].includes(kind)
+    const products = (Object.keys(CATALOG) as ItemKind[]).filter(kind => !['sapling', 'water-bowl', 'picnic-table', 'pinwheel', 'flower-arch', 'sandbox'].includes(kind)
         || import.meta.env.DEV && import.meta.env.VITE_ISLAND_LIFE_PREVIEW === 'true');
     const pageCount = Math.max(1, Math.ceil((tab === 'build' ? products.length : state.items.length) / 2));
     const currentPage = Math.min(page, pageCount - 1);

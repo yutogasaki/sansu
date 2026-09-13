@@ -1,0 +1,132 @@
+{
+  "startHash": "19dbfd0da4766238e97027fa2e39664e6ec44d97a1bf05f563b2ad7c9792a6cd",
+  "revision": "4ba1468cbe80c7430725d0905c2bc732e1ea3c3b",
+  "target": "http://127.0.0.1:5223",
+  "flags": "DEV VITE_ISLAND_LIFE_PREVIEW=true",
+  "candidate": "life-v3-sandbox-v1",
+  "fixture": "50 QA credits; real UI purchases and visits; no earned acquisition claim",
+  "humanN": 0,
+  "cases": [
+    {
+      "device": "phone",
+      "delivered": {
+        "candidate": "island-life-economy-checkpoint-v3",
+        "world": "canopy-dots-c3-v1"
+      },
+      "eventId": "d244c3be-2f00-4981-aa57-4dabcd71b17a",
+      "playPoses": [
+        {
+          "id": "pokomoko",
+          "itemId": "a555d4c1-66f1-4670-999c-d8c600c7e036",
+          "phase": "sandbox",
+          "position": [
+            1.5,
+            0.04,
+            0.7
+          ],
+          "hop": 0,
+          "headPitch": 0.025464378966055908,
+          "headRoll": 0,
+          "sandWork": {
+            "form": "mountain",
+            "progress": 1
+          },
+          "headYaw": -6.165786088181667e-16
+        },
+        {
+          "id": "rabbit",
+          "itemId": "7d5a10cb-9766-4648-9f65-204b72a2d6dc",
+          "phase": "walking",
+          "position": [
+            1.3281611035937502,
+            0.04,
+            1
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "otter",
+          "itemId": "d443319b-6d76-417a-ab8a-481705bfcf46",
+          "phase": "swing",
+          "position": [
+            -0.5,
+            0.3465660069040402,
+            -0.1927815940861215
+          ],
+          "seatGap": 2.7755575615628914e-17,
+          "reaction": "♪",
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        }
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "device": "tablet",
+      "delivered": {
+        "candidate": "island-life-economy-checkpoint-v3",
+        "world": "canopy-dots-c3-v1"
+      },
+      "eventId": "091475a6-fe67-4eb2-92cf-09111a23c90a",
+      "playPoses": [
+        {
+          "id": "pokomoko",
+          "itemId": "51c13f9c-90ca-43d4-b111-8f481f52e01d",
+          "phase": "sandbox",
+          "position": [
+            1.5,
+            0.04,
+            0.7
+          ],
+          "hop": 0,
+          "headPitch": 0.025464378966055908,
+          "headRoll": 0,
+          "sandWork": {
+            "form": "mountain",
+            "progress": 1
+          },
+          "headYaw": -6.165786088181667e-16
+        },
+        {
+          "id": "rabbit",
+          "itemId": "ac56dd86-0b27-4530-8644-d3df41993c34",
+          "phase": "walking",
+          "position": [
+            0.5,
+            0.23161868605874344,
+            0.2796289997791602
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "otter",
+          "itemId": "69961a2f-d1dc-48ec-8d36-9108c8e38a81",
+          "phase": "swing",
+          "position": [
+            -0.5,
+            0.33000000000000007,
+            0
+          ],
+          "seatGap": 0,
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        }
+      ],
+      "pass": true,
+      "errors": []
+    }
+  ],
+  "pass": true,
+  "endHash": "19dbfd0da4766238e97027fa2e39664e6ec44d97a1bf05f563b2ad7c9792a6cd"
+}

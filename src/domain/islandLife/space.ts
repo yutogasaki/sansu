@@ -50,7 +50,7 @@ export function pathToActivity(s: LifeState, from: Cell, item: LifeItem, reserve
         }
         return paths.sort((a, b) => a.length - b.length)[0];
     }
-    const approaches = item.kind === 'picnic-table' ? [{ x: 0, z: 1 }, { x: 0, z: -1 }] : item.access === 'front' ? [{ x: 0, z: 1 }]
+    const approaches = (item.kind === 'picnic-table' || item.kind === 'sandbox') ? [{ x: 0, z: 1 }, { x: 0, z: -1 }] : item.access === 'front' ? [{ x: 0, z: 1 }]
         : [{ x: 0, z: 1 }, { x: 1, z: 0 }, { x: -1, z: 0 }, { x: 0, z: -1 }];
     return approaches
         .map(d => route(s, from, { x: item.cell!.x + d.x, z: item.cell!.z + d.z }))
@@ -65,7 +65,7 @@ export function usablePlacement(s: LifeState, itemId: string, p: Cell) {
 export function districts(s: LifeState): District[] {
     const found: District[] = [];
     for (const kind of ['flower', 'swing'] as const) {
-        const items = s.items.filter(i => i.cell && i.kind === kind && growthStage(i) === 2);
+        const items = s.items.filter(i => i.cell && (i.kind === kind || kind === 'swing' && i.kind === 'sandbox') && growthStage(i) === 2);
         const remaining = new Set(items.map(i => i.id));
         while (remaining.size) {
             const group = [items.find(i => i.id === remaining.values().next().value)!]; remaining.delete(group[0].id);

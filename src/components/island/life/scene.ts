@@ -1,3 +1,4 @@
+import type { SandScene } from './sandboxGeometry';
 import { buildCanopyScenery } from './canopyScenery';
 import { makeLifeMotion, type LifeSeat } from './residentMotion';
 import * as T from 'three';
@@ -51,6 +52,7 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
         tree.position.set(2.5 - center + 1.25, -.01, -3.05);
         tree.scale.setScalar(.63); root.add(tree);
     }
+    const sandboxes = new Map<string, SandScene>();
     const seats = new Map<string, LifeSeat>(), rotors: T.Group[] = [];
     for (const item of [...state.items, ...(placement?.item.cell ? [placement.item] : [])]) {
         if (!item.cell) continue;
@@ -59,6 +61,7 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
         g.name = preview ? 'life-placement-ghost' : `life-item-${item.id}`;
         const model = buildLifeItem(item, content.m, !bedIds.has(item.id) || preview);
         g.add(model.root);
+        if (model.sandbox && !preview) sandboxes.set(item.id, model.sandbox);
         if (model.rotor && !preview) rotors.push(model.rotor);
         if (!preview && model.seat) seats.set(item.id, { seat: model.seat, pivot: model.pivot, picnic: model.picnic });
         if (preview) {
@@ -86,7 +89,7 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
     scarf.name = 'life-scarf';
     scarf.rotation.x = Math.PI / 2; scarf.position.y = .59; content.hero.add(scarf);
     actors.forEach((a, i) => { a.name = `life-resident-${state.residents[i].id}`; a.scale.setScalar(i ? .60 : .76); root.add(a); });
-    const motion = makeLifeMotion(content, state, point, seats);
+    const motion = makeLifeMotion(content, state, point, seats, sandboxes);
     return { root, clickables, width: max - min + 1, depth: Math.max(...cells.map(c => c.z)) + 1, point,
         animate: (at: number, reduced: boolean, decorationAt = at) => { const frozen = state.scenePose === 'captured-v1';
             rotors.forEach(rotor => { rotor.rotation.z = (frozen && state.poseReducedMotion !== undefined ? state.poseReducedMotion : reduced) ? .2 : (frozen ? state.now : decorationAt) / 2300 % (Math.PI * 2); });

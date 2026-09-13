@@ -103,9 +103,10 @@ export function buildLandscape(state: LifeState, width: number, point: (c: Cell)
     };
     for (const district of districts(state)) {
         const cells = new Set(district.cells.map(cellKey));
+        const hasSand = district.ids.some(id => state.items.some(i => i.id === id && i.kind === 'sandbox'));
         const soil = district.kind === 'flowers' ? '#b8a077' : '#cbd09a';
         for (const c of district.cells) {
-            const p = point(c); plot(p.x, p.z, .94, .94, soil);
+            const p = point(c); plot(p.x, p.z, hasSand ? 1.12 : .94, hasSand ? 1.12 : .94, soil);
             // Join only cardinal neighbors. A hole in an L-shaped garden remains grass.
             for (const [dx, dz] of [[1, 0], [0, 1]]) if (cells.has(cellKey({ x: c.x + dx, z: c.z + dz }))) plot(p.x + dx * .5, p.z + dz * .5, dx ? .12 : .94, dz ? .12 : .94, soil);
             if (district.kind === 'flowers') for (const [dx, dz] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {

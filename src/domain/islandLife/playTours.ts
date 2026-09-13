@@ -45,9 +45,14 @@ export function planPlayTourDepartures(state: LifeState, requested: readonly Pen
         const ordered = [...ids.slice(after + 1), ...ids.slice(0, after)].filter(id => !visited.has(id));
         return ordered.flatMap(id => {
             const item = state.items.find(i => i.id === id && i.cell)!;
-            if (outside.some(r => r.visit?.itemId === id)) return [];
-            const path = pathToActivity(state, residents[index].cell, item, reserved);
-            return path ? [{ itemId: id, path }] : [];
+            const capacity = item.kind === 'sandbox' ? 2 : 1;
+            if (outside.filter(r => r.visit?.itemId === id).length >= capacity) return [];
+            const paths: Cell[][] = [], taken = [...reserved];
+            for (let role = 0; role < capacity; role++) {
+                const path = pathToActivity(state, residents[index].cell, item, taken); if (!path) break;
+                paths.push(path); taken.push(endpoint(path));
+            }
+            return paths.map(path => ({ itemId: id, path }));
         });
     });
     type Choice = (typeof options)[number][number] | undefined;
@@ -62,7 +67,11 @@ export function planPlayTourDepartures(state: LifeState, requested: readonly Pen
             return;
         }
         for (const option of [...options[chosen.length], undefined]) {
-            if (option && chosen.some(other => other && (other.itemId === option.itemId || sameCell(endpoint(other.path), endpoint(option.path))))) continue;
+            if (option) {
+                const capacity = state.items.find(i => i.id === option.itemId)?.kind === 'sandbox' ? 2 : 1;
+                const crowd = outside.filter(r => r.visit?.itemId === option.itemId).length + chosen.filter(other => other?.itemId === option.itemId).length;
+                if (crowd >= capacity || chosen.some(other => other && sameCell(endpoint(other.path), endpoint(option.path)))) continue;
+            }
             search([...chosen, option]);
         }
     };
