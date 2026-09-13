@@ -216,3 +216,11 @@ core PASS（371 files /3783 tests、docs/lint/typecheck/build/assets）。[実UI
 - [実画面と比較資料](../../design/2026-09-13-island-groves-water/README.md)。最終core375 files /3801 tests PASS、固定sourceのphone/tabletで実liveGT6/GW2、実収納GT3、undo、再読込、記録/学習正本不変、学習入力復帰PASS。source `cf3573fdf297a74023880823338750ef7945bf0d1edfe2b2cd39ee45dcd18c9e`。
 - 初回はasync waitForFunctionのPromise早期終了をローカルPlaywright pollerから診断し共有waitForAsyncへ修正。2回目は葉で隠れた冗長な内部境界を必須とする可視判定を、実可視の接続で全木をたどれる判定へ修正。3回目は診断中source変更を検知し除外、固定4回目だけを最終証拠とする。
 - 視覚HOLD（矩形の陰・単純な苗木の葉・C3の光と奥行きに未達）、無文字理解Human N=0、DEV runtime対象範囲PASSを別判定。次はR4水鉢/ベンチとR2用机を含む残り6品、魔法/出会い。C3品質、全PWA/offline/update/throughput/全smoke/実機性能は全体受入の残件。
+
+
+## R4 水鉢とベンチ
+
+- `water-bench-v1` に4歩以内・距離優先/同距離R1→R4→R3と現物対象選択を接続。3人の既存頭だけを水面へ向け、座面/造形を維持。旧snapshotは版なしとしてR4を候補に追加しない。
+- [実画面と証拠](../../design/2026-09-13-island-water-bench/README.md)。core376 files /3808 tests PASS。最終固定source `a335336f2a7a840e14d9ef2f1fc0bb3b712038abf21ea532bd48c1a769b9f695` の両幅で覆い中の記録抑止、live記録/再演/本人保存、水鉢の実移動で同一住民・同一席の近い/遠い/復元、学習正本/残高保持、学習入力復帰PASS。
+- 初回再演入口のR1/R3限定を実画面で発見・修正。2回目の両幅を最終証拠とする。最終入口とハーネスlint、修正後build/typecheck PASS。C3視覚HOLD、Human N=0、対象runtime PASSを分ける。
+- 次はピクニックテーブルとR2。仕様の1人おやつ/2人会話、成木1本、成熟陰側の体向き、2役予約を一緒に扱う。2×2施設/通行可能アーチと残りの魔法・出会い、全体受入は未完。

@@ -27,7 +27,7 @@ export function makeRelationGaze(state: LifeState, heads: T.Group[], point: (cel
         const other = relation.ruleId === 'R3' ? visible.residents.findIndex(other => other.id !== resident.id
             && other.visit?.itemId === target.id && now < other.visit.end && activityPhase(state, other, now) === 'swing') : -1;
         const focus = other >= 0 ? heads[other].getWorldPosition(new T.Vector3())
-            : point(target.cell).add(new T.Vector3(0, target.kind === 'flower' ? [ .16, .32, .49 ][growthStage(target)] : .7, 0));
+            : point(target.cell).add(new T.Vector3(0, target.kind === 'flower' ? [ .16, .32, .49 ][growthStage(target)] : target.kind === 'water-bowl' ? .23 : .7, 0));
         const head = heads[index];
         const local = head.parent!.worldToLocal(focus.clone()).sub(head.position);
         const settledAt = visit.start + (visit.path.length - 1) * LIFE_STEP_MS + 900;

@@ -1,0 +1,748 @@
+{
+  "startHash": "a335336f2a7a840e14d9ef2f1fc0bb3b712038abf21ea532bd48c1a769b9f695",
+  "revision": "5c06315ba9ee8dbc1fbf40b77d8cdd2654559881",
+  "flags": "VITE_ISLAND_ENABLED=true; VITE_ISLAND_LIFE_PREVIEW=true; DEV",
+  "cache": "fresh browser context; DEV; no production SW claim",
+  "target": "http://127.0.0.1:5223",
+  "candidate": "island-life-economy-checkpoint-v3",
+  "source": "explicit DEV two-item ownership fixture; no earned acquisition claim",
+  "humanN": 0,
+  "scenarios": [
+    {
+      "name": "phone-water-bowl",
+      "pass": true,
+      "delivered": {
+        "candidate": "island-life-economy-checkpoint-v3",
+        "world": "canopy-dots-c3-v1"
+      },
+      "cameraTurns": 0,
+      "event": {
+        "event": {
+          "eventId": "54bf2916-4366-443a-a4a0-9855c5afb136",
+          "profileId": "cb273b6f-8732-4d56-9e64-44e555cfdb74",
+          "ruleId": "R4",
+          "ruleVersion": "discovery-v3.0-rc1",
+          "semanticSignature": "[\"[\\\"cb273b6f-8732-4d56-9e64-44e555cfdb74\\\",\\\"discovery-v3.0-rc1\\\",\\\"R4\\\",[[\\\"qa-bench\\\",\\\"bench\\\",0,2,null,\\\"front\\\"],[\\\"qa-target\\\",\\\"water-bowl\\\",2,2,null,\\\"adjacent\\\"]]]\",[[\"pokomoko\",\"qa-bench\",\"using\"]]]",
+          "createdAt": 1789281956210,
+          "source": "live",
+          "focalResidentIds": [
+            "pokomoko"
+          ],
+          "snapshot": {
+            "contentVersion": 1,
+            "scene": {
+              "now": 1789281953109.7,
+              "activityVersion": 2,
+              "tourVersion": 1,
+              "roamRound": 0,
+              "scenePose": "captured-v1",
+              "poseReducedMotion": false,
+              "relationVersion": "water-bench-v1",
+              "landscapeVersion": "groves-water-v1",
+              "worldStyle": "canopy-dots-c3-v1",
+              "items": [
+                {
+                  "id": "qa-bench",
+                  "kind": "bench",
+                  "cell": {
+                    "x": 0,
+                    "z": 2
+                  },
+                  "growth": 0,
+                  "style": "original",
+                  "paidDrops": 4,
+                  "access": "front"
+                },
+                {
+                  "id": "qa-target",
+                  "kind": "water-bowl",
+                  "cell": {
+                    "x": 2,
+                    "z": 2
+                  },
+                  "growth": 0,
+                  "style": "original",
+                  "paidDrops": 4
+                }
+              ],
+              "residents": [
+                {
+                  "id": "pokomoko",
+                  "cell": {
+                    "x": 2,
+                    "z": 1
+                  },
+                  "enjoyed": 0,
+                  "enjoyedBy": {},
+                  "visit": {
+                    "itemId": "qa-bench",
+                    "path": [
+                      {
+                        "x": 2,
+                        "z": 1
+                      },
+                      {
+                        "x": 1,
+                        "z": 1
+                      },
+                      {
+                        "x": 1,
+                        "z": 2
+                      },
+                      {
+                        "x": 1,
+                        "z": 3
+                      },
+                      {
+                        "x": 0,
+                        "z": 3
+                      }
+                    ],
+                    "from": {
+                      "x": 2,
+                      "z": 1
+                    },
+                    "start": 1789281942223,
+                    "end": 1789283742223
+                  },
+                  "discovery": {
+                    "itemId": "qa-bench",
+                    "at": 1789281942223,
+                    "mood": "notice"
+                  }
+                },
+                {
+                  "id": "rabbit",
+                  "cell": {
+                    "x": 3,
+                    "z": 1
+                  },
+                  "enjoyed": 0,
+                  "enjoyedBy": {},
+                  "visit": {
+                    "itemId": "qa-target",
+                    "path": [
+                      {
+                        "x": 3,
+                        "z": 1
+                      },
+                      {
+                        "x": 3,
+                        "z": 2
+                      }
+                    ],
+                    "from": {
+                      "x": 3,
+                      "z": 1
+                    },
+                    "start": 1789281942223,
+                    "end": 1789283742223
+                  },
+                  "discovery": {
+                    "itemId": "qa-target",
+                    "at": 1789281942223,
+                    "mood": "notice"
+                  }
+                },
+                {
+                  "id": "otter",
+                  "cell": {
+                    "x": 2,
+                    "z": 4
+                  },
+                  "enjoyed": 0,
+                  "enjoyedBy": {},
+                  "visit": {
+                    "itemId": "roam:display:otter:1",
+                    "from": {
+                      "x": 2,
+                      "z": 4
+                    },
+                    "path": [
+                      {
+                        "x": 2,
+                        "z": 4
+                      },
+                      {
+                        "x": 3,
+                        "z": 4
+                      },
+                      {
+                        "x": 4,
+                        "z": 4
+                      },
+                      {
+                        "x": 5,
+                        "z": 4
+                      },
+                      {
+                        "x": 5,
+                        "z": 3
+                      },
+                      {
+                        "x": 5,
+                        "z": 2
+                      },
+                      {
+                        "x": 5,
+                        "z": 1
+                      },
+                      {
+                        "x": 5,
+                        "z": 0
+                      }
+                    ],
+                    "start": 1789281947623,
+                    "end": 1789281957823
+                  },
+                  "discovery": {
+                    "itemId": "qa-target",
+                    "at": 1789281942223,
+                    "mood": "notice"
+                  }
+                }
+              ],
+              "heroStyle": "original",
+              "target": "qa-bench"
+            },
+            "immutableHash": "2d4a874f363c4d77b09e3e4197a926456f53ebce69e888ad7165f547f7997c73"
+          }
+        },
+        "evidence": {
+          "eventId": "54bf2916-4366-443a-a4a0-9855c5afb136",
+          "firstVisibleAt": 1789281956485,
+          "visibleDurationMs": 1054.7999999523163,
+          "coreShown": true,
+          "presentationKind": "live"
+        }
+      },
+      "near": [
+        {
+          "id": "pokomoko",
+          "itemId": "qa-bench",
+          "phase": "bench",
+          "position": [
+            -2.5,
+            0.34199999999999997,
+            0
+          ],
+          "seatGap": 5.551115123125783e-17,
+          "hop": 0,
+          "headPitch": 0.25811111638316186,
+          "headRoll": 0,
+          "relation": {
+            "ruleId": "R4",
+            "targetId": "qa-target",
+            "focus": [
+              -0.5,
+              0.27,
+              0
+            ],
+            "ready": true
+          },
+          "headYaw": 1.5707963267948966
+        },
+        {
+          "id": "rabbit",
+          "itemId": "qa-target",
+          "phase": "water-bowl",
+          "position": [
+            0.12,
+            0.04,
+            0
+          ],
+          "hop": 0,
+          "headPitch": 0.09,
+          "headRoll": -0.011504844085792982,
+          "headYaw": 0
+        },
+        {
+          "id": "otter",
+          "itemId": "roam:display:otter:3",
+          "phase": "walking",
+          "position": [
+            1.5,
+            0.04,
+            1.999503449860212
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        }
+      ],
+      "far": [
+        {
+          "id": "pokomoko",
+          "itemId": "qa-bench",
+          "phase": "bench",
+          "position": [
+            -2.5,
+            0.34199999999999997,
+            0
+          ],
+          "seatGap": 5.551115123125783e-17,
+          "reaction": "♪",
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "rabbit",
+          "itemId": "qa-target",
+          "phase": "walking",
+          "position": [
+            1.3026692976022483,
+            0.04,
+            0
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "otter",
+          "itemId": "roam:display:otter:0",
+          "phase": "walking",
+          "position": [
+            2.3026692976022485,
+            0.04,
+            -1
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        }
+      ],
+      "restored": [
+        {
+          "id": "pokomoko",
+          "itemId": "qa-bench",
+          "phase": "bench",
+          "position": [
+            -2.5,
+            0.34199999999999997,
+            0
+          ],
+          "seatGap": 5.551115123125783e-17,
+          "reaction": "♪",
+          "hop": 0,
+          "headPitch": 0.25811111638316186,
+          "headRoll": 0,
+          "relation": {
+            "ruleId": "R4",
+            "targetId": "qa-target",
+            "focus": [
+              -0.5,
+              0.27,
+              0
+            ],
+            "ready": true
+          },
+          "headYaw": 1.5707963267948966
+        },
+        {
+          "id": "rabbit",
+          "itemId": "qa-target",
+          "phase": "walking",
+          "position": [
+            0.22536357281887742,
+            0.04,
+            2
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "otter",
+          "itemId": "roam:display:otter:0",
+          "phase": "walking",
+          "position": [
+            0.9974248754208483,
+            0.04,
+            0
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "tablet-water-bowl",
+      "pass": true,
+      "delivered": {
+        "candidate": "island-life-economy-checkpoint-v3",
+        "world": "canopy-dots-c3-v1"
+      },
+      "cameraTurns": 0,
+      "event": {
+        "event": {
+          "eventId": "409a6278-2461-4a65-9d98-07323750d411",
+          "profileId": "e51cffea-1d5f-4ed1-a32b-ac9143ed32fd",
+          "ruleId": "R4",
+          "ruleVersion": "discovery-v3.0-rc1",
+          "semanticSignature": "[\"[\\\"e51cffea-1d5f-4ed1-a32b-ac9143ed32fd\\\",\\\"discovery-v3.0-rc1\\\",\\\"R4\\\",[[\\\"qa-bench\\\",\\\"bench\\\",0,2,null,\\\"front\\\"],[\\\"qa-target\\\",\\\"water-bowl\\\",2,2,null,\\\"adjacent\\\"]]]\",[[\"pokomoko\",\"qa-bench\",\"using\"]]]",
+          "createdAt": 1789282058825,
+          "source": "live",
+          "focalResidentIds": [
+            "pokomoko"
+          ],
+          "snapshot": {
+            "contentVersion": 1,
+            "scene": {
+              "now": 1789282056978,
+              "activityVersion": 2,
+              "tourVersion": 1,
+              "roamRound": 0,
+              "scenePose": "captured-v1",
+              "poseReducedMotion": true,
+              "relationVersion": "water-bench-v1",
+              "landscapeVersion": "groves-water-v1",
+              "worldStyle": "canopy-dots-c3-v1",
+              "items": [
+                {
+                  "id": "qa-bench",
+                  "kind": "bench",
+                  "cell": {
+                    "x": 0,
+                    "z": 2
+                  },
+                  "growth": 0,
+                  "style": "original",
+                  "paidDrops": 4,
+                  "access": "front"
+                },
+                {
+                  "id": "qa-target",
+                  "kind": "water-bowl",
+                  "cell": {
+                    "x": 2,
+                    "z": 2
+                  },
+                  "growth": 0,
+                  "style": "original",
+                  "paidDrops": 4
+                }
+              ],
+              "residents": [
+                {
+                  "id": "pokomoko",
+                  "cell": {
+                    "x": 2,
+                    "z": 1
+                  },
+                  "enjoyed": 0,
+                  "enjoyedBy": {},
+                  "visit": {
+                    "itemId": "qa-bench",
+                    "path": [
+                      {
+                        "x": 2,
+                        "z": 1
+                      },
+                      {
+                        "x": 1,
+                        "z": 1
+                      },
+                      {
+                        "x": 1,
+                        "z": 2
+                      },
+                      {
+                        "x": 1,
+                        "z": 3
+                      },
+                      {
+                        "x": 0,
+                        "z": 3
+                      }
+                    ],
+                    "from": {
+                      "x": 2,
+                      "z": 1
+                    },
+                    "start": 1789282048732,
+                    "end": 1789283848732
+                  },
+                  "discovery": {
+                    "itemId": "qa-bench",
+                    "at": 1789282048732,
+                    "mood": "notice"
+                  }
+                },
+                {
+                  "id": "rabbit",
+                  "cell": {
+                    "x": 3,
+                    "z": 1
+                  },
+                  "enjoyed": 0,
+                  "enjoyedBy": {},
+                  "visit": {
+                    "itemId": "qa-target",
+                    "path": [
+                      {
+                        "x": 3,
+                        "z": 1
+                      },
+                      {
+                        "x": 3,
+                        "z": 2
+                      }
+                    ],
+                    "from": {
+                      "x": 3,
+                      "z": 1
+                    },
+                    "start": 1789282048732,
+                    "end": 1789283848732
+                  },
+                  "discovery": {
+                    "itemId": "qa-target",
+                    "at": 1789282048732,
+                    "mood": "notice"
+                  }
+                },
+                {
+                  "id": "otter",
+                  "cell": {
+                    "x": 2,
+                    "z": 4
+                  },
+                  "enjoyed": 0,
+                  "enjoyedBy": {},
+                  "visit": {
+                    "itemId": "roam:display:otter:1",
+                    "from": {
+                      "x": 2,
+                      "z": 4
+                    },
+                    "path": [
+                      {
+                        "x": 2,
+                        "z": 4
+                      },
+                      {
+                        "x": 3,
+                        "z": 4
+                      },
+                      {
+                        "x": 4,
+                        "z": 4
+                      },
+                      {
+                        "x": 5,
+                        "z": 4
+                      },
+                      {
+                        "x": 5,
+                        "z": 3
+                      },
+                      {
+                        "x": 5,
+                        "z": 2
+                      },
+                      {
+                        "x": 5,
+                        "z": 1
+                      },
+                      {
+                        "x": 5,
+                        "z": 0
+                      }
+                    ],
+                    "start": 1789282054132,
+                    "end": 1789282064332
+                  },
+                  "discovery": {
+                    "itemId": "qa-target",
+                    "at": 1789282048732,
+                    "mood": "notice"
+                  }
+                }
+              ],
+              "heroStyle": "original",
+              "target": "qa-bench"
+            },
+            "immutableHash": "c17a870b8c2e211b32c520761f68e8c841b693421a23cd09f02719c23e04e9ad"
+          }
+        },
+        "evidence": {
+          "eventId": "409a6278-2461-4a65-9d98-07323750d411",
+          "firstVisibleAt": 1789282058950,
+          "visibleDurationMs": 1103.5,
+          "coreShown": true,
+          "presentationKind": "live"
+        }
+      },
+      "near": [
+        {
+          "id": "pokomoko",
+          "itemId": "qa-bench",
+          "phase": "bench",
+          "position": [
+            -2.5,
+            0.34199999999999997,
+            0
+          ],
+          "seatGap": 5.551115123125783e-17,
+          "hop": 0,
+          "headPitch": 0.25811111638316186,
+          "headRoll": 0,
+          "relation": {
+            "ruleId": "R4",
+            "targetId": "qa-target",
+            "focus": [
+              -0.5,
+              0.27,
+              0
+            ],
+            "ready": true
+          },
+          "headYaw": 1.5707963267948966
+        },
+        {
+          "id": "rabbit",
+          "itemId": "qa-target",
+          "phase": "water-bowl",
+          "position": [
+            0.12,
+            0.04,
+            0
+          ],
+          "hop": 0,
+          "headPitch": 0.09,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "otter",
+          "itemId": "roam:display:otter:1",
+          "phase": "walking",
+          "position": [
+            2.5,
+            0.04,
+            0.16133016179664583
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        }
+      ],
+      "far": [
+        {
+          "id": "pokomoko",
+          "itemId": "qa-bench",
+          "phase": "bench",
+          "position": [
+            -2.5,
+            0.34199999999999997,
+            0
+          ],
+          "seatGap": 5.551115123125783e-17,
+          "reaction": "♪",
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "rabbit",
+          "itemId": "qa-target",
+          "phase": "walking",
+          "position": [
+            1.3427485651998174,
+            0.04,
+            0
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "otter",
+          "itemId": "roam:display:otter:0",
+          "phase": "walking",
+          "position": [
+            2.3427485651998174,
+            0.04,
+            -1
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        }
+      ],
+      "restored": [
+        {
+          "id": "pokomoko",
+          "itemId": "qa-bench",
+          "phase": "bench",
+          "position": [
+            -2.5,
+            0.34199999999999997,
+            0
+          ],
+          "seatGap": 5.551115123125783e-17,
+          "reaction": "♪",
+          "hop": 0,
+          "headPitch": 0.25811111638316186,
+          "headRoll": 0,
+          "relation": {
+            "ruleId": "R4",
+            "targetId": "qa-target",
+            "focus": [
+              -0.5,
+              0.27,
+              0
+            ],
+            "ready": true
+          },
+          "headYaw": 1.5707963267948966
+        },
+        {
+          "id": "rabbit",
+          "itemId": "qa-target",
+          "phase": "walking",
+          "position": [
+            0.6683697777777777,
+            0.04,
+            2
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "otter",
+          "itemId": "roam:display:otter:0",
+          "phase": "walking",
+          "position": [
+            1.440032,
+            0.04,
+            0
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "pass": true,
+  "endHash": "a335336f2a7a840e14d9ef2f1fc0bb3b712038abf21ea532bd48c1a769b9f695"
+}

@@ -133,7 +133,7 @@ export default function RelationObservationView(props: Props) {
             for (let object = hit?.object; object; object = object.parent ?? undefined) {
                 if (!object.name.startsWith('life-item-')) continue;
                 const id = object.name.slice('life-item-'.length), item = source.items.find(item => item.id === id);
-                if (item?.cell && (item.kind === 'flower' || item.kind === 'swing')) latest.current.target(id);
+                if (item?.cell && (item.kind === 'flower' || item.kind === 'swing' || (source.relationVersion === 'water-bench-v1' && item.kind === 'water-bowl'))) latest.current.target(id);
                 break;
             }
         };

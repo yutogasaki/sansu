@@ -22,7 +22,7 @@ const browser = await chromium.launch();
 try {
     for (const [device, viewport] of [['phone', { width: 390, height: 844 }], ['tablet', { width: 768, height: 1024 }]]) {
         if (process.env.SANSU_RELATION_DEVICE && process.env.SANSU_RELATION_DEVICE !== device) continue;
-        for (const kind of ['flower', 'swing']) {
+        for (const kind of (process.env.SANSU_RELATION_KIND ? [process.env.SANSU_RELATION_KIND] : ['flower', 'swing'])) {
             const name = `${device}-${kind}`;
             const context = await browser.newContext({ viewport, hasTouch: true, reducedMotion: device === 'tablet' ? 'reduce' : 'no-preference' });
             const page = await context.newPage(); page.setDefaultTimeout(20000);
@@ -36,6 +36,11 @@ try {
                     if (lifeDb.name !== 'SansuIslandLifePreviewV1') throw new Error('DEV preview required');
                     const at = Date.now(); let record = newLife(profileId, at);
                     record.credits = Array.from({ length: 6 }, (_, i) => ({ id: `qa-credit-${i}`, at, day: learningDay(at) }));
+                    if (kind === 'water-bowl') {
+                        const { prepareEconomyMigration } = await import('/src/domain/islandLife/economyMigration.ts');
+                        const { prepareTourMigration } = await import('/src/domain/islandLife/tourMigration.ts');
+                        record = await prepareTourMigration(await prepareEconomyMigration(record, []));
+                    }
                     record = commandLife(record, { type: 'buy', kind: 'bench', cell: { x: 0, z: 2 } }, 'qa-bench', at);
                     record = commandLife(record, { type: 'buy', kind, cell: { x: 2, z: 2 } }, 'qa-target', at);
                     record = commandLife(record, { type: 'visit', itemId: 'qa-bench' }, 'qa-visit', at);
@@ -56,7 +61,7 @@ try {
                             && (relation ? pose.relation?.ready && pose.relation.ruleId === relation : !pose.relation && pose.headYaw === 0));
                     }, { relation }, { timeout: 30000 });
                 };
-                const rule = kind === 'flower' ? 'R1' : 'R3';
+                const rule = kind === 'flower' ? 'R1' : kind === 'water-bowl' ? 'R4' : 'R3';
                 await ready(rule);
                 const read = () => page.evaluate(async profileId => {
                     const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); return await lifeDb.worlds.get(profileId);
@@ -83,6 +88,7 @@ try {
                 assert(entry.event.focalResidentIds.length >= 1);
                 assert.deepEqual((await read()).actions, coveredRecord.actions);
                 assert.deepEqual((await read()).credits, coveredRecord.credits);
+                const delivered = await page.locator('.island-life').evaluate(n => ({ candidate: n.dataset.lifeCandidate, world: n.querySelector('.life-world').dataset.lifeWorldStyle }));
                 const near = await poses(), native = await readNative(page, profileId);
                 await page.screenshot({ path: `${out}/${name}-near.png` });
                 const move = async (x, z) => {
@@ -109,7 +115,7 @@ try {
                 await page.getByRole('button', { name: 'のこすのを やめる', exact: true }).waitFor();
                 await page.screenshot({ path: `${out}/${name}-memory.png` });
                 await page.getByRole('button', { name: 'おもいでを とじる', exact: true }).click();
-                await move(5, kind === 'flower' ? 4 : 3); await ready(null);
+                await move(5, kind === 'swing' ? 3 : 4); await ready(null);
                 const far = await poses();
                 const atFar = (await read()).discoveryJournal;
                 await page.waitForTimeout(1600); assert.deepEqual((await read()).discoveryJournal, atFar); await page.screenshot({ path: `${out}/${name}-far.png` });
@@ -127,13 +133,13 @@ try {
                     const { replayLife } = await import('/src/domain/islandLife/simulation.ts');
                     const record = await lifeDb.worlds.get(profileId); return { state: replayLife(record), journal: record.discoveryJournal };
                 }, profileId);
-                assert.equal(saved.state.items.length, 2); assert.equal(saved.state.drops, kind === 'flower' ? 6 : 2);
+                assert.equal(saved.state.items.length, 2); assert.equal(saved.state.drops, kind === 'flower' ? 6 : kind === 'water-bowl' ? 4 : 2);
                 assert(saved.journal?.entries.some(entry => entry.event.ruleId === rule && entry.event.source === 'live' && entry.evidence.visibleDurationMs >= 1000));
                 await page.getByRole('navigation', { name: 'メインメニュー' }).getByRole('button', { name: 'まなぶ', exact: true }).click();
-                await page.locator('.island-learning[data-input-ready="true"]').waitFor();
+                await page.locator('.park-answer').waitFor();
                 await page.screenshot({ path: `${out}/${name}-learning.png` });
                 assert.equal(errors.length, 0, errors.join('\n'));
-                report.scenarios.push({ name, pass: true, cameraTurns, event: entry, near, far, restored, errors });
+                report.scenarios.push({ name, pass: true, delivered, cameraTurns, event: entry, near, far, restored, errors });
             } catch (error) { await page.screenshot({ path: `${out}/${name}-failure.png` }); report.scenarios.push({ name, pass: false, error: error.stack, errors }); throw error; }
             finally { await context.close(); }
         }

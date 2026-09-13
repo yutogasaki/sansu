@@ -39,6 +39,18 @@ describe('same-seat R1/R3 gaze', () => {
             expect(pose.seatGap).toBeLessThan(1e-8);
         } finally { normal.dispose(); }
     });
+    it.each<ResidentId>(['pokomoko', 'rabbit', 'otter'])('turns %s toward the water surface with unchanged seat contact', who => {
+        const state = fixture(who); state.items[1].kind = 'water-bowl'; state.relationVersion = 'water-bench-v1';
+        const scene = buildLifeScene(state);
+        try {
+            scene.animate(2000, true); const pose = scene.audit().find(p => p.id === who)!;
+            expect(pose.relation).toMatchObject({ ruleId: 'R4', targetId: 'target', ready: true });
+            expect(pose.relation!.focus[1]).toBeCloseTo(.27, 8); expect(pose.seatGap).toBeLessThan(1e-8);
+            scene.root.updateMatrixWorld(true);
+            const head = scene.root.getObjectByName(`life-resident-${who}`)!.getObjectByName(who === 'pokomoko' ? 'life-hero-head' : 'resident-head')!;
+            expect(head.getWorldDirection(new Vector3()).dot(new Vector3(...pose.relation!.focus).sub(head.getWorldPosition(new Vector3())).normalize())).toBeGreaterThan(.99);
+        } finally { scene.dispose(); }
+    });
     it('looks at the actual swing occupant after arrival and at the toy while it is empty', () => {
         const state = fixture('pokomoko', true);
         state.residents[1].visit = { itemId: 'target', from: { x: 2, z: 3 }, path: [{ x: 2, z: 3 }], start: 0, end: 20000 };
