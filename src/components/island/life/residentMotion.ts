@@ -1,3 +1,4 @@
+import { makeWindGaze } from './windGaze';
 import { makePicnicMotion, picnicRole } from './picnicMotion';
 import { makeWaterGaze } from './waterGaze';
 import * as T from 'three';
@@ -20,10 +21,11 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
     const heads = [makeLifeHeroHead(content.heroBody), content.rabbit.head, content.otter.head];
     const gaze = makeRelationGaze(state, heads, point);
     const picnic = makePicnicMotion(state, heads, seats, point);
+    const windGaze = makeWindGaze(state, heads, point);
     const waterGaze = makeWaterGaze(state, heads, point);
     const feet = [content.heroFeet, content.rabbit.feet, content.otter.feet];
     const neutralFeet = feet.map(pair => pair.map(foot => foot.position.clone()));
-    let audit: { picnic?: ReturnType<typeof picnic.finish>; waterLook?: ReturnType<ReturnType<typeof makeWaterGaze>>; id: string; itemId?: string; phase: string; position: number[]; seatGap?: number; reaction?: string; hop: number; headPitch: number; headRoll: number; headYaw?: number; relation?: ReturnType<ReturnType<typeof makeRelationGaze>> }[] = [];
+    let audit: { windLook?: ReturnType<typeof windGaze>; picnic?: ReturnType<typeof picnic.finish>; waterLook?: ReturnType<ReturnType<typeof makeWaterGaze>>; id: string; itemId?: string; phase: string; position: number[]; seatGap?: number; reaction?: string; hop: number; headPitch: number; headRoll: number; headYaw?: number; relation?: ReturnType<ReturnType<typeof makeRelationGaze>> }[] = [];
     return {
         audit: () => audit,
         snapshot: () => ({ ...(state.tourVersion ? visible : state), now: renderedAt,
@@ -153,6 +155,7 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                 pose.picnic = picnic.finish(visible, now, index, reduced);
                 if (pose.picnic?.relation) pose.relation = pose.picnic.relation;
                 pose.waterLook = waterGaze(visible, now, reduced, index);
+                pose.windLook = windGaze(now, reduced, index, pose.phase);
                 pose.headYaw = heads[index].rotation.y;
                 pose.headPitch = heads[index].rotation.x;
             });

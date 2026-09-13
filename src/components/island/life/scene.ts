@@ -51,7 +51,7 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
         tree.position.set(2.5 - center + 1.25, -.01, -3.05);
         tree.scale.setScalar(.63); root.add(tree);
     }
-    const seats = new Map<string, LifeSeat>();
+    const seats = new Map<string, LifeSeat>(), rotors: T.Group[] = [];
     for (const item of [...state.items, ...(placement?.item.cell ? [placement.item] : [])]) {
         if (!item.cell) continue;
         const preview = item === placement?.item;
@@ -59,6 +59,7 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
         g.name = preview ? 'life-placement-ghost' : `life-item-${item.id}`;
         const model = buildLifeItem(item, content.m, !bedIds.has(item.id) || preview);
         g.add(model.root);
+        if (model.rotor && !preview) rotors.push(model.rotor);
         if (!preview && model.seat) seats.set(item.id, { seat: model.seat, pivot: model.pivot, picnic: model.picnic });
         if (preview) {
             g.traverse(o => {
@@ -87,7 +88,9 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
     actors.forEach((a, i) => { a.name = `life-resident-${state.residents[i].id}`; a.scale.setScalar(i ? .60 : .76); root.add(a); });
     const motion = makeLifeMotion(content, state, point, seats);
     return { root, clickables, width: max - min + 1, depth: Math.max(...cells.map(c => c.z)) + 1, point,
-        animate: (at: number, reduced: boolean, decorationAt = at) => { landscape.animate(decorationAt, reduced); motion.animate(at, reduced, decorationAt); }, audit: motion.audit, snapshot: motion.snapshot,
+        animate: (at: number, reduced: boolean, decorationAt = at) => { const frozen = state.scenePose === 'captured-v1';
+            rotors.forEach(rotor => { rotor.rotation.z = (frozen && state.poseReducedMotion !== undefined ? state.poseReducedMotion : reduced) ? .2 : (frozen ? state.now : decorationAt) / 2300 % (Math.PI * 2); });
+            landscape.animate(decorationAt, reduced); motion.animate(at, reduced, decorationAt); }, audit: motion.audit, snapshot: motion.snapshot,
         dispose() {
             // Plane overlays use separate transparent materials; shared paints are owned by content.m.
             clickables.forEach(o => ((o as T.Mesh).material as T.Material).dispose());

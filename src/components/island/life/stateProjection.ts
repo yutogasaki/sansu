@@ -14,7 +14,7 @@ export function makeLifeStateProjection(source: LifeState) {
             // A fresh identity also invalidates the legacy roaming presentation
             // cache when a real visit has completed or its reservation changed.
             base = structuredClone(base); advanceLifeState(base, Math.max(base.now, now));
-            boundary = Math.min(...base.residents.flatMap(r => r.visit ? [r.visit.end, ...(r.playTour ? [base.now + r.playTour.remainingMs] : [])] : []));
+            boundary = Math.min(...base.residents.flatMap(r => [...(r.visit ? [r.visit.end, ...(r.playTour ? [base.now + r.playTour.remainingMs] : [])] : []), ...((r.archCooldownUntil ?? 0) > base.now ? [r.archCooldownUntil!] : [])]));
         }
         const touring = base.residents.some(r => r.playTour);
         const visible = touring ? base : sampleLifeRoaming(base, now);

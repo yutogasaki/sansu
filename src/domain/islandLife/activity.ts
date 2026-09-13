@@ -62,6 +62,7 @@ export function activityLabel(state: LifeState, resident: LifeResident, now: num
         : phase === 'swing' ? 'ブランコで ゆらゆら' : phase === 'bench' ? 'すわって ひとやすみ'
         : phase === 'sapling' ? '木の そばで ひとやすみ' : phase === 'water-bowl' ? '水を そっと のぞいている'
         : phase === 'picnic-table' ? 'テーブルで ひとやすみ'
+        : phase === 'flower-arch' ? 'アーチを くぐったよ'
         : phase === 'roaming' ? 'しまを のんびり さんぽ'
         : phase === 'waiting' ? 'あくのを まっている' : 'おうちの そば';
 }

@@ -6,8 +6,8 @@ import { effectiveGrowthHours, issueFiniteLight, GROWTH_WINDOW_MS } from './econ
 import { placementUndo } from './placementUndo';
 import { observationVisit } from './observationVisit';
 import { plantThresholds, readableLifeVersion, CATALOG, HOUR, LIFE_RULES, LIFE_STEP_MS, ROAM_VISIT_PREFIX, isRoamVisit, vigor, type LifeAction, type LifeCommand, type LifeRecord, type LifeState, type LifeResident, type Cell } from './model';
-import { cellKey, districts, homeCell, isHouse, landCells, route, sameCell, usablePlacement, pathToActivity } from './space';
-import { isPlantsWater, commandFingerprint, paidDrops, purchaseReceipt, removalRefund } from './purchases';
+import { blocksWalking, cellKey, districts, homeCell, isHouse, landCells, route, sameCell, usablePlacement, pathToActivity } from './space';
+import { isWindArch, isPlantsWater, commandFingerprint, paidDrops, purchaseReceipt, removalRefund } from './purchases';
 
 function initial(now: number): LifeState {
     return { now, activityVersion: 1, drops: 0, light: 0, items: [], styles: ['original'], heroStyle: 'original', days: {},
@@ -124,11 +124,12 @@ export function arrangeVisits(s: LifeState) {
     for (const r of order) {
         if (r.visit && !isRoamVisit(r.visit) && !s.items.some(i => i.id === r.visit!.itemId && i.cell)) { r.visit = undefined; r.cell = { ...homeCell }; }
         if (r.visit || r.playTour) continue;
-        const choices = s.items.filter(i => i.cell && i.kind !== 'lantern').flatMap(i => {
-            const reserved = s.activityVersion === 2 || i.kind === 'picnic-table' ? s.residents.filter(other => other !== r && other.visit).map(other => other.visit!.path[other.visit!.path.length - 1]) : [];
+        const choices = s.items.filter(i => i.cell && i.kind !== 'lantern' && i.kind !== 'pinwheel').flatMap(i => {
+            if (i.kind === 'flower-arch' && (r.archCooldownUntil ?? 0) > s.now) return [];
+            const reserved = s.activityVersion === 2 || i.kind === 'picnic-table' || i.kind === 'flower-arch' ? s.residents.filter(other => other !== r && other.visit).map(other => other.visit!.path[other.visit!.path.length - 1]) : [];
             const path = pathToActivity(s, r.cell, i, reserved); if (!path) return [];
             const crowd = s.residents.filter(other => other.visit?.itemId === i.id).length;
-            if (crowd >= (isPlantsWater(i.kind) || i.kind === 'swing' || s.activityVersion === 2 && i.kind === 'bench' ? 1 : 2)) return [];
+            if (crowd >= (isPlantsWater(i.kind) || i.kind === 'flower-arch' || i.kind === 'swing' || s.activityVersion === 2 && i.kind === 'bench' ? 1 : 2)) return [];
             const like = r.id === 'rabbit' ? i.kind === 'flower' : r.id === 'otter' ? i.kind === 'swing' : i.kind === 'bench';
             const lamp = s.items.some(l => l.kind === 'lantern' && l.cell && Math.abs(l.cell.x - i.cell!.x) + Math.abs(l.cell.z - i.cell!.z) <= 2);
             if (s.activityVersion === 1) return [{ item: i, path, weight: 2 + (like ? 5 : 0) + (i.id === s.target ? r.id === 'pokomoko' ? 100 : 3 : 0) + (lamp ? 2 : 0) - path.length * .08 }];
@@ -146,7 +147,7 @@ export function arrangeVisits(s: LifeState) {
         if (r.id === 'pokomoko' && s.target && !requested) continue;
         const chosen = requested ? requested
             : choices.find(c => (dice -= c.weight) <= 0) ?? choices[0];
-        r.visit = { itemId: chosen.item.id, path: chosen.path, from: { ...r.cell }, start: s.now, end: s.now + LIFE_RULES.activityMs };
+        r.visit = { itemId: chosen.item.id, path: chosen.path, from: { ...r.cell }, start: s.now, end: s.now + (chosen.item.kind === 'flower-arch' ? (chosen.path.length - 1) * LIFE_STEP_MS + 400 : LIFE_RULES.activityMs) };
         const members = s.tourVersion && !requested ? playTourMembers(s, chosen.item.id) : undefined;
         if (members) {
             r.playTour = { memberIds: members, lastItemId: chosen.item.id, remainingMs: LIFE_RULES.activityMs };
@@ -169,6 +170,7 @@ export function advanceLifeState(s: LifeState, to: number) {
     while (s.now < to) {
         let next = to;
         if (s.lastAchievement !== undefined) for (const boundary of [24, 72].map(h => s.lastAchievement! + h * HOUR)) if (boundary > s.now) next = Math.min(next, boundary);
+        for (const r of s.residents) if ((r.archCooldownUntil ?? 0) > s.now) next = Math.min(next, r.archCooldownUntil!);
         for (const r of s.residents) if (r.visit) {
             next = Math.min(next, r.visit.end);
             if (r.playTour) next = Math.min(next, s.now + r.playTour.remainingMs);
@@ -186,6 +188,11 @@ export function advanceLifeState(s: LifeState, to: number) {
         for (const r of s.residents) if (r.visit && r.visit.end <= next) {
             const visit = r.visit, kind = s.items.find(i => i.id === visit.itemId)?.kind;
             r.cell = visit.path[visit.path.length - 1]; r.visit = undefined;
+            if (kind === 'flower-arch') {
+                r.archCooldownUntil = s.now + LIFE_RULES.activityMs;
+                if (r.id === 'pokomoko' && s.target === visit.itemId) s.target = undefined;
+                continue;
+            }
             if (isRoamVisit(visit) || visit.observationTest) continue;
             if (!r.playTour) awardUse(s, r, kind);
         }
@@ -235,7 +242,8 @@ export function applyCommand(s: LifeState, event: LifeAction) {
                     start: s.now, end: s.now + plan.duration, observationTest: true };
             }
         } else if (c.type === 'visit') {
-            if (!item.cell || item.kind === 'lantern' || !pathToActivity(s, homeCell, item)) fail('ここでは あそべないよ。');
+            if (!item.cell || (item.kind === 'lantern' || item.kind === 'pinwheel') || !pathToActivity(s, homeCell, item)) fail('ここでは あそべないよ。');
+            if (item.kind === 'flower-arch') s.residents[0].archCooldownUntil = undefined;
             const changed = s.target !== item.id;
             s.target = item.id;
             const hero = s.residents[0];
@@ -261,7 +269,7 @@ export function applyCommand(s: LifeState, event: LifeAction) {
     }
     // Edits must also invalidate paths planned before a new obstacle was bought.
     for (const r of s.residents) {
-        const occupied = (p: typeof r.cell) => s.items.some(i => i.cell && sameCell(i.cell, p));
+        const occupied = (p: typeof r.cell) => s.items.some(i => blocksWalking(i) && sameCell(i.cell!, p));
         if (r.visit && r.visit.path.some(occupied)) {
             r.cell = residentCell(r, s.now);
             r.visit = undefined; r.playTour = undefined;
@@ -274,8 +282,9 @@ export function replayLife(record: LifeRecord, to = record.now): LifeState {
     if (!readableLifeVersion(record.version)) throw new Error('この島のデータは新しい版で開いてください。');
     const checkpoint = record.economyCheckpoint;
     assertCheckpointBoundary(record); assertTourCutover(record);
-    if (record.actions.some(action => action.landReceipt) && ![5, 6, 7].includes(record.version)) throw new Error('土地の保存版を確認できません。');
-    if (record.actions.some(action => action.command.type === 'buy' && action.command.kind === 'picnic-table') && record.version !== 7) throw new Error('テーブルの保存版を確認できません。');
+    if (record.actions.some(action => action.landReceipt) && ![5, 6, 7, 8].includes(record.version)) throw new Error('土地の保存版を確認できません。');
+    if (record.actions.some(action => action.command.type === 'buy' && isWindArch(action.command.kind)) && record.version !== 8) throw new Error('風車とアーチの保存版を確認できません。');
+    if (record.actions.some(action => action.command.type === 'buy' && action.command.kind === 'picnic-table') && record.version < 7) throw new Error('テーブルの保存版を確認できません。');
     if (record.actions.some(action => action.command.type === 'buy' && isPlantsWater(action.command.kind)) && record.version < 6) throw new Error('新しい物の保存版を確認できません。');
     if (checkpoint && to < checkpoint.cutoverAt) return replayLife(checkpointLegacyRecord(checkpoint), to);
     const s = checkpoint ? structuredClone(checkpoint.state) : initial(record.createdAt);
@@ -321,10 +330,10 @@ export function commandLife(record: LifeRecord, command: LifeCommand, id: string
         if (!inverse || commandFingerprint(inverse) !== commandFingerprint(command)) throw new Error('しまが かわったよ。もういちど えらんでね。');
     }
     const event: LifeAction = { id, at: now, command, ...(undoOf === undefined ? {} : { undoOf }) };
-    if (command.type === 'buy' && (isPlantsWater(command.kind) || command.kind === 'picnic-table') && !record.tourCutover) throw new Error('島をよみなおしてから えらんでね。');
+    if (command.type === 'buy' && (isPlantsWater(command.kind) || command.kind === 'picnic-table' || isWindArch(command.kind)) && !record.tourCutover) throw new Error('島をよみなおしてから えらんでね。');
     if (command.type === 'buy') event.purchaseReceipt = purchaseReceipt(event);
     const state = replayLife(record, now);
     if (command.type === 'expand' && record.tourCutover) event.landReceipt = landReceipt(state, event);
     applyCommand(state, event);
-    return { ...record, version: record.version === 7 || command.type === 'buy' && command.kind === 'picnic-table' ? 7 : record.version === 6 || command.type === 'buy' && isPlantsWater(command.kind) ? 6 : event.landReceipt ? 5 : command.type === 'observe' && record.version === 1 ? 2 : record.version, now, revision: record.revision + 1, actions: [...record.actions, event] };
+    return { ...record, version: record.version === 8 || command.type === 'buy' && isWindArch(command.kind) ? 8 : record.version === 7 || command.type === 'buy' && command.kind === 'picnic-table' ? 7 : record.version === 6 || command.type === 'buy' && isPlantsWater(command.kind) ? 6 : event.landReceipt ? 5 : command.type === 'observe' && record.version === 1 ? 2 : record.version, now, revision: record.revision + 1, actions: [...record.actions, event] };
 }
