@@ -6,6 +6,9 @@ const requested = import.meta.env.VITE_CANOPY_SHORE_STUDY;
 export const canopyShoreStudy: ShoreStudy | undefined = canopyMaterialStudy
     && (requested === 'lagoon' || requested === 'tidal' || requested === 'shelf') ? requested : undefined;
 
+/** ExtrudeGeometry is rotated -PI/2 around X: source Y becomes negative world Z. */
+export const coastWorldOutline = (points: readonly T.Vector2[]) => points.map(p => new T.Vector2(p.x, -p.y));
+
 /** A world-space distance field from the same polygon used to extrude the coast.
  * Keep per-pixel GPU work constant, independent of the number of coastline segments. */
 export function coastDistanceField(points: readonly T.Vector2[], offsetZ: number, size = 128) {

@@ -1,0 +1,3 @@
+# Root and bank relief study — before code
+TRANSFER: C3's continuous ground-to-water bank, broad irregular earthen planes, roots spreading out from the existing trunk into the rear ground, locally cool depth behind warm timber. DO NOT TRANSFER: generated characters, fixed reference layout, new interactive paths, dense detail, particles or blanket purple.
+Static intent: the existing inhabited clearing is supported by land and a tree rooted in it. Compare smooth bank / buttressed roots / terraced bank at actual phone/tablet crops. Preserve the existing upper grass geometry, all walk/placement cells, residents and learning/save/PWA behavior. Only the decorative bank below/outside the grass and rear roots may change. DEV study, no production or human acceptance.

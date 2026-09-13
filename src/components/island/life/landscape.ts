@@ -7,7 +7,7 @@ import type { Cell, LifeState } from '../../../domain/islandLife/model';
 import { createIslandGrassSurface } from '../three/grassSurface';
 import { cellKey, districts, isHouse } from '../../../domain/islandLife/space';
 import { plantGatherings } from '../../../domain/islandLife/discovery';
-import { canopyShoreStudy, makeCanopyShoreStudy } from './canopyShoreStudy';
+import { canopyShoreStudy, coastWorldOutline, makeCanopyShoreStudy } from './canopyShoreStudy';
 import { canopyGroundVariant, makeCanopyGroundStudy } from './canopyGroundStudy';
 
 /** The playable rectangle stays level. Irregularity belongs outside its cells. */
@@ -73,8 +73,8 @@ export function buildLandscape(state: LifeState, width: number, point: (c: Cell)
         }`,
     });
     const shoreStudy = canopy && canopyShoreStudy ? makeCanopyShoreStudy(water,
-        coastShape(width + 1.95, 6.65 + addedDepth + apron).getPoints(), (addedDepth - apron) / 2, canopyShoreStudy) : undefined;
-    if (shoreStudy) root.userData.visualCandidate = `canopy-shore-${canopyShoreStudy}-study-v2`;
+        coastWorldOutline(coastShape(width + 1.95, 6.65 + addedDepth + apron).getPoints()), (addedDepth - apron) / 2, canopyShoreStudy) : undefined;
+    if (shoreStudy) root.userData.visualCandidate = `canopy-shore-${canopyShoreStudy}-study-v3`;
     const sea = new T.Mesh(new T.PlaneGeometry(120, 120), water); sea.rotation.x = -Math.PI / 2; sea.position.y = -.46; sea.name = 'life-sea'; root.add(sea);
 
     const edge = new T.Group(); edge.name = 'life-coast-plants'; root.add(edge);

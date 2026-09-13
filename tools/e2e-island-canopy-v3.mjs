@@ -43,7 +43,7 @@ try {
             assert.equal(await page.locator('.life-world').getAttribute('data-life-visual-candidate'), candidate);
             if ((candidate.startsWith('canopy-ground-') || candidate.startsWith('canopy-shore-'))) await page.locator('.life-world[data-life-ground-material-status="ready"]').waitFor();
             const delivery = await page.evaluate(() => ({ builds: [...document.querySelectorAll('[data-build-revision]')].map(n => ({...n.dataset})), world: {...document.querySelector('.life-world').dataset}, shellBackground: getComputedStyle(document.querySelector('.island-life')).backgroundColor }));
-            if (candidate === 'canopy-shore-lagoon-study-v2') assert.equal(delivery.shellBackground, 'rgb(32, 134, 181)');
+            if (candidate === 'canopy-shore-lagoon-study-v3') assert.equal(delivery.shellBackground, 'rgb(32, 134, 181)');
             const native = await readNative(page, profileId);
             const read = () => page.evaluate(async profileId => { const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); return lifeDb.worlds.get(profileId); }, profileId);
             const before = await read();

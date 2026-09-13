@@ -1,6 +1,6 @@
 import { expect, it } from 'vitest';
 import * as T from 'three';
-import { coastDistanceField } from './canopyShoreStudy';
+import { coastDistanceField, coastWorldOutline } from './canopyShoreStudy';
 
 function sample(field: ReturnType<typeof coastDistanceField>, x: number, z: number) {
     const { width, height, data } = field.texture.image;
@@ -27,4 +27,14 @@ it('keeps an inlet outside land instead of filling the polygon bounding rectangl
         expect(Math.abs(sample(field, 0, 1) - 1)).toBeLessThan(.1);
         expect(sample(field, 2, 1)).toBe(0);
     } finally { field.texture.dispose(); }
+});
+
+it('uses the same depth direction as the rendered extrusion, not its mirrored outline', () => {
+    const points = [new T.Vector2(-2, -1), new T.Vector2(3, -2), new T.Vector2(1, 4)];
+    const world = coastWorldOutline(points);
+    points.forEach((p, i) => {
+        const rotated = new T.Vector3(p.x, p.y, 0).applyAxisAngle(new T.Vector3(1, 0, 0), -Math.PI / 2);
+        expect(world[i].x).toBe(rotated.x);
+        expect(world[i].y).toBeCloseTo(rotated.z, 10);
+    });
 });

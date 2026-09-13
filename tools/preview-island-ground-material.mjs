@@ -9,7 +9,7 @@ const record = JSON.parse(await readFile('docs/design/2026-09-14-island-world-sh
 async function hash() { const h=createHash('sha256'); for(const path of [...new Set(execFileSync('git',['ls-files','-co','--exclude-standard','src','public','package.json','package-lock.json','vite.config.ts'],{encoding:'utf8'}).trim().split('\n'))].sort()) h.update(path).update('\0').update(await readFile(path)).update('\0'); return h.digest('hex'); }
 const shore=process.env.SANSU_SHORE_VARIANT;
 assert(!shore || ['lagoon','tidal','shelf'].includes(shore));
-const candidate=shore?`canopy-shore-${shore}-study-v2`:`canopy-ground-${variant}-study-v1`;
+const candidate=shore?`canopy-shore-${shore}-study-v3`:`canopy-ground-${variant}-study-v1`;
 const failImage=process.env.SANSU_GROUND_FAIL_IMAGE==='1';
 const report={fault:failImage?'explicit texture network failure':'none',target:base,variant,shore,candidate,flags:'DEV Island/Life preview; bark study=true; ground study='+variant+'; shore study='+(shore??'off'),fixture:'Explicit same saved QA record, original resident assignments and logical time; realAt anchored at launch. No acquisition or human evidence.',startHash:await hash(),cases:[],pass:false};
 report.atlasSha256=createHash('sha256').update(await readFile('docs/design/2026-09-14-canopy-ground/material-atlas.png')).digest('hex');

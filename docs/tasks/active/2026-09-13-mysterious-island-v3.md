@@ -379,3 +379,9 @@ cd0c951のLife有効productionと3781179の固定production buildで、実初回
 ## 実海岸に沿う浅瀬のDEV試作
 
 独立した丸角長方形の浅瀬を、実際の砂海岸polygonから作る距離textureへ変更。3案を両幅で比較し、中間幅のlagoonを次の試作に選択。下部操作面の色の段差も候補v2で修正。core408/3948、旧memory保持/現在観察/全体/学習復帰は両幅PASS。[証拠と範囲](../../design/2026-09-14-canopy-shore/README.md)。視覚34/60・Human N=0でHOLD、production既定は変更なし。根元/岸の立体的接続と元の全仕様残件は継続。
+
+## 根/岸の造形不採用と海岸座標修正
+
+滑らかな岸/追加根/段差の3造形は実画面で人工的な板・独立した帯に見え、全案不採用。アプリコードから外して[再現patchと比較](../../design/2026-09-14-canopy-relief-rejected/README.md)を保存。次は一体meshによる接続を試す。
+
+浅瀬の参照輪郭が実地形の-PI/2回転に伴う奥行き反転を欠いていたため、座標変換を修正。非対称形で実回転を照合するtestを追加し、候補v3でcore408/3949・両幅導線PASS。[修正と範囲](../../design/2026-09-14-canopy-shore-transform/README.md)。視覚34/60 HOLD・Human N=0、本番既定は変更なし。既存の全仕様残件を継続。
