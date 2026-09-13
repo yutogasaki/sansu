@@ -11,10 +11,12 @@ async function sourceHash() {
     const files = [...new Set(execFileSync('git', ['ls-files', '-co', '--exclude-standard', 'src', 'public', 'package.json', 'package-lock.json', 'vite.config.ts'], { encoding: 'utf8' }).trim().split('\n'))].sort();
     const hash = createHash('sha256'); for (const file of files) hash.update(file).update('\0').update(await readFile(file)).update('\0'); return hash.digest('hex');
 }
+const sculpt = candidate.startsWith('canopy-sculpt-') ? candidate.split('-')[2] : undefined;
 const report = { startHash: await sourceHash(), revision: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), target: base,
-    candidate, flags: `DEV VITE_ISLAND_LIFE_PREVIEW=true; material study ${candidate === 'canopy-bark-runtime-study-v1' || (candidate.startsWith('canopy-ground-') || candidate.startsWith('canopy-shore-'))}; ground variant ${candidate.startsWith('canopy-shore-') ? 'turf' : candidate.startsWith('canopy-ground-') ? candidate.split('-')[2] : 'off'}; shore variant ${candidate.startsWith('canopy-shore-') ? candidate.split('-')[2] : 'off'}`, cache: 'fresh DEV context; no production SW claim',
+    candidate, flags: `DEV VITE_ISLAND_LIFE_PREVIEW=true; material study ${candidate === 'canopy-bark-runtime-study-v1' || (candidate.startsWith('canopy-ground-') || (candidate.startsWith('canopy-shore-') || Boolean(sculpt)))}; ground variant ${(candidate.startsWith('canopy-shore-') || Boolean(sculpt)) ? 'turf' : candidate.startsWith('canopy-ground-') ? candidate.split('-')[2] : 'off'}; shore variant ${(candidate.startsWith('canopy-shore-') || Boolean(sculpt)) ? (sculpt ? 'lagoon' : candidate.split('-')[2]) : 'off'}; sculpt ${sculpt ?? 'off'}`, cache: 'fresh DEV context; no production SW claim',
     fixture: 'three connected flowers and an explicitly simulated old-world saved memory; no earned acquisition or historical user activity claim', humanN: 0, cases: [], pass: false };
-if ((candidate.startsWith('canopy-ground-') || candidate.startsWith('canopy-shore-'))) report.groundAtlasSha256 = createHash('sha256').update(await readFile('docs/design/2026-09-14-canopy-ground/material-atlas.png')).digest('hex');
+if ((candidate.startsWith('canopy-ground-') || (candidate.startsWith('canopy-shore-') || Boolean(sculpt)))) report.groundAtlasSha256 = createHash('sha256').update(await readFile('docs/design/2026-09-14-canopy-ground/material-atlas.png')).digest('hex');
+if (sculpt) report.sculptMeshSha256 = createHash('sha256').update(await readFile(`docs/design/2026-09-14-canopy-sculpt/meshes/${sculpt}.json`)).digest('hex');
 const browser = await chromium.launch();
 try {
     for (const [device, viewport] of [['phone', { width: 390, height: 844 }], ['tablet', { width: 768, height: 1024 }]]) {
@@ -41,9 +43,10 @@ try {
             }, profileId);
             await page.reload(); await page.locator('.life-world[data-life-world-style="canopy-dots-c3-v1"][data-rendered="true"]').waitFor();
             assert.equal(await page.locator('.life-world').getAttribute('data-life-visual-candidate'), candidate);
-            if ((candidate.startsWith('canopy-ground-') || candidate.startsWith('canopy-shore-'))) await page.locator('.life-world[data-life-ground-material-status="ready"]').waitFor();
+            if ((candidate.startsWith('canopy-ground-') || (candidate.startsWith('canopy-shore-') || Boolean(sculpt)))) await page.locator('.life-world[data-life-ground-material-status="ready"]').waitFor();
+            if (sculpt) await page.locator('.life-world[data-life-sculpt-status="ready"]').waitFor();
             const delivery = await page.evaluate(() => ({ builds: [...document.querySelectorAll('[data-build-revision]')].map(n => ({...n.dataset})), world: {...document.querySelector('.life-world').dataset}, shellBackground: getComputedStyle(document.querySelector('.island-life')).backgroundColor }));
-            if (candidate === 'canopy-shore-lagoon-study-v3') assert.equal(delivery.shellBackground, 'rgb(32, 134, 181)');
+            if (candidate === 'canopy-shore-lagoon-study-v3' || sculpt) assert.equal(delivery.shellBackground, 'rgb(32, 134, 181)');
             const native = await readNative(page, profileId);
             const read = () => page.evaluate(async profileId => { const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); return lifeDb.worlds.get(profileId); }, profileId);
             const before = await read();
@@ -56,6 +59,7 @@ try {
             await page.screenshot({ path: `${out}/${device}-old-memory.png` });
             await page.getByRole('button', { name: 'いまの島でみる', exact: true }).click();
             await page.locator('.life-relation-view[data-life-world-style="canopy-dots-c3-v1"][data-rendered="true"]').waitFor();
+            if (sculpt) await page.locator('.life-relation-view[data-life-sculpt-status="ready"]').waitFor();
             await page.screenshot({ path: `${out}/${device}-current-observation.png` });
             await page.reload(); await page.locator('.life-world[data-life-world-style="canopy-dots-c3-v1"][data-rendered="true"]').waitFor();
             await page.locator('.life-camera-tools summary').click(); await page.getByRole('button', { name: 'しま全体を みる', exact: true }).click(); await page.locator('.life-camera-tools summary').click();

@@ -1,0 +1,32 @@
+
+ RUN  v2.1.9 /private/tmp/sansu-canopy-material-worktree
+
+ ❯ src/components/island/life/canopySculptStudy.test.ts (4 tests | 1 failed) 256ms
+   × loads three closed, connected meshes and preserves the traced foreground volume 254ms
+     → expected 2 to be 1 // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/island/life/canopySculptStudy.test.ts > loads three closed, connected meshes and preserves the traced foreground volume
+AssertionError: expected 2 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 2
+
+ ❯ src/components/island/life/canopySculptStudy.test.ts:42:62
+     40|             }
+     41|             expect([...edges.values()].every(count=>count===2)).toBe(t…
+     42|             expect(new Set(parent.map((_,i)=>find(i))).size).toBe(1);
+       |                                                              ^
+     43|             for(let i=0;i<pos.count;i++) if(pos.getZ(i)>-2.5&&pos.getY…
+     44|             expect(foreground.size).toBeGreaterThan(0);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  03:22:39
+   Duration  493ms (transform 41ms, setup 0ms, collect 64ms, tests 256ms, environment 0ms, prepare 40ms)

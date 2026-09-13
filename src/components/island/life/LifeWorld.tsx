@@ -127,7 +127,8 @@ export default function LifeWorld({ inspectShadow, observationOpen = false, foot
             if (content) { scene.remove(content.root); content.dispose(); }
             content = buildLifeScene(next, selection, point, preview); scene.add(content.root);
             node.dataset.lifeWorldStyle = content.root.userData.worldStyle;
-            node.dataset.lifeVisualCandidate = content.root.getObjectByName('life-landscape')?.userData.visualCandidate ?? content.root.getObjectByName('life-canopy-c3')?.userData.visualCandidate ?? content.root.userData.worldStyle;
+            const canopy = content.root.getObjectByName('life-canopy-c3');
+            node.dataset.lifeVisualCandidate = canopy?.userData.sculptStatus ? canopy.userData.visualCandidate : content.root.getObjectByName('life-landscape')?.userData.visualCandidate ?? canopy?.userData.visualCandidate ?? content.root.userData.worldStyle;
             node.dataset.lifeLandscapeVersion = next.landscapeVersion ?? 'original';
             node.dataset.lifeTourVersion = String(next.tourVersion ?? 0);
             resize();
@@ -191,6 +192,7 @@ export default function LifeWorld({ inspectShadow, observationOpen = false, foot
             if (document.visibilityState !== 'visible' || renderer.getContext().isContextLost()) presentationClock.resume(performance.now(), true);
             const logicalAt = presentationClock.sample(performance.now());
             content?.animate(logicalAt, media.matches);
+            if (content) node.dataset.lifeSculptStatus = content.root.getObjectByName('life-canopy-c3')?.userData.sculptStatus ?? 'none';
             if (content) node.dataset.lifeGroundMaterialStatus = content.root.getObjectByName('life-landscape')?.userData.groundMaterialStatus ?? 'none';
             if (content) shadows.update(content.snapshot(), content.root, performance.now(), media.matches,
                 discovery.current.enabled && !currentPlacement && !behindObservation.current && !renderer.getContext().isContextLost(), footsteps.current.input?.id);

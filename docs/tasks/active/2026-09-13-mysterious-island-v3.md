@@ -385,3 +385,7 @@ cd0c951のLife有効productionと3781179の固定production buildで、実初回
 滑らかな岸/追加根/段差の3造形は実画面で人工的な板・独立した帯に見え、全案不採用。アプリコードから外して[再現patchと比較](../../design/2026-09-14-canopy-relief-rejected/README.md)を保存。次は一体meshによる接続を試す。
 
 浅瀬の参照輪郭が実地形の-PI/2回転に伴う奥行き反転を欠いていたため、座標変換を修正。非対称形で実回転を照合するtestを追加し、候補v3でcore408/3949・両幅導線PASS。[修正と範囲](../../design/2026-09-14-canopy-shore-transform/README.md)。視覚34/60 HOLD・Human N=0、本番既定は変更なし。既存の全仕様残件を継続。
+
+## 根と幹の一体mesh試作
+
+不採用の独立tube追加から、offline smooth unionの閉じた一体meshへ方式変更。3案を実画面で比較し、中程度のbuttressをDEV試作用に選択。細い枝先の孤立片と格子補間の前方ずれを検出・修正した。core409/3953、旧memory保持/現在観察/全体/学習復帰とmesh取得失敗fallbackは両幅PASS。[生成・実画面・独立3判定](../../design/2026-09-14-canopy-sculpt/README.md)。視覚35/60 HOLD・Human N=0、production既定は変更なし。次は構図と光。元の全仕様残件は継続。

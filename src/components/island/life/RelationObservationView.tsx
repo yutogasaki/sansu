@@ -145,6 +145,9 @@ export default function RelationObservationView(props: Props) {
                     targetRing.position.copy(content.root.localToWorld(content.point({ x: selectedItem.cell.x + (facility ? .5 : 0), z: selectedItem.cell.z + (facility ? .5 : 0) }).setY(.09)));
                     targetRing.scale.setScalar(facility ? 2 : 1);
                 }
+                const canopy = content.root.getObjectByName('life-canopy-c3');
+                node.dataset.lifeSculptStatus = canopy?.userData.sculptStatus ?? 'none';
+                node.dataset.lifeVisualCandidate = canopy?.userData.sculptStatus ? canopy.userData.visualCandidate : content.root.getObjectByName('life-landscape')?.userData.visualCandidate ?? canopy?.userData.visualCandidate ?? content.root.userData.worldStyle;
                 renderer.render(scene, camera); node.dataset.rendered = 'true';
                 const findTransport = () => facilityRelations(stateAtFrame, '', content!, camera, ndc => {
                     const rect = node.getBoundingClientRect();

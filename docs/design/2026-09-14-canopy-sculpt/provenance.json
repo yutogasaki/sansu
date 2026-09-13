@@ -1,0 +1,17 @@
+{
+  "method": "offline signed-distance smooth union and marching cubes; no generated raster image",
+  "toolSourcesSha256": {
+    "tools/export-canopy-sculpt-spines.mjs": "1005b923cfb564f39448be373f1d1cdbaa939a22220d4abd3d11eccbb356c8b6",
+    "tools/build-canopy-sculpt-study.py": "989c95f9cade1cb971c4320d96fde8cc1579f12560e787f0aa5b3149385df3b5"
+  },
+  "pythonLibraries": {
+    "numpy": "2.0.2",
+    "scipy": "1.13.1",
+    "skimage": "0.24.0"
+  },
+  "node": "v24.14.0",
+  "comparisonGeometry": "generation 2, before two-cell protection halo",
+  "finalGeometry": "generation 3, two-cell protection halo",
+  "selectedStudy": "buttress",
+  "productionApproved": false
+}

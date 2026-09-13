@@ -1,5 +1,6 @@
 import * as T from 'three';
 import { batch } from '../three/primitives';
+import { canopySculptStudy, loadCanopySculpt } from './canopySculptStudy';
 import { canopyMaterialStudy, makeCanopyStudyWood } from './canopyMaterialStudy';
 
 /** Sculptural world geometry only. Coordinates stay behind the playable grid;
@@ -90,5 +91,6 @@ export function buildCanopyScenery(center: number) {
     const timber = new T.Group();
     [...root.children].filter(child => child instanceof T.Mesh && child.material === wood).forEach(child => timber.add(child));
     batch(timber); root.add(timber);
-    return { root, dispose: () => { disposeStudy?.(); paints.forEach(material => material.dispose()); } };
+    const disposeSculpt = canopySculptStudy ? loadCanopySculpt(root, timber, wood, canopySculptStudy) : undefined;
+    return { root, dispose: () => { disposeSculpt?.(); disposeStudy?.(); paints.forEach(material => material.dispose()); } };
 }
