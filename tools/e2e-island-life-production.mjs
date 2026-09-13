@@ -38,7 +38,8 @@ try {
       const openLifePanel = async () => {
         const group = page.getByRole('group', { name: 'しまの ていれ' });
         if (!await group.isVisible().catch(() => false)) {
-          await page.getByRole('button', { name: 'しまの ようす', exact: true }).click();
+          if (await page.locator('.life-dock').isVisible().catch(() => false)) await page.getByRole('button', { name: 'しまの ようすを とじる', exact: true }).click();
+          await page.getByRole('button', { name: 'つくる', exact: true }).click();
           await group.waitFor();
         }
         return group;
@@ -50,7 +51,7 @@ try {
       assert.match(await page.locator('[data-life-buy="flower"]').innerText(), /あと 2 しずく/);
       await page.screenshot({ path: `${out}/${name}-build-empty.png` });
       await selectTab('いろ');
-      assert.match(await page.locator('[data-life-style="sunshine"]').innerText(), /ひかり 4/);
+      assert.match(await page.locator('[data-life-style="sunshine"]').innerText(), /あと\s*4\s*ひかり/);
       await page.getByRole('button', { name: 'メニューを とじる', exact: true }).click();
       await page.screenshot({ path: `${out}/${name}-initial.png` });
       await page.getByRole('navigation', { name: 'メインメニュー' }).getByRole('button', { name: 'まなぶ', exact: true }).click();

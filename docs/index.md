@@ -1,5 +1,7 @@
 # Documentation Index
 
+暮らす島の次期設計と32種の品揃えは[地区・解放・施設カタログ49](product/49_island_growth_catalog_spec.md)。既存の花畑等からの恒久解放、組み合わせ、特殊施設の働きを定義。数値は調整案で、実装・配布は未完。
+
 暮らす島の家庭内利用は[仕様48](product/48_island_life_spec.md)と[検証記録](design/2026-09-10-island-life/main-release/README.md)を参照。
 
 写真の読込失敗・削除中断・撮影後の戻り先・空のおくりものは[写真とおくりものの復帰](design/audits/2026-09-09-photo-exits/README.md)で改善と実画面を記録。4サイズ、実撮影/保存、障害注入、学習保存の不変を確認した。

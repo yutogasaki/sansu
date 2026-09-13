@@ -33,7 +33,8 @@ try {
       const openLifePanel = async () => {
         const group = page.getByRole('group', { name: 'しまの ていれ' });
         if (!await group.isVisible().catch(() => false)) {
-          await page.getByRole('button', { name: 'しまの ようす', exact: true }).click();
+          if (await page.locator('.life-dock').isVisible().catch(() => false)) await page.getByRole('button', { name: 'しまの ようすを とじる', exact: true }).click();
+          await page.getByRole('button', { name: 'つくる', exact: true }).click();
           await group.waitFor();
         }
         return group;

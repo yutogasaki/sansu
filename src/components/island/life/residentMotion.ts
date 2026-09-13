@@ -1,10 +1,11 @@
 import * as T from 'three';
 import type { buildHomeJourney } from '../homeJourney/scene';
-import { poseResidentTail, residentSeatContactY } from '../three/residentRig';
+import { easeResident, poseResidentTail, RESIDENT_SCALE, residentSeatContactY, sampleResidentStride, turnResidentToward } from '../three/residentRig';
 import { isRoamVisit, LIFE_STEP_MS, type Cell, type LifeState } from '../../../domain/islandLife/model';
 import { activityPhase, favoriteReactionElapsed, residentReaction } from '../../../domain/islandLife/activity';
 import { sampleResidentInterest } from '../three/residentInterest';
-import { sampleWalkEdge, smoothArrival, turnToward } from './residentWalk';
+import { smoothArrival, turnToward } from './residentWalk';
+import { sampleLifeRoaming } from './roamingPresentation';
 
 export type LifeSeat = { seat: T.Mesh; pivot?: T.Group };
 export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, state: LifeState,
@@ -17,8 +18,9 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
     return {
         audit: () => audit,
         animate(now: number, reduced: boolean) {
+            const visible = sampleLifeRoaming(state, now);
             for (const { pivot } of seats.values()) if (pivot) pivot.rotation.x = 0;
-            audit = state.residents.map((resident, index) => {
+            audit = visible.residents.map((resident, index) => {
                 const actor = actors[index], body = bodies[index], visit = resident.visit;
                 const item = state.items.find(i => i.id === visit?.itemId && i.cell);
                 const phase = activityPhase(state, resident, now);
@@ -26,29 +28,27 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                 body.position.y = 0; body.rotation.set(0, 0, 0); actor.rotation.set(0, 0, 0);
                 feet[index].forEach((foot, n) => { foot.position.copy(neutralFeet[index][n]); foot.rotation.set(0, 0, 0); });
                 const rig = index === 1 ? content.rabbit : index === 2 ? content.otter : undefined;
-                if (rig) { rig.head.rotation.set(0, 0, 0); poseResidentTail(rig.tail, index === 1 ? 'rabbit' : 'otter', 0); }
+                if (rig) { rig.head.rotation.set(0, 0, 0); rig.shoulders.forEach(shoulder => { shoulder.rotation.x = 0; }); poseResidentTail(rig.tail, index === 1 ? 'rabbit' : 'otter', 0); }
                 let position = point(resident.cell), seatGap: number | undefined, flowerLean = 0;
                 if (visit && (item || isRoamVisit(visit))) {
-                    const step = Math.max(0, (now - visit.start) / LIFE_STEP_MS), n = Math.min(visit.path.length - 1, Math.floor(step));
+                    const length = visit.path.length - 1;
+                    const step = length ? easeResident((now - visit.start) / (length * LIFE_STEP_MS)) * length : 0;
+                    const n = Math.min(length, Math.floor(step));
                     const a = point(visit.path[n]), b = point(visit.path[Math.min(n + 1, visit.path.length - 1)]);
-                    const edge = sampleWalkEdge(step - Math.floor(step), n === 0, n === visit.path.length - 2);
-                    position = a.clone().lerp(b, edge.fraction);
+                    position = a.clone().lerp(b, step - n);
                     if (a.distanceTo(b) > .01) {
                         const heading = Math.atan2(b.x - a.x, b.z - a.z);
                         const previous = point(visit.path[Math.max(0, n - 1)]);
                         const from = n > 0 ? Math.atan2(a.x - previous.x, a.z - previous.z) : 0;
-                        actor.rotation.y = reduced ? heading : turnToward(from, heading, (step - n) / .3);
+                        actor.rotation.y = reduced ? heading : turnResidentToward(from, heading, (step - n) * LIFE_STEP_MS);
                         if (!reduced) {
-                            const gait = (n + edge.fraction) * Math.PI * 2;
-                            body.position.y = Math.sin(gait * 2) * .018 * edge.weight;
-                            body.rotation.x = .055 * edge.weight;
-                            body.rotation.z = Math.sin(gait) * .035 * edge.weight;
+                            const stride = sampleResidentStride(step * RESIDENT_SCALE / scale, length * RESIDENT_SCALE / scale);
+                            body.position.y = stride.bob;
                             feet[index].forEach((foot, f) => {
-                                const stride = Math.sin(gait + f * Math.PI) * edge.weight;
-                                foot.position.y += Math.max(0, stride) * .075;
-                                foot.position.z += stride * .09;
-                                foot.rotation.x = stride * .18;
+                                foot.position.y += stride.feet[f].lift;
+                                foot.position.z += stride.feet[f].z - .12;
                             });
+                            rig?.shoulders.forEach((shoulder, f) => { shoulder.rotation.x = stride.feet[f].arm; });
                         }
                     } else if (item) {
                         const target = point(item.cell!), walkedAt = visit.start + (visit.path.length - 1) * LIFE_STEP_MS;

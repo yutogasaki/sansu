@@ -1,0 +1,51 @@
+vite v7.3.1 building client environment for production...
+transforming...
+Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+✓ 3621 modules transformed.
+
+(!) outDir /tmp/sansu-roaming-production-fixed is not inside project root and will not be emptied.
+Use --emptyOutDir to override.
+
+Generated an empty chunk: "pdf".
+rendering chunks...
+computing gzip size...
+../../../tmp/sansu-roaming-production-fixed/version.json                                     0.44 kB │ gzip:   0.26 kB
+../../../tmp/sansu-roaming-production-fixed/index.html                                       1.58 kB │ gzip:   0.72 kB
+../../../tmp/sansu-roaming-production-fixed/assets/NotoSansJP-C_ziqpoc.woff2                13.06 kB
+../../../tmp/sansu-roaming-production-fixed/assets/IslandWelcome-BJp8Sa-m.css                2.05 kB │ gzip:   0.72 kB
+../../../tmp/sansu-roaming-production-fixed/assets/Island-DyYOUQ1e.css                      28.98 kB │ gzip:   5.63 kB
+../../../tmp/sansu-roaming-production-fixed/assets/IslandLife-Bn9mcgHc.css                  32.17 kB │ gzip:   5.29 kB
+../../../tmp/sansu-roaming-production-fixed/assets/Island-C9Lfi2K9.css                     101.39 kB │ gzip:  16.08 kB
+../../../tmp/sansu-roaming-production-fixed/assets/index-CSrjid2N.css                      239.38 kB │ gzip:  40.87 kB
+../../../tmp/sansu-roaming-production-fixed/assets/pdf-l0sNRNKZ.js                           0.00 kB │ gzip:   0.02 kB
+../../../tmp/sansu-roaming-production-fixed/assets/IslandWelcome-DpLtUfwB.js                 1.95 kB │ gzip:   1.05 kB
+../../../tmp/sansu-roaming-production-fixed/assets/IslandOnboarding-IjdWBUfw.js              3.45 kB │ gzip:   1.50 kB
+../../../tmp/sansu-roaming-production-fixed/assets/repository-B_zCaYyu.js                   14.27 kB │ gzip:   5.81 kB
+../../../tmp/sansu-roaming-production-fixed/assets/icons-CrPBO_F1.js                        25.82 kB │ gzip:   9.58 kB
+../../../tmp/sansu-roaming-production-fixed/assets/audio-DwtSHwBT.js                        36.13 kB │ gzip:   9.75 kB
+../../../tmp/sansu-roaming-production-fixed/assets/islandFurniturePlacement-BLOWLGDe.js     42.09 kB │ gzip:  12.16 kB
+../../../tmp/sansu-roaming-production-fixed/assets/react-DcHpdqMy.js                        48.53 kB │ gzip:  17.24 kB
+../../../tmp/sansu-roaming-production-fixed/assets/IslandLife-Js9Aa4qt.js                   49.59 kB │ gzip:  18.86 kB
+../../../tmp/sansu-roaming-production-fixed/assets/Island-B6DKhNsd.js                       68.13 kB │ gzip:  21.41 kB
+../../../tmp/sansu-roaming-production-fixed/assets/data-DHx4MMMe.js                         96.36 kB │ gzip:  32.45 kB
+../../../tmp/sansu-roaming-production-fixed/assets/motion-iLBaTeAD.js                      119.65 kB │ gzip:  39.54 kB
+../../../tmp/sansu-roaming-production-fixed/assets/Island-Ci-1GQxb.js                      299.54 kB │ gzip:  88.65 kB
+../../../tmp/sansu-roaming-production-fixed/assets/runtime-glwh7GEU.js                     344.39 kB │ gzip: 107.76 kB
+../../../tmp/sansu-roaming-production-fixed/assets/charts-Dqb-tBNT.js                      371.57 kB │ gzip: 108.42 kB
+../../../tmp/sansu-roaming-production-fixed/assets/residentInterest-DKJDfFdg.js            634.51 kB │ gzip: 170.34 kB
+../../../tmp/sansu-roaming-production-fixed/assets/index-3b53jjsz.js                     1,062.40 kB │ gzip: 298.85 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 5.63s
+
+PWA v1.2.0
+mode      generateSW
+precache  98 entries (4665.81 KiB)
+files generated
+  ../../../tmp/sansu-roaming-production-fixed/sw.js
+  ../../../tmp/sansu-roaming-production-fixed/workbox-fc21a5da.js

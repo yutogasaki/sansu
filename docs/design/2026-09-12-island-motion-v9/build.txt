@@ -1,0 +1,51 @@
+vite v7.3.1 building client environment for production...
+transforming...
+Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+✓ 3623 modules transformed.
+
+(!) outDir /tmp/sansu-swipe-owned-build is not inside project root and will not be emptied.
+Use --emptyOutDir to override.
+
+Generated an empty chunk: "pdf".
+rendering chunks...
+computing gzip size...
+../../../tmp/sansu-swipe-owned-build/version.json                                     0.42 kB │ gzip:   0.25 kB
+../../../tmp/sansu-swipe-owned-build/index.html                                       1.58 kB │ gzip:   0.72 kB
+../../../tmp/sansu-swipe-owned-build/assets/NotoSansJP-C_ziqpoc.woff2                13.06 kB
+../../../tmp/sansu-swipe-owned-build/assets/IslandWelcome-BJp8Sa-m.css                2.05 kB │ gzip:   0.72 kB
+../../../tmp/sansu-swipe-owned-build/assets/Island-DyYOUQ1e.css                      28.98 kB │ gzip:   5.63 kB
+../../../tmp/sansu-swipe-owned-build/assets/IslandLife-DVN1mp9b.css                  33.32 kB │ gzip:   5.51 kB
+../../../tmp/sansu-swipe-owned-build/assets/Island-C9Lfi2K9.css                     101.39 kB │ gzip:  16.08 kB
+../../../tmp/sansu-swipe-owned-build/assets/index-BJRhExpm.css                      240.61 kB │ gzip:  40.97 kB
+../../../tmp/sansu-swipe-owned-build/assets/pdf-l0sNRNKZ.js                           0.00 kB │ gzip:   0.02 kB
+../../../tmp/sansu-swipe-owned-build/assets/IslandWelcome-DtMqdeLc.js                 1.94 kB │ gzip:   1.04 kB
+../../../tmp/sansu-swipe-owned-build/assets/IslandOnboarding-CuuVbRFx.js              3.45 kB │ gzip:   1.50 kB
+../../../tmp/sansu-swipe-owned-build/assets/repository-CxsV0n4h.js                   14.25 kB │ gzip:   5.80 kB
+../../../tmp/sansu-swipe-owned-build/assets/icons-CrPBO_F1.js                        25.82 kB │ gzip:   9.58 kB
+../../../tmp/sansu-swipe-owned-build/assets/audio-DwtSHwBT.js                        36.13 kB │ gzip:   9.75 kB
+../../../tmp/sansu-swipe-owned-build/assets/islandFurniturePlacement-DgxdiRWI.js     42.09 kB │ gzip:  12.16 kB
+../../../tmp/sansu-swipe-owned-build/assets/react-DcHpdqMy.js                        48.53 kB │ gzip:  17.24 kB
+../../../tmp/sansu-swipe-owned-build/assets/IslandLife-C6BaixK4.js                   51.19 kB │ gzip:  19.22 kB
+../../../tmp/sansu-swipe-owned-build/assets/Island-B3WoZwe5.js                       68.13 kB │ gzip:  21.41 kB
+../../../tmp/sansu-swipe-owned-build/assets/data-DHx4MMMe.js                         96.36 kB │ gzip:  32.45 kB
+../../../tmp/sansu-swipe-owned-build/assets/motion-iLBaTeAD.js                      119.65 kB │ gzip:  39.54 kB
+../../../tmp/sansu-swipe-owned-build/assets/Island-DpFkuul-.js                      299.53 kB │ gzip:  88.64 kB
+../../../tmp/sansu-swipe-owned-build/assets/runtime-D_zWdfFi.js                     344.39 kB │ gzip: 107.77 kB
+../../../tmp/sansu-swipe-owned-build/assets/charts-Dqb-tBNT.js                      371.57 kB │ gzip: 108.42 kB
+../../../tmp/sansu-swipe-owned-build/assets/residentInterest-CAXaMRiH.js            634.51 kB │ gzip: 170.33 kB
+../../../tmp/sansu-swipe-owned-build/assets/index-C3F2pvrh.js                     1,062.39 kB │ gzip: 298.84 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 7.37s
+
+PWA v1.2.0
+mode      generateSW
+precache  98 entries (4669.65 KiB)
+files generated
+  ../../../tmp/sansu-swipe-owned-build/sw.js
+  ../../../tmp/sansu-swipe-owned-build/workbox-fc21a5da.js

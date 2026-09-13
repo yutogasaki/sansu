@@ -1,0 +1,12 @@
+.life-catalog-scroll { display:flex; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; overscroll-behavior-x:contain; }
+.life-catalog-scroll::-webkit-scrollbar { display:none; }
+.life-catalog-page { flex:0 0 100%; min-width:0; scroll-snap-align:start; scroll-snap-stop:always; }
+.life-catalog-page .life-catalog { margin-top:8px; margin-bottom:4px; padding:3px; }
+.life-catalog-navigation { display:flex; align-items:center; justify-content:center; gap:12px; color:var(--pokomoko-muted); }
+.life-catalog-navigation small,.life-catalog-count { font-size:11px; }
+.life-catalog-dots { display:flex; gap:0; }
+.island-page[data-life-home="true"] .life-menu .life-catalog-dots button { display:grid; place-items:center; width:44px; min-height:44px; padding:0; border:0; background:transparent; box-shadow:none; }
+.life-catalog-dots button span { width:8px; height:8px; border-radius:50%; background:var(--pokomoko-edge); }
+.life-catalog-dots button[aria-pressed="true"] span { width:18px; border-radius:6px; background:var(--pokomoko-blue); }
+.life-catalog-dots button:focus-visible { outline:3px solid var(--pokomoko-blue); outline-offset:-3px; }
+@media(prefers-reduced-motion:reduce) { .life-catalog-scroll { scroll-behavior:auto; } }

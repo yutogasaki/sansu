@@ -8,6 +8,7 @@ import { hasChangedIslandCameraView, initialIslandCameraView, IslandCameraContro
 import type { CameraPanFraming, CameraPanPoint } from '../three/cameraPanFraming';
 import { buildLifeScene } from './scene';
 import type { PlacementPreview } from './placement';
+import { LifePresentationClock } from './presentationClock';
 
 type Content = ReturnType<typeof buildLifeScene>;
 type LifeWorldProps = { state: LifeState; selected?: string; cell?: Cell; placement?: PlacementPreview; onCell: (cell: Cell) => void };
@@ -28,7 +29,7 @@ export default function LifeWorld({ state, selected, cell, placement, onCell }: 
         let renderer: T.WebGLRenderer;
         try { renderer = new T.WebGLRenderer({ antialias: true }); } catch { setFailed(true); return; }
         let content: Content | undefined, currentState = stateAtMount.current, currentPlacement = placementAtMount.current;
-        let lastSnapshot: LifeState | undefined, snapshotAt = 0, frameAt = performance.now();
+        const presentationClock = new LifePresentationClock();
         const scene = new T.Scene(); scene.background = new T.Color('#278bac');
         scene.add(new T.HemisphereLight('#fff7ea', '#63806c', 1.15));
         const sun = new T.DirectionalLight('#fff4e0', 2.3); sun.position.set(-3, 8, 4); sun.castShadow = true;
@@ -94,12 +95,13 @@ export default function LifeWorld({ state, selected, cell, placement, onCell }: 
         };
         reframe.current = () => { cameraControls.reset(false); resize(); };
         update.current = (next, selection, point, preview) => {
+            presentationClock.prepare(next, performance.now());
+            if (document.visibilityState !== 'visible' || renderer.getContext().isContextLost()) presentationClock.resume(performance.now(), true);
             if (Boolean(preview) !== Boolean(currentPlacement)) cameraControls.reset(false);
             currentState = next; currentPlacement = preview;
             if (preview) cameraControls.cancel();
             if (content) { scene.remove(content.root); content.dispose(); }
             content = buildLifeScene(next, selection, point, preview); scene.add(content.root);
-            if (next !== lastSnapshot) { lastSnapshot = next; snapshotAt = next.now; frameAt = performance.now(); }
             resize();
         };
         const observer = new ResizeObserver(resize); observer.observe(node);
@@ -150,9 +152,13 @@ export default function LifeWorld({ state, selected, cell, placement, onCell }: 
         const media = window.matchMedia('(prefers-reduced-motion: reduce)');
         let raf = 0, auditAt = 0;
         const frame = () => {
-            content?.animate(snapshotAt + performance.now() - frameAt, media.matches);
+            // Background/context-loss time must age reactions, not replay them on return.
+            if (document.visibilityState !== 'visible' || renderer.getContext().isContextLost()) presentationClock.resume(performance.now(), true);
+            content?.animate(presentationClock.sample(performance.now()), media.matches);
             if (content && document.visibilityState === 'visible' && !renderer.getContext().isContextLost()) { renderer.render(scene, camera); node.dataset.rendered = 'true';
-                content.audit().forEach((pose, i) => {
+                presentationClock.resume(performance.now());
+                const poses = content.audit();
+                poses.forEach((pose, i) => {
                     const badge = emotes[i]; badge.hidden = !pose.reaction;
                     if (!pose.reaction) return;
                     const position = new T.Vector3(...pose.position).add(new T.Vector3(0, i === 1 ? 1.05 : .9, 0)).project(camera);
@@ -160,19 +166,24 @@ export default function LifeWorld({ state, selected, cell, placement, onCell }: 
                     badge.style.left = `${(position.x + 1) / 2 * node.clientWidth}px`;
                     badge.style.top = `${(1 - position.y) / 2 * node.clientHeight}px`;
                 });
-                if (performance.now() - auditAt > 500) {
-                    node.dataset.lifePoses = JSON.stringify(content.audit());
+                // A 500ms sample can omit an entire short hop. During an earned
+                // reaction expose the actual rendered pose, not a stale sample.
+                if (poses.some(pose => pose.reaction) || performance.now() - auditAt > 500) {
+                    node.dataset.lifePoses = JSON.stringify(poses);
                     node.dataset.lifeRender = JSON.stringify({ calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, ...renderer.info.memory });
                     auditAt = performance.now();
                 }
             }
             raf = requestAnimationFrame(frame);
         }; frame();
-        const lost = (event: Event) => { event.preventDefault(); setFailed(true); delete node.dataset.rendered; };
+        const hidden = () => { if (document.visibilityState !== 'visible') presentationClock.resume(performance.now(), true); };
+        document.addEventListener('visibilitychange', hidden);
+        const lost = (event: Event) => { presentationClock.resume(performance.now(), true); event.preventDefault(); setFailed(true); delete node.dataset.rendered; };
         const restored = () => setFailed(false);
         renderer.domElement.addEventListener('webglcontextlost', lost); renderer.domElement.addEventListener('webglcontextrestored', restored);
         return () => {
             cancelAnimationFrame(raf); observer.disconnect(); update.current = null; controlCamera.current = undefined; reframe.current = undefined; cameraControls.cancel(); content?.dispose();
+            document.removeEventListener('visibilitychange', hidden);
             renderer.domElement.removeEventListener('click', click);
             renderer.domElement.removeEventListener('pointerdown', pointerDown);
             renderer.domElement.removeEventListener('pointermove', pointerMove);

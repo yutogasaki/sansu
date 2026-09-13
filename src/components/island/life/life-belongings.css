@@ -1,0 +1,77 @@
+.island-page[data-life-home="true"] .life-menu .life-items button {
+    min-width: 0; align-items: stretch; gap: 7px; padding: 8px;
+    background: var(--pokomoko-paper); text-align: left;
+}
+.life-items .life-product-preview { height: 104px; }
+.life-item-name { display: flex; align-items: baseline; justify-content: space-between; gap: 4px; }
+.life-item-name b { font-size: 15px; }
+.life-item-name > small { color: var(--pokomoko-muted); }
+.life-items .life-item-growth { gap: 5px; padding: 0 3px 4px; }
+.life-items .life-growth-next { font-size: 12px!important; }
+.life-item-actions > .life-product-preview { width: 108px; height: 94px; flex-shrink: 0; }
+.life-item-actions > .life-item-growth-detail {
+    flex: 1; width: auto; min-width: 140px; margin: 0;
+    flex-direction: column; align-items: flex-start; justify-content: center; gap: 8px;
+    background: transparent; padding: 8px;
+}
+.life-item-growth-detail small { font-size: 12px; text-align: left; }
+.island-page[data-life-home="true"] .life-item-actions .life-remove-action {
+    margin-left: auto; background: transparent; border-color: transparent;
+    color: var(--pokomoko-muted); font-size: 12px;
+}
+.life-inventory-empty { display: grid; justify-items: center; gap: 8px; padding: 18px 8px; text-align: center; }
+.life-inventory-empty > svg { color: var(--pokomoko-blue); }
+.life-section-intro { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 10px; }
+.life-section-intro b { font-size: 14px; }
+.life-section-intro > span { color: var(--pokomoko-muted); font-size: 12px; }
+.island-page[data-life-home="true"] .life-section-intro button { padding: 5px 8px; font-size: 12px; }
+.island-page[data-life-home="true"] .life-menu .life-appearance-cards { gap: 6px; }
+.island-page[data-life-home="true"] .life-menu .life-appearance-cards button {
+    min-width: 0; padding: 5px; gap: 7px; background: var(--pokomoko-paper);
+    border: 2px solid var(--pokomoko-edge); border-radius: 14px; opacity: 1;
+}
+.island-page[data-life-home="true"] .life-menu .life-appearance-cards button[aria-pressed="true"] {
+    border-color: var(--pokomoko-blue); background: var(--pokomoko-lavender);
+}
+.life-appearance-cards .life-product-preview { height: 100px; background: transparent; }
+.life-appearance-cards b { font-size: 12px; }
+.life-style-state > span { white-space: nowrap; }
+.life-style-state { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 3px; min-height: 30px; font-size: 12px; color: var(--pokomoko-blue-deep); }
+.life-land-map { display: block; width: 100%; max-height: 168px; margin-top: 10px; }
+.life-map-sea { fill: var(--pokomoko-blue-soft, #d8eaf2); }
+.life-map-ground { fill: var(--pokomoko-mint); stroke: var(--pokomoko-leaf, #80a783); stroke-width: .7; }
+.life-map-proposed { fill: var(--pokomoko-paper); stroke: var(--pokomoko-blue); stroke-width: 1.2; stroke-dasharray: 3 2; }
+.life-map-plus { fill: none; stroke: var(--pokomoko-blue); stroke-width: 1.5; }
+.life-map-house { fill: var(--pokomoko-amber, #efc56d); }
+.life-map-roof { fill: none; stroke: var(--pokomoko-ink); stroke-width: 2; stroke-linejoin: round; }
+.life-map-item { fill: none; stroke: var(--pokomoko-ink); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.life-map-item--flower circle { fill: var(--pokomoko-rose); }
+.life-map-item--lantern circle { fill: var(--pokomoko-amber, #efc56d); }
+.life-map-legend { display: flex; align-items: center; gap: 6px; color: var(--pokomoko-muted); }
+.life-map-legend-sample { width: 14px; height: 14px; border: 1px dashed var(--pokomoko-blue); border-radius: 3px; }
+.life-land-directions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 10px 0; }
+.life-land-directions button { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 14px; padding: 8px 6px; white-space: nowrap; }
+.life-land-directions button svg { flex-shrink: 0; }
+.island-page[data-life-home="true"] .life-land-directions button[aria-pressed="true"] { background: var(--pokomoko-lavender); border-color: var(--pokomoko-blue); }
+.life-land-confirm { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; }
+.life-land-confirm > span:last-child { display: flex; align-items: center; gap: 4px; font-size: 12px; }
+.island-page[data-life-home="true"] .life-dock .life-caption { display: flex; min-height: 44px; margin-bottom: 8px; }
+.island-page[data-life-home="true"] .life-dock .life-dock-close { width: 44px; min-width: 44px; min-height: 44px; }
+.island-page[data-life-home="true"] .life-dock .life-caption-actions > .island-text-button { min-height: 44px; }
+.island-page[data-life-home="true"] .life-dock .life-residents > span { padding: 8px 6px; align-content: start; gap: 5px; }
+.island-page[data-life-home="true"] .life-dock .life-resident-dot { display: none; }
+.island-page[data-life-home="true"] .life-dock .life-residents b,
+.island-page[data-life-home="true"] .life-dock .life-residents small,
+.island-page[data-life-home="true"] .life-dock .life-residents em {
+    font-size: 12px; line-height: 1.4; white-space: normal; overflow: visible; text-overflow: clip;
+}
+.island-page[data-life-home="true"] .life-dock .life-goal { font-size: 12px; line-height: 1.5; margin-bottom: 0; }
+@media (max-height: 700px) {
+    .life-items .life-product-preview, .life-appearance-cards .life-product-preview { height: 70px; }
+    .life-land-map { max-height: 112px; }
+}
+@media (max-width: 360px) {
+    .island-page[data-life-home="true"] .life-menu-tabs button { gap: 2px; padding-inline: 1px; }
+    .island-page[data-life-home="true"] .life-menu-tabs button span { white-space: nowrap; }
+    .island-page[data-life-home="true"] .life-menu-tabs button svg { width: 12px; flex-shrink: 0; }
+}

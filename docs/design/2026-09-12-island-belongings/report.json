@@ -1,0 +1,227 @@
+[
+  {
+    "target": "http://127.0.0.1:5350",
+    "version": {
+      "version": "development-local:8baa3fd9-2c41-4062-9cc3-6d12fa359f08",
+      "revision": "development-local",
+      "delivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "park": {
+        "enabled": false,
+        "renderer": "retired"
+      },
+      "island": {
+        "enabled": true,
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "mystic-island-learning-v2",
+        "residentCandidate": "patchwork-otter-v1",
+        "artDirection": "moon-garden"
+      }
+    },
+    "fixture": "Disposable historical credits and placed items, not earned learning evidence",
+    "humanN": 0,
+    "scenarios": [
+      {
+        "name": "phone",
+        "width": 390,
+        "height": 844,
+        "pass": true,
+        "candidate": "island-life-moon-garden-v9",
+        "actions": [
+          {
+            "type": "buy",
+            "kind": "flower",
+            "cell": {
+              "x": 0,
+              "z": 2
+            }
+          },
+          {
+            "type": "buy",
+            "kind": "bench",
+            "cell": {
+              "x": 4,
+              "z": 2
+            }
+          },
+          {
+            "type": "style",
+            "style": "starlight",
+            "itemId": "qa-flower"
+          },
+          {
+            "type": "style",
+            "style": "sunshine"
+          },
+          {
+            "type": "store",
+            "itemId": "qa-flower"
+          },
+          {
+            "type": "move",
+            "itemId": "qa-flower",
+            "cell": {
+              "x": 0,
+              "z": 0
+            }
+          },
+          {
+            "type": "expand",
+            "side": "west"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "target": "http://127.0.0.1:5350",
+    "version": {
+      "version": "development-local:8baa3fd9-2c41-4062-9cc3-6d12fa359f08",
+      "revision": "development-local",
+      "delivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "park": {
+        "enabled": false,
+        "renderer": "retired"
+      },
+      "island": {
+        "enabled": true,
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "mystic-island-learning-v2",
+        "residentCandidate": "patchwork-otter-v1",
+        "artDirection": "moon-garden"
+      }
+    },
+    "fixture": "Disposable historical credits and placed items, not earned learning evidence",
+    "humanN": 0,
+    "scenarios": [
+      {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024,
+        "pass": true,
+        "candidate": "island-life-moon-garden-v9",
+        "actions": [
+          {
+            "type": "buy",
+            "kind": "flower",
+            "cell": {
+              "x": 0,
+              "z": 2
+            }
+          },
+          {
+            "type": "buy",
+            "kind": "bench",
+            "cell": {
+              "x": 4,
+              "z": 2
+            }
+          },
+          {
+            "type": "style",
+            "style": "starlight",
+            "itemId": "qa-flower"
+          },
+          {
+            "type": "style",
+            "style": "sunshine"
+          },
+          {
+            "type": "store",
+            "itemId": "qa-flower"
+          },
+          {
+            "type": "move",
+            "itemId": "qa-flower",
+            "cell": {
+              "x": 0,
+              "z": 0
+            }
+          },
+          {
+            "type": "expand",
+            "side": "west"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "target": "http://127.0.0.1:5350",
+    "version": {
+      "version": "development-local:8baa3fd9-2c41-4062-9cc3-6d12fa359f08",
+      "revision": "development-local",
+      "delivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "park": {
+        "enabled": false,
+        "renderer": "retired"
+      },
+      "island": {
+        "enabled": true,
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "mystic-island-learning-v2",
+        "residentCandidate": "patchwork-otter-v1",
+        "artDirection": "moon-garden"
+      }
+    },
+    "fixture": "Disposable historical credits and placed items, not earned learning evidence",
+    "humanN": 0,
+    "scenarios": [
+      {
+        "name": "small",
+        "width": 320,
+        "height": 568,
+        "pass": true,
+        "candidate": "island-life-moon-garden-v9",
+        "actions": [
+          {
+            "type": "buy",
+            "kind": "flower",
+            "cell": {
+              "x": 0,
+              "z": 2
+            }
+          },
+          {
+            "type": "buy",
+            "kind": "bench",
+            "cell": {
+              "x": 4,
+              "z": 2
+            }
+          },
+          {
+            "type": "style",
+            "style": "starlight",
+            "itemId": "qa-flower"
+          },
+          {
+            "type": "style",
+            "style": "sunshine"
+          },
+          {
+            "type": "store",
+            "itemId": "qa-flower"
+          },
+          {
+            "type": "move",
+            "itemId": "qa-flower",
+            "cell": {
+              "x": 0,
+              "z": 0
+            }
+          },
+          {
+            "type": "expand",
+            "side": "west"
+          }
+        ]
+      }
+    ]
+  }
+]

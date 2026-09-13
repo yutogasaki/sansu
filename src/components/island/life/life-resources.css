@@ -1,0 +1,114 @@
+/* One quiet balance surface; the island's growth belongs with its residents. */
+.island-page[data-life-home="true"] .life-hud {
+    position: absolute; z-index: 9; top: calc(64px + env(safe-area-inset-top)); left: 14px;
+    width: 300px; max-width: calc(100% - 28px); display: grid; justify-items: start; gap: 8px;
+    pointer-events: none;
+}
+.island-page[data-life-home="true"] .life-hud .life-wallet.life-resources {
+    position: static; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 284px; max-width: 100%; gap: 10px; padding: 9px 12px;
+    border: 1px solid var(--pokomoko-edge); border-radius: 18px;
+    background: var(--pokomoko-paper); box-shadow: 0 3px 0 color-mix(in srgb, var(--pokomoko-ink) 12%, transparent);
+    pointer-events: auto;
+}
+.island-page[data-life-home="true"] .life-resources .life-wallet-item {
+    display: grid; grid-template-columns: 30px minmax(0, 1fr); grid-template-rows: auto auto;
+    align-items: center; column-gap: 8px!important; row-gap: 1px!important;
+    min-height: 0; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none;
+}
+.island-page[data-life-home="true"] .life-resources .life-wallet-item + .life-wallet-item {
+    border-left: 1px solid var(--pokomoko-edge); padding-left: 10px;
+}
+.island-page[data-life-home="true"] .life-resources .life-wallet-item > .life-resource-icon { grid-row: 1 / 3; }
+.island-page[data-life-home="true"] .life-resources .life-wallet-item > span { font-size: 12px; line-height: 1.2; color: var(--pokomoko-muted); }
+.island-page[data-life-home="true"] .life-resources .life-wallet-item strong {
+    margin: 0; font-size: 20px; line-height: 1.15; font-weight: 800; font-variant-numeric: tabular-nums;
+}
+.life-resource-icon { flex-shrink: 0; overflow: visible; }
+.life-resource-shape { stroke: var(--pokomoko-ink); stroke-width: 1.6; stroke-linejoin: round; }
+.life-resource-icon--drops .life-resource-shape { fill: #88bea7; }
+.life-resource-icon--light .life-resource-shape { fill: #f3cd67; }
+.life-resource-shine { fill: none; stroke: var(--pokomoko-paper); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.island-page[data-life-home="true"] .life-hud .life-earned {
+    position: static; display: flex; flex-direction: column; align-items: stretch; gap: 5px;
+    width: 100%; max-width: 100%; min-height: 44px; margin: 0; padding: 10px 12px; text-align: left;
+    border: 1px solid var(--pokomoko-edge); border-radius: 16px;
+    background: var(--pokomoko-paper); box-shadow: 0 3px 0 color-mix(in srgb, var(--pokomoko-ink) 12%, transparent);
+    pointer-events: auto;
+}
+.island-page[data-life-home="true"] .life-hud .life-earned-message { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 8px; line-height: 1.5; }
+.island-page[data-life-home="true"] .life-hud .life-earned-action { padding-top: 5px; border-top: 1px solid var(--pokomoko-edge); color: var(--pokomoko-blue); line-height: 1.4; white-space: normal; }
+.island-page[data-life-home="true"] .island-life .life-menu,
+.island-page[data-life-home="true"] .island-life .life-dock,
+.island-page[data-life-home="true"] .island-life .life-viewport > .life-placement.life-controls {
+    max-height: calc(100% - 146px - env(safe-area-inset-top));
+}
+.island-page[data-life-home="true"] .island-life .life-menu,
+.island-page[data-life-home="true"] .island-life .life-dock { display: flex; flex-direction: column; overflow: hidden; }
+.island-page[data-life-home="true"] .life-menu .life-menu-heading,
+.island-page[data-life-home="true"] .life-dock .life-caption { flex-shrink: 0; background: var(--pokomoko-paper); }
+.life-menu-body, .life-information-body { min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+.life-growth-summary { margin-top: 12px; padding: 12px; border-radius: 14px; background: var(--pokomoko-mint); }
+.life-growth-heading { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+.life-growth-heading svg { color: var(--pokomoko-blue-deep); flex-shrink: 0; }
+.life-growth-heading strong { margin-left: auto; font-size: 13px; }
+.life-growth-day { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 12px; font-size: 12px; }
+.life-growth-day b { font-size: 18px; font-variant-numeric: tabular-nums; }
+.life-growth-day small { font-size: 12px; font-weight: 400; }
+.life-growth-steps { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 5px; margin-top: 6px; }
+.life-growth-steps i { height: 7px; border: 1px solid color-mix(in srgb, var(--pokomoko-blue) 40%, var(--pokomoko-paper)); border-radius: 5px; background: var(--pokomoko-paper); }
+.life-growth-steps i[data-filled="true"] { background: var(--pokomoko-blue); border-color: var(--pokomoko-blue); }
+.island-page[data-life-home="true"] .life-dock .life-growth-summary .life-goal { margin-top: 7px; padding: 0; border: 0; text-align: left; color: var(--pokomoko-muted); }
+.life-resource-guide { display: grid; gap: 10px; margin-top: 12px; padding: 2px; }
+.life-resource-guide > div { display: flex; align-items: center; gap: 8px; }
+.life-resource-guide .life-resource-icon { width: 22px; height: 28px; }
+.life-resource-guide p { display: grid; gap: 3px; margin: 0; font-size: 12px; line-height: 1.4; }
+.life-resource-guide p > span { color: var(--pokomoko-muted); }
+
+
+/* A compact resident chooser leaves the live island visible above the sheet. */
+.island-page[data-life-home="true"] .life-dock .life-caption { padding: 4px 2px 8px; margin-bottom: 0; }
+.island-page[data-life-home="true"] .life-dock .life-caption h2 { font-size: 18px; }
+.island-page[data-life-home="true"] .life-dock .life-caption-mark,
+.island-page[data-life-home="true"] .life-dock .life-caption .life-eyebrow { display: none; }
+.life-resident-choices { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.life-resident-choices button { display: grid; justify-items: center; gap: 4px; min-width: 0; padding: 6px 0 10px; border: 0; border-bottom: 3px solid transparent; border-radius: 12px 12px 0 0; background: transparent; font: inherit; color: var(--pokomoko-ink); cursor: pointer; }
+.life-resident-choices button[aria-pressed="true"] { border-bottom-color: #568775; background: linear-gradient(transparent 65%, var(--pokomoko-mint)); }
+.life-resident-choices button:focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: -3px; }
+.life-resident-choices button > span:last-child { font-size: 13px; font-weight: 700; }
+.life-resident-portrait { display: grid; place-items: center; width: 88px; height: 88px; border-radius: 50%; background: color-mix(in srgb, var(--pokomoko-mint) 65%, var(--pokomoko-paper)); overflow: hidden; }
+.life-resident-choices button:nth-child(2) .life-resident-portrait { background: color-mix(in srgb, var(--pokomoko-rose) 65%, var(--pokomoko-paper)); }
+.life-resident-choices button:nth-child(3) .life-resident-portrait { background: color-mix(in srgb, var(--pokomoko-lavender) 65%, var(--pokomoko-paper)); }
+.life-resident-portrait img { display: block; width: 88px; height: 88px; object-fit: contain; }
+.life-resident-portrait img[hidden], .life-resident-portrait span[hidden] { display: none; }
+.life-resident-story { min-height: 74px; padding: 12px 4px 10px; }
+.life-resident-story p { margin: 0 0 4px; font-size: 15px; font-weight: 600; line-height: 1.5; }
+.life-resident-story small { font-size: 12px; color: var(--pokomoko-muted); }
+.life-island-notes { border-top: 1px solid var(--pokomoko-edge); }
+.life-island-notes > summary { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 44px; font-size: 12px; color: var(--pokomoko-muted); cursor: pointer; list-style: none; }
+.life-island-notes > summary::-webkit-details-marker { display: none; }
+.life-island-notes > summary:focus-visible { outline: 2px solid var(--pokomoko-blue); outline-offset: -2px; border-radius: 8px; }
+.life-island-notes > summary > span { font-size: 18px; }
+.life-island-notes[open] > summary > span { transform: rotate(45deg); }
+.life-growth-summary { margin-top: 0; padding: 12px; background: color-mix(in srgb, var(--pokomoko-mint) 45%, var(--pokomoko-paper)); border-radius: 14px; }
+.life-growth-heading { font-size: 11px; }
+.life-growth-heading strong { font-size: 12px; font-weight: 600; }
+.life-growth-steps i { height: 6px; border: 0; background: var(--pokomoko-mint); }
+.life-growth-steps i[data-filled="true"] { background: #568775; }
+.life-resource-guide { display: grid; margin: 10px 2px; gap: 10px; }
+@media (max-width: 359px) {
+    .life-resident-choices { gap: 4px; }
+    .life-resident-portrait, .life-resident-portrait img { width: 72px; height: 80px; }
+    .life-resident-choices button > span:last-child { font-size: 12px; }
+}
+@media (min-width: 600px) and (max-height: 500px) {
+    .life-resident-view { display: grid; grid-template-columns: 1.25fr 1fr; align-items: center; gap: 12px; }
+    .life-resident-choices { gap: 4px; }
+    .life-resident-choices button { gap: 2px; padding: 0 0 4px; }
+    .life-resident-portrait, .life-resident-portrait img { width: 54px; height: 54px; }
+    .life-resident-choices button > span:last-child { font-size: 11px; }
+    .life-resident-story { min-height: 0; padding: 4px 0; }
+    .life-resident-story p { font-size: 13px; }
+    .life-resident-story small { font-size: 11px; }
+    .island-page[data-life-home="true"] .life-dock .life-caption { padding-top: 0; padding-bottom: 4px; }
+}

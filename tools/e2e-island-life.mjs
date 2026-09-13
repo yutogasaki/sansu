@@ -46,7 +46,8 @@ try {
     const openLifePanel = async () => {
         const group = page.getByRole('group', { name: 'しまの ていれ' });
         if (!await group.isVisible().catch(() => false)) {
-            await page.getByRole('button', { name: 'しまの ようす', exact: true }).click();
+            if (await page.locator('.life-dock').isVisible().catch(() => false)) await page.getByRole('button', { name: 'しまの ようすを とじる', exact: true }).click();
+          await page.getByRole('button', { name: 'つくる', exact: true }).click();
             await group.waitFor();
         }
         return group;
@@ -87,7 +88,7 @@ try {
         await healthy();
         assert(await canvas.evaluate(e => e.isConnected), 'Keep the renderer while editing instead of exhausting WebGL contexts');
     };
-    await selectTab('ひろげる'); await page.getByRole('button', { name: 'みぎへ ひろげる', exact: true }).click();
+    await selectTab('ひろげる'); await page.getByRole('button', { name: 'みぎへ', exact: true }).click(); await page.locator('.life-land-confirm').click();
     await page.getByText('ひろがった しまに、すきな ばしょを つくろう。').waitFor();
     await page.evaluate(() => {
         window.__lifeEmotes = [];
@@ -150,7 +151,7 @@ try {
     await page.getByRole('button', { name: 'ぽこもこを よぶ', exact: true }).click();
     await page.waitForFunction(id => document.querySelector('[data-life-candidate]')?.dataset.lifeDestination === id, requestedItem);
     const dropsBeforeStyle = await page.locator('[data-life-drops]').getAttribute('data-life-drops');
-    await selectTab('いろ'); await page.getByRole('button', { name: 'ぽこもこの いろ', exact: true }).click();
+    await selectTab('いろ'); await page.getByRole('button', { name: 'ぽこもこの いろへ', exact: true }).click();
     await page.locator('[data-life-style="starlight"]').click(); await page.getByText('いろが かわったよ。いつでも もどせるよ。').waitFor();
     assert.equal(await page.locator('[data-life-drops]').getAttribute('data-life-drops'), dropsBeforeStyle);
     await capture('style');

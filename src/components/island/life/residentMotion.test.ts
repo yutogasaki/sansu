@@ -3,8 +3,31 @@ import { Box3 } from 'three';
 import { HOUR, isRoamVisit, LIFE_STEP_MS, learningDay, newLife } from '../../../domain/islandLife/model';
 import { commandLife, replayLife } from '../../../domain/islandLife/simulation';
 import { buildLifeScene } from './scene';
+import { sampleLifeRoaming } from './roamingPresentation';
+import { easeResident, RESIDENT_SCALE, sampleResidentStride } from '../three/residentRig';
 
 describe('rendered activity geometry', () => {
+    it('uses the legacy distance-based stride without the new sideways sway', () => {
+        const state = replayLife(newLife('legacy-stride', 1)), scene = buildLifeScene(state);
+        const at = 401, visible = sampleLifeRoaming(state, at);
+        const walker = visible.residents.find(r => isRoamVisit(r.visit))!;
+        const actor = scene.root.getObjectByName(`life-resident-${walker.id}`)!;
+        const body = actor.children.find(child => child.name === 'resident-body') ?? actor.children[0];
+        const length = walker.visit!.path.length - 1;
+        const traveled = easeResident((at - walker.visit!.start) / (length * LIFE_STEP_MS)) * length;
+        const expected = sampleResidentStride(traveled * RESIDENT_SCALE / actor.scale.x, length * RESIDENT_SCALE / actor.scale.x);
+        try {
+            scene.animate(at, false);
+            expect(body.position.y).toBeCloseTo(expected.bob);
+            expect(body.rotation.x).toBe(0);
+            expect(body.rotation.z).toBe(0);
+            const position = actor.position.clone();
+            scene.animate(at, true);
+            expect(body.position.y).toBe(0);
+            expect(actor.position).toEqual(position);
+        } finally { scene.dispose(); }
+    });
+
     it('renders a derived ground walk without requiring a furniture mesh', () => {
         const state = replayLife(newLife('roam-motion', 1)), walker = state.residents.find(resident => isRoamVisit(resident.visit))!;
         const scene = buildLifeScene(state), visit = walker.visit!;
