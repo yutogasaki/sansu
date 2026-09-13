@@ -55,6 +55,19 @@ describe('display is distinct from eligibility, saving and understanding', () =>
         expect(JSON.stringify(shown)).not.toMatch(/comprehension|understood|creativity/);
         expect(appendPresentedScene(shown, event, evidence(event))).toBe(shown);
     });
+    it('freezes the displayed world style without rewriting old memory content or hashes', async () => {
+        const old = await scene(), oldBytes = JSON.stringify(old);
+        expect(old.snapshot.scene.worldStyle).toBeUndefined();
+        const state = { ...replayLife(owner()), worldStyle: 'canopy-dots-c3-v1' as const };
+        const rule = evaluateDiscovery(state, 'p').find(rule => rule.ruleId === 'M2')!;
+        const current = await createDiscoveryScene('p', state, rule, 'live', 'new-world', 1000);
+        expect(current.snapshot.scene.worldStyle).toBe('canopy-dots-c3-v1');
+        expect(current.snapshot.immutableHash).not.toBe(old.snapshot.immutableHash);
+        expect(replayDiscoveryScene(current, 'replay-new', 2000).snapshot).toEqual(current.snapshot);
+        expect(replayDiscoveryScene(old, 'replay-old', 2000).snapshot).toEqual(old.snapshot);
+        expect(await sceneDigest(old.snapshot.scene)).toBe(old.snapshot.immutableHash);
+        expect(JSON.stringify(old)).toBe(oldBytes);
+    });
     it('captures a detached snapshot and rejects stale conditions', async () => {
         const state = replayLife(owner()), rule = evaluateDiscovery(state, 'p').find(rule => rule.ruleId === 'M2')!;
         const event = await createDiscoveryScene('p', state, rule, 'live', 'event', 1000);

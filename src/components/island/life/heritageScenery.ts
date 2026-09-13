@@ -1,4 +1,5 @@
-import { Group } from 'three';
+import { Group, Mesh, MeshStandardMaterial } from 'three';
+import { roundedBoxGeometry } from '../three/geometry';
 import { disposeGeometry, IslandMaterials } from '../three/primitives';
 import { makeScenery, makeStarTree } from '../three/scenery';
 import { createIslandRoofSurface, ISLAND_ROOF_SURFACE_CANDIDATE } from '../three/roofSurface';
@@ -20,7 +21,7 @@ class HeritageHouseMaterials extends IslandMaterials {
  * world materials and applies the existing Life house scale (.8) and position.
  * Dispose this factory's roof pool when the scene is torn down.
  */
-export function buildHeritageHouse(materials: IslandMaterials) {
+export function buildHeritageHouse(materials: IslandMaterials, vivid = false) {
     const houseMaterials = new HeritageHouseMaterials(materials);
     // The legacy cottage factory is private. Extract its named shell through
     // the public scenery builder without constructing the old island terrain.
@@ -30,6 +31,21 @@ export function buildHeritageHouse(materials: IslandMaterials) {
         disposeGeometry(scenery);
         houseMaterials.dispose();
         throw new Error('Heritage cottage shell is missing');
+    }
+    const tileMaterials: MeshStandardMaterial[] = [];
+    if (vivid) {
+        shell.traverse(object => {
+            if (object instanceof Mesh && !Array.isArray(object.material)
+                && object.material.name.startsWith(ISLAND_ROOF_SURFACE_CANDIDATE)) object.visible = false;
+        });
+        tileMaterials.push(...['#f5c431', '#e767aa', '#299bc5'].map(color => new MeshStandardMaterial({ color, roughness: .38 })));
+        const tiles = new Group(); tiles.name = 'life-canopy-roof'; shell.add(tiles);
+        for (const side of [-1, 1]) for (let row = 0; row < 3; row++) for (let col = 0; col < 3; col++) {
+            const x = side * (.23 + row * .39), y = 2.36 - Math.abs(x) * .769;
+            const tile = new Mesh(roundedBoxGeometry([.54, .12, .65], .065, 3), tileMaterials[(col + row + (side === 1 ? 1 : 0)) % 3]);
+            tile.position.set(x, y, (col - 1) * .65); tile.rotation.z = -side * Math.atan(.769);
+            tile.castShadow = tile.receiveShadow = true; tiles.add(tile);
+        }
     }
     shell.removeFromParent();
     disposeGeometry(scenery);
@@ -41,8 +57,8 @@ export function buildHeritageHouse(materials: IslandMaterials) {
     shell.position.set(.18, 0, -.5);
     house.add(shell);
     house.userData.visualSource = 'moon-garden-cottage';
-    house.userData.roofSurfaceCandidate = ISLAND_ROOF_SURFACE_CANDIDATE;
-    return { root: house, dispose: () => houseMaterials.dispose() };
+    house.userData.roofSurfaceCandidate = vivid ? 'canopy-c3-rounded-tiles-v1' : ISLAND_ROOF_SURFACE_CANDIDATE;
+    return { root: house, dispose: () => { tileMaterials.forEach(material => material.dispose()); houseMaterials.dispose(); } };
 }
 
 /** The original rooted, lobed canopy and hanging stars, in local coordinates. */

@@ -1,0 +1,26 @@
+# C2 — 巨大植物・水玉・住民の愛着
+
+2026-09-13。ユーザーがCの方向を選好し、元憲章の水玉・色面と住民への愛着を合わせるよう希望。Cの画像選好は、新しいC2や本番実装の承認を意味しない。
+
+参照: `c-botanical-architecture.png`（空間）と `../2026-09-12-island-resident-panel/phone-information.png`（住民の顔・配色）。仕様48の既存の好みは、ぽこもこ=ベンチ、うさぎ=おはな、カワウソ=ブランコ。パッチワークはぽこもこだけ。
+
+取り入れる: 巨大な包む形、曲面に沿う大きな水玉、屋根の色面、局所的な透過光、顔が読めるしぐさ。取り入れない: 全面の細かい柄、全員の同じ表情、作品固有のモチーフ、UI焼き込み、既存キャラの別種への置換。
+
+制作はbuilt-in image_gen。静止画の方向検討であり、学習・配置・保存・runtimeは変更しない。
+
+## Prompt
+
+生成結果: [C2](c2-dots-residents.png)。Cの包む樹形に大粒の水玉・大きな色瓦を合わせ、3住民の顔と異なる活動を表現できた。葉の枚数や家の細部・住民の頭身は完全固定ではない。カワウソのしっぽが既存の小さな丸より大きく長く見え、identityの再調整が必要。庭の細かな植生も増えたため、実画面化では密度を整理する。愛着が生まれるかは画像作者の判断で認定せず、利用者観察は未実施。新しい候補の採用・runtime検証は未実施。
+
+Use case: stylized-concept / reference-led art refinement.
+Generate ONE beautifully art-directed portrait illustration, aspect ratio 390:844, of Pokomoko's mysterious island. This is a new art concept, NOT runtime UI.
+INPUT 1 = user-selected direction C; preserve its giant tree wrapping around the cottage, sweeping rooted branch arch, huge overhead canopy, shore, sea glimpses and layered depth. INPUT 2 = actual resident identity reference, the three portraits inside the UI; use these ONLY for accurate characters, NOT UI or background.
+PRIMARY CHANGE: mix sculptural fantasy botanical space with bold large polka dots and separated vivid color fields, while making the three residents individually lovable through faces, silhouettes and distinct physical mannerisms. Render with high-end tactile stylized 3D picture-book craft, crisp large forms, NOT flat vector, NOT photoreal jungle, NOT excessive fine detail.
+COMPOSITION: Same elevated three-quarter view as input 1. Giant tree and five or six enormous curling leaves create a habitable arch occupying upper half, small cream cottage right-middle with curved yellow/pink/cobalt tile roof. A spacious mint garden occupies middle/lower half. Reduce giant foreground leaf so it does not occupy half the picture. Exactly three residents visible full-body at a readable larger scale around house, each about 10-13% of frame height; faces in three-quarter view facing into foreground, not all turned away as input 1. Their activities are a quiet lived-in moment, not a lineup, no new characters.
+PATTERN: Only selected enormous purple leaves carry large clean widely spaced warm-cream and coral polka dots, following curvature with foreshortening. Some leaf undersides show jade-blue color with a few large pale dots, others stay completely plain. Dots are bold graphic organic surface patterns, not spores, tiny spots or glitter. A curled front leaf exposes its dotted underside and translucent rim, creating an unexpected spatial fold. Preserve material thickness and visible stem attachment. House roof has fewer bigger expressive yellow/ochre/pink/cobalt ceramic color planes, deep indigo seams/contours confined to the roof and selected patterned edges. Trunk warm wood remains unpatterned; ground, water, faces and most of cottage walls remain plain. Avoid all-over pattern overload and equal rainbow color allocation.
+LIGHT / MYSTERY: Clear warm daylight on garden with deep cool teal/plum shadow inside the giant canopy, a few soft light-transmitting leaf edges, amber cottage window. Half-visible winding spaces behind boughs and layered blue water beyond, magical wonder readable in static silhouette and light. Not nighttime, not tropical postcard, no bright sun/huge clouds dominating. No magical particles, symbols, runes, fireworks, portals.
+CHARACTERS - STRICT IDENTITY:
+1. Pokomoko: same small round-eared patchwork fabric bear from reference 2. Cream muzzle/face area, blue patch on head, colorful red/pink and teal/green/yellow fabric sections with local seams, simple dark eyes and nose, short round limbs, recognizable bear NOT astronaut helmet. Sitting comfortably on a small wooden bench to the left of house, feet hanging safely, head gently tilted toward the rabbit, one paw resting on seat. Face clearly visible, relaxed curious expression.
+2. Rabbit: same cream slender small rabbit with long upright ears, blue neck bow/scarf, tiny dark eyes and nose, no patchwork. Near a flower, one ear tilts subtly as rabbit leans in to smell it; paws and feet visibly grounded. Little contained delight rather than giant cartoon smile.
+3. Otter: same warm brown otter with cream muzzle and oval cream belly, round small ears, little round tail. Sitting on a low wooden swing near right garden edge suspended from an appropriate branch, both paws holding separate ropes, seat under hips, feet near clear safe ground; gentle backward lean and pleased expression. No ropes over face or body, no dangling dangerous pose. Keep swing small and grounded, do not add playground clutter.
+Only these small bench/swing/flower props, justified by existing resident preferences. No costumes or personality text. Materials separate: patchwork only bear, subtle short fur rabbit/otter, solid smooth mint earth with low soft grass not fuzzy fabric carpet, wood grain trunk/bench, glazed ceramic roof, waxy thin leaf surfaces, clear blue water. Preserve beauty of original giant-tree design but simplify repetitive tiny leaves and detail. No UI, no text, captions, labels, watermarks, logos, collage, cards, or game franchise characters. One emotionally warm mysterious habitat with three specific personalities living in it.

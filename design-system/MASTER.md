@@ -20,6 +20,8 @@ If a design rule changes, update the SSOT docs first and then refresh this file.
 
 ## Design Intent
 
+Island world art follows [the design charter](../docs/product/design-charter.md) and its [C3 environment reference](../docs/design/references/2026-09-13-canopy-dots/README.md): embracing giant plants, large curved-surface dots, distinct roof color fields, local cool shade and open resting areas. Preserve the existing Pokomoko character design; character changes are separate scoped work. Generated character differences in the environment reference are not identity updates.
+
 - Fun first without sacrificing child safety, learning integrity, or parent trust
 - Readable, alive valleys punctuated by short, meaningful peaks; calm means one clear cause and limited competition, not muted color or an expressionless world
 - Math actions should visibly move the world: digging, building, opening, discovering, and returning

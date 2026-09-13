@@ -2,7 +2,7 @@ import { DISCOVERY_RULE_VERSION, evaluateDiscovery, type DiscoveryRuleId, type R
 import { LIFE_STEP_MS, type LifeState, type ResidentId } from './model';
 
 export type SceneSource = 'live' | 'current-context-test' | 'replay' | 'simulated';
-export type SceneSnapshot = Pick<LifeState, 'now' | 'activityVersion' | 'items' | 'residents' | 'heroStyle' | 'expanded' | 'target' | 'relationTarget'>;
+export type SceneSnapshot = Pick<LifeState, 'now' | 'activityVersion' | 'items' | 'residents' | 'heroStyle' | 'expanded' | 'target' | 'relationTarget' | 'worldStyle'>;
 export interface DiscoveryScene {
     eventId: string; profileId: string; ruleId: DiscoveryRuleId; ruleVersion: typeof DISCOVERY_RULE_VERSION;
     semanticSignature: string; createdAt: number; source: SceneSource; originEventId?: string;
@@ -34,6 +34,7 @@ export async function createDiscoveryScene(profileId: string, state: LifeState, 
     const focal = [...new Set(focalResidentIds)].sort();
     if (focal.some(id => !state.residents.some(resident => resident.id === id))) throw new Error('Unknown scene resident');
     const scene: SceneSnapshot = structuredClone({ now: state.now, activityVersion: state.activityVersion,
+        ...(state.worldStyle ? { worldStyle: state.worldStyle } : {}),
         items: state.items, residents: state.residents, heroStyle: state.heroStyle, expanded: state.expanded, target: state.target, relationTarget: state.relationTarget });
     const residentState = focal.map(id => {
         const resident = scene.residents.find(candidate => candidate.id === id)!;

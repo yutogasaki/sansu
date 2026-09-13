@@ -31,23 +31,29 @@ export function buildLandscape(state: LifeState, width: number, point: (c: Cell)
         const mesh = new T.Mesh(geometry, paint(color)); mesh.position.y = y;
         mesh.receiveShadow = true; root.add(mesh); return mesh;
     };
-    land(width + 1.7, 6.35, -.43, .23, '#9d8cb8');
-    land(width + 1.95, 6.65, -.24, .15, '#ead7a8');
-    const grass = land(width + 1.4, 5.65, -.16, .15, '#63cbb0');
+    const canopy = state.worldStyle === 'canopy-dots-c3-v1';
+    const apron = canopy ? 1.35 : 0;
+    const cliff = land(width + 1.7, 6.35 + apron, -.43, .23, '#9d8cb8');
+    const sand = land(width + 1.95, 6.65 + apron, -.24, .15, '#ead7a8');
+    const grass = land(width + 1.4, 5.65 + apron, -.16, .15, '#63cbb0');
+    for (const layer of [cliff, sand, grass]) layer.position.z = -apron / 2;
     const grassSurface = createIslandGrassSurface(grass.material, 'legacy-v1:moon-garden:ground');
-    if (grassSurface) grass.material = grassSurface.material;
+    if (grassSurface) {
+        grass.material = grassSurface.material;
+        if (state.worldStyle === 'canopy-dots-c3-v1') grassSurface.material.bumpScale = .24;
+    }
 
     // A broad, quiet water plane with a shallow shelf and low-contrast current.
     // It carries no hit targets and never changes simulation time or growth.
     const water = new T.ShaderMaterial({
-        uniforms: { time: { value: 0 }, halfLand: { value: new T.Vector2((width + 1.9) / 2, 3.35) },
-            deep: { value: new T.Color('#355fc4') }, shallow: { value: new T.Color('#8bdbdd') } },
+        uniforms: { time: { value: 0 }, halfLand: { value: new T.Vector2((width + 1.9) / 2, 3.35 + apron / 2) },
+            landOffset: { value: apron / 2 }, deep: { value: new T.Color('#355fc4') }, shallow: { value: new T.Color('#8bdbdd') } },
         vertexShader: 'varying vec2 vWorld; void main(){vec4 p=modelMatrix*vec4(position,1.0);vWorld=p.xz;gl_Position=projectionMatrix*viewMatrix*p;}',
-        fragmentShader: `uniform float time; uniform vec2 halfLand; uniform vec3 deep; uniform vec3 shallow; varying vec2 vWorld;
+        fragmentShader: `uniform float time; uniform float landOffset; uniform vec2 halfLand; uniform vec3 deep; uniform vec3 shallow; varying vec2 vWorld;
         float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
         float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.0-2.0*f);return mix(mix(hash(i),hash(i+vec2(1,0)),f.x),mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),f.x),f.y);}
         void main(){
-            vec2 q=abs(vWorld)-halfLand+vec2(.7);
+            vec2 q=abs(vWorld+vec2(0.0,landOffset))-halfLand+vec2(.7);
             float edge=length(max(q,0.0))+min(max(q.x,q.y),0.0)-.7;
             float shelf=1.0-smoothstep(.0,2.2,edge);
             vec3 color=mix(deep,shallow,shelf*.92);

@@ -1,3 +1,4 @@
+import { buildCanopyScenery } from './canopyScenery';
 import { makeLifeMotion, type LifeSeat } from './residentMotion';
 import * as T from 'three';
 import { makeResidentRig } from '../three/residentRig';
@@ -17,7 +18,7 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
     // Pokomoko alone keeps the patchwork identity. The discarded legacy otter
     // stays in root and is disposed with the unused home-journey scenery.
     content.otter = makeResidentRig('otter', content.m, 'natural');
-    const heritageHouse = buildHeritageHouse(content.m), house = heritageHouse.root;
+    const heritageHouse = buildHeritageHouse(content.m, state.worldStyle === 'canopy-dots-c3-v1'), house = heritageHouse.root;
     const actors = [content.hero, content.rabbit.pose, content.otter.pose];
     house.removeFromParent(); actors.forEach(a => a.removeFromParent());
     disposeGeometry(root); root.clear();
@@ -42,9 +43,14 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
 
     }
     house.position.set(2.5 - center, .035, -1.5); house.scale.setScalar(.8); root.add(house);
-    const tree = buildHeritageTree(content.m);
-    tree.position.set(2.5 - center + 1.25, -.01, -3.05);
-    tree.scale.setScalar(.63); root.add(tree);
+    const canopy = state.worldStyle === 'canopy-dots-c3-v1' ? buildCanopyScenery(center) : undefined;
+    root.userData.worldStyle = state.worldStyle ?? 'moon-garden-v1';
+    if (canopy) root.add(canopy.root);
+    else {
+        const tree = buildHeritageTree(content.m);
+        tree.position.set(2.5 - center + 1.25, -.01, -3.05);
+        tree.scale.setScalar(.63); root.add(tree);
+    }
     const seats = new Map<string, LifeSeat>();
     for (const item of [...state.items, ...(placement?.item.cell ? [placement.item] : [])]) {
         if (!item.cell) continue;
@@ -86,6 +92,6 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
             // Plane overlays use separate transparent materials; shared paints are owned by content.m.
             clickables.forEach(o => ((o as T.Mesh).material as T.Material).dispose());
             previewMaterials.forEach(m => m.dispose());
-            landscape.dispose(); heritageHouse.dispose(); content.dispose();
+            canopy?.dispose(); landscape.dispose(); heritageHouse.dispose(); content.dispose();
         } };
 }

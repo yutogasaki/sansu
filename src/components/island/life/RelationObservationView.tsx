@@ -65,7 +65,7 @@ export default function RelationObservationView(props: Props) {
             if (benchId !== (latest.current.benchId ?? '')) cancel();
             source = latest.current.state; benchId = latest.current.benchId ?? ''; start = performance.now();
             if (content) { scene.remove(content.root); content.dispose(); }
-            content = buildLifeScene(source); scene.add(content.root); content.animate(source.now, matchMedia('(prefers-reduced-motion: reduce)').matches); resize();
+            content = buildLifeScene(source); scene.add(content.root); node.dataset.lifeWorldStyle = content.root.userData.worldStyle; content.animate(source.now, matchMedia('(prefers-reduced-motion: reduce)').matches); resize();
         };
         const observer = new ResizeObserver(resize); observer.observe(node); update.current();
         const frame = () => {

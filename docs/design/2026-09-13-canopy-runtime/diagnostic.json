@@ -1,0 +1,130 @@
+{
+  "revision": "1b7edba39cc031b022b950ac85a7b52df0ea63b1",
+  "candidate": "canopy-dots-c3-v1",
+  "target": "http://127.0.0.1:5223",
+  "flags": "DEV VITE_ISLAND_LIFE_PREVIEW=true",
+  "humanN": 0,
+  "diagnostic": true,
+  "cases": [
+    {
+      "device": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "errors": [],
+      "audit": {
+        "style": "canopy-dots-c3-v1",
+        "render": {
+          "calls": 188,
+          "triangles": 121266,
+          "geometries": 128,
+          "textures": 6
+        },
+        "poses": [
+          {
+            "id": "pokomoko",
+            "itemId": "roam:display:pokomoko:0",
+            "phase": "walking",
+            "position": [
+              -1.5,
+              0.04,
+              -1.5242695257523147
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0,
+            "headYaw": 0
+          },
+          {
+            "id": "rabbit",
+            "phase": "home",
+            "position": [
+              0.5,
+              0.04,
+              -1
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": -0.02393354174344234,
+            "headYaw": 0
+          },
+          {
+            "id": "otter",
+            "phase": "home",
+            "position": [
+              0.5,
+              0.04,
+              0
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0.008558074553074679,
+            "headYaw": 0
+          }
+        ]
+      }
+    },
+    {
+      "device": "tablet",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "errors": [],
+      "audit": {
+        "style": "canopy-dots-c3-v1",
+        "render": {
+          "calls": 188,
+          "triangles": 121266,
+          "geometries": 128,
+          "textures": 6
+        },
+        "poses": [
+          {
+            "id": "pokomoko",
+            "itemId": "roam:display:pokomoko:0",
+            "phase": "walking",
+            "position": [
+              -1.5,
+              0.04,
+              -1.5859352104243585
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0,
+            "headYaw": 0
+          },
+          {
+            "id": "rabbit",
+            "phase": "home",
+            "position": [
+              0.5,
+              0.04,
+              -1
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0,
+            "headYaw": 0
+          },
+          {
+            "id": "otter",
+            "phase": "home",
+            "position": [
+              0.5,
+              0.04,
+              0
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0,
+            "headYaw": 0
+          }
+        ]
+      }
+    }
+  ],
+  "sourceHash": "2e2b7c1e35e6a8c25b0d00a0b30abc88b7e4a210f6133a68182332ccf25d1d41",
+  "sourceHashTiming": "calculated after capture; no application edits between capture and digest; not a start/end-certified release run"
+}

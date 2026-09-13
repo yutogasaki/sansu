@@ -66,7 +66,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
     const lastObservedLight = useRef<number | undefined>(undefined);
     const lastObservedGrowth = useRef<Record<string, number> | undefined>(undefined);
     const lastObservedObservation = useRef<Record<string, string> | undefined>(undefined);
-    const state = useMemo(() => record ? replayLife(record) : undefined, [record]);
+    const state = useMemo(() => record ? { ...replayLife(record), worldStyle: import.meta.env.DEV && import.meta.env.VITE_ISLAND_LIFE_PREVIEW === 'true' ? 'canopy-dots-c3-v1' as const : 'moon-garden-v1' as const } : undefined, [record]);
     useEffect(() => {
         if (!observed) { setGathering(undefined); observationOrigin.current = undefined; return; }
         const target = state?.items.find(i => i.id === observed && i.cell);

@@ -70,7 +70,8 @@ export default function LifeWorld({ profileId, presented, state, selected, cell,
             // The ordinary view reads faces; placement and overview retain the full shore.
             const closeView = !currentPlacement && !overviewRef.current;
             const halfHeight = Math.max(3.8, projectedWidth / aspect / 2) * (closeView ? .66 : 1);
-            cameraOffset.copy(cameraBaseOffset).applyAxisAngle(cameraYAxis, cameraControls.view.azimuth);
+            const canopyView = currentState.worldStyle === 'canopy-dots-c3-v1' && closeView;
+            cameraOffset.copy(canopyView ? new T.Vector3(4.5, 6.0, 11) : cameraBaseOffset).applyAxisAngle(cameraYAxis, cameraControls.view.azimuth);
             camera.position.copy(cameraTarget).add(cameraOffset); camera.lookAt(cameraTarget); camera.updateMatrixWorld(true);
             camera.left = -halfHeight * aspect; camera.right = halfHeight * aspect; camera.top = halfHeight; camera.bottom = -halfHeight;
 
@@ -96,7 +97,7 @@ export default function LifeWorld({ profileId, presented, state, selected, cell,
                 ground: { origin, x: { x: xBasis.x - origin.x, y: xBasis.y - origin.y }, z: { x: zBasis.x - origin.x, y: zBasis.y - origin.y } },
                 // Bring the doorstep toward the center in the closer view without
                 // changing the full-island frame used for placement and overview.
-                center: closeView ? { x: project(pointFor(2.5, 1)).x * .45, y: 0 } : { x: 0, y: 0 },
+                center: closeView ? { x: project(pointFor(2.5, 1)).x * .45, y: canopyView ? .95 : 0 } : { x: 0, y: 0 },
                 height: halfHeight * 2, aspect, bounds, regions: [ground],
             };
             const frame = cameraControls.setFrame(framing);
@@ -113,6 +114,7 @@ export default function LifeWorld({ profileId, presented, state, selected, cell,
             if (preview) cameraControls.cancel();
             if (content) { scene.remove(content.root); content.dispose(); }
             content = buildLifeScene(next, selection, point, preview); scene.add(content.root);
+            node.dataset.lifeWorldStyle = content.root.userData.worldStyle;
             resize();
         };
         const observer = new ResizeObserver(resize); observer.observe(node);

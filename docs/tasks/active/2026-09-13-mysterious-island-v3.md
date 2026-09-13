@@ -165,3 +165,12 @@
 ぽこもこの顔/輪郭/頭身/耳/配色/布の切替と既存住民の好み・動作を維持。参考画像の生成キャラは設定画にしない。C3は配信背景や固定配置/カメラの契約ではなく、世界表現の参照。進行中の経済移行を検証可能なcheckpointへ整えた後、通常島の美術を更新し、実画面とC3を比較する。視覚・無文字理解/安全・runtimeを別に判定する。別作業のデザイン資料を戻さず、関連する正本の取り込みは世界美術のまとまりで扱う。
 
 - 段階10の最終core PASS（366 files / 3751 tests、docs/lint/typecheck/build/assets）。DEV両幅PASS、source開始/終了 `6c27e4b8743690ed2b7ac4911ce8d7769a7595be52c5a9e5ba94ae36f3c56693` 一致。[実画面・transaction検査の範囲](../../design/2026-09-13-island-economy-checkpoint/README.md)。C3の世界美術更新、土地/cap/GP3/B、release全体は引き続き未完。
+
+### C3 world preview（継続中）
+
+経済checkpoint `1b7edba39cc031b022b950ac85a7b52df0ea63b1` はmain push確認済み。C3はDEV Life previewで通常島に実装試行中。巨大枝/水玉の曲面葉/立体色瓦/草の低密度化を独立world rendererで作成。住民の既存mesh/布/歩行は同一で対象回帰PASS。`worldStyle`を発見snapshotに含め、旧snapshotは版なし=旧背景のまま再生し既存hashを書き換えない。
+
+[最新DEV実画面と未採用理由](../../design/2026-09-13-canopy-runtime/README.md)。視覚HOLD（特にtablet上部の葉のcrop、平たい葉、根奥の陰）、Human N=0、runtime部分検証。対象14テスト/typecheck PASS。2回の比較で基準未達のため主要な樹形を変更したが、次はカメラと樹形を一体で再構成し葉の立体構造も見直す。未commit。production既定値は旧背景。土地/GP3/Bと全体releaseも継続対象。
+
+
+- C3の葉を閉じた曲面へ作り直し、根の接地用後端とカメラ/枝の重なりを再構成。実UI両幅で旧世界のimmutable再生と現在への移動、live G0のworldStyle記録、全景/学習復帰、学習正本不変を確認。source `4c696b4b66a948d3096a4af3748a3b02639bfb70ef8db268450f8930b3719db7`、core 366 files / 3753 tests PASS。最新contact sheetは上記READMEの統合検証。背景版保存とDEV試作の技術checkpointとし、視覚HOLD・Human N=0・release未完を維持。C3の陰/素材/構図の改善とGP3/土地/Bを継続する。

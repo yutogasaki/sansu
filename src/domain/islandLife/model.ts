@@ -45,7 +45,9 @@ export interface LifeResident {
     id: ResidentId; cell: Cell; visit?: Visit; enjoyed: number; enjoyedBy: Partial<Record<ItemKind, number>>;
     discovery?: { itemId: string; at: number; mood: 'notice' | 'curious' };
 }
+export type LifeWorldStyle = 'moon-garden-v1' | 'canopy-dots-c3-v1';
 export interface LifeState {
+    worldStyle?: LifeWorldStyle;
     now: number; activityVersion: 1 | 2; drops: number; light: number; expanded?: 'east' | 'west'; items: LifeItem[];
     styles: Style[]; heroStyle: Style; target?: string; days: Record<string, number>;
     economy?: LifeEconomyV3;

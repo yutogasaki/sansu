@@ -1,5 +1,7 @@
 # Documentation Index
 
+世界表現は[デザイン憲章](product/design-charter.md)と[巨大植物・水玉のC3参考画像](design/references/2026-09-13-canopy-dots/README.md)を参照。ぽこもこの既存デザインは維持し、キャラ変更は個別作業として扱う。
+
 不思議な島のv3段階実装は[仕様50](product/50_mysterious_island_discovery_spec.md)。添付原文と現行実装の境界、購入履歴保護、4品からの実装順を参照。
 
 
