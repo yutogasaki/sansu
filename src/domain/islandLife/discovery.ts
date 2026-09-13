@@ -1,3 +1,4 @@
+import { isFacility } from './footprint';
 import { itemComponents as components } from './itemComponents';
 import { extendedGatherings } from './extendedGatherings';
 import { growthStage, LIFE_STEP_MS, type Cell, type LifeItem, type LifeState } from './model';
@@ -26,7 +27,7 @@ function eligibility(profileId: string, ruleId: DiscoveryRuleId, items: LifeItem
 /** Actual usable ground points, including the front-only legacy access contract. */
 export function discoveryAccessPoints(state: LifeState, item: LifeItem): Cell[] {
     if (!item.cell) return [];
-    const directions = (item.kind === 'picnic-table' || item.kind === 'sandbox') ? [{ x: 0, z: 1 }, { x: 0, z: -1 }] : item.access === 'front' ? [{ x: 0, z: 1 }]
+    const directions = isFacility(item.kind) ? [{ x: 0, z: 2 }] : (item.kind === 'picnic-table' || item.kind === 'sandbox') ? [{ x: 0, z: 1 }, { x: 0, z: -1 }] : item.access === 'front' ? [{ x: 0, z: 1 }]
         : [{ x: 0, z: 1 }, { x: 1, z: 0 }, { x: -1, z: 0 }, { x: 0, z: -1 }];
     return directions.map(d => ({ x: item.cell!.x + d.x, z: item.cell!.z + d.z }))
         .filter(point => vacant(state, point) && Boolean(route(state, homeCell, point)));

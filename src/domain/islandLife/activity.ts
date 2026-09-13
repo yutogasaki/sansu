@@ -1,3 +1,4 @@
+import { isFacility } from './footprint';
 import { isRoamVisit, LIFE_STEP_MS, type LifeResident, type LifeState } from './model';
 import { favorite } from './simulation';
 
@@ -53,7 +54,7 @@ export function activityPhase(state: LifeState, resident: LifeResident, now: num
     }
     if (!item) return resident.id === 'pokomoko' && state.target ? 'waiting' : 'home';
     const walkEnd = visit.start + (visit.path.length - 1) * LIFE_STEP_MS;
-    const settle = item.kind === 'bench' || item.kind === 'swing' || item.kind === 'picnic-table' || item.kind === 'sandbox' ? 900 : 400;
+    const settle = isFacility(item.kind) || item.kind === 'bench' || item.kind === 'swing' || item.kind === 'picnic-table' || item.kind === 'sandbox' ? 900 : 400;
     return now < walkEnd + settle ? 'walking' : item.kind;
 }
 export function activityLabel(state: LifeState, resident: LifeResident, now: number) {
@@ -62,6 +63,7 @@ export function activityLabel(state: LifeState, resident: LifeResident, now: num
         : phase === 'swing' ? 'ブランコで ゆらゆら' : phase === 'bench' ? 'すわって ひとやすみ'
         : phase === 'sapling' ? '木の そばで ひとやすみ' : phase === 'water-bowl' ? '水を そっと のぞいている'
         : phase === 'picnic-table' ? 'テーブルで ひとやすみ'
+        : phase === 'library' ? 'ほんを よんでいる' : phase === 'garden-hut' ? 'どうぐを おていれ'
         : phase === 'sandbox' ? 'すなで つくっている'
         : phase === 'flower-arch' ? 'アーチを くぐったよ'
         : phase === 'roaming' ? 'しまを のんびり さんぽ'

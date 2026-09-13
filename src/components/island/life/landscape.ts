@@ -1,3 +1,4 @@
+import { occupiedCells } from '../../../domain/islandLife/footprint';
 import { buildExtendedGround } from './extendedGround';
 import { landBounds } from '../../../domain/islandLife/landRules';
 import * as T from 'three';
@@ -147,7 +148,7 @@ export function buildLandscape(state: LifeState, width: number, point: (c: Cell)
 
     // Flat stepping stones borrow the old garden's path without reserving cells.
     // An owned item always wins over decoration, including after a move/reload.
-    const occupied = new Set(state.items.filter(item => item.cell).map(item => cellKey(item.cell!)));
+    const occupied = new Set(state.items.flatMap(item => occupiedCells(item).map(cellKey)));
     const path = new T.Group(); path.name = 'life-doorstep-path'; root.add(path);
     for (let z = 1; z <= 4; z++) {
         const cell = { x: 2, z };

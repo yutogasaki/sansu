@@ -1,3 +1,5 @@
+import { buildFacility } from './facilityGeometry';
+import { isFacility } from '../../../domain/islandLife/footprint';
 import { buildSandbox } from './sandboxGeometry';
 import { buildWindArch } from './windArchGeometry';
 import * as T from 'three';
@@ -9,6 +11,7 @@ export const tint = (style: Style) => style === 'sunshine' ? '#f5bf60' : style =
 
 /** Shared catalog and placed-item model. Growth is always supplied by the caller. */
 export function buildLifeItem(item: LifeItem, materials: IslandMaterials, showSoil = true) {
+    if (isFacility(item.kind)) return { root: buildFacility(item.kind, materials, item.style), seat: undefined, pivot: undefined, picnic: undefined, rotor: undefined, sandbox: undefined };
     if (item.kind === 'sandbox') return { ...buildSandbox(materials, item.style), seat: undefined, pivot: undefined, picnic: undefined, rotor: undefined };
     if (item.kind === 'pinwheel' || item.kind === 'flower-arch') return { ...buildWindArch(item.kind, materials, item.style), seat: undefined, pivot: undefined, picnic: undefined, sandbox: undefined };
     const g = new T.Group();

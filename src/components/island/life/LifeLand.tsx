@@ -1,3 +1,4 @@
+import { isFacility, occupiesCell } from '../../../domain/islandLife/footprint';
 import { expandedLand, landBounds, landQuote } from '../../../domain/islandLife/landRules';
 import { useState } from 'react';
 import { ArrowDown, ArrowLeft, ArrowRight, Check, Droplets } from 'lucide-react';
@@ -24,14 +25,14 @@ export default function LifeLand({ state, locked, onAction }: {
             {cells.map(c => {
                 const added = !owned.has(`${c.x},${c.z}`);
                 const x = 20 + (c.x - min) * 29, y = 12 + c.z * 27;
-                const placed = state.items.find(item => item.cell?.x === c.x && item.cell.z === c.z);
+                const placed = state.items.find(item => occupiesCell(item, c));
                 return <g key={`${c.x},${c.z}`} data-life-map-cell={`${c.x},${c.z}`} data-proposed={added}>
                     <rect x={x} y={y} width="28" height="26" rx="5" className={added ? 'life-map-proposed' : 'life-map-ground'} />
                     {added && <path d={`M${x + 10} ${y + 13}h8m-4 -4v8`} className="life-map-plus" />}
                     {isHouse(c) && <rect x={x + 5} y={y + 4} width="18" height="18" rx="3" className="life-map-house" />}
                     {c.x === 2 && c.z === 0 && <path d={`M${x + 3} ${y + 10}l11 -8 11 8`} className="life-map-roof" />}
-                    {placed && <g transform={`translate(${x + 14} ${y + 13})`} className={`life-map-item life-map-item--${placed.kind}`}>
-                        {placed.kind === 'sandbox' ? <><path d="M-9 7V-3H9V7ZM-5 3L0-5 5 3Z" /></> : placed.kind === 'pinwheel' ? <><path d="M0 8V-5M0-4L-7-8V-1ZM0-4L7-8V-1ZM0-4L-7 3H0ZM0-4L7 3H0Z" /></> : placed.kind === 'flower-arch' ? <><path d="M-7 8V-3Q0-13 7-3V8" /></> : placed.kind === 'picnic-table' ? <><path d="M-8 -3H8V1H-8ZM-5 1V8M5 1V8M-9 5H9" /></> : placed.kind === 'sapling' ? <><path d="M0 8V-5" /><ellipse cy="-3" rx="7" ry="5" /></> : placed.kind === 'water-bowl' ? <><path d="M-8 0Q-6 9 0 9Q6 9 8 0" /><ellipse rx="8" ry="3" /></> : placed.kind === 'flower' ? <><path d="M0 7V-4M-5 3L0 5 5 1" /><circle cy="-4" r="4" /></> : placed.kind === 'bench' ? <><path d="M-8 -5H8V3H-8ZM-6 3V8M6 3V8" /></> : placed.kind === 'swing' ? <><path d="M-9 8L-5 -8H5L9 8M-4 -6V4H4V-6" /></> : <><path d="M0 8V-3" /><circle cy="-5" r="4" /></>}
+                    {placed && placed.cell?.x === c.x && placed.cell.z === c.z && <g transform={`translate(${x + 14 + (isFacility(placed.kind) ? 14.5 : 0)} ${y + 13 + (isFacility(placed.kind) ? 13.5 : 0)})`} className={`life-map-item life-map-item--${placed.kind}`}>
+                        {placed.kind === 'library' || placed.kind === 'garden-hut' ? <><rect x="-27.5" y="-25.5" width="57" height="53" rx="5" fill="none" stroke="#927750" /><path d="M-9 -2L0-9 9-2V8H-9ZM-2 8V1H3V8" /></> : placed.kind === 'sandbox' ? <><path d="M-9 7V-3H9V7ZM-5 3L0-5 5 3Z" /></> : placed.kind === 'pinwheel' ? <><path d="M0 8V-5M0-4L-7-8V-1ZM0-4L7-8V-1ZM0-4L-7 3H0ZM0-4L7 3H0Z" /></> : placed.kind === 'flower-arch' ? <><path d="M-7 8V-3Q0-13 7-3V8" /></> : placed.kind === 'picnic-table' ? <><path d="M-8 -3H8V1H-8ZM-5 1V8M5 1V8M-9 5H9" /></> : placed.kind === 'sapling' ? <><path d="M0 8V-5" /><ellipse cy="-3" rx="7" ry="5" /></> : placed.kind === 'water-bowl' ? <><path d="M-8 0Q-6 9 0 9Q6 9 8 0" /><ellipse rx="8" ry="3" /></> : placed.kind === 'flower' ? <><path d="M0 7V-4M-5 3L0 5 5 1" /><circle cy="-4" r="4" /></> : placed.kind === 'bench' ? <><path d="M-8 -5H8V3H-8ZM-6 3V8M6 3V8" /></> : placed.kind === 'swing' ? <><path d="M-9 8L-5 -8H5L9 8M-4 -6V4H4V-6" /></> : <><path d="M0 8V-3" /><circle cy="-5" r="4" /></>}
                     </g>}
                 </g>;
             })}

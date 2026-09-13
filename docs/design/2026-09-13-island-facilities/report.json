@@ -1,0 +1,227 @@
+{
+  "startHash": "9c14717edf9bf77211d8317422496efaaecf00759febc944247d06a4ad55949b",
+  "revision": "04b60fa6b198f31263def3e4f673ae1d3116bb10",
+  "target": "http://127.0.0.1:5223",
+  "flags": "DEV VITE_ISLAND_LIFE_PREVIEW=true",
+  "candidate": "life-v3-facilities-v1",
+  "fixture": "100 QA credits; real UI purchases and visits; no earned acquisition claim",
+  "humanN": 0,
+  "cases": [
+    {
+      "device": "phone",
+      "delivered": {
+        "candidate": "island-life-economy-checkpoint-v3",
+        "world": "canopy-dots-c3-v1"
+      },
+      "uses": [
+        [
+          {
+            "id": "pokomoko",
+            "itemId": "46c98e44-489d-49f7-817c-09f49ffc913a",
+            "phase": "garden-hut",
+            "position": [
+              -2.5,
+              0.04,
+              0
+            ],
+            "hop": 0,
+            "headPitch": 0.6,
+            "headRoll": 0,
+            "facilityUse": {
+              "kind": "garden-hut",
+              "action": "tool-care"
+            },
+            "headYaw": -1.4802973661668755e-15
+          },
+          {
+            "id": "rabbit",
+            "itemId": "roam:display:rabbit:2",
+            "phase": "roaming",
+            "position": [
+              -2.5,
+              0.04,
+              1
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0.010403485174403466,
+            "headYaw": 0
+          },
+          {
+            "id": "otter",
+            "phase": "home",
+            "position": [
+              1.5,
+              0.04,
+              -1
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0.03374136448177642,
+            "headYaw": 0
+          }
+        ],
+        [
+          {
+            "id": "pokomoko",
+            "phase": "waiting",
+            "position": [
+              -2.5,
+              0.04,
+              0
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0,
+            "headYaw": 0
+          },
+          {
+            "id": "rabbit",
+            "itemId": "cebc82de-4daf-4051-88e3-76323f1a11c6",
+            "phase": "library",
+            "position": [
+              1.5,
+              0.04,
+              0
+            ],
+            "hop": 0,
+            "headPitch": 0.6,
+            "headRoll": 0.03498902467849145,
+            "facilityUse": {
+              "kind": "library",
+              "action": "reading"
+            },
+            "headYaw": 1.1686558153949017e-15
+          },
+          {
+            "id": "otter",
+            "itemId": "46c98e44-489d-49f7-817c-09f49ffc913a",
+            "phase": "walking",
+            "position": [
+              0.4958796296296296,
+              0.04,
+              2
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0,
+            "headYaw": 0
+          }
+        ]
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "device": "tablet",
+      "delivered": {
+        "candidate": "island-life-economy-checkpoint-v3",
+        "world": "canopy-dots-c3-v1"
+      },
+      "uses": [
+        [
+          {
+            "id": "pokomoko",
+            "phase": "waiting",
+            "position": [
+              -0.5,
+              0.04,
+              -1
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0,
+            "headYaw": 0
+          },
+          {
+            "id": "rabbit",
+            "itemId": "24c98e56-b4c2-4242-8e70-79d31857d1be",
+            "phase": "garden-hut",
+            "position": [
+              -2.5,
+              0.04,
+              0
+            ],
+            "hop": 0,
+            "headPitch": 0.6,
+            "headRoll": 0,
+            "facilityUse": {
+              "kind": "garden-hut",
+              "action": "tool-care"
+            },
+            "headYaw": -2.220446049250313e-15
+          },
+          {
+            "id": "otter",
+            "itemId": "roam:display:otter:2",
+            "phase": "walking",
+            "position": [
+              1.5,
+              0.04,
+              -1.408073937210648
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0,
+            "headYaw": 0
+          }
+        ],
+        [
+          {
+            "id": "pokomoko",
+            "phase": "waiting",
+            "position": [
+              -0.5,
+              0.04,
+              -1
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0,
+            "headYaw": 0
+          },
+          {
+            "id": "rabbit",
+            "itemId": "24c98e56-b4c2-4242-8e70-79d31857d1be",
+            "phase": "garden-hut",
+            "position": [
+              -2.5,
+              0.04,
+              0
+            ],
+            "hop": 0,
+            "headPitch": 0.6,
+            "headRoll": 0,
+            "facilityUse": {
+              "kind": "garden-hut",
+              "action": "tool-care"
+            },
+            "headYaw": -2.220446049250313e-15
+          },
+          {
+            "id": "otter",
+            "itemId": "ee581fba-21fb-4b25-8181-36df29a10ada",
+            "phase": "library",
+            "position": [
+              1.5,
+              0.04,
+              0
+            ],
+            "hop": 0,
+            "headPitch": 0.6,
+            "headRoll": 0,
+            "facilityUse": {
+              "kind": "library",
+              "action": "reading"
+            },
+            "headYaw": 1.1686558153949017e-15
+          }
+        ]
+      ],
+      "pass": true,
+      "errors": []
+    }
+  ],
+  "pass": true,
+  "endHash": "9c14717edf9bf77211d8317422496efaaecf00759febc944247d06a4ad55949b"
+}

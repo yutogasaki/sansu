@@ -1,3 +1,4 @@
+import { occupiedCells } from '../../../domain/islandLife/footprint';
 import type { Cell, ItemKind, LifeItem, LifeState } from '../../../domain/islandLife/model';
 import { cellKey, homeCell, isHouse, landCells, pathToActivity, usablePlacement, vacant } from '../../../domain/islandLife/space';
 
@@ -14,7 +15,7 @@ export function previewPlacement(state: LifeState, source: ItemKind | LifeItem, 
     const reason = !cell ? 'しまを タップして ばしょを えらぼう。'
         : valid ? 'ここなら おけるよ。てんてんは とおりみち。'
         : isHouse(cell) ? 'ここは おうちの ばしょだよ。'
-        : !vacant(base, cell, item.id) ? 'ここには ほかの ものが あるよ。'
+        : !occupiedCells({ ...item, cell }).every(p => vacant(base, p, item.id)) ? 'ここには ほかの ものが あるよ。'
         : item.access === 'front' && !vacant(trial, { x: cell.x, z: cell.z + 1 }) ? 'まえを ひとマス あけて おこう。'
         : 'みんなの とおりみちを あけて おこう。';
     return { item: { ...item, cell }, allowed, valid, reason, path: valid ? path : undefined };

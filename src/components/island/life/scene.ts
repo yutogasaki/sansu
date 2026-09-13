@@ -1,3 +1,4 @@
+import { isFacility, occupiedCells } from '../../../domain/islandLife/footprint';
 import type { SandScene } from './sandboxGeometry';
 import { buildCanopyScenery } from './canopyScenery';
 import { makeLifeMotion, type LifeSeat } from './residentMotion';
@@ -36,7 +37,8 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
     const clickables: T.Object3D[] = [];
     const previewMaterials: T.Material[] = [];
     for (const c of cells) {
-        const active = selectedCell && cellKey(c) === cellKey(selectedCell);
+        const highlighted = placement?.item.cell ? occupiedCells(placement.item) : selected ? occupiedCells(state.items.find(i => i.id === selected) ?? { kind: 'flower' }) : selectedCell ? [selectedCell] : [];
+        const active = highlighted.some(p => cellKey(c) === cellKey(p));
         const available = placement?.allowed.includes(cellKey(c));
         const mesh = new T.Mesh(new T.PlaneGeometry(.91, .91), new T.MeshBasicMaterial({ color: '#fff4c1', transparent: true, opacity: active ? .55 : available ? .18 : .015, depthWrite: false }));
         mesh.rotation.x = -Math.PI / 2; mesh.position.copy(point(c)); mesh.position.y = .085;
@@ -71,13 +73,16 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
                 o.material = material; o.castShadow = false; previewMaterials.push(material);
             });
             const marker = new T.Group(); marker.name = 'life-placement-marker'; marker.position.copy(point(item.cell)); root.add(marker);
-            if (placement!.valid) {
+            if (isFacility(item.kind)) {
+                marker.position.x += .5; marker.position.z += .5;
+                for (const side of [-1, 1]) { box(marker, placement!.valid ? '#fff5ac' : '#715637', side * .97, .015, 0, .035, .025, 1.94); box(marker, placement!.valid ? '#fff5ac' : '#715637', 0, .015, side * .97, 1.94, .025, .035); }
+            } else if (placement!.valid) {
                 const ring = new T.Mesh(new T.TorusGeometry(.44, .03, 8, 40), paint('#fff5ac')); ring.rotation.x = Math.PI / 2; marker.add(ring);
             } else {
                 for (const direction of [-1, 1]) { const bar = box(marker, '#715637', 0, .015, 0, .62, .025, .075); bar.rotation.y = direction * Math.PI / 4; }
             }
         } else if (selected === item.id) {
-            const ring = new T.Mesh(new T.TorusGeometry(.43, .028, 8, 40), paint('#fff5ac')); ring.rotation.x = Math.PI / 2; ring.position.y = .045; g.add(ring);
+            const ring = new T.Mesh(new T.TorusGeometry(isFacility(item.kind) ? 1.03 : .43, .028, 8, 40), paint('#fff5ac')); ring.rotation.x = Math.PI / 2; ring.position.y = .045; if (isFacility(item.kind)) { ring.position.x = .5; ring.position.z = .5; } g.add(ring);
         }
     }
     const path = new T.Group(); path.name = 'life-placement-path'; root.add(path);

@@ -9,7 +9,7 @@ export const LIFE_STEP_MS = 1200;
 export const HOUR = 3_600_000;
 export const LIFE_RULES = { dropsPerProblem: 2, dailyGoal: 6, activityMs: HOUR / 2, expansionPrice: 12,
     maxItems: 30, budHours: 2, bloomHours: 6, stylePrice: 4 } as const;
-export type ItemKind = 'flower' | 'bench' | 'swing' | 'lantern' | 'sapling' | 'water-bowl' | 'picnic-table' | 'pinwheel' | 'flower-arch' | 'sandbox';
+export type ItemKind = 'flower' | 'bench' | 'swing' | 'lantern' | 'sapling' | 'water-bowl' | 'picnic-table' | 'pinwheel' | 'flower-arch' | 'sandbox' | 'garden-hut' | 'library';
 export type Style = 'original' | 'sunshine' | 'starlight';
 export type ResidentId = 'pokomoko' | 'rabbit' | 'otter';
 export type LandSide = 'east' | 'west' | 'south';
@@ -19,6 +19,7 @@ export const CATALOG: Record<ItemKind, { label: string; price: number }> = {
     swing: { label: 'ブランコ', price: 6 }, lantern: { label: 'ほしの あかり', price: 8 },
     sapling: { label: '木の なえ', price: 4 }, 'water-bowl': { label: '水ばち', price: 4 }, 'picnic-table': { label: 'ピクニック テーブル', price: 8 },
     pinwheel: { label: 'かざぐるま', price: 12 }, 'flower-arch': { label: '花の アーチ', price: 12 }, sandbox: { label: 'すなば', price: 18 },
+    'garden-hut': { label: 'えんげい 小屋', price: 36 }, library: { label: '森の としょしつ', price: 72 },
 };
 export interface LifeItem { id: string; kind: ItemKind; cell?: Cell; growth: number; style: Style; access?: 'front'; paidDrops?: number }
 export interface Credit { id: string; at: number; day: string }
@@ -26,7 +27,7 @@ export type LifeCommand = { type: 'buy'; kind: ItemKind; cell: Cell }
     | { type: 'move'; itemId: string; cell: Cell } | { type: 'store' | 'remove' | 'visit' | 'observe'; itemId: string }
     | { type: 'expand'; side: LandSide } | { type: 'style'; style: Style; itemId?: string };
 export interface LifePurchaseReceipt {
-    priceVersion: 'life-48-v1' | 'life-v3-plants-water-v1' | 'life-v3-picnic-v1' | 'life-v3-wind-arch-v1' | 'life-v3-sandbox-v1'; actualPaidDrops: number; quoteFingerprint: string;
+    priceVersion: 'life-48-v1' | 'life-v3-plants-water-v1' | 'life-v3-picnic-v1' | 'life-v3-wind-arch-v1' | 'life-v3-sandbox-v1' | 'life-v3-facilities-v1'; actualPaidDrops: number; quoteFingerprint: string;
     itemInstanceId: string; committedAt: number;
 }
 export interface LifeLandReceipt {
@@ -34,7 +35,7 @@ export interface LifeLandReceipt {
 }
 export interface LifeAction { id: string; at: number; command: LifeCommand; purchaseReceipt?: LifePurchaseReceipt; landReceipt?: LifeLandReceipt; undoOf?: string }
 export interface LifeRecord {
-    profileId: string; version: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9; revision: number; createdAt: number; realAt: number; now: number;
+    profileId: string; version: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10; revision: number; createdAt: number; realAt: number; now: number;
     credits: Credit[]; actions: LifeAction[]; offsets: { at: number; offset: number }[]; clockIntents: string[];
     activitiesV2At?: number;
     activitiesV2After?: number;
@@ -96,4 +97,4 @@ export function newLife(profileId: string, now: number): LifeRecord {
     return { profileId, version: 1, revision: 0, createdAt: now, realAt: now, now, credits: [], actions: [], offsets: [{ at: now, offset: 0 }], clockIntents: [], activitiesV2At: now, activitiesV2After: 0 };
 }
 
-export function readableLifeVersion(version: number) { return version === 1 || version === 2 || version === 3 || version === 4 || version === 5 || version === 6 || version === 7 || version === 8 || version === 9; }
+export function readableLifeVersion(version: number) { return version === 1 || version === 2 || version === 3 || version === 4 || version === 5 || version === 6 || version === 7 || version === 8 || version === 9 || version === 10; }

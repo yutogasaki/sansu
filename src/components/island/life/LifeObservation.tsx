@@ -2,7 +2,7 @@ import WaterObservationView from './WaterObservationView';
 import { displayedGatherings } from './gatheringVisibility';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { X } from 'lucide-react';
-import type { LifeItem, LifeRecord, LifeState } from '../../../domain/islandLife/model';
+import { CATALOG, type LifeItem, type LifeRecord, type LifeState } from '../../../domain/islandLife/model';
 import { benchRelation, evaluateDiscovery } from '../../../domain/islandLife/discovery';
 import { createDiscoveryScene, emptyDiscoveryJournal, type DiscoveryScene, type PresentationEvidence } from '../../../domain/islandLife/discoveryJournal';
 import { recordPresentedScene, editDiscoveryMemory } from '../../../domain/islandLife/discoveryRepository';
@@ -89,7 +89,7 @@ export default function LifeObservation({ record, state, item, close, memories, 
                 <RelationObservationView state={viewState} benchId={item.id} prepare={prepareRelation} presented={presented} status={setStatus} target={id => { if (!busy && !pending.current) { setTargetId(id); setShown(undefined); setError(''); } }} />
                 <p className="life-observation-hint" role="status">{status === 'bench' ? 'ここで ひとやすみ' : status === 'walking' ? 'みちを とおって くるよ' : 'いまは、ほかのことを しているよ'}</p>
                 <label className="life-observation-target">みるもの <select aria-label="ベンチから みるもの" value={targetId ?? ''} disabled={busy || Boolean(pending.current)} onChange={event => { setTargetId(event.target.value || undefined); setShown(undefined); setError(''); }}>
-                    <option value="">いまの ようす</option>{state.items.filter(i => i.cell && (i.kind === 'flower' || i.kind === 'swing')).map((i, index) => <option key={i.id} value={i.id}>{i.kind === 'flower' ? 'おはな' : 'ブランコ'} {index + 1}</option>)}
+                    <option value="">いまの ようす</option>{state.items.filter(i => i.cell && ['flower', 'sapling', 'swing', 'sandbox', 'water-bowl'].includes(i.kind)).map((i, index) => <option key={i.id} value={i.id}>{CATALOG[i.kind].label} {index + 1}</option>)}
                 </select></label>
                 {status === 'busy' && <button type="button" onClick={tryVisit}>もういちど みてみる</button>}
             </> : item.kind === 'water-bowl' ? <WaterObservationView item={item} /> : <><PlantObservationView item={item} prepare={prepare} presented={presented} />

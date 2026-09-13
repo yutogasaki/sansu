@@ -1,3 +1,5 @@
+import { makeFacilityMotion } from './facilityMotion';
+import { isFacility } from '../../../domain/islandLife/footprint';
 import { makeSandboxMotion } from './sandboxMotion';
 import type { SandScene } from './sandboxGeometry';
 import { makeWindGaze } from './windGaze';
@@ -22,6 +24,7 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
     const bodies = [content.heroBody, content.rabbit.body, content.otter.body];
     const heads = [makeLifeHeroHead(content.heroBody), content.rabbit.head, content.otter.head];
     const heroArms = content.heroBody.children.filter(part => Math.abs(part.position.x) === .27 && part.position.y === .46);
+    const facilityMotion = makeFacilityMotion(content.m, bodies, heads, state.items.some(i => isFacility(i.kind) && i.cell));
     const sandMotion = makeSandboxMotion(sandboxes, heads, point);
     const gaze = makeRelationGaze(state, heads, point);
     const picnic = makePicnicMotion(state, heads, seats, point);
@@ -29,7 +32,7 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
     const waterGaze = makeWaterGaze(state, heads, point);
     const feet = [content.heroFeet, content.rabbit.feet, content.otter.feet];
     const neutralFeet = feet.map(pair => pair.map(foot => foot.position.clone()));
-    let audit: { sandWork?: { form: 'mountain' | 'castle'; partnerId?: string; progress: number }; windLook?: ReturnType<typeof windGaze>; picnic?: ReturnType<typeof picnic.finish>; waterLook?: ReturnType<ReturnType<typeof makeWaterGaze>>; id: string; itemId?: string; phase: string; position: number[]; seatGap?: number; reaction?: string; hop: number; headPitch: number; headRoll: number; headYaw?: number; relation?: ReturnType<ReturnType<typeof makeRelationGaze>> }[] = [];
+    let audit: { facilityUse?: { kind: 'library' | 'garden-hut'; action: 'reading' | 'tool-care' }; sandWork?: { form: 'mountain' | 'castle'; partnerId?: string; progress: number }; windLook?: ReturnType<typeof windGaze>; picnic?: ReturnType<typeof picnic.finish>; waterLook?: ReturnType<ReturnType<typeof makeWaterGaze>>; id: string; itemId?: string; phase: string; position: number[]; seatGap?: number; reaction?: string; hop: number; headPitch: number; headRoll: number; headYaw?: number; relation?: ReturnType<ReturnType<typeof makeRelationGaze>> }[] = [];
     return {
         audit: () => audit,
         snapshot: () => ({ ...(state.tourVersion ? visible : state), now: renderedAt,
@@ -90,6 +93,9 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                             position.lerp(target, (item.kind === 'water-bowl' ? .38 : .48) * settling);
                             body.rotation.x = (.18 + (reduced ? 0 : Math.sin((now - walkedAt) / 950) * .045)) * settling;
                             flowerLean = settling;
+                        } else if (isFacility(item.kind)) {
+                            actor.rotation.y = reduced ? 0 : turnToward(heading, 0, (now - walkedAt) / 900);
+                            (rig?.shoulders ?? heroArms).forEach(arm => { arm.rotation.x = -1 * settling; });
                         } else if (item.kind === 'sandbox') {
                             const facing = Math.atan2(target.x - position.x, target.z - position.z);
                             actor.rotation.y = reduced ? facing : turnToward(heading, facing, (now - walkedAt) / 900);
@@ -160,8 +166,10 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                     headPitch: rig?.head.rotation.x ?? 0, headRoll: rig?.head.rotation.z ?? 0 };
             });
             content.world.updateMatrixWorld(true);
+            const facilityUse = facilityMotion(visible, now, reduced);
             const sandWork = sandMotion(visible, now, reduced);
             audit.forEach((pose, index) => {
+                pose.facilityUse = facilityUse.get(pose.id);
                 pose.sandWork = sandWork.get(pose.id);
                 pose.relation = gaze(visible, now, reduced, index);
                 pose.picnic = picnic.finish(visible, now, index, reduced);

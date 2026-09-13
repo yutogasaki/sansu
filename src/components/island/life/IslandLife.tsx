@@ -1,3 +1,4 @@
+import { isFacility, occupiesCell } from '../../../domain/islandLife/footprint';
 import type { RuleEligibility } from '../../../domain/islandLife/discovery';
 import { useLiveDiscovery } from './useLiveDiscovery';
 import { placementUndo } from '../../../domain/islandLife/placementUndo';
@@ -32,7 +33,7 @@ import './life-belongings.css';
 import './life-resources.css';
 import './life-world-first.css';
 
-const productStories = { flower: 'めを そだてて おはなに', bench: 'ひとやすみの ばしょ', swing: 'すわって ゆらゆら', lantern: 'あかりの そばに あつまるかな', sapling: '木かげに そだつ なえ', 'water-bowl': '水を のぞく うつわ', 'picnic-table': 'おやつと おしゃべりの ばしょ', pinwheel: 'かぜと くるくる', 'flower-arch': 'おはなの したを くぐろう', sandbox: 'すなで おやまや おしろを' };
+const productStories = { flower: 'めを そだてて おはなに', bench: 'ひとやすみの ばしょ', swing: 'すわって ゆらゆら', lantern: 'あかりの そばに あつまるかな', sapling: '木かげに そだつ なえ', 'water-bowl': '水を のぞく うつわ', 'picnic-table': 'おやつと おしゃべりの ばしょ', pinwheel: 'かぜと くるくる', 'flower-arch': 'おはなの したを くぐろう', sandbox: 'すなで おやまや おしろを', 'garden-hut': 'どうぐを だして おていれ', library: 'ほんを ひらいて ひとやすみ' };
 const tabOptions = [
     ['build', 'つくる', Sprout],
     ['items', 'もちもの', Archive],
@@ -193,7 +194,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
     const chooseCell = (next: Cell) => {
         if (locked || observed || memoriesOpen) return;
         if (kind || moving) { setCell(next); return; }
-        const found = state.items.find(i => i.cell && cellKey(i.cell) === cellKey(next));
+        const found = state.items.find(i => occupiesCell(i, next));
         if (found) { setSelected(found.id); setTab('items'); setDockOpen(false); setMenuOpen(true); setRemoving(false); }
         else if (isHouse(next)) onHome();
     };
@@ -219,8 +220,8 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
         if (error) { setMenuOpen(true); setDockOpen(false); return; }
         setDockOpen(true);
     };
-    const products = (Object.keys(CATALOG) as ItemKind[]).filter(kind => !['sapling', 'water-bowl', 'picnic-table', 'pinwheel', 'flower-arch', 'sandbox'].includes(kind)
-        || import.meta.env.DEV && import.meta.env.VITE_ISLAND_LIFE_PREVIEW === 'true');
+    const products = (Object.keys(CATALOG) as ItemKind[]).filter(kind => !['sapling', 'water-bowl', 'picnic-table', 'pinwheel', 'flower-arch', 'sandbox', 'garden-hut', 'library'].includes(kind)
+        || import.meta.env.DEV && import.meta.env.VITE_ISLAND_LIFE_PREVIEW === 'true').filter(kind => !isFacility(kind) || !state.items.some(i => i.kind === kind));
     const pageCount = Math.max(1, Math.ceil((tab === 'build' ? products.length : state.items.length) / 2));
     const currentPage = Math.min(page, pageCount - 1);
     const cells = landCells(state), cellPages = Math.ceil(cells.length / 6);
