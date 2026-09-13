@@ -10,13 +10,14 @@ import { createDiscoveryScene, emptyDiscoveryJournal, type DiscoveryScene, type 
 import { recordPresentedScene, editDiscoveryMemory } from '../../../domain/islandLife/discoveryRepository';
 import { holdPwaUpdateForCriticalPersistence } from '../../../pwa';
 import RelationObservationView from './RelationObservationView';
+import type { ShadowRequest } from './shadowObservation';
 import type { RuleEligibility } from '../../../domain/islandLife/discovery';
 import type { ResidentId } from '../../../domain/islandLife/model';
 import PlantObservationView from './PlantObservationView';
 import './life-observation.css';
 
-export default function LifeObservation({ record, state, item, initialResidentId, close, memories, tryVisit, tryRelation, selectionFailure, gathering }: {
-    record: LifeRecord; state: LifeState; item: LifeItem; initialResidentId?: ResidentId; close: () => void; memories: () => void; tryVisit?: () => void; tryRelation?: (targetId: string | undefined, residentId: ResidentId) => Promise<boolean>; selectionFailure?: string; gathering?: { ruleId: RuleEligibility['ruleId']; participantIds: string[] };
+export default function LifeObservation({ record, state, item, initialResidentId, initialShadowRequest, close, memories, tryVisit, tryRelation, selectionFailure, gathering }: {
+    record: LifeRecord; state: LifeState; item: LifeItem; initialResidentId?: ResidentId; initialShadowRequest?: ShadowRequest; close: () => void; memories: () => void; tryVisit?: () => void; tryRelation?: (targetId: string | undefined, residentId: ResidentId) => Promise<boolean>; selectionFailure?: string; gathering?: { ruleId: RuleEligibility['ruleId']; participantIds: string[] };
 }) {
     const [status, setStatus] = useState<'bench' | 'walking' | 'busy'>('busy');
     const [residentId, setResidentId] = useState<ResidentId | undefined>(() => {
@@ -27,6 +28,7 @@ export default function LifeObservation({ record, state, item, initialResidentId
     const isBench = item.kind === 'bench' || item.kind === 'picnic-table';
     const isRelation = isBench || isFacility(item.kind);
     const [targetId, setTargetId] = useState<string>();
+    const cancelledShadowRequest = useRef(false);
     useEffect(() => {
         if (!residentId) { const plan = observationVisit(state, item.id); if ('residentId' in plan) setResidentId(plan.residentId); }
     }, [state, item.id, residentId]);
@@ -127,6 +129,7 @@ export default function LifeObservation({ record, state, item, initialResidentId
     };
     const presented = (event: DiscoveryScene, evidence: PresentationEvidence) => { if (!pending.current) { pending.current = { event, evidence }; void persistShown(); } };
     const selectTarget = async (id?: string) => {
+        cancelledShadowRequest.current = true;
         if (!tryRelation || selecting || busy || pending.current || !residentId) return;
         setSelecting(true); setSelectionError(false); setShown(undefined); setError('');
         try { const ok = await tryRelation(id, residentId); if (alive.current) setSelectionError(!ok); }
@@ -137,7 +140,7 @@ export default function LifeObservation({ record, state, item, initialResidentId
         <header><b>{gathering ? 'いまの あつまり' : isFacility(item.kind) ? `${CATALOG[item.kind].label}の ようす` : isBench ? 'いまの ベンチ' : item.kind === 'sapling' ? 'いまの 木' : item.kind === 'water-bowl' ? 'いまの 水ばち' : 'いまの おはな'}</b><button type="button" aria-label="みてみるを とじる" onClick={close}><X size={20} /></button></header>
         <div className="life-observation-body">
             {gathering ? <RelationObservationView state={state} gathering={gathering} encounterPrepare={prepareEncounter} encounterPresented={presented} prepare={prepareGathering} presented={presented} /> : isRelation ? <>
-                <RelationObservationView state={state} benchId={item.id} residentId={residentId} selectedTarget={setTargetId} readingPrepare={prepareReading} readingPresented={presented} shadowPrepare={item.kind === 'bench' ? prepareShadow : undefined} shadowPresented={presented} prepare={prepareRelation} presented={presented} status={setStatus} target={!selecting && !busy && !pending.current && residentId ? id => { void selectTarget(id); } : undefined} />
+                <RelationObservationView state={state} benchId={item.id} residentId={residentId} shadowRequest={initialShadowRequest} shadowRequestCancelled={cancelledShadowRequest.current} selectedTarget={setTargetId} readingPrepare={prepareReading} readingPresented={presented} shadowPrepare={item.kind === 'bench' ? prepareShadow : undefined} shadowPresented={presented} prepare={prepareRelation} presented={presented} status={setStatus} target={!selecting && !busy && !pending.current && residentId ? id => { void selectTarget(id); } : undefined} />
                 <p className="life-observation-hint" role="status">{status === 'bench' ? item.kind === 'garden-hut' ? 'ここで おていれ' : item.kind === 'library' ? 'ここで よんでいる' : 'ここで ひとやすみ' : status === 'walking' ? 'みちを とおって くるよ' : 'いまは、ほかのことを しているよ'}</p>
                 {isRelation && <label className="life-observation-target">みるもの <select aria-label={isBench ? "ベンチから みるもの" : "たてものから みるもの"} value={targetId ?? ''} disabled={selecting || busy || Boolean(pending.current) || !residentId} onChange={event => { void selectTarget(event.target.value || undefined); }}>
                     <option value="">いまの ようす</option>{state.items.filter(i => i.cell && i.id !== item.id).map((i, index) => <option key={i.id} value={i.id}>{CATALOG[i.kind].label} {index + 1}</option>)}

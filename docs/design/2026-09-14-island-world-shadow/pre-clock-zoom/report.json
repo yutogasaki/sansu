@@ -1,0 +1,273 @@
+{
+  "startHash": "97c625e627d262eb6e1498e32736031a4619f6573eaaa7ca42b5006d3fac0326",
+  "target": "http://127.0.0.1:5233",
+  "revision": "917327886e5d7df04280543f377d9dae830f302b",
+  "flags": "DEV Island/Life preview; bark study OFF",
+  "candidate": "world-shadow-greeting-v1",
+  "humanN": 0,
+  "fixture": "Explicit fixed QA record of the first purchase diagnostic, with its original resident assignments and logical time; realAt anchored to test launch. No natural-occurrence or new-acquisition claim.",
+  "cases": [
+    {
+      "device": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "actors": [
+        "pokomoko"
+      ],
+      "zoom": true,
+      "events": [
+        {
+          "eventId": "dadae86a-7cb2-4164-b54a-438d5ac33d91",
+          "profileId": "ab2397d0-c512-4cf8-854c-529abb822e4e",
+          "ruleId": "M3",
+          "ruleVersion": "discovery-v3.0-rc1",
+          "semanticSignature": "[\"[\\\"ab2397d0-c512-4cf8-854c-529abb822e4e\\\",\\\"discovery-v3.0-rc1\\\",\\\"M3\\\",[[\\\"234602c6-44cc-4088-a3e4-f0bf5be74c2a\\\",\\\"bench\\\",3,2,null,null]]]\",[[\"pokomoko\",\"234602c6-44cc-4088-a3e4-f0bf5be74c2a\",\"using\"]]]",
+          "createdAt": 1789317330356,
+          "source": "live",
+          "focalResidentIds": [
+            "pokomoko"
+          ],
+          "snapshot": {
+            "contentVersion": 1,
+            "scene": {
+              "now": 1789315524128.4,
+              "activityVersion": 2,
+              "tourVersion": 1,
+              "roamRound": 0,
+              "scenePose": "captured-v1",
+              "encounterVersion": 1,
+              "readingEncounterVersion": 1,
+              "footstepMagicVersion": 1,
+              "shadowMagicVersion": 1,
+              "shadowTouch": {
+                "itemId": "234602c6-44cc-4088-a3e4-f0bf5be74c2a",
+                "residentId": "pokomoko"
+              },
+              "waterMagicVersion": 1,
+              "facilityPresentation": "carry-care-v1",
+              "relationSelectionVersion": 1,
+              "facilityTripVersion": 1,
+              "poseReducedMotion": false,
+              "relationVersion": "water-bench-v1",
+              "landscapeVersion": "groves-water-v1",
+              "worldStyle": "canopy-dots-c3-v1",
+              "items": [
+                {
+                  "id": "234602c6-44cc-4088-a3e4-f0bf5be74c2a",
+                  "kind": "bench",
+                  "cell": {
+                    "x": 3,
+                    "z": 2
+                  },
+                  "growth": 0,
+                  "style": "original",
+                  "paidDrops": 4,
+                  "access": "front"
+                },
+                {
+                  "id": "a7fe829b-0136-4d61-9aa2-dcb56aa209a9",
+                  "kind": "bench",
+                  "cell": {
+                    "x": 0,
+                    "z": 2
+                  },
+                  "growth": 0,
+                  "style": "original",
+                  "paidDrops": 4,
+                  "access": "front"
+                },
+                {
+                  "id": "066fa95d-a659-4f75-9f69-38b8e527595d",
+                  "kind": "bench",
+                  "cell": {
+                    "x": 1,
+                    "z": 2
+                  },
+                  "growth": 0,
+                  "style": "original",
+                  "paidDrops": 4,
+                  "access": "front"
+                }
+              ],
+              "residents": [
+                {
+                  "id": "pokomoko",
+                  "cell": {
+                    "x": 2,
+                    "z": 1
+                  },
+                  "enjoyed": 0,
+                  "enjoyedBy": {},
+                  "discovery": {
+                    "itemId": "234602c6-44cc-4088-a3e4-f0bf5be74c2a",
+                    "at": 1789315440125,
+                    "mood": "notice"
+                  },
+                  "visit": {
+                    "relationSelectionVersion": 1,
+                    "itemId": "234602c6-44cc-4088-a3e4-f0bf5be74c2a",
+                    "path": [
+                      {
+                        "x": 2,
+                        "z": 1
+                      },
+                      {
+                        "x": 2,
+                        "z": 2
+                      },
+                      {
+                        "x": 2,
+                        "z": 3
+                      },
+                      {
+                        "x": 3,
+                        "z": 3
+                      }
+                    ],
+                    "from": {
+                      "x": 2,
+                      "z": 1
+                    },
+                    "start": 1789315440125,
+                    "end": 1789317240125
+                  }
+                },
+                {
+                  "id": "rabbit",
+                  "cell": {
+                    "x": 0,
+                    "z": 3
+                  },
+                  "enjoyed": 0,
+                  "enjoyedBy": {},
+                  "discovery": {
+                    "itemId": "234602c6-44cc-4088-a3e4-f0bf5be74c2a",
+                    "at": 1789315440125,
+                    "mood": "notice"
+                  },
+                  "visit": {
+                    "relationSelectionVersion": 1,
+                    "itemId": "066fa95d-a659-4f75-9f69-38b8e527595d",
+                    "path": [
+                      {
+                        "x": 0,
+                        "z": 3
+                      },
+                      {
+                        "x": 1,
+                        "z": 3
+                      }
+                    ],
+                    "from": {
+                      "x": 0,
+                      "z": 3
+                    },
+                    "start": 1789315471755,
+                    "end": 1789317271755
+                  }
+                },
+                {
+                  "id": "otter",
+                  "cell": {
+                    "x": 4,
+                    "z": 3
+                  },
+                  "enjoyed": 0,
+                  "enjoyedBy": {},
+                  "visit": {
+                    "relationSelectionVersion": 1,
+                    "itemId": "a7fe829b-0136-4d61-9aa2-dcb56aa209a9",
+                    "path": [
+                      {
+                        "x": 4,
+                        "z": 3
+                      },
+                      {
+                        "x": 3,
+                        "z": 3
+                      },
+                      {
+                        "x": 2,
+                        "z": 3
+                      },
+                      {
+                        "x": 1,
+                        "z": 3
+                      },
+                      {
+                        "x": 0,
+                        "z": 3
+                      }
+                    ],
+                    "from": {
+                      "x": 4,
+                      "z": 3
+                    },
+                    "start": 1789315471755,
+                    "end": 1789317271755
+                  },
+                  "discovery": {
+                    "itemId": "066fa95d-a659-4f75-9f69-38b8e527595d",
+                    "at": 1789315471755,
+                    "mood": "curious"
+                  }
+                }
+              ],
+              "heroStyle": "original",
+              "target": "234602c6-44cc-4088-a3e4-f0bf5be74c2a"
+            },
+            "immutableHash": "731a9b85951441c14d7c284b5b4a96328c6bd01c2eda0ab88aad8a91649b53bb"
+          }
+        }
+      ],
+      "delivery": {
+        "builds": [
+          {
+            "buildRevision": "development-local",
+            "deliveryId": "snap-root-v1",
+            "configuredDeliveryId": "snap-root-v1",
+            "visualLineageId": "pokko-field-v1"
+          },
+          {
+            "layoutVersion": "display-v1",
+            "gameId": "mystic-island-v1",
+            "mode": "home",
+            "lifeHome": "true",
+            "homeLayout": "world-first-v2",
+            "complex": "false",
+            "visualCandidateId": "mystic-island-shore-garden-v18",
+            "deliveryId": "mystic-island-v1",
+            "learningCandidate": "mystic-island-learning-v2",
+            "islandRevision": "0",
+            "discoveryCount": "0",
+            "buildRevision": "development-local",
+            "buildVersion": "development-local:dfdd99a1-7551-4490-b52f-b2e1bdda38d1",
+            "busy": "false"
+          }
+        ],
+        "world": {
+          "placing": "false",
+          "lifeWorldStyle": "canopy-dots-c3-v1",
+          "lifeVisualCandidate": "canopy-dots-c3-v1",
+          "lifeLandscapeVersion": "groves-water-v1",
+          "lifeTourVersion": "1",
+          "lifeCamera": "{\"projection\":[0.2914509565274668,0,0,0,0,0.18818853153263582,0,0,0,0,-0.02002002002002002,0,-0.04965880727608097,-0.17877910495600405,-1.002002002002002,1],\"view\":[0.9255469562056767,-0.17063826001053398,0.3380020947849059,0,-2.7755575615628914e-17,0.8926908972773304,0.4506694597132078,0,-0.37863284572050404,-0.41711574669241636,0.8262273428075476,0,6.938893903907228e-17,-0.17853817945546582,-13.403660847636989,1],\"cameraView\":{\"zoom\":1,\"azimuth\":0,\"pan\":{\"x\":0,\"y\":2.220446049250313e-16},\"manual\":false}}",
+          "worldShadowrabbitView": "{\"residentId\":\"rabbit\",\"itemId\":\"a7fe829b-0136-4d61-9aa2-dcb56aa209a9\",\"active\":false,\"elapsed\":-1,\"visitEnd\":1789317344643,\"visitStart\":1789315544643,\"touchPoint\":[-2.2905807197093964,0.09,-0.4088817238807678]}",
+          "worldShadowUpdateMs": "0.30000001192092896",
+          "rendered": "true",
+          "worldShadowSampleMs": "0",
+          "lifeGatherings": "[]",
+          "lifeRelations": "[]",
+          "lifePoses": "[{\"id\":\"pokomoko\",\"itemId\":\"066fa95d-a659-4f75-9f69-38b8e527595d\",\"phase\":\"bench\",\"position\":[-1.5,0.34199999999999997,0],\"seatGap\":5.551115123125783e-17,\"reaction\":\"♪\",\"hop\":0,\"headPitch\":0,\"headRoll\":0,\"headYaw\":0},{\"id\":\"rabbit\",\"itemId\":\"a7fe829b-0136-4d61-9aa2-dcb56aa209a9\",\"phase\":\"bench\",\"position\":[-2.5,0.32599999999999996,0],\"seatGap\":0,\"hop\":0,\"headPitch\":0,\"headRoll\":0.033154956237092824,\"headYaw\":0},{\"id\":\"otter\",\"phase\":\"home\",\"position\":[-2.5,0.04,1],\"hop\":0,\"headPitch\":0,\"headRoll\":0.008477628241994042,\"headYaw\":0}]",
+          "lifeRender": "{\"calls\":219,\"triangles\":164386,\"geometries\":165,\"textures\":6}",
+          "worldShadowpokomokoView": "{\"residentId\":\"pokomoko\",\"itemId\":\"066fa95d-a659-4f75-9f69-38b8e527595d\",\"active\":false,\"elapsed\":-1,\"visitEnd\":1789317344643,\"visitStart\":1789315544643,\"touchPoint\":[-1.1774999797344208,0.09,-0.43000001460313797]}"
+        }
+      },
+      "pass": true
+    }
+  ],
+  "pass": true,
+  "endHash": "97c625e627d262eb6e1498e32736031a4619f6573eaaa7ca42b5006d3fac0326"
+}

@@ -1,0 +1,2741 @@
+{
+  "startHash": "97c625e627d262eb6e1498e32736031a4619f6573eaaa7ca42b5006d3fac0326",
+  "revision": "917327886e5d7df04280543f377d9dae830f302b",
+  "target": "http://127.0.0.1:5233",
+  "flags": "DEV VITE_ISLAND_ENABLED=true VITE_ISLAND_LIFE_PREVIEW=true",
+  "candidate": "shadow-greeting-v1",
+  "humanN": 0,
+  "fixture": "20 QA credits; actual purchases/call/placement and real projected shadow tap; no actor rerolls or accelerated time",
+  "cases": [
+    {
+      "device": "phone",
+      "scenes": [
+        {
+          "before": {
+            "shadow": {
+              "residentId": "pokomoko",
+              "itemId": "2f5926e6-3d2d-4206-8366-c946e5d484a8",
+              "active": false,
+              "elapsed": -1,
+              "visitEnd": 1789319243161,
+              "visitStart": 1789317443161,
+              "touchPoint": [
+                0.8224999904632568,
+                0.09,
+                -0.43000001460313797
+              ]
+            },
+            "view": {
+              "at": 1789317444633.8,
+              "core": false,
+              "status": "bench",
+              "poses": [
+                {
+                  "id": "pokomoko",
+                  "itemId": "2f5926e6-3d2d-4206-8366-c946e5d484a8",
+                  "phase": "bench",
+                  "position": [
+                    0.5,
+                    0.34199999999999997,
+                    0
+                  ],
+                  "seatGap": 5.551115123125783e-17,
+                  "reaction": "♪",
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                },
+                {
+                  "id": "rabbit",
+                  "itemId": "roam:display:rabbit:0",
+                  "phase": "walking",
+                  "position": [
+                    2.398661632629153,
+                    0.04,
+                    -2
+                  ],
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                },
+                {
+                  "id": "otter",
+                  "phase": "home",
+                  "position": [
+                    -0.5,
+                    0.04,
+                    -1
+                  ],
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0.026573369688660416,
+                  "headYaw": 0
+                }
+              ],
+              "preparation": "",
+              "delivered": false,
+              "maxGap": 883.8000000119209,
+              "epoch": 1,
+              "camera": {
+                "projection": [
+                  0.5985783763561541,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0.8230452674897119,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -0.02002002002002002,
+                  0,
+                  -0.013699488818964742,
+                  0.08993536056664647,
+                  -1.002002002002002,
+                  1
+                ],
+                "view": [
+                  0.919145030018058,
+                  -0.3133853673620511,
+                  0.23866718525271904,
+                  0,
+                  2.7755575615628914e-17,
+                  0.6058783768999658,
+                  0.7955572841757298,
+                  0,
+                  -0.39391929857916763,
+                  -0.7312325238447859,
+                  0.5568900989230113,
+                  0,
+                  -0.6796871926045955,
+                  -0.28692499881564726,
+                  -13.152614597210258,
+                  1
+                ]
+              }
+            }
+          },
+          "peak": {
+            "shadow": {
+              "residentId": "pokomoko",
+              "itemId": "2f5926e6-3d2d-4206-8366-c946e5d484a8",
+              "active": true,
+              "elapsed": 898.1999999880791,
+              "visitEnd": 1789319243161,
+              "visitStart": 1789317443161,
+              "eventId": "d7758e2d-9040-4bc0-919d-2fae8f47f607",
+              "touchPoint": [
+                0.8224999904632568,
+                0.09,
+                -0.43000001460313797
+              ]
+            },
+            "view": {
+              "at": 1789317446410.1,
+              "core": false,
+              "status": "bench",
+              "poses": [
+                {
+                  "id": "pokomoko",
+                  "itemId": "2f5926e6-3d2d-4206-8366-c946e5d484a8",
+                  "phase": "bench",
+                  "position": [
+                    0.5,
+                    0.34199999999999997,
+                    0
+                  ],
+                  "seatGap": 5.551115123125783e-17,
+                  "reaction": "♪",
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                },
+                {
+                  "id": "rabbit",
+                  "itemId": "roam:display:rabbit:0",
+                  "phase": "walking",
+                  "position": [
+                    2.5,
+                    0.04,
+                    0.01709151920623997
+                  ],
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                },
+                {
+                  "id": "otter",
+                  "phase": "home",
+                  "position": [
+                    -0.5,
+                    0.04,
+                    -1
+                  ],
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0.0336544863574588,
+                  "headYaw": 0
+                }
+              ],
+              "preparation": "",
+              "delivered": false,
+              "maxGap": 883.8000000119209,
+              "epoch": 1,
+              "camera": {
+                "projection": [
+                  0.5985783763561541,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0.8230452674897119,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -0.02002002002002002,
+                  0,
+                  -0.013699488818964742,
+                  0.08993536056664647,
+                  -1.002002002002002,
+                  1
+                ],
+                "view": [
+                  0.919145030018058,
+                  -0.3133853673620511,
+                  0.23866718525271904,
+                  0,
+                  2.7755575615628914e-17,
+                  0.6058783768999658,
+                  0.7955572841757298,
+                  0,
+                  -0.39391929857916763,
+                  -0.7312325238447859,
+                  0.5568900989230113,
+                  0,
+                  -0.6796871926045955,
+                  -0.28692499881564726,
+                  -13.152614597210258,
+                  1
+                ]
+              }
+            }
+          },
+          "event": {
+            "eventId": "d7758e2d-9040-4bc0-919d-2fae8f47f607",
+            "profileId": "9e941701-24fa-4e1a-aefc-eff60c43cd1d",
+            "ruleId": "M3",
+            "ruleVersion": "discovery-v3.0-rc1",
+            "semanticSignature": "[\"[\\\"9e941701-24fa-4e1a-aefc-eff60c43cd1d\\\",\\\"discovery-v3.0-rc1\\\",\\\"M3\\\",[[\\\"2f5926e6-3d2d-4206-8366-c946e5d484a8\\\",\\\"bench\\\",3,2,null,null]]]\",[[\"pokomoko\",\"2f5926e6-3d2d-4206-8366-c946e5d484a8\",\"using\"]]]",
+            "createdAt": 1789317450509,
+            "source": "current-context-test",
+            "focalResidentIds": [
+              "pokomoko"
+            ],
+            "snapshot": {
+              "contentVersion": 1,
+              "scene": {
+                "now": 1789317445479.4,
+                "activityVersion": 2,
+                "tourVersion": 1,
+                "roamRound": 0,
+                "scenePose": "captured-v1",
+                "encounterVersion": 1,
+                "readingEncounterVersion": 1,
+                "footstepMagicVersion": 1,
+                "shadowMagicVersion": 1,
+                "shadowTouch": {
+                  "itemId": "2f5926e6-3d2d-4206-8366-c946e5d484a8",
+                  "residentId": "pokomoko"
+                },
+                "waterMagicVersion": 1,
+                "facilityPresentation": "carry-care-v1",
+                "relationSelectionVersion": 1,
+                "facilityTripVersion": 1,
+                "poseReducedMotion": false,
+                "relationVersion": "water-bench-v1",
+                "landscapeVersion": "groves-water-v1",
+                "worldStyle": "canopy-dots-c3-v1",
+                "items": [
+                  {
+                    "id": "2f5926e6-3d2d-4206-8366-c946e5d484a8",
+                    "kind": "bench",
+                    "cell": {
+                      "x": 3,
+                      "z": 2
+                    },
+                    "growth": 0,
+                    "style": "original",
+                    "paidDrops": 4,
+                    "access": "front"
+                  },
+                  {
+                    "id": "110d2cd3-bf11-4390-afe3-6aaddc27e6a3",
+                    "kind": "lantern",
+                    "cell": {
+                      "x": 5,
+                      "z": 4
+                    },
+                    "growth": 0,
+                    "style": "original",
+                    "paidDrops": 8
+                  }
+                ],
+                "residents": [
+                  {
+                    "id": "pokomoko",
+                    "cell": {
+                      "x": 3,
+                      "z": 3
+                    },
+                    "enjoyed": 0,
+                    "enjoyedBy": {},
+                    "visit": {
+                      "relationSelectionVersion": 1,
+                      "itemId": "2f5926e6-3d2d-4206-8366-c946e5d484a8",
+                      "path": [
+                        {
+                          "x": 3,
+                          "z": 3
+                        }
+                      ],
+                      "from": {
+                        "x": 3,
+                        "z": 3
+                      },
+                      "start": 1789317443161,
+                      "end": 1789319243161
+                    }
+                  },
+                  {
+                    "id": "rabbit",
+                    "cell": {
+                      "x": 4,
+                      "z": 0
+                    },
+                    "enjoyed": 0,
+                    "enjoyedBy": {},
+                    "visit": {
+                      "itemId": "roam:display:rabbit:0",
+                      "from": {
+                        "x": 4,
+                        "z": 0
+                      },
+                      "path": [
+                        {
+                          "x": 4,
+                          "z": 0
+                        },
+                        {
+                          "x": 5,
+                          "z": 0
+                        },
+                        {
+                          "x": 5,
+                          "z": 1
+                        },
+                        {
+                          "x": 5,
+                          "z": 2
+                        },
+                        {
+                          "x": 5,
+                          "z": 3
+                        }
+                      ],
+                      "start": 1789317443161,
+                      "end": 1789317449761
+                    }
+                  },
+                  {
+                    "id": "otter",
+                    "cell": {
+                      "x": 2,
+                      "z": 1
+                    },
+                    "enjoyed": 0,
+                    "enjoyedBy": {}
+                  }
+                ],
+                "heroStyle": "original",
+                "target": "2f5926e6-3d2d-4206-8366-c946e5d484a8"
+              },
+              "immutableHash": "8d5e7c8f3876a890e36b951a0e18fde8801d4a28eae51386f01f5fac69536324"
+            }
+          },
+          "interrupted": {
+            "shadow": {
+              "residentId": "pokomoko",
+              "itemId": "2f5926e6-3d2d-4206-8366-c946e5d484a8",
+              "active": true,
+              "elapsed": 203.5,
+              "visitEnd": 1789317493120,
+              "visitStart": 1789317443161,
+              "eventId": "c2cb17a8-c8fc-4017-a5d5-a2c67eef101e",
+              "touchPoint": [
+                0.8224999904632568,
+                0.09,
+                -0.43000001460313797
+              ]
+            },
+            "view": {
+              "at": 1789317490987,
+              "core": false,
+              "status": "bench",
+              "poses": [
+                {
+                  "id": "pokomoko",
+                  "itemId": "2f5926e6-3d2d-4206-8366-c946e5d484a8",
+                  "phase": "bench",
+                  "position": [
+                    0.5,
+                    0.34199999999999997,
+                    0
+                  ],
+                  "seatGap": 5.551115123125783e-17,
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                },
+                {
+                  "id": "rabbit",
+                  "phase": "home",
+                  "position": [
+                    2.5,
+                    0.04,
+                    -2
+                  ],
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0.01619888140289782,
+                  "headYaw": 0
+                },
+                {
+                  "id": "otter",
+                  "itemId": "roam:display:otter:9",
+                  "phase": "walking",
+                  "position": [
+                    2.411073609375,
+                    0.04,
+                    1
+                  ],
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                }
+              ],
+              "preparation": "",
+              "delivered": false,
+              "maxGap": 1786.699999988079,
+              "epoch": 1,
+              "camera": {
+                "projection": [
+                  0.33260923547376964,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0.45733769877643327,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -0.02002002002002002,
+                  0,
+                  0.03584982245824826,
+                  0.07901773584764085,
+                  -1.002002002002002,
+                  1
+                ],
+                "view": [
+                  0.919145030018058,
+                  -0.3133853673620511,
+                  0.23866718525271904,
+                  0,
+                  2.7755575615628914e-17,
+                  0.6058783768999658,
+                  0.7955572841757298,
+                  0,
+                  -0.39391929857916763,
+                  -0.7312325238447859,
+                  0.5568900989230113,
+                  0,
+                  -1.002138925106412,
+                  0.6112080671870553,
+                  -13.836612362165306,
+                  1
+                ]
+              }
+            }
+          },
+          "after": {
+            "shadow": {
+              "itemId": "2f5926e6-3d2d-4206-8366-c946e5d484a8",
+              "active": false,
+              "elapsed": -1
+            },
+            "view": {
+              "at": 1789317493330.7,
+              "core": false,
+              "status": "walking",
+              "poses": [
+                {
+                  "id": "pokomoko",
+                  "itemId": "2f5926e6-3d2d-4206-8366-c946e5d484a8",
+                  "phase": "walking",
+                  "position": [
+                    0.5,
+                    0.08190601809888937,
+                    0.8612383506659292
+                  ],
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                },
+                {
+                  "id": "rabbit",
+                  "phase": "home",
+                  "position": [
+                    2.5,
+                    0.04,
+                    -2
+                  ],
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0.034213185746414555,
+                  "headYaw": 0
+                },
+                {
+                  "id": "otter",
+                  "itemId": "roam:display:otter:9",
+                  "phase": "walking",
+                  "position": [
+                    1.5,
+                    0.04,
+                    -0.4584697111109808
+                  ],
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                }
+              ],
+              "preparation": "",
+              "delivered": false,
+              "maxGap": 1786.699999988079,
+              "epoch": 1,
+              "camera": {
+                "projection": [
+                  0.5406632672750896,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0.7434119925032482,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -0.02002002002002002,
+                  0,
+                  0.14530311009095867,
+                  0.13859833647017067,
+                  -1.002002002002002,
+                  1
+                ],
+                "view": [
+                  0.8411784753765535,
+                  -0.2785043287946192,
+                  0.4635235823621443,
+                  0,
+                  5.551115123125783e-17,
+                  0.8571744341789946,
+                  0.5150262026246047,
+                  0,
+                  -0.5407575913134988,
+                  -0.43322895590274096,
+                  0.7210366836744466,
+                  0,
+                  -0.6495099536094947,
+                  0.3215796648556356,
+                  -11.389031934133637,
+                  1
+                ]
+              }
+            }
+          }
+        },
+        {
+          "resident": "rabbit",
+          "ordinary": {
+            "shadow": {
+              "residentId": "rabbit",
+              "itemId": "3b264b7c-dfed-4579-a3f9-f65dd55207b9",
+              "active": false,
+              "elapsed": -1,
+              "visitEnd": 1789319318423,
+              "visitStart": 1789317518423,
+              "touchPoint": [
+                -1.1653193831443787,
+                0.09,
+                -0.4087352976202965
+              ]
+            },
+            "view": {
+              "at": 1789317519879.2,
+              "core": false,
+              "status": "bench",
+              "poses": [
+                {
+                  "id": "pokomoko",
+                  "itemId": "2f5926e6-3d2d-4206-8366-c946e5d484a8",
+                  "phase": "bench",
+                  "position": [
+                    0.5,
+                    0.34199999999999997,
+                    0
+                  ],
+                  "seatGap": 5.551115123125783e-17,
+                  "reaction": "♪",
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                },
+                {
+                  "id": "rabbit",
+                  "itemId": "3b264b7c-dfed-4579-a3f9-f65dd55207b9",
+                  "phase": "bench",
+                  "position": [
+                    -1.5,
+                    0.32599999999999996,
+                    0
+                  ],
+                  "seatGap": 0,
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": -0.025695834666344827,
+                  "headYaw": 0
+                },
+                {
+                  "id": "otter",
+                  "itemId": "6523d0f2-9e9c-4362-b5ec-51f06830915a",
+                  "phase": "bench",
+                  "position": [
+                    -2.5,
+                    0.35,
+                    0
+                  ],
+                  "seatGap": 0,
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": -0.03388017119811892,
+                  "headYaw": 0
+                }
+              ],
+              "preparation": "",
+              "delivered": false,
+              "maxGap": 884.3999999761581,
+              "epoch": 1,
+              "camera": {
+                "projection": [
+                  0.5985783763561541,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0.8230452674897119,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -0.02002002002002002,
+                  0,
+                  -0.016751666129084374,
+                  0.0996166550061822,
+                  -1.002002002002002,
+                  1
+                ],
+                "view": [
+                  0.919145030018058,
+                  -0.3133853673620511,
+                  0.23866718525271904,
+                  0,
+                  2.7755575615628914e-17,
+                  0.6058783768999658,
+                  0.7955572841757298,
+                  0,
+                  -0.39391929857916763,
+                  -0.7312325238447859,
+                  0.5568900989230113,
+                  0,
+                  1.218520821549818,
+                  -0.9455164519191394,
+                  -12.680034107355395,
+                  1
+                ]
+              }
+            }
+          },
+          "greeting": {
+            "shadow": {
+              "residentId": "rabbit",
+              "itemId": "3b264b7c-dfed-4579-a3f9-f65dd55207b9",
+              "active": true,
+              "elapsed": 3130.399999976158,
+              "visitEnd": 1789319318423,
+              "visitStart": 1789317518423,
+              "eventId": "f5ab0e8d-ae47-4025-b494-86941d6d785a",
+              "touchPoint": [
+                -1.1685242056846619,
+                0.09,
+                -0.40833912044763565
+              ]
+            },
+            "view": {
+              "at": 1789317530215.9,
+              "core": false,
+              "status": "bench",
+              "poses": [
+                {
+                  "id": "pokomoko",
+                  "itemId": "2f5926e6-3d2d-4206-8366-c946e5d484a8",
+                  "phase": "bench",
+                  "position": [
+                    0.5,
+                    0.34199999999999997,
+                    0
+                  ],
+                  "seatGap": 5.551115123125783e-17,
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                },
+                {
+                  "id": "rabbit",
+                  "itemId": "3b264b7c-dfed-4579-a3f9-f65dd55207b9",
+                  "phase": "bench",
+                  "position": [
+                    -1.5,
+                    0.32599999999999996,
+                    0
+                  ],
+                  "seatGap": 0,
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": -0.0098023628671359,
+                  "headYaw": 0
+                },
+                {
+                  "id": "otter",
+                  "itemId": "6523d0f2-9e9c-4362-b5ec-51f06830915a",
+                  "phase": "bench",
+                  "position": [
+                    -2.5,
+                    0.35,
+                    0
+                  ],
+                  "seatGap": 0,
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": -0.03356908435754844,
+                  "headYaw": 0
+                }
+              ],
+              "preparation": "",
+              "delivered": false,
+              "maxGap": 1696.2000000476837,
+              "epoch": 1,
+              "camera": {
+                "projection": [
+                  0.5985783763561541,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0.8230452674897119,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -0.02002002002002002,
+                  0,
+                  -0.01675166612908451,
+                  0.09970508024664335,
+                  -1.002002002002002,
+                  1
+                ],
+                "view": [
+                  0.919145030018058,
+                  -0.3133853673620511,
+                  0.23866718525271904,
+                  0,
+                  2.7755575615628914e-17,
+                  0.6058783768999658,
+                  0.7955572841757298,
+                  0,
+                  -0.39391929857916763,
+                  -0.7312325238447859,
+                  0.5568900989230113,
+                  0,
+                  1.2256883331790092,
+                  -0.9483901350714176,
+                  -12.67847362707318,
+                  1
+                ]
+              }
+            }
+          },
+          "event": {
+            "eventId": "f5ab0e8d-ae47-4025-b494-86941d6d785a",
+            "profileId": "9e941701-24fa-4e1a-aefc-eff60c43cd1d",
+            "ruleId": "M3",
+            "ruleVersion": "discovery-v3.0-rc1",
+            "semanticSignature": "[\"[\\\"9e941701-24fa-4e1a-aefc-eff60c43cd1d\\\",\\\"discovery-v3.0-rc1\\\",\\\"M3\\\",[[\\\"3b264b7c-dfed-4579-a3f9-f65dd55207b9\\\",\\\"bench\\\",1,2,null,null]]]\",[[\"rabbit\",\"3b264b7c-dfed-4579-a3f9-f65dd55207b9\",\"using\"]]]",
+            "createdAt": 1789317527488,
+            "source": "current-context-test",
+            "focalResidentIds": [
+              "rabbit"
+            ],
+            "snapshot": {
+              "contentVersion": 1,
+              "scene": {
+                "now": 1789317520319.1,
+                "activityVersion": 2,
+                "tourVersion": 1,
+                "roamRound": 0,
+                "scenePose": "captured-v1",
+                "encounterVersion": 1,
+                "readingEncounterVersion": 1,
+                "footstepMagicVersion": 1,
+                "shadowMagicVersion": 1,
+                "shadowTouch": {
+                  "itemId": "3b264b7c-dfed-4579-a3f9-f65dd55207b9",
+                  "residentId": "rabbit"
+                },
+                "waterMagicVersion": 1,
+                "facilityPresentation": "carry-care-v1",
+                "relationSelectionVersion": 1,
+                "facilityTripVersion": 1,
+                "poseReducedMotion": false,
+                "relationVersion": "water-bench-v1",
+                "landscapeVersion": "groves-water-v1",
+                "worldStyle": "canopy-dots-c3-v1",
+                "items": [
+                  {
+                    "id": "2f5926e6-3d2d-4206-8366-c946e5d484a8",
+                    "kind": "bench",
+                    "cell": {
+                      "x": 3,
+                      "z": 2
+                    },
+                    "growth": 0,
+                    "style": "original",
+                    "paidDrops": 4,
+                    "access": "front"
+                  },
+                  {
+                    "id": "110d2cd3-bf11-4390-afe3-6aaddc27e6a3",
+                    "kind": "lantern",
+                    "cell": {
+                      "x": 5,
+                      "z": 4
+                    },
+                    "growth": 0,
+                    "style": "original",
+                    "paidDrops": 8
+                  },
+                  {
+                    "id": "6523d0f2-9e9c-4362-b5ec-51f06830915a",
+                    "kind": "bench",
+                    "cell": {
+                      "x": 0,
+                      "z": 2
+                    },
+                    "growth": 0,
+                    "style": "original",
+                    "paidDrops": 4,
+                    "access": "front"
+                  },
+                  {
+                    "id": "3b264b7c-dfed-4579-a3f9-f65dd55207b9",
+                    "kind": "bench",
+                    "cell": {
+                      "x": 1,
+                      "z": 2
+                    },
+                    "growth": 0,
+                    "style": "original",
+                    "paidDrops": 4,
+                    "access": "front"
+                  }
+                ],
+                "residents": [
+                  {
+                    "id": "pokomoko",
+                    "cell": {
+                      "x": 3,
+                      "z": 3
+                    },
+                    "enjoyed": 0,
+                    "enjoyedBy": {},
+                    "visit": {
+                      "relationSelectionVersion": 1,
+                      "itemId": "2f5926e6-3d2d-4206-8366-c946e5d484a8",
+                      "path": [
+                        {
+                          "x": 3,
+                          "z": 3
+                        }
+                      ],
+                      "from": {
+                        "x": 3,
+                        "z": 3
+                      },
+                      "start": 1789317518423,
+                      "end": 1789319318423
+                    }
+                  },
+                  {
+                    "id": "rabbit",
+                    "cell": {
+                      "x": 1,
+                      "z": 3
+                    },
+                    "enjoyed": 0,
+                    "enjoyedBy": {},
+                    "visit": {
+                      "relationSelectionVersion": 1,
+                      "itemId": "3b264b7c-dfed-4579-a3f9-f65dd55207b9",
+                      "path": [
+                        {
+                          "x": 1,
+                          "z": 3
+                        }
+                      ],
+                      "from": {
+                        "x": 1,
+                        "z": 3
+                      },
+                      "start": 1789317518423,
+                      "end": 1789319318423
+                    }
+                  },
+                  {
+                    "id": "otter",
+                    "cell": {
+                      "x": 0,
+                      "z": 3
+                    },
+                    "enjoyed": 0,
+                    "enjoyedBy": {},
+                    "visit": {
+                      "relationSelectionVersion": 1,
+                      "itemId": "6523d0f2-9e9c-4362-b5ec-51f06830915a",
+                      "path": [
+                        {
+                          "x": 0,
+                          "z": 3
+                        }
+                      ],
+                      "from": {
+                        "x": 0,
+                        "z": 3
+                      },
+                      "start": 1789317518423,
+                      "end": 1789319318423
+                    }
+                  }
+                ],
+                "heroStyle": "original",
+                "target": "2f5926e6-3d2d-4206-8366-c946e5d484a8"
+              },
+              "immutableHash": "711c215e243636774227aa304f7ada0aa319801148937b105bf978a9336cb718"
+            }
+          }
+        },
+        {
+          "resident": "otter",
+          "ordinary": {
+            "shadow": {
+              "residentId": "otter",
+              "itemId": "6523d0f2-9e9c-4362-b5ec-51f06830915a",
+              "active": false,
+              "elapsed": -1,
+              "visitEnd": 1789319318423,
+              "visitStart": 1789317518423,
+              "touchPoint": [
+                -2.1650326251983643,
+                0.09,
+                -0.409000001847744
+              ]
+            },
+            "view": {
+              "at": 1789317529134.7,
+              "core": false,
+              "status": "bench",
+              "poses": [
+                {
+                  "id": "pokomoko",
+                  "itemId": "2f5926e6-3d2d-4206-8366-c946e5d484a8",
+                  "phase": "bench",
+                  "position": [
+                    0.5,
+                    0.34199999999999997,
+                    0
+                  ],
+                  "seatGap": 5.551115123125783e-17,
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                },
+                {
+                  "id": "rabbit",
+                  "itemId": "3b264b7c-dfed-4579-a3f9-f65dd55207b9",
+                  "phase": "bench",
+                  "position": [
+                    -1.5,
+                    0.32599999999999996,
+                    0
+                  ],
+                  "seatGap": 0,
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0.010903532527900441,
+                  "headYaw": 0
+                },
+                {
+                  "id": "otter",
+                  "itemId": "6523d0f2-9e9c-4362-b5ec-51f06830915a",
+                  "phase": "bench",
+                  "position": [
+                    -2.5,
+                    0.35,
+                    0
+                  ],
+                  "seatGap": 0,
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": -0.02209467119922936,
+                  "headYaw": 0
+                }
+              ],
+              "preparation": "",
+              "delivered": false,
+              "maxGap": 683.8999999761581,
+              "epoch": 1,
+              "camera": {
+                "projection": [
+                  0.5985783763561541,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0.8230452674897119,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -0.02002002002002002,
+                  0,
+                  -0.01636755148399587,
+                  0.08175040048825093,
+                  -1.002002002002002,
+                  1
+                ],
+                "view": [
+                  0.919145030018058,
+                  -0.3133853673620511,
+                  0.23866718525271904,
+                  0,
+                  2.7755575615628914e-17,
+                  0.6058783768999658,
+                  0.7955572841757298,
+                  0,
+                  -0.39391929857916763,
+                  -0.7312325238447859,
+                  0.5568900989230113,
+                  0,
+                  2.1292515559334175,
+                  -1.1968122760772317,
+                  -12.370022918009244,
+                  1
+                ]
+              }
+            }
+          },
+          "greeting": {
+            "shadow": {
+              "residentId": "otter",
+              "itemId": "6523d0f2-9e9c-4362-b5ec-51f06830915a",
+              "active": true,
+              "elapsed": 1080.300000011921,
+              "visitEnd": 1789319318423,
+              "visitStart": 1789317518423,
+              "eventId": "3d9edb83-b6af-4a8b-9e26-0b367078bae4",
+              "touchPoint": [
+                -2.1644824147224426,
+                0.09,
+                -0.4089999943971634
+              ]
+            },
+            "view": {
+              "at": 1789317530661.2,
+              "core": false,
+              "status": "bench",
+              "poses": [
+                {
+                  "id": "pokomoko",
+                  "itemId": "2f5926e6-3d2d-4206-8366-c946e5d484a8",
+                  "phase": "bench",
+                  "position": [
+                    0.5,
+                    0.34199999999999997,
+                    0
+                  ],
+                  "seatGap": 5.551115123125783e-17,
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                },
+                {
+                  "id": "rabbit",
+                  "itemId": "3b264b7c-dfed-4579-a3f9-f65dd55207b9",
+                  "phase": "bench",
+                  "position": [
+                    -1.5,
+                    0.32599999999999996,
+                    0
+                  ],
+                  "seatGap": 0,
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": -0.01773149968715368,
+                  "headYaw": 0
+                },
+                {
+                  "id": "otter",
+                  "itemId": "6523d0f2-9e9c-4362-b5ec-51f06830915a",
+                  "phase": "bench",
+                  "position": [
+                    -2.5,
+                    0.35,
+                    0
+                  ],
+                  "seatGap": 0,
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": -0.03497263963625313,
+                  "headYaw": 0
+                }
+              ],
+              "preparation": "",
+              "delivered": false,
+              "maxGap": 683.8999999761581,
+              "epoch": 1,
+              "camera": {
+                "projection": [
+                  0.5985783763561541,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0.8230452674897119,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -0.02002002002002002,
+                  0,
+                  -0.01636755148399587,
+                  0.08175040048825093,
+                  -1.002002002002002,
+                  1
+                ],
+                "view": [
+                  0.919145030018058,
+                  -0.3133853673620511,
+                  0.23866718525271904,
+                  0,
+                  2.7755575615628914e-17,
+                  0.6058783768999658,
+                  0.7955572841757298,
+                  0,
+                  -0.39391929857916763,
+                  -0.7312325238447859,
+                  0.5568900989230113,
+                  0,
+                  2.1292515559334175,
+                  -1.1968122760772317,
+                  -12.370022918009244,
+                  1
+                ]
+              }
+            }
+          },
+          "event": {
+            "eventId": "3d9edb83-b6af-4a8b-9e26-0b367078bae4",
+            "profileId": "9e941701-24fa-4e1a-aefc-eff60c43cd1d",
+            "ruleId": "M3",
+            "ruleVersion": "discovery-v3.0-rc1",
+            "semanticSignature": "[\"[\\\"9e941701-24fa-4e1a-aefc-eff60c43cd1d\\\",\\\"discovery-v3.0-rc1\\\",\\\"M3\\\",[[\\\"6523d0f2-9e9c-4362-b5ec-51f06830915a\\\",\\\"bench\\\",0,2,null,null]]]\",[[\"otter\",\"6523d0f2-9e9c-4362-b5ec-51f06830915a\",\"using\"]]]",
+            "createdAt": 1789317537823,
+            "source": "current-context-test",
+            "focalResidentIds": [
+              "otter"
+            ],
+            "snapshot": {
+              "contentVersion": 1,
+              "scene": {
+                "now": 1789317529557.8,
+                "activityVersion": 2,
+                "tourVersion": 1,
+                "roamRound": 0,
+                "scenePose": "captured-v1",
+                "encounterVersion": 1,
+                "readingEncounterVersion": 1,
+                "footstepMagicVersion": 1,
+                "shadowMagicVersion": 1,
+                "shadowTouch": {
+                  "itemId": "6523d0f2-9e9c-4362-b5ec-51f06830915a",
+                  "residentId": "otter"
+                },
+                "waterMagicVersion": 1,
+                "facilityPresentation": "carry-care-v1",
+                "relationSelectionVersion": 1,
+                "facilityTripVersion": 1,
+                "poseReducedMotion": false,
+                "relationVersion": "water-bench-v1",
+                "landscapeVersion": "groves-water-v1",
+                "worldStyle": "canopy-dots-c3-v1",
+                "items": [
+                  {
+                    "id": "2f5926e6-3d2d-4206-8366-c946e5d484a8",
+                    "kind": "bench",
+                    "cell": {
+                      "x": 3,
+                      "z": 2
+                    },
+                    "growth": 0,
+                    "style": "original",
+                    "paidDrops": 4,
+                    "access": "front"
+                  },
+                  {
+                    "id": "110d2cd3-bf11-4390-afe3-6aaddc27e6a3",
+                    "kind": "lantern",
+                    "cell": {
+                      "x": 5,
+                      "z": 4
+                    },
+                    "growth": 0,
+                    "style": "original",
+                    "paidDrops": 8
+                  },
+                  {
+                    "id": "6523d0f2-9e9c-4362-b5ec-51f06830915a",
+                    "kind": "bench",
+                    "cell": {
+                      "x": 0,
+                      "z": 2
+                    },
+                    "growth": 0,
+                    "style": "original",
+                    "paidDrops": 4,
+                    "access": "front"
+                  },
+                  {
+                    "id": "3b264b7c-dfed-4579-a3f9-f65dd55207b9",
+                    "kind": "bench",
+                    "cell": {
+                      "x": 1,
+                      "z": 2
+                    },
+                    "growth": 0,
+                    "style": "original",
+                    "paidDrops": 4,
+                    "access": "front"
+                  }
+                ],
+                "residents": [
+                  {
+                    "id": "pokomoko",
+                    "cell": {
+                      "x": 3,
+                      "z": 3
+                    },
+                    "enjoyed": 0,
+                    "enjoyedBy": {},
+                    "visit": {
+                      "relationSelectionVersion": 1,
+                      "itemId": "2f5926e6-3d2d-4206-8366-c946e5d484a8",
+                      "path": [
+                        {
+                          "x": 3,
+                          "z": 3
+                        }
+                      ],
+                      "from": {
+                        "x": 3,
+                        "z": 3
+                      },
+                      "start": 1789317518423,
+                      "end": 1789319318423
+                    }
+                  },
+                  {
+                    "id": "rabbit",
+                    "cell": {
+                      "x": 1,
+                      "z": 3
+                    },
+                    "enjoyed": 0,
+                    "enjoyedBy": {},
+                    "visit": {
+                      "relationSelectionVersion": 1,
+                      "itemId": "3b264b7c-dfed-4579-a3f9-f65dd55207b9",
+                      "path": [
+                        {
+                          "x": 1,
+                          "z": 3
+                        }
+                      ],
+                      "from": {
+                        "x": 1,
+                        "z": 3
+                      },
+                      "start": 1789317518423,
+                      "end": 1789319318423
+                    }
+                  },
+                  {
+                    "id": "otter",
+                    "cell": {
+                      "x": 0,
+                      "z": 3
+                    },
+                    "enjoyed": 0,
+                    "enjoyedBy": {},
+                    "visit": {
+                      "relationSelectionVersion": 1,
+                      "itemId": "6523d0f2-9e9c-4362-b5ec-51f06830915a",
+                      "path": [
+                        {
+                          "x": 0,
+                          "z": 3
+                        }
+                      ],
+                      "from": {
+                        "x": 0,
+                        "z": 3
+                      },
+                      "start": 1789317518423,
+                      "end": 1789319318423
+                    }
+                  }
+                ],
+                "heroStyle": "original",
+                "target": "2f5926e6-3d2d-4206-8366-c946e5d484a8"
+              },
+              "immutableHash": "ef8fdb0b73e8dd040a50fe8ac16615fc135e84cc95f120d6c4416f3c4bd13c74"
+            }
+          }
+        }
+      ],
+      "delivery": {
+        "url": "http://127.0.0.1:5233/#/island",
+        "builds": [
+          {
+            "revision": "development-local",
+            "delivery": "snap-root-v1"
+          },
+          {
+            "revision": "development-local",
+            "version": "development-local:dfdd99a1-7551-4490-b52f-b2e1bdda38d1",
+            "delivery": "mystic-island-v1"
+          }
+        ],
+        "world": "canopy-dots-c3-v1"
+      },
+      "version": 14,
+      "pass": true,
+      "errors": []
+    },
+    {
+      "device": "tablet",
+      "scenes": [
+        {
+          "before": {
+            "shadow": {
+              "residentId": "pokomoko",
+              "itemId": "f4ad73fd-53dd-47b5-99b3-0eda5fa7ba77",
+              "active": false,
+              "elapsed": -1,
+              "visitEnd": 1789319395778,
+              "visitStart": 1789317595778,
+              "touchPoint": [
+                0.8224999904632568,
+                0.09,
+                -0.43000001460313797
+              ]
+            },
+            "view": {
+              "at": 1789317601277.8,
+              "core": false,
+              "status": "bench",
+              "poses": [
+                {
+                  "id": "pokomoko",
+                  "itemId": "f4ad73fd-53dd-47b5-99b3-0eda5fa7ba77",
+                  "phase": "bench",
+                  "position": [
+                    0.5,
+                    0.34199999999999997,
+                    0
+                  ],
+                  "seatGap": 5.551115123125783e-17,
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                },
+                {
+                  "id": "rabbit",
+                  "itemId": "roam:display:rabbit:0",
+                  "phase": "roaming",
+                  "position": [
+                    2.5,
+                    0.04,
+                    1
+                  ],
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                },
+                {
+                  "id": "otter",
+                  "phase": "home",
+                  "position": [
+                    -0.5,
+                    0.04,
+                    -1
+                  ],
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                }
+              ],
+              "preparation": "",
+              "delivered": false,
+              "maxGap": 961.5,
+              "epoch": 1,
+              "camera": {
+                "projection": [
+                  0.5985783763561541,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0.8230452674897119,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -0.02002002002002002,
+                  0,
+                  -0.013699488818964742,
+                  0.08993536056664647,
+                  -1.002002002002002,
+                  1
+                ],
+                "view": [
+                  0.919145030018058,
+                  -0.3133853673620511,
+                  0.23866718525271904,
+                  0,
+                  2.7755575615628914e-17,
+                  0.6058783768999658,
+                  0.7955572841757298,
+                  0,
+                  -0.39391929857916763,
+                  -0.7312325238447859,
+                  0.5568900989230113,
+                  0,
+                  -0.6796871926045955,
+                  -0.28692499881564726,
+                  -13.152614597210258,
+                  1
+                ]
+              }
+            }
+          },
+          "peak": {
+            "shadow": {
+              "residentId": "pokomoko",
+              "itemId": "f4ad73fd-53dd-47b5-99b3-0eda5fa7ba77",
+              "active": true,
+              "elapsed": 1200.5,
+              "visitEnd": 1789319395778,
+              "visitStart": 1789317595778,
+              "eventId": "786a6221-1e45-49f5-a9f5-ef4cbaa474b6",
+              "touchPoint": [
+                0.8224999904632568,
+                0.09,
+                -0.43000001460313797
+              ]
+            },
+            "view": {
+              "at": 1789317603619,
+              "core": false,
+              "status": "bench",
+              "poses": [
+                {
+                  "id": "pokomoko",
+                  "itemId": "f4ad73fd-53dd-47b5-99b3-0eda5fa7ba77",
+                  "phase": "bench",
+                  "position": [
+                    0.5,
+                    0.34199999999999997,
+                    0
+                  ],
+                  "seatGap": 5.551115123125783e-17,
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                },
+                {
+                  "id": "rabbit",
+                  "phase": "home",
+                  "position": [
+                    2.5,
+                    0.04,
+                    1
+                  ],
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                },
+                {
+                  "id": "otter",
+                  "itemId": "roam:display:otter:1",
+                  "phase": "walking",
+                  "position": [
+                    0.3237135904063785,
+                    0.04,
+                    -1
+                  ],
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                }
+              ],
+              "preparation": "",
+              "delivered": false,
+              "maxGap": 961.5,
+              "epoch": 1,
+              "camera": {
+                "projection": [
+                  0.5985783763561541,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0.8230452674897119,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -0.02002002002002002,
+                  0,
+                  -0.013699488818964742,
+                  0.08993536056664647,
+                  -1.002002002002002,
+                  1
+                ],
+                "view": [
+                  0.919145030018058,
+                  -0.3133853673620511,
+                  0.23866718525271904,
+                  0,
+                  2.7755575615628914e-17,
+                  0.6058783768999658,
+                  0.7955572841757298,
+                  0,
+                  -0.39391929857916763,
+                  -0.7312325238447859,
+                  0.5568900989230113,
+                  0,
+                  -0.6796871926045955,
+                  -0.28692499881564726,
+                  -13.152614597210258,
+                  1
+                ]
+              }
+            }
+          },
+          "event": {
+            "eventId": "786a6221-1e45-49f5-a9f5-ef4cbaa474b6",
+            "profileId": "93226ad6-6e97-427e-9b55-7396b5f79682",
+            "ruleId": "M3",
+            "ruleVersion": "discovery-v3.0-rc1",
+            "semanticSignature": "[\"[\\\"93226ad6-6e97-427e-9b55-7396b5f79682\\\",\\\"discovery-v3.0-rc1\\\",\\\"M3\\\",[[\\\"f4ad73fd-53dd-47b5-99b3-0eda5fa7ba77\\\",\\\"bench\\\",3,2,null,null]]]\",[[\"pokomoko\",\"f4ad73fd-53dd-47b5-99b3-0eda5fa7ba77\",\"using\"]]]",
+            "createdAt": 1789317606074,
+            "source": "current-context-test",
+            "focalResidentIds": [
+              "pokomoko"
+            ],
+            "snapshot": {
+              "contentVersion": 1,
+              "scene": {
+                "now": 1789317602329.6,
+                "activityVersion": 2,
+                "tourVersion": 1,
+                "roamRound": 0,
+                "scenePose": "captured-v1",
+                "encounterVersion": 1,
+                "readingEncounterVersion": 1,
+                "footstepMagicVersion": 1,
+                "shadowMagicVersion": 1,
+                "shadowTouch": {
+                  "itemId": "f4ad73fd-53dd-47b5-99b3-0eda5fa7ba77",
+                  "residentId": "pokomoko"
+                },
+                "waterMagicVersion": 1,
+                "facilityPresentation": "carry-care-v1",
+                "relationSelectionVersion": 1,
+                "facilityTripVersion": 1,
+                "poseReducedMotion": true,
+                "relationVersion": "water-bench-v1",
+                "landscapeVersion": "groves-water-v1",
+                "worldStyle": "canopy-dots-c3-v1",
+                "items": [
+                  {
+                    "id": "f4ad73fd-53dd-47b5-99b3-0eda5fa7ba77",
+                    "kind": "bench",
+                    "cell": {
+                      "x": 3,
+                      "z": 2
+                    },
+                    "growth": 0,
+                    "style": "original",
+                    "paidDrops": 4,
+                    "access": "front"
+                  },
+                  {
+                    "id": "23b43e6f-cc54-4bc1-bd9e-3a4e0c237de9",
+                    "kind": "lantern",
+                    "cell": {
+                      "x": 5,
+                      "z": 4
+                    },
+                    "growth": 0,
+                    "style": "original",
+                    "paidDrops": 8
+                  }
+                ],
+                "residents": [
+                  {
+                    "id": "pokomoko",
+                    "cell": {
+                      "x": 3,
+                      "z": 3
+                    },
+                    "enjoyed": 0,
+                    "enjoyedBy": {},
+                    "visit": {
+                      "relationSelectionVersion": 1,
+                      "itemId": "f4ad73fd-53dd-47b5-99b3-0eda5fa7ba77",
+                      "path": [
+                        {
+                          "x": 3,
+                          "z": 3
+                        }
+                      ],
+                      "from": {
+                        "x": 3,
+                        "z": 3
+                      },
+                      "start": 1789317595778,
+                      "end": 1789319395778
+                    }
+                  },
+                  {
+                    "id": "rabbit",
+                    "cell": {
+                      "x": 4,
+                      "z": 0
+                    },
+                    "enjoyed": 0,
+                    "enjoyedBy": {},
+                    "visit": {
+                      "itemId": "roam:display:rabbit:0",
+                      "from": {
+                        "x": 4,
+                        "z": 0
+                      },
+                      "path": [
+                        {
+                          "x": 4,
+                          "z": 0
+                        },
+                        {
+                          "x": 5,
+                          "z": 0
+                        },
+                        {
+                          "x": 5,
+                          "z": 1
+                        },
+                        {
+                          "x": 5,
+                          "z": 2
+                        },
+                        {
+                          "x": 5,
+                          "z": 3
+                        }
+                      ],
+                      "start": 1789317595778,
+                      "end": 1789317602378
+                    }
+                  },
+                  {
+                    "id": "otter",
+                    "cell": {
+                      "x": 2,
+                      "z": 1
+                    },
+                    "enjoyed": 0,
+                    "enjoyedBy": {}
+                  }
+                ],
+                "heroStyle": "original",
+                "target": "f4ad73fd-53dd-47b5-99b3-0eda5fa7ba77"
+              },
+              "immutableHash": "6cba8048017f558cb990342ce9f17df458484225a8d54c8651dd05b5c0507fb0"
+            }
+          },
+          "interrupted": {
+            "shadow": {
+              "residentId": "pokomoko",
+              "itemId": "f4ad73fd-53dd-47b5-99b3-0eda5fa7ba77",
+              "active": true,
+              "elapsed": 258.5,
+              "visitEnd": 1789317649768,
+              "visitStart": 1789317595778,
+              "eventId": "cdfe0738-0b85-4390-a28c-75311dcb9393",
+              "touchPoint": [
+                0.8224999904632568,
+                0.09,
+                -0.43000001460313797
+              ]
+            },
+            "view": {
+              "at": 1789317647891.1,
+              "core": false,
+              "status": "bench",
+              "poses": [
+                {
+                  "id": "pokomoko",
+                  "itemId": "f4ad73fd-53dd-47b5-99b3-0eda5fa7ba77",
+                  "phase": "bench",
+                  "position": [
+                    0.5,
+                    0.34199999999999997,
+                    0
+                  ],
+                  "seatGap": 5.551115123125783e-17,
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                },
+                {
+                  "id": "rabbit",
+                  "phase": "home",
+                  "position": [
+                    2.5,
+                    0.04,
+                    -2
+                  ],
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                },
+                {
+                  "id": "otter",
+                  "itemId": "roam:display:otter:9",
+                  "phase": "walking",
+                  "position": [
+                    1.5,
+                    0.04,
+                    -1.99611434916809
+                  ],
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                }
+              ],
+              "preparation": "",
+              "delivered": false,
+              "maxGap": 1825.7000000476837,
+              "epoch": 1,
+              "camera": {
+                "projection": [
+                  0.33260923547376964,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0.45733769877643327,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -0.02002002002002002,
+                  0,
+                  0.03584982245824826,
+                  0.07901773584764085,
+                  -1.002002002002002,
+                  1
+                ],
+                "view": [
+                  0.919145030018058,
+                  -0.3133853673620511,
+                  0.23866718525271904,
+                  0,
+                  2.7755575615628914e-17,
+                  0.6058783768999658,
+                  0.7955572841757298,
+                  0,
+                  -0.39391929857916763,
+                  -0.7312325238447859,
+                  0.5568900989230113,
+                  0,
+                  -1.002138925106412,
+                  0.6112080671870553,
+                  -13.836612362165306,
+                  1
+                ]
+              }
+            }
+          },
+          "after": {
+            "shadow": {
+              "itemId": "f4ad73fd-53dd-47b5-99b3-0eda5fa7ba77",
+              "active": false,
+              "elapsed": -1
+            },
+            "view": {
+              "at": 1789317650064.7,
+              "core": false,
+              "status": "walking",
+              "poses": [
+                {
+                  "id": "pokomoko",
+                  "itemId": "f4ad73fd-53dd-47b5-99b3-0eda5fa7ba77",
+                  "phase": "walking",
+                  "position": [
+                    0.5,
+                    0.11682392012444817,
+                    0.7456161585283173
+                  ],
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                },
+                {
+                  "id": "rabbit",
+                  "itemId": "roam:display:rabbit:10",
+                  "phase": "walking",
+                  "position": [
+                    2.5,
+                    0.04,
+                    -1.9211970871282993
+                  ],
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                },
+                {
+                  "id": "otter",
+                  "phase": "home",
+                  "position": [
+                    1.5,
+                    0.04,
+                    -2
+                  ],
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                }
+              ],
+              "preparation": "",
+              "delivered": false,
+              "maxGap": 1825.7000000476837,
+              "epoch": 1,
+              "camera": {
+                "projection": [
+                  0.5406632672750896,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0.7434119925032482,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -0.02002002002002002,
+                  0,
+                  0.14430984024648616,
+                  0.13859833647017067,
+                  -1.002002002002002,
+                  1
+                ],
+                "view": [
+                  0.8411784753765535,
+                  -0.2785043287946192,
+                  0.4635235823621443,
+                  0,
+                  5.551115123125783e-17,
+                  0.8571744341789946,
+                  0.5150262026246047,
+                  0,
+                  -0.5407575913134988,
+                  -0.43322895590274096,
+                  0.7210366836744466,
+                  0,
+                  -0.6495099536094947,
+                  0.3215796648556356,
+                  -11.389031934133637,
+                  1
+                ]
+              }
+            }
+          }
+        },
+        {
+          "resident": "rabbit",
+          "ordinary": {
+            "shadow": {
+              "residentId": "rabbit",
+              "itemId": "adf0dcae-9e43-4910-8316-7fbc3fe89cd0",
+              "active": false,
+              "elapsed": -1,
+              "visitEnd": 1789319480070,
+              "visitStart": 1789317680070,
+              "touchPoint": [
+                -1.170405387878418,
+                0.09,
+                -0.4080841988325119
+              ]
+            },
+            "view": {
+              "at": 1789317681566.9,
+              "core": false,
+              "status": "bench",
+              "poses": [
+                {
+                  "id": "pokomoko",
+                  "itemId": "f4ad73fd-53dd-47b5-99b3-0eda5fa7ba77",
+                  "phase": "bench",
+                  "position": [
+                    0.5,
+                    0.34199999999999997,
+                    0
+                  ],
+                  "seatGap": 5.551115123125783e-17,
+                  "reaction": "♪",
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                },
+                {
+                  "id": "rabbit",
+                  "itemId": "adf0dcae-9e43-4910-8316-7fbc3fe89cd0",
+                  "phase": "bench",
+                  "position": [
+                    -1.5,
+                    0.32599999999999996,
+                    0
+                  ],
+                  "seatGap": 0,
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                },
+                {
+                  "id": "otter",
+                  "itemId": "70cc478e-6bfd-4c1f-a2f5-83e3bec2be7a",
+                  "phase": "bench",
+                  "position": [
+                    -2.5,
+                    0.35,
+                    0
+                  ],
+                  "seatGap": 0,
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                }
+              ],
+              "preparation": "",
+              "delivered": false,
+              "maxGap": 916.1000000238419,
+              "epoch": 1,
+              "camera": {
+                "projection": [
+                  0.5985783763561541,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0.8230452674897119,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -0.02002002002002002,
+                  0,
+                  -0.016751666129084374,
+                  0.09933541610751322,
+                  -1.002002002002002,
+                  1
+                ],
+                "view": [
+                  0.919145030018058,
+                  -0.3133853673620511,
+                  0.23866718525271904,
+                  0,
+                  2.7755575615628914e-17,
+                  0.6058783768999658,
+                  0.7955572841757298,
+                  0,
+                  -0.39391929857916763,
+                  -0.7312325238447859,
+                  0.5568900989230113,
+                  0,
+                  1.2218142406414918,
+                  -0.9452900518778935,
+                  -12.678246336305119,
+                  1
+                ]
+              }
+            }
+          },
+          "greeting": {
+            "shadow": {
+              "residentId": "rabbit",
+              "itemId": "adf0dcae-9e43-4910-8316-7fbc3fe89cd0",
+              "active": true,
+              "elapsed": 1191.2999999523163,
+              "visitEnd": 1789319480070,
+              "visitStart": 1789317680070,
+              "eventId": "711a4b3e-1d76-4114-9a7d-c0a69eaab00b",
+              "touchPoint": [
+                -1.170405387878418,
+                0.09,
+                -0.4080841988325119
+              ]
+            },
+            "view": {
+              "at": 1789317694267.9,
+              "core": false,
+              "status": "bench",
+              "poses": [
+                {
+                  "id": "pokomoko",
+                  "itemId": "f4ad73fd-53dd-47b5-99b3-0eda5fa7ba77",
+                  "phase": "bench",
+                  "position": [
+                    0.5,
+                    0.34199999999999997,
+                    0
+                  ],
+                  "seatGap": 5.551115123125783e-17,
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                },
+                {
+                  "id": "rabbit",
+                  "itemId": "adf0dcae-9e43-4910-8316-7fbc3fe89cd0",
+                  "phase": "bench",
+                  "position": [
+                    -1.5,
+                    0.32599999999999996,
+                    0
+                  ],
+                  "seatGap": 0,
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                },
+                {
+                  "id": "otter",
+                  "itemId": "70cc478e-6bfd-4c1f-a2f5-83e3bec2be7a",
+                  "phase": "bench",
+                  "position": [
+                    -2.5,
+                    0.35,
+                    0
+                  ],
+                  "seatGap": 0,
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                }
+              ],
+              "preparation": "",
+              "delivered": false,
+              "maxGap": 1637.199999988079,
+              "epoch": 1,
+              "camera": {
+                "projection": [
+                  0.5985783763561541,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0.8230452674897119,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -0.02002002002002002,
+                  0,
+                  -0.016751666129084374,
+                  0.09933541610751322,
+                  -1.002002002002002,
+                  1
+                ],
+                "view": [
+                  0.919145030018058,
+                  -0.3133853673620511,
+                  0.23866718525271904,
+                  0,
+                  2.7755575615628914e-17,
+                  0.6058783768999658,
+                  0.7955572841757298,
+                  0,
+                  -0.39391929857916763,
+                  -0.7312325238447859,
+                  0.5568900989230113,
+                  0,
+                  1.2218142406414918,
+                  -0.9452900518778935,
+                  -12.678246336305119,
+                  1
+                ]
+              }
+            }
+          },
+          "event": {
+            "eventId": "711a4b3e-1d76-4114-9a7d-c0a69eaab00b",
+            "profileId": "93226ad6-6e97-427e-9b55-7396b5f79682",
+            "ruleId": "M3",
+            "ruleVersion": "discovery-v3.0-rc1",
+            "semanticSignature": "[\"[\\\"93226ad6-6e97-427e-9b55-7396b5f79682\\\",\\\"discovery-v3.0-rc1\\\",\\\"M3\\\",[[\\\"adf0dcae-9e43-4910-8316-7fbc3fe89cd0\\\",\\\"bench\\\",1,2,null,null]]]\",[[\"rabbit\",\"adf0dcae-9e43-4910-8316-7fbc3fe89cd0\",\"using\"]]]",
+            "createdAt": 1789317693528,
+            "source": "current-context-test",
+            "focalResidentIds": [
+              "rabbit"
+            ],
+            "snapshot": {
+              "contentVersion": 1,
+              "scene": {
+                "now": 1789317693049.6,
+                "activityVersion": 2,
+                "tourVersion": 1,
+                "roamRound": 0,
+                "scenePose": "captured-v1",
+                "encounterVersion": 1,
+                "readingEncounterVersion": 1,
+                "footstepMagicVersion": 1,
+                "shadowMagicVersion": 1,
+                "shadowTouch": {
+                  "itemId": "adf0dcae-9e43-4910-8316-7fbc3fe89cd0",
+                  "residentId": "rabbit"
+                },
+                "waterMagicVersion": 1,
+                "facilityPresentation": "carry-care-v1",
+                "relationSelectionVersion": 1,
+                "facilityTripVersion": 1,
+                "poseReducedMotion": true,
+                "relationVersion": "water-bench-v1",
+                "landscapeVersion": "groves-water-v1",
+                "worldStyle": "canopy-dots-c3-v1",
+                "items": [
+                  {
+                    "id": "f4ad73fd-53dd-47b5-99b3-0eda5fa7ba77",
+                    "kind": "bench",
+                    "cell": {
+                      "x": 3,
+                      "z": 2
+                    },
+                    "growth": 0,
+                    "style": "original",
+                    "paidDrops": 4,
+                    "access": "front"
+                  },
+                  {
+                    "id": "23b43e6f-cc54-4bc1-bd9e-3a4e0c237de9",
+                    "kind": "lantern",
+                    "cell": {
+                      "x": 5,
+                      "z": 4
+                    },
+                    "growth": 0,
+                    "style": "original",
+                    "paidDrops": 8
+                  },
+                  {
+                    "id": "70cc478e-6bfd-4c1f-a2f5-83e3bec2be7a",
+                    "kind": "bench",
+                    "cell": {
+                      "x": 0,
+                      "z": 2
+                    },
+                    "growth": 0,
+                    "style": "original",
+                    "paidDrops": 4,
+                    "access": "front"
+                  },
+                  {
+                    "id": "adf0dcae-9e43-4910-8316-7fbc3fe89cd0",
+                    "kind": "bench",
+                    "cell": {
+                      "x": 1,
+                      "z": 2
+                    },
+                    "growth": 0,
+                    "style": "original",
+                    "paidDrops": 4,
+                    "access": "front"
+                  }
+                ],
+                "residents": [
+                  {
+                    "id": "pokomoko",
+                    "cell": {
+                      "x": 3,
+                      "z": 3
+                    },
+                    "enjoyed": 0,
+                    "enjoyedBy": {},
+                    "visit": {
+                      "relationSelectionVersion": 1,
+                      "itemId": "f4ad73fd-53dd-47b5-99b3-0eda5fa7ba77",
+                      "path": [
+                        {
+                          "x": 3,
+                          "z": 3
+                        }
+                      ],
+                      "from": {
+                        "x": 3,
+                        "z": 3
+                      },
+                      "start": 1789317680070,
+                      "end": 1789319480070
+                    }
+                  },
+                  {
+                    "id": "rabbit",
+                    "cell": {
+                      "x": 1,
+                      "z": 3
+                    },
+                    "enjoyed": 0,
+                    "enjoyedBy": {},
+                    "visit": {
+                      "relationSelectionVersion": 1,
+                      "itemId": "adf0dcae-9e43-4910-8316-7fbc3fe89cd0",
+                      "path": [
+                        {
+                          "x": 1,
+                          "z": 3
+                        }
+                      ],
+                      "from": {
+                        "x": 1,
+                        "z": 3
+                      },
+                      "start": 1789317680070,
+                      "end": 1789319480070
+                    }
+                  },
+                  {
+                    "id": "otter",
+                    "cell": {
+                      "x": 0,
+                      "z": 3
+                    },
+                    "enjoyed": 0,
+                    "enjoyedBy": {},
+                    "visit": {
+                      "relationSelectionVersion": 1,
+                      "itemId": "70cc478e-6bfd-4c1f-a2f5-83e3bec2be7a",
+                      "path": [
+                        {
+                          "x": 0,
+                          "z": 3
+                        }
+                      ],
+                      "from": {
+                        "x": 0,
+                        "z": 3
+                      },
+                      "start": 1789317680070,
+                      "end": 1789319480070
+                    }
+                  }
+                ],
+                "heroStyle": "original",
+                "target": "f4ad73fd-53dd-47b5-99b3-0eda5fa7ba77"
+              },
+              "immutableHash": "d25dd1f750d0aaf0a018cc1e5f9d52bba41ecad6733ba25fc385a3baafb3abcd"
+            }
+          }
+        },
+        {
+          "resident": "otter",
+          "ordinary": {
+            "shadow": {
+              "residentId": "otter",
+              "itemId": "70cc478e-6bfd-4c1f-a2f5-83e3bec2be7a",
+              "active": false,
+              "elapsed": -1,
+              "visitEnd": 1789319480070,
+              "visitStart": 1789317680070,
+              "touchPoint": [
+                -2.165987193584442,
+                0.09,
+                -0.4089999943971634
+              ]
+            },
+            "view": {
+              "at": 1789317691910.1,
+              "core": false,
+              "status": "bench",
+              "poses": [
+                {
+                  "id": "pokomoko",
+                  "itemId": "f4ad73fd-53dd-47b5-99b3-0eda5fa7ba77",
+                  "phase": "bench",
+                  "position": [
+                    0.5,
+                    0.34199999999999997,
+                    0
+                  ],
+                  "seatGap": 5.551115123125783e-17,
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                },
+                {
+                  "id": "rabbit",
+                  "itemId": "adf0dcae-9e43-4910-8316-7fbc3fe89cd0",
+                  "phase": "bench",
+                  "position": [
+                    -1.5,
+                    0.32599999999999996,
+                    0
+                  ],
+                  "seatGap": 0,
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                },
+                {
+                  "id": "otter",
+                  "itemId": "70cc478e-6bfd-4c1f-a2f5-83e3bec2be7a",
+                  "phase": "bench",
+                  "position": [
+                    -2.5,
+                    0.35,
+                    0
+                  ],
+                  "seatGap": 0,
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                }
+              ],
+              "preparation": "",
+              "delivered": false,
+              "maxGap": 745,
+              "epoch": 1,
+              "camera": {
+                "projection": [
+                  0.5985783763561541,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0.8230452674897119,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -0.02002002002002002,
+                  0,
+                  -0.016367551483995737,
+                  0.08175066953056401,
+                  -1.002002002002002,
+                  1
+                ],
+                "view": [
+                  0.919145030018058,
+                  -0.3133853673620511,
+                  0.23866718525271904,
+                  0,
+                  2.7755575615628914e-17,
+                  0.6058783768999658,
+                  0.7955572841757298,
+                  0,
+                  -0.39391929857916763,
+                  -0.7312325238447859,
+                  0.5568900989230113,
+                  0,
+                  2.129405710064521,
+                  -1.1964140557506329,
+                  -12.369390184589886,
+                  1
+                ]
+              }
+            }
+          },
+          "greeting": {
+            "shadow": {
+              "residentId": "otter",
+              "itemId": "70cc478e-6bfd-4c1f-a2f5-83e3bec2be7a",
+              "active": true,
+              "elapsed": 2830.300000011921,
+              "visitEnd": 1789319480070,
+              "visitStart": 1789317680070,
+              "eventId": "a11b7813-0c72-4789-85a6-d34c08b66fdf",
+              "touchPoint": [
+                -2.165987193584442,
+                0.09,
+                -0.4089999943971634
+              ]
+            },
+            "view": {
+              "at": 1789317706869.6,
+              "core": false,
+              "status": "bench",
+              "poses": [
+                {
+                  "id": "pokomoko",
+                  "itemId": "f4ad73fd-53dd-47b5-99b3-0eda5fa7ba77",
+                  "phase": "bench",
+                  "position": [
+                    0.5,
+                    0.34199999999999997,
+                    0
+                  ],
+                  "seatGap": 5.551115123125783e-17,
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                },
+                {
+                  "id": "rabbit",
+                  "itemId": "adf0dcae-9e43-4910-8316-7fbc3fe89cd0",
+                  "phase": "bench",
+                  "position": [
+                    -1.5,
+                    0.32599999999999996,
+                    0
+                  ],
+                  "seatGap": 0,
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                },
+                {
+                  "id": "otter",
+                  "itemId": "70cc478e-6bfd-4c1f-a2f5-83e3bec2be7a",
+                  "phase": "bench",
+                  "position": [
+                    -2.5,
+                    0.35,
+                    0
+                  ],
+                  "seatGap": 0,
+                  "hop": 0,
+                  "headPitch": 0,
+                  "headRoll": 0,
+                  "headYaw": 0
+                }
+              ],
+              "preparation": "",
+              "delivered": false,
+              "maxGap": 1539,
+              "epoch": 1,
+              "camera": {
+                "projection": [
+                  0.5985783763561541,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0.8230452674897119,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -0.02002002002002002,
+                  0,
+                  -0.016367551483996136,
+                  0.08175066953056419,
+                  -1.002002002002002,
+                  1
+                ],
+                "view": [
+                  0.919145030018058,
+                  -0.3133853673620511,
+                  0.23866718525271904,
+                  0,
+                  2.7755575615628914e-17,
+                  0.6058783768999658,
+                  0.7955572841757298,
+                  0,
+                  -0.39391929857916763,
+                  -0.7312325238447859,
+                  0.5568900989230113,
+                  0,
+                  2.121605377197974,
+                  -1.1937545079087855,
+                  -12.371415635882656,
+                  1
+                ]
+              }
+            }
+          },
+          "event": {
+            "eventId": "a11b7813-0c72-4789-85a6-d34c08b66fdf",
+            "profileId": "93226ad6-6e97-427e-9b55-7396b5f79682",
+            "ruleId": "M3",
+            "ruleVersion": "discovery-v3.0-rc1",
+            "semanticSignature": "[\"[\\\"93226ad6-6e97-427e-9b55-7396b5f79682\\\",\\\"discovery-v3.0-rc1\\\",\\\"M3\\\",[[\\\"70cc478e-6bfd-4c1f-a2f5-83e3bec2be7a\\\",\\\"bench\\\",0,2,null,null]]]\",[[\"otter\",\"70cc478e-6bfd-4c1f-a2f5-83e3bec2be7a\",\"using\"]]]",
+            "createdAt": 1789317704513,
+            "source": "current-context-test",
+            "focalResidentIds": [
+              "otter"
+            ],
+            "snapshot": {
+              "contentVersion": 1,
+              "scene": {
+                "now": 1789317692608.7,
+                "activityVersion": 2,
+                "tourVersion": 1,
+                "roamRound": 0,
+                "scenePose": "captured-v1",
+                "encounterVersion": 1,
+                "readingEncounterVersion": 1,
+                "footstepMagicVersion": 1,
+                "shadowMagicVersion": 1,
+                "shadowTouch": {
+                  "itemId": "70cc478e-6bfd-4c1f-a2f5-83e3bec2be7a",
+                  "residentId": "otter"
+                },
+                "waterMagicVersion": 1,
+                "facilityPresentation": "carry-care-v1",
+                "relationSelectionVersion": 1,
+                "facilityTripVersion": 1,
+                "poseReducedMotion": true,
+                "relationVersion": "water-bench-v1",
+                "landscapeVersion": "groves-water-v1",
+                "worldStyle": "canopy-dots-c3-v1",
+                "items": [
+                  {
+                    "id": "f4ad73fd-53dd-47b5-99b3-0eda5fa7ba77",
+                    "kind": "bench",
+                    "cell": {
+                      "x": 3,
+                      "z": 2
+                    },
+                    "growth": 0,
+                    "style": "original",
+                    "paidDrops": 4,
+                    "access": "front"
+                  },
+                  {
+                    "id": "23b43e6f-cc54-4bc1-bd9e-3a4e0c237de9",
+                    "kind": "lantern",
+                    "cell": {
+                      "x": 5,
+                      "z": 4
+                    },
+                    "growth": 0,
+                    "style": "original",
+                    "paidDrops": 8
+                  },
+                  {
+                    "id": "70cc478e-6bfd-4c1f-a2f5-83e3bec2be7a",
+                    "kind": "bench",
+                    "cell": {
+                      "x": 0,
+                      "z": 2
+                    },
+                    "growth": 0,
+                    "style": "original",
+                    "paidDrops": 4,
+                    "access": "front"
+                  },
+                  {
+                    "id": "adf0dcae-9e43-4910-8316-7fbc3fe89cd0",
+                    "kind": "bench",
+                    "cell": {
+                      "x": 1,
+                      "z": 2
+                    },
+                    "growth": 0,
+                    "style": "original",
+                    "paidDrops": 4,
+                    "access": "front"
+                  }
+                ],
+                "residents": [
+                  {
+                    "id": "pokomoko",
+                    "cell": {
+                      "x": 3,
+                      "z": 3
+                    },
+                    "enjoyed": 0,
+                    "enjoyedBy": {},
+                    "visit": {
+                      "relationSelectionVersion": 1,
+                      "itemId": "f4ad73fd-53dd-47b5-99b3-0eda5fa7ba77",
+                      "path": [
+                        {
+                          "x": 3,
+                          "z": 3
+                        }
+                      ],
+                      "from": {
+                        "x": 3,
+                        "z": 3
+                      },
+                      "start": 1789317680070,
+                      "end": 1789319480070
+                    }
+                  },
+                  {
+                    "id": "rabbit",
+                    "cell": {
+                      "x": 1,
+                      "z": 3
+                    },
+                    "enjoyed": 0,
+                    "enjoyedBy": {},
+                    "visit": {
+                      "relationSelectionVersion": 1,
+                      "itemId": "adf0dcae-9e43-4910-8316-7fbc3fe89cd0",
+                      "path": [
+                        {
+                          "x": 1,
+                          "z": 3
+                        }
+                      ],
+                      "from": {
+                        "x": 1,
+                        "z": 3
+                      },
+                      "start": 1789317680070,
+                      "end": 1789319480070
+                    }
+                  },
+                  {
+                    "id": "otter",
+                    "cell": {
+                      "x": 0,
+                      "z": 3
+                    },
+                    "enjoyed": 0,
+                    "enjoyedBy": {},
+                    "visit": {
+                      "relationSelectionVersion": 1,
+                      "itemId": "70cc478e-6bfd-4c1f-a2f5-83e3bec2be7a",
+                      "path": [
+                        {
+                          "x": 0,
+                          "z": 3
+                        }
+                      ],
+                      "from": {
+                        "x": 0,
+                        "z": 3
+                      },
+                      "start": 1789317680070,
+                      "end": 1789319480070
+                    }
+                  }
+                ],
+                "heroStyle": "original",
+                "target": "f4ad73fd-53dd-47b5-99b3-0eda5fa7ba77"
+              },
+              "immutableHash": "f8e5370117fcda2e7fb22bb95a9b8daf91fffb90cecb33c94d0be9c0035bb179"
+            }
+          }
+        }
+      ],
+      "delivery": {
+        "url": "http://127.0.0.1:5233/#/island",
+        "builds": [
+          {
+            "revision": "development-local",
+            "delivery": "snap-root-v1"
+          },
+          {
+            "revision": "development-local",
+            "version": "development-local:dfdd99a1-7551-4490-b52f-b2e1bdda38d1",
+            "delivery": "mystic-island-v1"
+          }
+        ],
+        "world": "canopy-dots-c3-v1"
+      },
+      "version": 14,
+      "pass": true,
+      "errors": []
+    }
+  ],
+  "pass": true,
+  "endHash": "97c625e627d262eb6e1498e32736031a4619f6573eaaa7ca42b5006d3fac0326"
+}

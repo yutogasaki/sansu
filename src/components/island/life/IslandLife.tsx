@@ -1,4 +1,5 @@
 import type { FootstepInput } from './footstepPresentation';
+import type { ShadowRequest } from './shadowObservation';
 import { isFacility, occupiesCell } from '../../../domain/islandLife/footprint';
 import type { RuleEligibility } from '../../../domain/islandLife/discovery';
 import { useLiveDiscovery } from './useLiveDiscovery';
@@ -54,6 +55,8 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
     const [menuOpen, setMenuOpen] = useState(false);
     const [observed, setObserved] = useState<string>();
     const [observedResident, setObservedResident] = useState<ResidentId>();
+    const [shadowRequest, setShadowRequest] = useState<ShadowRequest>();
+    useEffect(() => { if (!observed) setShadowRequest(undefined); }, [observed]);
     const [gathering, setGathering] = useState<{ ruleId: RuleEligibility['ruleId']; participantIds: string[] }>();
     const [memoriesOpen, setMemoriesOpen] = useState(false);
     const observationOrigin = useRef<string | undefined>(undefined);
@@ -246,7 +249,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
         </button>}
         </div>
         <div className="life-viewport">
-        <LifeWorld observationOpen={Boolean(observed || memoriesOpen)} footstepInput={footstepInput} profileId={record.profileId} presented={liveDiscovery.presented} state={state} selected={selected} cell={cell} placement={placement} onCell={chooseCell} controlsVisible={!menuOpen && !dockOpen && !observed && !memoriesOpen}>
+        <LifeWorld inspectShadow={(itemId, residentId, worldAt) => { if (locked) return; showWorld(); setGathering(undefined); setObservedResident(residentId); setShadowRequest({ id: crypto.randomUUID(), worldAt, monotonicAt: performance.now() }); setObserved(itemId); }} observationOpen={Boolean(observed || memoriesOpen)} footstepInput={footstepInput} profileId={record.profileId} presented={liveDiscovery.presented} state={state} selected={selected} cell={cell} placement={placement} onCell={chooseCell} controlsVisible={!menuOpen && !dockOpen && !observed && !memoriesOpen}>
             <button ref={buildTrigger} className="life-home-action life-build-action" type="button" disabled={locked} onClick={() => openMenuTab('build')}>
                 <LifeProductPreview kind="flower" growth={LIFE_RULES.bloomHours} /><span>つくる</span>
             </button>
@@ -257,7 +260,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
         {observed && !placement && !menuOpen && !dockOpen && (() => {
             const target = state.items.find(i => i.id === observed && i.cell && (gathering || ['flower', 'sapling', 'water-bowl', 'bench', 'picnic-table', 'library', 'garden-hut'].includes(i.kind)));
             return target ? <LifeObservation key={`${record.profileId}:${target.id}:${target.cell!.x}:${target.cell!.z}:${target.style}`}
-                record={record} state={state} item={target} initialResidentId={observedResident} gathering={gathering} close={() => setObserved(undefined)} memories={openMemories} tryVisit={() => tryObservation(target.id)} selectionFailure={error}
+                record={record} state={state} item={target} initialResidentId={observedResident} initialShadowRequest={shadowRequest} gathering={gathering} close={() => setObserved(undefined)} memories={openMemories} tryVisit={() => tryObservation(target.id)} selectionFailure={error}
                 tryRelation={(targetId, residentId) => locked ? Promise.resolve(false) : refresh({ id: crypto.randomUUID(), revision: record.revision, command: { type: 'observe-relation', itemId: target.id, residentId, ...(targetId ? { targetId } : {}) } })} /> : null;
         })()}
         {memoriesOpen && <LifeMemories key={record.profileId} profileId={record.profileId} state={state} walk={id => { setMemoriesOpen(false); void doAction({ type: 'visit', itemId: id }, 'いきさきを きめたよ', undefined, 'current-context-test'); }} close={() => setMemoriesOpen(false)}

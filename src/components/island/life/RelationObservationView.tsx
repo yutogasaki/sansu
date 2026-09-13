@@ -1,6 +1,6 @@
 import { makeEncounterObservation } from './encounterObservation';
 import { makeReadingObservation } from './readingObservation';
-import { makeShadowObservation } from './shadowObservation';
+import { makeShadowObservation, shadowObservationTime, shadowRequestExpired, type ShadowRequest } from './shadowObservation';
 import { facilityRelations } from './facilityRelations';
 import { visibleRelationObject } from './relationVisibility';
 import { displayedGatherings, gatheringVisible } from './gatheringVisibility';
@@ -16,7 +16,7 @@ type Prepared = (state: LifeState, rule: RuleEligibility, residents: ResidentId[
 type Props = { state: LifeState; residentId?: ResidentId; selectedTarget?: (id?: string) => void; benchId?: string; gathering?: { ruleId: RuleEligibility['ruleId']; participantIds: string[] }; frozen?: boolean; prepare: Prepared;
     readingPrepare?: Prepared; readingPresented?: (event: DiscoveryScene, evidence: PresentationEvidence) => void; readingReplay?: boolean;
     encounterPrepare?: Prepared; encounterPresented?: (event: DiscoveryScene, evidence: PresentationEvidence) => void; encounterReplay?: boolean;
-    shadowPrepare?: Prepared; shadowPresented?: (event: DiscoveryScene, evidence: PresentationEvidence) => void;
+    shadowRequest?: ShadowRequest; shadowRequestCancelled?: boolean; shadowPrepare?: Prepared; shadowPresented?: (event: DiscoveryScene, evidence: PresentationEvidence) => void;
     presented: (event: DiscoveryScene, evidence: PresentationEvidence) => void; target?: (id: string) => void; status?: (status: 'bench' | 'walking' | 'busy') => void };
 
 /** Render committed geometry and real visits. The memory mode freezes the original
@@ -44,6 +44,7 @@ export default function RelationObservationView(props: Props) {
         renderer.toneMapping = T.ACESFilmicToneMapping; renderer.toneMappingExposure = .95;
         renderer.domElement.setAttribute('aria-hidden', 'true'); node.append(renderer.domElement);
         const camera = new T.OrthographicCamera(-2, 2, 2, -2, .1, 100), ray = new T.Raycaster();
+        let consumedShadowRequest: string | undefined;
         const shadow = makeShadowObservation(node,scene,camera,{
             prepare: (state,rule,residents) => latest.current.shadowPrepare?.(state,rule,residents) ?? Promise.resolve(undefined),
             presented: (event,evidence) => latest.current.shadowPresented?.(event,evidence), ready: setShadowReady,
@@ -52,7 +53,7 @@ export default function RelationObservationView(props: Props) {
             prepare: (state,rule,residents) => latest.current.readingPrepare?.(state,rule,residents) ?? Promise.resolve(undefined),
             presented: (event,evidence) => latest.current.readingPresented?.(event,evidence),
         });
-        shadowTrigger.current = () => { reading.cancel(); shadow.start(); };
+        shadowTrigger.current = () => { consumedShadowRequest = latest.current.shadowRequest?.id; reading.cancel(); shadow.start(); };
         const encounter = makeEncounterObservation(node,scene,camera,{
             prepare: (state,rule) => latest.current.encounterPrepare?.(state,rule,[]) ?? Promise.resolve(undefined),
             presented: (event,evidence) => latest.current.encounterPresented?.(event,evidence), hint: setEncounterHint,
@@ -119,13 +120,21 @@ export default function RelationObservationView(props: Props) {
             if (!alive || !source || !content) return;
             const mono = performance.now(); maxGap = Math.max(maxGap, mono - lastFrame); lastFrame = mono;
             const foreground = document.visibilityState === 'visible' && !renderer.getContext().isContextLost();
-            const at = source.now + (latest.current.frozen ? 0 : mono - start);
+            const at = latest.current.frozen ? source.now : shadowObservationTime(source.now + (mono - start), latest.current.shadowRequest, mono);
             if (foreground) {
                 content.animate(at, matchMedia('(prefers-reduced-motion: reduce)').matches, latest.current.frozen ? source.now + Math.min(3000, mono - start) : at);
                 const poses = content.audit(), stateAtFrame = content.snapshot();
                 if (shadow.update(stateAtFrame,content.root,benchId,latest.current.residentId,mono,matchMedia('(prefers-reduced-motion: reduce)').matches)) resize();
                 if (encounter.update(stateAtFrame,content,latest.current.encounterPrepare ? latest.current.gathering : undefined,Boolean(latest.current.encounterReplay),mono,matchMedia('(prefers-reduced-motion: reduce)').matches)) resize();
-                if (reading.update(stateAtFrame, content.root, benchId, latest.current.residentId, Boolean(latest.current.readingReplay), Boolean(latest.current.readingPrepare), mono, matchMedia('(prefers-reduced-motion: reduce)').matches)) resize();
+                if (shadow.active()) reading.cancel();
+                else if (reading.update(stateAtFrame, content.root, benchId, latest.current.residentId, Boolean(latest.current.readingReplay), Boolean(latest.current.readingPrepare), mono, matchMedia('(prefers-reduced-motion: reduce)').matches)) resize();
+                const request = latest.current.shadowRequest;
+                if (request && consumedShadowRequest !== request.id) {
+                    if (latest.current.shadowRequestCancelled || shadowRequestExpired(request, mono)) consumedShadowRequest = request.id;
+                    else if (node.dataset.rendered === 'true' && shadow.coreVisible()) {
+                        reading.cancel(); if (shadow.start()) consumedShadowRequest = request.id;
+                    }
+                }
                 const selectedVisit = stateAtFrame.residents.find(r => r.id === latest.current.residentId)?.visit;
                 const selectedTarget = selectedVisit?.observationSubjectId === benchId ? selectedVisit.relationTargetId : undefined;
                 if (selectedTarget !== previousTarget) { previousTarget = selectedTarget; latest.current.selectedTarget?.(selectedTarget); }
@@ -182,18 +191,19 @@ export default function RelationObservationView(props: Props) {
                         if (result) { event = result; collector = new DiscoveryPresentation(result); }
                     }).catch(cause => { if (alive && token === epoch) preparation = String(cause); });
                 }
-                const evidence = collector?.sample(mono, Date.now(), { rendered: true, foreground, onScreen: onscreen, unoccluded: uncovered, preview: false, coreShown: core });
+                const evidence = collector?.sample(mono, Date.now(), { rendered: true, foreground, onScreen: onscreen, unoccluded: uncovered, preview: false, coreShown: core && !shadow.active() });
                 if (event && evidence) { delivered = true; encounter.normalPresented(event); reading.normalPresented(event); latest.current.presented(event, evidence); }
                 if (mono - auditAt > 200) { node.dataset.relationView = JSON.stringify({ at, core, status: nextStatus, poses, preparation, eventId: event?.eventId, delivered, maxGap, epoch, camera: { projection: camera.projectionMatrix.elements, view: camera.matrixWorldInverse.elements } }); auditAt = mono; }
             } else cancel();
             raf = requestAnimationFrame(frame);
         };
-        const hidden = () => { if (document.visibilityState !== 'visible') { cancel(); shadow.cancel(); encounter.cancel(); reading.cancel(); } };
-        const lost = (event: Event) => { event.preventDefault(); cancel(); shadow.cancel(); encounter.cancel(); reading.cancel(); setFailed(true); delete node.dataset.rendered; };
+        const hidden = () => { if (document.visibilityState !== 'visible') { consumedShadowRequest = latest.current.shadowRequest?.id; cancel(); shadow.cancel(); encounter.cancel(); reading.cancel(); } };
+        const lost = (event: Event) => { event.preventDefault(); consumedShadowRequest = latest.current.shadowRequest?.id; cancel(); shadow.cancel(); encounter.cancel(); reading.cancel(); setFailed(true); delete node.dataset.rendered; };
         const restored = () => { setFailed(false); resize(); };
         document.addEventListener('visibilitychange', hidden); renderer.domElement.addEventListener('webglcontextlost', lost); renderer.domElement.addEventListener('webglcontextrestored', restored);
         const pick = (event: MouseEvent) => {
             if (!content || !source) return;
+            consumedShadowRequest = latest.current.shadowRequest?.id;
             const rect = renderer.domElement.getBoundingClientRect();
             ray.setFromCamera(new T.Vector2((event.clientX - rect.left) / rect.width * 2 - 1, 1 - (event.clientY - rect.top) / rect.height * 2), camera);
             if (encounter.pick(ray)) return;

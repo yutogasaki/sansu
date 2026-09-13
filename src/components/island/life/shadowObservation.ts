@@ -8,6 +8,13 @@ import { DiscoveryPresentation } from '../../../domain/islandLife/discoveryPrese
 import { buildResidentShadow, SHADOW_MAGIC_MS } from './residentShadow';
 import { visibleRelationObject } from './relationVisibility';
 type Prepare = (state: LifeState, rule: RuleEligibility, residents: ResidentId[]) => Promise<DiscoveryScene | undefined>;
+export interface ShadowRequest { id: string; worldAt: number; monotonicAt: number }
+export function shadowObservationTime(fallback: number, request: ShadowRequest | undefined, at: number) {
+    return request ? Math.max(fallback, request.worldAt + Math.max(0, at - request.monotonicAt)) : fallback;
+}
+export function shadowRequestExpired(request: ShadowRequest, at: number) {
+    return at < request.monotonicAt || at - request.monotonicAt > 5000;
+}
 function visible(object: T.Object3D) {
     for (let p: T.Object3D | null = object; p; p = p.parent) if (!p.visible) return false;
     const material = (object as T.Mesh).material;
@@ -15,12 +22,12 @@ function visible(object: T.Object3D) {
 }
 export function makeShadowObservation(node: HTMLElement, scene: T.Scene, camera: T.Camera, callbacks: {
     prepare: Prepare; presented: (event: DiscoveryScene, evidence: PresentationEvidence) => void; ready: (ready: boolean) => void;
-}) {
+}, namespace = 'shadow') {
     let actor: T.Object3D | undefined, shape: ReturnType<typeof buildResidentShadow> | undefined, content: T.Object3D | undefined;
     let state: LifeState | undefined, who: ResidentId | undefined, itemId = '', key = '', generation = 0, preparing = false, alive = true;
     let event: DiscoveryScene | undefined, collector: DiscoveryPresentation | undefined, started: number | undefined, cooldown = 0, ready = false;
     const domVisible = (ndc: T.Vector3) => { const r = node.getBoundingClientRect(); return node.contains(document.elementFromPoint(r.left+(ndc.x+1)*r.width/2,r.top+(1-ndc.y)*r.height/2)); };
-    const cancel = () => { generation++; preparing = false; event = undefined; collector?.cancel(); collector = undefined; started = undefined; delete node.dataset.shadowMagic; };
+    const cancel = () => { generation++; preparing = false; event = undefined; collector?.cancel(); collector = undefined; started = undefined; delete node.dataset[`${namespace}Magic`]; };
     const clearShape = () => { shape?.dispose(); shape = undefined; actor = undefined; };
     const coreVisible = () => {
         if (!shape || !actor) return false;
@@ -41,9 +48,10 @@ export function makeShadowObservation(node: HTMLElement, scene: T.Scene, camera:
         return undefined;
     };
     let auditAt = 0;
+    let probeKey = '', probeAt = -Infinity, touchPoint: number[] | undefined;
     const start = () => {
-        if (!state || !who || !shape || event || preparing || performance.now() < cooldown || document.visibilityState !== 'visible' || !coreVisible()) return;
-        const rule = evaluateDiscovery(state,'').find(r => r.ruleId === 'M3' && r.participantIds.includes(itemId)); if (!rule) return;
+        if (!state || !who || !shape || event || preparing || performance.now() < cooldown || document.visibilityState !== 'visible' || !coreVisible()) return false;
+        const rule = evaluateDiscovery(state,'').find(r => r.ruleId === 'M3' && r.participantIds.includes(itemId)); if (!rule) return false;
         const frozen = structuredClone(state); frozen.shadowTouch = { itemId, residentId: who };
         preparing = true; const token = ++generation;
         void callbacks.prepare(frozen,rule,[who]).then(next => {
@@ -52,8 +60,26 @@ export function makeShadowObservation(node: HTMLElement, scene: T.Scene, camera:
                 event = next; collector = new DiscoveryPresentation(next); started = performance.now();
             }
         }).catch(() => { if (alive && token === generation) preparing = false; });
+        return true;
     };
-    return { cancel, start, coreVisible, objects: () => shape ? [shape.root] : [],
+    const hitDistance = (ray: T.Raycaster) => {
+        if (!shape || !content) return undefined;
+        const hit = ray.intersectObject(shape.root,true).find(h=>visible(h.object)); if (!hit) return undefined;
+        const obstruction = ray.intersectObject(content,true).find(h=>visible(h.object));
+        return obstruction && obstruction.distance < hit.distance - .002 ? undefined : hit.distance;
+    };
+    return { cancel, start, coreVisible, hitDistance, active: () => Boolean(event || preparing), subject: () => who && state ? { itemId, residentId: who, worldAt: state.now } : undefined,
+        canShowGesture() {
+            if (!shape || event || preparing) return Boolean(event || preparing);
+            // This is a framing prediction, never presentation evidence.
+            shape.update(1000, true);
+            const box = new T.Box3().setFromObject(shape.root), rect = node.getBoundingClientRect();
+            const points = [box.min.x,box.max.x].flatMap(x => [box.min.z,box.max.z].map(z => new T.Vector3(x,.09,z).project(camera)));
+            const width = (Math.max(...points.map(p=>p.x))-Math.min(...points.map(p=>p.x)))*rect.width/2;
+            const height = (Math.max(...points.map(p=>p.y))-Math.min(...points.map(p=>p.y)))*rect.height/2;
+            const readable = width >= 44 && height >= 44 && coreVisible() && shape.gesture.some(part=>visibleRelationObject(part,scene,camera,domVisible));
+            shape.update(-1, true); return readable;
+        }, objects: () => shape ? [shape.root] : [],
         update(next: LifeState, root: T.Object3D, benchId: string, residentId: ResidentId | undefined, at: number, reduced: boolean) {
             state = next; content = root; itemId = benchId;
             const resident = shadowResident(next,benchId,residentId);
@@ -66,8 +92,16 @@ export function makeShadowObservation(node: HTMLElement, scene: T.Scene, camera:
             let elapsed = started === undefined ? -1 : at - started;
             if (elapsed >= SHADOW_MAGIC_MS) { cancel(); cooldown = at + MAGIC_RETRY_MS; elapsed = -1; }
             shape?.update(elapsed,reduced);
-            if (at - auditAt > 200) { node.dataset.shadowView = JSON.stringify({ residentId: who, itemId, active: Boolean(event), elapsed, visitEnd: resident?.visit?.end, visitStart: resident?.visit?.start, eventId: event?.eventId, touchPoint: exposedPoint() }); auditAt = at; }
-            if (event) node.dataset.shadowMagic = 'greeting';
+            if (at - auditAt > 200) {
+                const nextProbeKey = key + camera.matrixWorld.elements.join(',') + camera.projectionMatrix.elements.join(',');
+                // A QA pointer probe must not raycast all resting rigs every frame.
+                // Real input and presentation still check current visible geometry.
+                if (namespace === 'shadow' || nextProbeKey !== probeKey || !touchPoint && at - probeAt > 1000) {
+                    touchPoint = exposedPoint(); probeKey = nextProbeKey; probeAt = at;
+                }
+                node.dataset[`${namespace}View`] = JSON.stringify({ residentId: who, itemId, active: Boolean(event), elapsed, visitEnd: resident?.visit?.end, visitStart: resident?.visit?.start, eventId: event?.eventId, touchPoint }); auditAt = at;
+            }
+            if (event) node.dataset[`${namespace}Magic`] = 'greeting';
             return changed;
         }, sample(at: number, foreground: boolean, onScreen: boolean, unoccluded: boolean) {
             if (!event || !collector || started === undefined) return;
@@ -75,11 +109,8 @@ export function makeShadowObservation(node: HTMLElement, scene: T.Scene, camera:
             const evidence = collector.sample(at,Date.now(),{rendered:true,foreground,onScreen,unoccluded,preview:false,coreShown:elapsed>=350&&elapsed<SHADOW_MAGIC_MS-400&&coreVisible()&&Boolean(shape?.gesture.some(part=>visibleRelationObject(part,scene,camera,domVisible)))});
             if (evidence) callbacks.presented(event,evidence);
         }, pick(ray: T.Raycaster) {
-            if (!shape || !content) return false;
-            const hit = ray.intersectObject(shape.root,true).find(h=>visible(h.object)); if (!hit) return false;
-            const obstruction = ray.intersectObject(content,true).find(h=>visible(h.object));
-            if (obstruction && obstruction.distance < hit.distance - .002) return false;
+            if (hitDistance(ray) === undefined) return false;
             start(); return true;
-        }, dispose() { alive = false; cancel(); clearShape(); }
+        }, dispose() { alive = false; cancel(); clearShape(); delete node.dataset[`${namespace}View`]; }
     };
 }

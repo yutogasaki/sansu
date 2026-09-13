@@ -16,7 +16,7 @@ async function sourceHash() {
     return hash.digest('hex');
 }
 const report = { startHash: await sourceHash(), revision: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
-    target: 'http://127.0.0.1:5223', flags: 'DEV VITE_ISLAND_ENABLED=true VITE_ISLAND_LIFE_PREVIEW=true', candidate: 'reading-book-v1',
+    target: process.env.SANSU_READING_URL || 'http://127.0.0.1:5223', flags: 'DEV VITE_ISLAND_ENABLED=true VITE_ISLAND_LIFE_PREVIEW=true', candidate: 'reading-book-v1',
     fixture: 'Explicit simulated otter reading snapshot rendered by the actual observation component. Actual rendered evidence is persisted as simulated, then saved and replayed through app UI. This does not prove a naturally scheduled X3 or acquisition.', humanN: 0, cases: [], pass: false };
 const browser = await chromium.launch();
 try {

@@ -84,6 +84,7 @@ GitHub Actions should mirror the same baseline for `docs:check` and `verify:core
 | `npm run e2e:island-pwa` | 島有効productionの `#/onboarding` 上の実welcome・空保存→profile fixture→実homeから更新checkpoint/保存holdを検査。旧予約の問題・gift・10ほしと明示移行時の残高保持、フックなし実SW制御・初期homeのJS/CSS cache確認後のoffline開始/回答/reloadを分離。比較はIsland/学習/Exploreの7storeと初期owner確認に限定し、全DB/写真bytes保持とは扱わない。`SANSU_ISLAND_PRODUCTION_URL`、新しい `SANSU_ISLAND_OUTPUT` を指定し、固定app＋QA overlayの外側fingerprintで版を照合。`--plan` はブラウザ未起動の範囲確認 |
 | `npm run benchmark:island-fixed-ten` | Study / Islandを固定10問、phone/tablet各10反復で比較。初回済みの明示fixtureで6問区切りの自動次問まで計時し、追加操作0・自動報酬面0を必須とする。初回3問は別の実設定検査 |
 | `npm run benchmark:fixed-ten` | Study / Exploreの固定10問throughput、回復、中断、game-only receipt整合を比較 |
+| `node tools/e2e-island-world-shadow.mjs` | DEV Life全景の実影タップ→同じ本人の拡大または全景挨拶→連打/対象切替→保存/再読込→編集/収納→学習。`SANSU_WORLD_SHADOW_URL` と新しい `SANSU_WORLD_SHADOW_OUTPUT` を指定。任意の `SANSU_WORLD_SHADOW_FIXTURE` は元recordの論理時刻/割当を保持しrealAtを起動へ合わせる明示fixture。自然獲得の証拠とはしない。fixtureなしでは実購入後に本当に着座した住民だけを検査。`SANSU_WORLD_SHADOW_ZOOM=1` / `SANSU_WORLD_SHADOW_DEVICE=phone` は拡大限定診断。core後に順次実行し、source hashと表示時刻/着座位置列を照合 |
 | `npm run verify:core` | Docs check + full local quality gate |
 | `npm run verify:release` | Full local quality gate + smoke E2E + production PWA checkpoint E2E |
 

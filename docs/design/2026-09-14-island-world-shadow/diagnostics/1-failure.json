@@ -1,0 +1,816 @@
+{
+  "error": "page.waitForFunction: Timeout 45000ms exceeded.\n    at /private/tmp/sansu-canopy-material-worktree/tools/e2e-island-world-shadow.mjs:27:24",
+  "errors": [],
+  "state": {
+    "record": {
+      "profileId": "ab2397d0-c512-4cf8-854c-529abb822e4e",
+      "version": 13,
+      "revision": 15,
+      "createdAt": 1789315427176,
+      "realAt": 1789315518237,
+      "now": 1789315518237,
+      "credits": [
+        {
+          "id": "qa-0",
+          "at": 1789315427176,
+          "day": "2026-9-13"
+        },
+        {
+          "id": "qa-1",
+          "at": 1789315427176,
+          "day": "2026-9-13"
+        },
+        {
+          "id": "qa-2",
+          "at": 1789315427176,
+          "day": "2026-9-13"
+        },
+        {
+          "id": "qa-3",
+          "at": 1789315427176,
+          "day": "2026-9-13"
+        },
+        {
+          "id": "qa-4",
+          "at": 1789315427176,
+          "day": "2026-9-13"
+        },
+        {
+          "id": "qa-5",
+          "at": 1789315427176,
+          "day": "2026-9-13"
+        },
+        {
+          "id": "qa-6",
+          "at": 1789315427176,
+          "day": "2026-9-13"
+        },
+        {
+          "id": "qa-7",
+          "at": 1789315427176,
+          "day": "2026-9-13"
+        },
+        {
+          "id": "qa-8",
+          "at": 1789315427176,
+          "day": "2026-9-13"
+        },
+        {
+          "id": "qa-9",
+          "at": 1789315427176,
+          "day": "2026-9-13"
+        },
+        {
+          "id": "qa-10",
+          "at": 1789315427176,
+          "day": "2026-9-13"
+        },
+        {
+          "id": "qa-11",
+          "at": 1789315427176,
+          "day": "2026-9-13"
+        },
+        {
+          "id": "qa-12",
+          "at": 1789315427176,
+          "day": "2026-9-13"
+        },
+        {
+          "id": "qa-13",
+          "at": 1789315427176,
+          "day": "2026-9-13"
+        },
+        {
+          "id": "qa-14",
+          "at": 1789315427176,
+          "day": "2026-9-13"
+        },
+        {
+          "id": "qa-15",
+          "at": 1789315427176,
+          "day": "2026-9-13"
+        },
+        {
+          "id": "qa-16",
+          "at": 1789315427176,
+          "day": "2026-9-13"
+        },
+        {
+          "id": "qa-17",
+          "at": 1789315427176,
+          "day": "2026-9-13"
+        },
+        {
+          "id": "qa-18",
+          "at": 1789315427176,
+          "day": "2026-9-13"
+        },
+        {
+          "id": "qa-19",
+          "at": 1789315427176,
+          "day": "2026-9-13"
+        }
+      ],
+      "actions": [
+        {
+          "id": "234602c6-44cc-4088-a3e4-f0bf5be74c2a",
+          "at": 1789315440125,
+          "command": {
+            "type": "buy",
+            "kind": "bench",
+            "cell": {
+              "x": 3,
+              "z": 2
+            }
+          },
+          "purchaseReceipt": {
+            "priceVersion": "life-48-v1",
+            "actualPaidDrops": 4,
+            "quoteFingerprint": "[\"life-48-v1\",\"bench\",4]",
+            "itemInstanceId": "234602c6-44cc-4088-a3e4-f0bf5be74c2a",
+            "committedAt": 1789315440125
+          }
+        },
+        {
+          "id": "99248271-64f6-410b-9e53-abf1988bf897",
+          "at": 1789315449811,
+          "command": {
+            "type": "visit",
+            "itemId": "234602c6-44cc-4088-a3e4-f0bf5be74c2a"
+          }
+        },
+        {
+          "id": "a7fe829b-0136-4d61-9aa2-dcb56aa209a9",
+          "at": 1789315461820,
+          "command": {
+            "type": "buy",
+            "kind": "bench",
+            "cell": {
+              "x": 0,
+              "z": 2
+            }
+          },
+          "purchaseReceipt": {
+            "priceVersion": "life-48-v1",
+            "actualPaidDrops": 4,
+            "quoteFingerprint": "[\"life-48-v1\",\"bench\",4]",
+            "itemInstanceId": "a7fe829b-0136-4d61-9aa2-dcb56aa209a9",
+            "committedAt": 1789315461820
+          }
+        },
+        {
+          "id": "066fa95d-a659-4f75-9f69-38b8e527595d",
+          "at": 1789315471755,
+          "command": {
+            "type": "buy",
+            "kind": "bench",
+            "cell": {
+              "x": 1,
+              "z": 2
+            }
+          },
+          "purchaseReceipt": {
+            "priceVersion": "life-48-v1",
+            "actualPaidDrops": 4,
+            "quoteFingerprint": "[\"life-48-v1\",\"bench\",4]",
+            "itemInstanceId": "066fa95d-a659-4f75-9f69-38b8e527595d",
+            "committedAt": 1789315471755
+          }
+        }
+      ],
+      "offsets": [
+        {
+          "at": 1789315427176,
+          "offset": 0
+        }
+      ],
+      "clockIntents": [],
+      "activitiesV2At": 1789315427176,
+      "activitiesV2After": 0,
+      "economyCheckpoint": {
+        "checkpointId": "[\"ab2397d0-c512-4cf8-854c-529abb822e4e\",\"life-v3.0-rc1\"]",
+        "sourceRules": "life-48-v1",
+        "targetRules": "life-v3.0-rc1",
+        "originalRecord": {
+          "profileId": "ab2397d0-c512-4cf8-854c-529abb822e4e",
+          "version": 1,
+          "revision": 0,
+          "createdAt": 1789315427176,
+          "realAt": 1789315427176,
+          "now": 1789315427176,
+          "credits": [
+            {
+              "id": "qa-0",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-1",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-2",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-3",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-4",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-5",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-6",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-7",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-8",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-9",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-10",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-11",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-12",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-13",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-14",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-15",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-16",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-17",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-18",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-19",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            }
+          ],
+          "actions": [],
+          "offsets": [
+            {
+              "at": 1789315427176,
+              "offset": 0
+            }
+          ],
+          "clockIntents": [],
+          "activitiesV2At": 1789315427176,
+          "activitiesV2After": 0
+        },
+        "sourceRecord": {
+          "profileId": "ab2397d0-c512-4cf8-854c-529abb822e4e",
+          "version": 1,
+          "revision": 1,
+          "createdAt": 1789315427176,
+          "realAt": 1789315427635,
+          "now": 1789315427635,
+          "credits": [
+            {
+              "id": "qa-0",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-1",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-2",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-3",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-4",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-5",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-6",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-7",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-8",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-9",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-10",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-11",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-12",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-13",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-14",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-15",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-16",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-17",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-18",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            },
+            {
+              "id": "qa-19",
+              "at": 1789315427176,
+              "day": "2026-9-13"
+            }
+          ],
+          "actions": [],
+          "offsets": [
+            {
+              "at": 1789315427176,
+              "offset": 0
+            }
+          ],
+          "clockIntents": [],
+          "activitiesV2At": 1789315427176,
+          "activitiesV2After": 0
+        },
+        "sourceFactWatermark": [],
+        "cutoverAt": 1789315427635,
+        "actionCount": 0,
+        "projectedCreditIds": [
+          "qa-0",
+          "qa-1",
+          "qa-2",
+          "qa-3",
+          "qa-4",
+          "qa-5",
+          "qa-6",
+          "qa-7",
+          "qa-8",
+          "qa-9",
+          "qa-10",
+          "qa-11",
+          "qa-12",
+          "qa-13",
+          "qa-14",
+          "qa-15",
+          "qa-16",
+          "qa-17",
+          "qa-18",
+          "qa-19"
+        ],
+        "legacyCorrections": [],
+        "initialLightRemainingBudget": 8,
+        "state": {
+          "now": 1789315427635,
+          "activityVersion": 2,
+          "drops": 40,
+          "light": 0,
+          "items": [],
+          "styles": [
+            "original"
+          ],
+          "heroStyle": "original",
+          "days": {
+            "2026-9-13": 20
+          },
+          "residents": [
+            {
+              "id": "pokomoko",
+              "cell": {
+                "x": 2,
+                "z": 1
+              },
+              "enjoyed": 0,
+              "enjoyedBy": {}
+            },
+            {
+              "id": "rabbit",
+              "cell": {
+                "x": 3,
+                "z": 1
+              },
+              "enjoyed": 0,
+              "enjoyedBy": {}
+            },
+            {
+              "id": "otter",
+              "cell": {
+                "x": 3,
+                "z": 2
+              },
+              "enjoyed": 0,
+              "enjoyedBy": {},
+              "visit": {
+                "itemId": "roam:otter:994064",
+                "path": [
+                  {
+                    "x": 3,
+                    "z": 2
+                  },
+                  {
+                    "x": 2,
+                    "z": 2
+                  },
+                  {
+                    "x": 1,
+                    "z": 2
+                  },
+                  {
+                    "x": 1,
+                    "z": 1
+                  },
+                  {
+                    "x": 1,
+                    "z": 0
+                  }
+                ],
+                "from": {
+                  "x": 3,
+                  "z": 2
+                },
+                "start": 1789315427176,
+                "end": 1789317227176
+              }
+            }
+          ],
+          "lastAchievement": 1789315427176,
+          "economy": {
+            "version": "life-v3.0-rc1",
+            "lightRemainingBudget": 8,
+            "completionTimes": [
+              1789315427176,
+              1789315427176,
+              1789315427176,
+              1789315427176,
+              1789315427176,
+              1789315427176,
+              1789315427176,
+              1789315427176,
+              1789315427176,
+              1789315427176,
+              1789315427176,
+              1789315427176,
+              1789315427176,
+              1789315427176,
+              1789315427176,
+              1789315427176,
+              1789315427176,
+              1789315427176,
+              1789315427176,
+              1789315427176
+            ]
+          }
+        },
+        "validationHash": "624bcb3c01c910b4d8fea81edb90b14e65dc124558ef015d1c90dc93fe4929f8",
+        "completionStatus": "complete"
+      },
+      "tourCutover": {
+        "rules": "gp3-tours-v1",
+        "profileId": "ab2397d0-c512-4cf8-854c-529abb822e4e",
+        "at": 1789315427635,
+        "actionCount": 0,
+        "priorActions": [],
+        "validationHash": "47cf4850fc7397132217da6448695a3f81993a312d7d7c72fc136a57762d4dde"
+      },
+      "facilityCutover": {
+        "rules": "facility-trips-v1",
+        "profileId": "ab2397d0-c512-4cf8-854c-529abb822e4e",
+        "at": 1789315427635,
+        "actionCount": 0,
+        "priorActions": [],
+        "validationHash": "94fe6c000fab67024f91bf7ffc4bdc7af988d9688ee433269732d7901e251868"
+      },
+      "relationCutover": {
+        "rules": "relation-selection-v1",
+        "profileId": "ab2397d0-c512-4cf8-854c-529abb822e4e",
+        "at": 1789315427635,
+        "actionCount": 0,
+        "priorActions": [],
+        "validationHash": "f151d42bb2d8dc11ec0a29a3d596e32cd36169073d4d2753e83ad891910d4000"
+      }
+    },
+    "state": {
+      "now": 1789315518237,
+      "activityVersion": 2,
+      "drops": 28,
+      "light": 0,
+      "items": [
+        {
+          "id": "234602c6-44cc-4088-a3e4-f0bf5be74c2a",
+          "kind": "bench",
+          "cell": {
+            "x": 3,
+            "z": 2
+          },
+          "growth": 0,
+          "style": "original",
+          "paidDrops": 4,
+          "access": "front"
+        },
+        {
+          "id": "a7fe829b-0136-4d61-9aa2-dcb56aa209a9",
+          "kind": "bench",
+          "cell": {
+            "x": 0,
+            "z": 2
+          },
+          "growth": 0,
+          "style": "original",
+          "paidDrops": 4,
+          "access": "front"
+        },
+        {
+          "id": "066fa95d-a659-4f75-9f69-38b8e527595d",
+          "kind": "bench",
+          "cell": {
+            "x": 1,
+            "z": 2
+          },
+          "growth": 0,
+          "style": "original",
+          "paidDrops": 4,
+          "access": "front"
+        }
+      ],
+      "styles": [
+        "original"
+      ],
+      "heroStyle": "original",
+      "days": {
+        "2026-9-13": 20
+      },
+      "residents": [
+        {
+          "id": "pokomoko",
+          "cell": {
+            "x": 2,
+            "z": 1
+          },
+          "enjoyed": 0,
+          "enjoyedBy": {},
+          "visit": {
+            "relationSelectionVersion": 1,
+            "itemId": "234602c6-44cc-4088-a3e4-f0bf5be74c2a",
+            "path": [
+              {
+                "x": 2,
+                "z": 1
+              },
+              {
+                "x": 2,
+                "z": 2
+              },
+              {
+                "x": 2,
+                "z": 3
+              },
+              {
+                "x": 3,
+                "z": 3
+              }
+            ],
+            "from": {
+              "x": 2,
+              "z": 1
+            },
+            "start": 1789315440125,
+            "end": 1789317240125
+          },
+          "discovery": {
+            "itemId": "234602c6-44cc-4088-a3e4-f0bf5be74c2a",
+            "at": 1789315440125,
+            "mood": "notice"
+          }
+        },
+        {
+          "id": "rabbit",
+          "cell": {
+            "x": 0,
+            "z": 3
+          },
+          "enjoyed": 0,
+          "enjoyedBy": {},
+          "visit": {
+            "relationSelectionVersion": 1,
+            "itemId": "066fa95d-a659-4f75-9f69-38b8e527595d",
+            "path": [
+              {
+                "x": 0,
+                "z": 3
+              },
+              {
+                "x": 1,
+                "z": 3
+              }
+            ],
+            "from": {
+              "x": 0,
+              "z": 3
+            },
+            "start": 1789315471755,
+            "end": 1789317271755
+          },
+          "discovery": {
+            "itemId": "234602c6-44cc-4088-a3e4-f0bf5be74c2a",
+            "at": 1789315440125,
+            "mood": "notice"
+          }
+        },
+        {
+          "id": "otter",
+          "cell": {
+            "x": 4,
+            "z": 3
+          },
+          "enjoyed": 0,
+          "enjoyedBy": {},
+          "visit": {
+            "relationSelectionVersion": 1,
+            "itemId": "a7fe829b-0136-4d61-9aa2-dcb56aa209a9",
+            "path": [
+              {
+                "x": 4,
+                "z": 3
+              },
+              {
+                "x": 3,
+                "z": 3
+              },
+              {
+                "x": 2,
+                "z": 3
+              },
+              {
+                "x": 1,
+                "z": 3
+              },
+              {
+                "x": 0,
+                "z": 3
+              }
+            ],
+            "from": {
+              "x": 4,
+              "z": 3
+            },
+            "start": 1789315471755,
+            "end": 1789317271755
+          },
+          "discovery": {
+            "itemId": "066fa95d-a659-4f75-9f69-38b8e527595d",
+            "at": 1789315471755,
+            "mood": "curious"
+          }
+        }
+      ],
+      "lastAchievement": 1789315427176,
+      "economy": {
+        "version": "life-v3.0-rc1",
+        "lightRemainingBudget": 8,
+        "completionTimes": [
+          1789315427176,
+          1789315427176,
+          1789315427176,
+          1789315427176,
+          1789315427176,
+          1789315427176,
+          1789315427176,
+          1789315427176,
+          1789315427176,
+          1789315427176,
+          1789315427176,
+          1789315427176,
+          1789315427176,
+          1789315427176,
+          1789315427176,
+          1789315427176,
+          1789315427176,
+          1789315427176,
+          1789315427176,
+          1789315427176
+        ]
+      },
+      "tourVersion": 1,
+      "roamRound": 0,
+      "facilityTripVersion": 1,
+      "relationSelectionVersion": 1,
+      "target": "234602c6-44cc-4088-a3e4-f0bf5be74c2a"
+    }
+  },
+  "dom": "つむぎの しま\nしずく\n28\nひかり\n0\nつくる\nようす\nながめ\nもどす\n試作\nしま\nいえ\nまなぶ\nきろく\n設定",
+  "world": {
+    "placing": "false",
+    "lifeWorldStyle": "canopy-dots-c3-v1",
+    "lifeVisualCandidate": "canopy-dots-c3-v1",
+    "lifeLandscapeVersion": "groves-water-v1",
+    "lifeTourVersion": "1",
+    "lifeCamera": "{\"projection\":[0.2914509565274668,0,0,0,0,0.18818853153263582,0,0,0,0,-0.02002002002002002,0,-0.04965880727608097,-0.17877910495600405,-1.002002002002002,1],\"view\":[0.9255469562056767,-0.17063826001053398,0.3380020947849059,0,-2.7755575615628914e-17,0.8926908972773304,0.4506694597132078,0,-0.37863284572050404,-0.41711574669241636,0.8262273428075476,0,6.938893903907228e-17,-0.17853817945546582,-13.403660847636989,1],\"cameraView\":{\"zoom\":1,\"azimuth\":0,\"pan\":{\"x\":0,\"y\":2.220446049250313e-16},\"manual\":false}}",
+    "rendered": "true",
+    "lifeGatherings": "[]",
+    "lifeRelations": "[]",
+    "lifePoses": "[{\"id\":\"pokomoko\",\"itemId\":\"234602c6-44cc-4088-a3e4-f0bf5be74c2a\",\"phase\":\"bench\",\"position\":[0.5,0.34199999999999997,0],\"seatGap\":5.551115123125783e-17,\"hop\":0,\"headPitch\":0,\"headRoll\":0,\"headYaw\":0},{\"id\":\"rabbit\",\"itemId\":\"066fa95d-a659-4f75-9f69-38b8e527595d\",\"phase\":\"bench\",\"position\":[-1.5,0.32599999999999996,0],\"seatGap\":0,\"hop\":0,\"headPitch\":0,\"headRoll\":-0.022083846809447003,\"headYaw\":0},{\"id\":\"otter\",\"itemId\":\"a7fe829b-0136-4d61-9aa2-dcb56aa209a9\",\"phase\":\"bench\",\"position\":[-2.5,0.35,0],\"seatGap\":0,\"hop\":0,\"headPitch\":0,\"headRoll\":0.010916791870478726,\"headYaw\":0}]",
+    "lifeRender": "{\"calls\":241,\"triangles\":171554,\"geometries\":183,\"textures\":6}",
+    "footstepView": "{\"targetId\":\"234602c6-44cc-4088-a3e4-f0bf5be74c2a\",\"lampId\":\"\",\"elapsed\":-1,\"moving\":false,\"delivered\":false,\"stars\":[],\"regions\":[]}",
+    "worldShadowpokomokoView": "{\"residentId\":\"pokomoko\",\"itemId\":\"234602c6-44cc-4088-a3e4-f0bf5be74c2a\",\"active\":false,\"elapsed\":-1,\"visitEnd\":1789317240125,\"visitStart\":1789315440125,\"touchPoint\":[0.8224999904632568,0.09,-0.43000001460313797]}",
+    "worldShadowrabbitView": "{\"residentId\":\"rabbit\",\"itemId\":\"066fa95d-a659-4f75-9f69-38b8e527595d\",\"active\":false,\"elapsed\":-1,\"visitEnd\":1789317271755,\"visitStart\":1789315471755,\"touchPoint\":[-1.1670500338077545,0.09,-0.4085259437561035]}",
+    "worldShadowotterView": "{\"residentId\":\"otter\",\"itemId\":\"a7fe829b-0136-4d61-9aa2-dcb56aa209a9\",\"active\":false,\"elapsed\":-1,\"visitEnd\":1789317271755,\"visitStart\":1789315471755,\"touchPoint\":[-2.1667028665542603,0.09,-0.4090000092983246]}"
+  }
+}
