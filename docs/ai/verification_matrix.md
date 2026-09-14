@@ -162,3 +162,9 @@ If a task spans more than one change type, use the stricter row.
 ### Life v3 のproduction capability検査
 
 `tools/e2e-island-life-storage.mjs` に `SANSU_LIFE_STORAGE_DISCOVERY=1` を付けると、明示Discovery=trueの固定production buildで12品の6ページを照合し、実初回3問から苗4しずくの購入・offline移動/収納/回答を検査する。6個の44pxボタンと説明/ページ数の折れ・横overflowも確認する。既存のbuild manifestとsource開始終了一致は必須。`SANSU_LIFE_STORAGE_FAIL_PROJECTION=1` では同じ旅程にLife putの明示障害と再試行の検査を加える。追加8品の全関係、two-build更新、自然X3、利用者評価の代替にはしない。Discovery未指定時は従来の4品/花購入旅程を維持する。
+
+### 住人の短い滞在と寄り道
+
+`node tools/e2e-island-cadence.mjs` は `SANSU_CADENCE_URL` のDEV Lifeと新しい `SANSU_CADENCE_OUTPUT` を指定する。使い捨ての本人・12 credits・花1個の明示fixtureで、390/768幅それぞれ90秒の実時計の歩行列・学習store不変・保存版16・同cutoverでのreloadを照合する。tabletはreduced motion。実獲得・本番SW・子どもの評価の代替ではない。`cadence.test.ts` は空/花のみの島で全3人の繰り返し歩行、滞在/運搬、30分の種別別利用積算、有限報酬、保存/描画時計を検査し、`cadenceMigration.test.ts` は旧履歴と位置・購入保持、同時刻操作、破損/降格拒否、計算cacheと非cacheの一致を検査する。配置の退避/孤立復旧はisland-isolation、本番の実購入/offline/retryはLife storageハーネスで分けて確認する。
+
+`SANSU_LIFE_CADENCE_UPGRADE=1` をLife two-buildに指定すると、旧保存版15→新保存版16の実更新を検査する。購入前に同じ花/マスへの退避が入る場合も、退避1件＋購入1件の正確な内容を照合する。新しいcadence切替の本人と旧action prefix、placement切替、全native storeを保持し、更新完了後は版16であることを確認する。通常モードは従来どおり同じ保存版を要求する。

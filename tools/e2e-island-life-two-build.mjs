@@ -27,6 +27,7 @@ assert(bundles.every(Boolean)); assert.notEqual(bundles[0], bundles[1]);
 const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.webp': 'image/webp', '.png': 'image/png', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.mp3': 'audio/mpeg' };
 const interruption = process.env.SANSU_LIFE_UPDATE_INTERRUPTION === '1';
 const discoveryUpgrade = process.env.SANSU_LIFE_DISCOVERY_UPGRADE === '1';
+const cadenceUpgrade = process.env.SANSU_LIFE_CADENCE_UPGRADE === '1';
 if (discoveryUpgrade) {
     assert.notEqual(builds[0].flags.VITE_ISLAND_LIFE_DISCOVERY_ENABLED, true);
     assert.equal(builds[1].flags.VITE_ISLAND_LIFE_DISCOVERY_ENABLED, true);
@@ -42,7 +43,7 @@ const server = createServer(async (req, res) => {
 await new Promise(resolveListening => server.listen(0, '127.0.0.1', resolveListening));
 const base = `http://127.0.0.1:${server.address().port}`, browser = await chromium.launch();
 const report = { target: base, builds: builds.map(b => ({ revision: b.revision, sourceHash: b.sourceHash, version: b.version, flags: b.flags })), bundles,
-    scope: 'Real old-to-new SW update during a partially completed learning reservation, retained earned Life ownership and all native stores, one reload, offline restart and same next question. No injected profile, credits, timestamps, update events or worker mocks. Empty photo stores do not prove Blob retention.', interruption, discoveryUpgrade, humanN: 0, cases: [], pass: false };
+    scope: 'Real old-to-new SW update during a partially completed learning reservation, retained earned Life ownership and all native stores, one reload, offline restart and same next question. No injected profile, credits, timestamps, update events or worker mocks. Empty photo stores do not prove Blob retention.', interruption, discoveryUpgrade, cadenceUpgrade, humanN: 0, cases: [], pass: false };
 async function snapshot(page) {
     return page.evaluate(async () => {
         const result = {};
@@ -64,7 +65,12 @@ function retained(before, after) {
     assert.deepEqual(after.SansuDatabase, before.SansuDatabase, 'Every native store remains unchanged');
     assert.equal(after.SansuIslandLifeV1.worlds.length, 1);
     const old = before.SansuIslandLifeV1.worlds[0], next = after.SansuIslandLifeV1.worlds[0];
-    for (const key of ['profileId', 'version', 'createdAt', 'credits', 'actions', 'economyCheckpoint', 'tourCutover', 'facilityCutover', 'relationCutover', 'clockIntents']) assert.deepEqual(next[key], old[key], key);
+    if (cadenceUpgrade && old.version === 15 && next.version === 16) {
+        assert(next.cadenceCutover); assert.equal(next.cadenceCutover.profileId, old.profileId);
+        assert.deepEqual(next.cadenceCutover.priorActions, old.actions);
+        assert.deepEqual(next.placementCutover, old.placementCutover);
+    } else assert.equal(next.version, old.version);
+    for (const key of ['profileId', 'createdAt', 'credits', 'actions', 'economyCheckpoint', 'tourCutover', 'facilityCutover', 'relationCutover', 'clockIntents']) assert.deepEqual(next[key], old[key], key);
 }
 try {
     for (const [device, viewport] of [['phone', { width: 390, height: 844 }], ['tablet', { width: 768, height: 1024 }]]) {
@@ -97,8 +103,14 @@ try {
             assert(await page.evaluate(() => Boolean(navigator.serviceWorker.controller))); assert.equal(await bundle(page), bundles[0]);
             await page.getByRole('button', { name: 'まなぶ', exact: true }).click(); await input(page);
             const cacheBefore = await page.evaluate(() => caches.keys());
-            const before = await snapshot(page); assert.equal(before.SansuIslandLifeV1.worlds[0].credits.length, 4);
-            assert.equal(before.SansuIslandLifeV1.worlds[0].actions.length, 1);
+            const before = await snapshot(page); if (cadenceUpgrade) assert.equal(before.SansuIslandLifeV1.worlds[0].version, 15); assert.equal(before.SansuIslandLifeV1.worlds[0].credits.length, 4);
+            const purchaseActions = before.SansuIslandLifeV1.worlds[0].actions;
+            // Permissive placement can legitimately move a resident out of
+            // this exact footprint before the single paid purchase commits.
+            assert.deepEqual(purchaseActions.map(a => a.command.type), purchaseActions.length === 2 ? ['clear-placement', 'buy'] : ['buy']);
+            for (const action of purchaseActions) assert.deepEqual(action.command, {
+                type: action.command.type, kind: 'flower', cell: { x: 0, z: 2 },
+            });
             assert.deepEqual((await readNative(page)).plan, partial.plan);
             await page.screenshot({ path: `${out}/${device}-protected-old.png` });
             console.log(`${device}: real worker update waits during learning`);
@@ -128,6 +140,7 @@ try {
             await page.getByRole('button', { name: 'とじる', exact: true }).click();
             await page.waitForFunction(expected => document.querySelector('script[type="module"][src]')?.getAttribute('src') === expected, bundles[1]); await world(page);
             await page.waitForTimeout(5000); assert.equal(navigations.length, 1); const after = await snapshot(page); retained(before, after);
+            if (cadenceUpgrade) assert.equal(after.SansuIslandLifeV1.worlds[0].version, 16);
             assert.equal(await page.locator('[data-life-drops]').getAttribute('data-life-drops'), '6'); assert.equal(await page.locator('[data-life-items]').getAttribute('data-life-items'), '1');
             await page.screenshot({ path: `${out}/${device}-new-world.png` });
             let offlineBaseline = after, addedPurchase;

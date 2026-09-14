@@ -43,7 +43,7 @@ export function departFacilityTrip(state: LifeState, resident: LifeResident) {
     if (!trip || !visit || trip.phase !== 'collect') return false;
     resident.cell = visit.path[visit.path.length - 1];
     trip.phase = 'carry';
-    resident.visit = { ...(visit.observationSubjectId ? { observationSubjectId: visit.observationSubjectId } : {}), ...(visit.relationTargetId ? { relationTargetId: visit.relationTargetId } : {}), ...(visit.relationSelectionVersion ? { relationSelectionVersion: visit.relationSelectionVersion } : {}), itemId: trip.targetId, from: { ...resident.cell }, path: trip.path,
+    resident.visit = { ...(visit.cadence ? { cadence: true as const } : {}), ...(visit.observationSubjectId ? { observationSubjectId: visit.observationSubjectId } : {}), ...(visit.relationTargetId ? { relationTargetId: visit.relationTargetId } : {}), ...(visit.relationSelectionVersion ? { relationSelectionVersion: visit.relationSelectionVersion } : {}), itemId: trip.targetId, from: { ...resident.cell }, path: trip.path,
         start: state.now, end: trip.end, ...(visit.observationTest ? { observationTest: true } : {}) };
     return true;
 }

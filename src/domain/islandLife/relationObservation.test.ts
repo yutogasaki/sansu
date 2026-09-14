@@ -142,7 +142,7 @@ describe('versioned explicit observation intent', () => {
             const fail = () => { throw new Error('disk failure'); }; db.worlds.hook('updating', fail);
             await expect(updateLife(old.profileId, [], intent, 10000, db)).rejects.toThrow('disk failure'); expect(await db.worlds.get(old.profileId)).toEqual(old);
             db.worlds.hook('updating').unsubscribe(fail);
-            const next = await updateLife(old.profileId, [], intent, 10000, db); expect(next.version).toBe(15);
+            const next = await updateLife(old.profileId, [], intent, 10000, db); expect(next.version).toBe(16);
             expect(await updateLife(old.profileId, [], intent, 10001, db)).toEqual(next); expect(next.actions.filter(a => a.id === intent.id)).toHaveLength(1);
         } finally { await db.delete(); }
     });

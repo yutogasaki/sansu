@@ -1,0 +1,4378 @@
+{
+  "target": "http://127.0.0.1:5236",
+  "revision": "922c1444d03b0ddff0c9e98d0cb9cf36b16c3038",
+  "startHash": "7e1107dae201d62cc9822b1417d60066e164a8affd6a9842a135a8beb75363a3",
+  "flags": "DEV Island=true, Life preview=true",
+  "fixture": "Disposable preview owner, 12 injected credits and one flower. Real time and UI refresh/reload; no time acceleration. Does not prove earned acquisition.",
+  "humanN": 0,
+  "cases": [
+    {
+      "device": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "reducedMotion": false,
+      "initial": {
+        "placing": "false",
+        "lifeWorldStyle": "canopy-dots-c3-v1",
+        "lifeVisualCandidate": "canopy-dots-c3-v1",
+        "lifeLandscapeVersion": "groves-water-v1",
+        "lifeTourVersion": "1",
+        "lifeCamera": "{\"projection\":[0.2914509565274668,0,0,0,0,0.18818853153263582,0,0,0,0,-0.02002002002002002,0,-0.04965880727608097,-0.17877910495600405,-1.002002002002002,1],\"view\":[0.9255469562056767,-0.17063826001053398,0.3380020947849059,0,-2.7755575615628914e-17,0.8926908972773304,0.4506694597132078,0,-0.37863284572050404,-0.41711574669241636,0.8262273428075476,0,6.938893903907228e-17,-0.17853817945546582,-13.403660847636989,1],\"cameraView\":{\"zoom\":1,\"azimuth\":0,\"pan\":{\"x\":0,\"y\":2.220446049250313e-16},\"manual\":false}}",
+        "lifeSculptStatus": "none",
+        "lifeGroundMaterialStatus": "none",
+        "worldShadowUpdateMs": "0",
+        "rendered": "true",
+        "worldShadowSampleMs": "0",
+        "lifeGatherings": "[]",
+        "lifeRelations": "[]",
+        "lifePoses": "[{\"id\":\"pokomoko\",\"itemId\":\"qa-flower\",\"phase\":\"walking\",\"position\":[-0.8834999593098958,0.04,-1],\"hop\":0,\"headPitch\":0,\"headRoll\":0,\"headYaw\":0},{\"id\":\"rabbit\",\"itemId\":\"qa-flower\",\"phase\":\"walking\",\"position\":[0.11650004069010411,0.111459148790581,-1],\"reaction\":\"!\",\"hop\":0.071459148790581,\"headPitch\":0,\"headRoll\":0,\"headYaw\":0},{\"id\":\"otter\",\"itemId\":\"roam:otter:0\",\"phase\":\"walking\",\"position\":[0.11650004069010411,0.04,0],\"hop\":0,\"headPitch\":0,\"headRoll\":0,\"headYaw\":0}]",
+        "lifeRender": "{\"calls\":196,\"triangles\":162002,\"geometries\":132,\"textures\":6}"
+      },
+      "positions": {
+        "pokomoko": 14,
+        "rabbit": 26,
+        "otter": 26
+      },
+      "samples": [
+        {
+          "at": 1789360249682,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -0.8834999593098958,
+                0.04,
+                -1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                0.11650004069010411,
+                0.111459148790581,
+                -1
+              ],
+              "reaction": "!",
+              "hop": 0.071459148790581,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:0",
+              "phase": "walking",
+              "position": [
+                0.11650004069010411,
+                0.04,
+                0
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360251744,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -2.2449165852864583,
+                0.04,
+                -1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -1.2449165852864583,
+                0.04,
+                -1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:0",
+              "phase": "walking",
+              "position": [
+                -0.5,
+                0.04,
+                0.7449165852864583
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360253749,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -2.5,
+                0.04,
+                0.4382499186197917
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -2,
+                0.04,
+                -0.06175008138020832
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:0",
+              "phase": "roaming",
+              "position": [
+                -0.5,
+                0.04,
+                2
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0.032944384735536396,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360255755,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.15626591565371553,
+                1
+              ],
+              "reaction": "♪",
+              "hop": 0.11626591565371554,
+              "headPitch": 0.1067753454185164,
+              "headRoll": 0.14755745947865154,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:1",
+              "phase": "walking",
+              "position": [
+                0.4531667073567708,
+                0.04,
+                2
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360257762,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "reaction": "♪",
+              "hop": 0,
+              "headPitch": 0.08999894793293128,
+              "headRoll": 0.000013799728342237527,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:1",
+              "phase": "walking",
+              "position": [
+                1.5,
+                0.04,
+                1.671916707356771
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360259766,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": -0.01598424086779519,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:1",
+              "phase": "walking",
+              "position": [
+                1.5,
+                0.04,
+                -0.022499999999999964
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360261774,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": -0.03496924908686204,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:1",
+              "phase": "roaming",
+              "position": [
+                1.5,
+                0.04,
+                -1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": -0.01765966298521706,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360263778,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": -0.013318708826441053,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:2",
+              "phase": "walking",
+              "position": [
+                2.4379166666666667,
+                0.04,
+                -1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360265785,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0.030806224801710694,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:2",
+              "phase": "walking",
+              "position": [
+                2.5,
+                0.04,
+                1.1378332519531251
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360267790,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "phase": "home",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0.027789891669460023,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:2",
+              "phase": "roaming",
+              "position": [
+                2.5,
+                0.04,
+                2
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": -0.002889256906310062,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360269794,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "roam:rabbit:3",
+              "phase": "walking",
+              "position": [
+                -0.9451666259765625,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                1.4451666259765625,
+                0.04,
+                2
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360271798,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "roam:rabbit:3",
+              "phase": "walking",
+              "position": [
+                0.747833251953125,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -0.247833251953125,
+                0.04,
+                2
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360273802,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "roam:rabbit:3",
+              "phase": "walking",
+              "position": [
+                2.4296667480468743,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -1.9296667480468752,
+                0.04,
+                2
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360275809,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "roam:rabbit:3",
+              "phase": "walking",
+              "position": [
+                2.5,
+                0.04,
+                -0.6233333333333331
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                1.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0.03474517198567321,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360277815,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "roam:rabbit:3",
+              "phase": "walking",
+              "position": [
+                2.5,
+                0.04,
+                -1.8881667073567705
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                1.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0.02625594370055312,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360279821,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "roam:pokomoko:4",
+              "phase": "walking",
+              "position": [
+                -2.5,
+                0.04,
+                0.40783345540364585
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                2.407833455403646,
+                0.04,
+                -2
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                1.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": -0.00993052711579033,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360281892,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "roam:pokomoko:4",
+              "phase": "walking",
+              "position": [
+                -2.5,
+                0.04,
+                -1.2868332926432293
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                1.25,
+                0.04,
+                -1.463166707356771
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                1.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": -0.034589338884525284,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360283897,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "roam:pokomoko:4",
+              "phase": "roaming",
+              "position": [
+                -2.5,
+                0.04,
+                -2
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -0.2450000000000001,
+                0.04,
+                -1.25
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                1.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": -0.019337363882700888,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360285903,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "roam:pokomoko:5",
+              "phase": "walking",
+              "position": [
+                -2.5,
+                0.04,
+                -0.7973333740234374
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -1.952666625976562,
+                0.04,
+                -1.25
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                1.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0.018386116914566604,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360287908,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "roam:pokomoko:5",
+              "phase": "roaming",
+              "position": [
+                -2.5,
+                0.04,
+                0
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -2,
+                0.04,
+                0.4251666259765621
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                1.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0.03470182168792898,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360289913,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "roam:pokomoko:6",
+              "phase": "walking",
+              "position": [
+                -2.5,
+                0.04,
+                -1.3551666259765625
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "reaction": "♪",
+              "hop": 0,
+              "headPitch": 0.07044130041549274,
+              "headRoll": 0.20074971742396558,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                1.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0.005351573523182649,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360291919,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "roam:pokomoko:6",
+              "phase": "roaming",
+              "position": [
+                -2.5,
+                0.04,
+                -2
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0.007575547566909779,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                1.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": -0.024660250821941225,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360293927,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -2.5,
+                0.04,
+                -1.0486667887369792
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": -0.027645662076268045,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:7",
+              "phase": "walking",
+              "position": [
+                -1.5486667887369792,
+                0.04,
+                1.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360295940,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": -0.03130327140187855,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:7",
+              "phase": "walking",
+              "position": [
+                0.13724995930989614,
+                0.04,
+                1.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360297942,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0.0014020676508472395,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:7",
+              "phase": "walking",
+              "position": [
+                1.8579166666666662,
+                0.04,
+                1.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360299946,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0.03210071789729183,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:7",
+              "phase": "walking",
+              "position": [
+                2.5,
+                0.04,
+                0.46083333333333343
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360301951,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "phase": "home",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0.02610323924252889,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:7",
+              "phase": "roaming",
+              "position": [
+                2.5,
+                0.04,
+                -1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": -0.005515827265545519,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360303953,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "roam:rabbit:8",
+              "phase": "walking",
+              "position": [
+                -1.5440834554036458,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                2.044083455403646,
+                0.04,
+                -1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360305957,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "roam:rabbit:8",
+              "phase": "walking",
+              "position": [
+                0.16358317057291671,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                0.3364168294270833,
+                0.04,
+                -1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360307961,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "roam:rabbit:8",
+              "phase": "walking",
+              "position": [
+                1.8590832519531246,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -1.3590832519531255,
+                0.04,
+                -1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360309963,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "roam:rabbit:8",
+              "phase": "walking",
+              "position": [
+                2.5,
+                0.04,
+                1.779333292643229
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -2,
+                0.04,
+                -0.22066670735677096
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360312037,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "roam:rabbit:8",
+              "phase": "roaming",
+              "position": [
+                2.5,
+                0.04,
+                2
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0.03493520901458106,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0.020666775207781995,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360314039,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "roam:rabbit:9",
+              "phase": "walking",
+              "position": [
+                1.5,
+                0.04,
+                1.3041666666666667
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": -0.017001716677293045,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360316043,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "roam:rabbit:9",
+              "phase": "roaming",
+              "position": [
+                1.5,
+                0.04,
+                0
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": -0.020813232103389298,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": -0.03492367977544999,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360318047,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                0.9030832926432292,
+                0.04,
+                0
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": -0.012557526156050054,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360320049,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -0.7790000406901041,
+                0.04,
+                0
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0.02397035227381229,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360322055,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -2.4867500813802086,
+                0.04,
+                0
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0.03319976773127258,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360324058,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "reaction": "♪",
+              "hop": 0,
+              "headPitch": 0.07047516939315408,
+              "headRoll": 0.20056223205428003,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0.00007210402554639008,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360326094,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0.002492773369680744,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": -0.02802984069148715,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360328098,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": -0.030500941742334187,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:10",
+              "phase": "walking",
+              "position": [
+                -1.3863334147135418,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360330101,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": -0.028544845377312836,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:10",
+              "phase": "walking",
+              "position": [
+                0.3082499186197918,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360332104,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0.0064080228705529095,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:10",
+              "phase": "roaming",
+              "position": [
+                0.5,
+                0.04,
+                2
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0.032415930624401575,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360334106,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "roam:pokomoko:11",
+              "phase": "walking",
+              "position": [
+                -1.7907501220703126,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0.03384896475417531,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -0.20924987792968752,
+                0.04,
+                2
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360336110,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "roam:pokomoko:11",
+              "phase": "walking",
+              "position": [
+                -0.10858337402343743,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0.022721763518573666,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -1.8914166259765626,
+                0.04,
+                2
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360338111,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "roam:pokomoko:11",
+              "phase": "walking",
+              "position": [
+                1.5,
+                0.04,
+                0.6127500406901039
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": -0.014940565767780238,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                1.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": -0.03470573644378729,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360340114,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "roam:pokomoko:11",
+              "phase": "roaming",
+              "position": [
+                1.5,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": -0.034975883082704634,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                1.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": -0.017804414180316603,
+              "headYaw": 0
+            }
+          ]
+        }
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "device": "tablet",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "reducedMotion": true,
+      "initial": {
+        "placing": "false",
+        "lifeWorldStyle": "canopy-dots-c3-v1",
+        "lifeVisualCandidate": "canopy-dots-c3-v1",
+        "lifeLandscapeVersion": "groves-water-v1",
+        "lifeTourVersion": "1",
+        "lifeCamera": "{\"projection\":[0.2914509565274668,0,0,0,0,0.28550297782282463,0,0,0,0,-0.02002002002002002,0,-0.04965880727608098,-0.2712278289316833,-1.002002002002002,1],\"view\":[0.9255469562056767,-0.17063826001053398,0.3380020947849059,0,-2.7755575615628914e-17,0.8926908972773304,0.4506694597132078,0,-0.37863284572050404,-0.41711574669241636,0.8262273428075476,0,6.938893903907228e-17,-0.17853817945546582,-13.403660847636989,1],\"cameraView\":{\"zoom\":1,\"azimuth\":0,\"pan\":{\"x\":0,\"y\":0},\"manual\":false}}",
+        "lifeSculptStatus": "none",
+        "lifeGroundMaterialStatus": "none",
+        "worldShadowUpdateMs": "0",
+        "rendered": "true",
+        "worldShadowSampleMs": "0",
+        "lifeGatherings": "[]",
+        "lifeRelations": "[]",
+        "lifePoses": "[{\"id\":\"pokomoko\",\"itemId\":\"qa-flower\",\"phase\":\"walking\",\"position\":[-0.9099165852864584,0.04,-1],\"hop\":0,\"headPitch\":0,\"headRoll\":0,\"headYaw\":0},{\"id\":\"rabbit\",\"itemId\":\"qa-flower\",\"phase\":\"walking\",\"position\":[0.0900834147135417,0.04,-1],\"reaction\":\"!\",\"hop\":0,\"headPitch\":0,\"headRoll\":0,\"headYaw\":0},{\"id\":\"otter\",\"itemId\":\"roam:otter:0\",\"phase\":\"walking\",\"position\":[0.09008341471354164,0.04,0],\"hop\":0,\"headPitch\":0,\"headRoll\":0,\"headYaw\":0}]",
+        "lifeRender": "{\"calls\":196,\"triangles\":162002,\"geometries\":132,\"textures\":6}"
+      },
+      "positions": {
+        "pokomoko": 14,
+        "rabbit": 25,
+        "otter": 27
+      },
+      "samples": [
+        {
+          "at": 1789360343130,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -0.9099165852864584,
+                0.04,
+                -1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                0.0900834147135417,
+                0.04,
+                -1
+              ],
+              "reaction": "!",
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:0",
+              "phase": "walking",
+              "position": [
+                0.09008341471354164,
+                0.04,
+                0
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360345230,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -2.2564998372395833,
+                0.04,
+                -1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -1.2564998372395833,
+                0.04,
+                -1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:0",
+              "phase": "walking",
+              "position": [
+                -0.5,
+                0.04,
+                0.7564998372395833
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360347235,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -2.5,
+                0.04,
+                0.4385831705729166
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -2,
+                0.04,
+                -0.061416829427083375
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:0",
+              "phase": "roaming",
+              "position": [
+                -0.5,
+                0.04,
+                2
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360349237,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "reaction": "♪",
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0.105,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:1",
+              "phase": "walking",
+              "position": [
+                0.5079166666666666,
+                0.04,
+                2
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360351242,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "reaction": "♪",
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0.105,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:1",
+              "phase": "walking",
+              "position": [
+                1.5,
+                0.04,
+                1.6731667073567706
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360353247,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:1",
+              "phase": "walking",
+              "position": [
+                1.5,
+                0.04,
+                -0.04949991861979175
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360355257,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:1",
+              "phase": "roaming",
+              "position": [
+                1.5,
+                0.04,
+                -1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360357264,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:2",
+              "phase": "walking",
+              "position": [
+                2.4382499186197917,
+                0.04,
+                -1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360359268,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:2",
+              "phase": "walking",
+              "position": [
+                2.5,
+                0.04,
+                1.1709167480468752
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360361273,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "phase": "home",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:2",
+              "phase": "roaming",
+              "position": [
+                2.5,
+                0.04,
+                2
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360363290,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "roam:rabbit:3",
+              "phase": "walking",
+              "position": [
+                -0.9271665445963542,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                1.4271665445963542,
+                0.04,
+                2
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360365294,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "roam:rabbit:3",
+              "phase": "walking",
+              "position": [
+                0.7671667480468751,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -0.2671667480468751,
+                0.04,
+                2
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360367297,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "roam:rabbit:3",
+              "phase": "walking",
+              "position": [
+                2.489416707356771,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -1.9894167073567708,
+                0.04,
+                2
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360369304,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "roam:rabbit:3",
+              "phase": "walking",
+              "position": [
+                2.5,
+                0.04,
+                -0.2809167480468746
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -2.5,
+                0.04,
+                1.5
+              ],
+              "hop": 0,
+              "headPitch": 0.08402348925277126,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360371307,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "roam:rabbit:3",
+              "phase": "walking",
+              "position": [
+                2.5,
+                0.04,
+                -1.9760001627604167
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                1.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360373309,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "roam:pokomoko:4",
+              "phase": "walking",
+              "position": [
+                -2.5,
+                0.04,
+                0.32275004069010416
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                2.3227500406901043,
+                0.04,
+                -2
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                1.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360375382,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "roam:pokomoko:4",
+              "phase": "walking",
+              "position": [
+                -2.5,
+                0.04,
+                -1.3848333740234375
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                1.25,
+                0.04,
+                -1.3651666259765625
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                1.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360377386,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "roam:pokomoko:4",
+              "phase": "roaming",
+              "position": [
+                -2.5,
+                0.04,
+                -2
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -0.34224995930989577,
+                0.04,
+                -1.25
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                1.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360379388,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "roam:pokomoko:5",
+              "phase": "walking",
+              "position": [
+                -2.5,
+                0.04,
+                -0.7123333740234374
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -2,
+                0.04,
+                -1.2123333740234372
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                1.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360381391,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "roam:pokomoko:5",
+              "phase": "roaming",
+              "position": [
+                -2.5,
+                0.04,
+                0
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -2,
+                0.04,
+                0.48199991861979186
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                1.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360383394,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "roam:pokomoko:6",
+              "phase": "walking",
+              "position": [
+                -2.5,
+                0.04,
+                -1.4269167073567708
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "reaction": "♪",
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0.105,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                1.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360385397,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "roam:pokomoko:6",
+              "phase": "roaming",
+              "position": [
+                -2.5,
+                0.04,
+                -2
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                1.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360387401,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -2.5,
+                0.04,
+                -0.6074999999999999
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:7",
+              "phase": "walking",
+              "position": [
+                -1.1075,
+                0.04,
+                1.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360389586,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:7",
+              "phase": "walking",
+              "position": [
+                0.16408325195312523,
+                0.04,
+                1.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360391589,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:7",
+              "phase": "walking",
+              "position": [
+                1.8856665039062497,
+                0.04,
+                1.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360393594,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:7",
+              "phase": "walking",
+              "position": [
+                2.5,
+                0.04,
+                0.4326668294270837
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360395605,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "phase": "home",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:7",
+              "phase": "roaming",
+              "position": [
+                2.5,
+                0.04,
+                -1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360397607,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "roam:rabbit:8",
+              "phase": "walking",
+              "position": [
+                -1.5441666666666667,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                2.0441666666666665,
+                0.04,
+                -1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360399611,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "roam:rabbit:8",
+              "phase": "walking",
+              "position": [
+                0.16375000000000028,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                0.33625000000000016,
+                0.04,
+                -1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360401616,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "roam:rabbit:8",
+              "phase": "walking",
+              "position": [
+                1.8854998779296874,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -1.3854998779296874,
+                0.04,
+                -1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360403622,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "roam:rabbit:8",
+              "phase": "roaming",
+              "position": [
+                2.5,
+                0.04,
+                2
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -2,
+                0.04,
+                0.23249999999999993
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360405732,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "roam:rabbit:9",
+              "phase": "walking",
+              "position": [
+                2.0727500406901043,
+                0.04,
+                2
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360407735,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "roam:rabbit:9",
+              "phase": "walking",
+              "position": [
+                1.5,
+                0.04,
+                0.8640834554036458
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360409739,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "roam:rabbit:9",
+              "phase": "roaming",
+              "position": [
+                1.5,
+                0.04,
+                0
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360411742,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                0.4475,
+                0.04,
+                0
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360413743,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -0.842916666666667,
+                0.04,
+                0
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360415746,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -2.5,
+                0.04,
+                0.05216654459635439
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360417750,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "reaction": "♪",
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0.105,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360419753,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360421755,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:10",
+              "phase": "walking",
+              "position": [
+                -0.968499959309896,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360423757,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:10",
+              "phase": "walking",
+              "position": [
+                0.5,
+                0.04,
+                1.225916544596354
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360425760,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "roam:otter:10",
+              "phase": "roaming",
+              "position": [
+                0.5,
+                0.04,
+                2
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360427763,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "roam:pokomoko:11",
+              "phase": "walking",
+              "position": [
+                -1.7602500406901043,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -0.23974995930989584,
+                0.04,
+                2
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360429767,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "roam:pokomoko:11",
+              "phase": "walking",
+              "position": [
+                -0.03816670735677086,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "walking",
+              "position": [
+                -1.9618332926432291,
+                0.04,
+                2
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360431769,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "roam:pokomoko:11",
+              "phase": "walking",
+              "position": [
+                1.5,
+                0.04,
+                0.6835833740234376
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                1.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        },
+        {
+          "at": 1789360433772,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "roam:pokomoko:11",
+              "phase": "roaming",
+              "position": [
+                1.5,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                0.5
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-flower",
+              "phase": "flower",
+              "position": [
+                -2.5,
+                0.04,
+                1.5
+              ],
+              "hop": 0,
+              "headPitch": 0.09,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ]
+        }
+      ],
+      "errors": [],
+      "pass": true
+    }
+  ],
+  "pass": true,
+  "endHash": "7e1107dae201d62cc9822b1417d60066e164a8affd6a9842a135a8beb75363a3"
+}
