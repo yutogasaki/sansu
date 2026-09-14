@@ -1,0 +1,80 @@
+{
+  "target": "http://127.0.0.1:55683",
+  "builds": [
+    {
+      "revision": "922c1444d03b0ddff0c9e98d0cb9cf36b16c3038",
+      "sourceHash": "7e1107dae201d62cc9822b1417d60066e164a8affd6a9842a135a8beb75363a3",
+      "version": {
+        "version": "resident-cadence-final:abb4df76-2c11-4119-9e01-84b6a7dade02",
+        "revision": "resident-cadence-final",
+        "delivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "park": {
+          "enabled": false,
+          "renderer": "retired"
+        },
+        "island": {
+          "enabled": true,
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "mystic-island-learning-v2",
+          "residentCandidate": "patchwork-otter-v1",
+          "artDirection": "moon-garden"
+        }
+      },
+      "flags": "Island=true, Life=true, Discovery=true, Preview=false, BuildPlay=false"
+    },
+    {
+      "revision": "a4f50ef42f8e57a0b78fda5c14b860d1a292e469",
+      "sourceHash": "13ef3f4808a1b681aeb7c9e8156e8121b7b66a06c332911aad9b738cefbcbd7f",
+      "version": {
+        "version": "pokomoko-single-visit-local:521dcc74-f87e-40b0-a1d8-bea3aaba5488",
+        "revision": "pokomoko-single-visit-local",
+        "delivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "park": {
+          "enabled": false,
+          "renderer": "retired"
+        },
+        "island": {
+          "enabled": true,
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "mystic-island-learning-v2",
+          "residentCandidate": "patchwork-otter-v1",
+          "artDirection": "moon-garden"
+        }
+      },
+      "flags": "Island=true Life=true Discovery=true Preview=false BuildPlay=false"
+    }
+  ],
+  "bundles": [
+    "/assets/index-DeObK7Nz.js",
+    "/assets/index-ClyrlHmb.js"
+  ],
+  "scope": "Real old-to-new SW update during a partially completed learning reservation, retained earned Life ownership and all native stores, one reload, offline restart and same next question. No injected profile, credits, timestamps, update events or worker mocks. Empty photo stores do not prove Blob retention.",
+  "interruption": false,
+  "discoveryUpgrade": false,
+  "cadenceUpgrade": false,
+  "heroVisitUpgrade": true,
+  "humanN": 0,
+  "pass": true,
+  "cases": [
+    {
+      "device": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pass": true
+    },
+    {
+      "device": "tablet",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "pass": true
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+import { inventory, saved } from './island-life-ui-helpers.mjs';
 import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
@@ -6,13 +7,14 @@ import { execFileSync } from 'node:child_process';
 import { seedDev, readNative } from './island-e2e-helpers.mjs';
 const base = process.env.SANSU_CADENCE_URL ?? 'http://127.0.0.1:5236';
 const out = process.env.SANSU_CADENCE_OUTPUT ?? 'output/resident-cadence';
+const heroCall = process.env.SANSU_CADENCE_HERO_CALL === '1';
 await mkdir(out, { recursive: true });
 async function sourceHash() {
     const paths = [...new Set(execFileSync('git', ['ls-files', '-co', '--exclude-standard', 'src', 'public', 'package.json', 'package-lock.json', 'vite.config.ts'], { encoding: 'utf8' }).trim().split('\n'))].sort();
     const hash = createHash('sha256'); for (const path of paths) hash.update(path).update('\0').update(await readFile(path)).update('\0'); return hash.digest('hex');
 }
 const report = { target: base, revision: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), startHash: await sourceHash(),
-    flags: 'DEV Island=true, Life preview=true', fixture: 'Disposable preview owner, 12 injected credits and one flower. Real time and UI refresh/reload; no time acceleration. Does not prove earned acquisition.', humanN: 0, cases: [], pass: false };
+    flags: 'DEV Island=true, Life preview=true', fixture: 'Disposable preview owner, 12 injected credits and one flower. Real time and UI refresh/reload; no time acceleration. Does not prove earned acquisition.', heroCall, humanN: 0, cases: [], pass: false };
 const browser = await chromium.launch({ channel: 'chrome' });
 try {
     for (const [device, viewport] of [['phone', { width: 390, height: 844 }], ['tablet', { width: 768, height: 1024 }]]) {
@@ -31,6 +33,12 @@ try {
             await lifeDb.worlds.put(commandLife(migrated, { type: 'buy', kind: 'flower', cell: { x: 0, z: 3 } }, 'qa-flower', at));
         }, id);
         await page.reload(); const world = page.locator('.life-world[data-rendered="true"]'); await world.waitFor();
+        if (heroCall) {
+            await inventory(page, 'qa-flower');
+            await page.getByRole('button', { name: 'ぽこもこを よぶ', exact: true }).click();
+            await page.getByRole('button', { name: 'メニューを とじる', exact: true }).waitFor({ state: 'hidden' });
+            assert.equal((await saved(page, id)).state.target, 'qa-flower');
+        }
         const native = await readNative(page, id), samples = [];
         const initial = await world.evaluate(n => ({ ...n.dataset }));
         for (let i = 0; i < 46; i++) {
@@ -42,11 +50,16 @@ try {
         for (const [id, count] of Object.entries(positions)) assert(count >= 4, `${device}: ${id} stayed still (${count})`);
         assert.deepEqual(await readNative(page, id), native, 'Idle movement must not change learning');
         const before = await page.evaluate(async id => { const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); return lifeDb.worlds.get(id); }, id);
-        assert.equal(before.version, 16); await page.reload(); await world.waitFor();
+        assert.equal(before.version, 17); await page.reload(); await world.waitFor();
         const after = await page.evaluate(async id => { const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); return lifeDb.worlds.get(id); }, id);
+        if (heroCall) {
+            assert.equal((await saved(page, id, true)).state.target, undefined);
+            assert(samples.some(s => s.poses.some(p => p.id === 'pokomoko' && p.phase === 'walking' && p.itemId !== 'qa-flower')), 'Called hero must walk elsewhere');
+            assert.deepEqual(after.heroVisitCutover, before.heroVisitCutover);
+        }
         assert.deepEqual(after.cadenceCutover, before.cadenceCutover); assert.deepEqual(after.actions, before.actions); assert.deepEqual(after.credits, before.credits);
         assert.deepEqual(errors, []); assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
-        report.cases.push({ device, viewport, reducedMotion: device === 'tablet', candidate: initial.lifeCandidate, initial, positions, samples, errors, pass: true });
+        report.cases.push({ device, viewport, reducedMotion: device === 'tablet', candidate: initial.lifeVisualCandidate, initial, positions, samples, errors, pass: true });
         await context.close();
     }
     report.endHash = await sourceHash(); assert.equal(report.endHash, report.startHash); report.pass = true;

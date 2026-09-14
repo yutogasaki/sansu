@@ -6,7 +6,7 @@ import { DISCOVERY_RULE_VERSION, evaluateDiscovery, type DiscoveryRuleId, type R
 import { type LifeState, type ResidentId } from './model';
 
 export type SceneSource = 'live' | 'current-context-test' | 'replay' | 'simulated';
-export type SceneSnapshot = Pick<LifeState, 'now' | 'activityVersion' | 'items' | 'residents' | 'heroStyle' | 'expanded' | 'extraLand' | 'target' | 'relationTarget' | 'worldStyle' | 'landscapeVersion' | 'relationVersion' | 'waterFocus' | 'poseReducedMotion' | 'cadenceVersion' | 'tourVersion' | 'roamRound' | 'scenePose' | 'facilityTripVersion' | 'relationSelectionVersion' | 'placementVersion' | 'waterMagicVersion' | 'waterTouch' | 'shadowMagicVersion' | 'shadowTouch' | 'footstepMagicVersion' | 'footstepTouch' | 'encounterVersion' | 'encounterTouch' | 'readingEncounterVersion' | 'readingObservation'> & { observationResidentId?: ResidentId };
+export type SceneSnapshot = Pick<LifeState, 'now' | 'activityVersion' | 'items' | 'residents' | 'heroStyle' | 'expanded' | 'extraLand' | 'target' | 'relationTarget' | 'worldStyle' | 'landscapeVersion' | 'relationVersion' | 'waterFocus' | 'poseReducedMotion' | 'heroVisitVersion' | 'heroWaitUntil' | 'cadenceVersion' | 'tourVersion' | 'roamRound' | 'scenePose' | 'facilityTripVersion' | 'relationSelectionVersion' | 'placementVersion' | 'waterMagicVersion' | 'waterTouch' | 'shadowMagicVersion' | 'shadowTouch' | 'footstepMagicVersion' | 'footstepTouch' | 'encounterVersion' | 'encounterTouch' | 'readingEncounterVersion' | 'readingObservation'> & { observationResidentId?: ResidentId };
 export interface DiscoveryScene {
     eventId: string; profileId: string; ruleId: DiscoveryRuleId; ruleVersion: typeof DISCOVERY_RULE_VERSION;
     semanticSignature: string; createdAt: number; source: SceneSource; originEventId?: string;
@@ -57,6 +57,7 @@ export async function createDiscoveryScene(profileId: string, state: LifeState, 
     if (focal.some(id => !state.residents.some(resident => resident.id === id))) throw new Error('Unknown scene resident');
     const observationResidentId = source === 'current-context-test' && state.residents.find(r => r.id === focalResidentIds[0])?.visit?.observationSubjectId ? focalResidentIds[0] : undefined;
     const scene: SceneSnapshot = structuredClone({ ...(observationResidentId ? { observationResidentId } : {}), now: state.now, activityVersion: state.activityVersion,
+        ...(state.heroVisitVersion ? { heroVisitVersion: state.heroVisitVersion, heroWaitUntil: state.heroWaitUntil } : {}),
         ...(state.cadenceVersion ? { cadenceVersion: state.cadenceVersion } : {}),
         ...(state.tourVersion ? { tourVersion: state.tourVersion, roamRound: state.roamRound, scenePose: 'captured-v1' as const } : {}),
         ...(state.encounterVersion ? { encounterVersion: state.encounterVersion } : {}),

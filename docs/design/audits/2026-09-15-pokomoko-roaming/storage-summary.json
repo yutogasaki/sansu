@@ -1,0 +1,128 @@
+{
+  "target": "http://127.0.0.1:5337",
+  "startHash": "13ef3f4808a1b681aeb7c9e8156e8121b7b66a06c332911aad9b738cefbcbd7f",
+  "revision": "a4f50ef42f8e57a0b78fda5c14b860d1a292e469",
+  "flags": "production Island=true, Life=true, Discovery=true, Life preview=false, BuildPlay=false",
+  "fixture": "No injected profiles, clocks, credits, answers, or database writes; onboarding and purchases through actual UI in disposable contexts",
+  "failureInjection": "Explicit IDBObjectStore.put failure for SansuIslandLifeV1/worlds only after a real offline answer; disabled before UI retry",
+  "buildVersion": {
+    "version": "pokomoko-single-visit-local:521dcc74-f87e-40b0-a1d8-bea3aaba5488",
+    "revision": "pokomoko-single-visit-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "scope": "Actual service worker offline ownership, earned credit projection, placement/storage and native learning. 12-item catalog and real sapling purchase. Not all rule journeys, C3 or two-build update.",
+  "humanN": 0,
+  "pass": true,
+  "navigationChecks": [
+    {
+      "device": "phone",
+      "width": 346,
+      "scrollWidth": 346,
+      "hintHeight": 17.59375,
+      "countHeight": 17.59375,
+      "targets": [
+        {
+          "width": 44,
+          "height": 44,
+          "inside": true
+        },
+        {
+          "width": 44,
+          "height": 44,
+          "inside": true
+        },
+        {
+          "width": 44,
+          "height": 44,
+          "inside": true
+        },
+        {
+          "width": 44,
+          "height": 44,
+          "inside": true
+        },
+        {
+          "width": 44,
+          "height": 44,
+          "inside": true
+        },
+        {
+          "width": 44,
+          "height": 44,
+          "inside": true
+        }
+      ]
+    },
+    {
+      "device": "tablet",
+      "width": 516,
+      "scrollWidth": 516,
+      "hintHeight": 17.59375,
+      "countHeight": 17.59375,
+      "targets": [
+        {
+          "width": 44,
+          "height": 44,
+          "inside": true
+        },
+        {
+          "width": 44,
+          "height": 44,
+          "inside": true
+        },
+        {
+          "width": 44,
+          "height": 44,
+          "inside": true
+        },
+        {
+          "width": 44,
+          "height": 44,
+          "inside": true
+        },
+        {
+          "width": 44,
+          "height": 44,
+          "inside": true
+        },
+        {
+          "width": 44,
+          "height": 44,
+          "inside": true
+        }
+      ]
+    }
+  ],
+  "endHash": "13ef3f4808a1b681aeb7c9e8156e8121b7b66a06c332911aad9b738cefbcbd7f",
+  "cases": [
+    {
+      "device": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pass": true
+    },
+    {
+      "device": "tablet",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "pass": true
+    }
+  ]
+}

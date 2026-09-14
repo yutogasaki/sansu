@@ -1,3 +1,5 @@
+import { enableHeroVisits, expireHeroWait, heroWaitDeadline, HERO_WAIT_MS, isHeroTargetVisit } from './heroVisit';
+import { assertHeroVisitCutover } from './heroVisitMigration';
 import { cadenceReplayKey, cachedLifeState, rememberLifeState } from './replayCache';
 import { accrueCadenceUse, CADENCE_REST_MS, enableCadence, shortenCadenceVisit, usesCadence } from './cadence';
 import { assertCadenceCutover } from './cadenceMigration';
@@ -122,6 +124,7 @@ function arrangeTours(s: LifeState) {
     }
 }
 export function arrangeVisits(s: LifeState) {
+    expireHeroWait(s);
     arrangeTours(s);
     const developed = s.activityVersion === 2 ? new Set(districts(s).flatMap(d => d.ids)) : new Set<string>();
     // A fixed assignment order lets the first two residents monopolize two seats.
@@ -138,7 +141,7 @@ export function arrangeVisits(s: LifeState) {
         if (r.visit && !isRoamVisit(r.visit) && !s.items.some(i => i.id === r.visit!.itemId && i.cell)) { r.visit = undefined; r.cell = { ...homeCell }; }
         if (r.visit || r.playTour) continue;
         const choices = s.items.filter(i => i.cell && i.kind !== 'lantern' && i.kind !== 'pinwheel').flatMap(i => {
-            if (usesCadence(s, r) && r.cadence?.lastItemId === i.id) return [];
+            if (usesCadence(s, r) && r.cadence?.lastItemId === i.id && !(r.id === 'pokomoko' && s.target === i.id)) return [];
             if (i.kind === 'flower-arch' && (r.archCooldownUntil ?? 0) > s.now) return [];
             const reserved = s.activityVersion === 2 || i.kind === 'picnic-table' || i.kind === 'flower-arch' || i.kind === 'sandbox' || isFacility(i.kind) ? reservedActivityCells(s, r.id) : [];
             const path = pathToActivity(s, r.cell, i, reserved); if (!path) return [];
@@ -193,6 +196,8 @@ export function advanceLifeState(s: LifeState, to: number) {
     arrangeVisits(s);
     while (s.now < to) {
         let next = to;
+        const waitDeadline = heroWaitDeadline(s);
+        if (waitDeadline !== undefined && waitDeadline > s.now) next = Math.min(next, waitDeadline);
         if (s.lastAchievement !== undefined) for (const boundary of [24, 72].map(h => s.lastAchievement! + h * HOUR)) if (boundary > s.now) next = Math.min(next, boundary);
         for (const r of s.residents) if ((r.archCooldownUntil ?? 0) > s.now) next = Math.min(next, r.archCooldownUntil!);
         for (const r of s.residents) if (r.visit) {
@@ -212,6 +217,7 @@ export function advanceLifeState(s: LifeState, to: number) {
         }
         for (const r of s.residents) if (r.visit && r.visit.end <= next) {
             if (departFacilityTrip(s, r)) continue;
+            if (s.heroVisitVersion && isHeroTargetVisit(s, r)) { s.target = undefined; s.heroWaitUntil = undefined; }
             const visit = r.visit, kind = s.items.find(i => i.id === visit.itemId)?.kind;
             r.cell = visit.path[visit.path.length - 1]; r.visit = undefined;
             r.facilityTrip = undefined;
@@ -304,8 +310,9 @@ export function applyCommand(s: LifeState, event: LifeAction) {
             if (item.kind === 'flower-arch') s.residents[0].archCooldownUntil = undefined;
             const changed = s.target !== item.id;
             s.target = item.id;
+            if (s.heroVisitVersion && changed) s.heroWaitUntil = s.now + HERO_WAIT_MS;
             const hero = s.residents[0];
-            if (hero.visit?.itemId !== item.id) {
+            if (hero.visit?.itemId !== item.id && !(s.heroVisitVersion && isHeroTargetVisit(s, hero))) {
                 if (hero.visit) hero.cell = residentCell(hero, s.now, Boolean(s.placementVersion));
                 hero.visit = undefined; hero.playTour = undefined; hero.facilityTrip = undefined;
             }
@@ -346,10 +353,10 @@ export function replayLife(record: LifeRecord, to = record.now): LifeState {
     const facilityIds = new Set(record.actions.filter(a => a.command.type === 'buy' && isFacility(a.command.kind)).map(a => a.id));
     if (record.version < 12 && record.actions.some(a => a.command.type === 'observe' && facilityIds.has(a.command.itemId))) throw new Error('この観察は新しい版で開いてください。');
     const checkpoint = record.economyCheckpoint;
-    assertCheckpointBoundary(record); assertTourCutover(record); assertFacilityCutover(record); assertRelationCutover(record); assertPlacementCutover(record); assertCadenceCutover(record);
+    assertCheckpointBoundary(record); assertTourCutover(record); assertFacilityCutover(record); assertRelationCutover(record); assertPlacementCutover(record); assertCadenceCutover(record); assertHeroVisitCutover(record);
     if (record.actions.some(action => action.command.type === 'buy' && action.command.kind === 'sandbox') && record.version < 9) throw new Error('砂場の保存版を確認できません。');
     if (record.actions.some(action => action.command.type === 'buy' && isFacility(action.command.kind)) && record.version < 10) throw new Error('建物の保存版を確認できません。');
-    if (record.actions.some(action => action.landReceipt) && ![5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].includes(record.version)) throw new Error('土地の保存版を確認できません。');
+    if (record.actions.some(action => action.landReceipt) && ![5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17].includes(record.version)) throw new Error('土地の保存版を確認できません。');
     if (record.actions.some(action => action.command.type === 'buy' && isWindArch(action.command.kind)) && record.version < 8) throw new Error('風車とアーチの保存版を確認できません。');
     if (record.actions.some(action => action.command.type === 'buy' && action.command.kind === 'picnic-table') && record.version < 7) throw new Error('テーブルの保存版を確認できません。');
     if (record.actions.some(action => action.command.type === 'buy' && isPlantsWater(action.command.kind)) && record.version < 6) throw new Error('新しい物の保存版を確認できません。');
@@ -365,21 +372,22 @@ export function replayLife(record: LifeRecord, to = record.now): LifeState {
     const credits = checkpoint ? record.credits.filter(credit => !known.has(credit.id)) : record.credits;
     if (checkpoint && credits.some(credit => credit.at <= checkpoint.cutoverAt)) throw new Error('以前の学習を反映してから島を開いてね。');
     const actions = checkpoint ? record.actions.slice(checkpoint.actionCount) : record.actions;
-    const events = [...credits.map(c => ({ at: c.at, credit: c, action: undefined, switchVersion: false, switchTour: false, switchFacility: false, switchRelation: false, switchPlacement: false, switchCadence: false, rank: 0 })),
-        ...actions.map((a, index) => ({ at: a.at, credit: undefined, action: a, switchVersion: false, switchTour: false, switchFacility: false, switchRelation: false, switchPlacement: false, switchCadence: false,
-            rank: record.tourCutover && a.at === record.tourCutover.at && index + (checkpoint?.actionCount ?? 0) < record.tourCutover.actionCount ? 1.25 : record.facilityCutover && a.at === record.facilityCutover.at && index + (checkpoint?.actionCount ?? 0) < record.facilityCutover.actionCount ? 1.75 : record.relationCutover && a.at === record.relationCutover.at && index + (checkpoint?.actionCount ?? 0) < record.relationCutover.actionCount ? 1.9 : record.placementCutover && a.at === record.placementCutover.at && index + (checkpoint?.actionCount ?? 0) < record.placementCutover.actionCount ? 1.96 : record.cadenceCutover && a.at === record.cadenceCutover.at && index + (checkpoint?.actionCount ?? 0) < record.cadenceCutover.actionCount ? 1.98 : a.at === record.activitiesV2At && index < (record.activitiesV2After ?? 0) ? .5 : 2 })),
-        ...(checkpoint || record.activitiesV2At === undefined ? [] : [{ at: record.activitiesV2At, credit: undefined, action: undefined, switchVersion: true, switchTour: false, switchFacility: false, switchRelation: false, switchPlacement: false, switchCadence: false, rank: 1 }]),
-        ...(record.tourCutover ? [{ at: record.tourCutover.at, credit: undefined, action: undefined, switchVersion: false, switchTour: true, switchFacility: false, switchRelation: false, switchPlacement: false, switchCadence: false, rank: 1.5 }] : []),
-        ...(record.facilityCutover ? [{ at: record.facilityCutover.at, credit: undefined, action: undefined, switchVersion: false, switchTour: false, switchFacility: true, switchRelation: false, switchPlacement: false, switchCadence: false, rank: 1.875 }] : []),
-        ...(record.relationCutover ? [{ at: record.relationCutover.at, credit: undefined, action: undefined, switchVersion: false, switchTour: false, switchFacility: false, switchRelation: true, switchPlacement: false, switchCadence: false, rank: 1.95 }] : []),
-        ...(record.placementCutover ? [{ at: record.placementCutover.at, credit: undefined, action: undefined, switchVersion: false, switchTour: false, switchFacility: false, switchRelation: false, switchPlacement: true, switchCadence: false, rank: 1.975 }] : []),
-        ...(record.cadenceCutover ? [{ at: record.cadenceCutover.at, credit: undefined, action: undefined, switchVersion: false, switchTour: false, switchFacility: false, switchRelation: false, switchPlacement: false, switchCadence: true, rank: 1.99 }] : [])]
+    const events = [...credits.map(c => ({ at: c.at, credit: c, action: undefined, switchVersion: false, switchTour: false, switchFacility: false, switchRelation: false, switchPlacement: false, switchCadence: false, switchHeroVisit: false, rank: 0 })),
+        ...actions.map((a, index) => ({ at: a.at, credit: undefined, action: a, switchVersion: false, switchTour: false, switchFacility: false, switchRelation: false, switchPlacement: false, switchCadence: false, switchHeroVisit: false,
+            rank: record.tourCutover && a.at === record.tourCutover.at && index + (checkpoint?.actionCount ?? 0) < record.tourCutover.actionCount ? 1.25 : record.facilityCutover && a.at === record.facilityCutover.at && index + (checkpoint?.actionCount ?? 0) < record.facilityCutover.actionCount ? 1.75 : record.relationCutover && a.at === record.relationCutover.at && index + (checkpoint?.actionCount ?? 0) < record.relationCutover.actionCount ? 1.9 : record.placementCutover && a.at === record.placementCutover.at && index + (checkpoint?.actionCount ?? 0) < record.placementCutover.actionCount ? 1.96 : record.cadenceCutover && a.at === record.cadenceCutover.at && index + (checkpoint?.actionCount ?? 0) < record.cadenceCutover.actionCount ? 1.98 : record.heroVisitCutover && a.at === record.heroVisitCutover.at && index + (checkpoint?.actionCount ?? 0) < record.heroVisitCutover.actionCount ? 1.992 : a.at === record.activitiesV2At && index < (record.activitiesV2After ?? 0) ? .5 : 2 })),
+        ...(checkpoint || record.activitiesV2At === undefined ? [] : [{ at: record.activitiesV2At, credit: undefined, action: undefined, switchVersion: true, switchTour: false, switchFacility: false, switchRelation: false, switchPlacement: false, switchCadence: false, switchHeroVisit: false, rank: 1 }]),
+        ...(record.tourCutover ? [{ at: record.tourCutover.at, credit: undefined, action: undefined, switchVersion: false, switchTour: true, switchFacility: false, switchRelation: false, switchPlacement: false, switchCadence: false, switchHeroVisit: false, rank: 1.5 }] : []),
+        ...(record.facilityCutover ? [{ at: record.facilityCutover.at, credit: undefined, action: undefined, switchVersion: false, switchTour: false, switchFacility: true, switchRelation: false, switchPlacement: false, switchCadence: false, switchHeroVisit: false, rank: 1.875 }] : []),
+        ...(record.relationCutover ? [{ at: record.relationCutover.at, credit: undefined, action: undefined, switchVersion: false, switchTour: false, switchFacility: false, switchRelation: true, switchPlacement: false, switchCadence: false, switchHeroVisit: false, rank: 1.95 }] : []),
+        ...(record.placementCutover ? [{ at: record.placementCutover.at, credit: undefined, action: undefined, switchVersion: false, switchTour: false, switchFacility: false, switchRelation: false, switchPlacement: true, switchCadence: false, switchHeroVisit: false, rank: 1.975 }] : []),
+        ...(record.cadenceCutover ? [{ at: record.cadenceCutover.at, credit: undefined, action: undefined, switchVersion: false, switchTour: false, switchFacility: false, switchRelation: false, switchPlacement: false, switchCadence: true, switchHeroVisit: false, rank: 1.99 }] : []),
+        ...(record.heroVisitCutover ? [{ at: record.heroVisitCutover.at, credit: undefined, action: undefined, switchVersion: false, switchTour: false, switchFacility: false, switchRelation: false, switchPlacement: false, switchCadence: false, switchHeroVisit: true, rank: 1.995 }] : [])]
         .sort((a, b) => a.at - b.at || a.rank - b.rank);
     const credited = new Set<string>();
     let lastWasPlacementCutover = false;
     for (const event of events) {
         if (event.at > to) break;
-        lastWasPlacementCutover = event.switchPlacement || event.switchCadence;
+        lastWasPlacementCutover = event.switchPlacement || event.switchCadence || event.switchHeroVisit;
         advanceLifeState(s, Math.max(s.now, event.at));
         if (event.credit) {
             const c = event.credit; if (credited.has(c.id)) continue; credited.add(c.id);
@@ -396,6 +404,7 @@ export function replayLife(record: LifeRecord, to = record.now): LifeState {
         else if (event.switchRelation) { s.relationSelectionVersion = 1; }
         else if (event.switchPlacement) { s.placementVersion = 1; }
         else if (event.switchCadence) enableCadence(s);
+        else if (event.switchHeroVisit) enableHeroVisits(s);
         else if (event.action) applyCommand(s, event.action);
     }
     // Enabling new routes alone must not reassign residents in the frozen cutover state.
@@ -424,5 +433,5 @@ export function commandLife(record: LifeRecord, command: LifeCommand, id: string
     if (command.type === 'expand' && record.tourCutover) event.landReceipt = landReceipt(state, event);
     applyCommand(state, event);
     const facilityObservation = command.type === 'observe' && state.items.some(i => i.id === command.itemId && isFacility(i.kind));
-    return { ...record, version: record.version === 16 ? 16 : record.version === 15 ? 15 : record.version === 14 || command.type === 'observe-relation' ? 14 : record.version === 13 ? 13 : record.version === 12 || facilityObservation ? 12 : record.version === 11 ? 11 : record.version === 10 || command.type === 'buy' && isFacility(command.kind) ? 10 : record.version === 9 || command.type === 'buy' && command.kind === 'sandbox' ? 9 : record.version === 8 || command.type === 'buy' && isWindArch(command.kind) ? 8 : record.version === 7 || command.type === 'buy' && command.kind === 'picnic-table' ? 7 : record.version === 6 || command.type === 'buy' && isPlantsWater(command.kind) ? 6 : event.landReceipt ? 5 : command.type === 'observe' && record.version === 1 ? 2 : record.version, now, revision: record.revision + 1, actions: [...record.actions, event] };
+    return { ...record, version: record.version === 17 ? 17 : record.version === 16 ? 16 : record.version === 15 ? 15 : record.version === 14 || command.type === 'observe-relation' ? 14 : record.version === 13 ? 13 : record.version === 12 || facilityObservation ? 12 : record.version === 11 ? 11 : record.version === 10 || command.type === 'buy' && isFacility(command.kind) ? 10 : record.version === 9 || command.type === 'buy' && command.kind === 'sandbox' ? 9 : record.version === 8 || command.type === 'buy' && isWindArch(command.kind) ? 8 : record.version === 7 || command.type === 'buy' && command.kind === 'picnic-table' ? 7 : record.version === 6 || command.type === 'buy' && isPlantsWater(command.kind) ? 6 : event.landReceipt ? 5 : command.type === 'observe' && record.version === 1 ? 2 : record.version, now, revision: record.revision + 1, actions: [...record.actions, event] };
 }

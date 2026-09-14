@@ -13,8 +13,8 @@ async function digest(cutover: FacilityCutover) {
 }
 export function assertFacilityCutover(record: LifeRecord) {
     const c = record.facilityCutover;
-    if (!c) { if ((record.version === 11 || record.version === 12 || (record.version === 13 || record.version === 14 || (record.version === 15 || record.version === 16)))) throw new Error('運搬の切替記録が見つかりません。'); return; }
-    if (![11, 12, 13, 14, 15, 16].includes(record.version) || c.rules !== 'facility-trips-v1' || c.profileId !== record.profileId
+    if (!c) { if ((record.version === 11 || record.version === 12 || (record.version === 13 || record.version === 14 || (record.version === 15 || (record.version === 16 || record.version === 17))))) throw new Error('運搬の切替記録が見つかりません。'); return; }
+    if (![11, 12, 13, 14, 15, 16, 17].includes(record.version) || c.rules !== 'facility-trips-v1' || c.profileId !== record.profileId
         || !record.tourCutover || !Number.isFinite(c.at) || c.at < record.tourCutover.at || c.at > record.now
         || !Number.isInteger(c.actionCount) || c.actionCount < record.tourCutover.actionCount || c.actionCount > record.actions.length
         || c.priorActions.length !== c.actionCount || JSON.stringify(c.priorActions) !== JSON.stringify(record.actions.slice(0, c.actionCount))
@@ -26,7 +26,7 @@ export async function verifyFacilityCutover(record: LifeRecord) {
     if (record.facilityCutover && record.facilityCutover.validationHash !== await digest(record.facilityCutover)) throw new Error('運搬の切替記録を確認できません。');
 }
 export async function prepareFacilityMigration(record: LifeRecord): Promise<LifeRecord> {
-    if ((record.version === 11 || record.version === 12 || (record.version === 13 || record.version === 14 || (record.version === 15 || record.version === 16)))) { await verifyFacilityCutover(record); return record; }
+    if ((record.version === 11 || record.version === 12 || (record.version === 13 || record.version === 14 || (record.version === 15 || (record.version === 16 || record.version === 17))))) { await verifyFacilityCutover(record); return record; }
     if (!record.tourCutover || record.facilityCutover) throw new Error('Unknown facility migration source');
     const before = replayLife(record);
     const cutover: FacilityCutover = { rules: 'facility-trips-v1', profileId: record.profileId, at: record.now,

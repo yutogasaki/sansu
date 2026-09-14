@@ -165,6 +165,12 @@ If a task spans more than one change type, use the stricter row.
 
 ### 住人の短い滞在と寄り道
 
-`node tools/e2e-island-cadence.mjs` は `SANSU_CADENCE_URL` のDEV Lifeと新しい `SANSU_CADENCE_OUTPUT` を指定する。使い捨ての本人・12 credits・花1個の明示fixtureで、390/768幅それぞれ90秒の実時計の歩行列・学習store不変・保存版16・同cutoverでのreloadを照合する。tabletはreduced motion。実獲得・本番SW・子どもの評価の代替ではない。`cadence.test.ts` は空/花のみの島で全3人の繰り返し歩行、滞在/運搬、30分の種別別利用積算、有限報酬、保存/描画時計を検査し、`cadenceMigration.test.ts` は旧履歴と位置・購入保持、同時刻操作、破損/降格拒否、計算cacheと非cacheの一致を検査する。配置の退避/孤立復旧はisland-isolation、本番の実購入/offline/retryはLife storageハーネスで分けて確認する。
+`node tools/e2e-island-cadence.mjs` は `SANSU_CADENCE_URL` のDEV Lifeと新しい `SANSU_CADENCE_OUTPUT` を指定する。使い捨ての本人・12 credits・花1個の明示fixtureで、390/768幅それぞれ90秒の実時計の歩行列・学習store不変・現行保存版17・同cutoverでのreloadを照合する。tabletはreduced motion。実獲得・本番SW・子どもの評価の代替ではない。`cadence.test.ts` は空/花のみの島で全3人の繰り返し歩行、滞在/運搬、30分の種別別利用積算、有限報酬、保存/描画時計を検査し、`cadenceMigration.test.ts` は旧履歴と位置・購入保持、同時刻操作、破損/降格拒否、計算cacheと非cacheの一致を検査する。配置の退避/孤立復旧はisland-isolation、本番の実購入/offline/retryはLife storageハーネスで分けて確認する。
 
 `SANSU_LIFE_CADENCE_UPGRADE=1` をLife two-buildに指定すると、旧保存版15→新保存版16の実更新を検査する。購入前に同じ花/マスへの退避が入る場合も、退避1件＋購入1件の正確な内容を照合する。新しいcadence切替の本人と旧action prefix、placement切替、全native storeを保持し、更新完了後は版16であることを確認する。通常モードは従来どおり同じ保存版を要求する。
+
+### 呼んだぽこもこの散歩復帰
+
+`SANSU_CADENCE_HERO_CALL=1` をcadenceハーネスへ加えると、実UIの「ぽこもこを よぶ」後から各幅90秒を観測し、指定した花以外への歩行・指定解除・保存版17・reloadを確認する。呼出成功でメニューは自動的に閉じるため、追加の閉じる操作を送らず非表示を待つ。既存のprofile/credits/花fixtureは実獲得の証拠にしない。
+
+`SANSU_LIFE_HERO_VISIT_UPGRADE=1` をLife two-buildへ指定すると、旧版16で実回答・花購入・実UI呼出を保存し、新版17への更新後に同じぽこもこが別の場所へ歩き出すことを確認する。全native storeと既存の購入/呼出/cadence切替を保持し、新しいheroVisit切替の本人・action prefixとoffline同じ次問を照合する。cadenceUpgradeとは同時指定しない。`heroVisit.test.ts` / `heroVisitMigration.test.ts` は旧無期限滞在の再現、到着済み/道中/30秒待機/運搬/同じ呼出/再送/cache/移行と未完利用時計を検査する。

@@ -1,3 +1,4 @@
+import { prepareHeroVisitMigration } from './heroVisitMigration';
 import { prepareCadenceMigration } from './cadenceMigration';
 import { preparePlacementMigration } from './placementMigration';
 import { lifeCatalogKinds } from './capabilities';
@@ -109,6 +110,7 @@ export async function updateLife(profileId: string, facts: TerminalFact[], inten
         next = await Dexie.waitFor(prepareRelationMigration(next));
         next = await Dexie.waitFor(preparePlacementMigration(next));
         next = await Dexie.waitFor(prepareCadenceMigration(next));
+        next = await Dexie.waitFor(prepareHeroVisitMigration(next));
         if (intent?.command) next = commandLife(next, intent.command, intent.id, next.now, intent.undoOf);
         replayLife(next); // Reject invalid transactions before any write.
         await database.worlds.put(next); return next;

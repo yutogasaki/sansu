@@ -1,4 +1,5 @@
 # Documentation Index
+呼び出したぽこもこが散歩に戻る保存版17の[修正と検証](design/audits/2026-09-15-pokomoko-roaming/README.md)。
 
 住人の自発利用を短い滞在と寄り道へ変更した[実画面と検証](design/audits/2026-09-14-resident-cadence/README.md)。保存版16、全員の実時計での移動、旧版からの更新・offline保持を確認。
 

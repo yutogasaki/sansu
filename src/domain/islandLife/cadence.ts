@@ -9,7 +9,7 @@ export function cadenceStay(resident: LifeResident, kind?: ItemKind) {
 }
 export function usesCadence(state: LifeState, resident: LifeResident) {
     return Boolean(state.cadenceVersion && !resident.playTour && !resident.visit?.observationTest
-        && !(resident.id === 'pokomoko' && state.target));
+        && !(resident.id === 'pokomoko' && state.target && !state.heroVisitVersion));
 }
 /** Preserve the current route, including a two-leg delivery. Only the quiet
  * stay is shortened, so a version change never teleports or abandons a prop. */
