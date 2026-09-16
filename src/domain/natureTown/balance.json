@@ -1,0 +1,176 @@
+{
+  "specVersion": "0.2.0",
+  "status": "prototype_defaults_not_validated",
+  "simulation": {
+    "tickSeconds": 1,
+    "decisionEveryTicks": 5,
+    "weatherEveryTicks": 180,
+    "mealEveryTicks": 120,
+    "settlementEveryTicks": 60,
+    "activeTimeOnly": true,
+    "maxCatchUpTicks": 5,
+    "maxSpeed": 2
+  },
+  "scope": {
+    "chunkSide": 16,
+    "starterChunk": [
+      0,
+      0
+    ],
+    "expandableChunks": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "initialResidents": 3,
+    "prototypePopulationCap": 9,
+    "maxPropsPerChunk": 128,
+    "maxInsectGroupsPerChunk": 3,
+    "futureLoadTestResidents": [
+      24,
+      96
+    ],
+    "futureLoadTestChunks": [
+      8,
+      24
+    ]
+  },
+  "weather": {
+    "initial": "clear",
+    "weights": {
+      "clear": 0.5,
+      "cloud": 0.35,
+      "rain": 0.15
+    },
+    "moistureAdd": {
+      "clear": 0,
+      "cloud": 0.05,
+      "rain": 0.12
+    },
+    "lightFactor": {
+      "clear": 1,
+      "cloud": 0.9,
+      "rain": 0.85
+    }
+  },
+  "water": {
+    "baseMoisture": 0.2,
+    "sourceInfluenceRadius": 3,
+    "waterWeight": 0.5,
+    "shadeRetention": 0.08,
+    "relaxationPerTick": 0.08,
+    "channelMaxSteps": 8
+  },
+  "plants": {
+    "treeShadeRadius": 3,
+    "cropDryPoint": 0.15,
+    "cropFullWaterPoint": 0.55,
+    "cropWetPenaltyStart": 0.9,
+    "cropWetPenaltyEnd": 1.15,
+    "shadeLightPenalty": 0.5,
+    "cropCycleTicksAtFullRate": 120,
+    "harvestBatch": 4,
+    "farmStorageCap": 8
+  },
+  "transport": {
+    "roadSecondsPerCell": 1,
+    "groundSecondsPerCell": 3,
+    "trafficDecayPerTick": 0.97,
+    "trafficReference": 12,
+    "trafficCostWeight": 0.75,
+    "walkerCarry": 2,
+    "cartCarry": 4,
+    "cartTrafficMass": 2,
+    "walkerTrafficMass": 1,
+    "maxJobWaitTicks": 15,
+    "serviceMaxPathCost": 32,
+    "pantryCap": 24,
+    "reserveMeals": 3
+  },
+  "population": {
+    "bedsPerHouse": 3,
+    "historyTicks": 240,
+    "minServiceCoverage": 0.8,
+    "minFoodReservePerNextResident": 1.5,
+    "eligibleEvaluationsRequired": 2,
+    "arrivalProbabilityMin": 0.2,
+    "arrivalProbabilityMax": 0.5,
+    "proposalLimit": 1,
+    "arrivalCooldownTicks": 180,
+    "minSupplyPerNextResident": 2
+  },
+  "insects": {
+    "evaluateEveryTicks": 30,
+    "visitBaseP": 0.08,
+    "habitatWeight": 0.42,
+    "probabilityCap": 0.55,
+    "minHabitat": 0.1,
+    "flowerRadius": 3,
+    "flowerSaturation": 4,
+    "moistureOptimum": 0.65,
+    "moistureTolerance": 0.65,
+    "habitatFlowerWeight": 0.65,
+    "habitatMoistureWeight": 0.35,
+    "weatherMultiplier": {
+      "clear": 1,
+      "cloud": 0.75,
+      "rain": 0.25
+    },
+    "groupLifetimeTicks": 60,
+    "rareVariantConditionalP": 0.05
+  },
+  "gathering": {
+    "radius": 2,
+    "minPeople": 2,
+    "minDwellTicks": 10,
+    "pairCooldownTicks": 60
+  },
+  "learning": {
+    "creditPerVerifiedCheckpoint": 1,
+    "unlockCosts": {
+      "irrigation": 3,
+      "handcart": 3
+    },
+    "initialCapabilities": [
+      "path",
+      "bridge",
+      "home",
+      "hub",
+      "farm",
+      "tree",
+      "flowers",
+      "bench"
+    ],
+    "creditExpires": false
+  },
+  "checks": {
+    "randomTrials": 2000,
+    "minimumHabitatPGap": 0.1
+  },
+  "residents": {
+    "maxCandidatePathCost": 48,
+    "baseScore": 1,
+    "natureWeight": 2,
+    "socialWeight": 2,
+    "quietWeight": 1.5,
+    "shadeWeight": 1,
+    "distancePenalty": 0.06,
+    "recentPenalty": 1.5,
+    "minimumChoiceWeight": 0.05,
+    "recentCount": 2,
+    "dwellTicks": 15,
+    "attractorNature": {
+      "insects": 1,
+      "flowers": 0.8,
+      "waterEdge": 0.8,
+      "tree": 0.5,
+      "hub": 0.1,
+      "bench": 0.1
+    }
+  }
+}

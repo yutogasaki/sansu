@@ -14,6 +14,8 @@ Keep only short active entries here, and put detailed execution context in `docs
 
 ## Current Queue
 
+- Nature Town S1 follow-up -> docs/tasks/active/2026-09-16-nature-town-s1.md
+
 - Mysterious island v3 -> docs/tasks/active/2026-09-13-mysterious-island-v3.md
 
 - Home journey connection preview -> docs/tasks/active/2026-09-09-home-journey-preview.md

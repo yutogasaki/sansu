@@ -208,3 +208,6 @@ The repository is transitioning toward an exploration-first math game. [product/
 - [家から育つ島の接続試作](product/45_home_journey_preview_spec.md)
 
 - [島のあそびかたとその場の案内](product/46_island_tutorial_spec.md)
+
+
+- [自然と町 v0.2 の独立試作](product/nature-town/IMPLEMENTATION.md) — 添付仕様、既存接続、起動・操作、受入結果。

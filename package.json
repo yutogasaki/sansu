@@ -40,7 +40,8 @@
         "e2e:pwa-update": "node tools/e2e-pwa-update.mjs",
         "e2e:pwa-two-build": "node tools/e2e-pwa-two-build.mjs",
         "benchmark:fixed-ten": "node tools/e2e-fixed-ten-throughput.mjs",
-        "e2e:island-living": "node tools/e2e-island-living.mjs"
+        "e2e:island-living": "node tools/e2e-island-living.mjs",
+        "dev:nature-town": "VITE_ISLAND_ENABLED=true VITE_NATURE_TOWN_ENABLED=true vite --host 127.0.0.1 --port 5233 --strictPort --open /#/nature-town"
     },
     "dependencies": {
         "@pdf-lib/fontkit": "^1.1.1",

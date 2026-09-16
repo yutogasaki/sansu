@@ -1,0 +1,376 @@
+{
+  "fixtureVersion": "0.2.0",
+  "type": "starter_definition_not_save_state",
+  "seed": "sansu-starter-2026-09-16",
+  "initialTick": 0,
+  "weather": "clear",
+  "ownedChunks": [
+    [
+      0,
+      0
+    ]
+  ],
+  "terrain": {
+    "chunkSide": 16,
+    "default": "ground",
+    "waterCells": [
+      [
+        12,
+        0
+      ],
+      [
+        12,
+        1
+      ],
+      [
+        12,
+        2
+      ],
+      [
+        12,
+        3
+      ],
+      [
+        12,
+        4
+      ],
+      [
+        12,
+        5
+      ],
+      [
+        12,
+        6
+      ],
+      [
+        12,
+        7
+      ],
+      [
+        12,
+        8
+      ],
+      [
+        12,
+        9
+      ],
+      [
+        12,
+        10
+      ],
+      [
+        12,
+        11
+      ],
+      [
+        12,
+        12
+      ],
+      [
+        12,
+        13
+      ],
+      [
+        12,
+        14
+      ],
+      [
+        12,
+        15
+      ]
+    ],
+    "heightDefault": 0
+  },
+  "props": [
+    {
+      "id": "home-0",
+      "definitionId": "home",
+      "position": [
+        7,
+        8
+      ],
+      "entrance": [
+        7,
+        9
+      ],
+      "hubId": "hub-0"
+    },
+    {
+      "id": "hub-0",
+      "definitionId": "hub",
+      "position": [
+        8,
+        8
+      ],
+      "entrance": [
+        8,
+        9
+      ],
+      "food": 12,
+      "transportPolicy": "hand"
+    },
+    {
+      "id": "farm-0",
+      "definitionId": "farm",
+      "position": [
+        10,
+        6
+      ],
+      "entrance": [
+        10,
+        7
+      ],
+      "growth": 0.75,
+      "food": 0
+    },
+    {
+      "id": "tree-0",
+      "definitionId": "tree",
+      "position": [
+        5,
+        5
+      ]
+    },
+    {
+      "id": "tree-1",
+      "definitionId": "tree",
+      "position": [
+        6,
+        5
+      ]
+    },
+    {
+      "id": "flower-0",
+      "definitionId": "flowers",
+      "position": [
+        9,
+        5
+      ]
+    },
+    {
+      "id": "flower-1",
+      "definitionId": "flowers",
+      "position": [
+        10,
+        5
+      ]
+    },
+    {
+      "id": "bench-0",
+      "definitionId": "bench",
+      "position": [
+        6,
+        8
+      ],
+      "entrance": [
+        6,
+        9
+      ]
+    }
+  ],
+  "pathCells": [
+    [
+      6,
+      9
+    ],
+    [
+      7,
+      9
+    ],
+    [
+      8,
+      9
+    ],
+    [
+      9,
+      9
+    ],
+    [
+      10,
+      9
+    ],
+    [
+      11,
+      9
+    ],
+    [
+      11,
+      8
+    ],
+    [
+      11,
+      7
+    ],
+    [
+      10,
+      7
+    ]
+  ],
+  "residents": [
+    {
+      "id": "resident-0",
+      "profileTemplateId": "r1",
+      "homeId": "home-0",
+      "hubId": "hub-0",
+      "position": [
+        7,
+        9
+      ]
+    },
+    {
+      "id": "resident-1",
+      "profileTemplateId": "r2",
+      "homeId": "home-0",
+      "hubId": "hub-0",
+      "position": [
+        8,
+        9
+      ]
+    },
+    {
+      "id": "resident-2",
+      "profileTemplateId": "r3",
+      "homeId": "home-0",
+      "hubId": "hub-0",
+      "position": [
+        6,
+        9
+      ]
+    }
+  ],
+  "futureChunkTemplates": [
+    {
+      "chunk": [
+        0,
+        1
+      ],
+      "theme": "dry_open_ground",
+      "defaultHeight": 0,
+      "ridge": {
+        "worldXRange": [
+          0,
+          3
+        ],
+        "height": 1
+      },
+      "waterWorldCells": [
+        [
+          12,
+          16
+        ],
+        [
+          12,
+          17
+        ],
+        [
+          12,
+          18
+        ],
+        [
+          12,
+          19
+        ],
+        [
+          12,
+          20
+        ],
+        [
+          12,
+          21
+        ],
+        [
+          12,
+          22
+        ],
+        [
+          12,
+          23
+        ],
+        [
+          12,
+          24
+        ],
+        [
+          12,
+          25
+        ],
+        [
+          12,
+          26
+        ],
+        [
+          12,
+          27
+        ],
+        [
+          12,
+          28
+        ],
+        [
+          12,
+          29
+        ],
+        [
+          12,
+          30
+        ],
+        [
+          12,
+          31
+        ]
+      ],
+      "initialProps": []
+    },
+    {
+      "chunk": [
+        1,
+        0
+      ],
+      "theme": "pond_and_trees",
+      "defaultHeight": 0,
+      "waterWorldCells": [
+        [
+          21,
+          4
+        ],
+        [
+          21,
+          5
+        ],
+        [
+          22,
+          4
+        ],
+        [
+          22,
+          5
+        ]
+      ],
+      "initialProps": [
+        {
+          "id": "east-tree-0",
+          "definitionId": "tree",
+          "position": [
+            24,
+            5
+          ]
+        },
+        {
+          "id": "east-tree-1",
+          "definitionId": "tree",
+          "position": [
+            25,
+            5
+          ]
+        }
+      ]
+    }
+  ],
+  "initializationRules": [
+    "水分は水源・木・天候から計算したM_targetで開始する。",
+    "家の枠、在庫容量、移動速度はbalance.jsonから取得する。",
+    "初期食料12はこの世界の初回生成時のみ付与する。新しいhubは在庫0で作る。",
+    "直近履歴・抽選評価回数は0。履歴が揃う前に入居抽選しない。",
+    "新しいチャンクを開いてもseedを再抽選せず、同じテンプレートの同じIDを一回生成する。"
+  ]
+}

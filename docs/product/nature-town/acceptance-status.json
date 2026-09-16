@@ -1,0 +1,334 @@
+{
+  "scope": "2026-09-16 local Nature Town prototype; automated evidence is separate from participant evaluation.",
+  "cases": [
+    {
+      "id": "SIM-01",
+      "condition": "同一の畑を水分の高低だけ変えた条件で実行",
+      "expected": "参照式通りに成長差が出る。他の要因を勝手に変更しない",
+      "status": "PASS",
+      "evidence": "src/domain/natureTown/*.test.ts; local deterministic fixture sansu-starter-2026-09-16"
+    },
+    {
+      "id": "SIM-02",
+      "condition": "水路を接続／途中で切断",
+      "expected": "接続した下流のみ水分目標が変わり、切断後は緩やかに戻る",
+      "status": "NOT_RUN",
+      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+    },
+    {
+      "id": "SIM-03",
+      "condition": "上り・循環・長すぎる水路",
+      "expected": "上りへ通水せず、ループ増殖せず、最大距離を守る",
+      "status": "NOT_RUN",
+      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+    },
+    {
+      "id": "SIM-04",
+      "condition": "同じ畑の近くに木を移す",
+      "expected": "日陰の変化が成長に作用し、休憩候補にも作用する",
+      "status": "NOT_RUN",
+      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+    },
+    {
+      "id": "SIM-05",
+      "condition": "成熟した畑の在庫が満杯",
+      "expected": "収穫で上限超過しない。収納・再配置で再取得しない",
+      "status": "PASS",
+      "evidence": "src/domain/natureTown/*.test.ts; local deterministic fixture sansu-starter-2026-09-16"
+    },
+    {
+      "id": "SIM-06",
+      "condition": "収穫→積載→運搬→納品→共同食",
+      "expected": "食料総量が収穫・初期投入・食事消費以外で増減しない",
+      "status": "PASS",
+      "evidence": "src/domain/natureTown/*.test.ts; local deterministic fixture sansu-starter-2026-09-16"
+    },
+    {
+      "id": "SIM-07",
+      "condition": "同じ食料を2人が取りに行く",
+      "expected": "二重予約・二重取得・負数在庫がない",
+      "status": "NOT_RUN",
+      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+    },
+    {
+      "id": "SIM-08",
+      "condition": "台車あり／なし、道が連続／途中欠落",
+      "expected": "一回の実積載量と往復数が仕様に沿って変わる",
+      "status": "PASS",
+      "evidence": "src/domain/natureTown/*.test.ts; local deterministic fixture sansu-starter-2026-09-16"
+    },
+    {
+      "id": "SIM-09",
+      "condition": "短い混雑路と少し長い空いた道",
+      "expected": "コストに応じて迂回する場合がある。全員停止しない",
+      "status": "PASS",
+      "evidence": "src/domain/natureTown/*.test.ts; local deterministic fixture sansu-starter-2026-09-16"
+    },
+    {
+      "id": "SIM-10",
+      "condition": "道を消す・橋を消す・輸送先を動かす",
+      "expected": "所持品を保護し、安全に再計画。水面や宙に残らない",
+      "status": "NOT_RUN",
+      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+    },
+    {
+      "id": "SIM-11",
+      "condition": "拠点が満杯／配送予約後に条件変化",
+      "expected": "受入上限を超えず、予約と荷物を整合させる",
+      "status": "NOT_RUN",
+      "evidence": "Partial automated coverage exists; complete specified scenario not yet exercised."
+    },
+    {
+      "id": "SIM-12",
+      "condition": "家と拠点を切り離す→再接続",
+      "expected": "供給範囲が変わり、復旧する。住人への苦痛・没収なし",
+      "status": "NOT_RUN",
+      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+    },
+    {
+      "id": "GROW-01",
+      "condition": "家だけ大量に配置",
+      "expected": "自動で住人を生成せず、供給条件と抽選と受入れが別",
+      "status": "PASS",
+      "evidence": "src/domain/natureTown/*.test.ts; local deterministic fixture sansu-starter-2026-09-16"
+    },
+    {
+      "id": "GROW-02",
+      "condition": "空き家、十分な供給・備蓄・履歴",
+      "expected": "初期式の入居抽選が始まる。常住人口は受入れまで不変",
+      "status": "PASS",
+      "evidence": "src/domain/natureTown/*.test.ts; local deterministic fixture sansu-starter-2026-09-16"
+    },
+    {
+      "id": "GROW-03",
+      "condition": "候補カードを連打・保存後に再表示",
+      "expected": "一人だけ受入れ。ID・枠・候補を二重消費しない",
+      "status": "PASS",
+      "evidence": "src/domain/natureTown/*.test.ts; local deterministic fixture sansu-starter-2026-09-16"
+    },
+    {
+      "id": "GROW-04",
+      "condition": "条件悪化・しばらく中断した候補",
+      "expected": "候補が無期限で保持され、基礎権利も失わない",
+      "status": "NOT_RUN",
+      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+    },
+    {
+      "id": "GROW-05",
+      "condition": "人口を増やして同じ供給を使う",
+      "expected": "食料要求が増え、配置変更の理由が発生する",
+      "status": "NOT_RUN",
+      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+    },
+    {
+      "id": "GROW-06",
+      "condition": "道を境界へ接続し、開拓する",
+      "expected": "隣チャンクが同じ世界につながり、座標・旧物・旧住人を保つ",
+      "status": "PASS",
+      "evidence": "src/domain/natureTown/*.test.ts; local deterministic fixture sansu-starter-2026-09-16"
+    },
+    {
+      "id": "GROW-07",
+      "condition": "道の未接続、水面だけを触る、拡張連打",
+      "expected": "不正な開拓や重複生成がない",
+      "status": "PASS",
+      "evidence": "src/domain/natureTown/*.test.ts; local deterministic fixture sansu-starter-2026-09-16"
+    },
+    {
+      "id": "GROW-08",
+      "condition": "遠い地区へ家・拠点・畑を作る",
+      "expected": "旧拠点の在庫が勝手に全域共有されず、輸送が意味を持つ",
+      "status": "NOT_RUN",
+      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+    },
+    {
+      "id": "GROW-09",
+      "condition": "人口を増やさず自然を整備",
+      "expected": "訪問・道具解放・土地拡張を人口条件で閉ざさない",
+      "status": "NOT_RUN",
+      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+    },
+    {
+      "id": "GROW-10",
+      "condition": "S1上限に到達／将来設定を増加",
+      "expected": "試作上限を明示。追加チャンク・IDに耐える構造を確認",
+      "status": "NOT_RUN",
+      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+    },
+    {
+      "id": "GROW-11",
+      "condition": "十分な備蓄があり、在庫満杯で配送が少ない",
+      "expected": "供給余地の式が備蓄を考慮し、配送件数だけで入居を閉ざさない",
+      "status": "PASS",
+      "evidence": "src/domain/natureTown/*.test.ts; local deterministic fixture sansu-starter-2026-09-16"
+    },
+    {
+      "id": "RNG-01",
+      "condition": "同じseed・初期状態・同tickのコマンド列",
+      "expected": "最終状態とドメインイベントが一致",
+      "status": "PASS",
+      "evidence": "src/domain/natureTown/*.test.ts; local deterministic fixture sansu-starter-2026-09-16"
+    },
+    {
+      "id": "RNG-02",
+      "condition": "30／60fps、カメラ位置、音、演出設定を変更",
+      "expected": "同じ論理tickまでの結果が一致",
+      "status": "NOT_RUN",
+      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+    },
+    {
+      "id": "RNG-03",
+      "condition": "セーブ／ロード、画面の開閉、プロフィール切替",
+      "expected": "抽選を引き直さず、評価回数と候補を維持",
+      "status": "NOT_RUN",
+      "evidence": "Partial automated coverage exists; complete specified scenario not yet exercised."
+    },
+    {
+      "id": "RNG-04",
+      "condition": "花の低条件／高条件、他条件同じで2000試行",
+      "expected": "高条件の確率が数式上高く、標本でも方向と誤差範囲が整合",
+      "status": "PASS",
+      "evidence": "src/domain/natureTown/*.test.ts; local deterministic fixture sansu-starter-2026-09-16"
+    },
+    {
+      "id": "RNG-05",
+      "condition": "物を大量に置く・同セルをなぞり直す",
+      "expected": "タップ数や物数分の追加抽選をしない",
+      "status": "NOT_RUN",
+      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+    },
+    {
+      "id": "RNG-06",
+      "condition": "レア訪問を一切発生させない",
+      "expected": "土地・人口候補・学習・全基本道具が機能する",
+      "status": "NOT_RUN",
+      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+    },
+    {
+      "id": "RNG-07",
+      "condition": "長い不発、天候変化、定員超過",
+      "expected": "仕様の頻度・上限を守り、普通の遊びが止まらない",
+      "status": "NOT_RUN",
+      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+    },
+    {
+      "id": "RNG-08",
+      "condition": "学習量・正答率・所要時間だけを変える",
+      "expected": "同じ世界条件なら訪問率が変わらない",
+      "status": "NOT_RUN",
+      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+    },
+    {
+      "id": "EDU-01",
+      "condition": "同じ予定単位の独力完了／支援完了",
+      "expected": "同量を付与し、学習記録の種別は異なるまま",
+      "status": "PASS",
+      "evidence": "src/domain/natureTown/*.test.ts; local deterministic fixture sansu-starter-2026-09-16"
+    },
+    {
+      "id": "EDU-02",
+      "condition": "完了イベントの再送・二重タップ",
+      "expected": "同じ課題チェックポイントは一回だけ付与",
+      "status": "PASS",
+      "evidence": "src/domain/natureTown/*.test.ts; local deterministic fixture sansu-starter-2026-09-16"
+    },
+    {
+      "id": "EDU-03",
+      "condition": "学習確定直後／ゲーム付与前に終了",
+      "expected": "再起動で未反映イベントを反映し、欠落も二重付与もない",
+      "status": "PASS",
+      "evidence": "src/domain/natureTown/*.test.ts; local deterministic fixture sansu-starter-2026-09-16"
+    },
+    {
+      "id": "EDU-04",
+      "condition": "スキップ・不正解・途中終了",
+      "expected": "未完了を完了扱いせず、既得単位・途中記録を没収しない",
+      "status": "NOT_RUN",
+      "evidence": "Partial automated coverage exists; complete specified scenario not yet exercised."
+    },
+    {
+      "id": "EDU-05",
+      "condition": "目当て変更・取得連打・単位不足",
+      "expected": "部分消費なし、取得権利と消費を原子的に一回記録",
+      "status": "PASS",
+      "evidence": "src/domain/natureTown/*.test.ts; local deterministic fixture sansu-starter-2026-09-16"
+    },
+    {
+      "id": "EDU-06",
+      "condition": "配置取り消し・世界の再読込",
+      "expected": "学習の権利と履歴を巻き戻さない",
+      "status": "PASS",
+      "evidence": "src/domain/natureTown/*.test.ts; local deterministic fixture sansu-starter-2026-09-16"
+    },
+    {
+      "id": "EDU-07",
+      "condition": "全解放後にも学習を完了",
+      "expected": "未使用単位を保持し、未提供の報酬を偽装しない",
+      "status": "PASS",
+      "evidence": "src/domain/natureTown/*.test.ts; local deterministic fixture sansu-starter-2026-09-16"
+    },
+    {
+      "id": "EDU-08",
+      "condition": "学習画面で長く滞在",
+      "expected": "世界は停止し、見逃し・不在の成長／衰退がない",
+      "status": "PASS",
+      "evidence": "production E2E: real 3 answers, native close, paused world tick preserved; both sizes."
+    },
+    {
+      "id": "SAFE-01",
+      "condition": "7日・30日後、時計変更後の再開",
+      "expected": "世界は保存tickから再開し、不在分で変化しない",
+      "status": "PASS",
+      "evidence": "src/domain/natureTown/*.test.ts; local deterministic fixture sansu-starter-2026-09-16"
+    },
+    {
+      "id": "SAFE-02",
+      "condition": "保存中の終了、壊れた最新保存",
+      "expected": "前の有効版を保護。新規状態で黙って上書きしない",
+      "status": "PASS",
+      "evidence": "src/domain/natureTown/*.test.ts; local deterministic fixture sansu-starter-2026-09-16"
+    },
+    {
+      "id": "SAFE-03",
+      "condition": "プロフィール2つ、別タブ",
+      "expected": "記録・世界・乱数・権利を混ぜず、同時二重書込みを防ぐ",
+      "status": "PASS",
+      "evidence": "repository.test.ts owner isolation/CAS; production E2E actual second tab refused."
+    },
+    {
+      "id": "SAFE-04",
+      "condition": "キャッシュ準備後の完全オフライン",
+      "expected": "学習・配置・保存・再起動が機能する",
+      "status": "PASS",
+      "evidence": "output/nature-town-production-final/report.json: real SW offline reload/edit/save/reload and complete normal learning section offline; two units retained. Both sizes."
+    },
+    {
+      "id": "SAFE-05",
+      "condition": "旧データを持つ環境への導入",
+      "expected": "旧履歴・所有・作品を破壊せず、変換がなければ旧版を保持",
+      "status": "PASS",
+      "evidence": "src/domain/natureTown/*.test.ts; local deterministic fixture sansu-starter-2026-09-16"
+    },
+    {
+      "id": "SAFE-06",
+      "condition": "390×844／768×1024、音なし、動き抑制",
+      "expected": "主要操作、経路不通、受渡し、入居が読み取れる",
+      "status": "NOT_RUN",
+      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+    },
+    {
+      "id": "SAFE-07",
+      "condition": "24／96人、8／24チャンクの負荷用状態",
+      "expected": "実測結果を記録。描画の省略で論理が変わらない",
+      "status": "NOT_RUN",
+      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+    },
+    {
+      "id": "SAFE-08",
+      "condition": "有効な世界の書き出し→別環境で復元",
+      "expected": "チェックサムと参照を検証し、同じ状態から続行",
+      "status": "PASS",
+      "evidence": "src/domain/natureTown/*.test.ts; local deterministic fixture sansu-starter-2026-09-16"
+    }
+  ]
+}

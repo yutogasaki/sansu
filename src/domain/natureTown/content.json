@@ -1,0 +1,158 @@
+{
+  "specVersion": "0.2.0",
+  "definitions": [
+    {
+      "id": "path",
+      "kind": "overlay",
+      "capability": "path",
+      "walkable": true,
+      "abilities": [
+        "route_fast"
+      ]
+    },
+    {
+      "id": "bridge",
+      "kind": "overlay",
+      "capability": "bridge",
+      "walkable": true,
+      "abilities": [
+        "water_crossing",
+        "route_fast"
+      ]
+    },
+    {
+      "id": "home",
+      "kind": "prop",
+      "capability": "home",
+      "blocksCell": true,
+      "entranceOffset": [
+        0,
+        1
+      ],
+      "abilities": [
+        "housing"
+      ]
+    },
+    {
+      "id": "hub",
+      "kind": "prop",
+      "capability": "hub",
+      "blocksCell": true,
+      "entranceOffset": [
+        0,
+        1
+      ],
+      "abilities": [
+        "food_store",
+        "meal_service"
+      ]
+    },
+    {
+      "id": "farm",
+      "kind": "prop",
+      "capability": "farm",
+      "blocksCell": true,
+      "entranceOffset": [
+        0,
+        1
+      ],
+      "abilities": [
+        "food_producer",
+        "food_store"
+      ]
+    },
+    {
+      "id": "tree",
+      "kind": "prop",
+      "capability": "tree",
+      "blocksCell": true,
+      "abilities": [
+        "shade_provider",
+        "rest_attractor"
+      ]
+    },
+    {
+      "id": "flowers",
+      "kind": "prop",
+      "capability": "flowers",
+      "blocksCell": false,
+      "abilities": [
+        "insect_habitat",
+        "watch_attractor"
+      ]
+    },
+    {
+      "id": "bench",
+      "kind": "prop",
+      "capability": "bench",
+      "blocksCell": true,
+      "entranceOffset": [
+        0,
+        1
+      ],
+      "abilities": [
+        "seat",
+        "gathering_attractor"
+      ]
+    },
+    {
+      "id": "channel",
+      "kind": "overlay",
+      "capability": "irrigation",
+      "walkable": true,
+      "abilities": [
+        "water_extension"
+      ]
+    },
+    {
+      "id": "handcart",
+      "kind": "hub_policy",
+      "capability": "handcart",
+      "abilities": [
+        "carry_four_on_connected_roads"
+      ]
+    }
+  ],
+  "residentProfiles": [
+    {
+      "id": "r1",
+      "appearanceRef": "reuse:pokomoko",
+      "naturePreference": 0.8,
+      "socialPreference": 0.25
+    },
+    {
+      "id": "r2",
+      "appearanceRef": "reuse:rabbit",
+      "naturePreference": 0.35,
+      "socialPreference": 0.85
+    },
+    {
+      "id": "r3",
+      "appearanceRef": "reuse:otter",
+      "naturePreference": 0.9,
+      "socialPreference": 0.5
+    },
+    {
+      "id": "r4",
+      "appearanceRef": "reuse:pokomoko",
+      "naturePreference": 0.25,
+      "socialPreference": 0.8
+    },
+    {
+      "id": "r5",
+      "appearanceRef": "reuse:rabbit",
+      "naturePreference": 0.85,
+      "socialPreference": 0.2
+    },
+    {
+      "id": "r6",
+      "appearanceRef": "reuse:otter",
+      "naturePreference": 0.5,
+      "socialPreference": 0.85
+    }
+  ],
+  "notes": [
+    "appearanceRefは実ファイルパスではなく、既存モデルへの統合時の対応キー。",
+    "台車はhubの運用設定であり、家の横に置くだけで世界全体が強化される装飾ではない。"
+  ]
+}

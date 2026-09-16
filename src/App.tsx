@@ -20,6 +20,7 @@ import { LaunchRoute } from "./components/LaunchRoute";
 import { islandAvailable, islandEnabled } from "./domain/island/feature";
 import { islandStudyDestination } from "./domain/island/studyRoute";
 
+const NatureTown = lazy(() => import('./pages/NatureTown'));
 const Island = lazy(() => import('./pages/Island'));
 
 type ProfileResolution = "loading" | "ready" | "missing";
@@ -230,6 +231,7 @@ function App() {
                     </Route>
 
                     <Route element={<Layout />}>
+                        <Route path="/nature-town" element={import.meta.env.VITE_NATURE_TOWN_ENABLED === 'true' ? <PrivateRoute><Suspense fallback={<Spinner fullScreen message="しまを じゅんびちゅう…" />}><NatureTown /></Suspense></PrivateRoute> : <Navigate to="/" replace />} />
                         <Route path="/park" element={<Navigate to="/" replace />} />
                         <Route path="/island" element={islandAvailable() ?
                             <PrivateRoute>{islandEnabled() ? null : <Suspense fallback={<Spinner fullScreen message="しまを じゅんびちゅう…" />}><Island /></Suspense>}</PrivateRoute>

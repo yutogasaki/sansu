@@ -18,7 +18,7 @@ export const Layout: React.FC = () => {
     const navigation = useIslandNavigationState(supportsIslandShell);
     const isFullScreen = isStudy || isBattlePlay || isExplore || location.pathname === "/park"
         || (supportsIslandShell ? navigation.focus : location.pathname === '/island');
-    const showFooter = !isFullScreen;
+    const showFooter = !isFullScreen && location.pathname !== "/nature-town";
     const isIslandShell = supportsIslandShell && !navigation.active;
 
     React.useEffect(() => {
