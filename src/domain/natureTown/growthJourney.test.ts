@@ -1,0 +1,48 @@
+import { expect, it } from 'vitest';
+import { newWorld, context } from './world';
+import { applyWorldCommand } from './commands';
+import { stepWorld } from './simulation';
+import { settlementReadiness } from './life';
+import { assertWorld } from './validation';
+import { at } from './grid';
+import type { WorldCommandPayload, WorldState } from './types';
+const ctx=context();
+const command=(w:WorldState,payload:WorldCommandPayload)=>{
+    const result=applyWorldCommand(w,{commandId:`journey:${w.revision}`,profileId:w.profileId,worldId:w.worldId,expectedRevision:w.revision,payload},ctx);
+    expect(result.rejection,JSON.stringify(payload)).toBeUndefined();assertWorld(result.state,w.profileId);return result.state;
+};
+const place=(w:WorldState,id:string,kind:'home'|'farm'|'hub',position:[number,number])=>command(w,{type:'placeProp',id,kind,position,rotation:0});
+it('grows from the starter through real supply, retained offer, admission and increased demand',()=>{
+    let w=newWorld('journey');
+    expect(settlementReadiness(w,'hub-0',ctx).homes).toHaveLength(0);
+    w=place(w,'new-home','home',[8,6]);w=place(w,'extra-farm','farm',[10,3]);
+    const oldResidents=w.residents.map(r=>r.id);
+    for(let n=0;n<1800&&!w.offer;n++)w=stepWorld(w,ctx).state;
+    expect(w.offer?.status).toBe('pending');expect(w.residents.map(r=>r.id)).toEqual(oldResidents);
+    const offer=structuredClone(w.offer);
+    w=command(w,{type:'storeProp',propId:'new-home'});
+    w=JSON.parse(JSON.stringify(w)) as WorldState;
+    for(let n=0;n<180;n++)w=stepWorld(w,ctx).state;
+    expect(w.offer).toEqual(offer);
+    w=command(w,{type:'restoreProp',propId:'new-home',position:[8,6],rotation:0});
+    w=command(w,{type:'acceptSettlement',offerId:offer!.id,homeId:'new-home'});
+    expect(w.residents).toHaveLength(4);
+    const target=w.tick+120;
+    while(w.tick<target)w=stepWorld(w,ctx).state;
+    expect(w.hubMetrics[0].history.filter(h=>h.requested).at(-1)?.requested).toBe(4);
+    assertWorld(w,'journey');
+},15000);
+it('opens both regions without population or learning gates, preserves identities and keeps a remote pantry separate',()=>{
+    let w=newWorld('expansion');const ids=w.residents.map(r=>r.id), initialized=w.foodAccounting.initialized;
+    w=command(w,{type:'paintPath',cells:Array.from({length:7},(_,i)=>[8,i+9])});
+    w=command(w,{type:'openChunk',coordinate:[0,1]});
+    w=command(w,{type:'placeBridge',cells:[[12,9]]});
+    w=command(w,{type:'paintPath',cells:[[13,9],[14,9],[15,9]]});
+    w=command(w,{type:'openChunk',coordinate:[1,0]});
+    expect(w.chunks).toHaveLength(3);expect(w.residents.map(r=>r.id)).toEqual(ids);
+    w=place(w,'remote-hub','hub',[7,16]);
+    const hub=w.props.find(p=>p.id==='remote-hub')!;expect('inventory' in hub&&hub.inventory.food).toBe(0);
+    expect(w.foodAccounting.initialized).toBe(initialized);
+    expect(at(w,[12,20])?.terrain).toBe('water');expect(at(w,[21,4])?.terrain).toBe('water');
+    expect(w.props.filter(p=>p.id==='east-tree-0')).toHaveLength(1);
+});

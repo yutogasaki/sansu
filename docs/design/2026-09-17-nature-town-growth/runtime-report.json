@@ -1,0 +1,257 @@
+{
+  "target": "http://127.0.0.1:5336/#/nature-town",
+  "build": {
+    "version": "nt2-working-20260917:c4f5606c-5cc5-4205-bc00-84489e5a1356",
+    "revision": "nt2-working-20260917",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "sourceScope": "Nature Town source and journey harness only; other concurrent asset work is not attested by this browser build",
+  "sourceHash": "ee8eaea3dd12c0658ed14852cbe564603b5b4615dd019645d9ffef05099a8469",
+  "flags": {
+    "VITE_NATURE_TOWN_ENABLED": true,
+    "VITE_ISLAND_ENABLED": true
+  },
+  "candidate": "nature-town-living-s1",
+  "journey": {
+    "target": "http://127.0.0.1:5336",
+    "fixture": "Disposable native profile only. Actual UI commands, ordinary learning and 2x speed; no town, credit, offer, or clock injection.",
+    "devices": [
+      {
+        "width": 768,
+        "stages": [
+          {
+            "name": "initial",
+            "tick": 1,
+            "population": 3,
+            "chunks": 1,
+            "awards": 0,
+            "unlocks": []
+          },
+          {
+            "name": "supply-readying",
+            "tick": 1,
+            "population": 3,
+            "chunks": 1,
+            "awards": 0,
+            "unlocks": []
+          },
+          {
+            "name": "offer",
+            "tick": 301,
+            "population": 3,
+            "chunks": 1,
+            "awards": 0,
+            "unlocks": []
+          },
+          {
+            "name": "admitted",
+            "tick": 302,
+            "population": 4,
+            "chunks": 1,
+            "awards": 0,
+            "unlocks": []
+          },
+          {
+            "name": "four-person-demand",
+            "tick": 360,
+            "population": 4,
+            "chunks": 1,
+            "awards": 0,
+            "unlocks": []
+          },
+          {
+            "name": "three-regions",
+            "tick": 360,
+            "population": 4,
+            "chunks": 3,
+            "awards": 0,
+            "unlocks": []
+          },
+          {
+            "name": "dry-north",
+            "tick": 360,
+            "population": 4,
+            "chunks": 3,
+            "awards": 0,
+            "unlocks": []
+          },
+          {
+            "name": "earned-tools",
+            "tick": 360,
+            "population": 4,
+            "chunks": 3,
+            "awards": 6,
+            "unlocks": [
+              "irrigation",
+              "handcart"
+            ]
+          },
+          {
+            "name": "cart-four",
+            "tick": 382,
+            "population": 4,
+            "chunks": 3,
+            "awards": 6,
+            "unlocks": [
+              "irrigation",
+              "handcart"
+            ]
+          },
+          {
+            "name": "remote-delivery",
+            "tick": 390,
+            "population": 4,
+            "chunks": 3,
+            "awards": 6,
+            "unlocks": [
+              "irrigation",
+              "handcart"
+            ]
+          },
+          {
+            "name": "resumed",
+            "tick": 390,
+            "population": 4,
+            "chunks": 3,
+            "awards": 6,
+            "unlocks": [
+              "irrigation",
+              "handcart"
+            ]
+          }
+        ],
+        "pass": true,
+        "metadata": {
+          "revision": "nt2-working-20260917",
+          "candidate": "nature-town-living-s1",
+          "sw": true
+        }
+      },
+      {
+        "width": 390,
+        "stages": [
+          {
+            "name": "initial",
+            "tick": 0,
+            "population": 3,
+            "chunks": 1,
+            "awards": 0,
+            "unlocks": []
+          },
+          {
+            "name": "supply-readying",
+            "tick": 0,
+            "population": 3,
+            "chunks": 1,
+            "awards": 0,
+            "unlocks": []
+          },
+          {
+            "name": "offer",
+            "tick": 300,
+            "population": 3,
+            "chunks": 1,
+            "awards": 0,
+            "unlocks": []
+          },
+          {
+            "name": "admitted",
+            "tick": 301,
+            "population": 4,
+            "chunks": 1,
+            "awards": 0,
+            "unlocks": []
+          },
+          {
+            "name": "four-person-demand",
+            "tick": 361,
+            "population": 4,
+            "chunks": 1,
+            "awards": 0,
+            "unlocks": []
+          },
+          {
+            "name": "three-regions",
+            "tick": 361,
+            "population": 4,
+            "chunks": 3,
+            "awards": 0,
+            "unlocks": []
+          },
+          {
+            "name": "dry-north",
+            "tick": 377,
+            "population": 4,
+            "chunks": 3,
+            "awards": 0,
+            "unlocks": []
+          },
+          {
+            "name": "earned-tools",
+            "tick": 377,
+            "population": 4,
+            "chunks": 3,
+            "awards": 6,
+            "unlocks": [
+              "irrigation",
+              "handcart"
+            ]
+          },
+          {
+            "name": "cart-four",
+            "tick": 419,
+            "population": 4,
+            "chunks": 3,
+            "awards": 6,
+            "unlocks": [
+              "irrigation",
+              "handcart"
+            ]
+          },
+          {
+            "name": "remote-delivery",
+            "tick": 425,
+            "population": 4,
+            "chunks": 3,
+            "awards": 6,
+            "unlocks": [
+              "irrigation",
+              "handcart"
+            ]
+          },
+          {
+            "name": "resumed",
+            "tick": 425,
+            "population": 4,
+            "chunks": 3,
+            "awards": 6,
+            "unlocks": [
+              "irrigation",
+              "handcart"
+            ]
+          }
+        ],
+        "pass": true,
+        "metadata": {
+          "revision": "nt2-working-20260917",
+          "candidate": "nature-town-living-s1",
+          "sw": true
+        }
+      }
+    ],
+    "pass": true
+  }
+}

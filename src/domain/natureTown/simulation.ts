@@ -22,9 +22,8 @@ export function stepWorld(state: WorldState, ctx: EngineContext): Transition {
         const k=`farm-ready:${p.id}`;
         if(p.inventory.food>p.inventory.outgoingReserved) w.randomEvaluationOrdinals[k]??=w.tick; else delete w.randomEvaluationOrdinals[k];
     }
-    deliver(w,ctx); wander(w,ctx); meals(w,ctx); visits(w,ctx); settlement(w,ctx);
+    deliver(w,ctx,events); wander(w,ctx); meals(w,ctx); visits(w,ctx); settlement(w,ctx);
     for(const m of w.hubMetrics) for(const sample of m.history.filter(h=>h.tick===w.tick)) {
-        if(sample.delivered) events.push({id:`delivery:${m.hubId}:${w.tick}:${events.length}`,type:'FoodTransferred',tick:w.tick,subjectIds:[m.hubId],quantity:sample.delivered});
         if(sample.requested) events.push({id:`meal:${m.hubId}:${w.tick}`,type:'MealServed',tick:w.tick,subjectIds:[m.hubId],quantity:sample.served});
     }
     for(const v of w.insectVisits.filter(v=>v.createdTick===w.tick)) events.push({id:v.id,type:'VisitorArrived',tick:w.tick,subjectIds:[v.id],position:v.position});

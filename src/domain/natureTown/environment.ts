@@ -16,14 +16,16 @@ export function channelSources(w: WorldState, ctx: EngineContext) {
     }
     return {reached,sources};
 }
-export function environment(w: WorldState, ctx: EngineContext, initial = false) {
+/** true initializes the world; a cell-key set initializes only newly opened land. */
+export function environment(w: WorldState, ctx: EngineContext, initial: boolean | ReadonlySet<string> = false) {
     const b=ctx.config, all=cells(w), {reached,sources}=channelSources(w,ctx);
     const trees=activeProps(w).filter(p=>p.kind==='tree');
     for (const c of all) {
         c.shade=trees.reduce((v,t)=>Math.max(v,clamp(1-distance(t.position,c.position)/b.plants.treeShadeRadius)),0);
         const influence=sources.reduce((v,s)=>Math.max(v,clamp(1-Math.max(0,distance(s.position,c.position)-1)/b.water.sourceInfluenceRadius)),0);
         const target=clamp(b.water.baseMoisture+b.water.waterWeight*influence+b.water.shadeRetention*c.shade+b.weather.moistureAdd[w.weather]);
-        c.moisture=initial ? target : clamp(c.moisture+b.water.relaxationPerTick*(target-c.moisture));
+        if(initial===false) c.moisture=clamp(c.moisture+b.water.relaxationPerTick*(target-c.moisture));
+        else if(initial===true || initial.has(key(c.position))) c.moisture=target;
     }
     return reached;
 }

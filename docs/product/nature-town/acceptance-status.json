@@ -12,22 +12,22 @@
       "id": "SIM-02",
       "condition": "水路を接続／途中で切断",
       "expected": "接続した下流のみ水分目標が変わり、切断後は緩やかに戻る",
-      "status": "NOT_RUN",
-      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+      "status": "PASS",
+      "evidence": "2026-09-18 local Vitest, src/domain/natureTown/acceptanceSimulation.test.ts; seed sansu-starter-2026-09-16; explicit diagnostic fixtures, not natural UI play. Connected eight-cell channel, removed water-side segment; downstream relaxes by 0.08 per tick, unrelated/upstream cells remain unchanged. Opening a new chunk preserves existing transient moisture (regression fixed)."
     },
     {
       "id": "SIM-03",
       "condition": "上り・循環・長すぎる水路",
       "expected": "上りへ通水せず、ループ増殖せず、最大距離を守る",
-      "status": "NOT_RUN",
-      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+      "status": "PASS",
+      "evidence": "2026-09-18 local Vitest, src/domain/natureTown/acceptanceSimulation.test.ts; seed sansu-starter-2026-09-16; explicit diagnostic fixtures, not natural UI play. Explicit single-source fixture: uphill rejected, loop visits each source once, eighth edge reached/ninth excluded; loop does not add moisture."
     },
     {
       "id": "SIM-04",
       "condition": "同じ畑の近くに木を移す",
       "expected": "日陰の変化が成長に作用し、休憩候補にも作用する",
-      "status": "NOT_RUN",
-      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+      "status": "PASS",
+      "evidence": "2026-09-18 local Vitest; seed sansu-starter-2026-09-16; acceptanceGrowthRandom.test.ts (EDU-04: learning.test.ts with disposable fake-indexeddb). Moves tree-0 near/away from the same farm, compares growth at identical moisture, and observes changed reachable tree-rest destination. Diagnostic isolates attractions; not a visual or participant result."
     },
     {
       "id": "SIM-05",
@@ -47,8 +47,8 @@
       "id": "SIM-07",
       "condition": "同じ食料を2人が取りに行く",
       "expected": "二重予約・二重取得・負数在庫がない",
-      "status": "NOT_RUN",
-      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+      "status": "PASS",
+      "evidence": "2026-09-18 local Vitest, src/domain/natureTown/acceptanceSimulation.test.ts; seed sansu-starter-2026-09-16; explicit diagnostic fixtures, not natural UI play. Six-resident diagnostic creates two simultaneous jobs from three food items (2+1); delivery retains conservation and nonnegative reservations each tick."
     },
     {
       "id": "SIM-08",
@@ -68,22 +68,22 @@
       "id": "SIM-10",
       "condition": "道を消す・橋を消す・輸送先を動かす",
       "expected": "所持品を保護し、安全に再計画。水面や宙に残らない",
-      "status": "NOT_RUN",
-      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+      "status": "PASS",
+      "evidence": "2026-09-18 local Vitest, src/domain/natureTown/acceptanceSimulation.test.ts; seed sansu-starter-2026-09-16; explicit diagnostic fixtures, not natural UI play. Source storage cancels reservations; after real pickup, road removal, bridge removal with carrier on bridge, and hub relocation preserve cargo, move carrier to ground, and complete delivery."
     },
     {
       "id": "SIM-11",
       "condition": "拠点が満杯／配送予約後に条件変化",
       "expected": "受入上限を超えず、予約と荷物を整合させる",
-      "status": "NOT_RUN",
-      "evidence": "Partial automated coverage exists; complete specified scenario not yet exercised."
+      "status": "PASS",
+      "evidence": "2026-09-18 local Vitest, src/domain/natureTown/acceptanceSimulation.test.ts; seed sansu-starter-2026-09-16; explicit diagnostic fixtures, not natural UI play. Two-carrier reservation plus pantry at 23/24 admits only one item; source storage and destination relocation cancel/replan reservations without losing stock or cargo."
     },
     {
       "id": "SIM-12",
       "condition": "家と拠点を切り離す→再接続",
       "expected": "供給範囲が変わり、復旧する。住人への苦痛・没収なし",
-      "status": "NOT_RUN",
-      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+      "status": "PASS",
+      "evidence": "2026-09-18 local Vitest, src/domain/natureTown/acceptanceSimulation.test.ts; seed sansu-starter-2026-09-16; explicit diagnostic fixtures, not natural UI play. Home moved across river: meal serves 3 with bridge, 0 after removal, 3 after reconnection; residents/food preserved during disconnection."
     },
     {
       "id": "GROW-01",
@@ -110,15 +110,15 @@
       "id": "GROW-04",
       "condition": "条件悪化・しばらく中断した候補",
       "expected": "候補が無期限で保持され、基礎権利も失わない",
-      "status": "NOT_RUN",
-      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+      "status": "PASS",
+      "evidence": "growthJourney.test.ts and tools/e2e-nature-town-growth.mjs; production 390x844 / 768x1024: retained offer across removed home/reload, restored home and admission, actual demand=4, new remote pantry starts at zero and receives real four-item delivery. See docs/design/2026-09-17-nature-town-growth/README.md."
     },
     {
       "id": "GROW-05",
       "condition": "人口を増やして同じ供給を使う",
       "expected": "食料要求が増え、配置変更の理由が発生する",
-      "status": "NOT_RUN",
-      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+      "status": "PASS",
+      "evidence": "growthJourney.test.ts and tools/e2e-nature-town-growth.mjs; production 390x844 / 768x1024: retained offer across removed home/reload, restored home and admission, actual demand=4, new remote pantry starts at zero and receives real four-item delivery. See docs/design/2026-09-17-nature-town-growth/README.md."
     },
     {
       "id": "GROW-06",
@@ -138,22 +138,22 @@
       "id": "GROW-08",
       "condition": "遠い地区へ家・拠点・畑を作る",
       "expected": "旧拠点の在庫が勝手に全域共有されず、輸送が意味を持つ",
-      "status": "NOT_RUN",
-      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+      "status": "PASS",
+      "evidence": "growthJourney.test.ts and tools/e2e-nature-town-growth.mjs; production 390x844 / 768x1024: retained offer across removed home/reload, restored home and admission, actual demand=4, new remote pantry starts at zero and receives real four-item delivery. See docs/design/2026-09-17-nature-town-growth/README.md."
     },
     {
       "id": "GROW-09",
       "condition": "人口を増やさず自然を整備",
       "expected": "訪問・道具解放・土地拡張を人口条件で閉ざさない",
-      "status": "NOT_RUN",
-      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+      "status": "PASS",
+      "evidence": "2026-09-18 local Vitest; seed sansu-starter-2026-09-16; acceptanceGrowthRandom.test.ts (EDU-04: learning.test.ts with disposable fake-indexeddb). Keeps population at three while ordinary visits, pending admission, six verified-checkpoint-shaped units, both tools and northern expansion remain available. Native completion adapter is covered by learning.test.ts."
     },
     {
       "id": "GROW-10",
       "condition": "S1上限に到達／将来設定を増加",
       "expected": "試作上限を明示。追加チャンク・IDに耐える構造を確認",
-      "status": "NOT_RUN",
-      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+      "status": "PASS",
+      "evidence": "2026-09-18 local Vitest; seed sansu-starter-2026-09-16; acceptanceGrowthRandom.test.ts (EDU-04: learning.test.ts with disposable fake-indexeddb). Configurable allowlist opens north, second-north and negative-coordinate west; rejects gaps/duplicates/unlisted land and preserves IDs. Diagnostic population 8 -> 9 rejects a tenth while keeping its offer; config cap 10 then accepts. S1 UI limits were covered by NT-2/SettlementStatus; 8/24-region load remains SAFE-07."
     },
     {
       "id": "GROW-11",
@@ -194,29 +194,29 @@
       "id": "RNG-05",
       "condition": "物を大量に置く・同セルをなぞり直す",
       "expected": "タップ数や物数分の追加抽選をしない",
-      "status": "NOT_RUN",
-      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+      "status": "PASS",
+      "evidence": "2026-09-18 local Vitest; seed sansu-starter-2026-09-16; acceptanceGrowthRandom.test.ts (EDU-04: learning.test.ts with disposable fake-indexeddb). Twenty repeated brushes including duplicate cells plus eight placed flowers do not change random ordinals; subsequent scheduled evaluation remains once per chunk per interval."
     },
     {
       "id": "RNG-06",
       "condition": "レア訪問を一切発生させない",
       "expected": "土地・人口候補・学習・全基本道具が機能する",
-      "status": "NOT_RUN",
-      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+      "status": "PASS",
+      "evidence": "2026-09-18 local Vitest; seed sansu-starter-2026-09-16; acceptanceGrowthRandom.test.ts (EDU-04: learning.test.ts with disposable fake-indexeddb). Injected random source suppresses rare variants while ordinary visits, pending admission, both tools and expansion still function; no population acceptance needed."
     },
     {
       "id": "RNG-07",
       "condition": "長い不発、天候変化、定員超過",
       "expected": "仕様の頻度・上限を守り、普通の遊びが止まらない",
-      "status": "NOT_RUN",
-      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+      "status": "PASS",
+      "evidence": "2026-09-18 local Vitest; seed sansu-starter-2026-09-16; acceptanceGrowthRandom.test.ts (EDU-04: learning.test.ts with disposable fake-indexeddb). 360 full ticks of forced misses: 12 insect evaluations, no visits, harvest/meal consumption continue. Rain and three occupied slots advance evaluation without extra variant draw; expired visits are replaced with the specified 60-tick lifetime."
     },
     {
       "id": "RNG-08",
       "condition": "学習量・正答率・所要時間だけを変える",
       "expected": "同じ世界条件なら訪問率が変わらない",
-      "status": "NOT_RUN",
-      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+      "status": "PASS",
+      "evidence": "2026-09-18 local Vitest; seed sansu-starter-2026-09-16; acceptanceGrowthRandom.test.ts (EDU-04: learning.test.ts with disposable fake-indexeddb). Different earned credits/unlocks yield identical states and events across 180 ticks with unchanged placement/policy. World context consumes capabilities only, not accuracy/time; independent/supported native completion equivalence also covered in learning.test.ts."
     },
     {
       "id": "EDU-01",
@@ -243,8 +243,8 @@
       "id": "EDU-04",
       "condition": "スキップ・不正解・途中終了",
       "expected": "未完了を完了扱いせず、既得単位・途中記録を没収しない",
-      "status": "NOT_RUN",
-      "evidence": "Partial automated coverage exists; complete specified scenario not yet exercised."
+      "status": "PASS",
+      "evidence": "2026-09-18 local Vitest; seed sansu-starter-2026-09-16; acceptanceGrowthRandom.test.ts (EDU-04: learning.test.ts with disposable fake-indexeddb). Native supported section earns one unit; next plan receives actual incorrect answer and skip. Database close/open preserves partial plan, logs and existing unit; completing one supported slot still yields no new section award."
     },
     {
       "id": "EDU-05",
@@ -314,7 +314,7 @@
       "condition": "390×844／768×1024、音なし、動き抑制",
       "expected": "主要操作、経路不通、受渡し、入居が読み取れる",
       "status": "NOT_RUN",
-      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+      "evidence": "Partial: nature-town-living production 390x844 / 768x1024, reduced motion, real harvest/pickup/dropoff/meal, disconnected farm and undo. Admission readability and independent silent comprehension remain unverified. See docs/design/2026-09-16-nature-town-living/README.md."
     },
     {
       "id": "SAFE-07",

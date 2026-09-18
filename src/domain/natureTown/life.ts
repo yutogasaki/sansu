@@ -89,16 +89,26 @@ export function availableHomes(w: WorldState, hubId: string, ctx: EngineContext)
     if(hub?.kind!=='hub') return [];
     return activeProps(w).filter(p=>p.kind==='home'&&p.hubId===hubId&&w.residents.filter(r=>r.homeId===p.id).length<p.beds&&(route(w,p.entrance,hub.entrance)?.cost??Infinity)<=ctx.config.transport.serviceMaxPathCost);
 }
+/** Shared by admission evaluation and its UI; observing readiness never draws randomness. */
+export function settlementReadiness(w: WorldState, hubId: string, ctx: EngineContext) {
+    const hub=activeProps(w).find(h=>h.id===hubId), metric=w.hubMetrics.find(m=>m.hubId===hubId), p=ctx.config.population;
+    const population=w.residents.filter(r=>r.hubId===hubId).length, homes=availableHomes(w,hubId,ctx);
+    const history=metric?.history??[];
+    const requested=history.reduce((s,h)=>s+h.requested,0), served=history.reduce((s,h)=>s+h.served,0), delivered=history.reduce((s,h)=>s+h.delivered,0);
+    const required=(population+1)*p.minFoodReservePerNextResident, food=hub?.kind==='hub'?hub.inventory.food:0;
+    const historyReady=!!metric && w.tick-metric.historyStartedTick>=p.historyTicks;
+    const serviceReady=!requested||served/requested>=p.minServiceCoverage;
+    const supplyReady=delivered+Math.max(0,food-population*p.minSupplyPerNextResident)>=(population+1)*p.minSupplyPerNextResident;
+    const reserveReady=food>=required;
+    return {hub,homes,population,required,historyReady,serviceReady,supplyReady,reserveReady,
+        eligible:hub?.kind==='hub' && homes.length>0 && historyReady && serviceReady && supplyReady && reserveReady};
+}
 export function settlement(w: WorldState, ctx: EngineContext) {
     if(w.tick%ctx.config.simulation.settlementEveryTicks) return;
     const roll=draw(w,ctx,'settlement','world'), p=ctx.config.population;
     const candidates=[];
     for(const metric of w.hubMetrics) {
-        const hub=activeProps(w).find(h=>h.id===metric.hubId), population=w.residents.filter(r=>r.hubId===metric.hubId).length;
-        const requested=metric.history.reduce((s,h)=>s+h.requested,0), served=metric.history.reduce((s,h)=>s+h.served,0), delivered=metric.history.reduce((s,h)=>s+h.delivered,0);
-        const homes=availableHomes(w,metric.hubId,ctx);
-        const required=(population+1)*p.minFoodReservePerNextResident;
-        const eligible=hub?.kind==='hub' && homes.length && w.tick-metric.historyStartedTick>=p.historyTicks && (!requested||served/requested>=p.minServiceCoverage) && delivered+Math.max(0,hub.inventory.food-population*p.minSupplyPerNextResident)>=(population+1)*p.minSupplyPerNextResident && hub.inventory.food>=required;
+        const {hub,homes,required,eligible}=settlementReadiness(w,metric.hubId,ctx);
         metric.eligibleStreak=eligible?metric.eligibleStreak+1:0;
         if(eligible && metric.eligibleStreak>=p.eligibleEvaluationsRequired && hub?.kind==='hub') candidates.push({hub,homes,required,slots:homes.reduce((s,h)=>s+(h.kind==='home'?h.beds:0)-w.residents.filter(r=>r.homeId===h.id).length,0)});
     }

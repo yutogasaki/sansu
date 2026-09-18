@@ -5,11 +5,12 @@ import { applyWorldCommand } from '../../domain/natureTown/commands';
 import { applyProgressCommand, capabilities } from '../../domain/natureTown/progress';
 import { context } from '../../domain/natureTown/world';
 import { stepWorld } from '../../domain/natureTown/simulation';
-import type { Capability, WorldCommandPayload } from '../../domain/natureTown/types';
+import type { DomainEvent, Capability, WorldCommandPayload } from '../../domain/natureTown/types';
 import { holdPwaUpdateForCriticalPersistence } from '../../pwa';
 export function useTown(paused: boolean, speed: number, learning: boolean) {
     const [save,setSave]=useState<TownSave>(), [error,setError]=useState(''), [notice,setNotice]=useState(''), [ready,setReady]=useState(false), [profileId,setProfileId]=useState('');
-    const current=useRef<TownSave | undefined>(undefined), generation=useRef(0), busy=useRef(false), active=useRef(false);
+    const [events,setEvents]=useState<DomainEvent[]>([]);
+    const current=useRef<TownSave | undefined>(undefined), generation=useRef(0), busy=useRef(false), active=useRef(false), ownsLease=useRef(false);
     const flags=useRef({paused,speed}); flags.current={paused,speed};
     const publish=(value: TownSave)=>{current.current=value;setSave(value);};
     useEffect(()=> {
@@ -26,7 +27,7 @@ export function useTown(paused: boolean, speed: number, learning: boolean) {
                 }).catch(reject);
             });
             if(disposed) {release?.();return;}
-            active.current=true;
+            active.current=true; ownsLease.current=true;
             const loaded=await loadTown(profile.id), reconciled=await reconcileLearning(loaded.save);
             generation.current=loaded.generation;
             if(reconciled.progress.revision!==loaded.save.progress.revision) generation.current=await persistTown(reconciled,generation.current);
@@ -34,30 +35,35 @@ export function useTown(paused: boolean, speed: number, learning: boolean) {
             publish(reconciled); setReady(true); setNotice('ほぞんできたよ');
             timer=setInterval(()=> {
                 if(busy.current||!active.current||flags.current.paused||document.visibilityState!=='visible'||!current.current) return;
+                const emitted: DomainEvent[]=[];
                 void run(async s=> {
                     let world=s.world;
-                    for(let i=0;i<flags.current.speed;i++) world=stepWorld(world,context(capabilities(s.progress))).state;
+                    for(let i=0;i<flags.current.speed;i++) {
+                        const result=stepWorld(world,context(capabilities(s.progress)));
+                        world=result.state;emitted.push(...result.events);
+                    }
                     return {...s,world};
-                });
+                },emitted);
             },1000);
         }).catch(e=> {if(!disposed) setError(String(e.message??e));});
-        return ()=>{disposed=true;active.current=false;abort.abort();if(timer)clearInterval(timer);release?.();};
+        return ()=>{disposed=true;active.current=false;ownsLease.current=false;abort.abort();if(timer)clearInterval(timer);release?.();};
         // All changing runtime inputs are refs; one writer lease per mounted owner.
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
-    async function run(change: (s: TownSave)=>Promise<TownSave>) {
-        if(!current.current||busy.current||!active.current) return;
+    async function run(change: (s: TownSave)=>Promise<TownSave>, emitted?: DomainEvent[]) {
+        if(!current.current||busy.current||!active.current) return false;
         busy.current=true; const hold=holdPwaUpdateForCriticalPersistence();
         try {
             const next=await change(current.current);
-            if(next===current.current) return;
+            if(next===current.current) return false;
             generation.current=await persistTown(next,generation.current);
-            publish(next);setNotice('ほぞんできたよ');setError('');
-        } catch(e) { setError(e instanceof Error?e.message:String(e)); active.current=false;setReady(false); }
+            setEvents(previous=>emitted?[...previous,...emitted].filter(e=>next.world.tick-e.tick<6).slice(-24):[]);
+            publish(next);setNotice('ほぞんできたよ');setError('');return true;
+        } catch(e) { setError(e instanceof Error?e.message:String(e)); active.current=false;setReady(false);return false; }
         finally {busy.current=false;hold();}
     }
     async function command(payload: WorldCommandPayload) {
-        await run(async s=> {
+        return run(async s=> {
             const result=applyWorldCommand(s.world,{commandId:crypto.randomUUID(),profileId:s.world.profileId,worldId:s.world.worldId,expectedRevision:s.world.revision,payload},context(capabilities(s.progress)));
             if(result.rejection) {setNotice(result.rejection.childMessage);return s;}
             return {...s,world:result.state};
@@ -73,12 +79,15 @@ export function useTown(paused: boolean, speed: number, learning: boolean) {
     async function restore(snapshot: Snapshot) {
         if(busy.current||!active.current) return;
         busy.current=true;const release=holdPwaUpdateForCriticalPersistence();
-        try {const result=await restoreTown(snapshot,profileId,generation.current);generation.current=result.generation;publish(result.save);setNotice('書き出した島から もどしたよ。');setError('');}
+        try {const result=await restoreTown(snapshot,profileId,generation.current);generation.current=result.generation;publish(result.save);setEvents([]);setNotice('書き出した島から もどしたよ。');setError('');}
         catch(e) {setError(e instanceof Error?e.message:String(e));}
         finally {busy.current=false;release();}
     }
     async function recovery() {
-        try {const recovered=await recoverTown(profileId);generation.current=recovered.generation;publish(recovered.save);setError('');setNotice('前の保存にもどしたよ。再読み込みして続けよう。');} catch(e) {setError(String(e));}
+        if(!ownsLease.current || busy.current) {setError('この画面では復旧できません。島を開いているタブで操作してください。');return;}
+        busy.current=true;const release=holdPwaUpdateForCriticalPersistence();
+        try {const recovered=await recoverTown(profileId);generation.current=recovered.generation;publish(recovered.save);setEvents([]);setError('');setNotice('前の保存にもどしたよ。再読み込みして続けよう。');} catch(e) {setError(String(e));}
+        finally {busy.current=false;release();}
     }
     // Re-read durable completions after returning from learning; the world clock stays paused throughout.
     const wasLearning=useRef(learning);
@@ -87,5 +96,5 @@ export function useTown(paused: boolean, speed: number, learning: boolean) {
         wasLearning.current=learning;
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[learning]);
-    return {save,error,notice,ready,profileId,command,unlock,recovery,restore};
+    return {save,events,error,notice,ready,profileId,command,unlock,recovery,restore};
 }

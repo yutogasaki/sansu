@@ -1,0 +1,123 @@
+{
+  "target": "http://127.0.0.1:5335/#/nature-town",
+  "build": {
+    "version": "nt1-working-20260916:c1f869fa-635a-4657-b10b-b7a48312ce31",
+    "revision": "nt1-working-20260916",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "sourceHash": "d7e7dbf5dbe9759568a1f5c5212de2591207e0666a7ddbcab3834f4e7c531c0f",
+  "flags": {
+    "VITE_ISLAND_ENABLED": true,
+    "VITE_NATURE_TOWN_ENABLED": true
+  },
+  "candidate": "nature-town-living-s1",
+  "flow": {
+    "target": "http://127.0.0.1:5335",
+    "fixture": "Disposable native profile; unmodified starter town. User-facing 2x speed only, no clock, food, or job injection.",
+    "diagnostic": false,
+    "devices": [
+      {
+        "width": 768,
+        "captures": [
+          {
+            "name": "harvest",
+            "event": {
+              "class": "town-farm-patch seed",
+              "data-growth-stage": "seed",
+              "data-recent-harvest": "4",
+              "role": "img",
+              "aria-label": "\u7551 \u82bd"
+            }
+          },
+          {
+            "name": "pickup",
+            "event": {
+              "data-transfer-id": "pickup:delivery:resident-2:32:39",
+              "data-from": "farm-0",
+              "data-to": "resident-2",
+              "data-quantity": "1"
+            }
+          },
+          {
+            "name": "delivery",
+            "event": {
+              "data-transfer-id": "dropoff:delivery:resident-2:32:48",
+              "data-from": "resident-2",
+              "data-to": "hub-0",
+              "data-quantity": "1"
+            }
+          },
+          {
+            "name": "meal",
+            "event": {
+              "class": "town-food-table",
+              "data-meal-served": "3",
+              "role": "img",
+              "aria-label": "\u3055\u3063\u304d\u306e\u5171\u540c\u98df 3\u4eba\u3076\u3093\u30fb\u5728\u5eab 10\u3053"
+            }
+          }
+        ],
+        "candidate": "nature-town-living-s1",
+        "pass": true
+      },
+      {
+        "width": 390,
+        "captures": [
+          {
+            "name": "harvest",
+            "event": {
+              "class": "town-farm-patch seed",
+              "data-growth-stage": "seed",
+              "data-recent-harvest": "4",
+              "role": "img",
+              "aria-label": "\u7551 \u82bd"
+            }
+          },
+          {
+            "name": "pickup",
+            "event": {
+              "data-transfer-id": "pickup:delivery:resident-2:32:39",
+              "data-from": "farm-0",
+              "data-to": "resident-2",
+              "data-quantity": "1"
+            }
+          },
+          {
+            "name": "delivery",
+            "event": {
+              "data-transfer-id": "dropoff:delivery:resident-2:32:48",
+              "data-from": "resident-2",
+              "data-to": "hub-0",
+              "data-quantity": "1"
+            }
+          },
+          {
+            "name": "meal",
+            "event": {
+              "class": "town-food-table",
+              "data-meal-served": "3",
+              "role": "img",
+              "aria-label": "\u3055\u3063\u304d\u306e\u5171\u540c\u98df 3\u4eba\u3076\u3093\u30fb\u5728\u5eab 10\u3053"
+            }
+          }
+        ],
+        "candidate": "nature-town-living-s1",
+        "pass": true
+      }
+    ],
+    "pass": true
+  }
+}

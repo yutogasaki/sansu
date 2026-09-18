@@ -205,6 +205,7 @@ export type ProgressCommand =
   | { type: 'unlock'; commandId: Id; profileId: Id; expectedRevision: number;
       capability: Capability };
 
+/** Ephemeral committed-tick feedback; never part of a saved world. */
 export interface DomainEvent {
   id: Id;
   type: 'FoodHarvested' | 'FoodTransferred' | 'MealServed' | 'VisitorArrived'
@@ -213,6 +214,7 @@ export interface DomainEvent {
   subjectIds: Id[];
   quantity?: number;
   position?: CellPos;
+  transfer?: { fromId: Id; toId: Id; from: CellPos; to: CellPos };
 }
 export type RandomAt = (
   seed: string, systemId: string, entityId: string, ordinal: number

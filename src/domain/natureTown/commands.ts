@@ -1,5 +1,5 @@
 import type { CellPos, EngineContext, Prop, Transition, WorldCommand, WorldState } from './types';
-import { activeProps, at, cells, entrance, equal, graph, key, route, validBridges } from './grid';
+import { activeProps, at, cells, entrance, equal, graph, key, neighbors, route, validBridges } from './grid';
 import { makeChunk, makeProp, makeResident } from './world';
 import { availableHomes, observe } from './life';
 import { repairAfterEdit } from './transport';
@@ -18,8 +18,8 @@ function validPlacement(w: WorldState, prop: Prop, ctx: EngineContext) {
 export function canOpen(w: WorldState, coordinate: CellPos, ctx: EngineContext) {
     if(!ctx.config.scope.expandableChunks.some(p=>equal(p as unknown as CellPos,coordinate))||w.chunks.some(c=>equal(c.coordinate,coordinate))) return false;
     const hub=activeProps(w).find(p=>p.id==='hub-0'); if(hub?.kind!=='hub') return false;
-    const size=ctx.config.scope.chunkSide;
-    return cells(w).some(c=>c.terrain==='ground'&&c.path&&((coordinate[0]===1&&c.position[0]===size-1&&c.position[1]<size)||(coordinate[1]===1&&c.position[1]===size-1&&c.position[0]<size))&&route(w,hub.entrance,c.position,true));
+    const land=new Set(makeChunk(coordinate).cells.filter(c=>c.terrain==='ground').map(c=>key(c.position)));
+    return cells(w).some(c=>c.terrain==='ground'&&c.path&&neighbors(c.position).some(p=>land.has(key(p)))&&route(w,hub.entrance,c.position,true));
 }
 export function applyWorldCommand(state: WorldState, command: WorldCommand, ctx: EngineContext): Transition {
     const reject=(message='そこには おけないよ。べつの ばしょを ためそう。'): Transition=>({state,events:[],rejection:{code:'invalid-command',childMessage:message}});
@@ -69,11 +69,12 @@ export function applyWorldCommand(state: WorldState, command: WorldCommand, ctx:
         edit=true;
     } else if(p.type==='openChunk') {
         if(!canOpen(w,p.coordinate,ctx)) return reject('食たくから 境めまで 道を つなごう。');
-        w.chunks.push(makeChunk(p.coordinate));
+        const chunk=makeChunk(p.coordinate);
+        w.chunks.push(chunk);
         const template=starter.futureChunkTemplates.find(t=>equal(t.chunk as unknown as CellPos,p.coordinate));
         for(const q of template?.initialProps??[]) w.props.push(makeProp(q.id,q.definitionId as Prop['kind'],q.position as unknown as CellPos));
         observe(w,'expansion',[`chunk:${key(p.coordinate)}`],[p.coordinate[0]*ctx.config.scope.chunkSide,p.coordinate[1]*ctx.config.scope.chunkSide]);
-        environment(w,ctx,true); edit=true;
+        environment(w,ctx,new Set(chunk.cells.map(c=>key(c.position)))); edit=true;
     } else if(p.type==='assignHomeHub') {
         const home=activeProps(w).find(q=>q.id===p.homeId), hub=activeProps(w).find(q=>q.id===p.hubId);
         if(home?.kind!=='home'||hub?.kind!=='hub'||!route(w,home.entrance,hub.entrance)) return reject();

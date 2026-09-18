@@ -1,4 +1,4 @@
-import type { EngineContext, Resident, WorldState } from './types';
+import type { DomainEvent, EngineContext, Resident, WorldState } from './types';
 import { activeProps, cellCost, equal, graph, key, route, routeOn } from './grid';
 export function releaseJob(w: WorldState, resident: Resident) {
     const job=w.jobs.find(j=>j.id===resident.jobId);
@@ -36,7 +36,7 @@ export function moveResident(w: WorldState, r: Resident, mass: number) {
     }
     return r.path.length===0;
 }
-export function deliver(w: WorldState, ctx: EngineContext) {
+export function deliver(w: WorldState, ctx: EngineContext, events: DomainEvent[] = []) {
     const b=ctx.config.transport;
     const people=[...w.residents].sort((a,b)=>a.id.localeCompare(b.id));
     for(const r of people) {
@@ -50,10 +50,12 @@ export function deliver(w: WorldState, ctx: EngineContext) {
             const path=route(w,r.position,hub.entrance,job.usingCart);
             if(!path) { releaseJob(w,r); continue; }
             source.inventory.food-=job.quantity; source.inventory.outgoingReserved-=job.quantity;
+            events.push({id:`pickup:${job.id}:${w.tick}`,type:'FoodTransferred',tick:w.tick,subjectIds:[source.id,r.id],quantity:job.quantity,transfer:{fromId:source.id,toId:r.id,from:[...source.position],to:[...r.position]}});
             r.carriedFood=job.quantity; job.phase='toHub'; r.path=path.path; job.lastProgressTick=w.tick;
         } else if(job.phase==='toHub') {
             if(!equal(r.position,hub.entrance) || hub.inventory.food+r.carriedFood>hub.inventory.capacity) { releaseJob(w,r); continue; }
             hub.inventory.food+=r.carriedFood;
+            events.push({id:`dropoff:${job.id}:${w.tick}`,type:'FoodTransferred',tick:w.tick,subjectIds:[r.id,hub.id],quantity:r.carriedFood,transfer:{fromId:r.id,toId:hub.id,from:[...r.position],to:[...hub.position]}});
             const metric=w.hubMetrics.find(m=>m.hubId===hub.id)!;
             metric.history.push({tick:w.tick,requested:0,served:0,delivered:r.carriedFood});
             // Keep phase and cargo until release has subtracted only the destination reservation.
