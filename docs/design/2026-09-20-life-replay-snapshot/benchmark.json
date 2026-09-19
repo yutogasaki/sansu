@@ -1,0 +1,23 @@
+{
+  "scope": "Synthetic one-flower owner; CPU only, not user-device opening latency; cold replay versus verified snapshot restoration at the same time",
+  "results": [
+    {
+      "hours": 24,
+      "fullMs": 2780.9670830000005,
+      "restoreMs": 1.352208000000246,
+      "snapshotBytes": 7089
+    },
+    {
+      "hours": 168,
+      "fullMs": 10526.573791000003,
+      "restoreMs": 1.022292000001471,
+      "snapshotBytes": 6774
+    },
+    {
+      "hours": 168.0000002777778,
+      "fullMs": 10241.252041,
+      "restoreMs": 0.8915830000041751,
+      "snapshotBytes": 6774
+    }
+  ]
+}

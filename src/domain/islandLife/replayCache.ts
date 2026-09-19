@@ -1,14 +1,14 @@
 import type { LifeRecord, LifeState } from './model';
 
 // An optional, bounded acceleration of deterministic replay. No cached data is
-// persisted or trusted instead of record validation. Different events, owners,
+// trusted instead of record validation. Persisted snapshots are verified separately. Different events, owners,
 // versions and checkpoints always get different keys, even after in-place edits.
 const states = new Map<string, LifeState>();
 export function cadenceReplayKey(record: LifeRecord, to: number) {
     if (![16, 17].includes(record.version) || !Number.isFinite(to) || to < record.now
         || record.actions.some(a => a.at > to) || record.credits.some(c => c.at > to)) return;
     return JSON.stringify({ ...record, now: 0, realAt: 0, revision: 0, offsets: [],
-        clockIntents: [], clockIntentHours: undefined, discoveryJournal: undefined });
+        clockIntents: [], clockIntentHours: undefined, discoveryJournal: undefined, replaySnapshot: undefined });
 }
 export function cachedLifeState(key: string | undefined, to: number) {
     const state = key === undefined ? undefined : states.get(key);

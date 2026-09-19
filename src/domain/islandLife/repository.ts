@@ -1,3 +1,4 @@
+import { createLifeSnapshot, restoreLifeSnapshot } from './replaySnapshot';
 import { prepareHeroVisitMigration } from './heroVisitMigration';
 import { prepareCadenceMigration } from './cadenceMigration';
 import { preparePlacementMigration } from './placementMigration';
@@ -86,6 +87,7 @@ export async function updateLife(profileId: string, facts: TerminalFact[], inten
                 throw new Error('しまが かわったよ。もういちど えらんでね。');
             }
         }
+        await Dexie.waitFor(restoreLifeSnapshot(previous));
         let next = previous;
         const elapsed = Math.max(0, Math.min(7 * 24 * HOUR, realNow - previous.realAt));
         next = { ...next, realAt: realNow, now: previous.now + elapsed, revision: previous.revision + 1 };
@@ -112,7 +114,8 @@ export async function updateLife(profileId: string, facts: TerminalFact[], inten
         next = await Dexie.waitFor(prepareCadenceMigration(next));
         next = await Dexie.waitFor(prepareHeroVisitMigration(next));
         if (intent?.command) next = commandLife(next, intent.command, intent.id, next.now, intent.undoOf);
-        replayLife(next); // Reject invalid transactions before any write.
+        const state = replayLife(next); // Reject invalid transactions before any write.
+        next = { ...next, replaySnapshot: await Dexie.waitFor(createLifeSnapshot(next, state)) };
         await database.worlds.put(next); return next;
     });
 }

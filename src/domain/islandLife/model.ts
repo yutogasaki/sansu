@@ -48,6 +48,7 @@ export interface LifeRecord {
     activitiesV2At?: number;
     activitiesV2After?: number;
     clockIntentHours?: Record<string, 6 | 24>;
+    replaySnapshot?: import('./replaySnapshot').LifeReplaySnapshot;
     discoveryJournal?: DiscoveryJournal;
     economyCheckpoint?: LifeEconomyCheckpoint;
     tourCutover?: TourCutover;
