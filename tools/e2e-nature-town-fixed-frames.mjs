@@ -48,7 +48,12 @@ try{
    const final=await town(page),frames=await page.evaluate(()=>window.__fixedFrames.frames),deltas=frames.slice(1).map((t,i)=>t-frames[i]);
    await fs.writeFile(`${out}/${fps}hz-frame-times.json`,JSON.stringify({requestedInterval:interval,frames,deltas}));
    const anomalies=deltas.map((d,i)=>({d,i})).filter(x=>Math.abs(x.d-interval)>=.1);console.log('cadence',fps,{count:deltas.length,min:Math.min(...deltas),max:Math.max(...deltas),anomalies:anomalies.slice(0,12)});
-   assert.ok(deltas.length>=fps*119,'RAF ran for the requested frames');assert.ok(deltas.every(d=>Math.abs(d-interval)<.1),`native RAF cadence must match ${fps} Hz`);
+   // Non-isolated DOMHighResTimeStamp is coarsened to 100us with jitter;
+   // an interval subtracts two such timestamps. Preserve exact frame count
+   // and cumulative cadence, allowing only the 0.2ms quantization envelope.
+   assert.equal(frames.length,fps*120,'every requested native frame produced RAF');
+   assert.ok(deltas.every(d=>Math.abs(d-interval)<=.201),`native RAF cadence must match ${fps} Hz within timestamp precision`);
+   assert.ok(Math.abs(frames.at(-1)-frames[0]-(frames.length-1)*interval)<=.201,'no accumulated frame drift');
    if(expected)assert.deepEqual(final.world,expected,'all world state, inventory, resident paths and random ordinals match at the same tick');else expected=final.world;
    assert.deepEqual(final.progress,initial.progress);assert.deepEqual(errors,[]);
    const capture=await frame(true);assert.ok(capture.screenshotData);await fs.writeFile(`${out}/${fps}hz.png`,Buffer.from(capture.screenshotData,'base64'));
