@@ -1,0 +1,94 @@
+{
+  "target": "http://127.0.0.1:5337",
+  "fixture": "Disposable native profiles. Timer dispatcher drives the actual 1-second application callback once per pulse, awaiting durable save; no world/offer/ordinal injection. Same IndexedDB snapshot is cloned between isolated contexts. RAF rates are imposed callback cadences, not device FPS benchmarks.",
+  "runs": [
+    {
+      "width": 390,
+      "fps": 60,
+      "motion": "no-preference",
+      "alter": false,
+      "runtime": {
+        "revision": "nt3-index-20260918",
+        "candidate": "nature-town-living-s1",
+        "sw": true,
+        "frames": 668,
+        "elapsed": 9563.5,
+        "observedCallbackHz": 69.74434046112825
+      },
+      "tick": 480,
+      "worldHash": "4f43875f6c481cd62c2e15793f7ffb40fca8e5898df0ffa0a07a1de5ffadc38c",
+      "ordinals": {
+        "[\"resident-choice\",\"resident-1\"]": 13,
+        "[\"resident-choice\",\"resident-2\"]": 9,
+        "[\"resident-choice\",\"resident-0\"]": 13,
+        "pair:resident-1:resident-2:last": 24,
+        "[\"insects\",\"chunk:0,0\"]": 16,
+        "[\"insect-variant\",\"chunk:0,0\"]": 6,
+        "[\"settlement\",\"world\"]": 8,
+        "farm-ready:aa12960c-3db5-4d98-8fcb-ab0e859466ae": 126,
+        "farm-ready:farm-0": 157,
+        "[\"weather\",\"world\"]": 2,
+        "pair:resident-0:resident-1:last": 313
+      },
+      "pass": true
+    },
+    {
+      "width": 768,
+      "fps": 30,
+      "motion": "reduce",
+      "alter": true,
+      "runtime": {
+        "revision": "nt3-index-20260918",
+        "candidate": "nature-town-living-s1",
+        "sw": true,
+        "frames": 176,
+        "elapsed": 8935.8,
+        "observedCallbackHz": 19.584144676469933
+      },
+      "tick": 480,
+      "worldHash": "4f43875f6c481cd62c2e15793f7ffb40fca8e5898df0ffa0a07a1de5ffadc38c",
+      "ordinals": {
+        "[\"resident-choice\",\"resident-1\"]": 13,
+        "[\"resident-choice\",\"resident-2\"]": 9,
+        "[\"resident-choice\",\"resident-0\"]": 13,
+        "pair:resident-1:resident-2:last": 24,
+        "[\"insects\",\"chunk:0,0\"]": 16,
+        "[\"insect-variant\",\"chunk:0,0\"]": 6,
+        "[\"settlement\",\"world\"]": 8,
+        "farm-ready:aa12960c-3db5-4d98-8fcb-ab0e859466ae": 126,
+        "farm-ready:farm-0": 157,
+        "[\"weather\",\"world\"]": 2,
+        "pair:resident-0:resident-1:last": 313
+      },
+      "pass": true
+    }
+  ],
+  "pass": true,
+  "start": {
+    "tick": 300,
+    "offer": {
+      "id": "offer:300",
+      "templateId": "r4",
+      "preferredHubId": "hub-0",
+      "createdTick": 300,
+      "status": "pending"
+    },
+    "ordinals": {
+      "[\"resident-choice\",\"resident-1\"]": 9,
+      "[\"resident-choice\",\"resident-2\"]": 6,
+      "[\"resident-choice\",\"resident-0\"]": 8,
+      "pair:resident-1:resident-2:last": 24,
+      "[\"insects\",\"chunk:0,0\"]": 10,
+      "[\"insect-variant\",\"chunk:0,0\"]": 4,
+      "[\"settlement\",\"world\"]": 5,
+      "farm-ready:aa12960c-3db5-4d98-8fcb-ab0e859466ae": 126,
+      "farm-ready:farm-0": 157,
+      "[\"weather\",\"world\"]": 1
+    },
+    "worldHash": "31f898701d27fba3ef6ad209b829ae0eda4f279f6c1d84b2d266cb4b867b8f08"
+  },
+  "acceptance": {
+    "RNG-03": "PASS",
+    "RNG-02": "NOT_RUN: display-setting invariance passed, but fixed 30/60 fps not established; observed callback frequency differs from nominal settings."
+  }
+}

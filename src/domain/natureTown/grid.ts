@@ -56,3 +56,62 @@ export function routeOn(g: Map<string,Cell>, start: CellPos, end: CellPos): Rout
     }
 }
 export const route = (w: WorldState, a: CellPos, b: CellPos, roadsOnly=false) => routeOn(graph(w,roadsOnly),a,b);
+
+/** Reuse searches only while graph membership and cell costs are unchanged.
+ * Equal costs retain first discovery order, matching routeOn's pending Set.
+ * Each result owns its path array: residents consume paths with shift().
+ */
+export function routesFrom(g: Map<string, Cell>, start: CellPos) {
+    interface Entry { key: string; cost: number; order: number }
+    const heap: Entry[] = [], costs = new Map<string, number>(), previous = new Map<string, string>();
+    const orders = new Map<string, number>(), settled = new Set<string>(), startKey = key(start);
+    const before = (a: Entry, b: Entry) => a.cost < b.cost || a.cost === b.cost && a.order < b.order;
+    const push = (entry: Entry) => {
+        let i = heap.length; heap.push(entry);
+        while (i > 0) {
+            const parent = (i - 1) >> 1;
+            if (!before(entry, heap[parent])) break;
+            heap[i] = heap[parent]; i = parent;
+        }
+        heap[i] = entry;
+    };
+    const pop = () => {
+        const first = heap[0], last = heap.pop()!;
+        if (heap.length) {
+            let i = 0;
+            while (i * 2 + 1 < heap.length) {
+                let child = i * 2 + 1;
+                if (child + 1 < heap.length && before(heap[child + 1], heap[child])) child++;
+                if (!before(heap[child], last)) break;
+                heap[i] = heap[child]; i = child;
+            }
+            heap[i] = last;
+        }
+        return first;
+    };
+    if (g.has(startKey)) { costs.set(startKey, 0); orders.set(startKey, 0); push({ key: startKey, cost: 0, order: 0 }); }
+    return (end: CellPos): Route | undefined => {
+        const endKey = key(end);
+        if (!g.has(endKey)) return;
+        while (!settled.has(endKey) && heap.length) {
+            const current = pop();
+            if (settled.has(current.key) || current.cost !== costs.get(current.key)) continue;
+            settled.add(current.key);
+            // Expand even the requested endpoint so a later query can resume here.
+            for (const position of neighbors(g.get(current.key)!.position)) {
+                const next = key(position), cell = g.get(next);
+                if (!cell || settled.has(next)) continue;
+                const cost = current.cost + cellCost(cell);
+                if (cost < (costs.get(next) ?? Infinity)) {
+                    if (!orders.has(next)) orders.set(next, orders.size);
+                    costs.set(next, cost); previous.set(next, current.key);
+                    push({ key: next, cost, order: orders.get(next)! });
+                }
+            }
+        }
+        if (!settled.has(endKey)) return;
+        const path: CellPos[] = []; let current = endKey;
+        while (current !== startKey) { path.push(g.get(current)!.position); current = previous.get(current)!; }
+        return { path: path.reverse(), cost: costs.get(endKey)! };
+    };
+}

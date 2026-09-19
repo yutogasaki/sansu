@@ -1,0 +1,110 @@
+{
+  "target": "http://127.0.0.1:5337",
+  "sourceRoot": "/tmp/sansu-nt3-index-t1bn4rns",
+  "diagnosticTicks": 1,
+  "sourceCommit": "11d0d25954e35239a02bf5762437ded1742fba66",
+  "flags": {
+    "VITE_ISLAND_ENABLED": true,
+    "VITE_NATURE_TOWN_ENABLED": true
+  },
+  "candidate": "nature-town-living-s1",
+  "host": {
+    "platform": "darwin",
+    "release": "25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M4",
+    "logicalCpus": 10,
+    "totalMemory": 34359738368
+  },
+  "browser": "145.0.7632.6",
+  "scope": "Synthetic expanded neighborhoods; Logical tick count is recorded per run. Actual app timer callback pulsed after each prior save/render; wall time is measured, not claimed real-time cadence. CSS content-visibility:auto is diagnostic only. Node step timing excludes browser persistence/render. FPS is observed RAF callback cadence under headless load, not physical display FPS. Heap is JS heap only.",
+  "cases": [
+    {
+      "population": 24,
+      "chunks": 8,
+      "cells": 2048,
+      "nodeTickMs": {
+        "samples": 1,
+        "mean": 2421.36175,
+        "p95": 2421.36175,
+        "max": 2421.36175
+      },
+      "initialHash": "5fdb100896e1849700a0f75194e3687dc67b472bd86eb77a093b53eb712efe8f",
+      "expectedHash": "debf57876ef33c1a8129ce646f3307dee53f199a613e588d177f063ec6b61ab1",
+      "runs": [
+        {
+          "cull": false,
+          "durationMs": 2563.8163750000003,
+          "logicalTicks": 1,
+          "callbackMs": {
+            "samples": 1,
+            "mean": 2493.5,
+            "p95": 2493.5,
+            "max": 2493.5
+          },
+          "saveAndRenderMs": {
+            "samples": 1,
+            "mean": 2563.8120839999992,
+            "p95": 2563.8120839999992,
+            "max": 2563.8120839999992
+          },
+          "rafFps": 6.278391254570301,
+          "frameIntervalMs": {
+            "samples": 17,
+            "mean": 159.27647058823527,
+            "p95": 2494.2999999999997,
+            "max": 2494.2999999999997
+          },
+          "longTasks": [
+            2502
+          ],
+          "revision": "nt3-index-20260918",
+          "candidate": "nature-town-living-s1",
+          "skippedDescendants": 0,
+          "heapBefore": 14620172,
+          "heapAfter": 32104900,
+          "savePayloadBytes": 304089,
+          "worldHash": "debf57876ef33c1a8129ce646f3307dee53f199a613e588d177f063ec6b61ab1",
+          "pass": true
+        },
+        {
+          "cull": true,
+          "durationMs": 2604.3958330000005,
+          "logicalTicks": 1,
+          "callbackMs": {
+            "samples": 1,
+            "mean": 2463.5,
+            "p95": 2463.5,
+            "max": 2463.5
+          },
+          "saveAndRenderMs": {
+            "samples": 1,
+            "mean": 2604.391958,
+            "p95": 2604.391958,
+            "max": 2604.391958
+          },
+          "rafFps": 5.851375073142188,
+          "frameIntervalMs": {
+            "samples": 16,
+            "mean": 170.9,
+            "p95": 2534.1000000000004,
+            "max": 2534.1000000000004
+          },
+          "longTasks": [
+            2472,
+            73
+          ],
+          "revision": "nt3-index-20260918",
+          "candidate": "nature-town-living-s1",
+          "skippedDescendants": 224,
+          "heapBefore": 17799384,
+          "heapAfter": 17600968,
+          "savePayloadBytes": 304089,
+          "worldHash": "debf57876ef33c1a8129ce646f3307dee53f199a613e588d177f063ec6b61ab1",
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "pass": true
+}

@@ -174,14 +174,14 @@
       "condition": "30／60fps、カメラ位置、音、演出設定を変更",
       "expected": "同じ論理tickまでの結果が一致",
       "status": "NOT_RUN",
-      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+      "evidence": "Partial 2026-09-18: entire world equals at tick 480 under different viewport, overview/moisture/selected resident, sound and reduced-motion settings. Nominal RAF 60/30 produced observed callback frequencies about 69.7/19.6 Hz, so exact fixed 30/60fps condition remains unverified. Not a device FPS benchmark. See docs/design/2026-09-18-nature-town-replay/README.md."
     },
     {
       "id": "RNG-03",
       "condition": "セーブ／ロード、画面の開閉、プロフィール切替",
       "expected": "抽選を引き直さず、評価回数と候補を維持",
-      "status": "NOT_RUN",
-      "evidence": "Partial automated coverage exists; complete specified scenario not yet exercised."
+      "status": "PASS",
+      "evidence": "2026-09-18 tools/e2e-nature-town-replay.mjs against isolated committed tree 11d0d25, production-form 390/768. Timer-dispatch diagnostic: real pending offer at tick 300; reload/settings/sound toggle/profile B +5 ticks/back to A preserves midpoint; both contexts reach tick 480 with identical entire world and random ordinals. docs/design/2026-09-18-nature-town-replay/README.md."
     },
     {
       "id": "RNG-04",
@@ -320,8 +320,8 @@
       "id": "SAFE-07",
       "condition": "24／96人、8／24チャンクの負荷用状態",
       "expected": "実測結果を記録。描画の省略で論理が変わらない",
-      "status": "NOT_RUN",
-      "evidence": "Implementation present where applicable; full acceptance scenario has not been verified."
+      "status": "PASS",
+      "evidence": "2026-09-19 optimized build nt5-optimized-20260919: 24/96 residents x 8/24 chunks, full/CSS content-visibility:auto, 30 ticks each. Complete WorldState matches same-source oracle, progress retained, actual offscreen descendants skipped. Host, duration, callback and Node tick timing, observed RAF cadence, JS heap, payload size: docs/design/2026-09-19-nature-town-routing/README.md. Old/new worlds also match for three previously completed fixtures. Diagnostic performance only, not real iOS or visual readiness."
     },
     {
       "id": "SAFE-08",

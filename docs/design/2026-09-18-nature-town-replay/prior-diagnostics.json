@@ -1,0 +1,182 @@
+[
+  {
+    "target": "http://127.0.0.1:5337",
+    "fixture": "Disposable native profiles. Timer dispatcher drives the actual 1-second application callback once per pulse, awaiting durable save; no world/offer/ordinal injection. Same IndexedDB snapshot is cloned between isolated contexts. RAF rates are imposed callback cadences, not device FPS benchmarks.",
+    "runs": [
+      {
+        "width": 390,
+        "fps": 60,
+        "motion": "no-preference",
+        "alter": false,
+        "runtime": {
+          "revision": "nt3-index-20260918",
+          "candidate": "nature-town-living-s1",
+          "sw": true,
+          "frames": 323,
+          "elapsed": 9109.4
+        },
+        "tick": 480,
+        "worldHash": "865ee8b17d60ed37f0758283260e8e1f9b21d59776a2fa4304eadee0e55a2d91",
+        "ordinals": {
+          "[\"resident-choice\",\"resident-1\"]": 13,
+          "[\"resident-choice\",\"resident-2\"]": 9,
+          "[\"resident-choice\",\"resident-0\"]": 13,
+          "pair:resident-1:resident-2:last": 24,
+          "[\"insects\",\"chunk:0,0\"]": 16,
+          "[\"insect-variant\",\"chunk:0,0\"]": 6,
+          "[\"settlement\",\"world\"]": 8,
+          "farm-ready:d8efc015-1187-40e8-9dbc-2ce1c950be39": 126,
+          "farm-ready:farm-0": 157,
+          "[\"weather\",\"world\"]": 2,
+          "pair:resident-0:resident-1:last": 313
+        },
+        "pass": true
+      }
+    ],
+    "pass": false,
+    "start": {
+      "tick": 300,
+      "offer": {
+        "id": "offer:300",
+        "templateId": "r4",
+        "preferredHubId": "hub-0",
+        "createdTick": 300,
+        "status": "pending"
+      },
+      "ordinals": {
+        "[\"resident-choice\",\"resident-1\"]": 9,
+        "[\"resident-choice\",\"resident-2\"]": 6,
+        "[\"resident-choice\",\"resident-0\"]": 8,
+        "pair:resident-1:resident-2:last": 24,
+        "[\"insects\",\"chunk:0,0\"]": 10,
+        "[\"insect-variant\",\"chunk:0,0\"]": 4,
+        "[\"settlement\",\"world\"]": 5,
+        "farm-ready:d8efc015-1187-40e8-9dbc-2ce1c950be39": 126,
+        "farm-ready:farm-0": 157,
+        "[\"weather\",\"world\"]": 1
+      },
+      "worldHash": "6523b4245b4348e489d2b63a5454e470dce254634543cc089bc09e28f1e1e6fc"
+    },
+    "error": "locator.click: Error: strict mode violation: getByRole('button', { name: 'OFF', exact: true }) resolved to 2 elements:\n    1) <button class=\"app-button app-button--secondary inline-flex items-center justify-center rounded-[14px] font-bold transition-all duration-200 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2BBAA0]/30 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none touch-manipulation border border-white/40 bg-white/70 text-slate-600 shadow-[0_2px_8px_rgba(0,0,0,0.06)] hover:bg-white/80 h-10 px-4 text-sm w-20\">OFF</button> aka getByRole('button', { name: 'OFF' }).nth(2)\n    2) <button class=\"app-button app-button--secondary inline-flex items-center justify-center rounded-[14px] font-bold transition-all duration-200 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2BBAA0]/30 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none touch-manipulation border border-white/40 bg-white/70 text-slate-600 shadow-[0_2px_8px_rgba(0,0,0,0.06)] hover:bg-white/80 h-10 px-4 text-sm w-20\">OFF</button> aka getByRole('button', { name: 'OFF' }).nth(3)\n\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'OFF', exact: true })\u001b[22m\n\n    at /Users/yutogasaki/Projects/sansu/tools/e2e-nature-town-replay.mjs:75:27"
+  },
+  {
+    "target": "http://127.0.0.1:5337",
+    "fixture": "Disposable native profiles. Timer dispatcher drives the actual 1-second application callback once per pulse, awaiting durable save; no world/offer/ordinal injection. Same IndexedDB snapshot is cloned between isolated contexts. RAF rates are imposed callback cadences, not device FPS benchmarks.",
+    "runs": [
+      {
+        "width": 390,
+        "fps": 60,
+        "motion": "no-preference",
+        "alter": false,
+        "runtime": {
+          "revision": "nt3-index-20260918",
+          "candidate": "nature-town-living-s1",
+          "sw": true,
+          "frames": 833,
+          "elapsed": 12166
+        },
+        "tick": 480,
+        "worldHash": "6f75f470df6eed204d2858b05ba8bb77e9df42a5cabaa7c6fb4a12d63a9b2b89",
+        "ordinals": {
+          "[\"resident-choice\",\"resident-1\"]": 13,
+          "[\"resident-choice\",\"resident-2\"]": 9,
+          "[\"resident-choice\",\"resident-0\"]": 13,
+          "pair:resident-1:resident-2:last": 24,
+          "[\"insects\",\"chunk:0,0\"]": 16,
+          "[\"insect-variant\",\"chunk:0,0\"]": 6,
+          "[\"settlement\",\"world\"]": 8,
+          "farm-ready:0bd94540-1f92-44c6-ab99-29416998a0d2": 126,
+          "farm-ready:farm-0": 157,
+          "[\"weather\",\"world\"]": 2,
+          "pair:resident-0:resident-1:last": 313
+        },
+        "pass": true
+      }
+    ],
+    "pass": false,
+    "start": {
+      "tick": 300,
+      "offer": {
+        "id": "offer:300",
+        "templateId": "r4",
+        "preferredHubId": "hub-0",
+        "createdTick": 300,
+        "status": "pending"
+      },
+      "ordinals": {
+        "[\"resident-choice\",\"resident-1\"]": 9,
+        "[\"resident-choice\",\"resident-2\"]": 6,
+        "[\"resident-choice\",\"resident-0\"]": 8,
+        "pair:resident-1:resident-2:last": 24,
+        "[\"insects\",\"chunk:0,0\"]": 10,
+        "[\"insect-variant\",\"chunk:0,0\"]": 4,
+        "[\"settlement\",\"world\"]": 5,
+        "farm-ready:0bd94540-1f92-44c6-ab99-29416998a0d2": 126,
+        "farm-ready:farm-0": 157,
+        "[\"weather\",\"world\"]": 1
+      },
+      "worldHash": "bb3c32636f3c0da803164a3d72923a75a223933aab82be04b17dfd5dacdab51f"
+    },
+    "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /^(きりかえ|切替)$/ })\u001b[22m\n\n    at /Users/yutogasaki/Projects/sansu/tools/e2e-nature-town-replay.mjs:80:54"
+  },
+  {
+    "target": "http://127.0.0.1:5337",
+    "fixture": "Disposable native profiles. Timer dispatcher drives the actual 1-second application callback once per pulse, awaiting durable save; no world/offer/ordinal injection. Same IndexedDB snapshot is cloned between isolated contexts. RAF rates are imposed callback cadences, not device FPS benchmarks.",
+    "runs": [
+      {
+        "width": 390,
+        "fps": 60,
+        "motion": "no-preference",
+        "alter": false,
+        "runtime": {
+          "revision": "nt3-index-20260918",
+          "candidate": "nature-town-living-s1",
+          "sw": true,
+          "frames": 732,
+          "elapsed": 10338.5
+        },
+        "tick": 480,
+        "worldHash": "e0caf15c3439268d305fd08256c3151693b77a65f645d6bf72055970644066fd",
+        "ordinals": {
+          "[\"resident-choice\",\"resident-1\"]": 13,
+          "[\"resident-choice\",\"resident-2\"]": 9,
+          "[\"resident-choice\",\"resident-0\"]": 13,
+          "pair:resident-1:resident-2:last": 24,
+          "[\"insects\",\"chunk:0,0\"]": 16,
+          "[\"insect-variant\",\"chunk:0,0\"]": 6,
+          "[\"settlement\",\"world\"]": 8,
+          "farm-ready:ff1022f5-c4bd-48fc-9d38-4078f4b43ada": 126,
+          "farm-ready:farm-0": 157,
+          "[\"weather\",\"world\"]": 2,
+          "pair:resident-0:resident-1:last": 313
+        },
+        "pass": true
+      }
+    ],
+    "pass": false,
+    "start": {
+      "tick": 300,
+      "offer": {
+        "id": "offer:300",
+        "templateId": "r4",
+        "preferredHubId": "hub-0",
+        "createdTick": 300,
+        "status": "pending"
+      },
+      "ordinals": {
+        "[\"resident-choice\",\"resident-1\"]": 9,
+        "[\"resident-choice\",\"resident-2\"]": 6,
+        "[\"resident-choice\",\"resident-0\"]": 8,
+        "pair:resident-1:resident-2:last": 24,
+        "[\"insects\",\"chunk:0,0\"]": 10,
+        "[\"insect-variant\",\"chunk:0,0\"]": 4,
+        "[\"settlement\",\"world\"]": 5,
+        "farm-ready:ff1022f5-c4bd-48fc-9d38-4078f4b43ada": 126,
+        "farm-ready:farm-0": 157,
+        "[\"weather\",\"world\"]": 1
+      },
+      "worldHash": "8de538ea951f95a2e52f4329012907ddbdceed9b16a0f39239527253dd27ff5c"
+    },
+    "error": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.nature-town') to be visible\u001b[22m\n\n    at ready (/Users/yutogasaki/Projects/sansu/tools/e2e-nature-town-replay.mjs:19:63)\n    at /Users/yutogasaki/Projects/sansu/tools/e2e-nature-town-replay.mjs:90:49"
+  }
+]

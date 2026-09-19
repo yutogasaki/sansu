@@ -1,5 +1,5 @@
 import type { CellPos, EngineContext, Observation, WorldState } from './types';
-import { activeProps, cells, distance, entrance, graph, key, neighbors, route, routeOn } from './grid';
+import { activeProps, cells, distance, entrance, graph, key, neighbors, route, routesFrom } from './grid';
 import { clamp } from './environment';
 import { clearSeat, moveResident } from './transport';
 export function draw(w: WorldState, ctx: EngineContext, system: string, id: string) {
@@ -40,8 +40,10 @@ export function wander(w: WorldState, ctx: EngineContext) {
             const position=neighbors(c.position).find(n=>g.has(key(n)));
             if(position) candidates.push({id:`water:${key(c.position)}`,position,nature:b.attractorNature.waterEdge});
         }
+        // Earlier residents can change traffic; reuse only within this decision.
+        const search = routesFrom(g, r.position);
         const choices=candidates.sort((a,b)=>a.id.localeCompare(b.id)).map(c=>{
-            const path=routeOn(g,r.position,c.position), d=clamp(w.residents.filter(p=>p.id!==r.id && distance(p.position,c.position)<=2).length/3);
+            const path=search(c.position), d=clamp(w.residents.filter(p=>p.id!==r.id && distance(p.position,c.position)<=2).length/3);
             const shade=g.get(key(c.position))?.shade??0;
             const weight=Math.max(b.minimumChoiceWeight,b.baseScore+b.natureWeight*r.naturePreference*c.nature+b.socialWeight*r.socialPreference*d+b.quietWeight*(1-r.socialPreference)*(1-d)+b.shadeWeight*shade-b.distancePenalty*(path?.cost??Infinity)-(r.recentTargetIds.includes(c.id)?b.recentPenalty:0));
             return {...c,path,weight};

@@ -1,5 +1,5 @@
-import type { DomainEvent, EngineContext, Resident, WorldState } from './types';
-import { activeProps, cellCost, equal, graph, key, route, routeOn } from './grid';
+import type { DomainEvent, EngineContext, Resident, WorldState, CellPos } from './types';
+import { activeProps, cellCost, equal, graph, key, route, routeOn, routesFrom } from './grid';
 export function releaseJob(w: WorldState, resident: Resident) {
     const job=w.jobs.find(j=>j.id===resident.jobId);
     if(job) {
@@ -63,9 +63,23 @@ export function deliver(w: WorldState, ctx: EngineContext, events: DomainEvent[]
             r.dwellUntil=w.tick+ctx.config.residents.dwellTicks; r.state='using';
         }
     }
+    // Movement above mutates traffic. From here through assignment, costs and
+    // topology are fixed; reservations affect quantities but never these routes.
+    const searches = new Map<string, ReturnType<typeof routesFrom>>();
+    const networks = new Map<boolean, ReturnType<typeof graph>>();
+    const assignmentRoute = (from: CellPos, to: CellPos, roadsOnly = false) => {
+        const id = `${roadsOnly}:${key(from)}`;
+        let search = searches.get(id);
+        if (!search) {
+            let network = networks.get(roadsOnly);
+            if (!network) { network = graph(w, roadsOnly); networks.set(roadsOnly, network); }
+            search = routesFrom(network, from); searches.set(id, search);
+        }
+        return search(to);
+    };
     const hubs=activeProps(w).filter(p=>p.kind==='hub');
     for(const r of people.filter(r=>!r.jobId && r.carriedFood>0)) {
-        const targets=hubs.map(h=>({h,path:route(w,r.position,h.entrance)})).filter(t=>t.path && t.h.inventory.capacity-t.h.inventory.food-t.h.inventory.incomingReserved>=r.carriedFood).sort((a,b)=>a.path!.cost-b.path!.cost||a.h.id.localeCompare(b.h.id));
+        const targets=hubs.map(h=>({h,path:assignmentRoute(r.position,h.entrance)})).filter(t=>t.path && t.h.inventory.capacity-t.h.inventory.food-t.h.inventory.incomingReserved>=r.carriedFood).sort((a,b)=>a.path!.cost-b.path!.cost||a.h.id.localeCompare(b.h.id));
         const target=targets[0]; if(!target) continue;
         const id=`delivery:${r.id}:${w.tick}`;
         target.h.inventory.incomingReserved+=r.carriedFood;
@@ -85,8 +99,8 @@ export function deliver(w: WorldState, ctx: EngineContext, events: DomainEvent[]
             const wanted=Math.min(hub.inventory.capacity,population*b.reserveMeals+ctx.config.plants.harvestBatch)-hub.inventory.food-hub.inventory.incomingReserved;
             const available=farm.inventory.food-farm.inventory.outgoingReserved;
             if(wanted<=0 || available<=0) continue;
-            const cartPath=hub.transportPolicy==='cart_if_connected' && ctx.capabilities.has('handcart') ? route(w,farm.entrance,hub.entrance,true):undefined;
-            const delivery=cartPath ?? route(w,farm.entrance,hub.entrance), pickup=route(w,r.position,farm.entrance);
+            const cartPath=hub.transportPolicy==='cart_if_connected' && ctx.capabilities.has('handcart') ? assignmentRoute(farm.entrance,hub.entrance,true):undefined;
+            const delivery=cartPath ?? assignmentRoute(farm.entrance,hub.entrance), pickup=assignmentRoute(r.position,farm.entrance);
             if(!delivery || !pickup) continue;
             const quantity=Math.min(available,wanted,cartPath?b.cartCarry:b.walkerCarry);
             const waitKey=`farm-ready:${farm.id}`;

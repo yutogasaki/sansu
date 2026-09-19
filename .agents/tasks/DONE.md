@@ -7,6 +7,14 @@ Durable completion history and verification facts still belong in `docs/done/YYY
 
 ## Current Index
 
+- 2026-09-19: Nature Townの経路最適化・全4負荷条件を確認。受入45/47。実機・最終美術等は残件、未コミット -> `docs/done/2026-09.md`
+
+- 2026-09-19: Nature Townの初回負荷診断を記録。3条件一致、96人・24地区未完了。次は性能改善、受入44/47維持。未コミット -> `docs/done/2026-09.md`
+
+- 2026-09-19: Nature Town NT-4の実2ビルド更新・offline継続を両幅で確認。次は負荷診断。未コミット -> `docs/done/2026-09.md`
+
+- 2026-09-18: Nature Townを `11d0d25` でmainへpush。続けて画面再開・プロフィール往復の一致を確認、受入44/47。続きの記録は未コミット -> `docs/done/2026-09.md`
+
 - 2026-09-18: Nature Townの将来地区接続を修正、成長・乱数・学習境界8項目を確認。受入43/47、実画面の乱数検証へ。未コミット -> `docs/done/2026-09.md`
 
 - 2026-09-18: Nature Town NT-3前半。開拓時の水分保持を修正、水路・配送6受入項目を確認。残り12項目、未コミット -> `docs/done/2026-09.md`
