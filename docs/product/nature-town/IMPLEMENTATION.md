@@ -6,7 +6,7 @@
 
 ## 2026-09-19：検証残件の切り分け
 
-Studyの旧「次へ」callbackによる問題飛ばしを修正し、fixed-tenのStudy入力を現在の自動採点へ合わせた。汎用PWAハーネスはclassic専用と明示し、そのbuildで4件PASS。[原因・確認範囲・正式計測](../../design/2026-09-19-feedback-boundary/README.md)。町の美術承認やSAFE-06の完了とは別。
+Studyの旧「次へ」callbackによる問題飛ばしを修正し、fixed-tenのStudy入力を現在の自動採点へ合わせた。汎用PWAハーネスはclassic専用と明示し、そのbuildで4件PASS。clean commitでfixed-ten全40runも正式PASSし、検証2件の残件を解消。[原因・確認範囲・正式計測](../../design/2026-09-19-feedback-boundary/README.md)。町の美術承認やSAFE-06の完了とは別。
 
 ## 2026-09-19：全身演技と立体素材
 

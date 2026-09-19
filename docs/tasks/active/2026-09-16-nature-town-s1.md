@@ -82,3 +82,5 @@ S2の作物追加・渡し船・市場等は[段階仕様](../../product/nature-
 2026-09-19 続行：全身ポーズと既存立体素材を `nature-town-acting-s2` として実装。[最新画面と確認範囲](../../design/2026-09-19-nature-town-acting/README.md)。独立観察にはこの候補のセットを使用する。次は町全体の空間構成・受渡しの読み取りを改善し、独立回答と実iOS操作を記録する。別系統のfixed-ten Study誤答後待機はtimeoutで未合格として残す。
 
 2026-09-19 検証残件の修正：Studyの退場中の「次へ」で未回答問題が飛ぶ不具合を修正。PWA4件PASS、fixed-tenの全数値gateはPASSだが初回exportはGit条件未成立。正式計測をクリーンcommitで実行する。[原因と証拠](../../design/2026-09-19-feedback-boundary/README.md)。
+
+2026-09-19 正式計測完了：`cd272b7` のclean worktreeでfixed-ten全40run・eligible/passともtrue。PWA4件と合わせ前回の検証2件を解消。次は町全体の見た目・独立観察・実iOS操作。[正式結果](../../design/2026-09-19-feedback-boundary/README.md)。

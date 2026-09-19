@@ -51,3 +51,5 @@
 技術ゲートは町の変更範囲でPASS、全体releaseはPARTIAL（fixed-tenと汎用PWAハーネスが未合格）。視覚HOLD・独立観察未確認は別々に維持する。
 
 後続調査で2件の原因を切り分けた。Studyの問題飛ばしと検証手順を修正し、classic PWA4件を確認。[後続の修正・計測記録](../2026-09-19-feedback-boundary/README.md)。本ページの失敗ログは当時の履歴として保持する。
+
+2026-09-19後続：classic PWA4件とclean commitのfixed-ten40runが正式PASSとなり、上記2件の検証残件は解消。美術HOLD・独立観察未確認は継続する。

@@ -29,3 +29,19 @@ Nature Townの受入46/47、独立観察0人・最終美術HOLD・実機iOS未�
 ## テンポ計測の初回結果
 
 [10反復の隔離コピー診断](fixed-ten-diagnostic.json)は全40run完走、数値・保存の全gateがtrue。Explore Q1/Q2正答P95 122.1ms、誤答から同問再入力P95 451.5ms、全正解のExplore/Study処理量比2.160。ただしGitのないexportを使ったためcleanRevision=false、eligible=false／pass=false。正式PASSに読み替えず、同じコードをコミットしたクリーン作業コピーで計測のみ再実行する。
+
+## 正式計測：PASS
+
+[固定10問・40runの正式report](fixed-ten-formal.json)。commit `cd272b7cc3adced320461b1f0c40ee9f3a0e8aa1` のクリーンなGit worktree、ハーネスが起動したDEV、Chromium、390×844、音OFF・reduced motion。`eligible=true` / `pass=true`、全gateがtrue。実装は上記の隔離検査と同一で、Git条件を満たすため計測だけを再実行した。
+
+| 指標 | 結果 | 基準 |
+|---|---:|---:|
+| Study 全正解の処理量中央値 | 123問/分 | 比較対象 |
+| Explore 全正解の処理量中央値 | 267.1問/分 | Study以上 |
+| 全正解 Explore / Study | 2.171 | 1以上 |
+| Explore Q1/Q2 正答→次入力 P95 | 122.1ms | 650ms以下 |
+| Explore 誤答→同問再入力 P95 | 451.6ms | 550ms以下 |
+
+各4条件10run、正答Q1/Q2 20件、Explore誤答20件、Study誤答表示20件。問題列・保存整合・割込み列・runtime候補IDも一致。Studyの誤答は次問へ進み、Exploreは同問を再入力するため、誤答laneの処理量は同じ意味の比較として扱わない。
+
+PWA4件と正式fixed-tenの残件は解消。全体テストの再実行は不要で、証拠・文書の追記後はdocs検査だけを行う。Nature Townの最終美術・独立観察・実機確認は引き続き別件。

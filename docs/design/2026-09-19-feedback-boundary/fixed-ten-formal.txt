@@ -1,0 +1,107 @@
+
+> pokko-fushigi-zukan-app@0.0.0 benchmark:fixed-ten
+> node tools/e2e-fixed-ten-throughput.mjs
+
+
+> pokko-fushigi-zukan-app@0.0.0 dev
+> vite --host 127.0.0.1 --port 4173 --strictPort
+
+9:05:06 PM [vite] (client) Re-optimizing dependencies because vite config has changed
+
+  VITE v7.3.1  ready in 162 ms
+
+  ➜  Local:   http://127.0.0.1:4173/
+Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+Benchmark 1/10 all-correct study... 122.8 problems/min, 0 interruptions
+Benchmark 1/10 all-correct explore... 267.8 problems/min, 4 interruptions
+Benchmark 1/10 miss-at-q4-q8 explore... 186.7 problems/min, 4 interruptions
+Benchmark 1/10 miss-at-q4-q8 study... 154.1 problems/min, 2 interruptions
+Benchmark 2/10 all-correct explore... 268.5 problems/min, 4 interruptions
+Benchmark 2/10 all-correct study... 122.7 problems/min, 0 interruptions
+Benchmark 2/10 miss-at-q4-q8 study... 154.2 problems/min, 2 interruptions
+Benchmark 2/10 miss-at-q4-q8 explore... 187.3 problems/min, 4 interruptions
+Benchmark 3/10 all-correct study... 123.6 problems/min, 0 interruptions
+Benchmark 3/10 all-correct explore... 266 problems/min, 4 interruptions
+Benchmark 3/10 miss-at-q4-q8 explore... 189 problems/min, 4 interruptions
+Benchmark 3/10 miss-at-q4-q8 study... 153.8 problems/min, 2 interruptions
+Benchmark 4/10 all-correct explore... 269.2 problems/min, 4 interruptions
+Benchmark 4/10 all-correct study... 123.1 problems/min, 0 interruptions
+Benchmark 4/10 miss-at-q4-q8 study... 154 problems/min, 2 interruptions
+Benchmark 4/10 miss-at-q4-q8 explore... 188.9 problems/min, 4 interruptions
+Benchmark 5/10 all-correct study... 122.9 problems/min, 0 interruptions
+Benchmark 5/10 all-correct explore... 265.1 problems/min, 4 interruptions
+Benchmark 5/10 miss-at-q4-q8 explore... 186.9 problems/min, 4 interruptions
+Benchmark 5/10 miss-at-q4-q8 study... 153.5 problems/min, 2 interruptions
+Benchmark 6/10 all-correct explore... 267.6 problems/min, 4 interruptions
+Benchmark 6/10 all-correct study... 123 problems/min, 0 interruptions
+Benchmark 6/10 miss-at-q4-q8 study... 154.5 problems/min, 2 interruptions
+Benchmark 6/10 miss-at-q4-q8 explore... 185.6 problems/min, 4 interruptions
+Benchmark 7/10 all-correct study... 123 problems/min, 0 interruptions
+Benchmark 7/10 all-correct explore... 262.7 problems/min, 4 interruptions
+Benchmark 7/10 miss-at-q4-q8 explore... 188 problems/min, 4 interruptions
+Benchmark 7/10 miss-at-q4-q8 study... 154 problems/min, 2 interruptions
+Benchmark 8/10 all-correct explore... 270.3 problems/min, 4 interruptions
+Benchmark 8/10 all-correct study... 123 problems/min, 0 interruptions
+Benchmark 8/10 miss-at-q4-q8 study... 153.4 problems/min, 2 interruptions
+Benchmark 8/10 miss-at-q4-q8 explore... 187 problems/min, 4 interruptions
+Benchmark 9/10 all-correct study... 123.1 problems/min, 0 interruptions
+Benchmark 9/10 all-correct explore... 266.1 problems/min, 4 interruptions
+Benchmark 9/10 miss-at-q4-q8 explore... 188.9 problems/min, 4 interruptions
+Benchmark 9/10 miss-at-q4-q8 study... 153.5 problems/min, 2 interruptions
+Benchmark 10/10 all-correct explore... 267.1 problems/min, 4 interruptions
+Benchmark 10/10 all-correct study... 122.8 problems/min, 0 interruptions
+Benchmark 10/10 miss-at-q4-q8 study... 153.5 problems/min, 2 interruptions
+Benchmark 10/10 miss-at-q4-q8 explore... 185.2 problems/min, 4 interruptions
+Fixed-ten throughput summary {
+  output: '/private/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-feedback-clean-pwml9ipp/output/verification-repair/fixed-ten.json',
+  comparison: {
+    allCorrectExploreToStudyThroughputRatio: 2.171,
+    allCorrectStudyMedianProblemsPerMinute: 123,
+    allCorrectExploreMedianProblemsPerMinute: 267.1,
+    missFlowExploreToStudyThroughputRatio: 1.216,
+    missFlowStudyMedianProblemsPerMinute: 153.8,
+    missFlowExploreMedianProblemsPerMinute: 187,
+    candidateQ1Q2CorrectOperableP95Ms: 122.1,
+    exploreSameQuestionOperableP95Ms: 451.6
+  },
+  gates: {
+    exactFixedTen: true,
+    allCorrectExploreThroughputNotBelowStudy: true,
+    candidateQ1Q2CorrectOperableP95Within650Ms: true,
+    exploreSameQuestionOperableP95Within550Ms: true,
+    persistenceIntegrity: true,
+    noUnexpectedInterruptions: true,
+    firstTwoExploreAnswersNeedNoExtraTap: true,
+    exactExploreInterruptionSequence: true,
+    runtimeIdentityMatches: true
+  },
+  evidence: {
+    status: 'gating',
+    eligible: true,
+    eligibility: {
+      tenRunsInEveryCell: true,
+      twentyCandidateQ1Q2CorrectSamples: true,
+      twentyExploreIncorrectSamples: true,
+      twentyStudyCorrectionFeedbackSamples: true,
+      exactFixture: true,
+      cleanRevision: true,
+      harnessOwnedServer: true,
+      runtimeIdentityMatches: true
+    },
+    cellRunCounts: {
+      'study:all-correct': 10,
+      'explore:all-correct': 10,
+      'study:miss-at-q4-q8': 10,
+      'explore:miss-at-q4-q8': 10
+    },
+    sampleCounts: {
+      candidateQ1Q2Correct: 20,
+      exploreIncorrectSameQuestion: 20,
+      studyCorrectionFeedback: 20
+    }
+  },
+  fixedTenTechnicalPass: true,
+  pass: true
+}
