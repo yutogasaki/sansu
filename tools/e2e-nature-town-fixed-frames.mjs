@@ -46,6 +46,8 @@ try{
     if(tick%30===0)console.log(fps,'Hz',tick,'ticks');
    }
    const final=await town(page),frames=await page.evaluate(()=>window.__fixedFrames.frames),deltas=frames.slice(1).map((t,i)=>t-frames[i]);
+   await fs.writeFile(`${out}/${fps}hz-frame-times.json`,JSON.stringify({requestedInterval:interval,frames,deltas}));
+   const anomalies=deltas.map((d,i)=>({d,i})).filter(x=>Math.abs(x.d-interval)>=.1);console.log('cadence',fps,{count:deltas.length,min:Math.min(...deltas),max:Math.max(...deltas),anomalies:anomalies.slice(0,12)});
    assert.ok(deltas.length>=fps*119,'RAF ran for the requested frames');assert.ok(deltas.every(d=>Math.abs(d-interval)<.1),`native RAF cadence must match ${fps} Hz`);
    if(expected)assert.deepEqual(final.world,expected,'all world state, inventory, resident paths and random ordinals match at the same tick');else expected=final.world;
    assert.deepEqual(final.progress,initial.progress);assert.deepEqual(errors,[]);
