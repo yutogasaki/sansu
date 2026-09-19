@@ -15,7 +15,17 @@ export function growthRateV3(completionTimes: readonly number[], at: number) {
 
 /** Integrate starts and expiries; a current speed is never extrapolated forever. */
 export function effectiveGrowthHours(completionTimes: readonly number[], from: number, to: number) {
-    if (![from, to, ...completionTimes].every(Number.isFinite) || to < from) throw new Error('Invalid growth interval');
+    if (!Number.isFinite(from) || !Number.isFinite(to) || to < from) throw new Error('Invalid growth interval');
+    let count = 0, crossesBoundary = false;
+    for (const time of completionTimes) {
+        if (!Number.isFinite(time)) throw new Error('Invalid growth interval');
+        if (time <= from && time > from - GROWTH_WINDOW_MS) count++;
+        const expiry = time + GROWTH_WINDOW_MS;
+        if (time > from && time < to || expiry > from && expiry < to) crossesBoundary = true;
+    }
+    // Most resident ticks cross no learning/expiry boundary. Preserve the exact
+    // original arithmetic, without constructing and sorting boundary arrays.
+    if (!crossesBoundary) return from === to ? 0 : (to - from) / HOUR_MS * (.5 + .5 * Math.min(count / 6, 1));
     const boundaries = [...new Set([from, to, ...completionTimes.flatMap(time => [time, time + GROWTH_WINDOW_MS])
         .filter(time => time > from && time < to)])].sort((a, b) => a - b);
     return boundaries.slice(1).reduce((total, end, i) => total + (end - boundaries[i]) / HOUR_MS * growthRateV3(completionTimes, boundaries[i]), 0);

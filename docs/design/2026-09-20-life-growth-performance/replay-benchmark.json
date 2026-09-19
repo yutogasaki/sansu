@@ -1,0 +1,36 @@
+{
+  "baseline": "eb65d7c",
+  "scope": "Synthetic CPU replay; six items/100 credits; only growth implementation substituted in before run; not browser latency",
+  "runs": [
+    {
+      "label": "before",
+      "results": [
+        {
+          "hours": 24,
+          "ms": 383.582583,
+          "stateHash": "d4322d0b56cd47217e441c8f34057af48a7c4955358343cddd35dd29b2571e34"
+        },
+        {
+          "hours": 168,
+          "ms": 2438.7500840000002,
+          "stateHash": "f014375955a8098c90eb8135bc5ada4ce98e0699e9bc08fa7dd0fff51f01c885"
+        }
+      ]
+    },
+    {
+      "label": "after",
+      "results": [
+        {
+          "hours": 24,
+          "ms": 326.0803329999999,
+          "stateHash": "d4322d0b56cd47217e441c8f34057af48a7c4955358343cddd35dd29b2571e34"
+        },
+        {
+          "hours": 168,
+          "ms": 2003.6007910000003,
+          "stateHash": "f014375955a8098c90eb8135bc5ada4ce98e0699e9bc08fa7dd0fff51f01c885"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "scope": "Synthetic CPU growth integration only; exact accumulated result equality; single local run, no timing assertion",
+  "results": [
+    {
+      "credits": 0,
+      "intervals": 100000,
+      "before": {
+        "ms": 39.21725000000015,
+        "sum": 97.22222222210007
+      },
+      "after": {
+        "ms": 0.45804199999997763,
+        "sum": 97.22222222210007
+      }
+    },
+    {
+      "credits": 6,
+      "intervals": 100000,
+      "before": {
+        "ms": 85.13766699999996,
+        "sum": 109.2222222220175
+      },
+      "after": {
+        "ms": 2.0599999999999454,
+        "sum": 109.2222222220175
+      }
+    },
+    {
+      "credits": 100,
+      "intervals": 100000,
+      "before": {
+        "ms": 715.4138330000001,
+        "sum": 109.69222222201307
+      },
+      "after": {
+        "ms": 74.62783300000001,
+        "sum": 109.69222222201307
+      }
+    }
+  ]
+}
