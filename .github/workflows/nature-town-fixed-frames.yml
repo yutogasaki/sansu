@@ -1,0 +1,36 @@
+name: Nature Town fixed frames
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  fixed-frames:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Build Nature Town
+        run: npx vite build
+        env:
+          VITE_ISLAND_ENABLED: 'true'
+          VITE_NATURE_TOWN_ENABLED: 'true'
+          SANSU_BUILD_REVISION: rng-fixed-${{ github.sha }}
+      - name: Compare native 30 and 60 Hz frames
+        run: |
+          npx vite preview --host 127.0.0.1 --port 5339 --strictPort > /tmp/preview.log 2>&1 &
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:5339/version.json; then break; fi
+            sleep 1
+          done
+          node tools/e2e-nature-town-fixed-frames.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nature-town-fixed-frames
+          path: output/playwright/nature-town-fixed-frames
