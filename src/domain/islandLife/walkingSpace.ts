@@ -42,11 +42,23 @@ function geometryAllows(state: LifeState, p: Cell) {
 }
 // Geometry is immutable for the lifetime of each cache entry, even though replay mutates state.
 const meshes = new Map<string, { stand: (p: Cell) => boolean; edges: Map<string, boolean>; paths: Map<string, Cell[] | undefined> }>();
+// Replay repeatedly asks for routes while only clocks and resident positions change.
+// Compare a small copied layout first; identity alone is unsafe for mutable replay states.
+let lastLayout: {
+    expanded: LifeState['expanded']; extraLand: NonNullable<LifeState['extraLand']>;
+    items: { kind: LifeState['items'][number]['kind']; x: number | undefined; z: number | undefined }[];
+    mesh: NonNullable<ReturnType<typeof meshes.get>>;
+} | undefined;
 function meshFor(state: LifeState) {
+    const last = lastLayout, extra = state.extraLand ?? [];
+    if (last && last.expanded === state.expanded && last.extraLand.length === extra.length
+        && last.extraLand.every((side, i) => side === extra[i]) && last.items.length === state.items.length
+        && last.items.every((item, i) => item.kind === state.items[i].kind
+            && item.x === state.items[i].cell?.x && item.z === state.items[i].cell?.z)) return last.mesh;
     const signature = JSON.stringify([state.expanded, state.extraLand, state.items.filter(i => i.cell).map(i => [i.kind, i.cell])]);
     let mesh = meshes.get(signature);
     if (!mesh) {
-        const geometry = { ...state, items: state.items.map(i => ({ ...i, cell: i.cell && { ...i.cell } })) };
+        const geometry = { ...state, extraLand: state.extraLand && [...state.extraLand], items: state.items.map(i => ({ ...i, cell: i.cell && { ...i.cell } })) };
         const points = new Map<string, boolean>();
         mesh = { edges: new Map(), paths: new Map(), stand: p => {
             const key = `${p.x},${p.z}`;
@@ -56,11 +68,13 @@ function meshFor(state: LifeState) {
         meshes.set(signature, mesh);
         if (meshes.size > 8) meshes.delete(meshes.keys().next().value!);
     }
+    lastLayout = { expanded: state.expanded, extraLand: [...extra],
+        items: state.items.map(i => ({ kind: i.kind, x: i.cell?.x, z: i.cell?.z })), mesh };
     return mesh;
 }
 export const canStand = (state: LifeState, point: Cell) => meshFor(state).stand(point);
 export function fineRoute(state: LifeState, from: Cell, to: Cell, avoid: Cell[] = []): Cell[] | undefined {
-    const mesh = meshFor(state), signature = JSON.stringify([from, to, avoid]);
+    const mesh = meshFor(state), signature = `${from.x},${from.z}>${to.x},${to.z}|${avoid.map(p => `${p.x},${p.z}`).join(';')}`;
     if (!mesh.paths.has(signature)) {
         mesh.paths.set(signature, findFineRoute(state, from, to, avoid));
         if (mesh.paths.size > 512) mesh.paths.delete(mesh.paths.keys().next().value!);

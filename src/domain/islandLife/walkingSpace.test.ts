@@ -40,6 +40,40 @@ describe('fine walking space', () => {
         expect(path).toBeDefined();
         for (let elapsed = 0; elapsed < routeDuration(path); elapsed += 20) expect(canStand(state, sampleRoute(path, elapsed))).toBe(true);
     });
+    it('invalidates reused routes for in-place placement, type, storage and land edits', () => {
+        const state = fixture(), from = { x: 0, z: 3 }, to = { x: 1, z: 3 };
+        const clear = route(state, from, to)!;
+        state.items.push(item('movable', 'flower', 1, 3));
+        expect(route(state, from, to)).toBeUndefined();
+        state.items[0].cell!.x = 2;
+        expect(route(state, from, to)).toEqual(clear);
+        state.items[0].kind = 'library';
+        expect(canStand(state, { x: 3, z: 3 })).toBe(false);
+        delete state.items[0].cell;
+        expect(canStand(state, { x: 3, z: 3 })).toBe(true);
+        expect(canStand(state, { x: -2, z: 3 })).toBe(false);
+        state.expanded = 'west';
+        expect(canStand(state, { x: -2, z: 3 })).toBe(true);
+        state.extraLand = ['east'];
+        expect(canStand(state, { x: 7, z: 3 })).toBe(true);
+        state.extraLand[0] = 'south';
+        expect(canStand(state, { x: 7, z: 3 })).toBe(false);
+        expect(canStand(state, { x: 0, z: 7 })).toBe(true);
+        state.extraLand = ['east'];
+        expect(canStand(state, { x: 8, z: 3 })).toBe(true);
+    });
+    it('keeps returned paths independent and separates avoid cells and different worlds', () => {
+        const state = fixture(), from = { x: 0, z: 3 }, to = { x: 1, z: 3 };
+        const expected = route(state, from, to)!;
+        const borrowed = route(state, from, to)!; borrowed[0].x = 99;
+        expect(route(state, from, to)).toEqual(expected);
+        expect(route(state, from, to, [to])).toBeUndefined();
+        const other = fixture(); other.items = [item('wall', 'bench', 1, 3)];
+        expect(route(other, from, to)).toBeUndefined();
+        expect(route(state, from, to)).toEqual(expected);
+        state.now += 12345;
+        expect(route(state, from, to)).toEqual(expected);
+    });
     it('measures physical distance and safely resumes fractional origins', () => {
         const state = fixture(), path = route(state, { x: 4.125, z: 3 }, { x: 5, z: 3 })!;
         expect(routeLength(path)).toBe(.875);
