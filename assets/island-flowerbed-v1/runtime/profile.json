@@ -1,0 +1,15 @@
+{
+  "asset": "flowerbed",
+  "sourceSha256": "118a65ad16447047d2750c5ddfd92c47b6062f2c1af0b60fa7fc8b737de73a36",
+  "nearSha256": "0faacb1773b8d904b05729ad0987e33a4fb50bc2e244dd717a4ca3b0afe62b60",
+  "farSha256": "548edd12d215b454d16da0dcd17f640585bff379eb6946775ef3e37a64f240f4",
+  "nearBytes": 1924852,
+  "farBytes": 325532,
+  "nearTriangles": 8353,
+  "farTriangles": 5461,
+  "nearGeometryIdentical": true,
+  "textureRecipe": "baseColor 1024; metallicRoughness/normal 512; all UASTC level2 RDO .5 Zstd18 box mip filter",
+  "farRecipe": "weld + attribute-aware meshoptimizer ratio .12 error .01 lock border; UV weights4 normal weights.1; no textures; runtime shares near material",
+  "gltfTransform": "4.5.0",
+  "ktx": "4.4.2"
+}

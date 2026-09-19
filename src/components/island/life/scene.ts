@@ -1,3 +1,4 @@
+import { gardenRuntimeAsset, runtimeAssetSlot } from './runtimeAssetSlots';
 import { isolationMarker } from './isolationMarker';
 import { buildLanternLight } from './lanternLight';
 import { isFacility, occupiedCells } from '../../../domain/islandLife/footprint';
@@ -54,7 +55,7 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
     else {
         const tree = buildHeritageTree(content.m);
         tree.position.set(2.5 - center + 1.25, -.01, -3.05);
-        tree.scale.setScalar(.63); root.add(tree);
+        tree.scale.setScalar(.63); runtimeAssetSlot(tree, 'tree'); root.add(tree);
     }
     const sandboxes = new Map<string, SandScene>();
     const seats = new Map<string, LifeSeat>(), rotors: T.Group[] = [];
@@ -65,6 +66,13 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
         g.name = preview ? 'life-placement-ghost' : `life-item-${item.id}`;
         const model = buildLifeItem(item, content.m, !bedIds.has(item.id) || preview, Boolean(state.encounterVersion));
         g.add(model.root);
+        if (!preview && item.kind === 'bench' && item.style === 'original') {
+            runtimeAssetSlot(model.root, 'bench');
+            model.root.userData.runtimeAssetSeatY = model.seat!.position.y + .05;
+        }
+        if (!preview && item.kind === 'garden-hut' && item.style === 'original') runtimeAssetSlot(model.root, 'garden-hut');
+        const gardenAsset = gardenRuntimeAsset(item, preview);
+        if (gardenAsset) runtimeAssetSlot(model.root, gardenAsset);
         if (model.sandbox && !preview) sandboxes.set(item.id, model.sandbox);
         if (model.rotor && !preview) rotors.push(model.rotor);
         if (!preview && model.seat) seats.set(item.id, { seat: model.seat, pivot: model.pivot, picnic: model.picnic });

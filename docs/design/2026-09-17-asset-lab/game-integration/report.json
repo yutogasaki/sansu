@@ -1,0 +1,162 @@
+{
+  "version": {
+    "version": "development-local:5d667aa5-4ef8-463d-a8e9-89c2adeb4d86",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "target": "http://127.0.0.1:5248/",
+  "flag": "VITE_ISLAND_RUNTIME_ASSETS=true",
+  "candidate": "island-life-runtime-assets-v1",
+  "fixture": "Disposable historical credit/bench fixture; not earned learning or real-device evidence",
+  "humanN": 0,
+  "runs": [
+    {
+      "width": 390,
+      "initial": {
+        "assets": {
+          "candidate": "island-life-runtime-assets-v1",
+          "loaded": [
+            "rock",
+            "tree",
+            "bench"
+          ],
+          "failed": [],
+          "pending": [],
+          "instances": 12,
+          "far": 0
+        },
+        "render": {
+          "calls": 164,
+          "triangles": 180944,
+          "geometries": 137,
+          "textures": 17
+        },
+        "candidate": "moon-garden-v1"
+      },
+      "distant": {
+        "assets": {
+          "candidate": "island-life-runtime-assets-v1",
+          "loaded": [
+            "rock",
+            "tree",
+            "bench"
+          ],
+          "failed": [],
+          "pending": [],
+          "instances": 12,
+          "far": 0
+        },
+        "render": {
+          "calls": 168,
+          "triangles": 196964,
+          "geometries": 137,
+          "textures": 17
+        },
+        "candidate": "moon-garden-v1"
+      },
+      "final": {
+        "assets": {
+          "candidate": "island-life-runtime-assets-v1",
+          "loaded": [
+            "tree",
+            "rock",
+            "bench"
+          ],
+          "failed": [],
+          "pending": [],
+          "instances": 12,
+          "far": 0
+        },
+        "render": {
+          "calls": 164,
+          "triangles": 180944,
+          "geometries": 137,
+          "textures": 17
+        },
+        "candidate": "moon-garden-v1"
+      },
+      "errors": []
+    },
+    {
+      "width": 768,
+      "initial": {
+        "assets": {
+          "candidate": "island-life-runtime-assets-v1",
+          "loaded": [
+            "rock",
+            "tree",
+            "bench"
+          ],
+          "failed": [],
+          "pending": [],
+          "instances": 12,
+          "far": 0
+        },
+        "render": {
+          "calls": 164,
+          "triangles": 180944,
+          "geometries": 137,
+          "textures": 17
+        },
+        "candidate": "moon-garden-v1"
+      },
+      "distant": {
+        "assets": {
+          "candidate": "island-life-runtime-assets-v1",
+          "loaded": [
+            "rock",
+            "tree",
+            "bench"
+          ],
+          "failed": [],
+          "pending": [],
+          "instances": 12,
+          "far": 0
+        },
+        "render": {
+          "calls": 168,
+          "triangles": 196964,
+          "geometries": 137,
+          "textures": 17
+        },
+        "candidate": "moon-garden-v1"
+      },
+      "final": {
+        "assets": {
+          "candidate": "island-life-runtime-assets-v1",
+          "loaded": [
+            "rock",
+            "tree",
+            "bench"
+          ],
+          "failed": [],
+          "pending": [],
+          "instances": 12,
+          "far": 0
+        },
+        "render": {
+          "calls": 164,
+          "triangles": 180944,
+          "geometries": 137,
+          "textures": 17
+        },
+        "candidate": "moon-garden-v1"
+      },
+      "errors": []
+    }
+  ],
+  "pass": true
+}

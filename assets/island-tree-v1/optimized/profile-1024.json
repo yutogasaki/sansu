@@ -1,0 +1,64 @@
+{
+  "asset": "island-tree-v1",
+  "preset": "png-1024",
+  "source_sha256": "d1899e1fbb65a0afde47928717d128022e6aaa55467e8f1b5fdfc4510a247121",
+  "output_sha256": "c3e8c3ddd9fd7940f2178468271ab35e93b7dc82101d51f809212a84884e1e15",
+  "source_bytes": 8528084,
+  "output_bytes": 4380344,
+  "reduction_percent": 48.64,
+  "images": [
+    {
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ],
+      "color_space": "sRGB"
+    },
+    {
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ],
+      "color_space": "Non-Color"
+    },
+    {
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ],
+      "color_space": "Non-Color"
+    }
+  ],
+  "embedded_png_sizes": [
+    [
+      1024,
+      1024
+    ],
+    [
+      1024,
+      1024
+    ],
+    [
+      1024,
+      1024
+    ]
+  ],
+  "geometry_uv_normals_identical": true,
+  "pbr_parameters_identical": true,
+  "triangles": 12390,
+  "visual_acceptance": "PASS_DESKTOP_AND_MOBILE_VIEWPORT_COMPARE",
+  "blender_version": "5.2.1 LTS",
+  "acceptance_scope": "Static placement and close views; real mobile device and gameplay collision/seating not tested"
+}

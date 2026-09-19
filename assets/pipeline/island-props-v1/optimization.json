@@ -1,0 +1,203 @@
+{
+  "candidate": "island-asset-lab-v1",
+  "recommended_texture_size": 1024,
+  "additional_meshy_credits": 0,
+  "source_total_bytes": 25335880,
+  "optimized_total_bytes": 12616460,
+  "triangles": 24104,
+  "assets": [
+    {
+      "asset": "island-tree-v1",
+      "preset": "png-1024",
+      "source_sha256": "d1899e1fbb65a0afde47928717d128022e6aaa55467e8f1b5fdfc4510a247121",
+      "output_sha256": "c3e8c3ddd9fd7940f2178468271ab35e93b7dc82101d51f809212a84884e1e15",
+      "source_bytes": 8528084,
+      "output_bytes": 4380344,
+      "reduction_percent": 48.64,
+      "images": [
+        {
+          "before": [
+            2048,
+            2048
+          ],
+          "after": [
+            1024,
+            1024
+          ],
+          "color_space": "sRGB"
+        },
+        {
+          "before": [
+            2048,
+            2048
+          ],
+          "after": [
+            1024,
+            1024
+          ],
+          "color_space": "Non-Color"
+        },
+        {
+          "before": [
+            2048,
+            2048
+          ],
+          "after": [
+            1024,
+            1024
+          ],
+          "color_space": "Non-Color"
+        }
+      ],
+      "embedded_png_sizes": [
+        [
+          1024,
+          1024
+        ],
+        [
+          1024,
+          1024
+        ],
+        [
+          1024,
+          1024
+        ]
+      ],
+      "geometry_uv_normals_identical": true,
+      "pbr_parameters_identical": true,
+      "triangles": 12390,
+      "visual_acceptance": "PASS_DESKTOP_AND_MOBILE_VIEWPORT_COMPARE",
+      "blender_version": "5.2.1 LTS",
+      "acceptance_scope": "Static placement and close views; real mobile device and gameplay collision/seating not tested"
+    },
+    {
+      "asset": "island-rock-v1",
+      "preset": "png-1024",
+      "source_sha256": "02d903ee1e5c7029e9e493749becaa25eec3f5e1a3eaf4b737c2b48205e4a0a4",
+      "output_sha256": "6857c686f46f5c96e28b4802692730508a589f278bdfe4ce13e7ba6b57454d66",
+      "source_bytes": 9027128,
+      "output_bytes": 4158408,
+      "reduction_percent": 53.93,
+      "images": [
+        {
+          "before": [
+            2048,
+            2048
+          ],
+          "after": [
+            1024,
+            1024
+          ],
+          "color_space": "sRGB"
+        },
+        {
+          "before": [
+            2048,
+            2048
+          ],
+          "after": [
+            1024,
+            1024
+          ],
+          "color_space": "Non-Color"
+        },
+        {
+          "before": [
+            2048,
+            2048
+          ],
+          "after": [
+            1024,
+            1024
+          ],
+          "color_space": "Non-Color"
+        }
+      ],
+      "embedded_png_sizes": [
+        [
+          1024,
+          1024
+        ],
+        [
+          1024,
+          1024
+        ],
+        [
+          1024,
+          1024
+        ]
+      ],
+      "geometry_uv_normals_identical": true,
+      "pbr_parameters_identical": true,
+      "triangles": 4005,
+      "visual_acceptance": "PASS_DESKTOP_AND_MOBILE_VIEWPORT_COMPARE",
+      "blender_version": "5.2.1 LTS",
+      "acceptance_scope": "Static placement and close views; real mobile device and gameplay collision/seating not tested"
+    },
+    {
+      "asset": "island-bench-v1",
+      "preset": "png-1024",
+      "source_sha256": "ed128387115112204504db4e92bad9b3caccaa00a53cd99043deaf529de2794d",
+      "output_sha256": "1c567b0ebe04e662d37abddce52ca5472349494e098a572be1dcab276a238bc9",
+      "source_bytes": 7780668,
+      "output_bytes": 4077708,
+      "reduction_percent": 47.59,
+      "images": [
+        {
+          "before": [
+            2048,
+            2048
+          ],
+          "after": [
+            1024,
+            1024
+          ],
+          "color_space": "sRGB"
+        },
+        {
+          "before": [
+            2048,
+            2048
+          ],
+          "after": [
+            1024,
+            1024
+          ],
+          "color_space": "Non-Color"
+        },
+        {
+          "before": [
+            2048,
+            2048
+          ],
+          "after": [
+            1024,
+            1024
+          ],
+          "color_space": "Non-Color"
+        }
+      ],
+      "embedded_png_sizes": [
+        [
+          1024,
+          1024
+        ],
+        [
+          1024,
+          1024
+        ],
+        [
+          1024,
+          1024
+        ]
+      ],
+      "geometry_uv_normals_identical": true,
+      "pbr_parameters_identical": true,
+      "triangles": 7709,
+      "visual_acceptance": "PASS_DESKTOP_AND_MOBILE_VIEWPORT_COMPARE",
+      "blender_version": "5.2.1 LTS",
+      "acceptance_scope": "Static placement and close views; real mobile device and gameplay collision/seating not tested"
+    }
+  ],
+  "gameplay_ready": false
+}

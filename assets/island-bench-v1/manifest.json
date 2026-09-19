@@ -1,0 +1,146 @@
+{
+  "id": "island-bench-v1",
+  "label": "木のベンチ",
+  "target_height": 1,
+  "target_polycount": 8000,
+  "source": "/Users/yutogasaki/Projects/sansu/assets/island-bench-v1/source/input.png",
+  "source_sha256": "c908d6c9ac0458c45685c00fcad54178afd31b4d0fabfb8fe631b881c1587ee1",
+  "status": "VERIFIED",
+  "reserved_credits": 30,
+  "submitted_at": "2026-09-16T15:00:18.214111+00:00",
+  "request": {
+    "tool": "meshy_image_to_3d",
+    "arguments": {
+      "ai_model": "meshy-7",
+      "model_type": "standard",
+      "should_texture": true,
+      "enable_pbr": true,
+      "texture_resolution": "2k",
+      "target_formats": [
+        "glb"
+      ],
+      "ultra_mode": false,
+      "should_remesh": true,
+      "topology": "triangle",
+      "symmetry_mode": "off",
+      "origin_at": "bottom",
+      "remove_lighting": true,
+      "response_format": "json",
+      "file_path": "/Users/yutogasaki/Projects/sansu/assets/island-bench-v1/source/input.png",
+      "target_polycount": 8000
+    }
+  },
+  "task_id": "01a0aabb-a11b-72a6-b76a-7d6c82f57134",
+  "consumed_credits": 30,
+  "completed_observed_at": "2026-09-16T15:04:33.637523+00:00",
+  "raw": {
+    "bytes": 7780628,
+    "sha256": "87369e081ea441c2c4e42484d1d265d35d23543515140a8d49e2734e5abd95cf",
+    "triangles": 7709,
+    "meshes": 1,
+    "nodes": 1,
+    "materials": 1,
+    "image_hashes": [
+      "61d1d7feb4a4228f731cb4a666cd92cdd07004099fd3bafd5204e15d5f5639aa",
+      "b3bfb8494047a5b66a28ecf9612ab91ca20678723418699faca7d82f31dd8011",
+      "fc6a1f5fc6e4e11436f8fbab5123d69e2d958c3df8185047da979cd34bb51b4d"
+    ]
+  },
+  "final": {
+    "bytes": 7780668,
+    "sha256": "ed128387115112204504db4e92bad9b3caccaa00a53cd99043deaf529de2794d",
+    "triangles": 7709,
+    "meshes": 1,
+    "nodes": 1,
+    "materials": 1,
+    "image_hashes": [
+      "61d1d7feb4a4228f731cb4a666cd92cdd07004099fd3bafd5204e15d5f5639aa",
+      "b3bfb8494047a5b66a28ecf9612ab91ca20678723418699faca7d82f31dd8011",
+      "fc6a1f5fc6e4e11436f8fbab5123d69e2d958c3df8185047da979cd34bb51b4d"
+    ]
+  },
+  "visual_review": "PENDING",
+  "batch_id": "island-props-v1",
+  "timing": {
+    "task_id": "01a0aabb-a11b-72a6-b76a-7d6c82f57134",
+    "started_at": 1789570820057,
+    "finished_at": 1789570992740,
+    "generation_seconds": 172.683,
+    "consumed_credits": 30
+  },
+  "review": {
+    "reviewer": "Codex visual inspection",
+    "visual_gate": "CANDIDATE",
+    "silent_comprehension_safety": "NOT_TESTED_WITH_USERS",
+    "runtime_gate": "GLB_ROUNDTRIP_PASS_GAME_NOT_INTEGRATED",
+    "notes": "木の座面・背板、ミントの脚、ピンクの留め具と板の隙間を保持。元画像より木目は平滑。背面と座面裏は推定形状で、ゲームの座席位置・当たり判定は未設定。"
+  },
+  "files": {
+    "source": "source/input.png",
+    "raw": "meshy_raw/model.glb",
+    "final": "final/model.glb"
+  },
+  "verification": {
+    "asset": "island-bench-v1",
+    "blender_version": "5.2.1 LTS",
+    "raw_sha256": "87369e081ea441c2c4e42484d1d265d35d23543515140a8d49e2734e5abd95cf",
+    "final_sha256": "ed128387115112204504db4e92bad9b3caccaa00a53cd99043deaf529de2794d",
+    "before": {
+      "meshes": 1,
+      "vertices": 7576,
+      "triangles": 7709,
+      "bounds_min": [
+        -0.9517148733139038,
+        -0.37684395909309387,
+        -0.5083940029144287
+      ],
+      "bounds_max": [
+        0.95061194896698,
+        0.37706902623176575,
+        0.507349967956543
+      ],
+      "dimensions": [
+        1.9023268222808838,
+        0.7539129853248596,
+        1.0157439708709717
+      ]
+    },
+    "after": {
+      "meshes": 1,
+      "vertices": 7576,
+      "triangles": 7709,
+      "bounds_min": [
+        -0.9364203810691833,
+        -0.371113657951355,
+        0.0
+      ],
+      "bounds_max": [
+        0.9364204406738281,
+        0.37111368775367737,
+        1.0
+      ],
+      "dimensions": [
+        1.8728408813476562,
+        0.74222731590271,
+        1.0
+      ]
+    },
+    "scale_factor": 0.9845000597370304,
+    "original_bottom_center": [
+      -0.0005514621734619141,
+      0.0001125335693359375,
+      -0.5083940029144287
+    ],
+    "reimport_pass": true,
+    "render_mean_absolute_error_0_to_1": 5.673565439678896e-08,
+    "origin": "bounding-box bottom center",
+    "blender_up": "Z",
+    "glb_up": "Y",
+    "yaw_degrees": 0.0,
+    "normals": "preserved",
+    "textures": "preserved",
+    "decimation": "none",
+    "visual_review": "PENDING",
+    "in_game_validation": "NOT_RUN"
+  }
+}

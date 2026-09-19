@@ -1,0 +1,15 @@
+{
+  "asset": "streetlamp",
+  "sourceSha256": "37d47143409cb2523640972e2e94b1928cc48e04d8819fbc298b315d59a7b3a3",
+  "nearSha256": "8d2512d5422fed515ea27e58bb88e8baaf3a5beccb4692b72d720684ad109b4f",
+  "farSha256": "29aa6bcdda5dc60bb39b5e0ff0fda50b5508492eca3aba086f5fa75dc1019c52",
+  "nearBytes": 1759800,
+  "farBytes": 90884,
+  "nearTriangles": 6099,
+  "farTriangles": 1569,
+  "nearGeometryIdentical": true,
+  "textureRecipe": "baseColor 1024; metallicRoughness/normal 512; all UASTC level2 RDO .5 Zstd18 box mip filter",
+  "farRecipe": "weld + attribute-aware meshoptimizer ratio .12 error .01 lock border; UV weights4 normal weights.1; no textures; runtime shares near material",
+  "gltfTransform": "4.5.0",
+  "ktx": "4.4.2"
+}

@@ -1,0 +1,63 @@
+{
+  "asset": "island-flowerbed-v1",
+  "blender_version": "5.2.1 LTS",
+  "raw_sha256": "3396909d88ec55bf84e79cb072296ee8b671a734dae897a2b6ffc4451190a8fe",
+  "final_sha256": "4d313d5c3aa072b983be383ac4c0a791ad838a12680d2c721c426af911d024ae",
+  "before": {
+    "meshes": 1,
+    "vertices": 11704,
+    "triangles": 8353,
+    "bounds_min": [
+      -0.9517289996147156,
+      -0.7097930312156677,
+      -0.3564009666442871
+    ],
+    "bounds_max": [
+      0.9491170644760132,
+      0.7115640640258789,
+      0.35513097047805786
+    ],
+    "dimensions": [
+      1.900846004486084,
+      1.4213571548461914,
+      0.711531937122345
+    ]
+  },
+  "after": {
+    "meshes": 1,
+    "vertices": 11704,
+    "triangles": 8353,
+    "bounds_min": [
+      -0.868232250213623,
+      -0.6492204070091248,
+      0.0
+    ],
+    "bounds_max": [
+      0.868232250213623,
+      0.6492204070091248,
+      0.6499999761581421
+    ],
+    "dimensions": [
+      1.736464500427246,
+      1.2984408140182495,
+      0.6499999761581421
+    ]
+  },
+  "scale_factor": 0.9135218900065131,
+  "original_bottom_center": [
+    -0.0013059675693511963,
+    0.0008855164051055908,
+    -0.3564009666442871
+  ],
+  "reimport_pass": true,
+  "render_mean_absolute_error_0_to_1": 1.8344529451042035e-07,
+  "origin": "bounding-box bottom center",
+  "blender_up": "Z",
+  "glb_up": "Y",
+  "yaw_degrees": 0.0,
+  "normals": "preserved",
+  "textures": "preserved",
+  "decimation": "none",
+  "visual_review": "PENDING",
+  "in_game_validation": "NOT_RUN"
+}

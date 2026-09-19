@@ -1,0 +1,33 @@
+{
+  "started_at": "2026-09-16T14:41:22.977Z",
+  "balance_before": 1000,
+  "generation_calls": 1,
+  "args": {
+    "file_path": "/Users/yutogasaki/Projects/sansu/assets/source/island-cottage-v1.png",
+    "ai_model": "meshy-7",
+    "model_type": "standard",
+    "should_texture": true,
+    "enable_pbr": true,
+    "texture_resolution": "2k",
+    "target_formats": [
+      "glb"
+    ],
+    "ultra_mode": false,
+    "should_remesh": true,
+    "target_polycount": 20000,
+    "topology": "triangle",
+    "symmetry_mode": "off",
+    "origin_at": "bottom",
+    "remove_lighting": true,
+    "response_format": "json"
+  },
+  "task_id": "01a0aaaa-4f68-7154-bfe9-cd7d7eb1bac8",
+  "status": "SUCCEEDED",
+  "no_retry": true,
+  "balance_after": 970,
+  "consumed_credits": 30,
+  "observed_generation_seconds": 205,
+  "final_glb": "assets/final/island-cottage-v1.glb",
+  "raw_glb": "assets/meshy_raw/island-cottage-v1.glb",
+  "triangles": 19513
+}

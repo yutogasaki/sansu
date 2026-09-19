@@ -1,0 +1,44 @@
+{
+  "batch_id": "island-garden-v1",
+  "budget_credits": 90,
+  "credits_per_asset": 30,
+  "balance_before": 880,
+  "authorization": "User approved additional 90 credits on 2026-09-18. One Meshy7 textured generation each for garden hut, flowerbed, streetlamp. No regeneration, paid followups, purchase or recharge.",
+  "settings": {
+    "ai_model": "meshy-7",
+    "model_type": "standard",
+    "should_texture": true,
+    "enable_pbr": true,
+    "texture_resolution": "2k",
+    "target_formats": [
+      "glb"
+    ],
+    "ultra_mode": false,
+    "should_remesh": true,
+    "topology": "triangle",
+    "symmetry_mode": "off",
+    "origin_at": "bottom",
+    "remove_lighting": true,
+    "response_format": "json"
+  },
+  "assets": [
+    {
+      "id": "island-garden-hut-v1",
+      "label": "庭小屋",
+      "target_height": 2.5,
+      "target_polycount": 12000
+    },
+    {
+      "id": "island-flowerbed-v1",
+      "label": "花壇",
+      "target_height": 0.65,
+      "target_polycount": 8000
+    },
+    {
+      "id": "island-streetlamp-v1",
+      "label": "街灯",
+      "target_height": 2.0,
+      "target_polycount": 6000
+    }
+  ]
+}

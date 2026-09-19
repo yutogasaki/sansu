@@ -1,0 +1,63 @@
+{
+  "asset": "island-streetlamp-v1",
+  "preset": "png-1024",
+  "source_sha256": "1b78efacafc753abd924583b10224cbf4a5dfa5c890c5dc040f0c45ca1c425c3",
+  "output_sha256": "37d47143409cb2523640972e2e94b1928cc48e04d8819fbc298b315d59a7b3a3",
+  "source_bytes": 8972832,
+  "output_bytes": 4350232,
+  "reduction_percent": 51.52,
+  "images": [
+    {
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ],
+      "color_space": "sRGB"
+    },
+    {
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ],
+      "color_space": "Non-Color"
+    },
+    {
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ],
+      "color_space": "Non-Color"
+    }
+  ],
+  "embedded_png_sizes": [
+    [
+      1024,
+      1024
+    ],
+    [
+      1024,
+      1024
+    ],
+    [
+      1024,
+      1024
+    ]
+  ],
+  "geometry_uv_normals_identical": true,
+  "pbr_parameters_identical": true,
+  "triangles": 6099,
+  "visual_acceptance": "PENDING_BROWSER_COMPARE",
+  "blender_version": "5.2.1 LTS"
+}

@@ -1,0 +1,219 @@
+{
+  "batch_id": "island-garden-v1",
+  "budget_credits": 90,
+  "credits_per_asset": 30,
+  "balance_before": 880,
+  "authorization": "User approved additional 90 credits on 2026-09-18. One Meshy7 textured generation each for garden hut, flowerbed, streetlamp. No regeneration, paid followups, purchase or recharge.",
+  "settings": {
+    "ai_model": "meshy-7",
+    "model_type": "standard",
+    "should_texture": true,
+    "enable_pbr": true,
+    "texture_resolution": "2k",
+    "target_formats": [
+      "glb"
+    ],
+    "ultra_mode": false,
+    "should_remesh": true,
+    "topology": "triangle",
+    "symmetry_mode": "off",
+    "origin_at": "bottom",
+    "remove_lighting": true,
+    "response_format": "json"
+  },
+  "assets": {
+    "island-garden-hut-v1": {
+      "id": "island-garden-hut-v1",
+      "label": "庭小屋",
+      "target_height": 2.5,
+      "target_polycount": 12000,
+      "source": "/Users/yutogasaki/Projects/sansu/assets/island-garden-hut-v1/source/input.png",
+      "source_sha256": "eee2347b088e4e8357fdb0edf196b66aefa1b1b972a6ef99df5989c90c9c7ead",
+      "status": "VERIFIED",
+      "reserved_credits": 30,
+      "submitted_at": "2026-09-18T02:26:41.819420+00:00",
+      "request": {
+        "tool": "meshy_image_to_3d",
+        "arguments": {
+          "ai_model": "meshy-7",
+          "model_type": "standard",
+          "should_texture": true,
+          "enable_pbr": true,
+          "texture_resolution": "2k",
+          "target_formats": [
+            "glb"
+          ],
+          "ultra_mode": false,
+          "should_remesh": true,
+          "topology": "triangle",
+          "symmetry_mode": "off",
+          "origin_at": "bottom",
+          "remove_lighting": true,
+          "response_format": "json",
+          "file_path": "/Users/yutogasaki/Projects/sansu/assets/island-garden-hut-v1/source/input.png",
+          "target_polycount": 12000
+        }
+      },
+      "task_id": "01a0b256-66f4-72fa-b38c-6485db1e4308",
+      "consumed_credits": 30,
+      "completed_observed_at": "2026-09-18T02:29:45.114463+00:00",
+      "raw": {
+        "bytes": 9463264,
+        "sha256": "a82c95474c59330279b82417f767f16a13457f5001f9697aedd43f4f1b9c1a85",
+        "triangles": 11401,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "959938670ef29ee99b6ae310b03d866349937ecc78e95ed4435be820fccd51ac",
+          "a1a24fddfb9417a1ddffece825d5ec71078d3b1ce68175792c435f4ccade6a7c",
+          "cc9803b0cd73bedd1dca4249f1e74fe7b61701032821e607981403f15d54e22f"
+        ]
+      },
+      "final": {
+        "bytes": 9463304,
+        "sha256": "b2ee40c050157cf777aa933fb07f75c7635aed71dc598eead3c538a61fd25e8d",
+        "triangles": 11401,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "959938670ef29ee99b6ae310b03d866349937ecc78e95ed4435be820fccd51ac",
+          "a1a24fddfb9417a1ddffece825d5ec71078d3b1ce68175792c435f4ccade6a7c",
+          "cc9803b0cd73bedd1dca4249f1e74fe7b61701032821e607981403f15d54e22f"
+        ]
+      },
+      "visual_review": "PENDING"
+    },
+    "island-flowerbed-v1": {
+      "id": "island-flowerbed-v1",
+      "label": "花壇",
+      "target_height": 0.65,
+      "target_polycount": 8000,
+      "source": "/Users/yutogasaki/Projects/sansu/assets/island-flowerbed-v1/source/input.png",
+      "source_sha256": "dd0013ce25203a6c60d687b22c72c776de23454f38c69cbad13d61811eef0443",
+      "status": "VERIFIED",
+      "reserved_credits": 30,
+      "submitted_at": "2026-09-18T02:27:09.975931+00:00",
+      "request": {
+        "tool": "meshy_image_to_3d",
+        "arguments": {
+          "ai_model": "meshy-7",
+          "model_type": "standard",
+          "should_texture": true,
+          "enable_pbr": true,
+          "texture_resolution": "2k",
+          "target_formats": [
+            "glb"
+          ],
+          "ultra_mode": false,
+          "should_remesh": true,
+          "topology": "triangle",
+          "symmetry_mode": "off",
+          "origin_at": "bottom",
+          "remove_lighting": true,
+          "response_format": "json",
+          "file_path": "/Users/yutogasaki/Projects/sansu/assets/island-flowerbed-v1/source/input.png",
+          "target_polycount": 8000
+        }
+      },
+      "task_id": "01a0b256-d4f6-7060-b987-d01ffd7abf2c",
+      "consumed_credits": 30,
+      "completed_observed_at": "2026-09-18T02:29:54.676412+00:00",
+      "raw": {
+        "bytes": 10055204,
+        "sha256": "3396909d88ec55bf84e79cb072296ee8b671a734dae897a2b6ffc4451190a8fe",
+        "triangles": 8353,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "13be4a859cd7f12756e8ba7b7d1bcb18bc3b6e0eca14ac05d5d3737f3880f8e3",
+          "66c803b6a3afac604719e8b66a31f8953924f960bf566337d20d09095ed1fbb8",
+          "d98c31b0bb619f5f86182de65a8653cea6a8b1e274a3eef6a5d5d9caa87abd3d"
+        ]
+      },
+      "final": {
+        "bytes": 10055288,
+        "sha256": "4d313d5c3aa072b983be383ac4c0a791ad838a12680d2c721c426af911d024ae",
+        "triangles": 8353,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "13be4a859cd7f12756e8ba7b7d1bcb18bc3b6e0eca14ac05d5d3737f3880f8e3",
+          "66c803b6a3afac604719e8b66a31f8953924f960bf566337d20d09095ed1fbb8",
+          "d98c31b0bb619f5f86182de65a8653cea6a8b1e274a3eef6a5d5d9caa87abd3d"
+        ]
+      },
+      "visual_review": "PENDING"
+    },
+    "island-streetlamp-v1": {
+      "id": "island-streetlamp-v1",
+      "label": "街灯",
+      "target_height": 2.0,
+      "target_polycount": 6000,
+      "source": "/Users/yutogasaki/Projects/sansu/assets/island-streetlamp-v1/source/input.png",
+      "source_sha256": "2a4dd700e6d439c83f68888c7df77ac127595b9beb57e09e7a7246540c0261f2",
+      "status": "VERIFIED",
+      "reserved_credits": 30,
+      "submitted_at": "2026-09-18T02:27:38.045249+00:00",
+      "request": {
+        "tool": "meshy_image_to_3d",
+        "arguments": {
+          "ai_model": "meshy-7",
+          "model_type": "standard",
+          "should_texture": true,
+          "enable_pbr": true,
+          "texture_resolution": "2k",
+          "target_formats": [
+            "glb"
+          ],
+          "ultra_mode": false,
+          "should_remesh": true,
+          "topology": "triangle",
+          "symmetry_mode": "off",
+          "origin_at": "bottom",
+          "remove_lighting": true,
+          "response_format": "json",
+          "file_path": "/Users/yutogasaki/Projects/sansu/assets/island-streetlamp-v1/source/input.png",
+          "target_polycount": 6000
+        }
+      },
+      "task_id": "01a0b257-4285-7540-9307-21844cf421ad",
+      "consumed_credits": 30,
+      "completed_observed_at": "2026-09-18T02:29:21.563118+00:00",
+      "raw": {
+        "bytes": 8972788,
+        "sha256": "759afa1ce3c4dce2cd2bcbc2e2ae1934cad57733a5b46104c601a47bb49e01e5",
+        "triangles": 6099,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "1737239f1873338f255cb0ec72f5b09c7eda2cb2bd9dd51a388077dcaaf581da",
+          "8a3184404514a27e6e5a7e57fe12271c8a648b06944cc54b2824ba1c5a1f4956",
+          "8afce8e2f497acd097bd0844642aa8e16a50deb247b08185e9111ca89f9fdbbe"
+        ]
+      },
+      "final": {
+        "bytes": 8972832,
+        "sha256": "1b78efacafc753abd924583b10224cbf4a5dfa5c890c5dc040f0c45ca1c425c3",
+        "triangles": 6099,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "1737239f1873338f255cb0ec72f5b09c7eda2cb2bd9dd51a388077dcaaf581da",
+          "8a3184404514a27e6e5a7e57fe12271c8a648b06944cc54b2824ba1c5a1f4956",
+          "8afce8e2f497acd097bd0844642aa8e16a50deb247b08185e9111ca89f9fdbbe"
+        ]
+      },
+      "visual_review": "PENDING"
+    }
+  },
+  "created_at": "2026-09-18T02:26:30.173803+00:00",
+  "root": "/Users/yutogasaki/Projects/sansu",
+  "recipe_sha256": "d9bee3efa7c73ac7d86e696c8baa449a6b95c565228d259d5e3d2ca29e856336",
+  "reserved_credits": 90
+}

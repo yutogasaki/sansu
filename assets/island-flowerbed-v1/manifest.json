@@ -1,0 +1,145 @@
+{
+  "id": "island-flowerbed-v1",
+  "label": "花壇",
+  "target_height": 0.65,
+  "target_polycount": 8000,
+  "source": "/Users/yutogasaki/Projects/sansu/assets/island-flowerbed-v1/source/input.png",
+  "source_sha256": "dd0013ce25203a6c60d687b22c72c776de23454f38c69cbad13d61811eef0443",
+  "status": "VERIFIED",
+  "reserved_credits": 30,
+  "submitted_at": "2026-09-18T02:27:09.975931+00:00",
+  "request": {
+    "tool": "meshy_image_to_3d",
+    "arguments": {
+      "ai_model": "meshy-7",
+      "model_type": "standard",
+      "should_texture": true,
+      "enable_pbr": true,
+      "texture_resolution": "2k",
+      "target_formats": [
+        "glb"
+      ],
+      "ultra_mode": false,
+      "should_remesh": true,
+      "topology": "triangle",
+      "symmetry_mode": "off",
+      "origin_at": "bottom",
+      "remove_lighting": true,
+      "response_format": "json",
+      "file_path": "/Users/yutogasaki/Projects/sansu/assets/island-flowerbed-v1/source/input.png",
+      "target_polycount": 8000
+    }
+  },
+  "task_id": "01a0b256-d4f6-7060-b987-d01ffd7abf2c",
+  "consumed_credits": 30,
+  "completed_observed_at": "2026-09-18T02:29:54.676412+00:00",
+  "raw": {
+    "bytes": 10055204,
+    "sha256": "3396909d88ec55bf84e79cb072296ee8b671a734dae897a2b6ffc4451190a8fe",
+    "triangles": 8353,
+    "meshes": 1,
+    "nodes": 1,
+    "materials": 1,
+    "image_hashes": [
+      "13be4a859cd7f12756e8ba7b7d1bcb18bc3b6e0eca14ac05d5d3737f3880f8e3",
+      "66c803b6a3afac604719e8b66a31f8953924f960bf566337d20d09095ed1fbb8",
+      "d98c31b0bb619f5f86182de65a8653cea6a8b1e274a3eef6a5d5d9caa87abd3d"
+    ]
+  },
+  "final": {
+    "bytes": 10055288,
+    "sha256": "4d313d5c3aa072b983be383ac4c0a791ad838a12680d2c721c426af911d024ae",
+    "triangles": 8353,
+    "meshes": 1,
+    "nodes": 1,
+    "materials": 1,
+    "image_hashes": [
+      "13be4a859cd7f12756e8ba7b7d1bcb18bc3b6e0eca14ac05d5d3737f3880f8e3",
+      "66c803b6a3afac604719e8b66a31f8953924f960bf566337d20d09095ed1fbb8",
+      "d98c31b0bb619f5f86182de65a8653cea6a8b1e274a3eef6a5d5d9caa87abd3d"
+    ]
+  },
+  "visual_review": "PENDING",
+  "batch_id": "island-garden-v1",
+  "timing": {
+    "generation_seconds": 164.7,
+    "measurement": "submission to first observed SUCCEEDED; includes polling delay, not exact server generation duration",
+    "submitted_at": "2026-09-18T02:27:09.975931+00:00",
+    "completed_observed_at": "2026-09-18T02:29:54.676412+00:00"
+  },
+  "review": {
+    "reviewer": "Codex source/front/back/bottom comparison",
+    "visual_gate": "CANDIDATE",
+    "silent_comprehension_safety": "NOT_TESTED_WITH_USERS",
+    "runtime_gate": "GLB_ROUNDTRIP_PASS_GAME_NOT_INTEGRATED",
+    "notes": "5輪の配色と葉・石の縁を保持。背面から花を見ると薄く、正面向きの構成。360度同じ見栄えにはならないため配置方向に注意。"
+  },
+  "files": {
+    "source": "source/input.png",
+    "raw": "meshy_raw/model.glb",
+    "final": "final/model.glb"
+  },
+  "verification": {
+    "asset": "island-flowerbed-v1",
+    "blender_version": "5.2.1 LTS",
+    "raw_sha256": "3396909d88ec55bf84e79cb072296ee8b671a734dae897a2b6ffc4451190a8fe",
+    "final_sha256": "4d313d5c3aa072b983be383ac4c0a791ad838a12680d2c721c426af911d024ae",
+    "before": {
+      "meshes": 1,
+      "vertices": 11704,
+      "triangles": 8353,
+      "bounds_min": [
+        -0.9517289996147156,
+        -0.7097930312156677,
+        -0.3564009666442871
+      ],
+      "bounds_max": [
+        0.9491170644760132,
+        0.7115640640258789,
+        0.35513097047805786
+      ],
+      "dimensions": [
+        1.900846004486084,
+        1.4213571548461914,
+        0.711531937122345
+      ]
+    },
+    "after": {
+      "meshes": 1,
+      "vertices": 11704,
+      "triangles": 8353,
+      "bounds_min": [
+        -0.868232250213623,
+        -0.6492204070091248,
+        0.0
+      ],
+      "bounds_max": [
+        0.868232250213623,
+        0.6492204070091248,
+        0.6499999761581421
+      ],
+      "dimensions": [
+        1.736464500427246,
+        1.2984408140182495,
+        0.6499999761581421
+      ]
+    },
+    "scale_factor": 0.9135218900065131,
+    "original_bottom_center": [
+      -0.0013059675693511963,
+      0.0008855164051055908,
+      -0.3564009666442871
+    ],
+    "reimport_pass": true,
+    "render_mean_absolute_error_0_to_1": 1.8344529451042035e-07,
+    "origin": "bounding-box bottom center",
+    "blender_up": "Z",
+    "glb_up": "Y",
+    "yaw_degrees": 0.0,
+    "normals": "preserved",
+    "textures": "preserved",
+    "decimation": "none",
+    "visual_review": "PENDING",
+    "in_game_validation": "NOT_RUN"
+  }
+}

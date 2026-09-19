@@ -1,0 +1,63 @@
+{
+  "asset": "island-bench-v1",
+  "blender_version": "5.2.1 LTS",
+  "raw_sha256": "87369e081ea441c2c4e42484d1d265d35d23543515140a8d49e2734e5abd95cf",
+  "final_sha256": "ed128387115112204504db4e92bad9b3caccaa00a53cd99043deaf529de2794d",
+  "before": {
+    "meshes": 1,
+    "vertices": 7576,
+    "triangles": 7709,
+    "bounds_min": [
+      -0.9517148733139038,
+      -0.37684395909309387,
+      -0.5083940029144287
+    ],
+    "bounds_max": [
+      0.95061194896698,
+      0.37706902623176575,
+      0.507349967956543
+    ],
+    "dimensions": [
+      1.9023268222808838,
+      0.7539129853248596,
+      1.0157439708709717
+    ]
+  },
+  "after": {
+    "meshes": 1,
+    "vertices": 7576,
+    "triangles": 7709,
+    "bounds_min": [
+      -0.9364203810691833,
+      -0.371113657951355,
+      0.0
+    ],
+    "bounds_max": [
+      0.9364204406738281,
+      0.37111368775367737,
+      1.0
+    ],
+    "dimensions": [
+      1.8728408813476562,
+      0.74222731590271,
+      1.0
+    ]
+  },
+  "scale_factor": 0.9845000597370304,
+  "original_bottom_center": [
+    -0.0005514621734619141,
+    0.0001125335693359375,
+    -0.5083940029144287
+  ],
+  "reimport_pass": true,
+  "render_mean_absolute_error_0_to_1": 5.673565439678896e-08,
+  "origin": "bounding-box bottom center",
+  "blender_up": "Z",
+  "glb_up": "Y",
+  "yaw_degrees": 0.0,
+  "normals": "preserved",
+  "textures": "preserved",
+  "decimation": "none",
+  "visual_review": "PENDING",
+  "in_game_validation": "NOT_RUN"
+}

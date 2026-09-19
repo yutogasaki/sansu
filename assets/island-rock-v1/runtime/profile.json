@@ -1,0 +1,15 @@
+{
+  "asset": "rock",
+  "sourceSha256": "6857c686f46f5c96e28b4802692730508a589f278bdfe4ce13e7ba6b57454d66",
+  "nearSha256": "efc003a7071c2a2d658c7eab31c23427b62f6040faaf563f4c563d7ec27647bf",
+  "farSha256": "faacdfff28bef2ecf1e8e04785df3f7f3bd8b048f6c73dfc7d588c51878b55e2",
+  "nearBytes": 1568144,
+  "farBytes": 62400,
+  "nearTriangles": 4005,
+  "farTriangles": 1255,
+  "nearGeometryIdentical": true,
+  "textureRecipe": "baseColor 1024; metallicRoughness/normal 512; all UASTC level2 RDO .5 Zstd18 box mip filter",
+  "farRecipe": "weld + attribute-aware meshoptimizer ratio .12 error .01 lock border; UV weights4 normal weights.1; no textures; runtime shares near material",
+  "gltfTransform": "4.5.0",
+  "ktx": "4.4.2"
+}

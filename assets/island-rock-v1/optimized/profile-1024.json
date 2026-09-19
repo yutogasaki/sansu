@@ -1,0 +1,64 @@
+{
+  "asset": "island-rock-v1",
+  "preset": "png-1024",
+  "source_sha256": "02d903ee1e5c7029e9e493749becaa25eec3f5e1a3eaf4b737c2b48205e4a0a4",
+  "output_sha256": "6857c686f46f5c96e28b4802692730508a589f278bdfe4ce13e7ba6b57454d66",
+  "source_bytes": 9027128,
+  "output_bytes": 4158408,
+  "reduction_percent": 53.93,
+  "images": [
+    {
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ],
+      "color_space": "sRGB"
+    },
+    {
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ],
+      "color_space": "Non-Color"
+    },
+    {
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ],
+      "color_space": "Non-Color"
+    }
+  ],
+  "embedded_png_sizes": [
+    [
+      1024,
+      1024
+    ],
+    [
+      1024,
+      1024
+    ],
+    [
+      1024,
+      1024
+    ]
+  ],
+  "geometry_uv_normals_identical": true,
+  "pbr_parameters_identical": true,
+  "triangles": 4005,
+  "visual_acceptance": "PASS_DESKTOP_AND_MOBILE_VIEWPORT_COMPARE",
+  "blender_version": "5.2.1 LTS",
+  "acceptance_scope": "Static placement and close views; real mobile device and gameplay collision/seating not tested"
+}

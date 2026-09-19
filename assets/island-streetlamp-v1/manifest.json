@@ -1,0 +1,145 @@
+{
+  "id": "island-streetlamp-v1",
+  "label": "街灯",
+  "target_height": 2.0,
+  "target_polycount": 6000,
+  "source": "/Users/yutogasaki/Projects/sansu/assets/island-streetlamp-v1/source/input.png",
+  "source_sha256": "2a4dd700e6d439c83f68888c7df77ac127595b9beb57e09e7a7246540c0261f2",
+  "status": "VERIFIED",
+  "reserved_credits": 30,
+  "submitted_at": "2026-09-18T02:27:38.045249+00:00",
+  "request": {
+    "tool": "meshy_image_to_3d",
+    "arguments": {
+      "ai_model": "meshy-7",
+      "model_type": "standard",
+      "should_texture": true,
+      "enable_pbr": true,
+      "texture_resolution": "2k",
+      "target_formats": [
+        "glb"
+      ],
+      "ultra_mode": false,
+      "should_remesh": true,
+      "topology": "triangle",
+      "symmetry_mode": "off",
+      "origin_at": "bottom",
+      "remove_lighting": true,
+      "response_format": "json",
+      "file_path": "/Users/yutogasaki/Projects/sansu/assets/island-streetlamp-v1/source/input.png",
+      "target_polycount": 6000
+    }
+  },
+  "task_id": "01a0b257-4285-7540-9307-21844cf421ad",
+  "consumed_credits": 30,
+  "completed_observed_at": "2026-09-18T02:29:21.563118+00:00",
+  "raw": {
+    "bytes": 8972788,
+    "sha256": "759afa1ce3c4dce2cd2bcbc2e2ae1934cad57733a5b46104c601a47bb49e01e5",
+    "triangles": 6099,
+    "meshes": 1,
+    "nodes": 1,
+    "materials": 1,
+    "image_hashes": [
+      "1737239f1873338f255cb0ec72f5b09c7eda2cb2bd9dd51a388077dcaaf581da",
+      "8a3184404514a27e6e5a7e57fe12271c8a648b06944cc54b2824ba1c5a1f4956",
+      "8afce8e2f497acd097bd0844642aa8e16a50deb247b08185e9111ca89f9fdbbe"
+    ]
+  },
+  "final": {
+    "bytes": 8972832,
+    "sha256": "1b78efacafc753abd924583b10224cbf4a5dfa5c890c5dc040f0c45ca1c425c3",
+    "triangles": 6099,
+    "meshes": 1,
+    "nodes": 1,
+    "materials": 1,
+    "image_hashes": [
+      "1737239f1873338f255cb0ec72f5b09c7eda2cb2bd9dd51a388077dcaaf581da",
+      "8a3184404514a27e6e5a7e57fe12271c8a648b06944cc54b2824ba1c5a1f4956",
+      "8afce8e2f497acd097bd0844642aa8e16a50deb247b08185e9111ca89f9fdbbe"
+    ]
+  },
+  "visual_review": "PENDING",
+  "batch_id": "island-garden-v1",
+  "timing": {
+    "generation_seconds": 103.52,
+    "measurement": "submission to first observed SUCCEEDED; includes polling delay, not exact server generation duration",
+    "submitted_at": "2026-09-18T02:27:38.045249+00:00",
+    "completed_observed_at": "2026-09-18T02:29:21.563118+00:00"
+  },
+  "review": {
+    "reviewer": "Codex source/front/back/bottom comparison",
+    "visual_gate": "CANDIDATE",
+    "silent_comprehension_safety": "NOT_TESTED_WITH_USERS",
+    "runtime_gate": "GLB_ROUNDTRIP_PASS_GAME_NOT_INTEGRATED",
+    "notes": "曲がった支柱とランタンの接続、台座を保持。元画像より細身に感じられ、黄色の明るさが控えめ。発光は設定していない。"
+  },
+  "files": {
+    "source": "source/input.png",
+    "raw": "meshy_raw/model.glb",
+    "final": "final/model.glb"
+  },
+  "verification": {
+    "asset": "island-streetlamp-v1",
+    "blender_version": "5.2.1 LTS",
+    "raw_sha256": "759afa1ce3c4dce2cd2bcbc2e2ae1934cad57733a5b46104c601a47bb49e01e5",
+    "final_sha256": "1b78efacafc753abd924583b10224cbf4a5dfa5c890c5dc040f0c45ca1c425c3",
+    "before": {
+      "meshes": 1,
+      "vertices": 5856,
+      "triangles": 6099,
+      "bounds_min": [
+        -0.4639999568462372,
+        -0.2869110405445099,
+        -0.9520079493522644
+      ],
+      "bounds_max": [
+        0.4617609679698944,
+        0.2895709276199341,
+        0.9508339762687683
+      ],
+      "dimensions": [
+        0.9257609248161316,
+        0.5764819383621216,
+        1.9028419256210327
+      ]
+    },
+    "after": {
+      "meshes": 1,
+      "vertices": 5856,
+      "triangles": 6099,
+      "bounds_min": [
+        -0.4865148961544037,
+        -0.3029584288597107,
+        0.0
+      ],
+      "bounds_max": [
+        0.4865148961544037,
+        0.3029584288597107,
+        2.0
+      ],
+      "dimensions": [
+        0.9730297923088074,
+        0.6059168577194214,
+        2.0
+      ]
+    },
+    "scale_factor": 1.051059456421877,
+    "original_bottom_center": [
+      -0.0011194944381713867,
+      0.0013299435377120972,
+      -0.9520079493522644
+    ],
+    "reimport_pass": true,
+    "render_mean_absolute_error_0_to_1": 3.025901662567776e-08,
+    "origin": "bounding-box bottom center",
+    "blender_up": "Z",
+    "glb_up": "Y",
+    "yaw_degrees": 0.0,
+    "normals": "preserved",
+    "textures": "preserved",
+    "decimation": "none",
+    "visual_review": "PENDING",
+    "in_game_validation": "NOT_RUN"
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "target": "http://127.0.0.1:5243/prototypes/asset-lab/?set=garden",
+  "candidate": "island-asset-lab-garden-v1",
+  "delivery": "dev-asset-lab",
+  "revision": "11d0d25954e35239a02bf5762437ded1742fba66",
+  "sourceSha256": "8ba6d30c4b55f1c1e5a8713102ee4f55bbb989e8434b643173bc11cfc1a10964",
+  "measuredAt": "2026-09-18T03:53:28.775Z",
+  "measurements": [
+    {
+      "width": 390,
+      "quality": "2048",
+      "loadMs": 762,
+      "renderCpuMeanMs": 0.32666667103767394,
+      "calls": 55,
+      "triangles": 121561,
+      "textures": 24
+    },
+    {
+      "width": 390,
+      "quality": "runtime",
+      "loadMs": 79,
+      "renderCpuMeanMs": 0.3116666634877523,
+      "calls": 55,
+      "triangles": 121561,
+      "textures": 24
+    },
+    {
+      "width": 768,
+      "quality": "2048",
+      "loadMs": 510,
+      "renderCpuMeanMs": 0.34333333373069763,
+      "calls": 55,
+      "triangles": 121561,
+      "textures": 24
+    },
+    {
+      "width": 768,
+      "quality": "runtime",
+      "loadMs": 73,
+      "renderCpuMeanMs": 0.30166666905085243,
+      "calls": 55,
+      "triangles": 121561,
+      "textures": 24
+    }
+  ],
+  "checks": [
+    {
+      "width": 390,
+      "coldResources": [
+        {
+          "url": "http://127.0.0.1:5243/assets/island-tree-v1/runtime/near.glb",
+          "bytes": 1706404
+        },
+        {
+          "url": "http://127.0.0.1:5243/assets/island-rock-v1/runtime/near.glb",
+          "bytes": 1568144
+        },
+        {
+          "url": "http://127.0.0.1:5243/assets/island-bench-v1/runtime/near.glb",
+          "bytes": 1642360
+        },
+        {
+          "url": "http://127.0.0.1:5243/assets/island-garden-hut-v1/runtime/near.glb",
+          "bytes": 1983432
+        },
+        {
+          "url": "http://127.0.0.1:5243/assets/island-flowerbed-v1/runtime/near.glb",
+          "bytes": 1924852
+        },
+        {
+          "url": "http://127.0.0.1:5243/assets/island-streetlamp-v1/runtime/near.glb",
+          "bytes": 1759800
+        }
+      ]
+    },
+    "390: both qualities, 4 views, no horizontal overflow, failed load and retry, reload, reduced motion",
+    {
+      "width": 768,
+      "coldResources": [
+        {
+          "url": "http://127.0.0.1:5243/assets/island-tree-v1/runtime/near.glb",
+          "bytes": 1706404
+        },
+        {
+          "url": "http://127.0.0.1:5243/assets/island-rock-v1/runtime/near.glb",
+          "bytes": 1568144
+        },
+        {
+          "url": "http://127.0.0.1:5243/assets/island-garden-hut-v1/runtime/near.glb",
+          "bytes": 1983432
+        },
+        {
+          "url": "http://127.0.0.1:5243/assets/island-bench-v1/runtime/near.glb",
+          "bytes": 1642360
+        },
+        {
+          "url": "http://127.0.0.1:5243/assets/island-flowerbed-v1/runtime/near.glb",
+          "bytes": 1924852
+        },
+        {
+          "url": "http://127.0.0.1:5243/assets/island-streetlamp-v1/runtime/near.glb",
+          "bytes": 1759800
+        }
+      ]
+    },
+    "768: both qualities, 4 views, no horizontal overflow, failed load and retry, reload, reduced motion"
+  ],
+  "errors": []
+}

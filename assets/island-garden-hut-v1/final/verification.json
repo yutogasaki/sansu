@@ -1,0 +1,63 @@
+{
+  "asset": "island-garden-hut-v1",
+  "blender_version": "5.2.1 LTS",
+  "raw_sha256": "a82c95474c59330279b82417f767f16a13457f5001f9697aedd43f4f1b9c1a85",
+  "final_sha256": "b2ee40c050157cf777aa933fb07f75c7635aed71dc598eead3c538a61fd25e8d",
+  "before": {
+    "meshes": 1,
+    "vertices": 11926,
+    "triangles": 11401,
+    "bounds_min": [
+      -0.9508079886436462,
+      -0.5520760416984558,
+      -0.7740560173988342
+    ],
+    "bounds_max": [
+      0.9509119391441345,
+      0.5589339137077332,
+      0.7726039886474609
+    ],
+    "dimensions": [
+      1.9017199277877808,
+      1.111009955406189,
+      1.5466599464416504
+    ]
+  },
+  "after": {
+    "meshes": 1,
+    "vertices": 11926,
+    "triangles": 11401,
+    "bounds_min": [
+      -1.536957025527954,
+      -0.8979105949401855,
+      0.0
+    ],
+    "bounds_max": [
+      1.536957025527954,
+      0.8979106545448303,
+      2.5
+    ],
+    "dimensions": [
+      3.073914051055908,
+      1.795821189880371,
+      2.5
+    ]
+  },
+  "scale_factor": 1.6163862712081851,
+  "original_bottom_center": [
+    5.1975250244140625e-05,
+    0.003428936004638672,
+    -0.7740560173988342
+  ],
+  "reimport_pass": true,
+  "render_mean_absolute_error_0_to_1": 9.834181469159375e-08,
+  "origin": "bounding-box bottom center",
+  "blender_up": "Z",
+  "glb_up": "Y",
+  "yaw_degrees": 0.0,
+  "normals": "preserved",
+  "textures": "preserved",
+  "decimation": "none",
+  "visual_review": "PENDING",
+  "in_game_validation": "NOT_RUN"
+}

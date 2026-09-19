@@ -1,0 +1,51 @@
+{
+  "target": "http://127.0.0.1:5243/prototypes/asset-lab/",
+  "candidate": "island-asset-lab-v1",
+  "delivery": "dev-asset-lab",
+  "revision": "aaaf3bc0ea4482f261f3f55607d76b3d701a50c8",
+  "sourceSha256": "580dde8b5cd8673c5cf20cf46bcb072069ffc9f862fdca4a923237a0ba35633a",
+  "measuredAt": "2026-09-16T15:54:05.795Z",
+  "measurements": [
+    {
+      "width": 1280,
+      "quality": "2048",
+      "loadMs": 211,
+      "renderCpuMeanMs": 0.2800000091393789,
+      "calls": 52,
+      "triangles": 95708,
+      "textures": 15
+    },
+    {
+      "width": 1280,
+      "quality": "1024",
+      "loadMs": 72,
+      "renderCpuMeanMs": 0.24833333889643353,
+      "calls": 52,
+      "triangles": 95708,
+      "textures": 15
+    },
+    {
+      "width": 390,
+      "quality": "2048",
+      "loadMs": 218,
+      "renderCpuMeanMs": 0.2699999948342641,
+      "calls": 52,
+      "triangles": 95708,
+      "textures": 15
+    },
+    {
+      "width": 390,
+      "quality": "1024",
+      "loadMs": 56,
+      "renderCpuMeanMs": 0.23666667739550273,
+      "calls": 52,
+      "triangles": 95708,
+      "textures": 15
+    }
+  ],
+  "checks": [
+    "1280: both qualities, 4 views, no horizontal overflow, failed load and retry, reload, reduced motion",
+    "390: both qualities, 4 views, no horizontal overflow, failed load and retry, reload, reduced motion"
+  ],
+  "errors": []
+}

@@ -1,0 +1,191 @@
+{
+  "target": "http://127.0.0.1:5250/",
+  "candidate": "island-life-runtime-assets-v3",
+  "flag": "VITE_ISLAND_RUNTIME_ASSETS=true",
+  "sourceHashes": {
+    "src/components/island/life/runtimeAssets.ts": "963630853501112f7c5d0b82cf16f3085213c1f0cbf5bca9ec108abc159eeaec",
+    "src/components/island/life/runtimeAssetSlots.ts": "c871652cf062b4a4be398ac83be0d5edbee77e9aec5e9fb97449435ab7839e2e",
+    "src/components/island/life/scene.ts": "26878671e8b98e21132a308c2721e54dbcb9b626e896b580543dba6545cf881b"
+  },
+  "fixture": "Disposable historical world with synthetic credits and staggered flower ages; no real learning or Meshy calls",
+  "runs": [
+    {
+      "width": 390,
+      "fixture": [
+        {
+          "id": "qa-mature",
+          "stage": 2
+        },
+        {
+          "id": "qa-bud",
+          "stage": 1
+        },
+        {
+          "id": "qa-young",
+          "stage": 0
+        }
+      ],
+      "assets": {
+        "candidate": "island-life-runtime-assets-v3",
+        "loaded": [
+          "rock",
+          "tree",
+          "flowerbed",
+          "streetlamp",
+          "garden-hut"
+        ],
+        "failed": [],
+        "pending": [],
+        "instances": 14,
+        "byKind": {
+          "rock": 10,
+          "tree": 1,
+          "flowerbed": 1,
+          "streetlamp": 1,
+          "garden-hut": 1
+        },
+        "far": 0
+      },
+      "ground": [
+        {
+          "x": 2,
+          "z": 1
+        },
+        {
+          "x": 3,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "z": 2
+        },
+        {
+          "x": 3,
+          "z": 2
+        },
+        {
+          "x": 5,
+          "z": 2
+        },
+        {
+          "x": 3,
+          "z": 3
+        },
+        {
+          "x": 4,
+          "z": 3
+        },
+        {
+          "x": 5,
+          "z": 3
+        },
+        {
+          "x": 3,
+          "z": 4
+        },
+        {
+          "x": 4,
+          "z": 4
+        },
+        {
+          "x": 5,
+          "z": 4
+        }
+      ],
+      "errors": []
+    },
+    {
+      "width": 768,
+      "fixture": [
+        {
+          "id": "qa-mature",
+          "stage": 2
+        },
+        {
+          "id": "qa-bud",
+          "stage": 1
+        },
+        {
+          "id": "qa-young",
+          "stage": 0
+        }
+      ],
+      "assets": {
+        "candidate": "island-life-runtime-assets-v3",
+        "loaded": [
+          "rock",
+          "tree",
+          "flowerbed",
+          "garden-hut",
+          "streetlamp"
+        ],
+        "failed": [],
+        "pending": [],
+        "instances": 14,
+        "byKind": {
+          "rock": 10,
+          "tree": 1,
+          "flowerbed": 1,
+          "garden-hut": 1,
+          "streetlamp": 1
+        },
+        "far": 0
+      },
+      "ground": [
+        {
+          "x": 2,
+          "z": 1
+        },
+        {
+          "x": 3,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "z": 2
+        },
+        {
+          "x": 3,
+          "z": 2
+        },
+        {
+          "x": 5,
+          "z": 2
+        },
+        {
+          "x": 3,
+          "z": 3
+        },
+        {
+          "x": 4,
+          "z": 3
+        },
+        {
+          "x": 5,
+          "z": 3
+        },
+        {
+          "x": 3,
+          "z": 4
+        },
+        {
+          "x": 4,
+          "z": 4
+        },
+        {
+          "x": 5,
+          "z": 4
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "pass": true,
+  "baseCommit": "11d0d25954e35239a02bf5762437ded1742fba66",
+  "delivery": "DEV working tree; not production",
+  "checks": {
+    "core": "433 files / 4069 tests PASS; docs/lint/typecheck/build/assets PASS",
+    "smoke": "31 PASS",
+    "focused": "4 files / 13 tests PASS"
+  }
+}

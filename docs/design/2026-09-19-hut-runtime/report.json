@@ -1,0 +1,178 @@
+{
+  "target": "http://127.0.0.1:5250/",
+  "candidate": "island-life-runtime-assets-v2",
+  "flag": "VITE_ISLAND_RUNTIME_ASSETS=true",
+  "sourceHashes": {
+    "src/components/island/life/runtimeAssets.ts": "a7d8f48a33acbd120eae82e902ee09e652db38a40b2115665863f3a0f83e071d",
+    "src/components/island/life/runtimeAssetSlots.ts": "95efcdd225d61b309748a30b3cf84da23f32604db44a9e0770de380ab4d797a6",
+    "src/components/island/life/scene.ts": "0ab1372ded51e007a5a7188a0c3a1905f251d7e5c1800195e42db94cbb0d7c63"
+  },
+  "fixture": "Synthetic learning credits in disposable browser; real commandLife purchase; real UI visit. No Meshy calls.",
+  "runs": [
+    {
+      "width": 390,
+      "fixture": {
+        "profileId": "59674709-f67a-4ccd-9656-cfc9f630aecb",
+        "item": {
+          "id": "qa-runtime-hut",
+          "kind": "garden-hut",
+          "cell": {
+            "x": 4,
+            "z": 0
+          },
+          "growth": 0,
+          "style": "original",
+          "paidDrops": 36
+        }
+      },
+      "use": {
+        "assets": {
+          "candidate": "island-life-runtime-assets-v2",
+          "loaded": [
+            "rock",
+            "tree",
+            "bench",
+            "garden-hut"
+          ],
+          "failed": [],
+          "pending": [],
+          "instances": 13,
+          "far": 0
+        },
+        "poses": [
+          {
+            "id": "pokomoko",
+            "itemId": "qa-runtime-hut",
+            "phase": "garden-hut",
+            "position": [
+              1.5,
+              0.04,
+              0
+            ],
+            "hop": 0,
+            "headPitch": 0.6,
+            "headRoll": 0,
+            "facilityUse": {
+              "kind": "garden-hut",
+              "action": "tool-care"
+            },
+            "headYaw": 0
+          },
+          {
+            "id": "rabbit",
+            "itemId": "roam:rabbit:4",
+            "phase": "roaming",
+            "position": [
+              0.5,
+              0.04,
+              1
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": -0.01084563582617823,
+            "headYaw": 0
+          },
+          {
+            "id": "otter",
+            "phase": "home",
+            "position": [
+              -2.5,
+              0.04,
+              2
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": -0.033861722117811736,
+            "headYaw": 0
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "width": 768,
+      "fixture": {
+        "profileId": "27479edd-f4ee-4f68-91f5-cf989a62a2ba",
+        "item": {
+          "id": "qa-runtime-hut",
+          "kind": "garden-hut",
+          "cell": {
+            "x": 4,
+            "z": 0
+          },
+          "growth": 0,
+          "style": "original",
+          "paidDrops": 36
+        }
+      },
+      "use": {
+        "assets": {
+          "candidate": "island-life-runtime-assets-v2",
+          "loaded": [
+            "rock",
+            "tree",
+            "bench",
+            "garden-hut"
+          ],
+          "failed": [],
+          "pending": [],
+          "instances": 13,
+          "far": 0
+        },
+        "poses": [
+          {
+            "id": "pokomoko",
+            "itemId": "qa-runtime-hut",
+            "phase": "garden-hut",
+            "position": [
+              1.5,
+              0.04,
+              0
+            ],
+            "hop": 0,
+            "headPitch": 0.6,
+            "headRoll": 0,
+            "facilityUse": {
+              "kind": "garden-hut",
+              "action": "tool-care"
+            },
+            "headYaw": 0
+          },
+          {
+            "id": "rabbit",
+            "itemId": "roam:rabbit:5",
+            "phase": "roaming",
+            "position": [
+              0.5,
+              0.04,
+              1
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0,
+            "headYaw": 0
+          },
+          {
+            "id": "otter",
+            "itemId": "qa-runtime-bench",
+            "phase": "bench",
+            "position": [
+              -2.5,
+              0.35,
+              1
+            ],
+            "seatGap": 0,
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0,
+            "headYaw": 0
+          }
+        ]
+      },
+      "errors": []
+    }
+  ],
+  "pass": true,
+  "revision": "11d0d25954e35239a02bf5762437ded1742fba66",
+  "build": "Vite DEV working tree; relevant source SHA verified before/after; not a production build"
+}

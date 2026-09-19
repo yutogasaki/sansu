@@ -1,0 +1,63 @@
+{
+  "asset": "island-streetlamp-v1",
+  "blender_version": "5.2.1 LTS",
+  "raw_sha256": "759afa1ce3c4dce2cd2bcbc2e2ae1934cad57733a5b46104c601a47bb49e01e5",
+  "final_sha256": "1b78efacafc753abd924583b10224cbf4a5dfa5c890c5dc040f0c45ca1c425c3",
+  "before": {
+    "meshes": 1,
+    "vertices": 5856,
+    "triangles": 6099,
+    "bounds_min": [
+      -0.4639999568462372,
+      -0.2869110405445099,
+      -0.9520079493522644
+    ],
+    "bounds_max": [
+      0.4617609679698944,
+      0.2895709276199341,
+      0.9508339762687683
+    ],
+    "dimensions": [
+      0.9257609248161316,
+      0.5764819383621216,
+      1.9028419256210327
+    ]
+  },
+  "after": {
+    "meshes": 1,
+    "vertices": 5856,
+    "triangles": 6099,
+    "bounds_min": [
+      -0.4865148961544037,
+      -0.3029584288597107,
+      0.0
+    ],
+    "bounds_max": [
+      0.4865148961544037,
+      0.3029584288597107,
+      2.0
+    ],
+    "dimensions": [
+      0.9730297923088074,
+      0.6059168577194214,
+      2.0
+    ]
+  },
+  "scale_factor": 1.051059456421877,
+  "original_bottom_center": [
+    -0.0011194944381713867,
+    0.0013299435377120972,
+    -0.9520079493522644
+  ],
+  "reimport_pass": true,
+  "render_mean_absolute_error_0_to_1": 3.025901662567776e-08,
+  "origin": "bounding-box bottom center",
+  "blender_up": "Z",
+  "glb_up": "Y",
+  "yaw_degrees": 0.0,
+  "normals": "preserved",
+  "textures": "preserved",
+  "decimation": "none",
+  "visual_review": "PENDING",
+  "in_game_validation": "NOT_RUN"
+}

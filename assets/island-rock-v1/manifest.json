@@ -1,0 +1,147 @@
+{
+  "id": "island-rock-v1",
+  "label": "苔の岩",
+  "target_height": 0.8,
+  "target_polycount": 4000,
+  "source": "/Users/yutogasaki/Projects/sansu/assets/island-rock-v1/source/input.png",
+  "source_sha256": "af6f16dfaf52227293de6343539f8a371dc273d8918e00a0cb0634c0a8f17f56",
+  "status": "VERIFIED",
+  "reserved_credits": 30,
+  "submitted_at": "2026-09-16T15:00:15.890629+00:00",
+  "request": {
+    "tool": "meshy_image_to_3d",
+    "arguments": {
+      "ai_model": "meshy-7",
+      "model_type": "standard",
+      "should_texture": true,
+      "enable_pbr": true,
+      "texture_resolution": "2k",
+      "target_formats": [
+        "glb"
+      ],
+      "ultra_mode": false,
+      "should_remesh": true,
+      "topology": "triangle",
+      "symmetry_mode": "off",
+      "origin_at": "bottom",
+      "remove_lighting": true,
+      "response_format": "json",
+      "file_path": "/Users/yutogasaki/Projects/sansu/assets/island-rock-v1/source/input.png",
+      "target_polycount": 4000
+    }
+  },
+  "task_id": "01a0aabb-980a-7263-a363-58f3f3f0a619",
+  "consumed_credits": 30,
+  "completed_observed_at": "2026-09-16T15:04:25.783992+00:00",
+  "raw": {
+    "bytes": 9027076,
+    "sha256": "b5b3b94f182d51797ca0952ce857a80a05f76ac5bdfcf4c73399f19ed30f9594",
+    "triangles": 4005,
+    "meshes": 1,
+    "nodes": 1,
+    "materials": 1,
+    "image_hashes": [
+      "a48a01c951da0a7e8119308160e68eb913e8529aeefa6907a2c696dbbe4294cf",
+      "c5c1130b84a4aa337e0381370fd440287c043bfa404d7777a8adb0b226c6d5e8",
+      "ea8c3d4c6c94524c7d84e79b85b5b1355edb56b51255078716dfde08f4f3f4bf"
+    ]
+  },
+  "final": {
+    "bytes": 9027128,
+    "sha256": "02d903ee1e5c7029e9e493749becaa25eec3f5e1a3eaf4b737c2b48205e4a0a4",
+    "triangles": 4005,
+    "meshes": 1,
+    "nodes": 1,
+    "materials": 1,
+    "image_hashes": [
+      "a48a01c951da0a7e8119308160e68eb913e8529aeefa6907a2c696dbbe4294cf",
+      "c5c1130b84a4aa337e0381370fd440287c043bfa404d7777a8adb0b226c6d5e8",
+      "ea8c3d4c6c94524c7d84e79b85b5b1355edb56b51255078716dfde08f4f3f4bf"
+    ]
+  },
+  "visual_review": "PENDING",
+  "yaw_degrees": 180,
+  "batch_id": "island-props-v1",
+  "timing": {
+    "task_id": "01a0aabb-980a-7263-a363-58f3f3f0a619",
+    "started_at": 1789570817926,
+    "finished_at": 1789570988705,
+    "generation_seconds": 170.779,
+    "consumed_credits": 30
+  },
+  "review": {
+    "reviewer": "Codex visual inspection",
+    "visual_gate": "CANDIDATE",
+    "silent_comprehension_safety": "NOT_TESTED_WITH_USERS",
+    "runtime_gate": "GLB_ROUNDTRIP_PASS_GAME_NOT_INTEGRATED",
+    "notes": "紫の石と苔を保持。正面を元画像に近づけるためBlenderで180度回転。元画像より角が丸く、石の微細な質感は簡略化されている。"
+  },
+  "files": {
+    "source": "source/input.png",
+    "raw": "meshy_raw/model.glb",
+    "final": "final/model.glb"
+  },
+  "verification": {
+    "asset": "island-rock-v1",
+    "blender_version": "5.2.1 LTS",
+    "raw_sha256": "b5b3b94f182d51797ca0952ce857a80a05f76ac5bdfcf4c73399f19ed30f9594",
+    "final_sha256": "02d903ee1e5c7029e9e493749becaa25eec3f5e1a3eaf4b737c2b48205e4a0a4",
+    "before": {
+      "meshes": 1,
+      "vertices": 3696,
+      "triangles": 4005,
+      "bounds_min": [
+        -0.9175869822502136,
+        -0.9506649374961853,
+        -0.6088590025901794
+      ],
+      "bounds_max": [
+        0.9170870184898376,
+        0.9518029093742371,
+        0.6160399913787842
+      ],
+      "dimensions": [
+        1.8346740007400513,
+        1.9024678468704224,
+        1.2248990535736084
+      ]
+    },
+    "after": {
+      "meshes": 1,
+      "vertices": 3696,
+      "triangles": 4005,
+      "bounds_min": [
+        -0.5991266369819641,
+        -0.6212652325630188,
+        0.0
+      ],
+      "bounds_max": [
+        0.5991266965866089,
+        0.6212652325630188,
+        0.8000000715255737
+      ],
+      "dimensions": [
+        1.1982533931732178,
+        1.2425304651260376,
+        0.8000000715255737
+      ]
+    },
+    "scale_factor": 0.6531150763768775,
+    "original_bottom_center": [
+      0.000250011682510376,
+      -0.0005689859390258789,
+      -0.6088590025901794
+    ],
+    "reimport_pass": true,
+    "render_mean_absolute_error_0_to_1": 2.5720169105625246e-07,
+    "origin": "bounding-box bottom center",
+    "blender_up": "Z",
+    "glb_up": "Y",
+    "yaw_degrees": 180.0,
+    "normals": "preserved",
+    "textures": "preserved",
+    "decimation": "none",
+    "visual_review": "PENDING",
+    "in_game_validation": "NOT_RUN"
+  }
+}

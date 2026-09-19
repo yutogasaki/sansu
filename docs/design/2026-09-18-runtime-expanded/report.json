@@ -1,0 +1,358 @@
+{
+  "version": {
+    "version": "development-local:5d667aa5-4ef8-463d-a8e9-89c2adeb4d86",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "target": "http://127.0.0.1:5248/",
+  "flag": "VITE_ISLAND_RUNTIME_ASSETS=true",
+  "candidate": "island-life-runtime-assets-v1",
+  "fixture": "Disposable historical credit/bench fixture; not earned learning or real-device evidence",
+  "humanN": 0,
+  "runs": [
+    {
+      "width": 390,
+      "expanded": {
+        "items": 22,
+        "landCells": 96,
+        "expansions": [
+          "west",
+          "east",
+          "south"
+        ],
+        "fixture": "200 synthetic credits; real commandLife validation; disposable browser only"
+      },
+      "initial": {
+        "assets": {
+          "candidate": "island-life-runtime-assets-v1",
+          "loaded": [
+            "rock",
+            "tree",
+            "bench"
+          ],
+          "failed": [],
+          "pending": [],
+          "instances": 37,
+          "far": 8
+        },
+        "render": {
+          "calls": 268,
+          "triangles": 498391,
+          "geometries": 284,
+          "textures": 17
+        },
+        "candidate": "moon-garden-v1"
+      },
+      "initialMeasure": {
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+        "frameMedianMs": 92.5,
+        "frameP95Ms": 97,
+        "sampleCount": 30,
+        "glbs": [
+          {
+            "url": "http://127.0.0.1:5248/assets/near-CMx7NApC.glb",
+            "encodedBytes": 1568144,
+            "transferBytes": 300,
+            "duration": 1.899999976158142
+          },
+          {
+            "url": "http://127.0.0.1:5248/assets/far-geometry-Di-gBAev.glb",
+            "encodedBytes": 62400,
+            "transferBytes": 300,
+            "duration": 2
+          },
+          {
+            "url": "http://127.0.0.1:5248/assets/near-C_b32qsb.glb",
+            "encodedBytes": 1706404,
+            "transferBytes": 300,
+            "duration": 2.600000023841858
+          },
+          {
+            "url": "http://127.0.0.1:5248/assets/far-geometry-BV4Tmqez.glb",
+            "encodedBytes": 136544,
+            "transferBytes": 300,
+            "duration": 2.700000047683716
+          },
+          {
+            "url": "http://127.0.0.1:5248/assets/near-B3PvBOT3.glb",
+            "encodedBytes": 1642360,
+            "transferBytes": 300,
+            "duration": 3.200000047683716
+          },
+          {
+            "url": "http://127.0.0.1:5248/assets/far-geometry-DTfZ_trK.glb",
+            "encodedBytes": 127568,
+            "transferBytes": 300,
+            "duration": 3.100000023841858
+          }
+        ]
+      },
+      "distant": {
+        "assets": {
+          "candidate": "island-life-runtime-assets-v1",
+          "loaded": [
+            "rock",
+            "tree",
+            "bench"
+          ],
+          "failed": [],
+          "pending": [],
+          "instances": 37,
+          "far": 14
+        },
+        "render": {
+          "calls": 279,
+          "triangles": 483687,
+          "geometries": 287,
+          "textures": 17
+        },
+        "candidate": "moon-garden-v1"
+      },
+      "distantMeasure": {
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+        "frameMedianMs": 92.39999997615814,
+        "frameP95Ms": 94.30000007152557,
+        "sampleCount": 30,
+        "glbs": [
+          {
+            "url": "http://127.0.0.1:5248/assets/near-CMx7NApC.glb",
+            "encodedBytes": 1568144,
+            "transferBytes": 300,
+            "duration": 1.899999976158142
+          },
+          {
+            "url": "http://127.0.0.1:5248/assets/far-geometry-Di-gBAev.glb",
+            "encodedBytes": 62400,
+            "transferBytes": 300,
+            "duration": 2
+          },
+          {
+            "url": "http://127.0.0.1:5248/assets/near-C_b32qsb.glb",
+            "encodedBytes": 1706404,
+            "transferBytes": 300,
+            "duration": 2.600000023841858
+          },
+          {
+            "url": "http://127.0.0.1:5248/assets/far-geometry-BV4Tmqez.glb",
+            "encodedBytes": 136544,
+            "transferBytes": 300,
+            "duration": 2.700000047683716
+          },
+          {
+            "url": "http://127.0.0.1:5248/assets/near-B3PvBOT3.glb",
+            "encodedBytes": 1642360,
+            "transferBytes": 300,
+            "duration": 3.200000047683716
+          },
+          {
+            "url": "http://127.0.0.1:5248/assets/far-geometry-DTfZ_trK.glb",
+            "encodedBytes": 127568,
+            "transferBytes": 300,
+            "duration": 3.100000023841858
+          }
+        ]
+      },
+      "final": {
+        "assets": {
+          "candidate": "island-life-runtime-assets-v1",
+          "loaded": [
+            "rock",
+            "tree",
+            "bench"
+          ],
+          "failed": [],
+          "pending": [],
+          "instances": 37,
+          "far": 8
+        },
+        "render": {
+          "calls": 264,
+          "triangles": 496279,
+          "geometries": 284,
+          "textures": 17
+        },
+        "candidate": "moon-garden-v1"
+      },
+      "errors": []
+    },
+    {
+      "width": 768,
+      "expanded": {
+        "items": 22,
+        "landCells": 96,
+        "expansions": [
+          "west",
+          "east",
+          "south"
+        ],
+        "fixture": "200 synthetic credits; real commandLife validation; disposable browser only"
+      },
+      "initial": {
+        "assets": {
+          "candidate": "island-life-runtime-assets-v1",
+          "loaded": [
+            "rock",
+            "tree",
+            "bench"
+          ],
+          "failed": [],
+          "pending": [],
+          "instances": 37,
+          "far": 0
+        },
+        "render": {
+          "calls": 268,
+          "triangles": 525891,
+          "geometries": 283,
+          "textures": 17
+        },
+        "candidate": "moon-garden-v1"
+      },
+      "initialMeasure": {
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+        "frameMedianMs": 122.29999995231628,
+        "frameP95Ms": 125.30000007152557,
+        "sampleCount": 30,
+        "glbs": [
+          {
+            "url": "http://127.0.0.1:5248/assets/near-CMx7NApC.glb",
+            "encodedBytes": 1568144,
+            "transferBytes": 300,
+            "duration": 2.100000023841858
+          },
+          {
+            "url": "http://127.0.0.1:5248/assets/far-geometry-Di-gBAev.glb",
+            "encodedBytes": 62400,
+            "transferBytes": 300,
+            "duration": 2.399999976158142
+          },
+          {
+            "url": "http://127.0.0.1:5248/assets/near-C_b32qsb.glb",
+            "encodedBytes": 1706404,
+            "transferBytes": 300,
+            "duration": 2.899999976158142
+          },
+          {
+            "url": "http://127.0.0.1:5248/assets/far-geometry-BV4Tmqez.glb",
+            "encodedBytes": 136544,
+            "transferBytes": 300,
+            "duration": 2.899999976158142
+          },
+          {
+            "url": "http://127.0.0.1:5248/assets/near-B3PvBOT3.glb",
+            "encodedBytes": 1642360,
+            "transferBytes": 300,
+            "duration": 3.399999976158142
+          },
+          {
+            "url": "http://127.0.0.1:5248/assets/far-geometry-DTfZ_trK.glb",
+            "encodedBytes": 127568,
+            "transferBytes": 300,
+            "duration": 3.3000000715255737
+          }
+        ]
+      },
+      "distant": {
+        "assets": {
+          "candidate": "island-life-runtime-assets-v1",
+          "loaded": [
+            "rock",
+            "tree",
+            "bench"
+          ],
+          "failed": [],
+          "pending": [],
+          "instances": 37,
+          "far": 0
+        },
+        "render": {
+          "calls": 279,
+          "triangles": 557937,
+          "geometries": 286,
+          "textures": 17
+        },
+        "candidate": "moon-garden-v1"
+      },
+      "distantMeasure": {
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+        "frameMedianMs": 121.29999995231628,
+        "frameP95Ms": 295.2000000476837,
+        "sampleCount": 30,
+        "glbs": [
+          {
+            "url": "http://127.0.0.1:5248/assets/near-CMx7NApC.glb",
+            "encodedBytes": 1568144,
+            "transferBytes": 300,
+            "duration": 2.100000023841858
+          },
+          {
+            "url": "http://127.0.0.1:5248/assets/far-geometry-Di-gBAev.glb",
+            "encodedBytes": 62400,
+            "transferBytes": 300,
+            "duration": 2.399999976158142
+          },
+          {
+            "url": "http://127.0.0.1:5248/assets/near-C_b32qsb.glb",
+            "encodedBytes": 1706404,
+            "transferBytes": 300,
+            "duration": 2.899999976158142
+          },
+          {
+            "url": "http://127.0.0.1:5248/assets/far-geometry-BV4Tmqez.glb",
+            "encodedBytes": 136544,
+            "transferBytes": 300,
+            "duration": 2.899999976158142
+          },
+          {
+            "url": "http://127.0.0.1:5248/assets/near-B3PvBOT3.glb",
+            "encodedBytes": 1642360,
+            "transferBytes": 300,
+            "duration": 3.399999976158142
+          },
+          {
+            "url": "http://127.0.0.1:5248/assets/far-geometry-DTfZ_trK.glb",
+            "encodedBytes": 127568,
+            "transferBytes": 300,
+            "duration": 3.3000000715255737
+          }
+        ]
+      },
+      "final": {
+        "assets": {
+          "candidate": "island-life-runtime-assets-v1",
+          "loaded": [
+            "rock",
+            "tree",
+            "bench"
+          ],
+          "failed": [],
+          "pending": [],
+          "instances": 37,
+          "far": 0
+        },
+        "render": {
+          "calls": 264,
+          "triangles": 523779,
+          "geometries": 283,
+          "textures": 17
+        },
+        "candidate": "moon-garden-v1"
+      },
+      "errors": []
+    }
+  ],
+  "pass": true
+}

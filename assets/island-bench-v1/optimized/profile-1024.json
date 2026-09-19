@@ -1,0 +1,64 @@
+{
+  "asset": "island-bench-v1",
+  "preset": "png-1024",
+  "source_sha256": "ed128387115112204504db4e92bad9b3caccaa00a53cd99043deaf529de2794d",
+  "output_sha256": "1c567b0ebe04e662d37abddce52ca5472349494e098a572be1dcab276a238bc9",
+  "source_bytes": 7780668,
+  "output_bytes": 4077708,
+  "reduction_percent": 47.59,
+  "images": [
+    {
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ],
+      "color_space": "sRGB"
+    },
+    {
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ],
+      "color_space": "Non-Color"
+    },
+    {
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ],
+      "color_space": "Non-Color"
+    }
+  ],
+  "embedded_png_sizes": [
+    [
+      1024,
+      1024
+    ],
+    [
+      1024,
+      1024
+    ],
+    [
+      1024,
+      1024
+    ]
+  ],
+  "geometry_uv_normals_identical": true,
+  "pbr_parameters_identical": true,
+  "triangles": 7709,
+  "visual_acceptance": "PASS_DESKTOP_AND_MOBILE_VIEWPORT_COMPARE",
+  "blender_version": "5.2.1 LTS",
+  "acceptance_scope": "Static placement and close views; real mobile device and gameplay collision/seating not tested"
+}

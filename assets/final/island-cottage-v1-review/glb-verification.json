@@ -1,0 +1,90 @@
+{
+  "meshy_raw": {
+    "bytes": 9448048,
+    "sha256": "3b7b3991b305944ce0433a27a5938d40b6678acd4ee332c2e784db3d8fe5f766",
+    "triangles": 19513,
+    "meshes": 1,
+    "nodes": [
+      {
+        "mesh": 0,
+        "name": "Mesh_0"
+      }
+    ],
+    "images": 3,
+    "materials": [
+      {
+        "doubleSided": true,
+        "name": "Material_0",
+        "normalTexture": {
+          "index": 0
+        },
+        "pbrMetallicRoughness": {
+          "baseColorTexture": {
+            "index": 1
+          },
+          "metallicRoughnessTexture": {
+            "index": 2
+          }
+        }
+      }
+    ],
+    "position_bounds": [
+      {
+        "min": [
+          -0.9120399951934814,
+          -0.9520840048789978,
+          -0.8241649866104126
+        ],
+        "max": [
+          0.9158379435539246,
+          0.9505839943885803,
+          0.822702944278717
+        ]
+      }
+    ]
+  },
+  "final": {
+    "bytes": 9448088,
+    "sha256": "07f395970202a294b59d455355f430b6fa36a466f6447f7d854d5023d84ac352",
+    "triangles": 19513,
+    "meshes": 1,
+    "nodes": [
+      {
+        "mesh": 0,
+        "name": "IslandCottage"
+      }
+    ],
+    "images": 3,
+    "materials": [
+      {
+        "doubleSided": true,
+        "name": "IslandCottage_PBR",
+        "normalTexture": {
+          "index": 0
+        },
+        "pbrMetallicRoughness": {
+          "baseColorTexture": {
+            "index": 1
+          },
+          "metallicRoughnessTexture": {
+            "index": 2
+          }
+        }
+      }
+    ],
+    "position_bounds": [
+      {
+        "min": [
+          -1.4410381317138672,
+          0,
+          -1.2983357906341553
+        ],
+        "max": [
+          1.4410381317138672,
+          3,
+          1.2983357906341553
+        ]
+      }
+    ]
+  }
+}

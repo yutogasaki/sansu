@@ -1,0 +1,13 @@
+{
+  "candidate": "island-asset-lab-garden-v1",
+  "delivery": "dev-asset-lab",
+  "target": "http://127.0.0.1:5243/prototypes/asset-lab/?set=garden",
+  "sourceHashes": {
+    "src/prototypes/assetLab/main.ts": "8ba6d30c4b55f1c1e5a8713102ee4f55bbb989e8434b643173bc11cfc1a10964",
+    "src/prototypes/assetLab/style.css": "61f934cd2271d8a40eecf5c6baa9c1ba368fab62cc54360f3043b90a2139b7b5",
+    "tools/e2e-asset-lab.mjs": "579682e37f3d9f085ac8f397b8d8b82f7c6ed765b0bf8abef431102bd1bc1a01",
+    "tools/asset-pipeline/build-runtime.mjs": "68710ae432a9c907ce7c2ba02f035acac1b348188efa7fedacbcb0de8c5b4bf0",
+    "assets/pipeline/island-garden-v1/runtime-manifest.json": "ce39a396414a5e661b03eed18f6f7e694fbbfac268344a484c4e119cf9281d76"
+  },
+  "scope": "DEV lab only; game storage, learning, behavior and production flag unchanged"
+}

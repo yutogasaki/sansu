@@ -1,3 +1,4 @@
+import { runtimeAssetsEnabled, runtimeAssetSlot } from './runtimeAssetSlots';
 import { occupiedCells } from '../../../domain/islandLife/footprint';
 import { buildExtendedGround } from './extendedGround';
 import { landBounds } from '../../../domain/islandLife/landRules';
@@ -87,6 +88,11 @@ export function buildLandscape(state: LifeState, width: number, point: (c: Cell)
         stone.scale.set(.22 + (j % 3) * .065, .19, .24);
         stone.castShadow = stone.receiveShadow = true; edge.add(stone);
         stone.rotation.y = j * .7;
+        if (runtimeAssetsEnabled) {
+            const slot = new T.Group(); slot.position.copy(stone.position); slot.quaternion.copy(stone.quaternion); slot.scale.copy(stone.scale);
+            stone.position.set(0, 0, 0); stone.rotation.set(0, 0, 0); stone.scale.setScalar(1);
+            slot.add(stone); runtimeAssetSlot(slot, 'rock'); root.add(slot);
+        }
         if (j % 3 !== 1) for (let k = 0; k < 4; k++) {
             const leaf = ellipsoid(edge, paint(k % 2 ? '#359c86' : '#72caa2'), [x + Math.sin(k * 2.3) * .12, .05 + k * .015, z + .17 + Math.cos(k * 2.3) * .10], [.075, .16, .035], 9);
             leaf.rotation.z = Math.sin(k * 2.3) * .65; leaf.rotation.x = Math.cos(k * 2.3) * .45;

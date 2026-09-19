@@ -1,3 +1,5 @@
+import { runtimeAssetsEnabled } from './runtimeAssetSlots';
+import type { LifeRuntimeAssets } from './runtimeAssets';
 import { canopyClearanceCandidate } from './canopyClearanceStudy';
 import { canopyAtmosphereStudy, canopyAtmospheres, createCanopyLightingStudy } from './canopyAtmosphereStudy';
 import { makeFootstepPresentation, type FootstepInput } from './footstepPresentation';
@@ -47,6 +49,15 @@ export default function LifeWorld({ onFrame, inspectShadow, observationOpen = fa
         try { renderer = new T.WebGLRenderer({ antialias: true }); } catch { setFailed(true); return; }
         let content: Content | undefined, currentState = stateAtMount.current, currentPlacement = placementAtMount.current;
         const presentationClock = new LifePresentationClock();
+        let runtimeAssets: LifeRuntimeAssets | undefined, assetsCancelled = false;
+        if (runtimeAssetsEnabled) {
+            node.dataset.runtimeAssets = 'loading';
+            void import('./runtimeAssets').then(({ LifeRuntimeAssets }) => {
+                if (assetsCancelled) return;
+                runtimeAssets = new LifeRuntimeAssets(renderer, () => { renderer.shadowMap.needsUpdate = true; });
+                if (content) runtimeAssets.bind(content.root);
+            }).catch(() => { if (!assetsCancelled) node.dataset.runtimeAssets = 'fallback'; });
+        }
         const scene = new T.Scene(); scene.background = new T.Color('#278bac');
         const hemi = new T.HemisphereLight('#fff7ea', '#63806c', 1.15); scene.add(hemi);
         const sun = new T.DirectionalLight('#fff4e0', 2.3); sun.position.set(-3, 8, 4); sun.castShadow = true;
@@ -130,8 +141,10 @@ export default function LifeWorld({ onFrame, inspectShadow, observationOpen = fa
             if (document.visibilityState !== 'visible' || renderer.getContext().isContextLost()) presentationClock.resume(performance.now(), true);
             if (Boolean(preview) !== Boolean(currentPlacement)) cameraControls.reset(false);
             currentState = next; currentPlacement = preview;
+            runtimeAssets?.detach();
             if (content) { scene.remove(content.root); content.dispose(); }
             content = buildLifeScene(next, selection, point, preview); scene.add(content.root);
+            runtimeAssets?.bind(content.root);
             node.dataset.lifeWorldStyle = content.root.userData.worldStyle;
             const atmosphere = next.worldStyle === 'canopy-dots-c3-v1' ? canopyAtmosphereStudy : undefined;
             studyLighting?.set(atmosphere);
@@ -203,7 +216,10 @@ export default function LifeWorld({ onFrame, inspectShadow, observationOpen = fa
             if (content) shadows.update(content.snapshot(), content.root, performance.now(), media.matches,
                 discovery.current.enabled && !currentPlacement && !behindObservation.current && !renderer.getContext().isContextLost(), footsteps.current.input?.id);
             if (content) footprint.update(content, content.snapshot(), footsteps.current.input, performance.now(), discovery.current.enabled && !currentPlacement && !renderer.getContext().isContextLost(), media.matches);
-            if (content && document.visibilityState === 'visible' && !renderer.getContext().isContextLost()) { content.faceIsolationSigns(camera); renderer.render(scene, camera); node.dataset.rendered = 'true'; frameObserver.current?.(content.snapshot()); footprint.sample(content, performance.now());
+            if (content && document.visibilityState === 'visible' && !renderer.getContext().isContextLost()) { content.faceIsolationSigns(camera);
+                runtimeAssets?.update(camera, node.clientHeight);
+                if (runtimeAssets) node.dataset.runtimeAssets = JSON.stringify(runtimeAssets.describe());
+                renderer.render(scene, camera); node.dataset.rendered = 'true'; frameObserver.current?.(content.snapshot()); footprint.sample(content, performance.now());
                 presentationClock.resume(performance.now());
                 shadows.sample(performance.now());
                 if (discovery.current.profileId !== discoveryOwner) {
@@ -255,6 +271,7 @@ export default function LifeWorld({ onFrame, inspectShadow, observationOpen = fa
         const restored = () => setFailed(false);
         renderer.domElement.addEventListener('webglcontextlost', lost); renderer.domElement.addEventListener('webglcontextrestored', restored);
         return () => {
+            assetsCancelled = true; runtimeAssets?.dispose(); delete node.dataset.runtimeAssets;
             collector?.cancel(); cancelAnimationFrame(raf); observer.disconnect(); update.current = null; controlCamera.current = undefined; reframe.current = undefined; cameraControls.cancel(); shadows.dispose(); footprint.dispose(); studyLighting?.dispose(); content?.dispose();
             document.removeEventListener('visibilitychange', hidden);
             renderer.domElement.removeEventListener('click', click);

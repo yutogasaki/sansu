@@ -1,0 +1,220 @@
+{
+  "batch_id": "island-props-v1",
+  "budget_credits": 90,
+  "credits_per_asset": 30,
+  "balance_before": 970,
+  "authorization": "User approved completing tree, rock and bench for 90 credits; exactly one generation each. No paid follow-up, purchases or auto recharge.",
+  "settings": {
+    "ai_model": "meshy-7",
+    "model_type": "standard",
+    "should_texture": true,
+    "enable_pbr": true,
+    "texture_resolution": "2k",
+    "target_formats": [
+      "glb"
+    ],
+    "ultra_mode": false,
+    "should_remesh": true,
+    "topology": "triangle",
+    "symmetry_mode": "off",
+    "origin_at": "bottom",
+    "remove_lighting": true,
+    "response_format": "json"
+  },
+  "assets": {
+    "island-tree-v1": {
+      "id": "island-tree-v1",
+      "label": "水玉の木",
+      "target_height": 4,
+      "target_polycount": 12000,
+      "source": "/Users/yutogasaki/Projects/sansu/assets/island-tree-v1/source/input.png",
+      "source_sha256": "6a5ddaf6c2119202602100b83f789181381236033a5eefa03e72e99b82b267a8",
+      "status": "VERIFIED",
+      "reserved_credits": 30,
+      "submitted_at": "2026-09-16T15:00:13.085271+00:00",
+      "request": {
+        "tool": "meshy_image_to_3d",
+        "arguments": {
+          "ai_model": "meshy-7",
+          "model_type": "standard",
+          "should_texture": true,
+          "enable_pbr": true,
+          "texture_resolution": "2k",
+          "target_formats": [
+            "glb"
+          ],
+          "ultra_mode": false,
+          "should_remesh": true,
+          "topology": "triangle",
+          "symmetry_mode": "off",
+          "origin_at": "bottom",
+          "remove_lighting": true,
+          "response_format": "json",
+          "file_path": "/Users/yutogasaki/Projects/sansu/assets/island-tree-v1/source/input.png",
+          "target_polycount": 12000
+        }
+      },
+      "task_id": "01a0aabb-8df9-7522-8afc-68ead6c30ba9",
+      "consumed_credits": 30,
+      "completed_observed_at": "2026-09-16T15:04:15.952090+00:00",
+      "raw": {
+        "bytes": 8528040,
+        "sha256": "24a94f79172c87dc7cae204f37c71a10b050cc1f156b979eaaa3ed8cd0236888",
+        "triangles": 12390,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "0eb194737eff2296f43ef94b8317a67cc787e14864f09f54f31bca8e32df6971",
+          "3bfb494de5b7e12df5e124d9cb07f3393751c2f0f8b8635f22f2b26cd843c79a",
+          "fcc2458c30b63f27ab8a8a95a707f7f03c0220e7312de06aa350f5dfb462b1ec"
+        ]
+      },
+      "final": {
+        "bytes": 8528084,
+        "sha256": "d1899e1fbb65a0afde47928717d128022e6aaa55467e8f1b5fdfc4510a247121",
+        "triangles": 12390,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "0eb194737eff2296f43ef94b8317a67cc787e14864f09f54f31bca8e32df6971",
+          "3bfb494de5b7e12df5e124d9cb07f3393751c2f0f8b8635f22f2b26cd843c79a",
+          "fcc2458c30b63f27ab8a8a95a707f7f03c0220e7312de06aa350f5dfb462b1ec"
+        ]
+      },
+      "visual_review": "PENDING"
+    },
+    "island-rock-v1": {
+      "id": "island-rock-v1",
+      "label": "苔の岩",
+      "target_height": 0.8,
+      "target_polycount": 4000,
+      "source": "/Users/yutogasaki/Projects/sansu/assets/island-rock-v1/source/input.png",
+      "source_sha256": "af6f16dfaf52227293de6343539f8a371dc273d8918e00a0cb0634c0a8f17f56",
+      "status": "VERIFIED",
+      "reserved_credits": 30,
+      "submitted_at": "2026-09-16T15:00:15.890629+00:00",
+      "request": {
+        "tool": "meshy_image_to_3d",
+        "arguments": {
+          "ai_model": "meshy-7",
+          "model_type": "standard",
+          "should_texture": true,
+          "enable_pbr": true,
+          "texture_resolution": "2k",
+          "target_formats": [
+            "glb"
+          ],
+          "ultra_mode": false,
+          "should_remesh": true,
+          "topology": "triangle",
+          "symmetry_mode": "off",
+          "origin_at": "bottom",
+          "remove_lighting": true,
+          "response_format": "json",
+          "file_path": "/Users/yutogasaki/Projects/sansu/assets/island-rock-v1/source/input.png",
+          "target_polycount": 4000
+        }
+      },
+      "task_id": "01a0aabb-980a-7263-a363-58f3f3f0a619",
+      "consumed_credits": 30,
+      "completed_observed_at": "2026-09-16T15:04:25.783992+00:00",
+      "raw": {
+        "bytes": 9027076,
+        "sha256": "b5b3b94f182d51797ca0952ce857a80a05f76ac5bdfcf4c73399f19ed30f9594",
+        "triangles": 4005,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "a48a01c951da0a7e8119308160e68eb913e8529aeefa6907a2c696dbbe4294cf",
+          "c5c1130b84a4aa337e0381370fd440287c043bfa404d7777a8adb0b226c6d5e8",
+          "ea8c3d4c6c94524c7d84e79b85b5b1355edb56b51255078716dfde08f4f3f4bf"
+        ]
+      },
+      "final": {
+        "bytes": 9027128,
+        "sha256": "02d903ee1e5c7029e9e493749becaa25eec3f5e1a3eaf4b737c2b48205e4a0a4",
+        "triangles": 4005,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "a48a01c951da0a7e8119308160e68eb913e8529aeefa6907a2c696dbbe4294cf",
+          "c5c1130b84a4aa337e0381370fd440287c043bfa404d7777a8adb0b226c6d5e8",
+          "ea8c3d4c6c94524c7d84e79b85b5b1355edb56b51255078716dfde08f4f3f4bf"
+        ]
+      },
+      "visual_review": "PENDING",
+      "yaw_degrees": 180
+    },
+    "island-bench-v1": {
+      "id": "island-bench-v1",
+      "label": "木のベンチ",
+      "target_height": 1,
+      "target_polycount": 8000,
+      "source": "/Users/yutogasaki/Projects/sansu/assets/island-bench-v1/source/input.png",
+      "source_sha256": "c908d6c9ac0458c45685c00fcad54178afd31b4d0fabfb8fe631b881c1587ee1",
+      "status": "VERIFIED",
+      "reserved_credits": 30,
+      "submitted_at": "2026-09-16T15:00:18.214111+00:00",
+      "request": {
+        "tool": "meshy_image_to_3d",
+        "arguments": {
+          "ai_model": "meshy-7",
+          "model_type": "standard",
+          "should_texture": true,
+          "enable_pbr": true,
+          "texture_resolution": "2k",
+          "target_formats": [
+            "glb"
+          ],
+          "ultra_mode": false,
+          "should_remesh": true,
+          "topology": "triangle",
+          "symmetry_mode": "off",
+          "origin_at": "bottom",
+          "remove_lighting": true,
+          "response_format": "json",
+          "file_path": "/Users/yutogasaki/Projects/sansu/assets/island-bench-v1/source/input.png",
+          "target_polycount": 8000
+        }
+      },
+      "task_id": "01a0aabb-a11b-72a6-b76a-7d6c82f57134",
+      "consumed_credits": 30,
+      "completed_observed_at": "2026-09-16T15:04:33.637523+00:00",
+      "raw": {
+        "bytes": 7780628,
+        "sha256": "87369e081ea441c2c4e42484d1d265d35d23543515140a8d49e2734e5abd95cf",
+        "triangles": 7709,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "61d1d7feb4a4228f731cb4a666cd92cdd07004099fd3bafd5204e15d5f5639aa",
+          "b3bfb8494047a5b66a28ecf9612ab91ca20678723418699faca7d82f31dd8011",
+          "fc6a1f5fc6e4e11436f8fbab5123d69e2d958c3df8185047da979cd34bb51b4d"
+        ]
+      },
+      "final": {
+        "bytes": 7780668,
+        "sha256": "ed128387115112204504db4e92bad9b3caccaa00a53cd99043deaf529de2794d",
+        "triangles": 7709,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "61d1d7feb4a4228f731cb4a666cd92cdd07004099fd3bafd5204e15d5f5639aa",
+          "b3bfb8494047a5b66a28ecf9612ab91ca20678723418699faca7d82f31dd8011",
+          "fc6a1f5fc6e4e11436f8fbab5123d69e2d958c3df8185047da979cd34bb51b4d"
+        ]
+      },
+      "visual_review": "PENDING"
+    }
+  },
+  "created_at": "2026-09-16T14:59:56.437289+00:00",
+  "root": "/Users/yutogasaki/Projects/sansu",
+  "recipe_sha256": "53205a8e9daddca4196f9a752f8a6029503b83883b1df8a60d0f23d8e882cf52",
+  "reserved_credits": 90
+}

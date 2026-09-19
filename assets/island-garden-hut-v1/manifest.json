@@ -1,0 +1,145 @@
+{
+  "id": "island-garden-hut-v1",
+  "label": "庭小屋",
+  "target_height": 2.5,
+  "target_polycount": 12000,
+  "source": "/Users/yutogasaki/Projects/sansu/assets/island-garden-hut-v1/source/input.png",
+  "source_sha256": "eee2347b088e4e8357fdb0edf196b66aefa1b1b972a6ef99df5989c90c9c7ead",
+  "status": "VERIFIED",
+  "reserved_credits": 30,
+  "submitted_at": "2026-09-18T02:26:41.819420+00:00",
+  "request": {
+    "tool": "meshy_image_to_3d",
+    "arguments": {
+      "ai_model": "meshy-7",
+      "model_type": "standard",
+      "should_texture": true,
+      "enable_pbr": true,
+      "texture_resolution": "2k",
+      "target_formats": [
+        "glb"
+      ],
+      "ultra_mode": false,
+      "should_remesh": true,
+      "topology": "triangle",
+      "symmetry_mode": "off",
+      "origin_at": "bottom",
+      "remove_lighting": true,
+      "response_format": "json",
+      "file_path": "/Users/yutogasaki/Projects/sansu/assets/island-garden-hut-v1/source/input.png",
+      "target_polycount": 12000
+    }
+  },
+  "task_id": "01a0b256-66f4-72fa-b38c-6485db1e4308",
+  "consumed_credits": 30,
+  "completed_observed_at": "2026-09-18T02:29:45.114463+00:00",
+  "raw": {
+    "bytes": 9463264,
+    "sha256": "a82c95474c59330279b82417f767f16a13457f5001f9697aedd43f4f1b9c1a85",
+    "triangles": 11401,
+    "meshes": 1,
+    "nodes": 1,
+    "materials": 1,
+    "image_hashes": [
+      "959938670ef29ee99b6ae310b03d866349937ecc78e95ed4435be820fccd51ac",
+      "a1a24fddfb9417a1ddffece825d5ec71078d3b1ce68175792c435f4ccade6a7c",
+      "cc9803b0cd73bedd1dca4249f1e74fe7b61701032821e607981403f15d54e22f"
+    ]
+  },
+  "final": {
+    "bytes": 9463304,
+    "sha256": "b2ee40c050157cf777aa933fb07f75c7635aed71dc598eead3c538a61fd25e8d",
+    "triangles": 11401,
+    "meshes": 1,
+    "nodes": 1,
+    "materials": 1,
+    "image_hashes": [
+      "959938670ef29ee99b6ae310b03d866349937ecc78e95ed4435be820fccd51ac",
+      "a1a24fddfb9417a1ddffece825d5ec71078d3b1ce68175792c435f4ccade6a7c",
+      "cc9803b0cd73bedd1dca4249f1e74fe7b61701032821e607981403f15d54e22f"
+    ]
+  },
+  "visual_review": "PENDING",
+  "batch_id": "island-garden-v1",
+  "timing": {
+    "generation_seconds": 183.3,
+    "measurement": "submission to first observed SUCCEEDED; includes polling delay, not exact server generation duration",
+    "submitted_at": "2026-09-18T02:26:41.819420+00:00",
+    "completed_observed_at": "2026-09-18T02:29:45.114463+00:00"
+  },
+  "review": {
+    "reviewer": "Codex source/front/back/bottom comparison",
+    "visual_gate": "CANDIDATE",
+    "silent_comprehension_safety": "NOT_TESTED_WITH_USERS",
+    "runtime_gate": "GLB_ROUNDTRIP_PASS_GAME_NOT_INTEGRATED",
+    "notes": "屋根・両開き扉・丸窓と色分けは保持。元画像より彩度と微細な質感が弱い。背面は推定され、基礎の石が背面には続かない。底面は閉じており配置に支障となる明白な欠損は見当たらない。"
+  },
+  "files": {
+    "source": "source/input.png",
+    "raw": "meshy_raw/model.glb",
+    "final": "final/model.glb"
+  },
+  "verification": {
+    "asset": "island-garden-hut-v1",
+    "blender_version": "5.2.1 LTS",
+    "raw_sha256": "a82c95474c59330279b82417f767f16a13457f5001f9697aedd43f4f1b9c1a85",
+    "final_sha256": "b2ee40c050157cf777aa933fb07f75c7635aed71dc598eead3c538a61fd25e8d",
+    "before": {
+      "meshes": 1,
+      "vertices": 11926,
+      "triangles": 11401,
+      "bounds_min": [
+        -0.9508079886436462,
+        -0.5520760416984558,
+        -0.7740560173988342
+      ],
+      "bounds_max": [
+        0.9509119391441345,
+        0.5589339137077332,
+        0.7726039886474609
+      ],
+      "dimensions": [
+        1.9017199277877808,
+        1.111009955406189,
+        1.5466599464416504
+      ]
+    },
+    "after": {
+      "meshes": 1,
+      "vertices": 11926,
+      "triangles": 11401,
+      "bounds_min": [
+        -1.536957025527954,
+        -0.8979105949401855,
+        0.0
+      ],
+      "bounds_max": [
+        1.536957025527954,
+        0.8979106545448303,
+        2.5
+      ],
+      "dimensions": [
+        3.073914051055908,
+        1.795821189880371,
+        2.5
+      ]
+    },
+    "scale_factor": 1.6163862712081851,
+    "original_bottom_center": [
+      5.1975250244140625e-05,
+      0.003428936004638672,
+      -0.7740560173988342
+    ],
+    "reimport_pass": true,
+    "render_mean_absolute_error_0_to_1": 9.834181469159375e-08,
+    "origin": "bounding-box bottom center",
+    "blender_up": "Z",
+    "glb_up": "Y",
+    "yaw_degrees": 0.0,
+    "normals": "preserved",
+    "textures": "preserved",
+    "decimation": "none",
+    "visual_review": "PENDING",
+    "in_game_validation": "NOT_RUN"
+  }
+}

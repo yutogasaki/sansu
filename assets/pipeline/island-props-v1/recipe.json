@@ -1,0 +1,44 @@
+{
+  "batch_id": "island-props-v1",
+  "budget_credits": 90,
+  "credits_per_asset": 30,
+  "balance_before": 970,
+  "authorization": "User approved completing tree, rock and bench for 90 credits; exactly one generation each. No paid follow-up, purchases or auto recharge.",
+  "settings": {
+    "ai_model": "meshy-7",
+    "model_type": "standard",
+    "should_texture": true,
+    "enable_pbr": true,
+    "texture_resolution": "2k",
+    "target_formats": [
+      "glb"
+    ],
+    "ultra_mode": false,
+    "should_remesh": true,
+    "topology": "triangle",
+    "symmetry_mode": "off",
+    "origin_at": "bottom",
+    "remove_lighting": true,
+    "response_format": "json"
+  },
+  "assets": [
+    {
+      "id": "island-tree-v1",
+      "label": "水玉の木",
+      "target_height": 4,
+      "target_polycount": 12000
+    },
+    {
+      "id": "island-rock-v1",
+      "label": "苔の岩",
+      "target_height": 0.8,
+      "target_polycount": 4000
+    },
+    {
+      "id": "island-bench-v1",
+      "label": "木のベンチ",
+      "target_height": 1,
+      "target_polycount": 8000
+    }
+  ]
+}
