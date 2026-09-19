@@ -1,0 +1,13 @@
+{
+  "target": "http://127.0.0.1:5345",
+  "cases": [
+    {
+      "kind": "incorrect",
+      "before": "1",
+      "outgoingStillMounted": true,
+      "after": "2"
+    }
+  ],
+  "pass": false,
+  "error": "AssertionError [ERR_ASSERTION]: outgoing feedback must not skip an unanswered problem\n\n'2' !== '1'\n\n    at file:///Users/yutogasaki/Projects/sansu/tools/e2e-study-feedback-boundary.mjs:36:16"
+}

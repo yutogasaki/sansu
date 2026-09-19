@@ -1,0 +1,28 @@
+{
+  "baseCommit": "5e17ef7c9589cf0d6bd79fca8eda03b0fca2654b",
+  "productionBuild": {
+    "version": "feedback-boundary-5e17ef7:8db010af-b125-4f71-938b-89258786a6b0",
+    "revision": "feedback-boundary-5e17ef7",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": false,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "source": {
+    "src/pages/Study.tsx": "5f5ab5e57b61731a0f2e275f65e36a9c69560d43988b71be6e83f9ce81d4d5bb",
+    "tools/e2e-fixed-ten-throughput.mjs": "62780b0124edd604bdc3db8d45486903c6840b46828abf1b24e25e1c8066bf3f",
+    "tools/e2e-pwa-update.mjs": "3a3326535b18d7cc51b9f66c83841f260965c633c7eeb45c15651d8b1ff5e738",
+    "tools/e2e-study-feedback-boundary.mjs": "5b94d1bd106882779bc065d7bda6016022a3943aa05d6b2105bbe7fa98d3e18c"
+  },
+  "note": "Application and harness checks use an isolated HEAD export plus exactly these files. Regression before/after used local DEV. Fixed-ten is a DEV fixture, not a production planner run."
+}

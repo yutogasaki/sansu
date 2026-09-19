@@ -157,6 +157,8 @@ const StudyContent: React.FC = () => {
 
     const storedProblem = queue[currentIndex];
     const currentProblem = useMemo(() => integerFractionProblem(storedProblem), [storedProblem]);
+    const activeProblemRef = React.useRef(currentProblem);
+    useLayoutEffect(() => { activeProblemRef.current = currentProblem; }, [currentProblem]);
     useLayoutEffect(() => { fieldDraft.current.lastEdited = undefined; fieldDraft.current.replaceOnInput = false; setReplaceFieldIndex(undefined); }, [currentProblem]);
 
     useEffect(() => {
@@ -519,6 +521,9 @@ const StudyContent: React.FC = () => {
     }, [completionPresentation, feedback, currentProblem, hissan]);
 
     const nextProblem = useCallback(() => {
+        // Outgoing feedback retains its old callback during AnimatePresence exit.
+        // It must never advance the newly displayed, unanswered problem.
+        if (!currentProblem || activeProblemRef.current !== currentProblem) return;
         if (
             completionPresentation !== "none"
             || fixedSessionCompletionInFlightRef.current

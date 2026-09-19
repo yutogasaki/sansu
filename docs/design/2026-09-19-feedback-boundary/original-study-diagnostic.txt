@@ -1,0 +1,62 @@
+
+> pokko-fushigi-zukan-app@0.0.0 dev
+> vite --host 127.0.0.1 --port 4173 --strictPort
+
+
+  VITE v7.3.1  ready in 115 ms
+
+  ➜  Local:   http://127.0.0.1:4173/
+Benchmark 1/1 miss-at-q4-q8 study... Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+BEFORE NEXT {
+  benchmarkId: 'cold-open-fixed-ten-v1',
+  studyQuestionId: 'cold-open-fixed-ten-v1:1:3',
+  questionText: '5 + 3 =',
+  studyIndex: '3',
+  feedback: 'incorrect',
+  benchmarkComplete: 'false'
+} {
+  disabled: false,
+  html: '<button class="app-button app-button--primary inline-flex items-center justify-center rounded-[14px] font-bold transition-all duration-200 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2BBAA0]/30 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none touch-manipulation border-0 bg-[linear-gradient(135deg,#2BBAA0,#24A08A)] text-white shadow-[0_6px_20px_rgba(43,186,160,0.4),0_2px_8px_rgba(43,186,160,0.2)] hover:brightness-[1.02] px-6 h-14 w-full max-w-xs text-lg">次へ</button>'
+}
+BEFORE NEXT {
+  benchmarkId: 'cold-open-fixed-ten-v1',
+  studyQuestionId: 'cold-open-fixed-ten-v1:1:8',
+  questionText: '3 + 3 =',
+  studyIndex: '8',
+  feedback: 'none',
+  benchmarkComplete: 'false'
+} {
+  disabled: false,
+  html: '<button class="app-button app-button--primary inline-flex items-center justify-center rounded-[14px] font-bold transition-all duration-200 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2BBAA0]/30 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none touch-manipulation border-0 bg-[linear-gradient(135deg,#2BBAA0,#24A08A)] text-white shadow-[0_6px_20px_rgba(43,186,160,0.4),0_2px_8px_rgba(43,186,160,0.2)] hover:brightness-[1.02] px-6 h-14 w-full max-w-xs text-lg">次へ</button>'
+}
+FAILED STATE {
+  benchmarkId: 'cold-open-fixed-ten-v1',
+  studyQuestionId: 'cold-open-fixed-ten-v1:1:9',
+  questionText: '9 + 1 =',
+  studyIndex: '9',
+  feedback: 'none',
+  benchmarkComplete: 'false'
+} 算数
+10 問目
+スキップ
+9 + 1 =
+□
+□
+7
+8
+9
+C
+4
+5
+6
+1
+2
+3
+0
+こたえる { pageErrors: [], failedLocalRequests: [] }
+page.waitForFunction: Timeout 15000ms exceeded.
+    at waitForStudyOperable (/Users/yutogasaki/Projects/sansu/output/verification-repair/study-diagnostic.mjs:343:14)
+    at runStudyLane (/Users/yutogasaki/Projects/sansu/output/verification-repair/study-diagnostic.mjs:427:21)
+    at async main (/Users/yutogasaki/Projects/sansu/output/verification-repair/study-diagnostic.mjs:1225:15)

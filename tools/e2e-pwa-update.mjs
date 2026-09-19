@@ -383,6 +383,11 @@ const main = async () => {
     throw new Error(`${join(PREVIEW_DIR, "index.html")} is missing. Build this preview directory before e2e:pwa-update.`);
   }
 
+  const metadata = JSON.parse(readFileSync(join(PREVIEW_DIR, "version.json"), "utf8"));
+  assert(metadata.island?.enabled === false && metadata.park?.enabled === false,
+    "e2e:pwa-update requires a classic build (VITE_ISLAND_ENABLED=false VITE_BUILD_PLAY_ENABLED=false npm run build). Set SANSU_PWA_PREVIEW_DIR to that build; use the mode-specific PWA harness for an island build.");
+  console.log("PWA classic target", { directory: PREVIEW_DIR, version: metadata.version });
+
   let previewServer;
   let browser;
 

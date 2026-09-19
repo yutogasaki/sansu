@@ -319,9 +319,10 @@ const elapsedSince = async (page, startedAt) => page.evaluate(
   startedAt,
 );
 
-const typeAndSubmit = async (page, value) => {
+const typeAndSubmit = async (page, value, automatic = false) => {
   await page.keyboard.type(String(value));
-  await page.keyboard.press("Enter");
+  // Study grades the last answer cell. Extra Enter can activate focused feedback.
+  if (!automatic) await page.keyboard.press("Enter");
 };
 
 const assertFullTenKey = async (page) => {
@@ -414,7 +415,7 @@ const runStudyLane = async (browser, scenario, repetition) => {
       if (scenario === "miss-at-q4-q8" && (questionIndex === 3 || questionIndex === 7)) {
         const missStartedAt = await markNow(page);
         attempts += 1;
-        await typeAndSubmit(page, wrongAnswerFor(answer));
+        await typeAndSubmit(page, wrongAnswerFor(answer), true);
         const nextButton = page.getByRole("button", { name: /次へ|つぎへ/ });
         await nextButton.waitFor({ timeout: STEP_TIMEOUT_MS });
         correctionFeedbackReadyMs.push(await elapsedSince(page, missStartedAt));
@@ -431,7 +432,7 @@ const runStudyLane = async (browser, scenario, repetition) => {
       const answerStartedAt = await markNow(page);
       attempts += 1;
       correctCount += 1;
-      await typeAndSubmit(page, answer);
+      await typeAndSubmit(page, answer, true);
       if (questionIndex === EXPECTED_QUESTIONS.length - 1) {
         await page.waitForFunction(
           ({ fixtureId }) => document.querySelector(
@@ -1185,13 +1186,15 @@ const main = async () => {
   let browser;
   let devServer;
   let startedByScript = false;
+  let environment;
+  const runs = [];
   try {
     const serverSession = await getServerSession();
     activeBaseUrl = serverSession.baseUrl;
     devServer = serverSession.devServer;
     startedByScript = serverSession.startedByScript;
     browser = await chromium.launch({ headless: true });
-    const environment = {
+    environment = {
       git: readGitMetadata(),
       app: {
         titleMarker: APP_TITLE_MARKER,
@@ -1209,7 +1212,6 @@ const main = async () => {
       visualCandidateId: "dig-pop-carry-bloom-v3",
     };
 
-    const runs = [];
     for (let repetition = 1; repetition <= repetitions; repetition += 1) {
       for (let scenarioIndex = 0; scenarioIndex < SCENARIOS.length; scenarioIndex += 1) {
         const scenario = SCENARIOS[scenarioIndex];
@@ -1238,6 +1240,11 @@ const main = async () => {
       pass: report.pass,
     });
     if (report.evidence.eligible && !report.pass) process.exitCode = 1;
+  } catch (error) {
+    // Never leave a previous passing report at the requested output path.
+    await mkdir(dirname(outputPath), { recursive: true });
+    await writeFile(outputPath, `${JSON.stringify({ pass: false, evidence: { eligible: false }, environment, runs, error: error instanceof Error ? error.stack : String(error) }, null, 2)}\n`, "utf8");
+    throw error;
   } finally {
     if (browser) await browser.close();
     if (startedByScript && devServer) stopDevServer(devServer);

@@ -49,3 +49,5 @@
 - `npm run e2e:pwa-update` は旧開始ボタン「たんけんを はじめる」の待機で30秒timeout。島有効buildへのこの汎用ハーネス実行をPASS扱いにしない。町の実two-build・offlineの結果とは区別する。ログは `pwa-hook-failed.txt`。
 
 技術ゲートは町の変更範囲でPASS、全体releaseはPARTIAL（fixed-tenと汎用PWAハーネスが未合格）。視覚HOLD・独立観察未確認は別々に維持する。
+
+後続調査で2件の原因を切り分けた。Studyの問題飛ばしと検証手順を修正し、classic PWA4件を確認。[後続の修正・計測記録](../2026-09-19-feedback-boundary/README.md)。本ページの失敗ログは当時の履歴として保持する。

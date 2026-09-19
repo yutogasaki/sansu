@@ -1,0 +1,7 @@
+Error: e2e:pwa-update requires a classic build (VITE_ISLAND_ENABLED=false VITE_BUILD_PLAY_ENABLED=false npm run build). Set SANSU_PWA_PREVIEW_DIR to that build; use the mode-specific PWA harness for an island build.
+    at assert (file:///Users/yutogasaki/Projects/sansu/tools/e2e-pwa-update.mjs:21:25)
+    at main (file:///Users/yutogasaki/Projects/sansu/tools/e2e-pwa-update.mjs:387:3)
+    at file:///Users/yutogasaki/Projects/sansu/tools/e2e-pwa-update.mjs:461:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)

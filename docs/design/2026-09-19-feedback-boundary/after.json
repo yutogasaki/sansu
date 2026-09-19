@@ -1,0 +1,18 @@
+{
+  "target": "http://127.0.0.1:5345",
+  "cases": [
+    {
+      "kind": "incorrect",
+      "before": "1",
+      "outgoingStillMounted": true,
+      "after": "1"
+    },
+    {
+      "kind": "skipped",
+      "before": "1",
+      "outgoingStillMounted": true,
+      "after": "1"
+    }
+  ],
+  "pass": true
+}
