@@ -1,0 +1,23 @@
+
+> pokko-fushigi-zukan-app@0.0.0 benchmark:fixed-ten
+> node tools/e2e-fixed-ten-throughput.mjs
+
+
+> pokko-fushigi-zukan-app@0.0.0 dev
+> vite --host 127.0.0.1 --port 4174 --strictPort
+
+6:26:26 PM [vite] (client) Re-optimizing dependencies because vite config has changed
+
+  VITE v7.3.1  ready in 137 ms
+
+  ➜  Local:   http://127.0.0.1:4174/
+Benchmark 1/10 all-correct study... Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+126 problems/min, 0 interruptions
+Benchmark 1/10 all-correct explore... 264.9 problems/min, 4 interruptions
+Benchmark 1/10 miss-at-q4-q8 explore... 191.1 problems/min, 4 interruptions
+Benchmark 1/10 miss-at-q4-q8 study... page.waitForFunction: Timeout 15000ms exceeded.
+    at waitForStudyOperable (/Users/yutogasaki/Projects/sansu/tools/e2e-fixed-ten-throughput.mjs:343:14)
+    at runStudyLane (/Users/yutogasaki/Projects/sansu/tools/e2e-fixed-ten-throughput.mjs:426:15)
+    at async main (/Users/yutogasaki/Projects/sansu/tools/e2e-fixed-ten-throughput.mjs:1221:15)

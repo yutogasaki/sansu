@@ -4,8 +4,9 @@ import type { CellPos, DomainEvent, WorldState } from '../../domain/natureTown/t
 import { channelSources } from '../../domain/natureTown/environment';
 import { context } from '../../domain/natureTown/world';
 import { key } from '../../domain/natureTown/grid';
-import LifeResidentPortrait from '../island/life/LifeResidentPortrait';
-import { names, icons } from './catalog';
+import { TownResident, TownProp } from './TownResident';
+import { residentPose } from './residentPose';
+import { names } from './catalog';
 import { FoodPile, FarmPatch, FoodTable } from './LivingPieces';
 import { FoodTransfers } from './FoodTransfers';
 import { recentEvent, type Connection } from './livingPresentation';
@@ -89,9 +90,9 @@ export function TownMap({ world, events, connections, selected, preview, onCell,
             if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
         }}
         onPointerCancel={() => { stroke.current = null; }} onLostPointerCapture={() => { stroke.current = null; }}>
-        <div className="town-map" style={{ width: maxX * size, height: maxY * size }} data-testid="town-map">
+        <div className={`town-map ${overview ? 'overview' : 'near'}`} style={{ width: maxX * size, height: maxY * size }} data-testid="town-map">
             {allCells.map(c => {
-                const cellKey = key(c.position), prop = props.get(cellKey), Icon = prop ? icons[prop.kind] : null;
+                const cellKey = key(c.position), prop = props.get(cellKey);
                 const insects = world.insectVisits.some(v => key(v.position) === cellKey);
                 const connection = prop && connections.get(prop.id);
                 const chosen = selected && key(selected) === cellKey, pending = pendingCells.has(cellKey);
@@ -105,7 +106,7 @@ export function TownMap({ world, events, connections, selected, preview, onCell,
                     {c.terrain === 'water' && !c.bridge && <Waves size={20}/>}
                     {c.path && !prop && <Route size={14}/>}
                     {c.channel && <span className={`town-channel-mark ${reached.has(cellKey) ? 'flowing' : 'dry'}`}>≋</span>}
-                    {prop?.kind === 'farm' ? <FarmPatch farm={prop} harvest={recentEvent(events, prop.id, 'FoodHarvested')}/> : prop?.kind === 'hub' ? <FoodTable food={prop.inventory.food} meal={recentEvent(events, prop.id, 'MealServed')}/> : Icon && <Icon size={prop?.kind === 'tree' ? 34 : 27} strokeWidth={1.7}/>}
+                    {prop?.kind === 'farm' ? <FarmPatch farm={prop} harvest={recentEvent(events, prop.id, 'FoodHarvested')}/> : prop?.kind === 'hub' ? <FoodTable food={prop.inventory.food} meal={recentEvent(events, prop.id, 'MealServed')}/> : prop && <TownProp kind={prop.kind}/>}
                     {prop?.kind === 'farm' && prop.inventory.food > 0 && <span className="town-basket"><FoodPile count={prop.inventory.food}/></span>}
                     {connection && connection !== 'connected' && <span className="town-supply-break" data-connection={connection} role="img" aria-label={connection === 'blocked' ? '食たくへ通れない' : connection === 'far' ? '食たくまで遠い' : '食たく未接続'}><Unplug size={15}/></span>}
                     {routeCells.has(cellKey) && <span className="town-route-dot" aria-hidden="true"/>}
@@ -114,16 +115,16 @@ export function TownMap({ world, events, connections, selected, preview, onCell,
                     {overlay === 'traffic' && c.traffic > 1 && <Footprints size={14}/>}
                 </button>;
             })}
-            {world.residents.map((r, index) => <button type="button" key={r.id} className={`town-resident-marker ${r.id === residentId ? 'chosen' : ''}`}
+            {world.residents.map((r, index) => <button type="button" key={r.id} data-resident-id={r.id} className={`town-resident-marker ${overview ? 'overview' : 'near'} ${r.id === residentId ? 'chosen' : ''}`}
                 style={{ left: r.position[0] * size + (size - 44) / 2, top: (maxY - r.position[1] - 1) * size + (size - 44) / 2, zIndex: r.id === residentId ? 10 : 5 + index % 3, pointerEvents: editing ? 'none' : undefined }}
                 tabIndex={editing ? -1 : 0} aria-hidden={editing || undefined} aria-label={`${residentName(world, r)}のようす`} onClick={() => onResident(r.id)}>
-                <LifeResidentPortrait resident={residentAppearance(r)}/>
+                <TownResident appearance={residentAppearance(r)} pose={residentPose(r, events, world.tick)}/>
                 {r.carriedFood > 0 && <span className="town-cargo"><FoodPile count={r.carriedFood} cart={!!world.jobs.find(j => j.id === r.jobId)?.usingCart}/></span>}
                 {r.state === 'reacting' && <span className="town-greeting">♪</span>}
             </button>)}
             <FoodTransfers events={events} size={size} maxY={maxY} width={maxX * size}/>
             {visitorHub && 'entrance' in visitorHub && <span className="town-person town-visitor" style={{ position: 'absolute', left: visitorHub.entrance[0] * size, top: (maxY - visitorHub.entrance[1] - 1) * size }} title="すんでみたい旅人">
-                <LifeResidentPortrait resident={world.offer?.templateId === 'r5' ? 'rabbit' : world.offer?.templateId === 'r6' ? 'otter' : 'pokomoko'}/><span className="town-greeting">?</span>
+                <TownResident appearance={world.offer?.templateId === 'r5' ? 'rabbit' : world.offer?.templateId === 'r6' ? 'otter' : 'pokomoko'}/><span className="town-greeting">?</span>
             </span>}
         </div>
     </div>;

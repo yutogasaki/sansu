@@ -1,0 +1,55 @@
+{
+  "baseCommit": "0921d7ad92ac66391c58674d0458e26e79298ea3",
+  "build": {
+    "version": "nt-acting-s2-0921d7a:0bb3e287-f524-45a5-8a7b-d614354ecc51",
+    "revision": "nt-acting-s2-0921d7a",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "flags": {
+    "VITE_ISLAND_ENABLED": true,
+    "VITE_NATURE_TOWN_ENABLED": true
+  },
+  "source": {
+    "src/components/natureTown/TownMap.tsx": "0e2c8ff42070f7cfd80070bb924f78783f125cc3f6f9c1caad9f49e4f4ec3ef7",
+    "src/components/natureTown/TownResident.tsx": "af01b566b9a6121a33491a597d223b81e2ee446158e01c8539ee376665217c54",
+    "src/components/natureTown/residentPose.ts": "419cc1915c23e130fa4a9e22afc0172bb7c85a3c8c000e2c26054977c5ef4645",
+    "src/components/natureTown/residentPose.test.ts": "ec90889da84e4257af17763d10a00be07d4af92205e9e86220c9dba82c98c966",
+    "src/components/natureTown/town.css": "690a6ef56d4d76ef4280492a0e45e6a2d8cd22d1402d11abfb7a3fac387d2cad",
+    "src/pages/NatureTown.tsx": "b62f68da1bfadd3aff0f2c587bc11c924deb0ec2280d68f48678f06bb2927966",
+    "tools/nature-town-pose-source.ts": "188c9859394d2ad69b3812477519d9fa26990f20bb177660a646704da06039de",
+    "tools/bake-nature-town-poses.mjs": "e93cbf9b9ed7288a50f1b90cf93cb2665646717205c042386402bcaf3cf1c70f",
+    "vite.config.ts": "f433febf11265e4c4a4618773cfcb8259f141f03193f1fe59b148d2150451e0a",
+    "tools/e2e-nature-town-acting.mjs": "3dd0d5d7728c3449bff91dfcc7cf38403d2cc580033a31e35485129edc3d5e3b",
+    "tools/e2e-nature-town-sprites.mjs": "6a2e05284764232f8f2a270e3e6b60d6872a0f131654f491e983524ab539c020",
+    "src/assets/natureTown/town-prop-tree.png": "a8517bf33316a154945fd36f6f2758fe3a00b18f6495a548adfb3bda1ce60113",
+    "src/assets/natureTown/town-pokomoko-receiving.png": "59bca099076cf22084eedc84603ee41e6f4efcf34c4c84f9e22ff0a0cdb9752d",
+    "src/assets/natureTown/town-rabbit-idle.png": "bde9855e68cbf8c1c3fbfdce92b761e41e27383fa2206fdf3f31f26fa5275344",
+    "src/assets/natureTown/town-rabbit-giving.png": "462f539c144edb6fa256710c831ad19b8724c437c0b1455e02d31ae1bdba73b4",
+    "src/assets/natureTown/town-otter-idle.png": "4638608833dec37cfc9eb5d682459f748833763eeb81bef8023db0f27dfd0fbf",
+    "src/assets/natureTown/town-otter-giving.png": "e7abce2ee43d98296f984c226946d602f15dd7498fe364f35a18bb6f1762a9f7",
+    "src/assets/natureTown/town-pokomoko-carrying.png": "affa4aedfce753b3aa38a0612d750df83c793419728f2bd565eeda27da0ad6e7",
+    "src/assets/natureTown/town-otter-receiving.png": "1147d0accc260d1c987b06cdcba520f3e45633c09847249392a8431427b9ca23",
+    "src/assets/natureTown/town-prop-home.png": "270a99763703b8ef9bd8db8eade0dcdec8780a7ed303a9a65a310ec3bfb6a79f",
+    "src/assets/natureTown/town-otter-carrying.png": "d6be3fed1841369bded5be6cfe96d1d7fd827337a3d431bb5c33f9859ebfa951",
+    "src/assets/natureTown/town-prop-bench.png": "4340e1f5b9690bd1f4721dbc6e044e1735d48bd71c1b05b5f63ed91d6ae5c080",
+    "src/assets/natureTown/town-pokomoko-giving.png": "05fa8eb9665ba78747be83472a1fa1b8fd76299b8dd0fbb7a97cc3eaae2fca1d",
+    "src/assets/natureTown/town-prop-flowers.png": "70a982e838e88474df186c11e243bf975fcc78532499e73862a32c7f0c49b651",
+    "src/assets/natureTown/town-rabbit-carrying.png": "02c93d03e0a6862e4ccc5fdb00e46f53fc5547a552947dacc8ec42bfb112ed65",
+    "src/assets/natureTown/town-rabbit-receiving.png": "b15c570189e2b6eab40818817861962a09f780b1373d8374e8fa4375f19f0832",
+    "src/assets/natureTown/town-pokomoko-idle.png": "c4993e7a9925eba2ce08fd0b7ebda39bb5c0bffbd8495b9166f5e6871e1c2790"
+  },
+  "note": "Source application inputs match isolated candidate. Final bundle built in shared checkout; unrelated process docs and package script edits are excluded from commit."
+}

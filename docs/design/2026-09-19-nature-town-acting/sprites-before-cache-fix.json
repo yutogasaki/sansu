@@ -1,0 +1,25 @@
+{
+  "target": "http://127.0.0.1:5342",
+  "version": {
+    "version": "development-local:0694b6ad-c669-48a5-8813-403c52ee728f",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "candidate": "nature-town-acting-s2",
+  "checks": [],
+  "pass": false,
+  "error": "page.waitForFunction: Timeout 30000ms exceeded.\n    at /Users/yutogasaki/Projects/sansu/tools/e2e-nature-town-sprites.mjs:25:14"
+}

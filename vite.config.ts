@@ -131,7 +131,7 @@ export default defineConfig(({ mode }) => {
                     navigateFallbackDenylist: [/[?&]__app-update=/],
                     // Explicit includeAssets above owns approved offline media;
                     // this glob covers the app shell and the two bundled Life control stills.
-                    globPatterns: ['**/*.{js,css,html,ico,woff,woff2}', 'assets/flower-bloom-original-*.png', 'assets/pokomoko-original-*.png'],
+                    globPatterns: ['**/*.{js,css,html,ico,woff,woff2}', 'assets/flower-bloom-original-*.png', 'assets/pokomoko-original-*.png', 'assets/town-*.png'],
                     globIgnores: ['visual-tests/**/*'],
                     runtimeCaching: [
                         {

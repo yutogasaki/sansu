@@ -31,3 +31,25 @@
 .town-food-transfers{position:absolute;inset:0;pointer-events:none;z-index:9;overflow:visible}.town-transfer-fruit{transform:translate(var(--to-x),var(--to-y));animation:town-pass-food .65s ease-out both}@keyframes town-pass-food{from{transform:translate(var(--from-x),var(--from-y))}to{transform:translate(var(--to-x),var(--to-y))}}
 .town-recent-event{color:var(--color-text-main,#243747);border-left:3px solid #a3b981;padding-left:8px;font-size:12px}.town-supply-detail{font-size:12px}
 @media(prefers-reduced-motion:reduce){.town-transfer-fruit{animation:none}}
+
+/* Feet are anchored to the same map cell in every pose; the hit target remains 44px. */
+.town-resident-body{position:absolute;left:-5px;bottom:6px;width:54px;height:65px;pointer-events:none;transform-origin:50% 88%}
+.town-resident-body img{position:absolute;inset:0;width:54px;height:65px;object-fit:contain;max-width:none}
+.town-resident-shadow{position:absolute;left:13px;bottom:5px;width:29px;height:8px;background:#3b60433d;border-radius:50%;filter:blur(1px)}
+.town-resident-marker.overview .town-resident-body{transform:scale(.76)}
+.town-resident-marker .town-cargo{right:auto;left:50%;bottom:16px;transform:translateX(-50%);padding:0 2px;max-width:32px;min-height:10px;border:1px solid #94734f;border-radius:2px 2px 5px 5px;background:#dcb784;font-size:9px;pointer-events:none}
+.town-resident-marker .town-cargo .town-food-pile{gap:0;flex-wrap:nowrap}
+.town-resident-marker .town-cargo svg{width:8px;height:8px}
+.town-resident-marker.overview .town-cargo{bottom:14px;transform:translateX(-50%) scale(.8)}
+.town-resident-marker .town-cargo:has(.on-cart){left:80%;bottom:5px}
+.town-visitor .town-resident-body{bottom:0}
+.town-prop-art{position:absolute;pointer-events:none;width:54px;height:65px;max-width:none;left:50%;bottom:9%;transform:translateX(-50%);object-fit:contain;filter:drop-shadow(0 3px 2px #345e4733)}
+.town-prop-tree{width:65px;height:78px}.town-prop-bench,.town-prop-flowers{width:46px;height:55px;bottom:-3%}
+.town-map.overview .town-prop-art{width:36px;height:43px}.town-map.overview .town-prop-tree{width:43px;height:52px}.town-map.overview .town-prop-bench,.town-map.overview .town-prop-flowers{width:31px;height:37px}
+.nature-town .town-cell.ground{background:#aed5b0;border-color:#78b19018}.nature-town .town-cell.ground:nth-child(5n){background:#b2d8b2}.nature-town .town-cell.ground.path{background:#ead5a4;border-color:#d9bd83}
+/* Art may extend above its cell; subsequent ground buttons must not paint over it. */
+.town-prop-art{z-index:2}
+.town-resident-marker .town-cargo{bottom:25px}
+.town-resident-marker.overview .town-cargo{bottom:22px}
+.town-resident-marker.overview .town-cargo:has(.on-cart){bottom:5px}
+.town-resident-marker .town-cargo .town-cart-frame{width:24px;height:18px}

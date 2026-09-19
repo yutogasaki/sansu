@@ -7,6 +7,8 @@ Durable completion history and verification facts still belong in `docs/done/YYY
 
 ## Current Index
 
+- 2026-09-19: Nature Townの全身受渡し4ポーズ・既存立体素材・offline画像を実装。両幅の実配送／入居／更新を確認。受入46/47、最終美術・独立観察は継続 -> `docs/done/2026-09.md`
+
 - 2026-09-19: Nature Town最適化等を39faaceでmainへpush。Linux固定フレーム比較PASS、受入46/47。SAFE-06の独立観察は未確認 -> `docs/done/2026-09.md`
 
 - 2026-09-19: Nature Townの経路最適化・全4負荷条件を確認。受入45/47。実機・最終美術等は残件、未コミット -> `docs/done/2026-09.md`
