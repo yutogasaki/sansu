@@ -1,0 +1,38 @@
+{
+  "target": "https://sansu-seven.vercel.app/",
+  "version": {
+    "version": "5e719911b853d2628f69b051c08f35bd1babe065:5d73f0e9-b313-47e3-8c44-c4c2f7167cbf",
+    "revision": "5e719911b853d2628f69b051c08f35bd1babe065",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "images": [
+    {
+      "name": "flower-bloom-original",
+      "width": 320,
+      "height": 208,
+      "bytes": 27168,
+      "sha256": "0480292c0370a2affcc0eefb047c353b3823784614e6ab72aaaa8146a066f6b4"
+    },
+    {
+      "name": "pokomoko-original",
+      "width": 160,
+      "height": 160,
+      "bytes": 31154,
+      "sha256": "e2a975cf0f3880cbd439630beebb56debdf9070cce0e5ac56995920a9b8a8328"
+    }
+  ],
+  "method": "Exact PNG bytes from existing runtime img.src; no image editing or regeneration"
+}

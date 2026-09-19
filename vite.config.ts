@@ -130,8 +130,8 @@ export default defineConfig(({ mode }) => {
                     // even when the currently controlling worker is stale.
                     navigateFallbackDenylist: [/[?&]__app-update=/],
                     // Explicit includeAssets above owns approved offline media;
-                    // this glob is intentionally limited to the app shell.
-                    globPatterns: ['**/*.{js,css,html,ico,woff,woff2}'],
+                    // this glob covers the app shell and the two bundled Life control stills.
+                    globPatterns: ['**/*.{js,css,html,ico,woff,woff2}', 'assets/flower-bloom-original-*.png', 'assets/pokomoko-original-*.png'],
                     globIgnores: ['visual-tests/**/*'],
                     runtimeCaching: [
                         {

@@ -1,3 +1,4 @@
+import flowerBloomOriginal from '../../../../docs/design/2026-09-19-life-startup-stills/source/flower-bloom-original.png';
 import { useEffect, useRef } from 'react';
 import * as T from 'three';
 import { CATALOG, growthStage, type ItemKind, type Style } from '../../../domain/islandLife/model';
@@ -18,7 +19,8 @@ export default function LifeProductPreview({ kind, growth = 0, style = 'original
         target.hidden = true;
         if (fallback.current) fallback.current.hidden = false;
         const key = `${kind ?? 'pokomoko'}:${stage}:${style}`;
-        const cached = stills.get(key);
+        // The two default home controls use the exact previously rendered PNGs.
+        const cached = key === 'flower:2:original' ? flowerBloomOriginal : stills.get(key);
         if (cached) { target.src = cached; target.hidden = false; if (fallback.current) fallback.current.hidden = true; return; }
         let home: ReturnType<typeof buildHomeJourney> | undefined;
         let renderer: T.WebGLRenderer | undefined;
@@ -78,7 +80,10 @@ export default function LifeProductPreview({ kind, growth = 0, style = 'original
         }
     }, [kind, growth, stage, style]);
     return <span className="life-product-preview" aria-hidden="true">
-        <img ref={image} width="160" height="104" alt="" hidden />
+        <img ref={image} width="160" height="104" alt="" hidden onError={() => {
+            if (image.current) image.current.hidden = true;
+            if (fallback.current) fallback.current.hidden = false;
+        }} />
         <span ref={fallback}>{kind ? CATALOG[kind].label : 'ぽこもこ'}</span>
     </span>;
 }

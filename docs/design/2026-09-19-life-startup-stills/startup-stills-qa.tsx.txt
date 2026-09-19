@@ -1,0 +1,10 @@
+import React from 'react';
+import {createRoot} from 'react-dom/client';
+import LifeResidentPortrait from './src/components/island/life/LifeResidentPortrait';
+import LifeProductPreview from './src/components/island/life/LifeProductPreview';
+const root=createRoot(document.getElementById('root')!);
+(window as any).renderStills=(variant:string)=>root.render(<div key={variant} data-variant={variant}>
+<LifeResidentPortrait resident="pokomoko" style={variant==='sunshine'?'sunshine':'original'}/>
+<LifeProductPreview kind="flower" growth={variant==='bud'?2:variant==='seed'?0:6}/>
+</div>);
+(window as any).renderStills('default');

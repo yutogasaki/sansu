@@ -1,0 +1,50 @@
+{
+  "target": "http://127.0.0.1:5261/",
+  "scope": "Isolated component fixture plus actual app screenshots; no user storage",
+  "cases": [
+    {
+      "name": "default",
+      "calls": {
+        "webgl": 0,
+        "png": 0
+      },
+      "images": [
+        "http://127.0.0.1:5261/docs/design/2026-09-19-life-startup-stills/source/pokomoko-original.png",
+        "http://127.0.0.1:5261/docs/design/2026-09-19-life-startup-stills/source/flower-bloom-original.png"
+      ],
+      "pngBytesMatch": true
+    },
+    {
+      "name": "seed",
+      "dynamicImage": true
+    },
+    {
+      "name": "bud",
+      "dynamicImage": true
+    },
+    {
+      "name": "sunshine",
+      "dynamicImage": true
+    },
+    {
+      "name": "image-transfer-failure",
+      "visibleTextFallback": true,
+      "noWebGL": true
+    },
+    {
+      "name": "app",
+      "width": 390,
+      "startupPngCalls": 0,
+      "learningReady": true,
+      "errors": []
+    },
+    {
+      "name": "app",
+      "width": 768,
+      "startupPngCalls": 0,
+      "learningReady": true,
+      "errors": []
+    }
+  ],
+  "pass": true
+}

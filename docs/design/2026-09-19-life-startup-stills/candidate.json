@@ -1,0 +1,16 @@
+{
+  "baseRevision": "5e719911b853d2628f69b051c08f35bd1babe065",
+  "candidate": "life-startup-stills-v1",
+  "target": "isolated localhost Vite / production preview",
+  "flags": {
+    "VITE_ISLAND_ENABLED": true,
+    "VITE_ISLAND_LIFE_ENABLED": true,
+    "VITE_BUILD_PLAY_ENABLED": true,
+    "VITE_PARK_RENDERER": "three"
+  },
+  "sourceSha256": {
+    "src/components/island/life/LifeProductPreview.tsx": "82c8ff70f564b86b51aa3ec2cda16282241368255f602916c2fe75113c1d92eb",
+    "src/components/island/life/LifeResidentPortrait.tsx": "bd4c27dbf9fc2faba819660dc68597a148b8e701cb4ab2938fcaef6c6a4a7cc4",
+    "vite.config.ts": "a2370f3a3fbfe962ee17b53f658192c845f1db4e912476d366055c375ccba97f"
+  }
+}
