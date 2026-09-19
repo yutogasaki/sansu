@@ -14,7 +14,7 @@ Keep only short active entries here, and put detailed execution context in `docs
 
 ## Current Queue
 
-- Nature Town S1：経路最適化・全4負荷条件PASS、受入45/47。次は最終美術・受渡し演技、実機等は継続 -> docs/tasks/active/2026-09-16-nature-town-s1.md
+- Nature Town S1：mainへpush済み、固定30／60Hz比較もPASSで受入46/47。残りSAFE-06は独立観察回答待ち。最終美術・実機等は継続 -> docs/tasks/active/2026-09-16-nature-town-s1.md
 
 - Mysterious island v3 -> docs/tasks/active/2026-09-13-mysterious-island-v3.md
 

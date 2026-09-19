@@ -7,6 +7,8 @@ Durable completion history and verification facts still belong in `docs/done/YYY
 
 ## Current Index
 
+- 2026-09-19: Nature Town最適化等を39faaceでmainへpush。Linux固定フレーム比較PASS、受入46/47。SAFE-06の独立観察は未確認 -> `docs/done/2026-09.md`
+
 - 2026-09-19: Nature Townの経路最適化・全4負荷条件を確認。受入45/47。実機・最終美術等は残件、未コミット -> `docs/done/2026-09.md`
 
 - 2026-09-19: Nature Townの初回負荷診断を記録。3条件一致、96人・24地区未完了。次は性能改善、受入44/47維持。未コミット -> `docs/done/2026-09.md`

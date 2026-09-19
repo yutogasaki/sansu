@@ -173,8 +173,8 @@
       "id": "RNG-02",
       "condition": "30／60fps、カメラ位置、音、演出設定を変更",
       "expected": "同じ論理tickまでの結果が一致",
-      "status": "NOT_RUN",
-      "evidence": "Partial 2026-09-18: entire world equals at tick 480 under different viewport, overview/moisture/selected resident, sound and reduced-motion settings. Nominal RAF 60/30 produced observed callback frequencies about 69.7/19.6 Hz, so exact fixed 30/60fps condition remains unverified. Not a device FPS benchmark. See docs/design/2026-09-18-nature-town-replay/README.md."
+      "status": "PASS",
+      "evidence": "2026-09-19 Linux Chromium native BeginFrameControl: exact 7200 frames at 60Hz / 3600 at 30Hz, timestamps and cumulative cadence verified within 0.2ms timer coarsening. Same initial UI-placed town, camera/moisture/sound/motion changed; complete WorldState and progress equal at tick120. CI run 35424841865, commit 0415af9. docs/design/2026-09-19-nature-town-fixed-frames/README.md. Controlled renderer time, not physical display refresh or wall-clock throughput."
     },
     {
       "id": "RNG-03",
@@ -314,7 +314,7 @@
       "condition": "390×844／768×1024、音なし、動き抑制",
       "expected": "主要操作、経路不通、受渡し、入居が読み取れる",
       "status": "NOT_RUN",
-      "evidence": "Partial: nature-town-living production 390x844 / 768x1024, reduced motion, real harvest/pickup/dropoff/meal, disconnected farm and undo. Admission readability and independent silent comprehension remain unverified. See docs/design/2026-09-16-nature-town-living/README.md."
+      "evidence": "Partial 2026-09-19: both 390x844/768x1024 with sound OFF and reduced motion; actual UI placement, farm pickup, disconnected supply/undo, admission captured with fixed overview. Blind observer page and original runtime shots: docs/design/2026-09-19-nature-town-silent-review/README.md. Runtime capture PASS, independent observers 0/5; readability/safety remains unverified."
     },
     {
       "id": "SAFE-07",

@@ -1,0 +1,79 @@
+{
+  "target": "http://127.0.0.1:5339",
+  "version": {
+    "version": "rng-fixed-0415af9396a8a49cad859e6840986d177d1aa19b:3caa639b-dbf1-441c-9ce6-0960a827a436",
+    "revision": "rng-fixed-0415af9396a8a49cad859e6840986d177d1aa19b",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "browser": "145.0.7632.6",
+  "platform": "linux",
+  "commit": "0415af9396a8a49cad859e6840986d177d1aa19b",
+  "scope": "Native compositor BeginFrameControl, 30/60 Hz frameTimeTicks intervals verified against unmodified requestAnimationFrame timestamps. Actual app timer callback advances once per logical second after exactly fps frames. Disposable profile; initial UI placements cloned across runs. Physical screen refresh rate and wall-clock throughput are not measured.",
+  "runs": [
+    {
+      "fps": 60,
+      "identity": {
+        "revision": "rng-fixed-0415af9396a8a49cad859e6840986d177d1aa19b",
+        "candidate": "nature-town-living-s1"
+      },
+      "frames": 7200,
+      "intervalMin": 16.5,
+      "intervalMax": 16.80000000000291,
+      "intervalMean": 16.666662036393944,
+      "tick": 120,
+      "worldHash": "bdab06411cd13111a90f642f6d7521bd77e15ae72f2b44ae0747b51dc25923f2",
+      "ordinals": {
+        "[\"resident-choice\",\"resident-1\"]": 5,
+        "[\"resident-choice\",\"resident-2\"]": 3,
+        "[\"resident-choice\",\"resident-0\"]": 4,
+        "pair:resident-1:resident-2:last": 24,
+        "[\"insects\",\"chunk:0,0\"]": 4,
+        "[\"insect-variant\",\"chunk:0,0\"]": 2,
+        "farm-ready:farm-0": 32,
+        "[\"settlement\",\"world\"]": 2
+      },
+      "wallMs": 5187,
+      "pass": true
+    },
+    {
+      "fps": 30,
+      "identity": {
+        "revision": "rng-fixed-0415af9396a8a49cad859e6840986d177d1aa19b",
+        "candidate": "nature-town-living-s1"
+      },
+      "frames": 3600,
+      "intervalMin": 33.19999999999709,
+      "intervalMax": 33.5,
+      "intervalMean": 33.33331480966935,
+      "tick": 120,
+      "worldHash": "bdab06411cd13111a90f642f6d7521bd77e15ae72f2b44ae0747b51dc25923f2",
+      "ordinals": {
+        "[\"resident-choice\",\"resident-1\"]": 5,
+        "[\"resident-choice\",\"resident-2\"]": 3,
+        "[\"resident-choice\",\"resident-0\"]": 4,
+        "pair:resident-1:resident-2:last": 24,
+        "[\"insects\",\"chunk:0,0\"]": 4,
+        "[\"insect-variant\",\"chunk:0,0\"]": 2,
+        "farm-ready:farm-0": 32,
+        "[\"settlement\",\"world\"]": 2
+      },
+      "wallMs": 3583,
+      "pass": true
+    }
+  ],
+  "pass": true,
+  "initialHash": "5ac39e32820691adbf03dec2cc38f46447d9c2726f09fed4d292bf38d7006788"
+}

@@ -4,7 +4,7 @@
 - 状態: 実装継続中。コア・基本操作は実装済み、S1全体は未完了。
 - Review By: 2026-09-23
 - 現在: NT-1の実状態表示を実装。芽・葉・実、実在庫、受渡し、共同食、供給不通を接続。最終美術と全身の受渡し演技は残る。
-- 次の着手: NT-1の最終美術・全身受渡し演技とSAFE-06の読み取り確認。NT-5の経路最適化・4負荷条件は確認済み。実機iOS、固定fps対応環境、参加者評価は別途必要。
+- 次の着手: SAFE-06の独立観察回答を集める。固定30／60Hz比較はLinuxでPASS。観察者用セットは用意済み、回答0人。最終美術・全身演技、実機iOS、対象年齢の再プレイ評価は別途残る。
 
 ## 目的と正本
 
@@ -13,7 +13,7 @@
 - [S1の納品条件](../../product/nature-town/07_MVP_AND_DELIVERY.md)
 - [操作仕様](../../product/nature-town/05_UX_AND_FEEDBACK.md)
 - [実装・起動・検証記録](../../product/nature-town/IMPLEMENTATION.md)
-- [受入対応表](../../product/nature-town/acceptance-status.json): 47項目中PASS 45、NOT_RUN 2。完成率ではなく検証状況。
+- [受入対応表](../../product/nature-town/acceptance-status.json): 47項目中PASS 46、NOT_RUN 1。完成率ではなく検証状況。
 
 ## 実装済みの区切り
 
@@ -36,6 +36,8 @@ NT-5負荷診断（2026-09-19）：3条件×通常／画面外省略の全世界
 
 NT-5改善（2026-09-19）：移動後の経路探索を共有し、3条件の旧新版全世界一致を確認。96人・24地区も完走、全4条件の通常／省略表示と保存を確認。SAFE-07 PASS、受入45/47。[変更と実測](../../design/2026-09-19-nature-town-routing/README.md)。
 
+2026-09-19：経路最適化・負荷・更新の記録を39faaceでmainへpush。続いて[Linux固定フレーム比較](../../design/2026-09-19-nature-town-fixed-frames/README.md)がPASS、受入46/47。[独立観察セット](../../design/2026-09-19-nature-town-silent-review/observer.html)は用意済みだが、回答0人のためSAFE-06を未確認で保持。
+
 ## 残作業と実行順
 
 | 順 | タスク | 完了条件 | 依存・状態 |
@@ -54,9 +56,8 @@ NT-5改善（2026-09-19）：移動後の経路探索を共有し、3条件の�
 | 作業 | NOT_RUNのID | 見る条件 |
 |---|---|---|
 | NT-1 | SAFE-06 | 主要操作、不通、受渡し、入居の読み取り |
-| NT-3 | RNG-02 | 表示設定・再開後の全世界一致は確認。固定30／60fps条件は未確認で、通常RAF／間引きの観測値を代用しない |
 
-NT-4は[実2ビルド更新の証跡](../../design/2026-09-19-nature-town-two-build/README.md)で完了。NT-6の参加者評価は別途必要。47項目のPASSだけでは参加者評価の完了を意味しない。RNG-02はmacOSの固定フレーム制御未対応により対応環境待ち。
+NT-4は[実2ビルド更新の証跡](../../design/2026-09-19-nature-town-two-build/README.md)で完了。NT-6の参加者評価は別途必要。47項目のPASSだけでは参加者評価の完了を意味しない。RNG-02はLinuxのネイティブフレーム制御で確認済み。
 
 ## Verification
 
