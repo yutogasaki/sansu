@@ -29,7 +29,8 @@ const interruption = process.env.SANSU_LIFE_UPDATE_INTERRUPTION === '1';
 const discoveryUpgrade = process.env.SANSU_LIFE_DISCOVERY_UPGRADE === '1';
 const cadenceUpgrade = process.env.SANSU_LIFE_CADENCE_UPGRADE === '1';
 const heroVisitUpgrade = process.env.SANSU_LIFE_HERO_VISIT_UPGRADE === '1';
-assert(!(cadenceUpgrade && heroVisitUpgrade), 'Select one version upgrade');
+const diagonalUpgrade = process.env.SANSU_LIFE_DIAGONAL_UPGRADE === '1';
+assert([cadenceUpgrade, heroVisitUpgrade, diagonalUpgrade].filter(Boolean).length <= 1, 'Select one version upgrade');
 if (discoveryUpgrade) {
     assert.notEqual(builds[0].flags.VITE_ISLAND_LIFE_DISCOVERY_ENABLED, true);
     assert.equal(builds[1].flags.VITE_ISLAND_LIFE_DISCOVERY_ENABLED, true);
@@ -45,7 +46,7 @@ const server = createServer(async (req, res) => {
 await new Promise(resolveListening => server.listen(0, '127.0.0.1', resolveListening));
 const base = `http://127.0.0.1:${server.address().port}`, browser = await chromium.launch();
 const report = { target: base, builds: builds.map(b => ({ revision: b.revision, sourceHash: b.sourceHash, version: b.version, flags: b.flags })), bundles,
-    scope: 'Real old-to-new SW update during a partially completed learning reservation, retained earned Life ownership and all native stores, one reload, offline restart and same next question. No injected profile, credits, timestamps, update events or worker mocks. Empty photo stores do not prove Blob retention.', interruption, discoveryUpgrade, cadenceUpgrade, heroVisitUpgrade, humanN: 0, cases: [], pass: false };
+    scope: 'Real old-to-new SW update during a partially completed learning reservation, retained earned Life ownership and all native stores, one reload, offline restart and same next question. No injected profile, credits, timestamps, update events or worker mocks. Empty photo stores do not prove Blob retention.', interruption, discoveryUpgrade, cadenceUpgrade, heroVisitUpgrade, diagonalUpgrade, humanN: 0, cases: [], pass: false };
 async function snapshot(page) {
     return page.evaluate(async () => {
         const result = {};
@@ -76,6 +77,10 @@ function retained(before, after) {
         assert.deepEqual(next.heroVisitCutover.priorActions, old.actions);
         assert.deepEqual(next.cadenceCutover, old.cadenceCutover);
         assert.deepEqual(next.placementCutover, old.placementCutover);
+    } else if (diagonalUpgrade && old.version === 17 && next.version === 18) {
+        assert(next.diagonalCutover); assert.equal(next.diagonalCutover.profileId, old.profileId);
+        assert.deepEqual(next.diagonalCutover.priorActions, old.actions);
+        for (const key of ['heroVisitCutover', 'cadenceCutover', 'placementCutover']) assert.deepEqual(next[key], old[key]);
     } else assert.equal(next.version, old.version);
     for (const key of ['profileId', 'createdAt', 'credits', 'actions', 'economyCheckpoint', 'tourCutover', 'facilityCutover', 'relationCutover', 'clockIntents']) assert.deepEqual(next[key], old[key], key);
 }
@@ -119,6 +124,7 @@ try {
             const cacheBefore = await page.evaluate(() => caches.keys());
             const before = await snapshot(page); if (cadenceUpgrade) assert.equal(before.SansuIslandLifeV1.worlds[0].version, 15); assert.equal(before.SansuIslandLifeV1.worlds[0].credits.length, 4);
             if (heroVisitUpgrade) assert.equal(before.SansuIslandLifeV1.worlds[0].version, 16);
+            if (diagonalUpgrade) assert.equal(before.SansuIslandLifeV1.worlds[0].version, 17);
             const allActions = before.SansuIslandLifeV1.worlds[0].actions;
             if (heroVisitUpgrade) {
                 const calls = allActions.filter(a => a.command.type === 'visit'); assert.equal(calls.length, 1);
@@ -161,6 +167,7 @@ try {
             await page.waitForFunction(expected => document.querySelector('script[type="module"][src]')?.getAttribute('src') === expected, bundles[1]); await world(page);
             await page.waitForTimeout(5000); assert.equal(navigations.length, 1); const after = await snapshot(page); retained(before, after);
             if (cadenceUpgrade) assert.equal(after.SansuIslandLifeV1.worlds[0].version, 16);
+            if (diagonalUpgrade) assert.equal(after.SansuIslandLifeV1.worlds[0].version, 18);
             if (heroVisitUpgrade) {
                 assert.equal(after.SansuIslandLifeV1.worlds[0].version, 17);
                 const flowerId = allActions.find(a => a.command.type === 'buy').id;

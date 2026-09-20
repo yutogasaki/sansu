@@ -67,7 +67,7 @@ describe('facility transport migration',()=>{
         next=commandLife(next,{type:'buy',kind:'flower',cell:{x:6,z:0}},'new-flower',next.now);
         expect(next.version).toBe(12);expect(await prepareFacilityMigration(next)).toBe(next);
         const db=new IslandLifeDatabase(`observation-version-${crypto.randomUUID()}`);
-        try{await db.worlds.put(next);const refreshed=await updateLife('trip',[],undefined,100,db);expect(refreshed.version).toBe(17);expect(refreshed.actions).toEqual(next.actions);}finally{await db.delete();}
+        try{await db.worlds.put(next);const refreshed=await updateLife('trip',[],undefined,100,db);expect(refreshed.version).toBe(18);expect(refreshed.actions).toEqual(next.actions);}finally{await db.delete();}
     });
     it('uses a free resident for a bounded observation trip without cancelling a busy resident or awarding use credit',()=>{
         const s=fixture('library');s.target=undefined;
@@ -106,7 +106,7 @@ describe('facility transport migration',()=>{
             const old=await legacy();await db.worlds.put(old);const fail=()=>{throw new Error('disk failure');};db.worlds.hook('updating',fail);
             await expect(updateLife('trip',[],undefined,100,db)).rejects.toThrow('disk failure');expect(await db.worlds.get('trip')).toEqual(old);
             db.worlds.hook('updating').unsubscribe(fail);const first=await updateLife('trip',[],undefined,100,db);
-            expect(first.version).toBe(17);expect(first.revision).toBe(old.revision+1);
+            expect(first.version).toBe(18);expect(first.revision).toBe(old.revision+1);
             const intent={id:'store',revision:first.revision,command:{type:'store' as const,itemId:'target'}};
             const stored=await updateLife('trip',[],intent,200,db);expect(await updateLife('trip',[],intent,300,db)).toEqual(stored);
             expect(stored.facilityCutover).toEqual(first.facilityCutover);

@@ -46,7 +46,7 @@ describe('tour cutover keeps old visits and same-time history intact', () => {
         await expect(updateLife('p', [], undefined, 100, db)).rejects.toThrow('disk failure');
         expect(await db.worlds.get('p')).toEqual(old); db.worlds.hook('updating').unsubscribe(fail);
         const first = await updateLife('p', [], undefined, 100, db), repeat = await updateLife('p', [], undefined, 200, db);
-        expect(first.version).toBe(17); expect(repeat.tourCutover).toEqual(first.tourCutover);
+        expect(first.version).toBe(18); expect(repeat.tourCutover).toEqual(first.tourCutover);
         const intent = { id: 'store', revision: repeat.revision, command: { type: 'store' as const, itemId: 's0' } };
         const stored = await updateLife('p', [], intent, 200, db);
         expect(await updateLife('p', [], intent, 300, db)).toEqual(stored);

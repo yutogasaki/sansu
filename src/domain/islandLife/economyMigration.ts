@@ -36,9 +36,9 @@ export async function verifyEconomyCheckpoint(checkpoint: LifeEconomyCheckpoint)
 }
 export function assertCheckpointBoundary(record: LifeRecord) {
     const checkpoint = record.economyCheckpoint;
-    if (!checkpoint) { if ((record.version === 3 || record.version === 4 || record.version === 5 || record.version === 6 || record.version === 7 || record.version === 8 || record.version === 9 || record.version === 10 || record.version === 11 || record.version === 12 || (record.version === 13 || record.version === 14 || (record.version === 15 || (record.version === 16 || record.version === 17))))) throw new Error('島の切替記録が見つかりません。'); return; }
+    if (!checkpoint) { if ((record.version === 3 || record.version === 4 || record.version === 5 || record.version === 6 || record.version === 7 || record.version === 8 || record.version === 9 || record.version === 10 || record.version === 11 || record.version === 12 || (record.version === 13 || record.version === 14 || (record.version === 15 || (record.version === 16 || (record.version === 17 || record.version === 18)))))) throw new Error('島の切替記録が見つかりません。'); return; }
     const known = new Set(checkpoint.projectedCreditIds);
-    if (![3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17].includes(record.version) || record.profileId !== checkpoint.sourceRecord.profileId
+    if (![3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18].includes(record.version) || record.profileId !== checkpoint.sourceRecord.profileId
         || checkpoint.checkpointId !== JSON.stringify([record.profileId, ECONOMY_V3_VERSION])
         || JSON.stringify(record.actions.slice(0, checkpoint.actionCount)) !== JSON.stringify(checkpoint.sourceRecord.actions)
         || JSON.stringify(record.credits.filter(credit => known.has(credit.id))) !== JSON.stringify([...checkpoint.sourceRecord.credits.filter(credit => credit.at <= checkpoint.cutoverAt), ...checkpoint.legacyCorrections])
@@ -59,7 +59,7 @@ function currentBase(legacy: LegacyRecord, budget: number): LifeState {
 /** Prepare a complete backup + verified projection. The caller must commit this
  * atomically under the same owner/revision lock before enabling new rules. */
 export async function prepareEconomyMigration(record: LifeRecord, facts: readonly TerminalFact[], originalRecord: LifeRecord = record): Promise<LifeRecord> {
-    if ((record.version === 3 || record.version === 4 || record.version === 5 || record.version === 6 || record.version === 7 || record.version === 8 || record.version === 9 || record.version === 10 || record.version === 11 || record.version === 12 || (record.version === 13 || record.version === 14 || (record.version === 15 || (record.version === 16 || record.version === 17))))) {
+    if ((record.version === 3 || record.version === 4 || record.version === 5 || record.version === 6 || record.version === 7 || record.version === 8 || record.version === 9 || record.version === 10 || record.version === 11 || record.version === 12 || (record.version === 13 || record.version === 14 || (record.version === 15 || (record.version === 16 || (record.version === 17 || record.version === 18)))))) {
         if (!record.economyCheckpoint) throw new Error('島の切替記録が見つかりません。');
         assertCheckpointBoundary(record); await verifyEconomyCheckpoint(record.economyCheckpoint); return record;
     }

@@ -50,12 +50,13 @@ try {
         for (const [id, count] of Object.entries(positions)) assert(count >= 4, `${device}: ${id} stayed still (${count})`);
         assert.deepEqual(await readNative(page, id), native, 'Idle movement must not change learning');
         const before = await page.evaluate(async id => { const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); return lifeDb.worlds.get(id); }, id);
-        assert.equal(before.version, 17); await page.reload(); await world.waitFor();
+        assert.equal(before.version, 18); await page.reload(); await world.waitFor();
         const after = await page.evaluate(async id => { const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); return lifeDb.worlds.get(id); }, id);
         if (heroCall) {
             assert.equal((await saved(page, id, true)).state.target, undefined);
             assert(samples.some(s => s.poses.some(p => p.id === 'pokomoko' && p.phase === 'walking' && p.itemId !== 'qa-flower')), 'Called hero must walk elsewhere');
             assert.deepEqual(after.heroVisitCutover, before.heroVisitCutover);
+            assert.deepEqual(after.diagonalCutover, before.diagonalCutover);
         }
         assert.deepEqual(after.cadenceCutover, before.cadenceCutover); assert.deepEqual(after.actions, before.actions); assert.deepEqual(after.credits, before.credits);
         assert.deepEqual(errors, []); assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));

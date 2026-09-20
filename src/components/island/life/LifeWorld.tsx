@@ -200,13 +200,15 @@ export default function LifeWorld({ onFrame, inspectShadow, observationOpen = fa
         renderer.domElement.addEventListener('lostpointercapture', lostPointerCapture);
         renderer.domElement.addEventListener('wheel', wheel, { passive: false });
         const media = window.matchMedia('(prefers-reduced-motion: reduce)');
-        let raf = 0, auditAt = 0, discoveryAt = 0, discoveryOwner: string | undefined, lastBackgroundFrame = -Infinity;
+        let raf = 0, auditAt = 0, discoveryAt = 0, discoveryOwner: string | undefined;
         let collector: GatheringCollector | undefined;
         const frame = () => {
-            // The foreground observation owns the full render cadence. The background
-            // still samples the same world clock; closing the panel resumes immediately.
-            if (behindObservation.current && performance.now() - lastBackgroundFrame < 125) { raf = requestAnimationFrame(frame); return; }
-            lastBackgroundFrame = performance.now();
+            // The opaque observation covers this canvas. Keep its clock running,
+            // but leave GPU/animation work to the visible scene until it closes.
+            if (behindObservation.current) {
+                presentationClock.resume(performance.now(), true);
+                raf = requestAnimationFrame(frame); return;
+            }
             // Background/context-loss time must age reactions, not replay them on return.
             if (document.visibilityState !== 'visible' || renderer.getContext().isContextLost()) presentationClock.resume(performance.now(), true);
             const logicalAt = presentationClock.sample(performance.now());

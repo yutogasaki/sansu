@@ -41,7 +41,7 @@ function geometryAllows(state: LifeState, p: Cell) {
     });
 }
 // Geometry is immutable for the lifetime of each cache entry, even though replay mutates state.
-const meshes = new Map<string, { stand: (p: Cell) => boolean; edges: Map<string, boolean>; paths: Map<string, Cell[] | undefined> }>();
+const meshes = new Map<string, { stand: (p: Cell) => boolean; geometry: (p: Cell) => boolean; edges: Map<string, boolean>; paths: Map<string, Cell[] | undefined> }>();
 // Replay repeatedly asks for routes while only clocks and resident positions change.
 // Compare a small copied layout first; identity alone is unsafe for mutable replay states.
 let lastLayout: {
@@ -60,7 +60,7 @@ function meshFor(state: LifeState) {
     if (!mesh) {
         const geometry = { ...state, extraLand: state.extraLand && [...state.extraLand], items: state.items.map(i => ({ ...i, cell: i.cell && { ...i.cell } })) };
         const points = new Map<string, boolean>();
-        mesh = { edges: new Map(), paths: new Map(), stand: p => {
+        mesh = { geometry: p => geometryAllows(geometry, p), edges: new Map(), paths: new Map(), stand: p => {
             const key = `${p.x},${p.z}`;
             if (!points.has(key)) points.set(key, geometryAllows(geometry, p));
             return points.get(key)!;
@@ -72,6 +72,8 @@ function meshFor(state: LifeState) {
         items: state.items.map(i => ({ kind: i.kind, x: i.cell?.x, z: i.cell?.z })), mesh };
     return mesh;
 }
+/** Direct clearance against one immutable layout, for dense segment checks. */
+export const walkingClearance = (state: LifeState) => meshFor(state).geometry;
 export const canStand = (state: LifeState, point: Cell) => meshFor(state).stand(point);
 export function fineRoute(state: LifeState, from: Cell, to: Cell, avoid: Cell[] = []): Cell[] | undefined {
     const mesh = meshFor(state), signature = `${from.x},${from.z}>${to.x},${to.z}|${avoid.map(p => `${p.x},${p.z}`).join(';')}`;

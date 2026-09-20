@@ -13,8 +13,8 @@ async function digest(cutover: HeroVisitCutover) {
 }
 export function assertHeroVisitCutover(record: LifeRecord) {
     const c = record.heroVisitCutover;
-    if (!c) { if (record.version === 17) throw new Error('呼び出しの切替記録が見つかりません。'); return; }
-    if (![17].includes(record.version) || c.rules !== 'hero-single-visit-v1' || c.profileId !== record.profileId
+    if (!c) { if ((record.version === 17 || record.version === 18)) throw new Error('呼び出しの切替記録が見つかりません。'); return; }
+    if (![17, 18].includes(record.version) || c.rules !== 'hero-single-visit-v1' || c.profileId !== record.profileId
         || !record.cadenceCutover || !Number.isFinite(c.at) || c.at < record.cadenceCutover.at || c.at > record.now
         || !Number.isInteger(c.actionCount) || c.actionCount < record.cadenceCutover.actionCount || c.actionCount > record.actions.length
         || c.priorActions.length !== c.actionCount || JSON.stringify(c.priorActions) !== JSON.stringify(record.actions.slice(0, c.actionCount))
@@ -26,7 +26,7 @@ export async function verifyHeroVisitCutover(record: LifeRecord) {
     if (record.heroVisitCutover && record.heroVisitCutover.validationHash !== await digest(record.heroVisitCutover)) throw new Error('呼び出しの切替記録を確認できません。');
 }
 export async function prepareHeroVisitMigration(record: LifeRecord): Promise<LifeRecord> {
-    if (record.version === 17) { await verifyHeroVisitCutover(record); return record; }
+    if ((record.version === 17 || record.version === 18)) { await verifyHeroVisitCutover(record); return record; }
     if (!record.cadenceCutover || record.heroVisitCutover) throw new Error('Unknown heroVisit migration source');
     const before = replayLife(record);
     const cutover: HeroVisitCutover = { rules: 'hero-single-visit-v1', profileId: record.profileId, at: record.now,

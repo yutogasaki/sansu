@@ -22,7 +22,7 @@ describe('atomic v3 economy cutover', () => {
         database.worlds.hook('updating').unsubscribe(fail);
         const migrated = await updateLife('p', [], undefined, HOUR, database);
         expect(migrated.economyCheckpoint!.originalRecord).toEqual(old);
-        expect(migrated.version).toBe(17); expect(migrated.economyCheckpoint!.checkpointId).toBe(JSON.stringify(['p', 'life-v3.0-rc1']));
+        expect(migrated.version).toBe(18); expect(migrated.economyCheckpoint!.checkpointId).toBe(JSON.stringify(['p', 'life-v3.0-rc1']));
         expect(migrated.economyCheckpoint!.sourceRecord.actions).toEqual(old.actions);
         await verifyEconomyCheckpoint(migrated.economyCheckpoint!);
         const repeat = await updateLife('p', [], undefined, 2 * HOUR, database);
