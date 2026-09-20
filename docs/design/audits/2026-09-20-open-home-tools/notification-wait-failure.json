@@ -1,0 +1,31 @@
+{
+  "target": "http://127.0.0.1:5342",
+  "version": {
+    "version": "ad223e39-open-tools-v1:9c59f03b-3b44-471f-9d95-8eea6909707e",
+    "revision": "ad223e39-open-tools-v1",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "fixture": "Disposable native life credits and four flowers/bench; acquisition is not earned-learning evidence",
+  "humanN": 0,
+  "scenarios": [
+    {
+      "name": "phone",
+      "pass": false,
+      "error": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.life-earned') to be hidden\u001b[22m\n\u001b[2m    6 × locator resolved to visible <button aria-live=\"polite\" class=\"life-earned\" data-life-earned=\"108\" data-life-light-earned=\"45\" data-life-observation-earned=\"pokomoko:qa-item-4:notice:1789843881849,rabbit:qa-item-3:notice:1789843880849,otter:qa-item-4:notice:1789843881849\">…</button>\u001b[22m\n",
+      "errors": []
+    }
+  ]
+}

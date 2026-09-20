@@ -1,0 +1,99 @@
+{
+  "target": "http://127.0.0.1:5342",
+  "version": {
+    "version": "ad223e39-open-tools-v1:9c59f03b-3b44-471f-9d95-8eea6909707e",
+    "revision": "ad223e39-open-tools-v1",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "fixture": "Real onboarding, empty island, no injected records/credits/clocks. Responsive checks resize the same owner.",
+  "humanN": 0,
+  "cases": [
+    {
+      "name": "phone",
+      "width": 390,
+      "height": 844,
+      "bounds": {
+        "x": 12,
+        "y": 702.40625,
+        "width": 366,
+        "height": 64
+      },
+      "worldBounds": {
+        "x": 0,
+        "y": 96,
+        "width": 390,
+        "height": 604.40625
+      },
+      "pass": true
+    },
+    {
+      "name": "tablet",
+      "width": 768,
+      "height": 1024,
+      "bounds": {
+        "x": 189,
+        "y": 882.40625,
+        "width": 390,
+        "height": 64
+      },
+      "worldBounds": {
+        "x": 0,
+        "y": 96,
+        "width": 768,
+        "height": 784.40625
+      },
+      "pass": true
+    },
+    {
+      "name": "small",
+      "width": 320,
+      "height": 568,
+      "bounds": {
+        "x": 12,
+        "y": 417.21875,
+        "width": 296,
+        "height": 64
+      },
+      "worldBounds": {
+        "x": 0,
+        "y": 96,
+        "width": 320,
+        "height": 319.21875
+      },
+      "pass": true
+    },
+    {
+      "name": "landscape",
+      "width": 844,
+      "height": 390,
+      "bounds": {
+        "x": 227,
+        "y": 248.40625,
+        "width": 390,
+        "height": 64
+      },
+      "worldBounds": {
+        "x": 0,
+        "y": 54,
+        "width": 844,
+        "height": 192.40625
+      },
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "pass": true
+}

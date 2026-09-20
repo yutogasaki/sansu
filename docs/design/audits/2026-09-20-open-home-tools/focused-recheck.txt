@@ -1,0 +1,27 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu-resident-diagonal
+
+ ✓ src/domain/island/growthRepository.test.ts (11 tests) 4922ms
+   ✓ owned atomic living island persistence > aborts growth, snapshot, answer, profile and completion together then saves each once on retry 3456ms
+   ✓ owned atomic living island persistence > saves old appearances independently of earned growth and never rewrites album snapshots or user placement 365ms
+ ❯ src/hooks/learningProgression.integration.test.ts (12 tests | 1 failed) 16207ms
+   × learning progression from real generated questions > reaches 70% promotion through generated normal blocks and persisted answers 15004ms
+     → Test timed out in 15000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   ✓ learning progression from real generated questions > keeps unknown vocabulary answers out of the independent unlock window 345ms
+   ✓ learning progression from real generated questions > holds the old math test range when the persisted 30th answer promotes the main level 439ms
+ ✓ src/domain/islandLife/repository.test.ts (5 tests) 3851ms
+   ✓ independent life persistence > never awards a diagnostic time jump twice and recovers from backward clock 3520ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/hooks/learningProgression.integration.test.ts > learning progression from real generated questions > reaches 70% promotion through generated normal blocks and persisted answers
+Error: Test timed out in 15000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  1 failed | 27 passed (28)
+   Start at  11:54:12
+   Duration  36.37s (transform 1.67s, setup 0ms, collect 10.08s, tests 24.98s, environment 0ms, prepare 232ms)
+

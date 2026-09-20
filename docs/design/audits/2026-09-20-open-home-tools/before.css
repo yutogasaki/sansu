@@ -49,15 +49,16 @@
     max-width: 390px; margin-inline: auto;
 }
 .island-page[data-life-home="true"] .life-home-tools .life-home-action {
-    display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 0;
-    width: 100%; min-width: 0; height: 64px; min-height: 44px; margin: 0; padding: 0 5px;
-    color: var(--pokomoko-paper); background: none;
-    border: 0; border-radius: 0; box-shadow: none;
+    display: flex; justify-content: center; align-items: center; gap: 2px;
+    width: 100%; min-width: 0; height: 54px; min-height: 44px; margin: 0; padding: 3px 5px;
+    color: var(--pokomoko-blue-deep); background: var(--pokomoko-paper);
+    border: 1px solid var(--pokomoko-edge); border-radius: 18px;
+    box-shadow: 0 3px 0 color-mix(in srgb, var(--pokomoko-ink) 18%, transparent);
     font: inherit; font-size: 13px; font-weight: 800; white-space: nowrap; cursor: pointer;
 }
-.life-home-action > span { line-height: 20px; }
-.life-home-action:is(:hover, :focus-visible) > span,
-.life-camera-tools[open] > .life-home-action > span { text-decoration: underline; text-underline-offset: 4px; }
+.island-page[data-life-home="true"] .life-home-tools .life-build-action {
+    background: var(--pokomoko-blue); border-color: var(--pokomoko-blue); color: var(--pokomoko-paper);
+}
 .life-home-action:focus-visible { outline: 3px solid var(--pokomoko-paper); outline-offset: 3px; }
 .life-home-action:disabled { opacity: .55; cursor: default; }
 .life-home-action > .life-product-preview,
@@ -69,9 +70,9 @@
 .life-home-action > .island-toy-icon { flex-shrink: 0; width: 40px; height: 40px; }
 .island-page[data-life-home="true"] .life-home-tools .life-camera-tools { position: static; margin: 0; }
 .island-page[data-life-home="true"] .life-home-tools .life-camera-tools-panel {
-    bottom: 74px; right: 0; max-width: calc(100vw - 24px); padding: 10px; z-index: 1;
+    bottom: 64px; right: 0; max-width: calc(100vw - 24px); padding: 10px; z-index: 1;
 }
-.island-page[data-life-home="true"] .life-home-tools .island-stage__quick-reset { bottom: 74px; left: auto; right: 0; }
+.island-page[data-life-home="true"] .life-home-tools .island-stage__quick-reset { bottom: 64px; left: auto; right: 0; }
 .life-home-tools:has(.life-camera-tools[open]) .island-stage__quick-reset { display: none; }
 .island-page[data-life-home="true"] .life-dock-closed {
     bottom: var(--life-world-bottom); align-items: center;
