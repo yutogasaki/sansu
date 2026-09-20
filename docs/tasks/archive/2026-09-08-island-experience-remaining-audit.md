@@ -190,7 +190,7 @@ Source A全面の造形差、音の未収録onset/実聴、無説明理解/意�
 
 ## F04の次段階に向けた保存境界の確認
 
-仕様39の実画面検査と並行して、任意家具の現コードを読み取った時点の準備記録。現在は[仕様40](../../product/40_island_life_furniture_spec.md)へ3道具を採用し、domain/UI/rendererを接続済みで、固定17/24の限定証拠と未完の全利用/保存境界はF04/R08へ記す。以下は当初の保存設計メモである。採用された内容は40を正本として読み、実画面の到達範囲は[全体タスク](2026-09-08-island-experience.md)で確認する。
+仕様39の実画面検査と並行して、任意家具の現コードを読み取った時点の準備記録。現在は[仕様40](../../product/40_island_life_furniture_spec.md)へ3道具を採用し、domain/UI/rendererを接続済みで、固定17/24の限定証拠と未完の全利用/保存境界はF04/R08へ記す。以下は当初の保存設計メモである。採用された内容は40を正本として読み、実画面の到達範囲は[全体タスク](../active/2026-09-08-island-experience.md)で確認する。
 
 - 現在は6 kind・基本7 instanceで、灯りが2個ある。`growth.ts` のMANAGED_ITEMSは自動取得を有限にするが、旧報酬では同kindの複数所有があり得る。新しい島の「基本7＋任意3」を、旧島全体の個数制限にしない。
 - 望遠鏡/ハンモック/茶卓を各1個のstable ID付き任意家具として既存itemsへ追加し、所有の二重配列を作らない案を検討する。購入時は収納状態にして、本人が既存のplace/storeで置く。基本成長、旧rewardChoices、獲得済みの重複家具は保持する。
@@ -201,7 +201,7 @@ Source A全面の造形差、音の未収録onset/実聴、無説明理解/意�
 
 ## F05の具体化に向けた現コードの境界
 
-2026-09-09追記: 以下は採用前の履歴。現在の契約は[仕様41](../../product/41_island_expression_collection_spec.md)へ採用済みで、10品のdomain/storage、取得と装備の分離、実rig/足跡/環境/旗、単一音engine、写真外装/旧履歴を固定13へ統合した。全268files/2916testsとbuild/assetsはPASS。実画面・X01〜X14全体は未合格で、現在の範囲別根拠は[全体タスク](2026-09-08-island-experience.md)と[対応表](2026-09-08-island-experience-coverage.md)で追う。下記の候補時点の「次の仕様」を新たな未採用扱いへ読み替えない。
+2026-09-09追記: 以下は採用前の履歴。現在の契約は[仕様41](../../product/41_island_expression_collection_spec.md)へ採用済みで、10品のdomain/storage、取得と装備の分離、実rig/足跡/環境/旗、単一音engine、写真外装/旧履歴を固定13へ統合した。全268files/2916testsとbuild/assetsはPASS。実画面・X01〜X14全体は未合格で、現在の範囲別根拠は[全体タスク](../active/2026-09-08-island-experience.md)と[対応表](2026-09-08-island-experience-coverage.md)で追う。下記の候補時点の「次の仕様」を新たな未採用扱いへ読み替えない。
 
 旧保存互換の証拠整理（2026-09-09）: 本走03は同一originの実06→12→20で両幅各150通常回答から旧none/v1保存、当時写真/共有記憶、旧初期memory1件の表示、4資格品とnonnull v2/null復元まで通過後、配置画面の「しまへ」待機というQA前提でFAIL。別のcheckpoint02はその実保存17store/原PNGを明示復元し、20で後発家具/展示の全体拒否→本人修正→同予約1回答/reloadを両幅PASSした。現行32のcurrent01は旧表示引数と本文収集のQA問題でFAILを保持し、修正QA02のcurrent02は固定33で両幅限定PASS（各26全DB、旧実img/同bytes出力、3形式の試用取消/適用、既存権利/同予約1回答、source/QA不変、8所有PID終了）。exact provenance・原FAIL・4枚の実画面は[互換監査](../../design/audits/2026-09-09-island-scene-compatibility/README.md)と[検証値](../../design/audits/2026-09-09-island-scene-compatibility/verification.json)へ耐久化した。目標/keepsakesは元データで省略され、非空状態の保持は未実証。旧通常回答/資格取得の全再走は不要で、全履歴/v1 growth memoryの実表示、連続全経路、実SW更新、実音、人の理解（N=0）へ合格を広げない。
 

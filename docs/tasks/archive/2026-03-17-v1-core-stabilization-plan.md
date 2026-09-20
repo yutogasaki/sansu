@@ -2,8 +2,8 @@
 
 - Date: 2026-03-17
 - Owner: yutogasaki / codex
-- Status: Active
-- Review By: 2026-05-15
+- Status: Archived; superseded by the current shared queue
+- Archived: 2026-09-20
 - Related ADR / Runbooks:
   - `docs/runbooks/backlog-triage.md`
   - `docs/ai/verification_matrix.md`
@@ -32,9 +32,9 @@
 
 - `docs/product/01_app_spec.md`
 - `docs/product/07_ui_design_guideline.md`
-- `docs/tasks/design-refresh-status.md`
+- `docs/tasks/archive/2026-03-17-design-refresh-status.md`
 - `docs/tasks/backlog.md`
-- `docs/tasks/ui-fix-tasklist.md`
+- `docs/tasks/archive/2026-03-13-ui-fix-tasklist.md`
 - `docs/wiki/risk_register.md`
 
 ## Docs To Touch

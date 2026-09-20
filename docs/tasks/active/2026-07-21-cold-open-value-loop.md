@@ -2,8 +2,8 @@
 
 - Date: 2026-07-21
 - Owner: Codex `/root`
-- Status: Active
-- Review By: 2026-07-28
+- Status: Blocked on external value test and same-build audit
+- Review By: 2026-09-27
 - Related ADR / Runbooks: `docs/runbooks/pwa-release.md`
 
 ## Goal

@@ -2,7 +2,7 @@
 
 Date: 2026-09-08
 
-親仕様は[01](01_app_spec.md)、島は[28](28_mystic_island_spec.md)、成長・暮らしは[30](30_living_island_growth_spec.md)、ほし・きせかえは[35](35_island_customization_spec.md)。本仕様は[104項目](../wiki/game-experience-benchmark.md)と[追加報酬分析](../wiki/reward-customization-benchmark.md)から採用する改善の契約。進捗は[全体タスク](../tasks/active/2026-09-08-island-experience.md)と[対応表](../tasks/active/2026-09-08-island-experience-coverage.md)で追い、仕様の存在を実装済みの証拠にしない。
+親仕様は[01](01_app_spec.md)、島は[28](28_mystic_island_spec.md)、成長・暮らしは[30](30_living_island_growth_spec.md)、ほし・きせかえは[35](35_island_customization_spec.md)。本仕様は[104項目](../wiki/game-experience-benchmark.md)と[追加報酬分析](../wiki/reward-customization-benchmark.md)から採用する改善の契約。進捗は[全体タスク](../tasks/active/2026-09-08-island-experience.md)と[対応表](../tasks/archive/2026-09-08-island-experience-coverage.md)で追い、仕様の存在を実装済みの証拠にしない。
 
 ## 目的と学習契約
 

@@ -1,8 +1,8 @@
 # 分析全体を、学ぶ・育つ・暮らす・試す体験へつなぐ
 
 - Date: 2026-09-08
-- Review By: 2026-09-09
-- Status: Implementation — Goal方式の追加分析・網羅検証はユーザー指示で停止
+- Review By: 2026-09-27
+- Status: Cross-cutting product goal — implementation continues through the specific queue tasks; Goal-style additional analysis remains stopped by user direction
 
 ## Goal
 
@@ -205,7 +205,7 @@ checkpoint02（`../../../output/island-experience/scene-compatibility-checkpoint
 - 2026-09-08: E2/E3の実診断で全景の小ささ、住民/家/木による遮蔽、巨大なホタル光、小鳥の接点誤認を検出。runtimeチェックが通っても視覚をHOLDにし、実geometryの遮蔽を避ける観察cameraと造形を改善中。
 - 2026-09-08: E5/E6のpersonal-20260908-1820は44画面、各6区間の実回答、名前/旗/衣装/3保存/試着取消/適用/後発成長/実PCM音/音off/学習停止/native abort/retry/reload/実画像写真がPASS。衣装が全景で小さかったため実住民portraitを追加。キツネ帽子の枠外を実画面の投影から検出し、実offsetと衣装共通倍率を守る修正を行った。修正版を再診断中。
 - 2026-09-08: phase-1の全208 suites/2345 tests、lint（既存IslandMilestoneのrefresh warning1）、docs:checkはPASS。その後のportrait修正は専用6tests PASS。まだ最終固定buildの全体検証ではなく、追加E7/E8と未充足が残る。
-- 2026-09-08: 全104行と9索引をコードへ照合した[残る体験の監査](2026-09-08-island-experience-remaining-audit.md)から、本人の道具・未知の正体・制作・仕掛け・別試作を[仕様37](../../product/37_island_workshop_spec.md)へ追加採用。3標本×3道具、4部品の水/軸接続、2作品案とundo、実住民利用まで実装する。その他のU3/U5/U6/U7と各報酬分類は対応表に残す。
+- 2026-09-08: 全104行と9索引をコードへ照合した[残る体験の監査](../archive/2026-09-08-island-experience-remaining-audit.md)から、本人の道具・未知の正体・制作・仕掛け・別試作を[仕様37](../../product/37_island_workshop_spec.md)へ追加採用。3標本×3道具、4部品の水/軸接続、2作品案とundo、実住民利用まで実装する。その他のU3/U5/U6/U7と各報酬分類は対応表に残す。
 - 2026-09-08: [途中診断の監査](../../design/audits/2026-09-08-island-experience/README.md)を追加。personal最終DEVはsource不変で52画面PASS、実actor portrait/全テーブル保持/音の現在出力/PNG画素一致を強化。自然の観察はなお見え方を修正中。E7/E8は標本/保存writerと接続/undo/simulatorを分担して着手し、次に単一rendererの入江と直接操作をつなぐ。
 - 2026-09-08: E7/E8の標本・観察・正体・棚・2作品・20操作のdraft履歴と原子的writer、typed water/shaft simulatorを実装。親のrequest再送を合わせた4 suites / 46 tests PASS。実学習後の全学習テーブル/ほし/成長/予約保持、lost response・native abort・CAS・旧省略値をdomainで確認。Reactの任意入口、道具の直接操作と同じ区画を選ぶ代替操作、組立/盤面/保存UIを追加し、単一rendererへの接続と実UI検証を継続中。
 - 2026-09-08: 工作専用の短い8材質音を追加。音ownerは学習/退出/背景/offで停止・解放。新12+既存6の音tests、実Chromiumの現在PCM出力/最大3voices/自然終了/停止/再起動を確認。実スピーカーの聞き分けは未評価。初回の実学習→3標本→A/B作品→undo/reload→同予約の回答を通す `tools/e2e-island-workshop.mjs` を追加し、実画面の到達待ち。

@@ -2,7 +2,7 @@
 
 Date: 2026-09-08
 
-親は[01](01_app_spec.md)、学習と島は[28](28_mystic_island_spec.md)・[30](30_living_island_growth_spec.md)、ほしは[35](35_island_customization_spec.md)、全体は[36](36_island_experience_spec.md)。[追加報酬分析](../wiki/reward-customization-benchmark.md)のねこあつめ2、Hay Day、ハロー・スイートデイズと、[7作品分析](../wiki/game-experience-benchmark.md)の「置いた後の生活」「役に立った」「眺めていたい」からF04を採用する。仕様の採用と実装・実画面の合格は別で、[対応表](../tasks/active/2026-09-08-island-experience-coverage.md)で追う。
+親は[01](01_app_spec.md)、学習と島は[28](28_mystic_island_spec.md)・[30](30_living_island_growth_spec.md)、ほしは[35](35_island_customization_spec.md)、全体は[36](36_island_experience_spec.md)。[追加報酬分析](../wiki/reward-customization-benchmark.md)のねこあつめ2、Hay Day、ハロー・スイートデイズと、[7作品分析](../wiki/game-experience-benchmark.md)の「置いた後の生活」「役に立った」「眺めていたい」からF04を採用する。仕様の採用と実装・実画面の合格は別で、[対応表](../tasks/archive/2026-09-08-island-experience-coverage.md)で追う。
 
 ## 目的と範囲
 

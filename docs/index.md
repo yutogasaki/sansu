@@ -1,4 +1,7 @@
 # Documentation Index
+
+[HTMLで閲覧](index.html) · [タスク一覧](../.agents/tasks/index.html) · [更新方法](runbooks/repository-portal.md)
+
 呼び出したぽこもこが散歩に戻る保存版17の[修正と検証](design/audits/2026-09-15-pokomoko-roaming/README.md)。
 
 住人の自発利用を短い滞在と寄り道へ変更した[実画面と検証](design/audits/2026-09-14-resident-cadence/README.md)。保存版16、全員の実時計での移動、旧版からの更新・offline保持を確認。
@@ -51,14 +54,9 @@ Use it to find the right source of truth before editing docs, tasks, runbooks, o
 - `docs/runbooks/`
   Repeatable operational procedures
 
-## Read Order
+## Context Routing
 
-1. [../CONSTITUTION.md](../CONSTITUTION.md)
-2. [product/01_app_spec.md](/docs/product/01_app_spec.md)
-3. [ai/ownership_map.md](/docs/ai/ownership_map.md)
-4. [ai/verification_matrix.md](/docs/ai/verification_matrix.md)
-5. [wiki/memory.md](/docs/wiki/memory.md)
-6. [ai/contributor-guide.md](/docs/ai/contributor-guide.md)
+Use [the shared agent guide](../.agents/agent-guide.md#context-routing) to select context for the current task. [CONSTITUTION.md](../CONSTITUTION.md) governs product principles; [ownership_map.md](ai/ownership_map.md) identifies the relevant source of truth when ownership is unclear.
 
 ## AI Collaboration Layers
 
@@ -86,7 +84,7 @@ iPad横向きで問題と数字キーが画面内に収まる左右配置は[実
 
 学習の蓄積でほしを貯め、実際の島でテーマ/飾りを試して選択交換する契約は[島のきせかえ](product/35_island_customization_spec.md)。通常の連問と自動成長を維持し、目標・着せ替えはホームの任意操作とする。
 
-分析全体から進める発見帳・実験・来訪・成長予告・島と仲間の表現・景色の保存は[体験仕様36](product/36_island_experience_spec.md)。[全項目の対応表](tasks/active/2026-09-08-island-experience-coverage.md)と[進行中タスク](tasks/active/2026-09-08-island-experience.md)で実装・検証と未充足を区別する。
+分析全体から進める発見帳・実験・来訪・成長予告・島と仲間の表現・景色の保存は[体験仕様36](product/36_island_experience_spec.md)。[全項目の対応表](tasks/archive/2026-09-08-island-experience-coverage.md)と[進行中タスク](tasks/active/2026-09-08-island-experience.md)で実装・検証と未充足を区別する。
 
 本人が道具で未知物を調べ、素材から部品を作り、水路/水車/ベルをつないで住民と試す採用契約は[おためしの入江37](product/37_island_workshop_spec.md)。島の通常学習・7家具の成長と独立した任意の試作として実装する。
 
@@ -169,9 +167,11 @@ The repository is transitioning toward an exploration-first math game. [product/
 
 | File | Role | SSOT |
 |---|---|---|
-| [tasks/design-refresh-status.md](/docs/tasks/design-refresh-status.md) | Design progress and status notes | No |
+| [tasks/archive/2026-03-17-design-refresh-status.md](/docs/tasks/archive/2026-03-17-design-refresh-status.md) | Historical design progress | No |
 | [tasks/backlog.md](/docs/tasks/backlog.md) | Full backlog | No |
-| [tasks/ui-fix-tasklist.md](/docs/tasks/ui-fix-tasklist.md) | UI-area task list | No |
+| [tasks/archive/2026-03-13-ui-fix-tasklist.md](/docs/tasks/archive/2026-03-13-ui-fix-tasklist.md) | Historical UI task list | No |
+| [../.agents/tasks/TASKS.md](../.agents/tasks/TASKS.md) | Current shared execution queue | No |
+| [../.agents/tasks/BLOCKED.md](../.agents/tasks/BLOCKED.md) | External validation blockers | No |
 | [product/design_review_checklist.md](/docs/product/design_review_checklist.md) | UI review checklist | Yes |
 | [wiki/risk_register.md](/docs/wiki/risk_register.md) | Cross-cutting risks and mitigations | Yes |
 | [ai/archive_policy.md](/docs/ai/archive_policy.md) | Doc trimming and archive rules | Yes |
@@ -208,6 +208,5 @@ The repository is transitioning toward an exploration-first math game. [product/
 - [家から育つ島の接続試作](product/45_home_journey_preview_spec.md)
 
 - [島のあそびかたとその場の案内](product/46_island_tutorial_spec.md)
-
 
 - [自然と町 v0.2 の独立試作](product/nature-town/IMPLEMENTATION.md) — 添付仕様、既存接続、起動・操作、受入結果。

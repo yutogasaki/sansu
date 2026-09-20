@@ -1,6 +1,6 @@
 # 島の家・操作導線のチェックポイント — 2026-09-09
 
-Status: **Checkpoint / Full Goal Active**。この文書は途中の保存地点であり、全Goal完了・公開承認を示さない。分析全体の範囲と残差は[親タスク](../../tasks/active/2026-09-08-island-experience.md)と[対応表](../../tasks/active/2026-09-08-island-experience-coverage.md)を正とする。
+Status: **Checkpoint / Full Goal Active**。この文書は途中の保存地点であり、全Goal完了・公開承認を示さない。分析全体の範囲と残差は[親タスク](../../tasks/active/2026-09-08-island-experience.md)と[対応表](../../tasks/archive/2026-09-08-island-experience-coverage.md)を正とする。
 
 mainには実装 `fcd1da1`、クリーンcheckoutでの文書参照修正 `7c45f98` をpush済み。後者の [Verify Core](https://github.com/yutogasaki/sansu/actions/runs/34290005123) と [Docs Check](https://github.com/yutogasaki/sansu/actions/runs/34290005161) はPASS。初回CIのローカルoutputリンク失敗は判定を緩めず、元label/pathを残す文書表記修正と追跡ファイルだけの事前検査で解消した。
 

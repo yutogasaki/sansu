@@ -14,8 +14,6 @@ Task docs capture active execution context only.
   Shared completion index
 - `docs/tasks/backlog.md`
   Global backlog and prioritization
-- `docs/tasks/ui-fix-tasklist.md`
-  Domain backlog/tasklist
 - `docs/tasks/active/`
   Detailed execution files for the small set of tasks currently being executed
 - `docs/tasks/archive/`

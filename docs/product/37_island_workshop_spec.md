@@ -2,7 +2,7 @@
 
 Date: 2026-09-08
 
-親は[01](01_app_spec.md)、島の体験は[36](36_island_experience_spec.md)。[分析の残る差分](../tasks/active/2026-09-08-island-experience-remaining-audit.md)のU1/U2/U4を、[入江の具体案](../tasks/active/2026-09-08-island-experience-workshop-plan.md)に基づきE7/E8として採用する。本仕様で具体案の未確定部分を決定する。住民関係・報酬全分類など他の未充足項目は[全体対応表](../tasks/active/2026-09-08-island-experience-coverage.md)に残る。
+親は[01](01_app_spec.md)、島の体験は[36](36_island_experience_spec.md)。[分析の残る差分](../tasks/archive/2026-09-08-island-experience-remaining-audit.md)のU1/U2/U4を、[入江の具体案](../tasks/archive/2026-09-08-island-experience-workshop-plan.md)に基づきE7/E8として採用する。本仕様で具体案の未確定部分を決定する。住民関係・報酬全分類など他の未充足項目は[全体対応表](../tasks/archive/2026-09-08-island-experience-coverage.md)に残る。
 
 主島へ標本/作品を飾り、選んだ仲間との仕事や写真へ残す追加契約は[仕様38](38_island_shared_memories_spec.md)。本仕様の3標本/2保存作品/現draftを正本として利用し、展示された作品snapshotの再演で現在のdraftを上書きしない。通常の入江操作と学習境界は本仕様を維持する。
 

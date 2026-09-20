@@ -2,31 +2,19 @@
 
 ## Purpose
 
-This file is the shared active queue for both Codex and Claude Code.
-Keep only short active entries here, and put detailed execution context in `docs/tasks/active/*.md`.
+CodexとClaude Codeの共有実行キュー。詳細は `docs/tasks/active/`、全体の推奨順と実装済み項目は [バックログ](../../docs/tasks/backlog.md)、外部確認待ちは [保留キュー](BLOCKED.md) を参照。
 
 ## Rules
 
-- One line per active task in this file
-- One detailed task file per active task under `docs/tasks/active/`
-- Remove the queue entry when the task closes
-- Move durable outcomes to `docs/done/YYYY-MM.md`
+- 実行中のタスクを一行ずつ記す。履歴や将来候補を混ぜない。
+- 同じ残件は既存の詳細へ集約し、横断目的ごとに重複起票しない。
+- 閉じた区切りは `docs/done/YYYY-MM.md` に記録する。
+- 実装済み・検証済み・公開済みを区別する。
 
 ## Current Queue
 
-- Nature Town S1：受入46/47。全身4ポーズ・立体素材・offline画像を実装、SAFE-06独立観察／最終美術／実iOSは継続 -> docs/tasks/active/2026-09-16-nature-town-s1.md
-
-- Mysterious island v3 -> docs/tasks/active/2026-09-13-mysterious-island-v3.md
-
-- Home journey connection preview -> docs/tasks/active/2026-09-09-home-journey-preview.md
-
-- Full island experience from benchmark -> docs/tasks/active/2026-09-08-island-experience.md
-
-- Learning rhythm and island game experience -> docs/tasks/active/2026-09-07-experience-improvements.md
-
-- Cold-open Value Loop -> docs/tasks/active/2026-07-21-cold-open-value-loop.md
-- Whole-app brand coherence -> docs/tasks/active/2026-07-23-whole-app-brand-coherence.md
-
-When starting or resuming a task, add:
-
-- `- short task name -> docs/tasks/active/YYYY-MM-DD-task-name.md`
+- Nature Town S1：受入46/47。次は町全体の空間構成・受渡し、実iOS。SAFE-06の独立回答待ちは保留キューを参照 -> docs/tasks/active/2026-09-16-nature-town-s1.md
+- Mysterious island v3：島ホーム入口は局所改善済み。次は世界美術（巨大植物・局所陰・地形接続）と現行版の残件照合。C3/Human評価は未完 -> docs/tasks/active/2026-09-13-mysterious-island-v3.md
+- Home journey connection preview：接続試作は検査済み、本制作・最終美術・公開範囲は未完。現行の家UI変更と対象系統を照合 -> docs/tasks/active/2026-09-09-home-journey-preview.md
+- Full island experience from benchmark：採用項目の横断索引。Goal方式の追加分析は停止済み、既存の通常実装と残件を保持 -> docs/tasks/active/2026-09-08-island-experience.md
+- Learning rhythm and island game experience：学習と暮らしの横断目的。個別実装はv3/家/S1と重複させず参照する -> docs/tasks/active/2026-09-07-experience-improvements.md

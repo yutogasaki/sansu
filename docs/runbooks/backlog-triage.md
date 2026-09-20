@@ -14,7 +14,6 @@ Use it to reduce file bloat, stale priorities, and context pollution.
 ## Inputs
 
 - `docs/tasks/backlog.md`
-- `docs/tasks/ui-fix-tasklist.md`
 - `docs/tasks/active/`
 - `docs/done/`
 - `docs/ai/archive_policy.md`

@@ -48,7 +48,7 @@ If the information would still matter after several unrelated tasks, it belongs 
 - [product/01_app_spec.md](/docs/product/01_app_spec.md) is the parent spec.
 - Child specs under `docs/product/` must follow it.
 - [product/07_ui_design_guideline.md](/docs/product/07_ui_design_guideline.md) is the design-principles doc.
-- [tasks/design-refresh-status.md](/docs/tasks/design-refresh-status.md) is status only, not design truth.
+- [tasks/archive/2026-03-17-design-refresh-status.md](/docs/tasks/archive/2026-03-17-design-refresh-status.md) is a historical snapshot, not current task or design truth.
 - [tasks/backlog.md](/docs/tasks/backlog.md) is backlog only, not active execution truth.
 - [ai/ownership_map.md](/docs/ai/ownership_map.md) is the tie-breaker when doc ownership is unclear.
 

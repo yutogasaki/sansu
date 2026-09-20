@@ -44,4 +44,4 @@ phone：任意操作後、同じ予約の非最終1問を実入力。
 
 3旧版ともDB v8／native80／写真3store。SWをblockした保存形式互換で、schema移行・実2build更新・offline・実音・native故障・今回の後発衝突再試験・正式速度は対象外。旧版の連続取得は本走03の別証拠であり、今回の復元ではnative key-generator内部値や実行中の身体姿勢を復元していない。
 
-元checkpointの `rewardGoal` / `learningKeepsakes` は省略状態で、その非materializeを保持した。**非空の目標や家の展示選択の保持まで証明したものではない**。全履歴の実表示や旧writerが作っていないv1 growth memoryを合成せず、人の観察はN=0。全体の範囲と残差は[親タスク](../../../tasks/active/2026-09-08-island-experience.md)と[残差監査](../../../tasks/active/2026-09-08-island-experience-remaining-audit.md)で維持する。QAを本流toolsへ昇格する作業は今回含めない。
+元checkpointの `rewardGoal` / `learningKeepsakes` は省略状態で、その非materializeを保持した。**非空の目標や家の展示選択の保持まで証明したものではない**。全履歴の実表示や旧writerが作っていないv1 growth memoryを合成せず、人の観察はN=0。全体の範囲と残差は[親タスク](../../../tasks/active/2026-09-08-island-experience.md)と[残差監査](../../../tasks/archive/2026-09-08-island-experience-remaining-audit.md)で維持する。QAを本流toolsへ昇格する作業は今回含めない。

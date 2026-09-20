@@ -25,7 +25,7 @@
 
 [7作品・104項目](../wiki/game-experience-benchmark.md)のSimCity SC01/03/06/09から同じ街の成長と往来、Forest FO01/04から努力が風景に残る蓄積、ポケモン PK02/04から収集と段階変化、どうぶつの森 AC08/18から施設を使う暮らしを取り出す。[追加12作品](../wiki/reward-customization-benchmark.md)のねこあつめ2は自発利用、Hay Dayとリヴリーはセットと所有感の参考。Minecraft/ヨッシーの直接操作は今回の主ループへ増やさず、物同士の作用や住民の仕掛けへ翻案する。
 
-[対応表](../tasks/active/2026-09-08-island-experience-coverage.md)・[残差監査](../tasks/active/2026-09-08-island-experience-remaining-audit.md)は参照するが、過去の未実装欄を現在へ一括転記しない。これらの調査は原作の機能と設計仮説を分けている。子どもの意欲・継続率・定着の実証ではない。
+[対応表](../tasks/archive/2026-09-08-island-experience-coverage.md)・[残差監査](../tasks/archive/2026-09-08-island-experience-remaining-audit.md)は参照するが、過去の未実装欄を現在へ一括転記しない。これらの調査は原作の機能と設計仮説を分けている。子どもの意欲・継続率・定着の実証ではない。
 
 今回までに照合した現在の土台：
 

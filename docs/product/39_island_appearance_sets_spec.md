@@ -4,7 +4,7 @@ Date: 2026-09-08
 
 ## Authority and purpose
 
-親は[01](01_app_spec.md)、既存の財布・確定交換は[35](35_island_customization_spec.md)、名前/装い/配置案は[36](36_island_experience_spec.md)、展示と共同記憶は[38](38_island_shared_memories_spec.md)。[分析全体の対応表](../tasks/active/2026-09-08-island-experience-coverage.md)と[残る体験](../tasks/active/2026-09-08-island-experience-remaining-audit.md)のF03/U6を採用する契約。仕様の採用は実装・実画面検証の完了を意味しない。
+親は[01](01_app_spec.md)、既存の財布・確定交換は[35](35_island_customization_spec.md)、名前/装い/配置案は[36](36_island_experience_spec.md)、展示と共同記憶は[38](38_island_shared_memories_spec.md)。[分析全体の対応表](../tasks/archive/2026-09-08-island-experience-coverage.md)と[残る体験](../tasks/archive/2026-09-08-island-experience-remaining-audit.md)のF03/U6を採用する契約。仕様の採用は実装・実画面検証の完了を意味しない。
 
 自分の育った島で一品を試す → 欲しい部位を選ぶ → 確定交換する → いつもの暮らしの中で使う → 同じシリーズを揃える/別シリーズを混ぜる → 好きな景色を名前付きで残す。所有・自己表現・収集・完成・眺める楽しみをつなぐ。新しい学習通貨、学習性能差、家具の自動量産を加えない。
 

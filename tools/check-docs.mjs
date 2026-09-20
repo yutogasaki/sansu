@@ -5,9 +5,7 @@ const repoRoot = process.cwd();
 
 const markdownLinkPattern = /\[[^\]]+\]\(([^)]+)\)/g;
 const statusDocs = [
-  "docs/tasks/design-refresh-status.md",
   "docs/tasks/backlog.md",
-  "docs/tasks/ui-fix-tasklist.md",
 ];
 const adrRequiredPatterns = [
   { label: "Date", pattern: /^- Date:\s*.+$/m },

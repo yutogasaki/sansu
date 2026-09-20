@@ -7,7 +7,7 @@
 - Review By: 2026-09-15
 - Owner: Island experience goal / spec review
 
-親は[01](01_app_spec.md)、任意体験と学習境界は[36](36_island_experience_spec.md)、標本と作品は[37](37_island_workshop_spec.md)、保存は[13](13_data_storage_migration_spec.md)。[残る差分の監査](../tasks/active/2026-09-08-island-experience-remaining-audit.md)のF01/U3とF02/U5を一続きにする採用契約。2026-09-08の親レビューで、限定した島状態、作品snapshot、初記憶receiptの直接参照、学習から分離した写真保存を採用した。
+親は[01](01_app_spec.md)、任意体験と学習境界は[36](36_island_experience_spec.md)、標本と作品は[37](37_island_workshop_spec.md)、保存は[13](13_data_storage_migration_spec.md)。[残る差分の監査](../tasks/archive/2026-09-08-island-experience-remaining-audit.md)のF01/U3とF02/U5を一続きにする採用契約。2026-09-08の親レビューで、限定した島状態、作品snapshot、初記憶receiptの直接参照、学習から分離した写真保存を採用した。
 
 ## 1. 体験の目的と範囲
 

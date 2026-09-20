@@ -1,160 +1,53 @@
-# 全体タスク台帳（進捗・未着手・次アクション）
+# Sansu 全体バックログ
 
-> 2026-09-09追記：以下の進捗率・実施済み一覧は2026-03-13時点の歴史的な棚卸しで、現在の完成率を示さない。家・学習・島の最新の論点と推奨実行順は[全体整合監査](../design/2026-09-09-home-island-consistency-audit.md)、実行中の作業は[共有キュー](../../.agents/tasks/TASKS.md)を参照。
+更新日: 2026-09-20
+次回棚卸し目安: 2026-09-27
 
-役割:
-- この文書は全体バックログと優先度整理のための台帳である
-- 実行中の小タスクは `docs/tasks/active/` で管理する
-- 完了履歴は `docs/done/` へ寄せる
+## 読み方
 
-更新日: 2026-03-13
-次回棚卸し目安: 2026-05-15
+Sansuを中心に、関連する実装・美術・学習・保存・公開・制作環境を棚卸しした計画。現在の実行状態は[共有キュー](../../.agents/tasks/TASKS.md)、外部確認待ちは[保留キュー](../../.agents/tasks/BLOCKED.md)。各モードの製品仕様は変更しない。アプリのタスクがidleでも、製品として完了したとは判断しない。
 
-## 0. 目的
+古い進捗率は[3月の履歴](backlog-2026-03-13.md)へ分離した。以下の順番は今回の整理による推奨であり、公開や旧モード廃止の決定ではない。
 
-この台帳は、デザインだけでなく機能・アルゴリズム・品質・運用を含めて、
+## 次に進める順番
 
-- どこまで終わっているか
-- 何が未着手か
-- 次にどの大物をやるべきか
+| 順 | 作業 | 次の具体的な行動 | 完了条件 |
+|---|---|---|---|
+| 条件 | Safari写真保存の実機確認 | 実Safariの通常profile/iOS PWAで撮影・保存・再読込を確認する | 確認できるまではPlaywright非永続コンテキスト固有の失敗として扱う。実Safariで再現した場合はiOS版/保存モードを記録し、実装taskを再開 |
+| 1 | 最近の変更を実行可能な形に揃える | 起動表示、もちものスワイプ、家UI・室内カメラ、島ホーム入口の差分と検証対象版を照合する | 各変更の実装・検証・commit・配布状態が判別でき、対象版の必要な回帰と実画面が揃う |
+| 2 | 現行の島・家の体験を仕上げる | 最新の家/島の実画面を並べ、入口・戻り先・カメラ・遮蔽と世界美術の残件を一つずつ修正する | 同じ版のphone/tablet主要経路で操作と見た目を確認。美術、無説明理解・安全、実装整合を別判定 |
+| 3 | Nature Town S1の残件を閉じる | 準備済み観察セットでSAFE-06の独立回答を集める。町の空間構成・受渡し、実iOS操作、対象年齢の再プレイを確認する | 受入残1項目に加え、最終美術・実機・参加者評価を各々記録する |
+| 4 | 公開する範囲を確定する | 上記の対象URL・build revision・delivery flag・candidate IDと残る公開ゲートを揃える | 採用候補の重要経路一覧、必要な保存/PWA/学習回帰、公開判断が一つの版を指す |
 
-を一元管理するための最新ステータスである。
+写真保存は実利用上の不具合を先に切り分ける。統合作業では共有作業ツリー内の変更と対象版を照合し、別版の合格結果を現在版の合格として扱わない。参加者待ちの間も美術改善や実機確認は進められる。
 
----
+## 領域別の棚卸し
 
-## 1. 進捗サマリ（領域別）
+| 領域 | 確認できた現在地 | 残作業・扱い | 詳細 |
+|---|---|---|---|
+| 起動・待機表示 | 読込表示を実装、DEV実画面とcoreの合格記録あり | 本番反映・実機の確認を分ける。新規実装には戻さない | [完了記録](../done/2026-09.md#2026-09-20-起動直後の読み込み表示) |
+| もちもの | nativeスワイプ、閲覧位置保持、誤選択防止を実装・両幅確認 | 実機と配布状態は別確認。局所再検証と全体検査を混同しない | [完了記録](../done/2026-09.md#2026-09-20-もちものの自然なスワイプと閲覧位置保持) |
+| 家・島のUI | 近景/全景、入口や室内の変更が複数タスクに分散 | 最新差分の検証範囲を統合。家の接続試作と現行Lifeを混同しない | [家の接続](active/2026-09-09-home-journey-preview.md)、[v3](active/2026-09-13-mysterious-island-v3.md) |
+| 島の美術・暮らし | v3の多くの局所実装と検証あり。C3美術HOLD、Human N=0 | 巨大植物・局所陰・地形接続など世界側の差、独立理解を残す | [v3](active/2026-09-13-mysterious-island-v3.md) |
+| Nature Town | 受入46/47、全身4ポーズ・立体素材・offline対応 | SAFE-06回答0人、最終美術、実iOS、再プレイ評価。46/47は完成率ではない | [S1](active/2026-09-16-nature-town-s1.md) |
+| 学習・テンポ | Study次問境界修正、固定10問40runの正式計測はcd272b7で合格 | この計測の再実施自体を未完に戻さない。新たに学習境界を変えるときは該当検証 | [修正と正式結果](../design/2026-09-19-feedback-boundary/README.md) |
+| 写真保存 | Chromium PASS、WebKitは公開版とカメラ変更前版で失敗 | 原因を特定。現行WebKitを同じ実保存導線で再現してから修正を判断 | [WebKit写真保存](archive/2026-09-20-house-webkit-photo-save.md) |
+| 保存・PWA・公開 | モード/版ごとの検証記録あり | 実装済み、main反映、実配布、実機確認を別管理。旧classicのPASSを新モードへ転用しない | [検証方針](../ai/verification_matrix.md) |
+| 探索モード旧候補 | Cold-openはHOLD/非採用候補あり。全体ブランドは外部検証待ち | 現行の島/町の作業とは分け、再開条件を確認する | [保留キュー](../../.agents/tasks/BLOCKED.md) |
+| 制作・運用 | HTMLポータル、指示/スキル監査の実施記録あり。Meshy/Blenderの関連タスクあり | HTMLを正本から再生成。3D制作は必要な素材・採用画面を決めてから進め、接続確認を製品完成と扱わない | [ポータル運用](../runbooks/repository-portal.md) |
 
-- UI/UX刷新: `75%`（主要画面は概ね反映、共通部品と一部ページが残）
-- 機能実装: `80%`（v1主要フローは実装済み、将来機能は未着手）
-- アルゴリズム: `70%`（主要ロジックは稼働、筆算は結果入力型からの深化が残）
-- テスト/品質: `70%`（ユニット増強済み、E2Eはスモーク中心）
-- 運用/仕様整備: `75%`（verification / runbook / memory / ownership の基盤は整備済み、release運用と機能側仕様詰めが残る）
+## 重複を増やさないための対応関係
 
----
+- 「学習と島の楽しさ」「島の主要体験」は横断目的と既存採用項目の索引。個別UI・v3・S1の同じ残件を別々に新規起票しない。
+- 家の接続試作は固有のDEV系統を保持する。Nature Town開始を理由に、旧島・家の残件を完了または中止にしない。
+- `active/`内のファイルの存在だけでは実行中と判断しない。3月のcore計画は現行との差分を再評価してから再起票、7月のroot観察は文書で停止済み。coverage/workshop/remaining-auditは親タスクの補助資料。
+- 最近の読込表示ともちものは実装済みとして扱い、残る配布確認は統合作業へ寄せる。WebKitの写真保存失敗は実Safari確認まで保留キューに置く。
+- 他プロジェクトの進行やアプリのサイドバー配置は今回変更しない。
 
-## 2. 実施済み（完了）
+## 後で再評価する候補
 
-### 2.1 デザイン・UI
+単位換算・時間計算・追加読み上げ、学習係数の運用改善は現行仕様/実装を再照合してから起票する。3月の未着手一覧をそのまま現行TODOにしない。クラウド同期はConstitutionのlocal-first境界により現行スコープ外。Nature Town S2の作物・渡し船・市場はS1と分ける。
 
-- トークン/背景/ガラス調の基盤を再設計（`src/index.css`）
-- 共通UI更新（`Button`/`Card`/`Layout`/`Header`/`Footer`）
-- Home刷新（情報導線・情緒演出・CTA整理）
-- 横展開:
-  - `src/pages/StudyLayout.tsx`
-  - `src/pages/Stats.tsx`
-  - `src/pages/Settings.tsx`
-  - `src/pages/Onboarding.tsx`
+## 確認範囲
 
-詳細: `docs/tasks/design-refresh-status.md`
-
-### 2.2 機能・アルゴリズム
-
-- 定期テスト紙採点の入力値を正規化（`correctCount` を `0..20`）
-  - `src/domain/test/paperTest.ts`
-- 筆算エンジンに `×` / `÷` の結果入力型グリッドを追加
-  - `src/domain/math/hissanEngine.ts`
-- `useStudySession` の完了判定ロジックを分離して純粋関数化
-  - `src/hooks/useStudySession.logic.ts`
-  - `src/hooks/useStudySession.ts`
-- 型・コメント整合の修正
-  - `src/domain/types.ts`
-  - `src/utils/audio.ts`
-
-### 2.3 テスト・検証
-
-- 追加ユニットテスト:
-  - `src/domain/test/trigger.test.ts`
-  - `src/domain/battle/engine.test.ts`
-  - `src/domain/test/paperTest.test.ts`
-  - `src/domain/math/hissanEngine.test.ts`
-  - `src/hooks/blockGenerators.test.ts`
-  - `src/hooks/useStudySession.logic.test.ts`
-- E2Eスモーク拡張（5シナリオ）
-  - `tools/e2e-smoke.mjs`
-- ビルド成功確認
-  - `npm run build`
-- 検証/運用ドキュメントの基盤整備
-  - `CONSTITUTION.md`
-  - `docs/ai/verification_matrix.md`
-  - `docs/runbooks/release-checklist.md`
-  - `docs/runbooks/schema-migration.md`
-  - `docs/runbooks/backlog-triage.md`
-  - `docs/ai/ownership_map.md`
-  - `docs/wiki/risk_register.md`
-
----
-
-## 3. 進行中（着手済み・未完了）
-
-### 3.1 デザイン統一の最終段
-
-- `Study` / `Battle` のトーン一貫性を最終調整中
-- 状態系UI（`Modal` / `Badge` / `ProgressBar` / `Spinner`）の統一が未完
-- 実機A11y/表示確認（iOS Safari / Android Chrome）が未完
-
-### 3.2 品質強化の最終段
-
-- `useStudySession.ts` 本体（UI経由の統合挙動）の回帰テスト拡張が未完
-- E2Eがスモーク中心で、主要導線の回帰網羅（オンボード→学習→テスト→設定）は未完
-
----
-
-## 4. 未着手（今後やること）
-
-## 4.1 大物A: 仕様由来の将来機能（機能拡張）
-
-対象: `docs/product/01_app_spec.md`「9. 今後の検討事項」
-
-- 音声読み上げ（英単語発音確認）
-- 算数の単位換算
-- 算数の時間計算
-- クラウド同期（V2以降）
-
-## 4.2 大物B: 学習アルゴリズム運用の実務化
-
-- 定期テストトリガー閾値の運用ドキュメント化
-  - 対象: `src/domain/test/trigger.ts`
-- 係数調整の運用ループ定義（ログ観察/閾値見直しの手順）
-
-## 4.3 大物C: データ運用・移行ポリシー整備
-
-- 同期なし方針（v1）と `syncMeta` 保持理由（v2想定）を仕様に明文化
-  - 対象: `docs/product/01_app_spec.md`, `src/domain/types.ts`
-- `schemaVersion` 更新時の移行手順（マイグレーション規約）を仕様やADRへ接続
-  - 進捗: `docs/runbooks/schema-migration.md` は作成済み
-
-## 4.4 大物D: デザインシステム完成
-
-- `tailwind.config.js` へのトークン移植とセマンティック命名の整理
-- 画面別トーン（通常/バトル/オンボーディング）のルール化
-- 実機A11y/表示検証（iOS Safari, Android Chrome）
-
----
-
-## 5. 次の未着手の大物（優先提案）
-
-最優先は **「大物B: 学習アルゴリズム運用の実務化」**。
-
-理由:
-- いま不足しているのは新機能数より、既存学習運用の観測・調整ルール
-- trigger/係数の扱いが明文化されると、将来機能より先に品質と説明可能性が上がる
-- 仕様・runbook・検証をつなげやすい
-
----
-
-## 6. 直近の実行順（提案）
-
-1. 状態系UI（`Modal` / `Badge` / `ProgressBar` / `Spinner`）をトークン準拠で統一
-2. `useStudySession.ts` 統合回帰テストを追加
-3. E2Eを「オンボード→学習→テスト→設定」まで拡張
-4. 定期テストトリガー閾値と係数調整の運用ドキュメントを起票
-5. 将来機能（読み上げ/例文/単位換算/時間計算/同期）の要件定義ドキュメントを起票
-
----
-
-## 7. ソース
-
-- 仕様書: `docs/product/01_app_spec.md`, `docs/product/06_screen_specs.md`, `docs/product/07_ui_design_guideline.md`, `docs/product/08_home_ikimono_spec.md`, `docs/product/09_battle_spec.md`
-- 実装: `src/` 全域（UI/Hook/Domain）
-- 検証: `tools/e2e-smoke.mjs`, `npm run build`, 追加テスト群
-- 計画: `docs/archive/notes/implementation_plan.md`, `docs/archive/notes/implementation_plan_v2.md`
+共有キュー、保留キュー、主要active/補助文書、9月の完了記録、最近のSansuタスク履歴、作業ツリーを照合した。今回の成果はタスク整理であり、アプリの新たな受入合格・公開・実参加者評価を宣言するものではない。

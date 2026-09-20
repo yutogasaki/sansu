@@ -3,7 +3,7 @@
 - Date: 2026-07-23
 - Owner: Codex `/root`
 - Status: Awaiting external validation
-- Review By: 2026-07-30
+- Review By: 2026-09-27
 - Related ADR / Runbooks: `docs/runbooks/pwa-release.md`
 
 ## Primary purpose

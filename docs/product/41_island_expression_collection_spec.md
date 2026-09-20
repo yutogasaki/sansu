@@ -4,7 +4,7 @@ Date: 2026-09-08
 
 Status: **採用・実装と検証は進行中。** この仕様の採用は、価格の妥当性、実装完了、実画面の魅力、子どもの再遊びの合格を意味しない。
 
-親は[01](01_app_spec.md)。既存の無料設定と全景保存は[36](36_island_experience_spec.md)・[39](39_island_appearance_sets_spec.md)、観察と制作は[37](37_island_workshop_spec.md)、写真は[38](38_island_shared_memories_spec.md)、家具の暮らしは[40](40_island_life_furniture_spec.md)を前提にする。[追加報酬分析](../wiki/reward-customization-benchmark.md)のR09衣装・R10模様・R12足跡・R13音・R14アルバム装飾・R15旗と、[残差監査](../tasks/active/2026-09-08-island-experience-remaining-audit.md)末尾のF05候補を具体化する。元資料の分析事実と、以下のSansuの採用設計を区別する。
+親は[01](01_app_spec.md)。既存の無料設定と全景保存は[36](36_island_experience_spec.md)・[39](39_island_appearance_sets_spec.md)、観察と制作は[37](37_island_workshop_spec.md)、写真は[38](38_island_shared_memories_spec.md)、家具の暮らしは[40](40_island_life_furniture_spec.md)を前提にする。[追加報酬分析](../wiki/reward-customization-benchmark.md)のR09衣装・R10模様・R12足跡・R13音・R14アルバム装飾・R15旗と、[残差監査](../tasks/archive/2026-09-08-island-experience-remaining-audit.md)末尾のF05候補を具体化する。元資料の分析事実と、以下のSansuの採用設計を区別する。
 
 ## 1. 目的と範囲
 

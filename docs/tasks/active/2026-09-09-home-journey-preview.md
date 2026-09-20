@@ -12,7 +12,11 @@
 
 接続試作の検査は完了：[実画面・検証記録](../../design/2026-09-09-pokomoko-growth-keyvisual/implementation-v1/README.md)。本制作は未完了のためactiveを保持。
 
-- Review By: 2026-09-16
+- Review By: 2026-09-27
+
+## Current status — 2026-09-20
+
+The v7 DEV connection test remains distinct from the current `IslandLife` house and the newly delivered house overview/camera. The production house flow has its own current evidence in [house UI and camera audit](../../design/audits/2026-09-20-house-camera/README.md). Reconcile the exact Home Journey candidate and its remaining acceptance before extending or promoting the preview. The production WebKit photo save issue is tracked separately.
 
 ## Docs To Touch
 

@@ -43,8 +43,8 @@
 | 探索転換に伴う既存機能の扱い | [product/16_legacy_feature_decision.md](/docs/product/16_legacy_feature_decision.md) | [product/17_open_questions.md](/docs/product/17_open_questions.md), 各既存機能仕様 | 維持、変更、統合、廃止、保留の判断が変わるとき |
 | 探索転換の未決事項 | [product/17_open_questions.md](/docs/product/17_open_questions.md) | 関連する探索子仕様 | 未決事項の選択肢・推奨を整理するとき。決定後は該当する正本へ反映する |
 | 画面・ドメイン固有の詳細挙動 | `docs/product/` 配下の画面仕様またはドメイン仕様 | [product/01_app_spec.md](/docs/product/01_app_spec.md) | 画面フローやドメインルールの詳細が変わるとき |
-| デザイン原則・トーン・トークン | [product/07_ui_design_guideline.md](/docs/product/07_ui_design_guideline.md) | [product/design_review_checklist.md](/docs/product/design_review_checklist.md), [tasks/design-refresh-status.md](/docs/tasks/design-refresh-status.md) | 共通の見た目ルールやトーン指針が変わるとき |
-| デザイン適用の進捗 | [tasks/design-refresh-status.md](/docs/tasks/design-refresh-status.md) | [product/07_ui_design_guideline.md](/docs/product/07_ui_design_guideline.md) | 進捗、残作業、状態メモが変わるとき |
+| デザイン原則・トーン・トークン | [product/07_ui_design_guideline.md](/docs/product/07_ui_design_guideline.md) | [product/design_review_checklist.md](/docs/product/design_review_checklist.md) | 共通の見た目ルールやトーン指針が変わるとき |
+| デザイン作業の進捗 | `.agents/tasks/TASKS.md` と `docs/tasks/active/` | [tasks/backlog.md](/docs/tasks/backlog.md) | 実行中のUI改善や優先順位が変わるとき |
 | 共有タスクキュー | `.agents/tasks/TASKS.md`, `.agents/tasks/BLOCKED.md`, `.agents/tasks/DONE.md` | `docs/tasks/active/*.md`, `docs/done/YYYY-MM.md` | agent 間で共有する task queue / blocked / done index が変わるとき |
 | 進行中タスクの文脈 | [tasks/active/README.md](/docs/tasks/active/README.md) と `docs/tasks/active/*.md` | [ai/verification_matrix.md](/docs/ai/verification_matrix.md) | 作業が現在進行中のとき |
 | 完了済み作業の履歴 | `docs/done/YYYY-MM.md` | 進行中タスク文書、関連仕様 | 作業が終わり、履歴として残すとき |
@@ -53,7 +53,7 @@
 | 検証方針 | [ai/verification_matrix.md](/docs/ai/verification_matrix.md) | 運用手順、タスク文書 | 必須確認やレビュー基準が変わるとき |
 | リリース・保守手順 | `docs/runbooks/` 配下の各ファイル | [ai/verification_matrix.md](/docs/ai/verification_matrix.md) | 運用手順やリリース上の注意点が変わるとき |
 | 再発見コストの高い設計判断 | `docs/adr/` 配下の各ファイル | 仕様、運用手順、`docs/wiki/memory.md` | 重要な設計判断を残すとき |
-| 全体バックログ | [tasks/backlog.md](/docs/tasks/backlog.md) | [tasks/ui-fix-tasklist.md](/docs/tasks/ui-fix-tasklist.md) | 優先アイデアや保留項目が変わるとき |
+| 全体バックログ | [tasks/backlog.md](/docs/tasks/backlog.md) | `.agents/tasks/TASKS.md`, `.agents/tasks/BLOCKED.md` | 優先アイデアや保留項目が変わるとき |
 | ワークスペース用語 | [wiki/glossary.md](/docs/wiki/glossary.md) | アプリ用語は [product/01_app_spec.md](/docs/product/01_app_spec.md) | 文書運用や用語の定義が変わるとき |
 
 ## 迷ったときのルール

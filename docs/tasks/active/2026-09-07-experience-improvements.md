@@ -2,8 +2,8 @@
 
 - Date: 2026-09-07
 - Owner: Codex
-- Status: Active
-- Review By: 2026-09-14
+- Status: Cross-cutting outcome; execute through the specific tasks in the shared queue
+- Review By: 2026-09-27
 
 ## Goal
 

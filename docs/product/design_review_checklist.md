@@ -11,7 +11,7 @@ This is a review aid, not the primary design spec.
 - [01_app_spec.md](01_app_spec.md)
 - [07_ui_design_guideline.md](07_ui_design_guideline.md)
 - [14_ui_world_motion_spec.md](14_ui_world_motion_spec.md)
-- [tasks/design-refresh-status.md](/docs/tasks/design-refresh-status.md)
+- [共有タスクキュー](../../.agents/tasks/TASKS.md)
 
 ## Checklist
 
