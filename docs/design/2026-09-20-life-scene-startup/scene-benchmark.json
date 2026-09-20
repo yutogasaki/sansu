@@ -1,0 +1,139 @@
+{
+  "baseline": "788db3f",
+  "scope": "Synthetic actual Life scene; CPU construction and allocated geometry, not GPU memory or phone latency",
+  "runs": [
+    {
+      "mode": "before",
+      "count": 0,
+      "constructionMedianMs": 126.91595800000005,
+      "samples": [
+        216.26604199999997,
+        127.11445900000012,
+        115.95187499999997,
+        126.91595800000005
+      ],
+      "geometryConstructions": [
+        1324,
+        1324,
+        1324,
+        1324
+      ],
+      "meshes": 122,
+      "triangles": 60274,
+      "geometryBytes": 4029524,
+      "textures": 5,
+      "sceneHash": "b8222acc9be2958a264e0e4d341b2ba90f33f41a886bd207f076be061373cde7"
+    },
+    {
+      "mode": "before",
+      "count": 30,
+      "constructionMedianMs": 159.1664589999998,
+      "samples": [
+        151.76883399999997,
+        142.61412500000006,
+        170.79654099999993,
+        159.1664589999998
+      ],
+      "geometryConstructions": [
+        2994,
+        2994,
+        2994,
+        2994
+      ],
+      "meshes": 262,
+      "triangles": 184434,
+      "geometryBytes": 12798644,
+      "textures": 5,
+      "sceneHash": "a09ba54ffc39b922a592bec6e2a580ceb092a08d710b0b047994066d0adb1536"
+    },
+    {
+      "mode": "before",
+      "count": 100,
+      "constructionMedianMs": 267.4011660000001,
+      "samples": [
+        302.9314999999997,
+        267.4011660000001,
+        265.2030420000001,
+        276.84283300000016
+      ],
+      "geometryConstructions": [
+        6994,
+        6994,
+        6994,
+        6994
+      ],
+      "meshes": 590,
+      "triangles": 481946,
+      "geometryBytes": 33827588,
+      "textures": 5,
+      "sceneHash": "89295b8321246c3242b4cb04d3469b85ba3c2b99590c59cff07d636a9f4fd4cd"
+    },
+    {
+      "mode": "after",
+      "count": 0,
+      "constructionMedianMs": 79.18100000000004,
+      "samples": [
+        131.45358299999998,
+        87.10516700000016,
+        79.18100000000004,
+        72.97666700000036
+      ],
+      "geometryConstructions": [
+        620,
+        620,
+        620,
+        620
+      ],
+      "meshes": 122,
+      "triangles": 60274,
+      "geometryBytes": 4029524,
+      "textures": 5,
+      "sceneHash": "b8222acc9be2958a264e0e4d341b2ba90f33f41a886bd207f076be061373cde7"
+    },
+    {
+      "mode": "after",
+      "count": 30,
+      "constructionMedianMs": 119.26116700000057,
+      "samples": [
+        110.48912500000006,
+        146.1656670000002,
+        113.98362500000076,
+        119.26116700000057
+      ],
+      "geometryConstructions": [
+        2290,
+        2290,
+        2290,
+        2290
+      ],
+      "meshes": 262,
+      "triangles": 184434,
+      "geometryBytes": 12798644,
+      "textures": 5,
+      "sceneHash": "a09ba54ffc39b922a592bec6e2a580ceb092a08d710b0b047994066d0adb1536"
+    },
+    {
+      "mode": "after",
+      "count": 100,
+      "constructionMedianMs": 309.1464589999996,
+      "samples": [
+        239.52750000000015,
+        214.06783300000006,
+        309.1464589999996,
+        319.8874169999999
+      ],
+      "geometryConstructions": [
+        6290,
+        6290,
+        6290,
+        6290
+      ],
+      "meshes": 590,
+      "triangles": 481946,
+      "geometryBytes": 33827588,
+      "textures": 5,
+      "sceneHash": "89295b8321246c3242b4cb04d3469b85ba3c2b99590c59cff07d636a9f4fd4cd"
+    }
+  ],
+  "pass": true
+}

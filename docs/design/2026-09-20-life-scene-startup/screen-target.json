@@ -1,0 +1,43 @@
+{
+  "target": "http://127.0.0.1:5274/#/island",
+  "version": {
+    "version": "life-scene-residents-only-v1:b58180c3-fb60-4528-8545-8774b7026bfd",
+    "revision": "life-scene-residents-only-v1",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "world": {
+    "placing": "false",
+    "lifeWorldStyle": "moon-garden-v1",
+    "lifeVisualCandidate": "moon-garden-v1",
+    "lifeLandscapeVersion": "original",
+    "lifeTourVersion": "1",
+    "lifeCamera": "{\"projection\":[0.2914509565274668,0,0,0,0,0.18818853153263582,0,0,0,0,-0.02002002002002002,0,-0.04965880727608123,0,-1.002002002002002,1],\"view\":[0.925546956205677,-0.207749733943065,0.3165483847771031,0,-5.551115123125784e-17,0.8360299122352686,0.5486838669469786,0,-0.3786328457205044,-0.5078326829719366,0.7737849405662518,0,2.116362640691705e-15,-0.16720598244705165,-14.325573013301563,1.0000000000000002],\"cameraView\":{\"zoom\":1,\"azimuth\":0,\"pan\":{\"x\":0,\"y\":0},\"manual\":false}}",
+    "lifeSculptStatus": "none",
+    "lifeGroundMaterialStatus": "none",
+    "worldShadowUpdateMs": "0",
+    "rendered": "true",
+    "worldShadowSampleMs": "0",
+    "lifeGatherings": "[]",
+    "lifeRelations": "[]",
+    "lifePoses": "[{\"id\":\"pokomoko\",\"itemId\":\"roam:pokomoko:0\",\"phase\":\"walking\",\"position\":[-1.5,0.04,1.0316666666666667],\"hop\":0,\"headPitch\":0,\"headRoll\":0,\"headYaw\":0},{\"id\":\"rabbit\",\"phase\":\"home\",\"position\":[0.5,0.04,-1],\"hop\":0,\"headPitch\":0,\"headRoll\":0.03460314063307229,\"headYaw\":0},{\"id\":\"otter\",\"phase\":\"home\",\"position\":[0.5,0.04,0],\"hop\":0,\"headPitch\":0,\"headRoll\":0.02311869781082274,\"headYaw\":0}]",
+    "lifeRender": "{\"calls\":176,\"triangles\":101738,\"geometries\":122,\"textures\":8}"
+  },
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "notes": "Fresh isolated profile; real onboarding; no injected saves; visible scene parity only, no actual-device paint timing."
+}

@@ -1,7 +1,7 @@
 import { Group, Mesh, MeshStandardMaterial } from 'three';
 import { roundedBoxGeometry } from '../three/geometry';
-import { disposeGeometry, IslandMaterials } from '../three/primitives';
-import { makeScenery, makeStarTree } from '../three/scenery';
+import { IslandMaterials } from '../three/primitives';
+import { makeCottage, makeStarTree } from '../three/scenery';
 import { createIslandRoofSurface, ISLAND_ROOF_SURFACE_CANDIDATE } from '../three/roofSurface';
 
 /** Borrow the world's paints; own only the equipped legacy roof surface. */
@@ -23,15 +23,7 @@ class HeritageHouseMaterials extends IslandMaterials {
  */
 export function buildHeritageHouse(materials: IslandMaterials, vivid = false) {
     const houseMaterials = new HeritageHouseMaterials(materials);
-    // The legacy cottage factory is private. Extract its named shell through
-    // the public scenery builder without constructing the old island terrain.
-    const scenery = makeScenery(houseMaterials, undefined, { terrain: false });
-    const shell = scenery.getObjectByName('island-home-shell');
-    if (!(shell instanceof Group)) {
-        disposeGeometry(scenery);
-        houseMaterials.dispose();
-        throw new Error('Heritage cottage shell is missing');
-    }
+    const shell = makeCottage(houseMaterials);
     const tileMaterials: MeshStandardMaterial[] = [];
     if (vivid) {
         shell.traverse(object => {
@@ -47,9 +39,6 @@ export function buildHeritageHouse(materials: IslandMaterials, vivid = false) {
             tile.castShadow = tile.receiveShadow = true; tiles.add(tile);
         }
     }
-    shell.removeFromParent();
-    disposeGeometry(scenery);
-    scenery.clear();
     const house = new Group();
     house.name = 'home';
     // Original door center (-.18, .77) -> Life door center (0, .27).

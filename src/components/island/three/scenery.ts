@@ -161,6 +161,11 @@ function cottage(m: IslandMaterials, slot?: IslandAppearanceSlotId) {
     return build.finish(false);
 }
 
+/** The same batched cottage shell used by the full scenery, without other props. */
+export function makeCottage(m: IslandMaterials, slot?: IslandAppearanceSlotId) {
+    return batch(cottage(m, slot));
+}
+
 interface TreeLife {
     glow: THREE.MeshStandardMaterial;
     pendants: THREE.Group[];

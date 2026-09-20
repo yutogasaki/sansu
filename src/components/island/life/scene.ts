@@ -6,9 +6,7 @@ import type { SandScene } from './sandboxGeometry';
 import { buildCanopyScenery } from './canopyScenery';
 import { makeLifeMotion, type LifeSeat } from './residentMotion';
 import * as T from 'three';
-import { makeResidentRig } from '../three/residentRig';
 import { buildHomeJourney } from '../homeJourney/scene';
-import { disposeGeometry } from '../three/primitives';
 import { type Cell, type LifeState } from '../../../domain/islandLife/model';
 import { cellKey, districts, homeCell, isolatedItems, landCells, pathToActivity } from '../../../domain/islandLife/space';
 import { plantGatherings } from '../../../domain/islandLife/discovery';
@@ -19,14 +17,11 @@ import { buildHeritageHouse, buildHeritageTree } from './heritageScenery';
 import { buildLifeItem, tint } from './itemGeometry';
 export { tint } from './itemGeometry';
 export function buildLifeScene(state: LifeState, selected?: string, selectedCell?: Cell, placement?: PlacementPreview) {
-    const content = buildHomeJourney(), root = content.world;
-    // Pokomoko alone keeps the patchwork identity. The discarded legacy otter
-    // stays in root and is disposed with the unused home-journey scenery.
-    content.otter = makeResidentRig('otter', content.m, 'natural');
+    const content = buildHomeJourney(undefined, { residentsOnly: true, naturalOtter: true }), root = content.world;
     const heritageHouse = buildHeritageHouse(content.m, state.worldStyle === 'canopy-dots-c3-v1'), house = heritageHouse.root;
     const actors = [content.hero, content.rabbit.pose, content.otter.pose];
     house.removeFromParent(); actors.forEach(a => a.removeFromParent());
-    disposeGeometry(root); root.clear();
+    root.clear();
     const cells = landCells(state), min = Math.min(...cells.map(c => c.x)), max = Math.max(...cells.map(c => c.x));
     const center = (min + max) / 2;
     const point = (c: Cell) => new T.Vector3(c.x - center, .04, c.z - 2);
