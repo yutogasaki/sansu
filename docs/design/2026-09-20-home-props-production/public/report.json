@@ -1,0 +1,43 @@
+{
+  "target": "https://sansu-seven.vercel.app",
+  "version": {
+    "version": "288384543aba94ae217deaf4a0bf6835393fbb30:3f2c3813-8cc1-451e-8b78-1d87e20633bb",
+    "revision": "288384543aba94ae217deaf4a0bf6835393fbb30",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "adopted": true,
+  "runs": [
+    {
+      "width": 390,
+      "world": {
+        "assets": "{\"candidate\":\"island-life-runtime-assets-v3\",\"homePropsCandidate\":\"island-home-props-v1\",\"loaded\":[\"fence\",\"mailbox\",\"planter\",\"watering-can\"],\"failed\":[],\"pending\":[],\"instances\":4,\"byKind\":{\"fence\":1,\"mailbox\":1,\"planter\":1,\"watering-can\":1},\"far\":1}",
+        "render": "{\"calls\":196,\"triangles\":129982,\"geometries\":141,\"textures\":17}",
+        "visual": "moon-garden-v1"
+      },
+      "errors": []
+    },
+    {
+      "width": 768,
+      "world": {
+        "assets": "{\"candidate\":\"island-life-runtime-assets-v3\",\"homePropsCandidate\":\"island-home-props-v1\",\"loaded\":[\"mailbox\",\"fence\",\"watering-can\",\"planter\"],\"failed\":[],\"pending\":[],\"instances\":4,\"byKind\":{\"mailbox\":1,\"fence\":1,\"watering-can\":1,\"planter\":1},\"far\":0}",
+        "render": "{\"calls\":196,\"triangles\":134402,\"geometries\":141,\"textures\":17}",
+        "visual": "moon-garden-v1"
+      },
+      "errors": []
+    }
+  ],
+  "pass": true
+}
