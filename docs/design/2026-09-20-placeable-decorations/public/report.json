@@ -1,0 +1,88 @@
+{
+  "target": "https://sansu-seven.vercel.app",
+  "version": {
+    "version": "7ac24419e12a6773567272ccc1805c31f5769e51:9fcc932d-750f-4ff7-9241-454d87a15d37",
+    "revision": "7ac24419e12a6773567272ccc1805c31f5769e51",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "candidate": "island-placeable-decorations-v1",
+  "humanN": 0,
+  "cases": [
+    {
+      "width": 390,
+      "products": [
+        {
+          "kind": "flower",
+          "text": "おはなおはなめを そだてて おはなにあと 2 しずく"
+        },
+        {
+          "kind": "bench",
+          "text": "ベンチベンチひとやすみの ばしょあと 4 しずく"
+        },
+        {
+          "kind": "swing",
+          "text": "ブランコブランコすわって ゆらゆらあと 6 しずく"
+        },
+        {
+          "kind": "lantern",
+          "text": "ほしの あかりほしの あかりあかりの そばに あつまるかなあと 8 しずく"
+        },
+        {
+          "kind": "fence",
+          "text": "木の さく木の さくならべて おにわを かざろうあと 4 しずく"
+        },
+        {
+          "kind": "planter",
+          "text": "うえ木ばちうえ木ばちおはなの はちを すきな ばしょへあと 6 しずく"
+        }
+      ],
+      "errors": [],
+      "lifeHome": "true"
+    },
+    {
+      "width": 768,
+      "products": [
+        {
+          "kind": "flower",
+          "text": "おはなおはなめを そだてて おはなにあと 2 しずく"
+        },
+        {
+          "kind": "bench",
+          "text": "ベンチベンチひとやすみの ばしょあと 4 しずく"
+        },
+        {
+          "kind": "swing",
+          "text": "ブランコブランコすわって ゆらゆらあと 6 しずく"
+        },
+        {
+          "kind": "lantern",
+          "text": "ほしの あかりほしの あかりあかりの そばに あつまるかなあと 8 しずく"
+        },
+        {
+          "kind": "fence",
+          "text": "木の さく木の さくならべて おにわを かざろうあと 4 しずく"
+        },
+        {
+          "kind": "planter",
+          "text": "うえ木ばちうえ木ばちおはなの はちを すきな ばしょへあと 6 しずく"
+        }
+      ],
+      "errors": [],
+      "lifeHome": "true"
+    }
+  ],
+  "pass": true
+}

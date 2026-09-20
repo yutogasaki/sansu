@@ -56,3 +56,7 @@ rendererの三角形数は影などを含むフレーム指標で、GLB本体の
 ## 配布前の最終統合
 
 その後のmain `b6d62216` を取り込み、実装commitは `07a5f272` へrebase。v3の検査対象からのapp差分は、別作業の室内写真カメラに関する `three/runtime.ts` の3行だけ。飾り・保存・学習・Life外観の入力は同一。[最終build](rebased-build.txt)と[室内カメラ16件](rebased-camera.txt)を通過。変更のない新機能journeyと80runは再走せず、元のhash付き結果を保持する。公開版は配布後に別途照合する。
+
+## 公開確認
+
+mainへpush後、Vercel成功と公開 `version.json` のrevision `7ac24419e12a6773567272ccc1805c31f5769e51` を照合。[公開検査](public/report.json)は新しい使い捨てブラウザの390/768幅で実初回設定→帰島→家まわり4素材ロード→カタログ第3ページを確認してPASS、page errorなし。実ユーザーの保存や残高は変更していない。公開では表示確認だけを行い、購入/保存/再試行/offlineの証拠は前掲の固定local production検査と区別する。[公開カタログ](public/390-catalog.png)、[tablet](public/768-catalog.png)、[検査コード](public/check.mjs)。この公開確認を保存する後続commitはdocsのみで、アプリ入力は変わらない。
