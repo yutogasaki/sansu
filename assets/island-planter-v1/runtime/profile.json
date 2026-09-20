@@ -1,0 +1,15 @@
+{
+  "asset": "planter",
+  "sourceSha256": "490f30ccf802aaf1344fd7600d2f00626b79d59897f3d84e6d51cb4662800d91",
+  "nearSha256": "69a4f0997a14d5aa518206353d48ca39398b28e2b808abba74cbce80857408b9",
+  "farSha256": "3d823298a65ede1d0c26173304a087fe9b6176b1f30404851be07d1029c419ff",
+  "nearBytes": 1961704,
+  "farBytes": 320268,
+  "nearTriangles": 5223,
+  "farTriangles": 4611,
+  "nearGeometryIdentical": true,
+  "textureRecipe": "baseColor 1024; metallicRoughness/normal 512; all UASTC level2 RDO .5 Zstd18 box mip filter",
+  "farRecipe": "weld + attribute-aware meshoptimizer ratio .12 error .01 lock border; UV weights4 normal weights.1; no textures; runtime shares near material",
+  "gltfTransform": "4.5.0",
+  "ktx": "4.4.2"
+}

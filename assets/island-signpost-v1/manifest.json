@@ -1,0 +1,144 @@
+{
+  "id": "island-signpost-v1",
+  "label": "案内板",
+  "target_height": 1.5,
+  "target_polycount": 5000,
+  "source": "/Users/yutogasaki/Projects/sansu/assets/island-signpost-v1/source/input.png",
+  "source_sha256": "13e43c80c613bd45a0cfe2d1263d25bf5aa90d998a31ebb2db1edd7edaecd101",
+  "status": "VERIFIED",
+  "reserved_credits": 30,
+  "submitted_at": "2026-09-20T00:44:29.216033+00:00",
+  "request": {
+    "tool": "meshy_image_to_3d",
+    "arguments": {
+      "ai_model": "meshy-7",
+      "model_type": "standard",
+      "should_texture": true,
+      "enable_pbr": true,
+      "texture_resolution": "2k",
+      "target_formats": [
+        "glb"
+      ],
+      "ultra_mode": false,
+      "should_remesh": true,
+      "topology": "triangle",
+      "symmetry_mode": "off",
+      "origin_at": "bottom",
+      "remove_lighting": true,
+      "response_format": "json",
+      "file_path": "/Users/yutogasaki/Projects/sansu/assets/island-signpost-v1/source/input.png",
+      "target_polycount": 5000
+    }
+  },
+  "task_id": "01a0bc45-8b15-7174-b4ff-36a97d1d55c8",
+  "consumed_credits": 30,
+  "completed_observed_at": "2026-09-20T00:47:31.538861+00:00",
+  "raw": {
+    "bytes": 10188084,
+    "sha256": "a951e93b1c38db84be98890c8a89de1e18071e23d71bd13a00cd2d658ed2a263",
+    "triangles": 4980,
+    "meshes": 1,
+    "nodes": 1,
+    "materials": 1,
+    "image_hashes": [
+      "8f8ba260fc7bd98f7c493d24f83c87c6536c078edceea83c745ccb6e2c426cbe",
+      "d34be598b9c5114cf2c8a7a62c81bc9b7ebab8979b6fdebf4f9c02f813710714",
+      "f1d66decc529f241bb25492daaef57026ebf64a766167b612da2f23802ba543f"
+    ]
+  },
+  "final": {
+    "bytes": 10188132,
+    "sha256": "ab6ceb7a2551245e44ecee528745a9b52e522df62dd804413f73f38ad9d08775",
+    "triangles": 4980,
+    "meshes": 1,
+    "nodes": 1,
+    "materials": 1,
+    "image_hashes": [
+      "8f8ba260fc7bd98f7c493d24f83c87c6536c078edceea83c745ccb6e2c426cbe",
+      "d34be598b9c5114cf2c8a7a62c81bc9b7ebab8979b6fdebf4f9c02f813710714",
+      "f1d66decc529f241bb25492daaef57026ebf64a766167b612da2f23802ba543f"
+    ]
+  },
+  "visual_review": "PENDING",
+  "yaw_degrees": 180,
+  "batch_id": "island-path-v1",
+  "timing": {
+    "generation_seconds": 182.323,
+    "measurement": "submission to first observed SUCCEEDED; sequential polling includes queue and local processing delay, NOT server generation time"
+  },
+  "review": {
+    "reviewer": "Codex source/front/back/bottom comparison",
+    "visual_gate": "HOLD_FOR_VARIETY_REVIEW",
+    "silent_comprehension_safety": "NOT_TESTED_WITH_USERS",
+    "runtime_gate": "GLB_ROUNDTRIP_PASS_GAME_NOT_INTEGRATED",
+    "notes": "葉の模様が背面向きだったためBlenderで180度回転。正面の矢印と葉を保持。片面の案内板で、裏面に葉はない。 ユーザーの「雰囲気にすぎ」を受け、配色の似通いと用途の違いを採用前に再評価する。"
+  },
+  "files": {
+    "source": "source/input.png",
+    "raw": "meshy_raw/model.glb",
+    "final": "final/model.glb"
+  },
+  "verification": {
+    "asset": "island-signpost-v1",
+    "blender_version": "5.2.1 LTS",
+    "raw_sha256": "a951e93b1c38db84be98890c8a89de1e18071e23d71bd13a00cd2d658ed2a263",
+    "final_sha256": "ab6ceb7a2551245e44ecee528745a9b52e522df62dd804413f73f38ad9d08775",
+    "before": {
+      "meshes": 1,
+      "vertices": 5777,
+      "triangles": 4980,
+      "bounds_min": [
+        -0.6499980092048645,
+        -0.3588780462741852,
+        -0.9519520401954651
+      ],
+      "bounds_max": [
+        0.6466389894485474,
+        0.36132797598838806,
+        0.9507890343666077
+      ],
+      "dimensions": [
+        1.2966370582580566,
+        0.7202060222625732,
+        1.9027410745620728
+      ]
+    },
+    "after": {
+      "meshes": 1,
+      "vertices": 5777,
+      "triangles": 4980,
+      "bounds_min": [
+        -0.511093020439148,
+        -0.2838823199272156,
+        0.0
+      ],
+      "bounds_max": [
+        0.5110930800437927,
+        0.2838823199272156,
+        1.5
+      ],
+      "dimensions": [
+        1.022186040878296,
+        0.5677646398544312,
+        1.5
+      ]
+    },
+    "scale_factor": 0.7883363743252528,
+    "original_bottom_center": [
+      0.0016795098781585693,
+      -0.0012249350547790527,
+      -0.9519520401954651
+    ],
+    "reimport_pass": true,
+    "render_mean_absolute_error_0_to_1": 6.619159620413484e-08,
+    "origin": "bounding-box bottom center",
+    "blender_up": "Z",
+    "glb_up": "Y",
+    "yaw_degrees": 180.0,
+    "normals": "preserved",
+    "textures": "preserved",
+    "decimation": "none",
+    "visual_review": "PENDING",
+    "in_game_validation": "NOT_RUN"
+  }
+}

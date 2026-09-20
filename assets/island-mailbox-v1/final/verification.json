@@ -1,0 +1,63 @@
+{
+  "asset": "island-mailbox-v1",
+  "blender_version": "5.2.1 LTS",
+  "raw_sha256": "c8f247e18ee25251711f4e90d4a9d918e5c3268ee9857ae8ab59385a7aeebbf9",
+  "final_sha256": "59c798a639a0d98eda0b23682a3ea2d216dc31101df38db34f931a43f98ff753",
+  "before": {
+    "meshes": 1,
+    "vertices": 7006,
+    "triangles": 5769,
+    "bounds_min": [
+      -0.5308740139007568,
+      -0.3993839621543884,
+      -0.9518550038337708
+    ],
+    "bounds_max": [
+      0.5284439325332642,
+      0.40148302912712097,
+      0.9502500295639038
+    ],
+    "dimensions": [
+      1.059317946434021,
+      0.800866961479187,
+      1.9021050930023193
+    ]
+  },
+  "after": {
+    "meshes": 1,
+    "vertices": 7006,
+    "triangles": 5769,
+    "bounds_min": [
+      -0.3341512382030487,
+      -0.2526254653930664,
+      0.0
+    ],
+    "bounds_max": [
+      0.3341512382030487,
+      0.2526254951953888,
+      1.2000000476837158
+    ],
+    "dimensions": [
+      0.6683024764060974,
+      0.5052509307861328,
+      1.2000000476837158
+    ]
+  },
+  "scale_factor": 0.6308799876610783,
+  "original_bottom_center": [
+    -0.0012150406837463379,
+    0.001049533486366272,
+    -0.9518550038337708
+  ],
+  "reimport_pass": true,
+  "render_mean_absolute_error_0_to_1": 2.4963688360912784e-07,
+  "origin": "bounding-box bottom center",
+  "blender_up": "Z",
+  "glb_up": "Y",
+  "yaw_degrees": 0.0,
+  "normals": "preserved",
+  "textures": "preserved",
+  "decimation": "none",
+  "visual_review": "PENDING",
+  "in_game_validation": "NOT_RUN"
+}

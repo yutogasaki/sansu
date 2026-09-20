@@ -1,0 +1,15 @@
+{
+  "asset": "cart",
+  "sourceSha256": "8ee7cd652dd927134639b3297bbc57f1a3329a6aa71fdfd27b3b58955d204c0f",
+  "nearSha256": "3d91f550dd8917e61058d6db4c62471703353155b384a36d1a7a57e197f81edc",
+  "farSha256": "d782915efb4d392fb635579bf42e1fece80ebe971143c15a7ee51787a74f7690",
+  "nearBytes": 1947016,
+  "farBytes": 158004,
+  "nearTriangles": 7422,
+  "farTriangles": 2676,
+  "nearGeometryIdentical": true,
+  "textureRecipe": "baseColor 1024; metallicRoughness/normal 512; all UASTC level2 RDO .5 Zstd18 box mip filter",
+  "farRecipe": "weld + attribute-aware meshoptimizer ratio .12 error .01 lock border; UV weights4 normal weights.1; no textures; runtime shares near material",
+  "gltfTransform": "4.5.0",
+  "ktx": "4.4.2"
+}

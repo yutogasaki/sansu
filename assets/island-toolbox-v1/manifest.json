@@ -1,0 +1,143 @@
+{
+  "id": "island-toolbox-v1",
+  "label": "道具箱",
+  "target_height": 0.45,
+  "target_polycount": 5000,
+  "source": "/Users/yutogasaki/Projects/sansu/assets/island-toolbox-v1/source/input.png",
+  "source_sha256": "b0bf0ee1cfa9f36385732496822d9752383b6a8b0ae288b710fac9f24c60d37d",
+  "status": "VERIFIED",
+  "reserved_credits": 30,
+  "submitted_at": "2026-09-20T00:44:36.676481+00:00",
+  "request": {
+    "tool": "meshy_image_to_3d",
+    "arguments": {
+      "ai_model": "meshy-7",
+      "model_type": "standard",
+      "should_texture": true,
+      "enable_pbr": true,
+      "texture_resolution": "2k",
+      "target_formats": [
+        "glb"
+      ],
+      "ultra_mode": false,
+      "should_remesh": true,
+      "topology": "triangle",
+      "symmetry_mode": "off",
+      "origin_at": "bottom",
+      "remove_lighting": true,
+      "response_format": "json",
+      "file_path": "/Users/yutogasaki/Projects/sansu/assets/island-toolbox-v1/source/input.png",
+      "target_polycount": 5000
+    }
+  },
+  "task_id": "01a0bc45-a83e-76d4-9d41-01fa339790e4",
+  "consumed_credits": 30,
+  "completed_observed_at": "2026-09-20T00:48:20.444563+00:00",
+  "raw": {
+    "bytes": 9691476,
+    "sha256": "533717039fc5a916a3fe0ed192c6de3ef95b4c8cf3b81e8743e3cb3c7c743bbe",
+    "triangles": 4602,
+    "meshes": 1,
+    "nodes": 1,
+    "materials": 1,
+    "image_hashes": [
+      "326b198846be28c263dbd1b9ced38935cfe50f54b7280e0581df9038464189c0",
+      "72bc52c3466013a41915ce24d71f7979945d97f55ce07188f54e2a1c60509baa",
+      "cb42601c43a79e69f6e56462023ae42a5446690b1947fcc6f74779d8720bd5db"
+    ]
+  },
+  "final": {
+    "bytes": 9691524,
+    "sha256": "7ac656ae637694f4e7f00243446ed3b316edc8f76ad9926336a2654576784f7a",
+    "triangles": 4602,
+    "meshes": 1,
+    "nodes": 1,
+    "materials": 1,
+    "image_hashes": [
+      "326b198846be28c263dbd1b9ced38935cfe50f54b7280e0581df9038464189c0",
+      "72bc52c3466013a41915ce24d71f7979945d97f55ce07188f54e2a1c60509baa",
+      "cb42601c43a79e69f6e56462023ae42a5446690b1947fcc6f74779d8720bd5db"
+    ]
+  },
+  "visual_review": "PENDING",
+  "batch_id": "island-path-v1",
+  "timing": {
+    "generation_seconds": 223.768,
+    "measurement": "submission to first observed SUCCEEDED; sequential polling includes queue and local processing delay, NOT server generation time"
+  },
+  "review": {
+    "reviewer": "Codex source/front/back/bottom comparison",
+    "visual_gate": "HOLD_FOR_VARIETY_REVIEW",
+    "silent_comprehension_safety": "NOT_TESTED_WITH_USERS",
+    "runtime_gate": "GLB_ROUNDTRIP_PASS_GAME_NOT_INTEGRATED",
+    "notes": "箱・持ち手・中の道具を保持。中の道具の重なりとブラシの細部は簡略化。取り出せる別パーツではない。 ユーザーの「雰囲気にすぎ」を受け、配色の似通いと用途の違いを採用前に再評価する。"
+  },
+  "files": {
+    "source": "source/input.png",
+    "raw": "meshy_raw/model.glb",
+    "final": "final/model.glb"
+  },
+  "verification": {
+    "asset": "island-toolbox-v1",
+    "blender_version": "5.2.1 LTS",
+    "raw_sha256": "533717039fc5a916a3fe0ed192c6de3ef95b4c8cf3b81e8743e3cb3c7c743bbe",
+    "final_sha256": "7ac656ae637694f4e7f00243446ed3b316edc8f76ad9926336a2654576784f7a",
+    "before": {
+      "meshes": 1,
+      "vertices": 7579,
+      "triangles": 4602,
+      "bounds_min": [
+        -0.9504010081291199,
+        -0.6631379723548889,
+        -0.7951440215110779
+      ],
+      "bounds_max": [
+        0.9485920071601868,
+        0.6614409685134888,
+        0.7932479381561279
+      ],
+      "dimensions": [
+        1.8989930152893066,
+        1.3245790004730225,
+        1.5883920192718506
+      ]
+    },
+    "after": {
+      "meshes": 1,
+      "vertices": 7579,
+      "triangles": 4602,
+      "bounds_min": [
+        -0.268997460603714,
+        -0.18763016164302826,
+        0.0
+      ],
+      "bounds_max": [
+        0.268997460603714,
+        0.18763016164302826,
+        0.44999998807907104
+      ],
+      "dimensions": [
+        0.537994921207428,
+        0.3752603232860565,
+        0.44999998807907104
+      ]
+    },
+    "scale_factor": 0.283305387729539,
+    "original_bottom_center": [
+      -0.0009045004844665527,
+      -0.0008485019207000732,
+      -0.7951440215110779
+    ],
+    "reimport_pass": true,
+    "render_mean_absolute_error_0_to_1": 1.7777171024135896e-07,
+    "origin": "bounding-box bottom center",
+    "blender_up": "Z",
+    "glb_up": "Y",
+    "yaw_degrees": 0.0,
+    "normals": "preserved",
+    "textures": "preserved",
+    "decimation": "none",
+    "visual_review": "PENDING",
+    "in_game_validation": "NOT_RUN"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "asset": "island-stepping-stones-v1",
+  "blender_version": "5.2.1 LTS",
+  "raw_sha256": "a10988e46ae5cd097a696fb54738834d8405b46a7c638e14b29328b5df67d826",
+  "final_sha256": "6dc5b26149624fe4610ee7d495ca09bef0ef51d041c2aca11bb6cb3a0855189b",
+  "before": {
+    "meshes": 1,
+    "vertices": 5445,
+    "triangles": 5126,
+    "bounds_min": [
+      -0.9506699442863464,
+      -0.9015799760818481,
+      -0.15270595252513885
+    ],
+    "bounds_max": [
+      0.9500049948692322,
+      0.902554988861084,
+      0.14933502674102783
+    ],
+    "dimensions": [
+      1.9006749391555786,
+      1.8041349649429321,
+      0.3020409941673279
+    ]
+  },
+  "after": {
+    "meshes": 1,
+    "vertices": 5445,
+    "triangles": 5126,
+    "bounds_min": [
+      -0.566349446773529,
+      -0.5375831127166748,
+      0.0
+    ],
+    "bounds_max": [
+      0.566349446773529,
+      0.5375831723213196,
+      0.17999999225139618
+    ],
+    "dimensions": [
+      1.132698893547058,
+      1.0751662254333496,
+      0.17999999225139618
+    ]
+  },
+  "scale_factor": 0.5959456244557435,
+  "original_bottom_center": [
+    -0.0003324747085571289,
+    0.0004875063896179199,
+    -0.15270595252513885
+  ],
+  "reimport_pass": true,
+  "render_mean_absolute_error_0_to_1": 4.917090024036952e-08,
+  "origin": "bounding-box bottom center",
+  "blender_up": "Z",
+  "glb_up": "Y",
+  "yaw_degrees": 0.0,
+  "normals": "preserved",
+  "textures": "preserved",
+  "decimation": "none",
+  "visual_review": "PENDING",
+  "in_game_validation": "NOT_RUN"
+}

@@ -1,0 +1,80 @@
+{
+  "batch_id": "island-path-v1",
+  "budget_credits": 270,
+  "credits_per_asset": 30,
+  "balance_before": 790,
+  "authorization": "User raised the current batch cap to 270 credits, nine assets at 30 each, once each. No paid follow-up, regeneration, purchases or recharge.",
+  "settings": {
+    "ai_model": "meshy-7",
+    "model_type": "standard",
+    "should_texture": true,
+    "enable_pbr": true,
+    "texture_resolution": "2k",
+    "target_formats": [
+      "glb"
+    ],
+    "ultra_mode": false,
+    "should_remesh": true,
+    "topology": "triangle",
+    "symmetry_mode": "off",
+    "origin_at": "bottom",
+    "remove_lighting": true,
+    "response_format": "json"
+  },
+  "assets": [
+    {
+      "id": "island-fence-v1",
+      "label": "柵",
+      "target_height": 0.85,
+      "target_polycount": 5000
+    },
+    {
+      "id": "island-bridge-v1",
+      "label": "小さな橋",
+      "target_height": 1.2,
+      "target_polycount": 10000
+    },
+    {
+      "id": "island-signpost-v1",
+      "label": "案内板",
+      "target_height": 1.5,
+      "target_polycount": 5000
+    },
+    {
+      "id": "island-planter-v1",
+      "label": "植木鉢",
+      "target_height": 0.65,
+      "target_polycount": 5000
+    },
+    {
+      "id": "island-watering-can-v1",
+      "label": "じょうろ",
+      "target_height": 0.6,
+      "target_polycount": 6000
+    },
+    {
+      "id": "island-toolbox-v1",
+      "label": "道具箱",
+      "target_height": 0.45,
+      "target_polycount": 5000
+    },
+    {
+      "id": "island-mailbox-v1",
+      "label": "ポスト",
+      "target_height": 1.2,
+      "target_polycount": 6000
+    },
+    {
+      "id": "island-cart-v1",
+      "label": "手押し車",
+      "target_height": 0.85,
+      "target_polycount": 8000
+    },
+    {
+      "id": "island-stepping-stones-v1",
+      "label": "飛び石",
+      "target_height": 0.18,
+      "target_polycount": 5000
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+{
+  "id": "island-bridge-v1",
+  "label": "小さな橋",
+  "target_height": 1.2,
+  "target_polycount": 10000,
+  "source": "/Users/yutogasaki/Projects/sansu/assets/island-bridge-v1/source/input.png",
+  "source_sha256": "fe006b5be0a7c613a95dcb9d9085af2ebf109ea10a2473e634859998d0f97bed",
+  "status": "VERIFIED",
+  "reserved_credits": 30,
+  "submitted_at": "2026-09-20T00:44:26.414564+00:00",
+  "request": {
+    "tool": "meshy_image_to_3d",
+    "arguments": {
+      "ai_model": "meshy-7",
+      "model_type": "standard",
+      "should_texture": true,
+      "enable_pbr": true,
+      "texture_resolution": "2k",
+      "target_formats": [
+        "glb"
+      ],
+      "ultra_mode": false,
+      "should_remesh": true,
+      "topology": "triangle",
+      "symmetry_mode": "off",
+      "origin_at": "bottom",
+      "remove_lighting": true,
+      "response_format": "json",
+      "file_path": "/Users/yutogasaki/Projects/sansu/assets/island-bridge-v1/source/input.png",
+      "target_polycount": 10000
+    }
+  },
+  "task_id": "01a0bc45-8026-7549-8cf7-9ff465c1b0e7",
+  "consumed_credits": 30,
+  "completed_observed_at": "2026-09-20T00:46:52.896890+00:00",
+  "raw": {
+    "bytes": 10586392,
+    "sha256": "2a14525ccb703d9bf654e1c5936d9e4424d44c75c006021d051696e62d2327bd",
+    "triangles": 8666,
+    "meshes": 1,
+    "nodes": 1,
+    "materials": 1,
+    "image_hashes": [
+      "6124d0c8d3857b2ad3c503cf3b4a7d1a9c3e507446055389967aa8f7134030bf",
+      "d65e2740a9f3a5768af54d0a441c9de887b6f6b9d767366ee160536e1408d076",
+      "f361b780c262de0d8b10ba7c476973583ba123a9260a0fec5ede8bb864928520"
+    ]
+  },
+  "final": {
+    "bytes": 10586436,
+    "sha256": "b45d06d68eeb5373cd9547f030e16be9880c923d818534c93baf6276f9acdcae",
+    "triangles": 8666,
+    "meshes": 1,
+    "nodes": 1,
+    "materials": 1,
+    "image_hashes": [
+      "6124d0c8d3857b2ad3c503cf3b4a7d1a9c3e507446055389967aa8f7134030bf",
+      "d65e2740a9f3a5768af54d0a441c9de887b6f6b9d767366ee160536e1408d076",
+      "f361b780c262de0d8b10ba7c476973583ba123a9260a0fec5ede8bb864928520"
+    ]
+  },
+  "visual_review": "PENDING",
+  "batch_id": "island-path-v1",
+  "timing": {
+    "generation_seconds": 146.482,
+    "measurement": "submission to first observed SUCCEEDED; sequential polling includes queue and local processing delay, NOT server generation time"
+  },
+  "review": {
+    "reviewer": "Codex source/front/back/bottom comparison",
+    "visual_gate": "HOLD_FOR_VARIETY_REVIEW",
+    "silent_comprehension_safety": "NOT_TESTED_WITH_USERS",
+    "runtime_gate": "GLB_ROUNDTRIP_PASS_GAME_NOT_INTEGRATED",
+    "notes": "両側の手すりと通路、緩いアーチを保持。床の微細な木目は弱い。歩行面・衝突・両岸との接続は未実装。 ユーザーの「雰囲気にすぎ」を受け、配色の似通いと用途の違いを採用前に再評価する。"
+  },
+  "files": {
+    "source": "source/input.png",
+    "raw": "meshy_raw/model.glb",
+    "final": "final/model.glb"
+  },
+  "verification": {
+    "asset": "island-bridge-v1",
+    "blender_version": "5.2.1 LTS",
+    "raw_sha256": "2a14525ccb703d9bf654e1c5936d9e4424d44c75c006021d051696e62d2327bd",
+    "final_sha256": "b45d06d68eeb5373cd9547f030e16be9880c923d818534c93baf6276f9acdcae",
+    "before": {
+      "meshes": 1,
+      "vertices": 10295,
+      "triangles": 8666,
+      "bounds_min": [
+        -0.9517120122909546,
+        -0.6888609528541565,
+        -0.2779179513454437
+      ],
+      "bounds_max": [
+        0.9507819414138794,
+        0.6896589398384094,
+        0.26073697209358215
+      ],
+      "dimensions": [
+        1.902493953704834,
+        1.378519892692566,
+        0.5386549234390259
+      ]
+    },
+    "after": {
+      "meshes": 1,
+      "vertices": 10295,
+      "triangles": 8666,
+      "bounds_min": [
+        -2.1191606521606445,
+        -1.5355135202407837,
+        0.0
+      ],
+      "bounds_max": [
+        2.1191606521606445,
+        1.5355135202407837,
+        1.2000000476837158
+      ],
+      "dimensions": [
+        4.238321304321289,
+        3.0710270404815674,
+        1.2000000476837158
+      ]
+    },
+    "scale_factor": 2.2277713389095872,
+    "original_bottom_center": [
+      -0.00046503543853759766,
+      0.00039899349212646484,
+      -0.2779179513454437
+    ],
+    "reimport_pass": true,
+    "render_mean_absolute_error_0_to_1": 1.8722766981227323e-07,
+    "origin": "bounding-box bottom center",
+    "blender_up": "Z",
+    "glb_up": "Y",
+    "yaw_degrees": 0.0,
+    "normals": "preserved",
+    "textures": "preserved",
+    "decimation": "none",
+    "visual_review": "PENDING",
+    "in_game_validation": "NOT_RUN"
+  }
+}

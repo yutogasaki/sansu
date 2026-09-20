@@ -1,0 +1,15 @@
+{
+  "asset": "mailbox",
+  "sourceSha256": "821b55fd3cfd6ca08dbe61fe1b276754574ab3f55c13f48ad9770ce65cc9beb8",
+  "nearSha256": "5d5c97d89af2c633d4f07a9713ee490386fe4513c2bf3592b2b87ddc3eb3aaf8",
+  "farSha256": "b712fc409abb84c997084d174457e24b05778cbc6aec68fb57e8aaec731699a2",
+  "nearBytes": 1890796,
+  "farBytes": 162120,
+  "nearTriangles": 5769,
+  "farTriangles": 2767,
+  "nearGeometryIdentical": true,
+  "textureRecipe": "baseColor 1024; metallicRoughness/normal 512; all UASTC level2 RDO .5 Zstd18 box mip filter",
+  "farRecipe": "weld + attribute-aware meshoptimizer ratio .12 error .01 lock border; UV weights4 normal weights.1; no textures; runtime shares near material",
+  "gltfTransform": "4.5.0",
+  "ktx": "4.4.2"
+}

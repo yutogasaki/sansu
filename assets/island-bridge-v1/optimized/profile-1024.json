@@ -1,0 +1,63 @@
+{
+  "asset": "island-bridge-v1",
+  "preset": "png-1024",
+  "source_sha256": "b45d06d68eeb5373cd9547f030e16be9880c923d818534c93baf6276f9acdcae",
+  "output_sha256": "721699e94f49013b06ab05f11a2fa16f975fbc8434d49221e13d37877f8cca70",
+  "source_bytes": 10586436,
+  "output_bytes": 5039916,
+  "reduction_percent": 52.39,
+  "images": [
+    {
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ],
+      "color_space": "sRGB"
+    },
+    {
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ],
+      "color_space": "Non-Color"
+    },
+    {
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ],
+      "color_space": "Non-Color"
+    }
+  ],
+  "embedded_png_sizes": [
+    [
+      1024,
+      1024
+    ],
+    [
+      1024,
+      1024
+    ],
+    [
+      1024,
+      1024
+    ]
+  ],
+  "geometry_uv_normals_identical": true,
+  "pbr_parameters_identical": true,
+  "triangles": 8666,
+  "visual_acceptance": "PENDING_BROWSER_COMPARE",
+  "blender_version": "5.2.1 LTS"
+}

@@ -1,0 +1,63 @@
+{
+  "asset": "island-watering-can-v1",
+  "blender_version": "5.2.1 LTS",
+  "raw_sha256": "5dcbd68dfd5f6fffa113d620cd09b7424047d2c84c6a1193dfaa6f17fb6c4325",
+  "final_sha256": "d8c76ef512ddf82ee02ef6d4aa4b34543ab5fb3568ebb2a381115e2bf036674c",
+  "before": {
+    "meshes": 1,
+    "vertices": 6727,
+    "triangles": 6204,
+    "bounds_min": [
+      -0.9510530829429626,
+      -0.5952681303024292,
+      -0.7217430472373962
+    ],
+    "bounds_max": [
+      0.9497740864753723,
+      0.595643937587738,
+      0.7221159934997559
+    ],
+    "dimensions": [
+      1.900827169418335,
+      1.1909120082855225,
+      1.4438591003417969
+    ]
+  },
+  "after": {
+    "meshes": 1,
+    "vertices": 6727,
+    "triangles": 6204,
+    "bounds_min": [
+      -0.39494726061820984,
+      -0.2474435567855835,
+      0.0
+    ],
+    "bounds_max": [
+      0.39494726061820984,
+      0.2474435567855835,
+      0.6000000238418579
+    ],
+    "dimensions": [
+      0.7898945212364197,
+      0.494887113571167,
+      0.6000000238418579
+    ]
+  },
+  "scale_factor": 0.4155530305047466,
+  "original_bottom_center": [
+    -0.000639498233795166,
+    0.00018790364265441895,
+    -0.7217430472373962
+  ],
+  "reimport_pass": true,
+  "render_mean_absolute_error_0_to_1": 1.2481844180456392e-07,
+  "origin": "bounding-box bottom center",
+  "blender_up": "Z",
+  "glb_up": "Y",
+  "yaw_degrees": 0.0,
+  "normals": "preserved",
+  "textures": "preserved",
+  "decimation": "none",
+  "visual_review": "PENDING",
+  "in_game_validation": "NOT_RUN"
+}

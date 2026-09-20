@@ -32,7 +32,7 @@ def build(state_path):
     document = '''<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>島の素材 — 制作レビュー</title><style>
     body{font-family:system-ui,sans-serif;background:#f6f4ee;color:#23342b;margin:0;padding:32px;line-height:1.7}main{max-width:1400px;margin:auto}h1{font-size:32px}h2{font-size:23px;margin-bottom:0}article{border-top:1px solid #c7cdc3;padding:24px 0}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}figure{margin:0}img{width:100%;aspect-ratio:1;object-fit:contain;background:white;border-radius:12px}figcaption{color:#526357}a{color:#23604c;margin-right:18px}p{max-width:1000px}@media(max-width:700px){body{padding:16px}.grid{grid-template-columns:repeat(2,1fr)}}
     </style><main><h1>島の素材 · 3D制作ルーチン</h1>'''
-    document += f'<p>Meshy 7 · PBR / 2K · 3件各1回 · 消費 {balance.get("consumed","未確認")} / {state["budget_credits"]} クレジット。原点・寸法・テクスチャ・再インポートを検証済み。</p><p>技術検証と見た目の判定は別。ゲーム内配置・実機性能・子どもの理解は未検証です。</p>'
+    document += f'<p>Meshy 7 · PBR / 2K · {len(rows)}件各1回 · 消費 {balance.get("consumed","未確認")} / {state["budget_credits"]} クレジット。原点・寸法・テクスチャ・再インポートを検証済み。</p><p>技術検証と見た目の判定は別。ゲーム内配置・実機性能・子どもの理解は未検証です。</p>'
     document += ''.join(cards) + '</main></html>'
     (output/'index.html').write_text(document)
     try:

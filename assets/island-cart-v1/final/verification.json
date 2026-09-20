@@ -1,0 +1,63 @@
+{
+  "asset": "island-cart-v1",
+  "blender_version": "5.2.1 LTS",
+  "raw_sha256": "42c57c60dc04253dcf84bd38b166f9089b646d9a87fa365f4b7a7208aa765f07",
+  "final_sha256": "b020e89634aebdc24af34068b313d1d0d9bdb8832b6a545bd369be648cc17401",
+  "before": {
+    "meshes": 1,
+    "vertices": 8062,
+    "triangles": 7422,
+    "bounds_min": [
+      -0.9516620635986328,
+      -0.4752390384674072,
+      -0.3210250735282898
+    ],
+    "bounds_max": [
+      0.9507930874824524,
+      0.47644999623298645,
+      0.32078301906585693
+    ],
+    "dimensions": [
+      1.9024550914764404,
+      0.9516890048980713,
+      0.6418080925941467
+    ]
+  },
+  "after": {
+    "meshes": 1,
+    "vertices": 8062,
+    "triangles": 7422,
+    "bounds_min": [
+      -1.2597899436950684,
+      -0.6302005648612976,
+      0.0
+    ],
+    "bounds_max": [
+      1.2597899436950684,
+      0.6302005648612976,
+      0.8499999642372131
+    ],
+    "dimensions": [
+      2.5195798873901367,
+      1.2604011297225952,
+      0.8499999642372131
+    ]
+  },
+  "scale_factor": 1.3243834252141555,
+  "original_bottom_center": [
+    -0.00043448805809020996,
+    0.0006054788827896118,
+    -0.3210250735282898
+  ],
+  "reimport_pass": true,
+  "render_mean_absolute_error_0_to_1": 1.2292724704821012e-07,
+  "origin": "bounding-box bottom center",
+  "blender_up": "Z",
+  "glb_up": "Y",
+  "yaw_degrees": 0.0,
+  "normals": "preserved",
+  "textures": "preserved",
+  "decimation": "none",
+  "visual_review": "PENDING",
+  "in_game_validation": "NOT_RUN"
+}

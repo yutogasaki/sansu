@@ -1,0 +1,598 @@
+{
+  "batch_id": "island-path-v1",
+  "budget_credits": 270,
+  "credits_per_asset": 30,
+  "balance_before": 790,
+  "authorization": "User raised the current batch cap to 270 credits, nine assets at 30 each, once each. No paid follow-up, regeneration, purchases or recharge.",
+  "settings": {
+    "ai_model": "meshy-7",
+    "model_type": "standard",
+    "should_texture": true,
+    "enable_pbr": true,
+    "texture_resolution": "2k",
+    "target_formats": [
+      "glb"
+    ],
+    "ultra_mode": false,
+    "should_remesh": true,
+    "topology": "triangle",
+    "symmetry_mode": "off",
+    "origin_at": "bottom",
+    "remove_lighting": true,
+    "response_format": "json"
+  },
+  "assets": {
+    "island-fence-v1": {
+      "id": "island-fence-v1",
+      "label": "柵",
+      "target_height": 0.85,
+      "target_polycount": 5000,
+      "source": "/Users/yutogasaki/Projects/sansu/assets/island-fence-v1/source/input.png",
+      "source_sha256": "29bd2d182023c579fd332abb2c3daafdda64a02debf147e4add2faf3a3f62816",
+      "status": "VERIFIED",
+      "reserved_credits": 30,
+      "submitted_at": "2026-09-20T00:44:23.597373+00:00",
+      "request": {
+        "tool": "meshy_image_to_3d",
+        "arguments": {
+          "ai_model": "meshy-7",
+          "model_type": "standard",
+          "should_texture": true,
+          "enable_pbr": true,
+          "texture_resolution": "2k",
+          "target_formats": [
+            "glb"
+          ],
+          "ultra_mode": false,
+          "should_remesh": true,
+          "topology": "triangle",
+          "symmetry_mode": "off",
+          "origin_at": "bottom",
+          "remove_lighting": true,
+          "response_format": "json",
+          "file_path": "/Users/yutogasaki/Projects/sansu/assets/island-fence-v1/source/input.png",
+          "target_polycount": 5000
+        }
+      },
+      "task_id": "01a0bc45-752a-7631-9c9f-0c146ed46054",
+      "consumed_credits": 30,
+      "completed_observed_at": "2026-09-20T00:46:21.670712+00:00",
+      "raw": {
+        "bytes": 8666800,
+        "sha256": "b0b8b48f1d74751a4928249c26becce14aba2d92d93c9ed0cfe1c96d939d0f4d",
+        "triangles": 4912,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "067193af99f0a4fffec2121042225cf4fecf028f1a6b6d958b8d77abf6d75737",
+          "2b58ce42717157c58ecbd2ee95feb83006567c537dec63e44b2a61fcfdda2544",
+          "317eacc3bcda06a42a71014fbd009ddd38f6666fa1963f7c4fa03a3c56b1858a"
+        ]
+      },
+      "final": {
+        "bytes": 8666868,
+        "sha256": "41dbd4ed6a628c7e3a045e04b3da5258eface229eaf918897c555ae1936eb5f5",
+        "triangles": 4912,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "067193af99f0a4fffec2121042225cf4fecf028f1a6b6d958b8d77abf6d75737",
+          "2b58ce42717157c58ecbd2ee95feb83006567c537dec63e44b2a61fcfdda2544",
+          "317eacc3bcda06a42a71014fbd009ddd38f6666fa1963f7c4fa03a3c56b1858a"
+        ]
+      },
+      "visual_review": "PENDING"
+    },
+    "island-bridge-v1": {
+      "id": "island-bridge-v1",
+      "label": "小さな橋",
+      "target_height": 1.2,
+      "target_polycount": 10000,
+      "source": "/Users/yutogasaki/Projects/sansu/assets/island-bridge-v1/source/input.png",
+      "source_sha256": "fe006b5be0a7c613a95dcb9d9085af2ebf109ea10a2473e634859998d0f97bed",
+      "status": "VERIFIED",
+      "reserved_credits": 30,
+      "submitted_at": "2026-09-20T00:44:26.414564+00:00",
+      "request": {
+        "tool": "meshy_image_to_3d",
+        "arguments": {
+          "ai_model": "meshy-7",
+          "model_type": "standard",
+          "should_texture": true,
+          "enable_pbr": true,
+          "texture_resolution": "2k",
+          "target_formats": [
+            "glb"
+          ],
+          "ultra_mode": false,
+          "should_remesh": true,
+          "topology": "triangle",
+          "symmetry_mode": "off",
+          "origin_at": "bottom",
+          "remove_lighting": true,
+          "response_format": "json",
+          "file_path": "/Users/yutogasaki/Projects/sansu/assets/island-bridge-v1/source/input.png",
+          "target_polycount": 10000
+        }
+      },
+      "task_id": "01a0bc45-8026-7549-8cf7-9ff465c1b0e7",
+      "consumed_credits": 30,
+      "completed_observed_at": "2026-09-20T00:46:52.896890+00:00",
+      "raw": {
+        "bytes": 10586392,
+        "sha256": "2a14525ccb703d9bf654e1c5936d9e4424d44c75c006021d051696e62d2327bd",
+        "triangles": 8666,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "6124d0c8d3857b2ad3c503cf3b4a7d1a9c3e507446055389967aa8f7134030bf",
+          "d65e2740a9f3a5768af54d0a441c9de887b6f6b9d767366ee160536e1408d076",
+          "f361b780c262de0d8b10ba7c476973583ba123a9260a0fec5ede8bb864928520"
+        ]
+      },
+      "final": {
+        "bytes": 10586436,
+        "sha256": "b45d06d68eeb5373cd9547f030e16be9880c923d818534c93baf6276f9acdcae",
+        "triangles": 8666,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "6124d0c8d3857b2ad3c503cf3b4a7d1a9c3e507446055389967aa8f7134030bf",
+          "d65e2740a9f3a5768af54d0a441c9de887b6f6b9d767366ee160536e1408d076",
+          "f361b780c262de0d8b10ba7c476973583ba123a9260a0fec5ede8bb864928520"
+        ]
+      },
+      "visual_review": "PENDING"
+    },
+    "island-signpost-v1": {
+      "id": "island-signpost-v1",
+      "label": "案内板",
+      "target_height": 1.5,
+      "target_polycount": 5000,
+      "source": "/Users/yutogasaki/Projects/sansu/assets/island-signpost-v1/source/input.png",
+      "source_sha256": "13e43c80c613bd45a0cfe2d1263d25bf5aa90d998a31ebb2db1edd7edaecd101",
+      "status": "VERIFIED",
+      "reserved_credits": 30,
+      "submitted_at": "2026-09-20T00:44:29.216033+00:00",
+      "request": {
+        "tool": "meshy_image_to_3d",
+        "arguments": {
+          "ai_model": "meshy-7",
+          "model_type": "standard",
+          "should_texture": true,
+          "enable_pbr": true,
+          "texture_resolution": "2k",
+          "target_formats": [
+            "glb"
+          ],
+          "ultra_mode": false,
+          "should_remesh": true,
+          "topology": "triangle",
+          "symmetry_mode": "off",
+          "origin_at": "bottom",
+          "remove_lighting": true,
+          "response_format": "json",
+          "file_path": "/Users/yutogasaki/Projects/sansu/assets/island-signpost-v1/source/input.png",
+          "target_polycount": 5000
+        }
+      },
+      "task_id": "01a0bc45-8b15-7174-b4ff-36a97d1d55c8",
+      "consumed_credits": 30,
+      "completed_observed_at": "2026-09-20T00:47:31.538861+00:00",
+      "raw": {
+        "bytes": 10188084,
+        "sha256": "a951e93b1c38db84be98890c8a89de1e18071e23d71bd13a00cd2d658ed2a263",
+        "triangles": 4980,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "8f8ba260fc7bd98f7c493d24f83c87c6536c078edceea83c745ccb6e2c426cbe",
+          "d34be598b9c5114cf2c8a7a62c81bc9b7ebab8979b6fdebf4f9c02f813710714",
+          "f1d66decc529f241bb25492daaef57026ebf64a766167b612da2f23802ba543f"
+        ]
+      },
+      "final": {
+        "bytes": 10188132,
+        "sha256": "ab6ceb7a2551245e44ecee528745a9b52e522df62dd804413f73f38ad9d08775",
+        "triangles": 4980,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "8f8ba260fc7bd98f7c493d24f83c87c6536c078edceea83c745ccb6e2c426cbe",
+          "d34be598b9c5114cf2c8a7a62c81bc9b7ebab8979b6fdebf4f9c02f813710714",
+          "f1d66decc529f241bb25492daaef57026ebf64a766167b612da2f23802ba543f"
+        ]
+      },
+      "visual_review": "PENDING",
+      "yaw_degrees": 180
+    },
+    "island-planter-v1": {
+      "id": "island-planter-v1",
+      "label": "植木鉢",
+      "target_height": 0.65,
+      "target_polycount": 5000,
+      "source": "/Users/yutogasaki/Projects/sansu/assets/island-planter-v1/source/input.png",
+      "source_sha256": "90276930b729554fcc2b45a8ddd2324d83ab317793bcfb799da4a72a633611b5",
+      "status": "VERIFIED",
+      "reserved_credits": 30,
+      "submitted_at": "2026-09-20T00:44:31.689243+00:00",
+      "request": {
+        "tool": "meshy_image_to_3d",
+        "arguments": {
+          "ai_model": "meshy-7",
+          "model_type": "standard",
+          "should_texture": true,
+          "enable_pbr": true,
+          "texture_resolution": "2k",
+          "target_formats": [
+            "glb"
+          ],
+          "ultra_mode": false,
+          "should_remesh": true,
+          "topology": "triangle",
+          "symmetry_mode": "off",
+          "origin_at": "bottom",
+          "remove_lighting": true,
+          "response_format": "json",
+          "file_path": "/Users/yutogasaki/Projects/sansu/assets/island-planter-v1/source/input.png",
+          "target_polycount": 5000
+        }
+      },
+      "task_id": "01a0bc45-94bd-70b3-9770-336c23df1a29",
+      "consumed_credits": 30,
+      "completed_observed_at": "2026-09-20T00:47:41.852874+00:00",
+      "raw": {
+        "bytes": 11205380,
+        "sha256": "53d4a8f6b21f83db0271adc051347fa1f4c39edd6f404636fbe2d878b9f2f6e0",
+        "triangles": 5223,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "5c2e52cf5efb7d3d1363974f112440b8db991c0b7e76eca669ba8c8ac45df831",
+          "6faed0d5e2ce67b3503aa9f6bd7de448e1d58b0218c9722837c94c30081b5d7e",
+          "f19b53fb122fef9c4aa0d768d7b0f7ab192ff635261f891146af749b25ded7f7"
+        ]
+      },
+      "final": {
+        "bytes": 11205432,
+        "sha256": "4383e87e430b8b3a0b918755fe668257bf9870e687bd6c39107f14113e83c470",
+        "triangles": 5223,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "5c2e52cf5efb7d3d1363974f112440b8db991c0b7e76eca669ba8c8ac45df831",
+          "6faed0d5e2ce67b3503aa9f6bd7de448e1d58b0218c9722837c94c30081b5d7e",
+          "f19b53fb122fef9c4aa0d768d7b0f7ab192ff635261f891146af749b25ded7f7"
+        ]
+      },
+      "visual_review": "PENDING"
+    },
+    "island-watering-can-v1": {
+      "id": "island-watering-can-v1",
+      "label": "じょうろ",
+      "target_height": 0.6,
+      "target_polycount": 6000,
+      "source": "/Users/yutogasaki/Projects/sansu/assets/island-watering-can-v1/source/input.png",
+      "source_sha256": "57519918f2325a68aaf2b42c68fcb71165299bee45e00929f2279072171b958f",
+      "status": "VERIFIED",
+      "reserved_credits": 30,
+      "submitted_at": "2026-09-20T00:44:34.203700+00:00",
+      "request": {
+        "tool": "meshy_image_to_3d",
+        "arguments": {
+          "ai_model": "meshy-7",
+          "model_type": "standard",
+          "should_texture": true,
+          "enable_pbr": true,
+          "texture_resolution": "2k",
+          "target_formats": [
+            "glb"
+          ],
+          "ultra_mode": false,
+          "should_remesh": true,
+          "topology": "triangle",
+          "symmetry_mode": "off",
+          "origin_at": "bottom",
+          "remove_lighting": true,
+          "response_format": "json",
+          "file_path": "/Users/yutogasaki/Projects/sansu/assets/island-watering-can-v1/source/input.png",
+          "target_polycount": 6000
+        }
+      },
+      "task_id": "01a0bc45-9e93-72b9-ac2e-031816737d78",
+      "consumed_credits": 30,
+      "completed_observed_at": "2026-09-20T00:47:51.202102+00:00",
+      "raw": {
+        "bytes": 8457492,
+        "sha256": "5dcbd68dfd5f6fffa113d620cd09b7424047d2c84c6a1193dfaa6f17fb6c4325",
+        "triangles": 6204,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "2fce077db3134899e7f53798e3f3be99bc186a0dba173b6faa765f88a00d26d2",
+          "5ee7d1d99557f8a0fbed436e479a85f5e24ab361ec32e12e6a52210fcb1fa074",
+          "9ea2b22a613a31e7767d553e6c3efe861ee250c1e38285a63d3601e0a5b58c80"
+        ]
+      },
+      "final": {
+        "bytes": 8457560,
+        "sha256": "d8c76ef512ddf82ee02ef6d4aa4b34543ab5fb3568ebb2a381115e2bf036674c",
+        "triangles": 6204,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "2fce077db3134899e7f53798e3f3be99bc186a0dba173b6faa765f88a00d26d2",
+          "5ee7d1d99557f8a0fbed436e479a85f5e24ab361ec32e12e6a52210fcb1fa074",
+          "9ea2b22a613a31e7767d553e6c3efe861ee250c1e38285a63d3601e0a5b58c80"
+        ]
+      },
+      "visual_review": "PENDING"
+    },
+    "island-toolbox-v1": {
+      "id": "island-toolbox-v1",
+      "label": "道具箱",
+      "target_height": 0.45,
+      "target_polycount": 5000,
+      "source": "/Users/yutogasaki/Projects/sansu/assets/island-toolbox-v1/source/input.png",
+      "source_sha256": "b0bf0ee1cfa9f36385732496822d9752383b6a8b0ae288b710fac9f24c60d37d",
+      "status": "VERIFIED",
+      "reserved_credits": 30,
+      "submitted_at": "2026-09-20T00:44:36.676481+00:00",
+      "request": {
+        "tool": "meshy_image_to_3d",
+        "arguments": {
+          "ai_model": "meshy-7",
+          "model_type": "standard",
+          "should_texture": true,
+          "enable_pbr": true,
+          "texture_resolution": "2k",
+          "target_formats": [
+            "glb"
+          ],
+          "ultra_mode": false,
+          "should_remesh": true,
+          "topology": "triangle",
+          "symmetry_mode": "off",
+          "origin_at": "bottom",
+          "remove_lighting": true,
+          "response_format": "json",
+          "file_path": "/Users/yutogasaki/Projects/sansu/assets/island-toolbox-v1/source/input.png",
+          "target_polycount": 5000
+        }
+      },
+      "task_id": "01a0bc45-a83e-76d4-9d41-01fa339790e4",
+      "consumed_credits": 30,
+      "completed_observed_at": "2026-09-20T00:48:20.444563+00:00",
+      "raw": {
+        "bytes": 9691476,
+        "sha256": "533717039fc5a916a3fe0ed192c6de3ef95b4c8cf3b81e8743e3cb3c7c743bbe",
+        "triangles": 4602,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "326b198846be28c263dbd1b9ced38935cfe50f54b7280e0581df9038464189c0",
+          "72bc52c3466013a41915ce24d71f7979945d97f55ce07188f54e2a1c60509baa",
+          "cb42601c43a79e69f6e56462023ae42a5446690b1947fcc6f74779d8720bd5db"
+        ]
+      },
+      "final": {
+        "bytes": 9691524,
+        "sha256": "7ac656ae637694f4e7f00243446ed3b316edc8f76ad9926336a2654576784f7a",
+        "triangles": 4602,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "326b198846be28c263dbd1b9ced38935cfe50f54b7280e0581df9038464189c0",
+          "72bc52c3466013a41915ce24d71f7979945d97f55ce07188f54e2a1c60509baa",
+          "cb42601c43a79e69f6e56462023ae42a5446690b1947fcc6f74779d8720bd5db"
+        ]
+      },
+      "visual_review": "PENDING"
+    },
+    "island-mailbox-v1": {
+      "id": "island-mailbox-v1",
+      "label": "ポスト",
+      "target_height": 1.2,
+      "target_polycount": 6000,
+      "source": "/Users/yutogasaki/Projects/sansu/assets/island-mailbox-v1/source/input.png",
+      "source_sha256": "5d5e50e9e737b74b8f8a43b9bb98a73e4af8fa3c2fa65b44c910b0c13259c273",
+      "status": "VERIFIED",
+      "reserved_credits": 30,
+      "submitted_at": "2026-09-20T00:44:39.338879+00:00",
+      "request": {
+        "tool": "meshy_image_to_3d",
+        "arguments": {
+          "ai_model": "meshy-7",
+          "model_type": "standard",
+          "should_texture": true,
+          "enable_pbr": true,
+          "texture_resolution": "2k",
+          "target_formats": [
+            "glb"
+          ],
+          "ultra_mode": false,
+          "should_remesh": true,
+          "topology": "triangle",
+          "symmetry_mode": "off",
+          "origin_at": "bottom",
+          "remove_lighting": true,
+          "response_format": "json",
+          "file_path": "/Users/yutogasaki/Projects/sansu/assets/island-mailbox-v1/source/input.png",
+          "target_polycount": 6000
+        }
+      },
+      "task_id": "01a0bc45-b292-7737-b796-5876deb90c64",
+      "consumed_credits": 30,
+      "completed_observed_at": "2026-09-20T00:48:29.736006+00:00",
+      "raw": {
+        "bytes": 9515508,
+        "sha256": "c8f247e18ee25251711f4e90d4a9d918e5c3268ee9857ae8ab59385a7aeebbf9",
+        "triangles": 5769,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "32cbfb50a51996f98d1aecfa44d409ad655aee956efed541e094aacb5248eb17",
+          "37fec334712a4f758fdc7c4613f68d3b36835af6aae8a1d38eba7c5a4adfa278",
+          "8f3a28fcc8613eebc9de3b1c0f4e47a7b994d11b35c6bbd9def2168c2a5dd971"
+        ]
+      },
+      "final": {
+        "bytes": 9515556,
+        "sha256": "59c798a639a0d98eda0b23682a3ea2d216dc31101df38db34f931a43f98ff753",
+        "triangles": 5769,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "32cbfb50a51996f98d1aecfa44d409ad655aee956efed541e094aacb5248eb17",
+          "37fec334712a4f758fdc7c4613f68d3b36835af6aae8a1d38eba7c5a4adfa278",
+          "8f3a28fcc8613eebc9de3b1c0f4e47a7b994d11b35c6bbd9def2168c2a5dd971"
+        ]
+      },
+      "visual_review": "PENDING"
+    },
+    "island-cart-v1": {
+      "id": "island-cart-v1",
+      "label": "手押し車",
+      "target_height": 0.85,
+      "target_polycount": 8000,
+      "source": "/Users/yutogasaki/Projects/sansu/assets/island-cart-v1/source/input.png",
+      "source_sha256": "6e3bb6e4309e58d163db834c3aef1d5a83641b4402615cdcf9af8e8515ec14e1",
+      "status": "VERIFIED",
+      "reserved_credits": 30,
+      "submitted_at": "2026-09-20T00:44:41.612455+00:00",
+      "request": {
+        "tool": "meshy_image_to_3d",
+        "arguments": {
+          "ai_model": "meshy-7",
+          "model_type": "standard",
+          "should_texture": true,
+          "enable_pbr": true,
+          "texture_resolution": "2k",
+          "target_formats": [
+            "glb"
+          ],
+          "ultra_mode": false,
+          "should_remesh": true,
+          "topology": "triangle",
+          "symmetry_mode": "off",
+          "origin_at": "bottom",
+          "remove_lighting": true,
+          "response_format": "json",
+          "file_path": "/Users/yutogasaki/Projects/sansu/assets/island-cart-v1/source/input.png",
+          "target_polycount": 8000
+        }
+      },
+      "task_id": "01a0bc45-bb76-736d-95fa-1708ba596374",
+      "consumed_credits": 30,
+      "completed_observed_at": "2026-09-20T00:48:37.657638+00:00",
+      "raw": {
+        "bytes": 9860376,
+        "sha256": "42c57c60dc04253dcf84bd38b166f9089b646d9a87fa365f4b7a7208aa765f07",
+        "triangles": 7422,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "3351fba167e774c4bb01e73415ff968f9817bc400a2ecc66b1dcba6f59410076",
+          "5597ccdc18a819284f34f07346ce72172de5ef42a87f361d35425acd4b842cc6",
+          "f84fbfb4863ce25af1f9dfbe5ec68505c51ae1c61440ad55dd0abdfe49ec7b94"
+        ]
+      },
+      "final": {
+        "bytes": 9860440,
+        "sha256": "b020e89634aebdc24af34068b313d1d0d9bdb8832b6a545bd369be648cc17401",
+        "triangles": 7422,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "3351fba167e774c4bb01e73415ff968f9817bc400a2ecc66b1dcba6f59410076",
+          "5597ccdc18a819284f34f07346ce72172de5ef42a87f361d35425acd4b842cc6",
+          "f84fbfb4863ce25af1f9dfbe5ec68505c51ae1c61440ad55dd0abdfe49ec7b94"
+        ]
+      },
+      "visual_review": "PENDING"
+    },
+    "island-stepping-stones-v1": {
+      "id": "island-stepping-stones-v1",
+      "label": "飛び石",
+      "target_height": 0.18,
+      "target_polycount": 5000,
+      "source": "/Users/yutogasaki/Projects/sansu/assets/island-stepping-stones-v1/source/input.png",
+      "source_sha256": "1878a19c686867e6fcd074f5d1d2ca91c3a5d26fdd610fdfeca09bd02bd5a8eb",
+      "status": "VERIFIED",
+      "reserved_credits": 30,
+      "submitted_at": "2026-09-20T00:44:44.602948+00:00",
+      "request": {
+        "tool": "meshy_image_to_3d",
+        "arguments": {
+          "ai_model": "meshy-7",
+          "model_type": "standard",
+          "should_texture": true,
+          "enable_pbr": true,
+          "texture_resolution": "2k",
+          "target_formats": [
+            "glb"
+          ],
+          "ultra_mode": false,
+          "should_remesh": true,
+          "topology": "triangle",
+          "symmetry_mode": "off",
+          "origin_at": "bottom",
+          "remove_lighting": true,
+          "response_format": "json",
+          "file_path": "/Users/yutogasaki/Projects/sansu/assets/island-stepping-stones-v1/source/input.png",
+          "target_polycount": 5000
+        }
+      },
+      "task_id": "01a0bc45-c734-77ac-9da1-5e02411f25f4",
+      "consumed_credits": 30,
+      "completed_observed_at": "2026-09-20T00:48:46.125463+00:00",
+      "raw": {
+        "bytes": 10055424,
+        "sha256": "a10988e46ae5cd097a696fb54738834d8405b46a7c638e14b29328b5df67d826",
+        "triangles": 5126,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "2894706366e29510d31aca66e3630a8760e418f34244484e853bec232ea7f007",
+          "3c579a2b0f340b85bf5173eebb6a61a4c43f8b507600e240a9f0cb8e621becf7",
+          "b33287f4f8ae099d8e735f63b7a0c15b8183da03ae1967bec4bf8159413db941"
+        ]
+      },
+      "final": {
+        "bytes": 10055596,
+        "sha256": "6dc5b26149624fe4610ee7d495ca09bef0ef51d041c2aca11bb6cb3a0855189b",
+        "triangles": 5126,
+        "meshes": 1,
+        "nodes": 1,
+        "materials": 1,
+        "image_hashes": [
+          "2894706366e29510d31aca66e3630a8760e418f34244484e853bec232ea7f007",
+          "3c579a2b0f340b85bf5173eebb6a61a4c43f8b507600e240a9f0cb8e621becf7",
+          "b33287f4f8ae099d8e735f63b7a0c15b8183da03ae1967bec4bf8159413db941"
+        ]
+      },
+      "visual_review": "PENDING"
+    }
+  },
+  "created_at": "2026-09-20T00:44:22.891431+00:00",
+  "root": "/Users/yutogasaki/Projects/sansu",
+  "recipe_sha256": "51d83afa4f23bb063df8388f4210238732c41d3a69ddebd0dc9866ad08a37733",
+  "reserved_credits": 270
+}

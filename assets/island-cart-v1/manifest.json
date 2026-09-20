@@ -1,0 +1,143 @@
+{
+  "id": "island-cart-v1",
+  "label": "手押し車",
+  "target_height": 0.85,
+  "target_polycount": 8000,
+  "source": "/Users/yutogasaki/Projects/sansu/assets/island-cart-v1/source/input.png",
+  "source_sha256": "6e3bb6e4309e58d163db834c3aef1d5a83641b4402615cdcf9af8e8515ec14e1",
+  "status": "VERIFIED",
+  "reserved_credits": 30,
+  "submitted_at": "2026-09-20T00:44:41.612455+00:00",
+  "request": {
+    "tool": "meshy_image_to_3d",
+    "arguments": {
+      "ai_model": "meshy-7",
+      "model_type": "standard",
+      "should_texture": true,
+      "enable_pbr": true,
+      "texture_resolution": "2k",
+      "target_formats": [
+        "glb"
+      ],
+      "ultra_mode": false,
+      "should_remesh": true,
+      "topology": "triangle",
+      "symmetry_mode": "off",
+      "origin_at": "bottom",
+      "remove_lighting": true,
+      "response_format": "json",
+      "file_path": "/Users/yutogasaki/Projects/sansu/assets/island-cart-v1/source/input.png",
+      "target_polycount": 8000
+    }
+  },
+  "task_id": "01a0bc45-bb76-736d-95fa-1708ba596374",
+  "consumed_credits": 30,
+  "completed_observed_at": "2026-09-20T00:48:37.657638+00:00",
+  "raw": {
+    "bytes": 9860376,
+    "sha256": "42c57c60dc04253dcf84bd38b166f9089b646d9a87fa365f4b7a7208aa765f07",
+    "triangles": 7422,
+    "meshes": 1,
+    "nodes": 1,
+    "materials": 1,
+    "image_hashes": [
+      "3351fba167e774c4bb01e73415ff968f9817bc400a2ecc66b1dcba6f59410076",
+      "5597ccdc18a819284f34f07346ce72172de5ef42a87f361d35425acd4b842cc6",
+      "f84fbfb4863ce25af1f9dfbe5ec68505c51ae1c61440ad55dd0abdfe49ec7b94"
+    ]
+  },
+  "final": {
+    "bytes": 9860440,
+    "sha256": "b020e89634aebdc24af34068b313d1d0d9bdb8832b6a545bd369be648cc17401",
+    "triangles": 7422,
+    "meshes": 1,
+    "nodes": 1,
+    "materials": 1,
+    "image_hashes": [
+      "3351fba167e774c4bb01e73415ff968f9817bc400a2ecc66b1dcba6f59410076",
+      "5597ccdc18a819284f34f07346ce72172de5ef42a87f361d35425acd4b842cc6",
+      "f84fbfb4863ce25af1f9dfbe5ec68505c51ae1c61440ad55dd0abdfe49ec7b94"
+    ]
+  },
+  "visual_review": "PENDING",
+  "batch_id": "island-path-v1",
+  "timing": {
+    "generation_seconds": 236.045,
+    "measurement": "submission to first observed SUCCEEDED; sequential polling includes queue and local processing delay, NOT server generation time"
+  },
+  "review": {
+    "reviewer": "Codex source/front/back/bottom comparison",
+    "visual_gate": "HOLD_FOR_VARIETY_REVIEW",
+    "silent_comprehension_safety": "NOT_TESTED_WITH_USERS",
+    "runtime_gate": "GLB_ROUNDTRIP_PASS_GAME_NOT_INTEGRATED",
+    "notes": "車輪・荷台・2本の持ち手を保持。木目や部品接合が簡略化。車輪回転や運搬動作は未実装。 ユーザーの「雰囲気にすぎ」を受け、配色の似通いと用途の違いを採用前に再評価する。"
+  },
+  "files": {
+    "source": "source/input.png",
+    "raw": "meshy_raw/model.glb",
+    "final": "final/model.glb"
+  },
+  "verification": {
+    "asset": "island-cart-v1",
+    "blender_version": "5.2.1 LTS",
+    "raw_sha256": "42c57c60dc04253dcf84bd38b166f9089b646d9a87fa365f4b7a7208aa765f07",
+    "final_sha256": "b020e89634aebdc24af34068b313d1d0d9bdb8832b6a545bd369be648cc17401",
+    "before": {
+      "meshes": 1,
+      "vertices": 8062,
+      "triangles": 7422,
+      "bounds_min": [
+        -0.9516620635986328,
+        -0.4752390384674072,
+        -0.3210250735282898
+      ],
+      "bounds_max": [
+        0.9507930874824524,
+        0.47644999623298645,
+        0.32078301906585693
+      ],
+      "dimensions": [
+        1.9024550914764404,
+        0.9516890048980713,
+        0.6418080925941467
+      ]
+    },
+    "after": {
+      "meshes": 1,
+      "vertices": 8062,
+      "triangles": 7422,
+      "bounds_min": [
+        -1.2597899436950684,
+        -0.6302005648612976,
+        0.0
+      ],
+      "bounds_max": [
+        1.2597899436950684,
+        0.6302005648612976,
+        0.8499999642372131
+      ],
+      "dimensions": [
+        2.5195798873901367,
+        1.2604011297225952,
+        0.8499999642372131
+      ]
+    },
+    "scale_factor": 1.3243834252141555,
+    "original_bottom_center": [
+      -0.00043448805809020996,
+      0.0006054788827896118,
+      -0.3210250735282898
+    ],
+    "reimport_pass": true,
+    "render_mean_absolute_error_0_to_1": 1.2292724704821012e-07,
+    "origin": "bounding-box bottom center",
+    "blender_up": "Z",
+    "glb_up": "Y",
+    "yaw_degrees": 0.0,
+    "normals": "preserved",
+    "textures": "preserved",
+    "decimation": "none",
+    "visual_review": "PENDING",
+    "in_game_validation": "NOT_RUN"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "asset": "island-bridge-v1",
+  "blender_version": "5.2.1 LTS",
+  "raw_sha256": "2a14525ccb703d9bf654e1c5936d9e4424d44c75c006021d051696e62d2327bd",
+  "final_sha256": "b45d06d68eeb5373cd9547f030e16be9880c923d818534c93baf6276f9acdcae",
+  "before": {
+    "meshes": 1,
+    "vertices": 10295,
+    "triangles": 8666,
+    "bounds_min": [
+      -0.9517120122909546,
+      -0.6888609528541565,
+      -0.2779179513454437
+    ],
+    "bounds_max": [
+      0.9507819414138794,
+      0.6896589398384094,
+      0.26073697209358215
+    ],
+    "dimensions": [
+      1.902493953704834,
+      1.378519892692566,
+      0.5386549234390259
+    ]
+  },
+  "after": {
+    "meshes": 1,
+    "vertices": 10295,
+    "triangles": 8666,
+    "bounds_min": [
+      -2.1191606521606445,
+      -1.5355135202407837,
+      0.0
+    ],
+    "bounds_max": [
+      2.1191606521606445,
+      1.5355135202407837,
+      1.2000000476837158
+    ],
+    "dimensions": [
+      4.238321304321289,
+      3.0710270404815674,
+      1.2000000476837158
+    ]
+  },
+  "scale_factor": 2.2277713389095872,
+  "original_bottom_center": [
+    -0.00046503543853759766,
+    0.00039899349212646484,
+    -0.2779179513454437
+  ],
+  "reimport_pass": true,
+  "render_mean_absolute_error_0_to_1": 1.8722766981227323e-07,
+  "origin": "bounding-box bottom center",
+  "blender_up": "Z",
+  "glb_up": "Y",
+  "yaw_degrees": 0.0,
+  "normals": "preserved",
+  "textures": "preserved",
+  "decimation": "none",
+  "visual_review": "PENDING",
+  "in_game_validation": "NOT_RUN"
+}

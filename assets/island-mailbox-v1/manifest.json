@@ -1,0 +1,143 @@
+{
+  "id": "island-mailbox-v1",
+  "label": "ポスト",
+  "target_height": 1.2,
+  "target_polycount": 6000,
+  "source": "/Users/yutogasaki/Projects/sansu/assets/island-mailbox-v1/source/input.png",
+  "source_sha256": "5d5e50e9e737b74b8f8a43b9bb98a73e4af8fa3c2fa65b44c910b0c13259c273",
+  "status": "VERIFIED",
+  "reserved_credits": 30,
+  "submitted_at": "2026-09-20T00:44:39.338879+00:00",
+  "request": {
+    "tool": "meshy_image_to_3d",
+    "arguments": {
+      "ai_model": "meshy-7",
+      "model_type": "standard",
+      "should_texture": true,
+      "enable_pbr": true,
+      "texture_resolution": "2k",
+      "target_formats": [
+        "glb"
+      ],
+      "ultra_mode": false,
+      "should_remesh": true,
+      "topology": "triangle",
+      "symmetry_mode": "off",
+      "origin_at": "bottom",
+      "remove_lighting": true,
+      "response_format": "json",
+      "file_path": "/Users/yutogasaki/Projects/sansu/assets/island-mailbox-v1/source/input.png",
+      "target_polycount": 6000
+    }
+  },
+  "task_id": "01a0bc45-b292-7737-b796-5876deb90c64",
+  "consumed_credits": 30,
+  "completed_observed_at": "2026-09-20T00:48:29.736006+00:00",
+  "raw": {
+    "bytes": 9515508,
+    "sha256": "c8f247e18ee25251711f4e90d4a9d918e5c3268ee9857ae8ab59385a7aeebbf9",
+    "triangles": 5769,
+    "meshes": 1,
+    "nodes": 1,
+    "materials": 1,
+    "image_hashes": [
+      "32cbfb50a51996f98d1aecfa44d409ad655aee956efed541e094aacb5248eb17",
+      "37fec334712a4f758fdc7c4613f68d3b36835af6aae8a1d38eba7c5a4adfa278",
+      "8f3a28fcc8613eebc9de3b1c0f4e47a7b994d11b35c6bbd9def2168c2a5dd971"
+    ]
+  },
+  "final": {
+    "bytes": 9515556,
+    "sha256": "59c798a639a0d98eda0b23682a3ea2d216dc31101df38db34f931a43f98ff753",
+    "triangles": 5769,
+    "meshes": 1,
+    "nodes": 1,
+    "materials": 1,
+    "image_hashes": [
+      "32cbfb50a51996f98d1aecfa44d409ad655aee956efed541e094aacb5248eb17",
+      "37fec334712a4f758fdc7c4613f68d3b36835af6aae8a1d38eba7c5a4adfa278",
+      "8f3a28fcc8613eebc9de3b1c0f4e47a7b994d11b35c6bbd9def2168c2a5dd971"
+    ]
+  },
+  "visual_review": "PENDING",
+  "batch_id": "island-path-v1",
+  "timing": {
+    "generation_seconds": 230.397,
+    "measurement": "submission to first observed SUCCEEDED; sequential polling includes queue and local processing delay, NOT server generation time"
+  },
+  "review": {
+    "reviewer": "Codex source/front/back/bottom comparison",
+    "visual_gate": "HOLD_FOR_VARIETY_REVIEW",
+    "silent_comprehension_safety": "NOT_TESTED_WITH_USERS",
+    "runtime_gate": "GLB_ROUNDTRIP_PASS_GAME_NOT_INTEGRATED",
+    "notes": "支柱と台座、丸い本体を保持。元画像の扉とノブの位置関係が崩れ、反対側にも扉風の面がある。近景の採用は保留。 ユーザーの「雰囲気にすぎ」を受け、配色の似通いと用途の違いを採用前に再評価する。"
+  },
+  "files": {
+    "source": "source/input.png",
+    "raw": "meshy_raw/model.glb",
+    "final": "final/model.glb"
+  },
+  "verification": {
+    "asset": "island-mailbox-v1",
+    "blender_version": "5.2.1 LTS",
+    "raw_sha256": "c8f247e18ee25251711f4e90d4a9d918e5c3268ee9857ae8ab59385a7aeebbf9",
+    "final_sha256": "59c798a639a0d98eda0b23682a3ea2d216dc31101df38db34f931a43f98ff753",
+    "before": {
+      "meshes": 1,
+      "vertices": 7006,
+      "triangles": 5769,
+      "bounds_min": [
+        -0.5308740139007568,
+        -0.3993839621543884,
+        -0.9518550038337708
+      ],
+      "bounds_max": [
+        0.5284439325332642,
+        0.40148302912712097,
+        0.9502500295639038
+      ],
+      "dimensions": [
+        1.059317946434021,
+        0.800866961479187,
+        1.9021050930023193
+      ]
+    },
+    "after": {
+      "meshes": 1,
+      "vertices": 7006,
+      "triangles": 5769,
+      "bounds_min": [
+        -0.3341512382030487,
+        -0.2526254653930664,
+        0.0
+      ],
+      "bounds_max": [
+        0.3341512382030487,
+        0.2526254951953888,
+        1.2000000476837158
+      ],
+      "dimensions": [
+        0.6683024764060974,
+        0.5052509307861328,
+        1.2000000476837158
+      ]
+    },
+    "scale_factor": 0.6308799876610783,
+    "original_bottom_center": [
+      -0.0012150406837463379,
+      0.001049533486366272,
+      -0.9518550038337708
+    ],
+    "reimport_pass": true,
+    "render_mean_absolute_error_0_to_1": 2.4963688360912784e-07,
+    "origin": "bounding-box bottom center",
+    "blender_up": "Z",
+    "glb_up": "Y",
+    "yaw_degrees": 0.0,
+    "normals": "preserved",
+    "textures": "preserved",
+    "decimation": "none",
+    "visual_review": "PENDING",
+    "in_game_validation": "NOT_RUN"
+  }
+}

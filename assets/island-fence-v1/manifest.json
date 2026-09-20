@@ -1,0 +1,143 @@
+{
+  "id": "island-fence-v1",
+  "label": "柵",
+  "target_height": 0.85,
+  "target_polycount": 5000,
+  "source": "/Users/yutogasaki/Projects/sansu/assets/island-fence-v1/source/input.png",
+  "source_sha256": "29bd2d182023c579fd332abb2c3daafdda64a02debf147e4add2faf3a3f62816",
+  "status": "VERIFIED",
+  "reserved_credits": 30,
+  "submitted_at": "2026-09-20T00:44:23.597373+00:00",
+  "request": {
+    "tool": "meshy_image_to_3d",
+    "arguments": {
+      "ai_model": "meshy-7",
+      "model_type": "standard",
+      "should_texture": true,
+      "enable_pbr": true,
+      "texture_resolution": "2k",
+      "target_formats": [
+        "glb"
+      ],
+      "ultra_mode": false,
+      "should_remesh": true,
+      "topology": "triangle",
+      "symmetry_mode": "off",
+      "origin_at": "bottom",
+      "remove_lighting": true,
+      "response_format": "json",
+      "file_path": "/Users/yutogasaki/Projects/sansu/assets/island-fence-v1/source/input.png",
+      "target_polycount": 5000
+    }
+  },
+  "task_id": "01a0bc45-752a-7631-9c9f-0c146ed46054",
+  "consumed_credits": 30,
+  "completed_observed_at": "2026-09-20T00:46:21.670712+00:00",
+  "raw": {
+    "bytes": 8666800,
+    "sha256": "b0b8b48f1d74751a4928249c26becce14aba2d92d93c9ed0cfe1c96d939d0f4d",
+    "triangles": 4912,
+    "meshes": 1,
+    "nodes": 1,
+    "materials": 1,
+    "image_hashes": [
+      "067193af99f0a4fffec2121042225cf4fecf028f1a6b6d958b8d77abf6d75737",
+      "2b58ce42717157c58ecbd2ee95feb83006567c537dec63e44b2a61fcfdda2544",
+      "317eacc3bcda06a42a71014fbd009ddd38f6666fa1963f7c4fa03a3c56b1858a"
+    ]
+  },
+  "final": {
+    "bytes": 8666868,
+    "sha256": "41dbd4ed6a628c7e3a045e04b3da5258eface229eaf918897c555ae1936eb5f5",
+    "triangles": 4912,
+    "meshes": 1,
+    "nodes": 1,
+    "materials": 1,
+    "image_hashes": [
+      "067193af99f0a4fffec2121042225cf4fecf028f1a6b6d958b8d77abf6d75737",
+      "2b58ce42717157c58ecbd2ee95feb83006567c537dec63e44b2a61fcfdda2544",
+      "317eacc3bcda06a42a71014fbd009ddd38f6666fa1963f7c4fa03a3c56b1858a"
+    ]
+  },
+  "visual_review": "PENDING",
+  "batch_id": "island-path-v1",
+  "timing": {
+    "generation_seconds": 118.073,
+    "measurement": "submission to first observed SUCCEEDED; sequential polling includes queue and local processing delay, NOT server generation time"
+  },
+  "review": {
+    "reviewer": "Codex source/front/back/bottom comparison",
+    "visual_gate": "HOLD_FOR_VARIETY_REVIEW",
+    "silent_comprehension_safety": "NOT_TESTED_WITH_USERS",
+    "runtime_gate": "GLB_ROUNDTRIP_PASS_GAME_NOT_INTEGRATED",
+    "notes": "2本の支柱と2本の横木、隙間を保持。色は元画像より淡い。連結時の支柱重複と隙間はゲーム配置で要検証。 ユーザーの「雰囲気にすぎ」を受け、配色の似通いと用途の違いを採用前に再評価する。"
+  },
+  "files": {
+    "source": "source/input.png",
+    "raw": "meshy_raw/model.glb",
+    "final": "final/model.glb"
+  },
+  "verification": {
+    "asset": "island-fence-v1",
+    "blender_version": "5.2.1 LTS",
+    "raw_sha256": "b0b8b48f1d74751a4928249c26becce14aba2d92d93c9ed0cfe1c96d939d0f4d",
+    "final_sha256": "41dbd4ed6a628c7e3a045e04b3da5258eface229eaf918897c555ae1936eb5f5",
+    "before": {
+      "meshes": 1,
+      "vertices": 4677,
+      "triangles": 4912,
+      "bounds_min": [
+        -0.9513350129127502,
+        -0.21202298998832703,
+        -0.4783709645271301
+      ],
+      "bounds_max": [
+        0.950404942035675,
+        0.21370799839496613,
+        0.47783395648002625
+      ],
+      "dimensions": [
+        1.9017399549484253,
+        0.42573100328445435,
+        0.956204891204834
+      ]
+    },
+    "after": {
+      "meshes": 1,
+      "vertices": 4677,
+      "triangles": 4912,
+      "bounds_min": [
+        -0.8452576398849487,
+        -0.18922269344329834,
+        0.0
+      ],
+      "bounds_max": [
+        0.845257580280304,
+        0.18922269344329834,
+        0.8500000238418579
+      ],
+      "dimensions": [
+        1.6905152797698975,
+        0.3784453868865967,
+        0.8500000238418579
+      ]
+    },
+    "scale_factor": 0.8889307943580835,
+    "original_bottom_center": [
+      -0.00046503543853759766,
+      0.0008425042033195496,
+      -0.4783709645271301
+    ],
+    "reimport_pass": true,
+    "render_mean_absolute_error_0_to_1": 1.134713034645074e-08,
+    "origin": "bounding-box bottom center",
+    "blender_up": "Z",
+    "glb_up": "Y",
+    "yaw_degrees": 0.0,
+    "normals": "preserved",
+    "textures": "preserved",
+    "decimation": "none",
+    "visual_review": "PENDING",
+    "in_game_validation": "NOT_RUN"
+  }
+}

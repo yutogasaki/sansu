@@ -1,0 +1,143 @@
+{
+  "id": "island-planter-v1",
+  "label": "植木鉢",
+  "target_height": 0.65,
+  "target_polycount": 5000,
+  "source": "/Users/yutogasaki/Projects/sansu/assets/island-planter-v1/source/input.png",
+  "source_sha256": "90276930b729554fcc2b45a8ddd2324d83ab317793bcfb799da4a72a633611b5",
+  "status": "VERIFIED",
+  "reserved_credits": 30,
+  "submitted_at": "2026-09-20T00:44:31.689243+00:00",
+  "request": {
+    "tool": "meshy_image_to_3d",
+    "arguments": {
+      "ai_model": "meshy-7",
+      "model_type": "standard",
+      "should_texture": true,
+      "enable_pbr": true,
+      "texture_resolution": "2k",
+      "target_formats": [
+        "glb"
+      ],
+      "ultra_mode": false,
+      "should_remesh": true,
+      "topology": "triangle",
+      "symmetry_mode": "off",
+      "origin_at": "bottom",
+      "remove_lighting": true,
+      "response_format": "json",
+      "file_path": "/Users/yutogasaki/Projects/sansu/assets/island-planter-v1/source/input.png",
+      "target_polycount": 5000
+    }
+  },
+  "task_id": "01a0bc45-94bd-70b3-9770-336c23df1a29",
+  "consumed_credits": 30,
+  "completed_observed_at": "2026-09-20T00:47:41.852874+00:00",
+  "raw": {
+    "bytes": 11205380,
+    "sha256": "53d4a8f6b21f83db0271adc051347fa1f4c39edd6f404636fbe2d878b9f2f6e0",
+    "triangles": 5223,
+    "meshes": 1,
+    "nodes": 1,
+    "materials": 1,
+    "image_hashes": [
+      "5c2e52cf5efb7d3d1363974f112440b8db991c0b7e76eca669ba8c8ac45df831",
+      "6faed0d5e2ce67b3503aa9f6bd7de448e1d58b0218c9722837c94c30081b5d7e",
+      "f19b53fb122fef9c4aa0d768d7b0f7ab192ff635261f891146af749b25ded7f7"
+    ]
+  },
+  "final": {
+    "bytes": 11205432,
+    "sha256": "4383e87e430b8b3a0b918755fe668257bf9870e687bd6c39107f14113e83c470",
+    "triangles": 5223,
+    "meshes": 1,
+    "nodes": 1,
+    "materials": 1,
+    "image_hashes": [
+      "5c2e52cf5efb7d3d1363974f112440b8db991c0b7e76eca669ba8c8ac45df831",
+      "6faed0d5e2ce67b3503aa9f6bd7de448e1d58b0218c9722837c94c30081b5d7e",
+      "f19b53fb122fef9c4aa0d768d7b0f7ab192ff635261f891146af749b25ded7f7"
+    ]
+  },
+  "visual_review": "PENDING",
+  "batch_id": "island-path-v1",
+  "timing": {
+    "generation_seconds": 190.164,
+    "measurement": "submission to first observed SUCCEEDED; sequential polling includes queue and local processing delay, NOT server generation time"
+  },
+  "review": {
+    "reviewer": "Codex source/front/back/bottom comparison",
+    "visual_gate": "HOLD_FOR_VARIETY_REVIEW",
+    "silent_comprehension_safety": "NOT_TESTED_WITH_USERS",
+    "runtime_gate": "GLB_ROUNDTRIP_PASS_GAME_NOT_INTEGRATED",
+    "notes": "鉢の模様と3輪の花を保持。花の黄色は淡く、背面の花弁は薄い。遠景での花の読取りを要確認。 ユーザーの「雰囲気にすぎ」を受け、配色の似通いと用途の違いを採用前に再評価する。"
+  },
+  "files": {
+    "source": "source/input.png",
+    "raw": "meshy_raw/model.glb",
+    "final": "final/model.glb"
+  },
+  "verification": {
+    "asset": "island-planter-v1",
+    "blender_version": "5.2.1 LTS",
+    "raw_sha256": "53d4a8f6b21f83db0271adc051347fa1f4c39edd6f404636fbe2d878b9f2f6e0",
+    "final_sha256": "4383e87e430b8b3a0b918755fe668257bf9870e687bd6c39107f14113e83c470",
+    "before": {
+      "meshes": 1,
+      "vertices": 9668,
+      "triangles": 5223,
+      "bounds_min": [
+        -0.767877995967865,
+        -0.6838430166244507,
+        -0.9476349949836731
+      ],
+      "bounds_max": [
+        0.7705439329147339,
+        0.6841779947280884,
+        0.9464089274406433
+      ],
+      "dimensions": [
+        1.538421869277954,
+        1.368021011352539,
+        1.8940439224243164
+      ]
+    },
+    "after": {
+      "meshes": 1,
+      "vertices": 9668,
+      "triangles": 5223,
+      "bounds_min": [
+        -0.26397863030433655,
+        -0.23473945260047913,
+        0.0
+      ],
+      "bounds_max": [
+        0.26397866010665894,
+        0.23473946750164032,
+        0.6500000357627869
+      ],
+      "dimensions": [
+        0.5279573202133179,
+        0.46947890520095825,
+        0.6500000357627869
+      ]
+    },
+    "scale_factor": 0.34318105948040556,
+    "original_bottom_center": [
+      0.0013329684734344482,
+      0.00016748905181884766,
+      -0.9476349949836731
+    ],
+    "reimport_pass": true,
+    "render_mean_absolute_error_0_to_1": 3.21502042766042e-08,
+    "origin": "bounding-box bottom center",
+    "blender_up": "Z",
+    "glb_up": "Y",
+    "yaw_degrees": 0.0,
+    "normals": "preserved",
+    "textures": "preserved",
+    "decimation": "none",
+    "visual_review": "PENDING",
+    "in_game_validation": "NOT_RUN"
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "id": "island-stepping-stones-v1",
+  "label": "飛び石",
+  "target_height": 0.18,
+  "target_polycount": 5000,
+  "source": "/Users/yutogasaki/Projects/sansu/assets/island-stepping-stones-v1/source/input.png",
+  "source_sha256": "1878a19c686867e6fcd074f5d1d2ca91c3a5d26fdd610fdfeca09bd02bd5a8eb",
+  "status": "VERIFIED",
+  "reserved_credits": 30,
+  "submitted_at": "2026-09-20T00:44:44.602948+00:00",
+  "request": {
+    "tool": "meshy_image_to_3d",
+    "arguments": {
+      "ai_model": "meshy-7",
+      "model_type": "standard",
+      "should_texture": true,
+      "enable_pbr": true,
+      "texture_resolution": "2k",
+      "target_formats": [
+        "glb"
+      ],
+      "ultra_mode": false,
+      "should_remesh": true,
+      "topology": "triangle",
+      "symmetry_mode": "off",
+      "origin_at": "bottom",
+      "remove_lighting": true,
+      "response_format": "json",
+      "file_path": "/Users/yutogasaki/Projects/sansu/assets/island-stepping-stones-v1/source/input.png",
+      "target_polycount": 5000
+    }
+  },
+  "task_id": "01a0bc45-c734-77ac-9da1-5e02411f25f4",
+  "consumed_credits": 30,
+  "completed_observed_at": "2026-09-20T00:48:46.125463+00:00",
+  "raw": {
+    "bytes": 10055424,
+    "sha256": "a10988e46ae5cd097a696fb54738834d8405b46a7c638e14b29328b5df67d826",
+    "triangles": 5126,
+    "meshes": 1,
+    "nodes": 1,
+    "materials": 1,
+    "image_hashes": [
+      "2894706366e29510d31aca66e3630a8760e418f34244484e853bec232ea7f007",
+      "3c579a2b0f340b85bf5173eebb6a61a4c43f8b507600e240a9f0cb8e621becf7",
+      "b33287f4f8ae099d8e735f63b7a0c15b8183da03ae1967bec4bf8159413db941"
+    ]
+  },
+  "final": {
+    "bytes": 10055596,
+    "sha256": "6dc5b26149624fe4610ee7d495ca09bef0ef51d041c2aca11bb6cb3a0855189b",
+    "triangles": 5126,
+    "meshes": 1,
+    "nodes": 1,
+    "materials": 1,
+    "image_hashes": [
+      "2894706366e29510d31aca66e3630a8760e418f34244484e853bec232ea7f007",
+      "3c579a2b0f340b85bf5173eebb6a61a4c43f8b507600e240a9f0cb8e621becf7",
+      "b33287f4f8ae099d8e735f63b7a0c15b8183da03ae1967bec4bf8159413db941"
+    ]
+  },
+  "visual_review": "PENDING",
+  "batch_id": "island-path-v1",
+  "timing": {
+    "generation_seconds": 241.523,
+    "measurement": "submission to first observed SUCCEEDED; sequential polling includes queue and local processing delay, NOT server generation time"
+  },
+  "review": {
+    "reviewer": "Codex source/front/back/bottom comparison",
+    "visual_gate": "HOLD_FOR_VARIETY_REVIEW",
+    "silent_comprehension_safety": "NOT_TESTED_WITH_USERS",
+    "runtime_gate": "GLB_ROUNDTRIP_PASS_GAME_NOT_INTEGRATED",
+    "notes": "平たい輪郭と苔を保持。石の割れ模様は薄い。底面は平坦な面として閉じる。繰り返し配置時の見た目を要確認。 ユーザーの「雰囲気にすぎ」を受け、配色の似通いと用途の違いを採用前に再評価する。"
+  },
+  "files": {
+    "source": "source/input.png",
+    "raw": "meshy_raw/model.glb",
+    "final": "final/model.glb"
+  },
+  "verification": {
+    "asset": "island-stepping-stones-v1",
+    "blender_version": "5.2.1 LTS",
+    "raw_sha256": "a10988e46ae5cd097a696fb54738834d8405b46a7c638e14b29328b5df67d826",
+    "final_sha256": "6dc5b26149624fe4610ee7d495ca09bef0ef51d041c2aca11bb6cb3a0855189b",
+    "before": {
+      "meshes": 1,
+      "vertices": 5445,
+      "triangles": 5126,
+      "bounds_min": [
+        -0.9506699442863464,
+        -0.9015799760818481,
+        -0.15270595252513885
+      ],
+      "bounds_max": [
+        0.9500049948692322,
+        0.902554988861084,
+        0.14933502674102783
+      ],
+      "dimensions": [
+        1.9006749391555786,
+        1.8041349649429321,
+        0.3020409941673279
+      ]
+    },
+    "after": {
+      "meshes": 1,
+      "vertices": 5445,
+      "triangles": 5126,
+      "bounds_min": [
+        -0.566349446773529,
+        -0.5375831127166748,
+        0.0
+      ],
+      "bounds_max": [
+        0.566349446773529,
+        0.5375831723213196,
+        0.17999999225139618
+      ],
+      "dimensions": [
+        1.132698893547058,
+        1.0751662254333496,
+        0.17999999225139618
+      ]
+    },
+    "scale_factor": 0.5959456244557435,
+    "original_bottom_center": [
+      -0.0003324747085571289,
+      0.0004875063896179199,
+      -0.15270595252513885
+    ],
+    "reimport_pass": true,
+    "render_mean_absolute_error_0_to_1": 4.917090024036952e-08,
+    "origin": "bounding-box bottom center",
+    "blender_up": "Z",
+    "glb_up": "Y",
+    "yaw_degrees": 0.0,
+    "normals": "preserved",
+    "textures": "preserved",
+    "decimation": "none",
+    "visual_review": "PENDING",
+    "in_game_validation": "NOT_RUN"
+  }
+}

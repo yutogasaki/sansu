@@ -1,0 +1,63 @@
+{
+  "asset": "island-signpost-v1",
+  "preset": "png-1024",
+  "source_sha256": "ab6ceb7a2551245e44ecee528745a9b52e522df62dd804413f73f38ad9d08775",
+  "output_sha256": "33c3e7a55f87ef29609070d1ea4b994878d602d8e527fed4e606218e5e40901c",
+  "source_bytes": 10188132,
+  "output_bytes": 4759068,
+  "reduction_percent": 53.29,
+  "images": [
+    {
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ],
+      "color_space": "sRGB"
+    },
+    {
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ],
+      "color_space": "Non-Color"
+    },
+    {
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ],
+      "color_space": "Non-Color"
+    }
+  ],
+  "embedded_png_sizes": [
+    [
+      1024,
+      1024
+    ],
+    [
+      1024,
+      1024
+    ],
+    [
+      1024,
+      1024
+    ]
+  ],
+  "geometry_uv_normals_identical": true,
+  "pbr_parameters_identical": true,
+  "triangles": 4980,
+  "visual_acceptance": "PENDING_BROWSER_COMPARE",
+  "blender_version": "5.2.1 LTS"
+}

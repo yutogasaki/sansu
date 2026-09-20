@@ -1,0 +1,63 @@
+{
+  "asset": "island-mailbox-v1",
+  "preset": "png-1024",
+  "source_sha256": "59c798a639a0d98eda0b23682a3ea2d216dc31101df38db34f931a43f98ff753",
+  "output_sha256": "821b55fd3cfd6ca08dbe61fe1b276754574ab3f55c13f48ad9770ce65cc9beb8",
+  "source_bytes": 9515556,
+  "output_bytes": 4654140,
+  "reduction_percent": 51.09,
+  "images": [
+    {
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ],
+      "color_space": "sRGB"
+    },
+    {
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ],
+      "color_space": "Non-Color"
+    },
+    {
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ],
+      "color_space": "Non-Color"
+    }
+  ],
+  "embedded_png_sizes": [
+    [
+      1024,
+      1024
+    ],
+    [
+      1024,
+      1024
+    ],
+    [
+      1024,
+      1024
+    ]
+  ],
+  "geometry_uv_normals_identical": true,
+  "pbr_parameters_identical": true,
+  "triangles": 5769,
+  "visual_acceptance": "PENDING_BROWSER_COMPARE",
+  "blender_version": "5.2.1 LTS"
+}

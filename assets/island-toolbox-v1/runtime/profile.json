@@ -1,0 +1,15 @@
+{
+  "asset": "toolbox",
+  "sourceSha256": "f21eea5d26a58a58940e7e37dd9e0431a42ef462ae2e9db4f97a989afe8bdaf7",
+  "nearSha256": "4e6e6b8e131a852455273885ac5fedc3f9871c2c03f73bafdbdbfa00e01acd92",
+  "farSha256": "edc79ee45edd8d2c1a6b58c6a4a86a39a1d9f4722a435c09177cf87d66c34cdd",
+  "nearBytes": 1794644,
+  "farBytes": 236180,
+  "nearTriangles": 4602,
+  "farTriangles": 3642,
+  "nearGeometryIdentical": true,
+  "textureRecipe": "baseColor 1024; metallicRoughness/normal 512; all UASTC level2 RDO .5 Zstd18 box mip filter",
+  "farRecipe": "weld + attribute-aware meshoptimizer ratio .12 error .01 lock border; UV weights4 normal weights.1; no textures; runtime shares near material",
+  "gltfTransform": "4.5.0",
+  "ktx": "4.4.2"
+}
