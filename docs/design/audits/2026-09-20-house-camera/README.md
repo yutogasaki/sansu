@@ -1,41 +1,38 @@
-# 家の縦画面カメラ — 2026-09-20
+# 家のUIと室内カメラ — 2026-09-20
 
-ユーザーの追加指示「やって」により、家の先頭で中央の住人・机を近くに見せる。縦画面で部屋の横幅全体を収めるために増えていた天井・床の余白を減らした。左右の家具は一部が画面端に入り、記念・おしらせはメニューからも開ける。選択した記念と撮影の全体収容は維持する。
+家を小さな見出しと「アルバム／しゃしん／メニュー」の1列にそろえ、縦画面では中央の住人・机に寄せた。端へ歩くと全身が見える画角へ広がり、中央へ戻ると近い構図に戻る。詳細・撮影は従来の全体収容を保つ。低い横画面の詳細は室内と左右に並べる。
 
-[比較と旅程](contact-sheet.html) / [ビルドとsource](manifest.json) / [Chromium実操作](chromium-report.json) / [WebKit実操作](webkit-report.json) / [本番WebKit実操作](production-webkit-report.json)。最初のUI整理の根拠は[前段](../2026-09-20-house-ui/README.md)。
+[本番](https://sansu-seven.vercel.app) / [実画面の比較と旅程](contact-sheet.html) / [実target・build・source hash](manifest.json)。初期のUI整理は[前段の証拠](../2026-09-20-house-ui/README.md)。
 
-## 独立した判定
+## 実際の公開対象
 
-- 視覚: 390×844で住人と机を約1.4倍にし、余白を減らした。家具・キャラクター・材質は同じ。WebKitとChromiumの最終ビルドを参考画像と並べて作者が確認。美術全体の完成や満点評価ではない。
-- 無説明理解・安全: 独立観察0人。子どもの理解・再訪意欲は未検証。既存の文字付き入口、退出、移動案内を保持。
-- Runtime: phone/tablet・通常/reduced motion、実床タップ、矢印キー移動、机のアルバムの実3Dタップ、7store不変、メニューの焦点復帰、学習から同じ予約への復帰は両ブラウザでPASS。実機iOS/Androidとは区別する。
+家の最終アプリ変更は `b6d62216`。公開の最終contact sheetは、並行公開された島の飾り更新を保持した `7ac24419` の同一ビルドでphone/tabletを撮影した。manifestは観測した実revisionと家の実装revisionを分け、対象source hashを実際の7ac24419のtreeから取得している。家候補 `house-world-first-v1`、カメラ `island-home-interior-v5`、Island/Life有効。後続の文書だけのcommitはアプリ入力を変えない。
 
-## 固定した公開候補
+元の共有checkoutの他タスクの未コミット変更を混ぜず、独立worktreeで実装・検証。先行する島の入口CSSと後続の飾り公開は保持した。ローカル対象は `http://127.0.0.1:5384`、[ローカルmanifest](local-manifest.json)と[基準候補](baseline-manifest.json)を別保存。
 
-`15c3eafcdaa5b8102c934b9bfc7130b78b6ce5d9` の独立worktreeで最終ビルドし、対象は `http://127.0.0.1:5384`。元の共有checkoutの他タスクの未コミット変更は含めない。家候補 `house-world-first-v1`、カメラ `island-home-interior-v5`。flagsと実際のversionはmanifestに記録。最終contact sheetのcritical path画像は公開URLの同一ビルド。ローカルの元manifestは[別保存](local-manifest.json)。
+## 検証
 
-基準候補のカメラ15テスト、lint、typecheck、docs、build/assetsはPASS。最終の端歩行対応後はカメラ16件＋歩行3件の計19件、対象lint、typecheck、build/assetsを再実行してPASS。PWA precacheは125ファイル、11.57 MiB / 12 MiB。既存のIslandMilestone Fast Refresh警告と文書棚卸し期限警告は継続。390/320/768/844幅の[家の境界チェック](edges-report.json)もPASS。実初回3問での記念展示、履歴/直接URL、写真入口、長い一覧の明示fixture、保存失敗/再試行、実SW offline再読込、退出・44px操作を確認。全体テストは439ファイル・4,089件すべてPASS。
+- 最終アプリ変更の[GitHub Verify Core](https://github.com/yutogasaki/sansu/actions/runs/35486506197)は439ファイル・4,090件、docs/lint/typecheck/build/assetsまでPASS。[集計](ci-final-summary.json)。既存のFast Refresh警告と文書棚卸し期限警告は継続。
+- 基準候補のsmoke31件PASS。別タスクのサーバーを使わないため、同じハーネスのポート候補だけを5395へ変更した一時コピーで実行。
+- 390/320/768/844幅の[家の境界チェック](edges-report.json)はPASS。実初回3問での記念展示、履歴/直接URL、写真入口、長い一覧の明示fixture、保存失敗/再試行、実SW offline再読込、退出・44px操作を確認。
+- [本番WebKit](production-webkit-report.json)のphone/tablet、通常/reduced motion、音offで起動→家→実床タップ→矢印/端歩行→机のアルバム→メニュー→学習→同じ予約を残して家へ戻る全行程をPASS。bootstrapを含むpageerrorは0件。[ローカルChromium](chromium-report.json)と[ローカルWebKit](webkit-report.json)もPASS。
+- [修正版への実自動更新](final-update-report.json)は `15c3eafc` → `b6d62216`、その同一windowでのoffline再読込までPASS。同じ学習予約と7storeを保持した。実機のインストールとは区別する。
+- 撮影のCI修正後は写真・カメラ・歩行の3ファイル32件もPASS。Chromiumの本番では[実PNGの撮影・保存](photo-chromium-report.json)を確認した。WebKitの保存は下記の未解消事項。
 
-基本動作のsmokeは31件PASS。別タスクのサーバーを使わないため、同じハーネスのポート候補だけを5395にした一時コピーを実行。アプリと検査内容は変更していない。家のpage-level UI/stateと室内カメラの変更であり、学習入力・採点・テンポ、保存writer、PWA更新処理は変更していない。fixed-tenの再計測やアート生成の新しい受入評価はこの変更の証拠へ代用しない。
+今回の分類は家のpage-level UI/stateと室内カメラ。学習入力・採点・テンポ、保存writer、PWA更新処理は変更していない。fixed-tenの再計測や新しい美術の受入評価を行ったとは扱わない。
 
-## 検証中の訂正
+## 独立した判定と未解消事項
 
-最初の追加unit検査は本の内部の点に対し別表面の遮蔽まで禁止してしまった。画面内であることと、実カメラからのrayが本を選ぶことを検査する形に訂正し、15件PASS。最初のChromium旅程はローカルrevisionを付け直すビルドと重なり2つのversionを含んだため正式証拠に使わず、最終ビルドを固定して全旅程を再実行した。
+- 視覚: 390×844で住人と机を約1.4倍にし、天井・床の余白を減らした。家具・キャラクター・材質は同じ。参考画像と実画面を並べて作者が確認。美術全体の満点・完成認定ではない。
+- 無説明理解・安全: 独立観察0人。子どもの理解・再訪意欲、実機iOS/Androidは未検証。文字付き入口、退出、移動案内は保持。
+- Runtime: 家の表示・歩行・アルバム・メニュー・学習復帰・更新保持はPASS。**WebKitでの写真保存は未解消**。PNGプレビューは作れるが保存がerrorになり、再試行案内を表示する。[現在の公開版](photo-current-webkit-report.json)と[カメラ調整前の旧ビルド](photo-before-camera-report.json)の両方で再現し、Chromiumは成功した。写真の保存writerは今回変更していない。IDB putのエラー観測だけでは原因を特定できず、実機Safariでの再現も未確認。保存まわりの別の調査事項として残す。
 
-## 公開
+## 途中の失敗をどう扱ったか
 
-家庭内の[既存本番](https://sansu-seven.vercel.app)へ `15c3eafc` を配信。Vercelの公開成功と実versionを確認。旧公開版 `ad223e39` を開いたまま `15c3eafc` へ自動更新され、同じ予約と7storeが不変だった。公開版を新しく開いた隔離contextでは実SWによるoffline再読込後にも同じ予約・家の表示・メニュー操作をPASS。実機インストールや子どもの観察を行ったとは扱わない。
+- 初期の追加unit検査は本の内部の点に対し別表面の遮蔽まで禁止していた。画面内であることと実cameraのrayが本を選ぶことへ訂正し、assertionを実際の操作に合わせた。
+- 初回のChromium旅程はrevisionを付け直すbuildと重なり2versionを含んだため正式証拠に使わず、固定したbuildで全行程を再実行。
+- 公開直後の最初の自動更新は予約保持後にofflineのload待ちでtimeout。[元report](automatic-update-report.json)のpass=falseを保持。初回SWのcontrollerとnetwork idleを待ってから実操作を始め、offlineではDOMContentLoadedと実DOMを待つ検査へ訂正。上記の最終実更新は同一windowで完走した。
+- 公開WebKitの初回旅程はversion.jsonへの一時的なaccess-control pageerrorが1件あり不合格として保存。起動時のSWを待つ再検査ではbootstrapも通常操作も0件で、pageerrorを無視してPASSにしていない。
+- [最初のCI](https://github.com/yutogasaki/sansu/actions/runs/35485910076)は写真2件で、住人を持たない撮影fixtureから不要なboundsを参照して例外になった。参照をcloseOverview時に限定して修正。テストやfixtureを緩めず、最終CI全件PASS。
 
-統合時にmainへ入った `e741b5c2` の島の入口CSSを保持してrebaseした。アプリ差分は `life-world-first.css` の島専用セレクタだけで、家のカメラ・操作・学習/保存のTS/TSXは同一。全体テストは基準候補01b936f9の結果を保持し、統合3519991ではbuild/assetsとWebKitの起動→家→移動→アルバム/メニュー→学習→同じ家の往復を再確認してPASS。
-
-最終の `15c3eafc` は、寄せた画角のまま矢印キーで端へ歩くと画面外へ出るケースに対応。実住人の全身boundsから必要なときだけ画角を広げ、中央への帰還で近い画角を復元する。学習・保存・部屋の形状は同じ。基準候補の全体439ファイル/4,089件とsmoke31件は保持し、変更の影響があるカメラ/歩行と両ブラウザの実操作を追加で検証した。
-
-公開直後の最初の自動更新windowでは、予約保持を確認した後のoffline `load` 待ちが30秒でtimeoutしたため、その[一連のreport](automatic-update-report.json)はpass=falseを保持する。続くfresh検査も初回SWのnavigationとDB読取りが重なり中断。初回SWのcontrollerとnetwork idleを待ってから実操作を始め、offlineはDOMContentLoadedと家の実DOMを待つ[再検査](production-offline-report.json)でPASSした。旧→新更新とfreshな新版offlineは別contextの証拠であり、最初のwindowでofflineまで完走したとは扱わない。
-
-公開WebKitの初回検査は家の操作・予約保持のassertion後に、version.jsonへの一時的なaccess-control pageerrorが1件あり不合格として残した。初回SWを待ってからリロードし、bootstrap中のerrorを別記録にして以後のpageerrorも空であることを確認する検査を追加した。アプリのPWA処理は変更していない。
-
-本番WebKitの再検査はphone/tabletともPASS。bootstrap pageerrorも0件で、通常のpageerrorを無視した検査ではない。起動→家→床/矢印/端歩行→机のアルバム→メニュー→学習→同じ予約を残して家へ戻る全行程を同じ公開buildで保存した。保存した検査scriptは相対importの位置だけを監査フォルダへ合わせている。
-
-## CI追補
-
-[最初のVerify Core](https://github.com/yutogasaki/sansu/actions/runs/35485910076)は4,088件PASS、写真の2件FAIL。端歩行対応で `frameKeepsakeRoom` が通常の写真構図でも不要な住人boundsを参照するようになり、住人を持たない撮影fixtureで例外になった。boundsの参照を `closeOverview` 時に限定して修正した。テストのassertionやfixtureを緩めず、写真・カメラ・歩行の3ファイル32件を再実行してPASS。15c3eafcの本番画像とPWA記録は修正前の観測として保持し、修正後の公開版を別途確認する。
+保存した検査scriptは相対importの位置だけ監査フォルダへ合わせている。生の失敗・診断と正式な公開旅程を分け、旧版・別context・実機の証拠へ置き換えない。

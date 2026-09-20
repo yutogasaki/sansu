@@ -1,8 +1,8 @@
 {
   "target": "https://sansu-seven.vercel.app",
   "build": {
-    "version": "15c3eafcdaa5b8102c934b9bfc7130b78b6ce5d9:50858e86-a9b3-45eb-b85d-56e41af42747",
-    "revision": "15c3eafcdaa5b8102c934b9bfc7130b78b6ce5d9",
+    "version": "7ac24419e12a6773567272ccc1805c31f5769e51:9fcc932d-750f-4ff7-9241-454d87a15d37",
+    "revision": "7ac24419e12a6773567272ccc1805c31f5769e51",
     "delivery": "snap-root-v1",
     "visualLineage": "pokko-field-v1",
     "park": {
@@ -18,7 +18,7 @@
       "artDirection": "moon-garden"
     }
   },
-  "sourceCommit": "15c3eafcdaa5b8102c934b9bfc7130b78b6ce5d9",
+  "sourceCommit": "7ac24419e12a6773567272ccc1805c31f5769e51",
   "flags": {
     "VITE_ISLAND_ENABLED": true,
     "VITE_ISLAND_LIFE_ENABLED": true
@@ -32,11 +32,19 @@
     "src/components/island/homeJourney/HomeJourneyPreview.tsx": "b61a24f156e910a4ca632256ed5f462d0788e953fd54c2b3f337ecf880d8c150",
     "src/pages/Island.tsx": "26c2e266a1a42712818e9b8eb8c7cb94a4dfb1b598790b089448e140d69c6d93",
     "src/components/island/three/homeInteriorCamera.ts": "94214210f8326783f512ded341f6e7ddcb41aaaa2347c752d1579c53a201a9a5",
-    "src/components/island/three/runtime.ts": "16c8211b2b604aa8cb1330e50b043a4859f34f1602f340fbac4779fb6e875a52",
+    "src/components/island/three/runtime.ts": "ece839086e26f595a492726299fd00a5b48bd215f6be183b95ba81ba1787c82e",
     "src/components/island/three/types.ts": "37140d4ec3189a3cc9b294b7bccfb18025a9fcaf1ba7df4bee7592c2ccb50fde",
     "src/components/island/life/life-world-first.css": "575c7e71f25f02798c1ce707dc12fccbce8b3e5051e43e0f6b1d149c4271ae8c"
   },
   "physicalDevice": false,
   "baselineManifest": "baseline-manifest.json",
-  "localManifest": "local-manifest.json"
+  "localManifest": "local-manifest.json",
+  "houseImplementationRevision": "b6d6221619b032645af3fc42d9be5641a0ae8512",
+  "ci": {
+    "revision": "b6d6221619b032645af3fc42d9be5641a0ae8512",
+    "url": "https://github.com/yutogasaki/sansu/actions/runs/35486506197",
+    "conclusion": "success",
+    "testFiles": 439,
+    "tests": 4090
+  }
 }
