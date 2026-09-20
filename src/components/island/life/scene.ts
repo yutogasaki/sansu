@@ -1,3 +1,4 @@
+import { buildHomeProps } from './homeProps';
 import { gardenRuntimeAsset, runtimeAssetSlot } from './runtimeAssetSlots';
 import { isolationMarker } from './isolationMarker';
 import { buildLanternLight } from './lanternLight';
@@ -43,6 +44,7 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
         mesh.userData.cell = c; root.add(mesh); clickables.push(mesh);
 
     }
+    house.add(buildHomeProps(content.m));
     house.position.set(2.5 - center, .035, -1.5); house.scale.setScalar(.8); root.add(house);
     const canopy = state.worldStyle === 'canopy-dots-c3-v1' ? buildCanopyScenery(center) : undefined;
     root.userData.worldStyle = state.worldStyle ?? 'moon-garden-v1';

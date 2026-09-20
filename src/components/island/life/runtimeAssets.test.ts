@@ -9,6 +9,23 @@ function scene() { const root = new T.Group(), target = new T.Group(); target.us
 const settle = async () => { await vi.waitFor(() => expect(fake.load).toHaveBeenCalledTimes(2)); await new Promise(r => setTimeout(r, 0)); };
 beforeEach(() => { fake.load.mockReset().mockImplementation(async () => model()); fake.dispose.mockReset(); });
 describe('Life runtime asset ownership', () => {
+    it('keeps every mailbox material shared with the matching far primitive', async () => {
+        const loaded: T.Group[] = [];
+        fake.load.mockImplementation(async () => {
+            const group = new T.Group();
+            for (const [name, color] of [['roof', '#aa3322'], ['door', '#eeddaa']]) {
+                const m = new T.MeshStandardMaterial({ color }); m.name = name;
+                group.add(new T.Mesh(new T.BoxGeometry(), m));
+            }
+            loaded.push(group); return { scene: group };
+        });
+        const a = scene(); a.target.userData.runtimeAssetKind = 'mailbox';
+        const pool = new LifeRuntimeAssets({} as T.WebGLRenderer, () => {});
+        pool.bind(a.root); await settle();
+        for (let i = 0; i < 2; i++) expect((loaded[1].children[i] as T.Mesh).material).toBe((loaded[0].children[i] as T.Mesh).material);
+        expect((loaded[1].children[0] as T.Mesh).material).not.toBe((loaded[1].children[1] as T.Mesh).material);
+        pool.dispose();
+    });
     it('fits the hut and connecting forecourt inside the saved footprint and releases the owned porch', async () => {
         const a = scene(); a.target.userData.runtimeAssetKind = 'garden-hut';
         const pool = new LifeRuntimeAssets({} as T.WebGLRenderer, () => {});

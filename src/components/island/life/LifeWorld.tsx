@@ -1,4 +1,4 @@
-import { runtimeAssetsEnabled } from './runtimeAssetSlots';
+import { anyRuntimeAssetsEnabled } from './runtimeAssetSlots';
 import type { LifeRuntimeAssets } from './runtimeAssets';
 import { canopyClearanceCandidate } from './canopyClearanceStudy';
 import { canopyAtmosphereStudy, canopyAtmospheres, createCanopyLightingStudy } from './canopyAtmosphereStudy';
@@ -50,14 +50,17 @@ export default function LifeWorld({ onFrame, inspectShadow, observationOpen = fa
         let content: Content | undefined, currentState = stateAtMount.current, currentPlacement = placementAtMount.current;
         const presentationClock = new LifePresentationClock();
         let runtimeAssets: LifeRuntimeAssets | undefined, assetsCancelled = false;
-        if (runtimeAssetsEnabled) {
+        let assetsStarted = false;
+        const startAssets = () => {
+            if (assetsStarted || !anyRuntimeAssetsEnabled) return;
+            assetsStarted = true;
             node.dataset.runtimeAssets = 'loading';
             void import('./runtimeAssets').then(({ LifeRuntimeAssets }) => {
                 if (assetsCancelled) return;
                 runtimeAssets = new LifeRuntimeAssets(renderer, () => { renderer.shadowMap.needsUpdate = true; });
                 if (content) runtimeAssets.bind(content.root);
             }).catch(() => { if (!assetsCancelled) node.dataset.runtimeAssets = 'fallback'; });
-        }
+        };
         const scene = new T.Scene(); scene.background = new T.Color('#278bac');
         const hemi = new T.HemisphereLight('#fff7ea', '#63806c', 1.15); scene.add(hemi);
         const sun = new T.DirectionalLight('#fff4e0', 2.3); sun.position.set(-3, 8, 4); sun.castShadow = true;
@@ -221,7 +224,7 @@ export default function LifeWorld({ onFrame, inspectShadow, observationOpen = fa
             if (content && document.visibilityState === 'visible' && !renderer.getContext().isContextLost()) { content.faceIsolationSigns(camera);
                 runtimeAssets?.update(camera, node.clientHeight);
                 if (runtimeAssets) node.dataset.runtimeAssets = JSON.stringify(runtimeAssets.describe());
-                renderer.render(scene, camera); node.dataset.rendered = 'true'; frameObserver.current?.(content.snapshot()); footprint.sample(content, performance.now());
+                renderer.render(scene, camera); node.dataset.rendered = 'true'; startAssets(); frameObserver.current?.(content.snapshot()); footprint.sample(content, performance.now());
                 presentationClock.resume(performance.now());
                 shadows.sample(performance.now());
                 if (discovery.current.profileId !== discoveryOwner) {

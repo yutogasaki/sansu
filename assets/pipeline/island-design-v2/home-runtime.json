@@ -1,0 +1,67 @@
+{
+  "candidate": "island-home-props-v1",
+  "recipe": "Near ratio .5/error .002; far ratio .15/error .015; locked UV borders. BaseColor256/other128. UASTC2 RDO.5 Zstd18.",
+  "assets": [
+    {
+      "id": "fence",
+      "sourceSha256": "3fba66c634df037f0641480c28aa7378c80582f636c9f91acbbed403531f6d79",
+      "nearSha256": "7d9d90db4cff5698b3262fc3764ce9fba94bf482189135b020fc25c060db1197",
+      "farSha256": "d5ffe92d1c8a9317950d92e257758e6abb872d3ddae94dfc07508499c6c40fb0",
+      "originalTriangles": 4912,
+      "nearTriangles": 2570,
+      "farTriangles": 1200,
+      "nearBytes": 209472,
+      "farBytes": 70368,
+      "materials": [
+        "island-fence-v1-PBR.003"
+      ]
+    },
+    {
+      "id": "watering-can",
+      "sourceSha256": "9b8d7ff6aecaae9f9bbd1f52d4e5787b5688d346c8ac735b4e2eb5b5f3454b7e",
+      "nearSha256": "850e16d8c2daf5a34bea05cccb3fb8a54c7bf7a75649fe931338e7adceeabf98",
+      "farSha256": "735a102b02ff3c51028d4c40f5be9251141c9cd2bfd1ae1368a1b6acc85dae4d",
+      "originalTriangles": 6204,
+      "nearTriangles": 4428,
+      "farTriangles": 2218,
+      "nearBytes": 293844,
+      "farBytes": 130804,
+      "materials": [
+        "island-watering-can-v1-PBR.007"
+      ]
+    },
+    {
+      "id": "planter",
+      "sourceSha256": "ad91e0451f07d51ad60329460d9c4bd50e6c07e94acc5e5783e3aac1c13498e3",
+      "nearSha256": "925db3139e79743233d94d034bd7996e038057bccb44f6dfcee65de83c85a310",
+      "farSha256": "b3fb7f25a3a022c5d4d9182ff7beecc3cf578a767022f72915c979b3b068e86c",
+      "originalTriangles": 5223,
+      "nearTriangles": 5189,
+      "farTriangles": 4343,
+      "nearBytes": 443912,
+      "farBytes": 309888,
+      "materials": [
+        "island-planter-v1-PBR.005"
+      ]
+    },
+    {
+      "id": "mailbox",
+      "sourceSha256": "162a674b9b5e3740ba91e1158b6ef6d092e0652e27b8ea1046138b1ae9252194",
+      "nearSha256": "88e57665916f04a737f686e1a91796e1faceb2b09bd95531045e5fe5472d49c8",
+      "farSha256": "df35e7344b78fbabeca7d9a26ff195f9a50536c8c1022a3e09afbcbd462a9118",
+      "originalTriangles": 4243,
+      "nearTriangles": 4145,
+      "farTriangles": 2781,
+      "nearBytes": 306040,
+      "farBytes": 147900,
+      "materials": [
+        "island-mailbox-v1-PBR.006",
+        "brass-hardware.002",
+        "warm-red-enamel.002",
+        "slot-and-door-seam.002",
+        "ivory-enamel.002"
+      ]
+    }
+  ],
+  "totalBytes": 1912228
+}

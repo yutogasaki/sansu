@@ -1,0 +1,264 @@
+{
+  "target": "http://127.0.0.1:5250",
+  "version": {
+    "version": "home-props-v1-c6c01356:1f1e782c-2a58-45c2-9ba3-b9b8623370cd",
+    "revision": "home-props-v1-c6c01356",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "candidate": "island-home-props-v1",
+  "flag": "VITE_ISLAND_HOME_PROPS default on; legacy runtime assets off",
+  "humanN": 0,
+  "runs": [
+    {
+      "width": 390,
+      "near": {
+        "assets": {
+          "candidate": "island-life-runtime-assets-v3",
+          "homePropsCandidate": "island-home-props-v1",
+          "loaded": [
+            "mailbox",
+            "fence",
+            "planter",
+            "watering-can"
+          ],
+          "failed": [],
+          "pending": [],
+          "instances": 4,
+          "byKind": {
+            "mailbox": 1,
+            "fence": 1,
+            "planter": 1,
+            "watering-can": 1
+          },
+          "far": 1
+        },
+        "render": {
+          "calls": 196,
+          "triangles": 129982,
+          "geometries": 141,
+          "textures": 17
+        },
+        "visual": "moon-garden-v1"
+      },
+      "distant": {
+        "assets": {
+          "candidate": "island-life-runtime-assets-v3",
+          "homePropsCandidate": "island-home-props-v1",
+          "loaded": [
+            "fence",
+            "watering-can",
+            "mailbox",
+            "planter"
+          ],
+          "failed": [],
+          "pending": [],
+          "instances": 4,
+          "byKind": {
+            "fence": 1,
+            "watering-can": 1,
+            "mailbox": 1,
+            "planter": 1
+          },
+          "far": 4
+        },
+        "render": {
+          "calls": 442,
+          "triangles": 134350,
+          "geometries": 295,
+          "textures": 17
+        },
+        "visual": "moon-garden-v1"
+      },
+      "expanded": {
+        "items": 23,
+        "landCells": 96,
+        "expansions": [
+          "west",
+          "east",
+          "south"
+        ],
+        "fixture": "200 synthetic credits; real commandLife validation; disposable browser only"
+      },
+      "resources": [
+        {
+          "url": "http://127.0.0.1:5250/assets/far-CbQUffpN.glb",
+          "bytes": 70368,
+          "duration": 200.10000002384186
+        },
+        {
+          "url": "http://127.0.0.1:5250/assets/near-Bt9PwG61.glb",
+          "bytes": 209472,
+          "duration": 202.70000004768372
+        },
+        {
+          "url": "http://127.0.0.1:5250/assets/near-B8znkHvM.glb",
+          "bytes": 306040,
+          "duration": 201.70000004768372
+        },
+        {
+          "url": "http://127.0.0.1:5250/assets/far-BNsdfYHM.glb",
+          "bytes": 147900,
+          "duration": 201.5
+        },
+        {
+          "url": "http://127.0.0.1:5250/assets/far-Zj6wZqfp.glb",
+          "bytes": 309888,
+          "duration": 202.79999995231628
+        },
+        {
+          "url": "http://127.0.0.1:5250/assets/near-CuR2H6Uc.glb",
+          "bytes": 443912,
+          "duration": 203
+        },
+        {
+          "url": "http://127.0.0.1:5250/assets/near-3yaftuce.glb",
+          "bytes": 293844,
+          "duration": 203.89999997615814
+        },
+        {
+          "url": "http://127.0.0.1:5250/assets/far-iUTsXLLh.glb",
+          "bytes": 130804,
+          "duration": 204.20000004768372
+        }
+      ],
+      "nonblockingFirstFrame": true,
+      "offline": true,
+      "ownershipUnchanged": true,
+      "learningUnchanged": true,
+      "errors": []
+    },
+    {
+      "width": 768,
+      "near": {
+        "assets": {
+          "candidate": "island-life-runtime-assets-v3",
+          "homePropsCandidate": "island-home-props-v1",
+          "loaded": [
+            "fence",
+            "mailbox",
+            "planter",
+            "watering-can"
+          ],
+          "failed": [],
+          "pending": [],
+          "instances": 4,
+          "byKind": {
+            "fence": 1,
+            "mailbox": 1,
+            "planter": 1,
+            "watering-can": 1
+          },
+          "far": 0
+        },
+        "render": {
+          "calls": 196,
+          "triangles": 134402,
+          "geometries": 141,
+          "textures": 17
+        },
+        "visual": "moon-garden-v1"
+      },
+      "distant": {
+        "assets": {
+          "candidate": "island-life-runtime-assets-v3",
+          "homePropsCandidate": "island-home-props-v1",
+          "loaded": [
+            "watering-can",
+            "fence",
+            "mailbox",
+            "planter"
+          ],
+          "failed": [],
+          "pending": [],
+          "instances": 4,
+          "byKind": {
+            "watering-can": 1,
+            "fence": 1,
+            "mailbox": 1,
+            "planter": 1
+          },
+          "far": 3
+        },
+        "render": {
+          "calls": 442,
+          "triangles": 137090,
+          "geometries": 303,
+          "textures": 17
+        },
+        "visual": "moon-garden-v1"
+      },
+      "expanded": {
+        "items": 23,
+        "landCells": 96,
+        "expansions": [
+          "west",
+          "east",
+          "south"
+        ],
+        "fixture": "200 synthetic credits; real commandLife validation; disposable browser only"
+      },
+      "resources": [
+        {
+          "url": "http://127.0.0.1:5250/assets/near-Bt9PwG61.glb",
+          "bytes": 209472,
+          "duration": 419.39999997615814
+        },
+        {
+          "url": "http://127.0.0.1:5250/assets/far-CbQUffpN.glb",
+          "bytes": 70368,
+          "duration": 419.10000002384186
+        },
+        {
+          "url": "http://127.0.0.1:5250/assets/near-B8znkHvM.glb",
+          "bytes": 306040,
+          "duration": 419.7000000476837
+        },
+        {
+          "url": "http://127.0.0.1:5250/assets/far-BNsdfYHM.glb",
+          "bytes": 147900,
+          "duration": 419.7000000476837
+        },
+        {
+          "url": "http://127.0.0.1:5250/assets/near-CuR2H6Uc.glb",
+          "bytes": 443912,
+          "duration": 421.39999997615814
+        },
+        {
+          "url": "http://127.0.0.1:5250/assets/far-Zj6wZqfp.glb",
+          "bytes": 309888,
+          "duration": 420.39999997615814
+        },
+        {
+          "url": "http://127.0.0.1:5250/assets/near-3yaftuce.glb",
+          "bytes": 293844,
+          "duration": 421.7999999523163
+        },
+        {
+          "url": "http://127.0.0.1:5250/assets/far-iUTsXLLh.glb",
+          "bytes": 130804,
+          "duration": 421.7999999523163
+        }
+      ],
+      "nonblockingFirstFrame": true,
+      "offline": true,
+      "ownershipUnchanged": true,
+      "learningUnchanged": true,
+      "errors": []
+    }
+  ],
+  "pass": true,
+  "harnessSha256": "1d24bf4c38ea9ed72e99653cb564c12abc2a88f1d27880767ff254b266e3e54e"
+}

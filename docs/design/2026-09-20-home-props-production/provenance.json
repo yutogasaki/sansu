@@ -1,0 +1,31 @@
+{
+  "candidate": "island-home-props-v1",
+  "baseRevision": "c6c01356a08bb64d5d8eae4c0ffd1e59dfa8eb8f",
+  "buildVersion": {
+    "version": "home-props-v1-c6c01356:1f1e782c-2a58-45c2-9ba3-b9b8623370cd",
+    "revision": "home-props-v1-c6c01356",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "flags": {
+    "VITE_ISLAND_ENABLED": true,
+    "VITE_ISLAND_LIFE_ENABLED": true,
+    "VITE_ISLAND_HOME_PROPS": "default-on",
+    "VITE_ISLAND_RUNTIME_ASSETS": "default-off"
+  },
+  "verifiedStagedInputs": 1197,
+  "inputHash": "deece1491ac3752e32c610dbd6de5e2e074cfeed711800e08103e97bc856a02e",
+  "distHash": "51c51f0ecb4f33be90404e614afa9298f4ecf90be71499c7000764a80c1fe4d6"
+}

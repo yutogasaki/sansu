@@ -1,3 +1,11 @@
+import fenceNear from '../../../../assets/island-fence-v1/home-runtime/near.glb?url';
+import fenceFar from '../../../../assets/island-fence-v1/home-runtime/far.glb?url';
+import wateringcanNear from '../../../../assets/island-watering-can-v1/home-runtime/near.glb?url';
+import wateringcanFar from '../../../../assets/island-watering-can-v1/home-runtime/far.glb?url';
+import planterNear from '../../../../assets/island-planter-v1/home-runtime/near.glb?url';
+import planterFar from '../../../../assets/island-planter-v1/home-runtime/far.glb?url';
+import mailboxNear from '../../../../assets/island-mailbox-v1/home-runtime/near.glb?url';
+import mailboxFar from '../../../../assets/island-mailbox-v1/home-runtime/far.glb?url';
 import * as T from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { KTX2Loader } from 'three/addons/loaders/KTX2Loader.js';
@@ -18,7 +26,7 @@ import lampFar from '../../../../assets/island-streetlamp-v1/runtime/far-geometr
 import { projectedDiameter, selectFarAsset } from './runtimeAssetLod';
 import type { RuntimeAssetKind } from './runtimeAssetSlots';
 
-const urls = { tree: [treeNear, treeFar], rock: [rockNear, rockFar], bench: [benchNear, benchFar], 'garden-hut': [hutNear, hutFar], flowerbed: [flowerNear, flowerFar], streetlamp: [lampNear, lampFar] };
+const urls = { fence: [fenceNear, fenceFar], 'watering-can': [wateringcanNear, wateringcanFar], planter: [planterNear, planterFar], mailbox: [mailboxNear, mailboxFar], tree: [treeNear, treeFar], rock: [rockNear, rockFar], bench: [benchNear, benchFar], 'garden-hut': [hutNear, hutFar], flowerbed: [flowerNear, flowerFar], streetlamp: [lampNear, lampFar] };
 type Asset = { near: T.Object3D; far: T.Object3D; bounds: T.Box3 };
 type Slot = { target: T.Object3D; visual: T.Group; near: T.Object3D; far: T.Object3D; porch?: T.Mesh<T.BoxGeometry, T.MeshStandardMaterial>; original: [T.Object3D, boolean][]; size: T.Vector3; isFar: boolean };
 const resources = (root: T.Object3D) => {
@@ -95,10 +103,21 @@ export class LifeRuntimeAssets {
             return;
         }
         const [near, far] = loaded.map(r => (r as PromiseFulfilledResult<Awaited<ReturnType<GLTFLoader['loadAsync']>>>).value.scene);
-        let material: T.Material | T.Material[] | undefined;
-        near.traverse(o => { if (o instanceof T.Mesh) { material = o.material; o.castShadow = o.receiveShadow = true; } });
-        if (!material) { release(near); release(far); this.failed.add(kind); return; }
-        far.traverse(o => { if (o instanceof T.Mesh) { for (const m of Array.isArray(o.material) ? o.material : [o.material]) m.dispose(); o.material = material!; o.castShadow = o.receiveShadow = true; } });
+        const materials = new Map<string, T.Material>();
+        near.traverse(o => { if (o instanceof T.Mesh) {
+            for (const material of Array.isArray(o.material) ? o.material : [o.material]) materials.set(material.name, material);
+            o.castShadow = o.receiveShadow = true;
+        } });
+        let missingMaterial = !materials.size;
+        far.traverse(o => { if (o instanceof T.Mesh) {
+            const original = Array.isArray(o.material) ? o.material : [o.material];
+            const shared = original.map(m => materials.get(m.name));
+            if (shared.some(m => !m)) { missingMaterial = true; return; }
+            original.forEach(m => m.dispose());
+            o.material = Array.isArray(o.material) ? shared as T.Material[] : shared[0]!;
+            o.castShadow = o.receiveShadow = true;
+        } });
+        if (missingMaterial) { release(near); release(far); this.failed.add(kind); this.changed(); return; }
         this.assets.set(kind, { near, far, bounds: new T.Box3().setFromObject(near) });
         if (this.root) this.bind(this.root);
     }
@@ -112,7 +131,7 @@ export class LifeRuntimeAssets {
         }
         if (changed) this.changed();
     }
-    describe() { return { candidate: 'island-life-runtime-assets-v3', loaded: [...this.assets.keys()], failed: [...this.failed], pending: [...this.pending], instances: this.slots.length, byKind: Object.fromEntries([...this.assets.keys()].map(kind => [kind, this.slots.filter(slot => slot.target.userData.runtimeAssetKind === kind).length])), far: this.slots.filter(s => s.isFar).length }; }
+    describe() { return { candidate: 'island-life-runtime-assets-v3', homePropsCandidate: 'island-home-props-v1', loaded: [...this.assets.keys()], failed: [...this.failed], pending: [...this.pending], instances: this.slots.length, byKind: Object.fromEntries([...this.assets.keys()].map(kind => [kind, this.slots.filter(slot => slot.target.userData.runtimeAssetKind === kind).length])), far: this.slots.filter(s => s.isFar).length }; }
     detach() {
         for (const slot of this.slots) { slot.visual.removeFromParent(); slot.porch?.geometry.dispose(); slot.porch?.material.dispose(); slot.original.forEach(([o, visible]) => { o.visible = visible; }); }
         this.slots = []; this.root = undefined;
