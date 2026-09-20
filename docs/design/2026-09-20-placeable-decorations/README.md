@@ -40,3 +40,15 @@ rendererの三角形数は影などを含むフレーム指標で、GLB本体の
 - [旧島PWA](legacy-island-pwa.txt): Life無効の別buildで8protected-flow checksと実SW offline PASS。
 
 今後は実機での多数配置測定を行い、必要なら鉢の遠景LODと同種描画の集約を優先する。追加生成や高解像度テクスチャで解決しない。
+
+## 最新mainとの統合候補
+
+実装commit `bc4d6040` は `15c3eafc` までの家/入口/室内カメラ変更を含む。app入力は以後変更せず、同commitの本番buildで新機能journeyを再実行した。
+
+- [統合版journey](v3-report.json): 390/768幅ともPASS。source hash `3aead417be860fd93e7f915adfa089fffa0a9cac2f1d1675f1ae2c71e792628c`。開始終了一致。30個でもGLB bytes/texture数は同じで、前掲のtriangles/draw callsも同じ。再読込は約4.1/4.4秒で、同時実行負荷のあるローカル計測として記録する。
+- [統合版の操作コンタクトシート](contact-sheet.html): カタログ→実購入→操作メニュー→回転→offline→学習復帰→多数配置→遠景。新しい入口デザインを維持。
+- [追加カタログ診断](catalog/report.json): Discovery=trueのDEVに限定し、320/390/768幅で7ページ14品・44pxボタン・画面内hit target・横overflowなしを確認。[再現スクリプト](catalog/check.mjs)。reportのwidthはnavigation自身の幅でありviewportではない。各viewportは対応するPNG名を参照。
+- [統合後の24単体テスト](integrated-tests.txt) PASS。[本番build](final-build.txt) PASS、precache11.57MiB / 12MiB。
+- [smoke再検査](smoke-recheck.txt): 失敗したroot-tangleを5画面幅すべてで再実行してPASS。初回の失敗ログを保持。
+- [既存島の回帰](legacy-island.txt): phone/tabletの46実UI区間による4地区成熟、3D履歴/再演、WebGL復旧、初回、自動進行、各入力形式PASS。Life無効の旧導線検査であり新飾りの証拠には混ぜない。
+- [固定10問の反復比較](throughput-v3.json): phone/tablet、各10反復、全正解/4・8問目誤答、Study/Islandの80runでPASS。閾値・追加操作0・正確な保存・source不変を確認。DEVの固定問題fixtureであり、本番plannerや子どもの学習効果の証拠ではない。
