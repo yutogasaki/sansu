@@ -4,6 +4,7 @@ import { ISLAND_LEARNING_KEEPSAKES, type IslandLearningKeepsakesState } from '..
 import { IslandLearningKeepsakeScenery } from './learningKeepsakeScenery';
 import { fitIslandHomeInteriorCamera } from './homeInteriorCamera';
 import { ISLAND_HOME_INTERIOR } from './homePresentation';
+import { HomeResident } from './homeResident';
 import { IslandCosmeticScenery } from './cosmeticScenery';
 
 const all: IslandLearningKeepsakesState = { version: 1, displayed: ISLAND_LEARNING_KEEPSAKES.map(item => item.id) };
@@ -157,6 +158,26 @@ describe('a perspective camera inside the same closed house', () => {
             expect(close.projectionMatrix.elements).toEqual(detail.projectionMatrix.elements);
             expect(close.matrixWorld.elements).toEqual(detail.matrixWorld.elements);
         } finally { room.dispose(); }
+    });
+
+    it('keeps the whole walking resident on screen at the portrait edges and restores the close view', () => {
+        const room = roomAt(true), resident = new HomeResident(), camera = new THREE.PerspectiveCamera();
+        resident.show(room.group);
+        const frame = () => {
+            expect(fitIslandHomeInteriorCamera(camera, room, 390 / 620, true, new THREE.Box3().setFromObject(resident.group))).toBe(true);
+            for (const point of vertices(resident.group)) {
+                const ndc = point.project(camera);
+                expect(Math.max(Math.abs(ndc.x), Math.abs(ndc.y))).toBeLessThan(.98);
+            }
+            checkEnclosure(room, camera);
+        };
+        try {
+            frame(); const initial = camera.fov;
+            expect(resident.walkTo({ x: 2.8, z: 1.1 }, 0, true)).toBe(true);
+            frame(); expect(camera.fov).toBeGreaterThan(initial);
+            expect(resident.walkTo({ x: .4, z: 1.1 }, 0, true)).toBe(true);
+            frame(); expect(camera.fov).toBeCloseTo(initial, 8);
+        } finally { resident.hide(); room.dispose(); }
     });
 
     it('uses the first visible real mesh for an award, album and notice, with no tap through walls or furniture', () => {

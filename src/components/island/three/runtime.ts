@@ -1891,8 +1891,8 @@ export class IslandScene {
         const optionalFramed = this.frameOptionalFurniture();
         this.frameCosmeticFocus();
         this.frameExpressionFlag();
-        this.frameKeepsakeRoom();
         const homeWalking = this.keepsakeRoomActive && !this.state?.photographing && this.homeResident.update(now);
+        this.frameKeepsakeRoom();
         const homeMoving = this.homePresentation.animate(this.camera, now, this.motion.matches);
         const renderedCamera = this.keepsakeRoomActive ? this.homeCamera : this.camera;
         this.renderer.render(this.scene, renderedCamera);
@@ -2128,7 +2128,8 @@ export class IslandScene {
     private frameKeepsakeRoom() {
         if (!this.keepsakeRoomActive) return false;
         const aspect = Math.max(1, this.host.clientWidth) / Math.max(1, this.host.clientHeight);
-        return fitIslandHomeInteriorCamera(this.homeCamera, this.keepsakeRoom, aspect, this.state?.learningKeepsakes?.closeOverview);
+        return fitIslandHomeInteriorCamera(this.homeCamera, this.keepsakeRoom, aspect, this.state?.learningKeepsakes?.closeOverview,
+            this.homeResident.group.visible ? new THREE.Box3().setFromObject(this.homeResident.group) : undefined);
     }
     private frameOptionalFurniture() {
         if (this.state?.learning || this.state?.readOnly || this.workshopActive || this.state?.shared?.active || this.state?.preview) return false;

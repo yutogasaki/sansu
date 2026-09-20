@@ -30,6 +30,19 @@ try {
   await capture('room-walk');
   await walker.focus();await page.keyboard.press('ArrowLeft');
   await page.waitForFunction(()=>{const w=JSON.parse(document.querySelector('[data-home-resident]').dataset.homeResident);return w.position[0]<1.5&&!w.moving;});
+  for(let step=0;step<4;step++){
+   await page.keyboard.press('ArrowRight');
+   await page.waitForFunction(()=>!JSON.parse(document.querySelector('[data-home-resident]').dataset.homeResident).moving);
+  }
+  const edge=await walker.evaluate(el=>({resident:JSON.parse(el.dataset.homeResident),frame:el.dataset.cameraFrame.split(',').map(Number)}));
+  const edgeCamera=new THREE.PerspectiveCamera();edgeCamera.matrixWorld.fromArray(edge.frame.slice(0,16));edgeCamera.matrixWorldInverse.copy(edgeCamera.matrixWorld).invert();edgeCamera.projectionMatrix.fromArray(edge.frame.slice(16));
+  const edgePoint=new THREE.Vector3(edge.resident.position[0],.5,edge.resident.position[2]).multiplyScalar(.26).add(new THREE.Vector3(-2.6,.18,-2.25)).project(edgeCamera);
+  assert(Math.abs(edgePoint.x)<.95 && Math.abs(edgePoint.y)<.95,'Keyboard walking keeps the resident on screen');
+  await capture('room-edge');
+  for(let step=0;step<3;step++){
+   await page.keyboard.press('ArrowLeft');
+   await page.waitForFunction(()=>!JSON.parse(document.querySelector('[data-home-resident]').dataset.homeResident).moving);
+  }
   const target=await walker.evaluate(el=>JSON.parse(el.dataset.homeTargets).find(t=>t.type==='album'));
   await page.touchscreen.tap(bounds.x+target.x,bounds.y+target.y);await page.locator('.island-page[data-mode=album]').waitFor();await capture('album');
   assert.deepEqual(await readNative(page,id),before);
@@ -43,7 +56,7 @@ try {
   await page.getByRole('button',{name:'とじる',exact:true}).click();await waitReady(page);
   assert.equal(await page.locator('.island-house-menu[open]').count(),0);
   assert.deepEqual(await readNative(page,id),reserved);await capture('learning-return');
-  assert.deepEqual(errors,[]);report.scenarios.push({viewport,pass:true,checks:['floor touch','arrow key walking','real tabletop album touch','read-only 7 stores','menu close focus','learning from menu','same reservation on return']});await page.close();
+  assert.deepEqual(errors,[]);report.scenarios.push({viewport,pass:true,checks:['floor touch','arrow key walking','resident stays visible at edge','real tabletop album touch','read-only 7 stores','menu close focus','learning from menu','same reservation on return']});await page.close();
  }
  report.pass=true;
 } finally {await fs.writeFile(`${out}/report.json`,JSON.stringify(report,null,2));await browser.close();}

@@ -9,7 +9,7 @@ const corners = (bounds: THREE.Box3) => [bounds.min.x, bounds.max.x].flatMap(x =
 
 /** A camera INSIDE the existing house footprint. Orthographic island framing
  * and the exterior model are untouched; only this camera sees the closed room. */
-export function fitIslandHomeInteriorCamera(camera: THREE.PerspectiveCamera, room: IslandLearningKeepsakeScenery, aspect: number, closeOverview = false): boolean {
+export function fitIslandHomeInteriorCamera(camera: THREE.PerspectiveCamera, room: IslandLearningKeepsakeScenery, aspect: number, closeOverview = false, residentBounds?: THREE.Box3): boolean {
     if (!room.group.visible || !Number.isFinite(aspect) || aspect <= 0) return false;
     room.group.updateWorldMatrix(true, true);
     const scale = room.group.getWorldScale(new THREE.Vector3()).x, selected = room.selectedObject();
@@ -35,6 +35,14 @@ export function fitIslandHomeInteriorCamera(camera: THREE.PerspectiveCamera, roo
         point.applyMatrix4(camera.matrixWorldInverse);
         if (point.z >= -.01 * scale) return false;
         tangent = Math.max(tangent, Math.abs(point.y) / -point.z * 1.06, Math.abs(point.x) / -point.z / framingAspect * 1.06);
+    }
+    // Widen only as needed when walking toward an edge; keep the whole resident visible.
+    if (closeOverview && !selected && residentBounds && !residentBounds.isEmpty()) {
+        for (const point of corners(residentBounds)) {
+            point.applyMatrix4(camera.matrixWorldInverse);
+            if (point.z < -.01 * scale) tangent = Math.max(tangent,
+                Math.abs(point.y) / -point.z * 1.08, Math.abs(point.x) / -point.z / aspect * 1.08);
+        }
     }
     camera.fov = 2 * Math.atan(tangent) * 180 / Math.PI;
     camera.aspect = aspect; camera.near = .01; camera.far = Math.max(10, scale * 20); camera.zoom = 1;
