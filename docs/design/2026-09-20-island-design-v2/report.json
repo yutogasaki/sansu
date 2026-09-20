@@ -1,0 +1,60 @@
+{
+  "target": "http://127.0.0.1:5246/prototypes/asset-lab/?set=design-v2",
+  "candidate": "island-design-v2",
+  "delivery": "isolated-development-asset-lab",
+  "revision": "441a2e15c701ae0facdd5997d9f7cdd081d51bae",
+  "startHash": "06dd70ab903bad27dab3df5b2fa7ba51778b6dc65d3f39e0d244a9da41fd45fa",
+  "cases": [
+    {
+      "width": 390,
+      "quality": "2048",
+      "renderCpuMeanMs": 0.24166666865348815,
+      "calls": 31,
+      "triangles": 69117,
+      "textures": 18
+    },
+    {
+      "width": 390,
+      "quality": "1024",
+      "renderCpuMeanMs": 0.24000000556310017,
+      "calls": 36,
+      "triangles": 67151,
+      "textures": 15
+    },
+    {
+      "width": 390,
+      "quality": "runtime",
+      "renderCpuMeanMs": 0.24166665275891622,
+      "calls": 36,
+      "triangles": 67151,
+      "textures": 15
+    },
+    {
+      "width": 768,
+      "quality": "2048",
+      "renderCpuMeanMs": 0.24833333094914753,
+      "calls": 32,
+      "triangles": 68965,
+      "textures": 18
+    },
+    {
+      "width": 768,
+      "quality": "1024",
+      "renderCpuMeanMs": 0.3050000011920929,
+      "calls": 38,
+      "triangles": 67439,
+      "textures": 15
+    },
+    {
+      "width": 768,
+      "quality": "runtime",
+      "renderCpuMeanMs": 0.2683333337306976,
+      "calls": 38,
+      "triangles": 67439,
+      "textures": 15
+    }
+  ],
+  "errors": [],
+  "pass": true,
+  "endHash": "06dd70ab903bad27dab3df5b2fa7ba51778b6dc65d3f39e0d244a9da41fd45fa"
+}

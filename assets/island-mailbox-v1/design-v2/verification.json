@@ -1,0 +1,37 @@
+{
+  "asset": "mailbox",
+  "candidate": "island-design-v2",
+  "source_sha256": "59c798a639a0d98eda0b23682a3ea2d216dc31101df38db34f931a43f98ff753",
+  "final_sha256": "062e829162d41d4362f6838b8e7c00fd7854e0c18a59e7549292a3270bc2daf8",
+  "before": {
+    "triangles": 5769,
+    "min": [
+      -0.3341512382030487,
+      -0.2526254653930664,
+      0.0
+    ],
+    "max": [
+      0.3341512382030487,
+      0.2526254951953888,
+      1.2000000476837158
+    ]
+  },
+  "after": {
+    "triangles": 4243,
+    "min": [
+      -0.2590000033378601,
+      -0.2827500104904175,
+      0.0
+    ],
+    "max": [
+      0.2590000033378601,
+      0.2827500104904175,
+      1.209019422531128
+    ]
+  },
+  "bytes": 9439216,
+  "roundtrip_render_error": 6.808278385506128e-08,
+  "roundtrip_pass": true,
+  "meshy_credits": 0,
+  "production_adoption": "NOT_INTEGRATED"
+}
