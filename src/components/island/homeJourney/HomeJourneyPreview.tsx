@@ -179,7 +179,7 @@ export default function HomeJourneyPreview({ state, growthAt, onGrowthShown, roo
             <button type="button" className="island-text-button" aria-pressed={wide} onClick={()=>setWide(true)} style={{minHeight:44}}>島全体</button>
             {onHomeEnter && <button type="button" className="island-text-button" onClick={onHomeEnter} style={{minHeight:44}}>いえに はいる</button>}
         </div>}
-        <div ref={host} style={{ width: '100%', height: room ? 'min(38vh, 380px)' : 'min(55vh, 540px)' }} />
+        <div ref={host} style={{ width: '100%', height: room ? 'var(--island-house-stage-height, min(38vh, 380px))' : 'min(55vh, 540px)' }} />
         {growthAt && <p role="status" className="sr-only">{view.latest?.title}</p>}
         {failed && <p role="status">景色を表示できません。学習は下のボタンから続けられます。</p>}
         {!room && <p style={{ padding: '0 16px 12px' }}>{view.latest?.title ?? 'ぽこもこの おうち'}<br />

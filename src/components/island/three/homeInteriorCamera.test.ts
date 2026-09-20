@@ -135,6 +135,30 @@ describe('a perspective camera inside the same closed house', () => {
         } finally { room.dispose(); }
     });
 
+    it.each([390 / 620, 320 / 344, 768 / 800, 844 / 194])('keeps the close overview usable at aspect %s', aspect => {
+        const room = roomAt(true);
+        try {
+            const wide = fit(room, aspect), close = new THREE.PerspectiveCamera();
+            expect(fitIslandHomeInteriorCamera(close, room, aspect, true)).toBe(true);
+            checkEnclosure(room, close, true);
+            const album = room.group.getObjectByName('home-album')!;
+            const point = album.localToWorld(new THREE.Vector3(0, .035, 0));
+            const screenPoint = point.clone().project(close);
+            expect(Math.max(Math.abs(screenPoint.x), Math.abs(screenPoint.y))).toBeLessThan(.95);
+            const ray = new THREE.Raycaster();
+            const projected = point.clone().project(close);
+            ray.setFromCamera(new THREE.Vector2(projected.x, projected.y), close);
+            expect(room.selectHit(ray.ray)).toEqual({ type: 'album' });
+            if (aspect < .9) expect(close.fov).toBeLessThan(wide.fov);
+            else expect(close.projectionMatrix.elements).toEqual(wide.projectionMatrix.elements);
+            room.update(all, 1000, true, 'first-completion');
+            const detail = fit(room, aspect);
+            expect(fitIslandHomeInteriorCamera(close, room, aspect, true)).toBe(true);
+            expect(close.projectionMatrix.elements).toEqual(detail.projectionMatrix.elements);
+            expect(close.matrixWorld.elements).toEqual(detail.matrixWorld.elements);
+        } finally { room.dispose(); }
+    });
+
     it('uses the first visible real mesh for an award, album and notice, with no tap through walls or furniture', () => {
         const room = roomAt(true);
         try {

@@ -73,6 +73,7 @@ try {
   assert.equal(await page.locator('.island-stage').count(),0,'The room never swaps to the legacy exterior renderer');
   assert.deepEqual(await readNative(page),beforeView,'Entering the room preserves every learning and island record');
   await page.screenshot({path:`${out}/${name}-room.png`});
+  await page.getByRole('button',{name:'いえの メニュー',exact:true}).click();
   await page.locator('[data-keepsake-action="open-keepsakes"]').click();
   await page.locator('[data-keepsake-action="display"]').click();
   await page.waitForFunction(()=>document.querySelector('[data-keepsake-action="store"]') && !document.querySelector('[data-keepsake-action="store"]').disabled);

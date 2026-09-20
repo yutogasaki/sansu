@@ -12,7 +12,7 @@ const browser = await chromium.launch();
 const report = { target: base, scope: 'Native profile, real first three answers and first award; explicit 1000-completion aggregate fixture for long collection; one native display-write failure diagnostic.', captures: [], scenarios: [], pass: false };
 try {
     for (const viewport of viewports) {
-        const context = await browser.newContext({ viewport, reducedMotion: 'reduce' });
+        const context = await browser.newContext({ viewport, reducedMotion: viewport.width === 390 ? 'no-preference' : 'reduce', hasTouch: viewport.width <= 390 });
         const page = await context.newPage(); page.setDefaultTimeout(15000);
         const errors = []; page.on('pageerror', e => errors.push(e.message));
         const action = name => page.locator(`[data-keepsake-action="${name}"]`);
@@ -21,9 +21,12 @@ try {
             await page.waitForTimeout(150);
             const file = `${viewport.width}-${name}.png`;
             await page.screenshot({ path: `${out}/${file}` });
-            report.captures.push({ file, ...(await runtimeMetadata(page)) });
+            report.captures.push({ file, ...(await runtimeMetadata(page)), houseCandidate: await page.locator('.island-page').getAttribute('data-house-candidate') });
         };
         const exposed = async locator => {
+            if (await locator.evaluate(el => el.closest('.island-house-menu')?.open === false)) {
+                await page.getByRole('button', { name: 'いえの メニュー', exact: true }).click();
+            }
             await locator.evaluate(el => el.scrollIntoView({ block: 'center', behavior: 'instant' }));
             await page.waitForTimeout(80);
             const rect = await locator.evaluate(el => {
@@ -35,14 +38,30 @@ try {
         try {
             await page.goto(base); await page.waitForURL('**/#/onboarding');
             const id = await seedNative(page, randomUUID());
-            await page.goto(base); await waitMode(page, 'home'); await waitReady(page); await capture('island');
+            await page.goto(base); await waitMode(page, 'home');
+            await page.locator('.life-world canvas, [data-renderer="three"] canvas').first().waitFor(); await capture('island');
             await page.locator('.island-shell-nav').getByRole('button', { name: 'いえ', exact: true }).click();
             await section('home'); await waitReady(page); await capture('house-empty');
+            const menu = page.getByRole('dialog', { name: 'いえの メニュー', exact: true });
+            const trigger = page.getByRole('button', { name: 'いえの メニュー', exact: true });
+            for (const target of [action('close'), action('album'), action('photos'), trigger]) await exposed(target);
+            const frame = await page.locator('.island-stage').boundingBox();
+            assert(frame.height > (viewport.width < viewport.height ? viewport.height * .55 : 140), 'The room owns the overview');
+            await trigger.click(); await menu.waitFor(); await capture('house-menu');
+            for (let index = 0; index < 10; index++) {
+                await page.keyboard.press('Tab');
+                // Chromium may hand focus to browser chrome at the end of a
+                // native dialog's tab sequence (reported as BODY), then wrap.
+                assert(await menu.evaluate(el => el.matches(':modal') && (document.activeElement === document.body || el.contains(document.activeElement))),
+                    'Menu keeps keyboard focus out of the covered world');
+            }
+            await page.keyboard.press('Escape'); await menu.waitFor({ state: 'hidden' });
+            await page.waitForFunction(() => document.activeElement?.hasAttribute('data-house-menu-trigger'));
             const beforeVisit = await readNative(page, id);
             await exposed(action('notices')); await action('notices').click(); await section('notices');
             assert.equal(new URL(page.url()).hash, '#/island?view=keepsakes&house=notices');
             await page.goBack(); await section('home');
-            await page.waitForFunction(() => document.activeElement?.getAttribute('data-keepsake-action') === 'notices');
+            await page.waitForFunction(() => document.activeElement?.hasAttribute('data-house-menu-trigger'));
             await page.goForward(); await section('notices'); await page.reload(); await section('notices');
             await action('home').click(); await section('home');
             await exposed(action('open-keepsakes')); await action('open-keepsakes').click(); await section('keepsakes');
@@ -60,11 +79,12 @@ try {
             assert.deepEqual((await readNative(page, id)).island.learningKeepsakes.displayed, ['first-completion']);
             await capture('earned-first-award');
             await exposed(action('room')); await action('room').click(); await section('home');
-            await page.waitForFunction(() => document.activeElement?.getAttribute('data-keepsake-action') === 'open-keepsakes');
+            await page.waitForFunction(() => document.activeElement?.hasAttribute('data-house-menu-trigger'));
             await action('album').click(); await waitMode(page, 'album');
             await page.locator('.island-panel-heading').getByRole('button').click(); await section('home');
             await exposed(action('photos')); await action('photos').click(); await waitMode(page, 'photos');
             await page.locator('.island-panel-heading').getByRole('button').click(); await section('home');
+            await trigger.click();
             const cameraEntry = button(page, 'しゃしんに のこす');
             await exposed(cameraEntry); await cameraEntry.click(); await waitMode(page, 'camera');
             await button(page, 'カメラを とじる').click(); await section('home');

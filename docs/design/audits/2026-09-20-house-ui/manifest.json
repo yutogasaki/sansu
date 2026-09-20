@@ -1,0 +1,53 @@
+{
+  "target": "http://127.0.0.1:5383",
+  "type": "local production preview; not deployed",
+  "sourceHeadAtEvidence": "ad223e39f611b3068e79e30c053225a90bbb8848",
+  "workingTree": "Shared checkout with existing changes; source hashes below identify this UI implementation.",
+  "build": {
+    "version": "house-world-first-v1-local:89223e48-4256-4366-ae91-198aa748c4d6",
+    "revision": "house-world-first-v1-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "flags": {
+    "VITE_ISLAND_ENABLED": true,
+    "VITE_ISLAND_LIFE_ENABLED": true
+  },
+  "uiCandidate": "house-world-first-v1",
+  "art": "Existing island-home-interior-v4, geometry/material/camera unchanged",
+  "cache": "Fresh disposable contexts, real SW enabled; room report records controller state per capture.",
+  "sources": [
+    {
+      "file": "src/pages/Island.tsx",
+      "sha256": "dd5e5509e04d5b02bafe9ab9149face7ba986f141251cde433cf514da9f0d548"
+    },
+    {
+      "file": "src/components/island/IslandHouseOverview.tsx",
+      "sha256": "e88a412e840c6ca8c57b2e618b16493c315a93b9fbeec890714f7c6704830cdd"
+    },
+    {
+      "file": "src/components/island/IslandHouseOverview.css",
+      "sha256": "290ffa2c18d208bcf01b30c755ad5631d1c0099ada7ab007468397f3106444d4"
+    },
+    {
+      "file": "src/components/island/IslandLearningKeepsakes.tsx",
+      "sha256": "5ae652fb3a868d32a138e12c5bd9393798b5cc6783af6f6e8eeaa8c2ee96e935"
+    },
+    {
+      "file": "src/components/island/homeJourney/HomeJourneyPreview.tsx",
+      "sha256": "b61a24f156e910a4ca632256ed5f462d0788e953fd54c2b3f337ecf880d8c150"
+    }
+  ]
+}

@@ -31,17 +31,17 @@ try {
   await page.waitForFunction(()=>{const w=JSON.parse(document.querySelector('[data-home-resident]').dataset.homeResident);return w.position[0]<1.5&&!w.moving;});
 
   const navTop=(await nav.boundingBox()).y;
-  for(const action of ['album','open-keepsakes','notices']) {
+  for(const action of ['album','photos']) {
    const control=page.locator(`[data-keepsake-action="${action}"]`);const box=await control.boundingBox();assert(box.height>=44);assert(box.y+box.height<=navTop,`${width} ${action} visible before scroll`);
    assert(await control.evaluate(e=>{const r=e.getBoundingClientRect();return e.contains(document.elementFromPoint(r.x+r.width/2,r.y+r.height/2));}));
   }
-  await page.locator('[data-keepsake-action="notices"]').tap();await page.getByText('いまは あたらしい おしらせは ないよ').waitFor();await capture('notices');await page.locator('[data-keepsake-action="home"]').tap();
+  await page.getByRole('button',{name:'いえの メニュー',exact:true}).tap();await page.locator('[data-keepsake-action="notices"]').tap();await page.getByText('いまは あたらしい おしらせは ないよ').waitFor();await capture('notices');await page.locator('[data-keepsake-action="home"]').tap();
   // Tap the actual tabletop album using the renderer's projected target.
   const host=page.locator('[data-renderer="three"]');const target=await host.evaluate(e=>JSON.parse(e.dataset.homeTargets).find(t=>t.type==='album'));const rect=await host.boundingBox();console.log('album target',target,rect,await page.evaluate(({x,y})=>document.elementFromPoint(x,y)?.outerHTML.slice(0,250),{x:rect.x+target.x,y:rect.y+target.y}));await capture('before-album-tap');await host.evaluate(e=>{window.housePointerEvents=[];for(const type of ['pointerdown','pointerup','pointercancel','lostpointercapture'])e.addEventListener(type,event=>window.housePointerEvents.push({type:event.type,button:event.button,x:event.clientX,y:event.clientY}));});await page.touchscreen.tap(rect.x+target.x,rect.y+target.y);await page.locator('.island-page[data-mode="album"]').waitFor({state:'attached'});await capture('album');
   await nav.getByRole('button',{name:'いえ',exact:true}).tap();await roomReady();
   // Only the diagnostic award qualification is seeded; display/store use real UI transactions.
   await page.evaluate(async id=>{const r=indexedDB.open('SansuDatabase');const db=await new Promise(ok=>r.onsuccess=()=>ok(r.result));const tx=db.transaction('islands','readwrite');const store=tx.objectStore('islands');const read=store.get(id);read.onsuccess=()=>store.put({...read.result,completedSets:5});await new Promise((ok,no)=>{tx.oncomplete=ok;tx.onerror=no;});db.close();},id);
-  await page.reload();await roomReady();await page.locator('[data-keepsake-action="open-keepsakes"]').tap();
+  await page.reload();await roomReady();await page.getByRole('button',{name:'いえの メニュー',exact:true}).tap();await page.locator('[data-keepsake-action="open-keepsakes"]').tap();
   await page.locator('[data-keepsake-action="display"]').tap();await page.locator('[data-keepsake-action="store"]').waitFor();await capture('certificate-displayed');
   assert((await readNative(page,id)).island.learningKeepsakes.displayed.includes('first-completion'));
   await page.locator('[data-keepsake-action="store"]').tap();await page.locator('[data-keepsake-action="display"]').waitFor();assert.equal((await readNative(page,id)).island.learningKeepsakes.displayed.length,0);

@@ -88,6 +88,7 @@ try {
             await waitMode(page, 'keepsakes'); await ordinary('#/island?view=keepsakes');
             assert.equal(await nav.locator('[aria-current="page"]').innerText(), 'いえ');
             await capture('house');
+            await page.getByRole('button', { name: 'いえの メニュー', exact: true }).click();
             await page.locator('[data-keepsake-action=notices]').click();
             await page.getByRole('heading', { name: 'おしらせ', exact: true }).first().waitFor();
             assert.equal(await page.locator('[data-keepsake-action=close]').count(), 0, 'House detail has one parent return');

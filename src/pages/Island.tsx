@@ -53,6 +53,7 @@ import { IslandCustomization, IslandCustomizationPreviewNotice } from '../compon
 import { IslandRewardGoal, IslandRewardGoalFeedback } from '../components/island/IslandRewardGoal';
 import { IslandHomeActions } from '../components/island/IslandHomeActions';
 import { IslandLearningKeepsakes } from '../components/island/IslandLearningKeepsakes';
+import { IslandToyIcon } from '../components/island/IslandToyIcon';
 import { useIslandLearningKeepsakes } from '../components/island/useIslandLearningKeepsakes';
 import type { IslandLearningKeepsakeId } from '../domain/island/learningKeepsakes';
 import { islandDistrictForPosition, islandHomeDistrict } from '../components/island/islandDistrictView';
@@ -96,6 +97,7 @@ import '../components/island/Island.css';
 import '../components/island/IslandDisplayLayout.css';
 import '../components/island/IslandWideWorkspace.css';
 import '../components/island/IslandImmersiveLayout.css';
+import '../components/island/IslandHouseOverview.css';
 
 type Screen = IslandScreen;
 const RENDERER_RECOVERY_HINT = '「もういちど みる」で、しまを ひらこう。';
@@ -628,14 +630,16 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     const cancelPlacement = navigation ? home : returnToFurniture ? () => {
         setFurniturePlacementSearch(undefined); setFurniturePlacementResult(undefined); setPreview(undefined); setScreen('furniture');
     } : home;
+    const houseOverview = screen === 'keepsakes' && houseSection === 'home';
     return <main className="island-page" data-tutorial-topic={tutorial.current?.id} data-layout-version="display-v1" data-game-id="mystic-island-v1" data-mode={screen} data-life-home={screen === 'home' && lifeEnabled() ? 'true' : undefined} data-home-layout={screen === 'home' ? 'world-first-v2' : undefined} data-complex={Boolean(learning && complex)}
+        data-house-layout={houseOverview ? 'world-first-v1' : undefined} data-house-candidate={houseOverview ? 'house-world-first-v1' : undefined}
         data-visual-candidate-id={ISLAND_VISUAL_CANDIDATE} data-delivery-id={ISLAND_DELIVERY_ID}
         data-learning-candidate={ISLAND_LEARNING_CANDIDATE}
         data-island-revision={island.revision} data-discovery-count={island.growth?.discoveries.length ?? 0}
         data-build-revision={__BUILD_REVISION__} data-build-version={__APP_VERSION__} data-busy={busy}>
         {!['showcase', 'placement'].includes(screen) && <header className="island-header"><div className="island-brand" data-learning-milestone={learning ? Boolean(milestoneNotice.milestone) : undefined}>
-            <Leaf size={20} /><div>{screen === 'home' && lifeEnabled()
-                ? <h1 title={island.experience?.islandName}>{profile.name}の しま</h1>
+            {houseOverview ? <IslandToyIcon kind="house" size={25} /> : <Leaf size={20} />}<div>{houseOverview || screen === 'home' && lifeEnabled()
+                ? <h1 title={houseOverview ? `${profile.name}の いえ` : island.experience?.islandName}>{profile.name}の {houseOverview ? 'いえ' : 'しま'}</h1>
                 : <><p>{profile.name}の</p><h1 title={island.experience?.islandName}>{island.experience?.islandName ?? 'ふしぎな しま'}</h1></>}</div>
             {milestoneNotice.milestone && <IslandMilestoneNotice milestone={milestoneNotice.milestone} island={island} />}</div>
             <div className="island-header-actions"><IslandSoundControl key={screen} enabled={profile.soundEnabled} disabled={busy} onChange={enabled => run(async () => {
@@ -679,7 +683,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                 onGrow={() => { void chooseGrowth('garden').then(updated => { if (updated) setDirectSelection(undefined); }); }}
                 onPlay={openDirectPlay} onBrowsePlay={residentId => openDirectPlay(undefined, residentId)} onMove={item => { setDirectSelection(undefined); select(item); }}
                 onInventory={() => { setDirectSelection(undefined); setScreen('inventory'); }} onClose={closeDirect} /> : undefined}
-            learningKeepsakes={keepsakeRoomActive ? { state: island.learningKeepsakes, selectedId: keepsakeFocus } : undefined}
+            learningKeepsakes={keepsakeRoomActive ? { closeOverview: houseOverview, state: island.learningKeepsakes, selectedId: keepsakeFocus } : undefined}
             onHomeEnter={!busy && ['home', 'play'].includes(screen) ? enterHouse : undefined}
             onHomeAction={!busy && screen === 'keepsakes' ? action => {
                 if (action.type === 'album') { setReturnToHouse(true); setAlbumComparison('garden'); setScreen('album'); }
@@ -851,6 +855,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                     onCommand={command => setWorkshopRequest({ id: crypto.randomUUID(), command })}
                     onAction={workshopActions.act} error={workshopActions.error} onRetry={workshopActions.retry} onClose={home} onLearn={() => void begin()} />
                 : screen === 'keepsakes' ? <IslandLearningKeepsakes island={island} controls={keepsakes} disabled={busy} comparisonDisabled={comparisonDisabled}
+                    active={active}
                     walkingAvailable={!homeJourneyScene}
                     challenge={<ChallengeHomeCard key={profile.id} profileId={profile.id} disabled={busy} onLearn={() => void begin()} onResult={() => { setChallengeStartIntent(false); setScreen('challenge'); }} onStart={() => { setChallengeStartIntent(true); setScreen('challenge'); }} />}
                     section={houseSection} onSectionChange={section => { setHouseSection(section); setKeepsakeFocus(undefined); }}
