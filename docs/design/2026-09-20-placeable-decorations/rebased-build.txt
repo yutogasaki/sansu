@@ -1,0 +1,109 @@
+
+> pokko-fushigi-zukan-app@0.0.0 build
+> tsc -b && vite build && npm run assets:check
+
+vite v7.3.1 building client environment for production...
+transforming...
+Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+✓ 3806 modules transformed.
+Generated an empty chunk: "pdf".
+rendering chunks...
+computing gzip size...
+dist/version.json                                     0.47 kB │ gzip:   0.27 kB
+dist/index.html                                       1.58 kB │ gzip:   0.72 kB
+dist/assets/town-prop-bench-FdKjOSai.png              9.13 kB
+dist/assets/NotoSansJP-C_ziqpoc.woff2                13.06 kB
+dist/assets/town-prop-flowers-BOUxk4Bw.png           13.80 kB
+dist/assets/town-rabbit-carrying-RfQ1w-aH.png        14.24 kB
+dist/assets/town-rabbit-giving-CnJ9JmwQ.png          14.58 kB
+dist/assets/town-rabbit-receiving-DUoJoWgV.png       14.72 kB
+dist/assets/town-rabbit-idle-Bh01hjGD.png            14.90 kB
+dist/assets/catalog-MsWF2Ofo.png                     18.20 kB
+dist/assets/town-prop-home-B1P8AAtr.png              19.39 kB
+dist/assets/town-prop-tree-Yw3JP1Jo.png              20.27 kB
+dist/assets/town-otter-carrying-CNTvBDdk.png         21.45 kB
+dist/assets/town-otter-giving-C4wtqVhT.png           21.71 kB
+dist/assets/town-otter-receiving-hjH-v6Y1.png        21.99 kB
+dist/assets/town-otter-idle-BshfulWh.png             22.12 kB
+dist/assets/town-pokomoko-carrying-B6igduKw.png      25.49 kB
+dist/assets/town-pokomoko-giving-BOi7RcKv.png        26.51 kB
+dist/assets/town-pokomoko-idle-hYR2u8GP.png          26.67 kB
+dist/assets/flower-bloom-original-Bhc8ZRS8.png       27.17 kB
+dist/assets/town-pokomoko-receiving-CKZT-N1L.png     27.25 kB
+dist/assets/pokomoko-original-8wLdjUXI.png           31.15 kB
+dist/assets/catalog-C9jTiRjH.png                     32.80 kB
+dist/assets/basis_transcoder-o4Hde_L7.js             57.53 kB
+dist/assets/far-geometry-Di-gBAev.glb                62.40 kB
+dist/assets/far-CbQUffpN.glb                         70.37 kB
+dist/assets/far-geometry-C2nCL94K.glb                90.88 kB
+dist/assets/far-geometry-DTfZ_trK.glb               127.57 kB
+dist/assets/far-iUTsXLLh.glb                        130.80 kB
+dist/assets/far-geometry-BV4Tmqez.glb               136.54 kB
+dist/assets/far-BNsdfYHM.glb                        147.90 kB
+dist/assets/near-Bt9PwG61.glb                       209.47 kB
+dist/assets/far-geometry-B5GXTTw0.glb               226.28 kB
+dist/assets/near-3yaftuce.glb                       293.84 kB
+dist/assets/near-B8znkHvM.glb                       306.04 kB
+dist/assets/far-Zj6wZqfp.glb                        309.89 kB
+dist/assets/far-geometry-CUf7iENq.glb               325.53 kB
+dist/assets/near-CuR2H6Uc.glb                       443.91 kB
+dist/assets/basis_transcoder-VXdx5NbI.wasm          527.33 kB │ gzip: 247.62 kB
+dist/assets/near-CMx7NApC.glb                     1,568.14 kB
+dist/assets/near-B3PvBOT3.glb                     1,642.36 kB
+dist/assets/near-C_b32qsb.glb                     1,706.40 kB
+dist/assets/near-l6ZZxCWq.glb                     1,759.80 kB
+dist/assets/near-DoEuBhay.glb                     1,924.85 kB
+dist/assets/near-7GK7mDBY.glb                     1,983.43 kB
+dist/assets/IslandWelcome-BJp8Sa-m.css                2.05 kB │ gzip:   0.72 kB
+dist/assets/NatureTown-CsBT-ZpQ.css                  11.84 kB │ gzip:   3.30 kB
+dist/assets/Island-DyYOUQ1e.css                      28.98 kB │ gzip:   5.63 kB
+dist/assets/IslandLife-BTbC2mKf.css                  60.45 kB │ gzip:   9.46 kB
+dist/assets/Island-5WeVh7cU.css                     107.94 kB │ gzip:  16.95 kB
+dist/assets/index-DHsEbQWW.css                      240.92 kB │ gzip:  41.01 kB
+dist/assets/pdf-l0sNRNKZ.js                           0.00 kB │ gzip:   0.02 kB
+dist/assets/homeJourney-AsyulGtB.js                   0.83 kB │ gzip:   0.52 kB
+dist/assets/IslandWelcome-CKsX5puY.js                 1.98 kB │ gzip:   1.06 kB
+dist/assets/footprint-C7KYpZtJ.js                     3.41 kB │ gzip:   1.72 kB
+dist/assets/IslandOnboarding-rMo1Xo1G.js              3.45 kB │ gzip:   1.50 kB
+dist/assets/LifeResidentPortrait-EDyD4Y9a.js         18.31 kB │ gzip:   7.76 kB
+dist/assets/repository-DjmZ0RZK.js                   23.36 kB │ gzip:   9.39 kB
+dist/assets/icons-DrizokvY.js                        28.68 kB │ gzip:  10.53 kB
+dist/assets/audio-DwtSHwBT.js                        36.13 kB │ gzip:   9.75 kB
+dist/assets/islandFurniturePlacement-BiovS_Ji.js     42.09 kB │ gzip:  12.16 kB
+dist/assets/residentInterest-CScPcl8C.js             46.78 kB │ gzip:  18.23 kB
+dist/assets/react-DcHpdqMy.js                        48.53 kB │ gzip:  17.24 kB
+dist/assets/NatureTown-DqNKtdFo.js                   50.72 kB │ gzip:  17.81 kB
+dist/assets/Island-DrN6oPAo.js                       68.17 kB │ gzip:  21.44 kB
+dist/assets/repository-Cnp4zsDh.js                   75.68 kB │ gzip:  21.05 kB
+dist/assets/data-CYRvWfdS.js                         96.37 kB │ gzip:  32.45 kB
+dist/assets/runtimeAssets-B6ijKwr2.js               108.82 kB │ gzip:  39.94 kB
+dist/assets/motion-iLBaTeAD.js                      119.65 kB │ gzip:  39.54 kB
+dist/assets/IslandLife-CCbX_p6u.js                  170.98 kB │ gzip:  57.21 kB
+dist/assets/Island-VXBJUBuJ.js                      302.34 kB │ gzip:  89.34 kB
+dist/assets/runtime-DI8w9rLP.js                     344.83 kB │ gzip: 107.82 kB
+dist/assets/charts-Dqb-tBNT.js                      371.57 kB │ gzip: 108.42 kB
+dist/assets/RoundedBoxGeometry-SRscFZ8v.js          627.12 kB │ gzip: 163.15 kB
+dist/assets/index-cRdkDDBu.js                     1,063.51 kB │ gzip: 299.20 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 13.73s
+
+PWA v1.2.0
+mode      generateSW
+precache  125 entries (5557.62 KiB)
+files generated
+  dist/sw.js
+  dist/workbox-08312b14.js
+
+> pokko-fushigi-zukan-app@0.0.0 assets:check
+> node tools/check-asset-budget.mjs
+
+PASS assets:check
+- PWA precache: 125 unique files, 11.57 MiB / 12.00 MiB
+- Explore artwork: 27 production files, 4.92 MiB / 8.00 MiB
+- Production-input contract: docs/design only; absent from public and precache

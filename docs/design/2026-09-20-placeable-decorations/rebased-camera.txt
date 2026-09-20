@@ -1,0 +1,17 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/.codex/worktrees/island-placeable-props/sansu
+
+ ✓ src/components/island/three/homeInteriorCamera.test.ts (16 tests) 32174ms
+   ✓ a perspective camera inside the same closed house > places the real room floor above the unchanged exterior foundation at aspect 1.3220338983050848 438ms
+   ✓ a perspective camera inside the same closed house > places the real room floor above the unchanged exterior foundation at aspect 2.0210526315789474 595ms
+   ✓ a perspective camera inside the same closed house > encloses the viewport, shows living objects and all sixteen awards at 390×295, actual cottage=false 7303ms
+   ✓ a perspective camera inside the same closed house > encloses the viewport, shows living objects and all sixteen awards at 768×380, actual cottage=false 7665ms
+   ✓ a perspective camera inside the same closed house > encloses the viewport, shows living objects and all sixteen awards at 390×295, actual cottage=true 7937ms
+   ✓ a perspective camera inside the same closed house > encloses the viewport, shows living objects and all sixteen awards at 768×380, actual cottage=true 7303ms
+   ✓ a perspective camera inside the same closed house > keeps the whole walking resident on screen at the portrait edges and restores the close view 652ms
+
+ Test Files  1 passed (1)
+      Tests  16 passed (16)
+   Start at  12:27:01
+   Duration  33.10s (transform 234ms, setup 0ms, collect 360ms, tests 32.17s, environment 0ms, prepare 54ms)
+

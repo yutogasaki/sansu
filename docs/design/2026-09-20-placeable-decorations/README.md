@@ -52,3 +52,7 @@ rendererの三角形数は影などを含むフレーム指標で、GLB本体の
 - [smoke再検査](smoke-recheck.txt): 失敗したroot-tangleを5画面幅すべてで再実行してPASS。初回の失敗ログを保持。
 - [既存島の回帰](legacy-island.txt): phone/tabletの46実UI区間による4地区成熟、3D履歴/再演、WebGL復旧、初回、自動進行、各入力形式PASS。Life無効の旧導線検査であり新飾りの証拠には混ぜない。
 - [固定10問の反復比較](throughput-v3.json): phone/tablet、各10反復、全正解/4・8問目誤答、Study/Islandの80runでPASS。閾値・追加操作0・正確な保存・source不変を確認。DEVの固定問題fixtureであり、本番plannerや子どもの学習効果の証拠ではない。
+
+## 配布前の最終統合
+
+その後のmain `b6d62216` を取り込み、実装commitは `07a5f272` へrebase。v3の検査対象からのapp差分は、別作業の室内写真カメラに関する `three/runtime.ts` の3行だけ。飾り・保存・学習・Life外観の入力は同一。[最終build](rebased-build.txt)と[室内カメラ16件](rebased-camera.txt)を通過。変更のない新機能journeyと80runは再走せず、元のhash付き結果を保持する。公開版は配布後に別途照合する。
