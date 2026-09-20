@@ -1,0 +1,42 @@
+{
+  "target": "https://sansu-seven.vercel.app",
+  "build": {
+    "version": "15c3eafcdaa5b8102c934b9bfc7130b78b6ce5d9:50858e86-a9b3-45eb-b85d-56e41af42747",
+    "revision": "15c3eafcdaa5b8102c934b9bfc7130b78b6ce5d9",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "sourceCommit": "15c3eafcdaa5b8102c934b9bfc7130b78b6ce5d9",
+  "flags": {
+    "VITE_ISLAND_ENABLED": true,
+    "VITE_ISLAND_LIFE_ENABLED": true
+  },
+  "houseCandidate": "house-world-first-v1",
+  "cameraCandidate": "island-home-interior-v5",
+  "sourceHashes": {
+    "src/components/island/IslandHouseOverview.tsx": "e88a412e840c6ca8c57b2e618b16493c315a93b9fbeec890714f7c6704830cdd",
+    "src/components/island/IslandHouseOverview.css": "290ffa2c18d208bcf01b30c755ad5631d1c0099ada7ab007468397f3106444d4",
+    "src/components/island/IslandLearningKeepsakes.tsx": "5ae652fb3a868d32a138e12c5bd9393798b5cc6783af6f6e8eeaa8c2ee96e935",
+    "src/components/island/homeJourney/HomeJourneyPreview.tsx": "b61a24f156e910a4ca632256ed5f462d0788e953fd54c2b3f337ecf880d8c150",
+    "src/pages/Island.tsx": "26c2e266a1a42712818e9b8eb8c7cb94a4dfb1b598790b089448e140d69c6d93",
+    "src/components/island/three/homeInteriorCamera.ts": "94214210f8326783f512ded341f6e7ddcb41aaaa2347c752d1579c53a201a9a5",
+    "src/components/island/three/runtime.ts": "16c8211b2b604aa8cb1330e50b043a4859f34f1602f340fbac4779fb6e875a52",
+    "src/components/island/three/types.ts": "37140d4ec3189a3cc9b294b7bccfb18025a9fcaf1ba7df4bee7592c2ccb50fde",
+    "src/components/island/life/life-world-first.css": "575c7e71f25f02798c1ce707dc12fccbce8b3e5051e43e0f6b1d149c4271ae8c"
+  },
+  "physicalDevice": false,
+  "baselineManifest": "baseline-manifest.json",
+  "localManifest": "local-manifest.json"
+}

@@ -1,0 +1,14 @@
+{
+  "pass": false,
+  "target": "https://sansu-seven.vercel.app",
+  "physicalDevice": false,
+  "requestsFailed": [
+    {
+      "url": "https://sansu-seven.vercel.app/version.json?t=1789874066839",
+      "failure": {
+        "errorText": "net::ERR_ABORTED"
+      }
+    }
+  ],
+  "error": "Error: page.evaluate: Execution context was destroyed, most likely because of a navigation"
+}

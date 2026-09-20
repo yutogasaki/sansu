@@ -1,0 +1,963 @@
+verify-core	Verify core	﻿2026-09-20T03:12:12.5364279Z ##[group]Run npm run verify:core
+verify-core	Verify core	2026-09-20T03:12:12.5364829Z [36;1mnpm run verify:core[0m
+verify-core	Verify core	2026-09-20T03:12:12.5403683Z shell: /usr/bin/bash -e {0}
+verify-core	Verify core	2026-09-20T03:12:12.5404054Z ##[endgroup]
+verify-core	Verify core	2026-09-20T03:12:12.6469125Z
+verify-core	Verify core	2026-09-20T03:12:12.6470251Z > pokko-fushigi-zukan-app@0.0.0 verify:core
+verify-core	Verify core	2026-09-20T03:12:12.6471625Z > npm run docs:check && npm run lint && npm run typecheck && npm run test:run && npm run build
+verify-core	Verify core	2026-09-20T03:12:12.6472407Z
+verify-core	Verify core	2026-09-20T03:12:12.7469089Z
+verify-core	Verify core	2026-09-20T03:12:12.7470170Z > pokko-fushigi-zukan-app@0.0.0 docs:check
+verify-core	Verify core	2026-09-20T03:12:12.7471190Z > node tools/check-docs.mjs
+verify-core	Verify core	2026-09-20T03:12:12.7471782Z
+verify-core	Verify core	2026-09-20T03:12:13.1666193Z WARN
+verify-core	Verify core	2026-09-20T03:12:13.1669634Z - docs/tasks/design-refresh-status.md: 次回棚卸し目安 (2026-05-15) is in the past
+verify-core	Verify core	2026-09-20T03:12:13.1671158Z - docs/tasks/backlog.md: 次回棚卸し目安 (2026-05-15) is in the past
+verify-core	Verify core	2026-09-20T03:12:13.1672549Z - docs/tasks/ui-fix-tasklist.md: 次回棚卸し目安 (2026-05-15) is in the past
+verify-core	Verify core	2026-09-20T03:12:13.1674079Z - docs/tasks/active/2026-03-17-v1-core-stabilization-plan.md: Review By (2026-05-15) is in the past
+verify-core	Verify core	2026-09-20T03:12:13.1676111Z - docs/tasks/active/2026-07-19-root-tangle-observation-morph.md: Review By (2026-07-26) is in the past
+verify-core	Verify core	2026-09-20T03:12:13.1677619Z - docs/tasks/active/2026-07-21-cold-open-value-loop.md: Review By (2026-07-28) is in the past
+verify-core	Verify core	2026-09-20T03:12:13.1679148Z - docs/tasks/active/2026-07-23-whole-app-brand-coherence.md: Review By (2026-07-30) is in the past
+verify-core	Verify core	2026-09-20T03:12:13.1680712Z - docs/tasks/active/2026-09-07-experience-improvements.md: Review By (2026-09-14) is in the past
+verify-core	Verify core	2026-09-20T03:12:13.1682250Z - docs/tasks/active/2026-09-08-island-experience-coverage.md: Review By (2026-09-15) is in the past
+verify-core	Verify core	2026-09-20T03:12:13.1684373Z - docs/tasks/active/2026-09-08-island-experience-remaining-audit.md: Review By (2026-09-15) is in the past
+verify-core	Verify core	2026-09-20T03:12:13.1685986Z - docs/tasks/active/2026-09-08-island-experience-workshop-plan.md: Review By (2026-09-15) is in the past
+verify-core	Verify core	2026-09-20T03:12:13.1687246Z - docs/tasks/active/2026-09-08-island-experience.md: Review By (2026-09-09) is in the past
+verify-core	Verify core	2026-09-20T03:12:13.1688456Z - docs/tasks/active/2026-09-09-home-journey-preview.md: Review By (2026-09-16) is in the past
+verify-core	Verify core	2026-09-20T03:12:13.1689208Z PASS docs:check
+verify-core	Verify core	2026-09-20T03:12:13.2710902Z
+verify-core	Verify core	2026-09-20T03:12:13.2711832Z > pokko-fushigi-zukan-app@0.0.0 lint
+verify-core	Verify core	2026-09-20T03:12:13.2712491Z > eslint .
+verify-core	Verify core	2026-09-20T03:12:13.2713082Z
+verify-core	Verify core	2026-09-20T03:13:01.0985183Z
+verify-core	Verify core	2026-09-20T03:13:01.0988443Z /home/runner/work/sansu/sansu/src/components/island/IslandMilestone.tsx
+verify-core	Verify core	2026-09-20T03:13:01.1028318Z ##[warning]  16:17  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+verify-core	Verify core	2026-09-20T03:13:01.1036879Z
+verify-core	Verify core	2026-09-20T03:13:01.1037380Z ✖ 1 problem (0 errors, 1 warning)
+verify-core	Verify core	2026-09-20T03:13:01.1037633Z
+verify-core	Verify core	2026-09-20T03:13:01.4532718Z
+verify-core	Verify core	2026-09-20T03:13:01.4534772Z > pokko-fushigi-zukan-app@0.0.0 typecheck
+verify-core	Verify core	2026-09-20T03:13:01.4535630Z > tsc -b --pretty false
+verify-core	Verify core	2026-09-20T03:13:01.4535992Z
+verify-core	Verify core	2026-09-20T03:13:21.3552714Z
+verify-core	Verify core	2026-09-20T03:13:21.3553746Z > pokko-fushigi-zukan-app@0.0.0 test:run
+verify-core	Verify core	2026-09-20T03:13:21.3554469Z > vitest run
+verify-core	Verify core	2026-09-20T03:13:21.3554695Z
+verify-core	Verify core	2026-09-20T03:13:21.7681037Z
+verify-core	Verify core	2026-09-20T03:13:21.7683697Z [1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m/home/runner/work/sansu/sansu[39m
+verify-core	Verify core	2026-09-20T03:13:21.7684549Z
+verify-core	Verify core	2026-09-20T03:13:25.2535984Z  [32m✓[39m src/domain/explore/__tests__/persistenceRepository.test.ts [2m([22m[2m38 tests[22m[2m)[22m[33m 721[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:25.4074728Z  [32m✓[39m src/domain/explore/__tests__/learningPlannerSegment.test.ts [2m([22m[2m15 tests[22m[2m)[22m[33m 511[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:32.3183431Z  [32m✓[39m src/components/island/three/residentRig.test.ts [2m([22m[2m38 tests[22m[2m)[22m[33m 5260[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:32.3186421Z    [33m[2m✓[22m[39m resident local rig and furniture contact[2m > [22mblends the flower lean out before carrying and restores it without accumulation [33m335[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:32.3190290Z    [33m[2m✓[22m[39m resident local rig and furniture contact[2m > [22mbench supports each resident at the real surface through all rotations [33m706[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:32.3193611Z    [33m[2m✓[22m[39m resident local rig and furniture contact[2m > [22mswing supports each resident at the real surface through all rotations [33m466[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:32.3196736Z    [33m[2m✓[22m[39m resident local rig and furniture contact[2m > [22mmushroom supports each resident at the real surface through all rotations [33m534[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:32.3199797Z    [33m[2m✓[22m[39m resident interest stays a removable layer on the real rig[2m > [22motter keeps real feet, root, seat and shoulder joints on rotated ordinary objects [33m1036[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:32.4326206Z  [32m✓[39m tools/expression-audio/audio-analysis.test.mjs [2m([22m[2m53 tests[22m[2m)[22m[33m 9723[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:32.4328727Z    [33m[2m✓[22m[39m source analysis requires all three pitches and a truly silent long gap [33m346[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:32.4333812Z    [33m[2m✓[22m[39m evening acceptance measures its insect band and all three 2-second calls at native sample rates [33m536[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:32.4338116Z    [33m[2m✓[22m[39m insect-band classification rejects absent insects and actual wind or water even when made quiet [33m637[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:32.4340234Z    [33m[2m✓[22m[39m an uninterrupted high tone, wrong cadence or missing call cannot impersonate evening insects [33m371[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:32.4342374Z    [33m[2m✓[22m[39m every retained pitch, correspondence, silence and end window uses the same native source clock [33m578[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:32.4348993Z    [33m[2m✓[22m[39m raw02 loop prefix positions are missing first-pitch evidence, not proof of an overlapping loop [33m618[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:32.4351155Z    [33m[2m✓[22m[39m one missing first-pitch sample or final required sample fails without shortening either window [33m1347[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:32.4353641Z    [33m[2m✓[22m[39m the complete native silence window rejects contamination in its first sample that a shifted range misses [33m487[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:32.4356156Z    [33m[2m✓[22m[39m one-sample and wrong-sign native offsets fail instead of choosing a better waveform lag [33m672[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:32.4358223Z    [33m[2m✓[22m[39m unknown, nonfinite, fractional and mismatched native metadata fail rather than falling back to signal alignment [33m539[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:32.4362042Z    [33m[2m✓[22m[39m real-answer cue history can exceed 256 sources, while the finite source cap still cannot block native playback or close [33m1548[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:36.1415640Z  [32m✓[39m src/domain/island/rewardGoalRepository.test.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 1393[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:36.1477591Z    [33m[2m✓[22m[39m reward goals and the real island storage boundary[2m > [22mearns the desired furniture through ordinary learning, preserves photographs and old memories, then resumes the same reservation [33m579[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:38.2380543Z  [32m✓[39m src/domain/island/island.test.ts [2m([22m[2m19 tests[22m[2m)[22m[33m 3581[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:38.2385748Z    [33m[2m✓[22m[39m island frozen learning sets[2m > [22mreserves three introductory questions, then six familiar questions, and restores the exact plan [33m992[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:38.2388176Z    [33m[2m✓[22m[39m island frozen learning sets[2m > [22mkeeps wrong answers on the same problem and assistance sticky without fabricating mastery [33m524[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:38.2389811Z    [33m[2m✓[22m[39m island frozen learning sets[2m > [22msupports mixed vocabulary sets and applies vocabulary progression only to independent answers [33m1118[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:38.2391909Z    [33m[2m✓[22m[39m island frozen learning sets[2m > [22mpreserves fraction multi-input and stepwise written arithmetic in complete reserved plans [33m550[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:39.7365559Z  [32m✓[39m src/domain/island/expressionRepository.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 1486[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:39.7370338Z    [33m[2m✓[22m[39m expression ownership with the existing learning and photo stores[2m > [22mearns ordinary stars without materializing expression, acquires separately, reloads and resumes the exact same learning plan [33m629[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:39.8782803Z  [32m✓[39m src/components/island/three/sharedDisplayScene.test.ts [2m([22m[2m13 tests[22m[2m)[22m[33m 1092[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:39.8786137Z    [33m[2m✓[22m[39m shared display geometry, anchors and lifecycle[2m > [22mkeeps every real table, tray, object, petal and selection vertex inside the shared placement footprint [33m345[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:41.6513468Z  [32m✓[39m src/hooks/useStudySession.logic.test.ts [2m([22m[2m40 tests[22m[2m)[22m[90m 29[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:43.4281601Z  [32m✓[39m src/hooks/blockGenerators.test.ts [2m([22m[2m32 tests[22m[2m)[22m[90m 34[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:54.3249275Z  [32m✓[39m src/components/island/three/sharedActivityFraming.test.ts [2m([22m[2m26 tests[22m[2m)[22m[33m 28032[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:54.3251924Z    [33m[2m✓[22m[39m body identity keeps the actual articulated tail[2m > [22motter retains tail surfaces in every held pose without borrowing head or arm surfaces [33m674[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:54.3315811Z    [33m[2m✓[22m[39m one side view contains the complete shared delivery[2m > [22m'flower' fits all quarter-turn chair directions and phone/tablet stage shapes [33m1683[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:54.3355594Z    [33m[2m✓[22m[39m one side view contains the complete shared delivery[2m > [22m'star' fits all quarter-turn chair directions and phone/tablet stage shapes [33m2113[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:54.3385560Z    [33m[2m✓[22m[39m one side view contains the complete shared delivery[2m > [22m'bubble' fits all quarter-turn chair directions and phone/tablet stage shapes [33m2352[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:54.3388001Z    [33m[2m✓[22m[39m one side view contains the complete shared delivery[2m > [22mscores actual held poses for '624 star spectator' across every phase without touching the live rigs [33m1722[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:54.3390027Z    [33m[2m✓[22m[39m one side view contains the complete shared delivery[2m > [22mscores actual held poses for '484 star self-occlusion' across every phase without touching the live rigs [33m1125[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:54.3392067Z    [33m[2m✓[22m[39m one side view contains the complete shared delivery[2m > [22mscores actual held poses for '484 bubble self-occlusion' across every phase without touching the live rigs [33m1797[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:54.3394143Z    [33m[2m✓[22m[39m one side view contains the complete shared delivery[2m > [22mkeeps each subject readable in the recorded 0875 'phone star' scene [33m1410[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:54.3395825Z    [33m[2m✓[22m[39m one side view contains the complete shared delivery[2m > [22mkeeps each subject readable in the recorded 0875 'tablet star' scene [33m1248[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:54.3397502Z    [33m[2m✓[22m[39m one side view contains the complete shared delivery[2m > [22mkeeps each subject readable in the recorded 0875 'phone flower' scene [33m776[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:54.3399132Z    [33m[2m✓[22m[39m one side view contains the complete shared delivery[2m > [22mkeeps each subject readable in the recorded 0875 'tablet flower' scene [33m854[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:54.3400758Z    [33m[2m✓[22m[39m one side view contains the complete shared delivery[2m > [22mkeeps each subject readable in the recorded 0875 'phone bubble' scene [33m888[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:54.3402605Z    [33m[2m✓[22m[39m one side view contains the complete shared delivery[2m > [22mkeeps each subject readable in the recorded 0875 'tablet bubble' scene [33m737[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:54.3404567Z    [33m[2m✓[22m[39m one side view contains the complete shared delivery[2m > [22mselects a legal fixed presentation for cdc5 phone without inventing readability [33m1062[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:54.3406337Z    [33m[2m✓[22m[39m one side view contains the complete shared delivery[2m > [22mselects a legal fixed presentation for cdc5 tablet without inventing readability [33m1131[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:54.3408132Z    [33m[2m✓[22m[39m one side view contains the complete shared delivery[2m > [22mselects a legal fixed presentation for cdc5 obstructed without inventing readability [33m2546[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:54.3409856Z    [33m[2m✓[22m[39m recorded 5d7 subjects cannot borrow visibility from later poses[2m > [22m'phone-flower' preserves a legal readable presentation [33m774[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:54.3411478Z    [33m[2m✓[22m[39m recorded 5d7 subjects cannot borrow visibility from later poses[2m > [22m'phone-star' preserves a legal readable presentation [33m498[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:54.3414900Z    [33m[2m✓[22m[39m recorded 5d7 subjects cannot borrow visibility from later poses[2m > [22m'phone-bubble' preserves a legal readable presentation [33m648[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:54.3416868Z    [33m[2m✓[22m[39m recorded 5d7 subjects cannot borrow visibility from later poses[2m > [22m'tablet-flower' preserves a legal readable presentation [33m806[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:54.3418525Z    [33m[2m✓[22m[39m recorded 5d7 subjects cannot borrow visibility from later poses[2m > [22m'tablet-star' preserves a legal readable presentation [33m676[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:54.3420200Z    [33m[2m✓[22m[39m recorded 5d7 subjects cannot borrow visibility from later poses[2m > [22m'tablet-bubble' preserves a legal readable presentation [33m880[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:54.3422204Z    [33m[2m✓[22m[39m recorded 5d7 subjects cannot borrow visibility from later poses[2m > [22m'tablet-fox-flower' preserves a legal readable presentation [33m1348[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:56.2607216Z  [32m✓[39m src/domain/explore/__tests__/reducer.test.ts [2m([22m[2m29 tests[22m[2m)[22m[90m 22[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:56.7151201Z  [32m✓[39m src/domain/math/generators/counting.test.ts [2m([22m[2m51 tests[22m[2m)[22m[90m 46[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:58.1768284Z  [32m✓[39m src/components/island/three/sharedActivities.test.ts [2m([22m[2m23 tests[22m[2m)[22m[33m 1049[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:13:58.6390003Z  [32m✓[39m src/domain/island/sharedMemories.test.ts [2m([22m[2m14 tests[22m[2m)[22m[90m 99[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:04.4606810Z  [32m✓[39m src/components/island/three/sharedJobController.test.ts [2m([22m[2m23 tests[22m[2m)[22m[33m 5337[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:04.4609577Z    [33m[2m✓[22m[39m shared work after-render and actual object continuity[2m > [22mborrows the actual hand, lamp and receiver for framing without turning strict camera diagnostics into a save gate [33m1015[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:04.4612524Z    [33m[2m✓[22m[39m shared work after-render and actual object continuity[2m > [22mrevisits the remembered actual target with otter after its display is stored [33m301[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:04.4615603Z    [33m[2m✓[22m[39m shared work after-render and actual object continuity[2m > [22mrevisits the remembered actual target with rabbit after its display is stored [33m383[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:04.4618461Z    [33m[2m✓[22m[39m shared work after-render and actual object continuity[2m > [22mrevisits the remembered actual target with fox after its display is stored [33m337[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:04.8864589Z Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+verify-core	Verify core	2026-09-20T03:14:04.8875246Z   npx update-browserslist-db@latest
+verify-core	Verify core	2026-09-20T03:14:04.8876163Z   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+verify-core	Verify core	2026-09-20T03:14:06.9075760Z  [32m✓[39m src/components/domain/LearningAnswerForm.defer.test.tsx [2m([22m[2m31 tests[22m[2m)[22m[90m 80[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:08.3252775Z  [32m✓[39m src/components/island/three/workshopScene.test.ts [2m([22m[2m22 tests[22m[2m)[22m[33m 978[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:12.8334323Z  [32m✓[39m src/domain/island/experienceRepository.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 2984[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:12.8338743Z    [33m[2m✓[22m[39m owned atomic experience persistence[2m > [22mrolls back a failed layout application receipt including all positions, cosmetics and optional expression state [33m1349[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:12.8342601Z    [33m[2m✓[22m[39m saved layout application against the current earned world[2m > [22mkeeps real later learning/growth, earned new items, spent stars and the saved next plan when restoring an old layout [33m1208[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:14.6280989Z  [32m✓[39m src/domain/math/planner.test.ts [2m([22m[2m35 tests[22m[2m)[22m[90m 41[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:17.9251554Z  [32m✓[39m src/components/island/three/livingRuntime.test.ts [2m([22m[2m18 tests[22m[2m)[22m[33m 2715[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:17.9255521Z    [33m[2m✓[22m[39m runtime life cancellation and actual observations[2m > [22mchecks a landed bird face in the actual rendered frame, preserves old records and recovers once (reduced=false) [33m622[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:17.9258426Z    [33m[2m✓[22m[39m runtime life cancellation and actual observations[2m > [22muses exactly the same all camera and world scale for past and present [33m333[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:18.2842297Z  [32m✓[39m src/domain/explore/__tests__/g0NumberVessel.test.ts [2m([22m[2m13 tests[22m[2m)[22m[90m 20[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:19.9587129Z  [32m✓[39m src/domain/island/workshop.test.ts [2m([22m[2m14 tests[22m[2m)[22m[90m 130[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:22.7041504Z  [32m✓[39m src/components/island/IslandAnswerForm.test.tsx [2m([22m[2m38 tests[22m[2m)[22m[33m 905[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:22.7048362Z    [33m[2m✓[22m[39m Island problem semantic presentation[2m > [22mhas a curated equivalent for every symbol actually emitted by the current math generators [33m715[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:24.6777037Z  [32m✓[39m src/domain/logic.test.ts [2m([22m[2m26 tests[22m[2m)[22m[90m 31[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:27.5881770Z  [32m✓[39m src/domain/island/photosRepository.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 899[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:29.2156002Z  [32m✓[39m src/domain/algorithms/srs.test.ts [2m([22m[2m60 tests[22m[2m)[22m[90m 31[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:31.9098644Z  [32m✓[39m src/domain/island/learningObservationCommit.test.ts [2m([22m[2m28 tests[22m[2m)[22m[33m 1098[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:34.5863978Z  [32m✓[39m src/components/island/useIslandCustomization.test.ts [2m([22m[2m27 tests[22m[2m)[22m[33m 650[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:38.1089105Z  [32m✓[39m src/components/island/three/natureObservationFrame.test.ts [2m([22m[2m22 tests[22m[2m)[22m[33m 54206[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:38.1092156Z    [33m[2m✓[22m[39m explicit nature observation framing[2m > [22mrejects qualified-03/06 saved phone cameras and a visible but subpixel frontal face (reduced=false) [33m4629[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:38.1095108Z    [33m[2m✓[22m[39m explicit nature observation framing[2m > [22mrejects qualified-03/06 saved phone cameras and a visible but subpixel frontal face (reduced=true) [33m3322[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:38.1098478Z    [33m[2m✓[22m[39m explicit nature observation framing[2m > [22mseparates butterfly in the actual qualified-03 layout from the unchanged rabbit throughout its flight (1.0103626943005182/false) [33m1754[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:38.1101043Z    [33m[2m✓[22m[39m explicit nature observation framing[2m > [22mseparates butterfly in the actual qualified-03 layout from the unchanged rabbit throughout its flight (1.0103626943005182/true) [33m1603[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:38.1103995Z    [33m[2m✓[22m[39m explicit nature observation framing[2m > [22mseparates butterfly in the actual qualified-03 layout from the unchanged rabbit throughout its flight (1.6340425531914893/false) [33m1766[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:38.1107096Z    [33m[2m✓[22m[39m explicit nature observation framing[2m > [22mseparates butterfly in the actual qualified-03 layout from the unchanged rabbit throughout its flight (1.6340425531914893/true) [33m1990[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:38.1109826Z    [33m[2m✓[22m[39m explicit nature observation framing[2m > [22mseparates ribbon-butterfly in the actual qualified-03 layout from the unchanged rabbit throughout its flight (1.0103626943005182/false) [33m2229[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:38.1111772Z    [33m[2m✓[22m[39m explicit nature observation framing[2m > [22mseparates ribbon-butterfly in the actual qualified-03 layout from the unchanged rabbit throughout its flight (1.0103626943005182/true) [33m1754[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:38.1114199Z    [33m[2m✓[22m[39m explicit nature observation framing[2m > [22mseparates ribbon-butterfly in the actual qualified-03 layout from the unchanged rabbit throughout its flight (1.6340425531914893/false) [33m2050[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:38.1116237Z    [33m[2m✓[22m[39m explicit nature observation framing[2m > [22mseparates ribbon-butterfly in the actual qualified-03 layout from the unchanged rabbit throughout its flight (1.6340425531914893/true) [33m1642[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:38.1117937Z    [33m[2m✓[22m[39m explicit nature observation framing[2m > [22mholds a butterfly covered in every candidate and recovers without moving its host or residents [33m2863[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:38.1119559Z    [33m[2m✓[22m[39m explicit nature observation framing[2m > [22mshows the actual eyes and beak at the rotated mushroom from qualified-03/06 without moving any model (reduced=false) [33m6031[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:38.1121519Z    [33m[2m✓[22m[39m explicit nature observation framing[2m > [22mshows the actual eyes and beak at the rotated mushroom from qualified-03/06 without moving any model (reduced=true) [33m6264[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:38.1123077Z    [33m[2m✓[22m[39m explicit nature observation framing[2m > [22mkeeps a landed or hovering bird readable at host yaw 0 in a single fixed observation camera [33m1579[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:38.1146038Z    [33m[2m✓[22m[39m explicit nature observation framing[2m > [22mkeeps a landed or hovering bird readable at host yaw 1.5707963267948966 in a single fixed observation camera [33m1568[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:38.1148666Z    [33m[2m✓[22m[39m explicit nature observation framing[2m > [22mkeeps a landed or hovering bird readable at host yaw 3.141592653589793 in a single fixed observation camera [33m1270[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:38.1151335Z    [33m[2m✓[22m[39m explicit nature observation framing[2m > [22mkeeps a landed or hovering bird readable at host yaw -2.356194490192345 in a single fixed observation camera [33m1456[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:38.1155196Z    [33m[2m✓[22m[39m explicit nature observation framing[2m > [22mchooses another front angle when real foreground geometry covers the face and never declares a covered face readable [33m10414[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:39.2845517Z  [32m✓[39m src/domain/island/learningContinuity.test.ts [2m([22m[2m13 tests[22m[2m)[22m[33m 2714[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:39.2857617Z    [33m[2m✓[22m[39m island learning continuity[2m > [22mshares review opportunities across 6-question 'math' sets [33m302[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:39.2862545Z    [33m[2m✓[22m[39m island learning continuity[2m > [22mshares review opportunities across 3-question 'mix' sets [33m492[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:39.2865255Z    [33m[2m✓[22m[39m island learning continuity[2m > [22mdoes not disguise unselected pending checks as ordinary Due across repeated short sets [33m718[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:40.9263027Z  [32m✓[39m src/domain/island/sharedMemoriesRepository.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 924[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:40.9289359Z    [33m[2m✓[22m[39m shared memory persistence and learning boundaries[2m > [22mkeeps the twelve-item shelf bounded while saving the full thirteenth result, then re-collects it without changing first time/order [33m302[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:43.1545872Z  [32m✓[39m src/components/island/islandWorkshopQueue.test.ts [2m([22m[2m20 tests[22m[2m)[22m[90m 147[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:46.3892877Z  [32m✓[39m src/components/island/useIslandExperience.test.ts [2m([22m[2m16 tests[22m[2m)[22m[33m 1094[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:50.6603989Z  [32m✓[39m src/domain/island/growthRepository.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 2304[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:50.6646414Z    [33m[2m✓[22m[39m owned atomic living island persistence[2m > [22maborts growth, snapshot, answer, profile and completion together then saves each once on retry [33m1672[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:53.1484066Z  [32m✓[39m src/domain/island/workshopRepository.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 765[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:55.7526070Z  [32m✓[39m src/components/island/three/runtimeExpressionEnvironment.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 15863[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:55.7541837Z    [33m[2m✓[22m[39m runtime environment/flag ownership boundary[2m > [22mrestores occlusion then seasonal materials before appearance and growth rebuild, using the same camera and rig roots [33m2928[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:55.7545776Z    [33m[2m✓[22m[39m runtime environment/flag ownership boundary[2m > [22mshows the actual trim even with default identity, reports its actual visibility, and keeps old memories bare [33m1924[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:55.7549678Z    [33m[2m✓[22m[39m runtime environment/flag ownership boundary[2m > [22mdoes not overwrite captured look/flag/environment state or the learning camera when hidden learning receives a saved scene [33m1016[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:55.7552860Z    [33m[2m✓[22m[39m runtime environment/flag ownership boundary[2m > [22mrestores each saved free look on the same three rigs after removing raincoat [33m1021[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:55.7556023Z    [33m[2m✓[22m[39m runtime environment/flag ownership boundary[2m > [22mrestores each saved free look on the same three rigs after removing star-beret [33m878[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:55.7558753Z    [33m[2m✓[22m[39m runtime environment/flag ownership boundary[2m > [22mcancels the actual walk and clears live foot marks on learning [33m1904[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:55.7561383Z    [33m[2m✓[22m[39m runtime environment/flag ownership boundary[2m > [22mcancels the actual walk and clears live foot marks on exit [33m2103[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:55.7564449Z    [33m[2m✓[22m[39m runtime environment/flag ownership boundary[2m > [22mcancels the actual walk and clears live foot marks on selection-change [33m2133[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:55.7567269Z    [33m[2m✓[22m[39m runtime environment/flag ownership boundary[2m > [22mdoes not pass a fresh walk request to the controller while the document is hidden [33m967[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:55.7595092Z    [33m[2m✓[22m[39m runtime environment/flag ownership boundary[2m > [22mreleases seasonal clones before the world can dispose their source materials [33m989[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:55.8984841Z  [32m✓[39m src/domain/island/learningKeepsakesRepository.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 1103[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:55.8988021Z    [33m[2m✓[22m[39m atomic owned learning keepsakes[2m > [22mearns first and five-section awards through real learning, changes only shelf+receipt, and preserves the same reservation [33m497[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:56.1845699Z  [32m✓[39m src/domain/island/workshopLayout.test.ts [2m([22m[2m17 tests[22m[2m)[22m[90m 77[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:58.4365482Z  [32m✓[39m src/domain/island/customizationRepository.test.ts [2m([22m[2m16 tests[22m[2m)[22m[33m 636[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:59.3817577Z  [32m✓[39m src/components/island/useIslandSharedMemories.test.ts [2m([22m[2m13 tests[22m[2m)[22m[33m 1036[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:14:59.8544539Z  [32m✓[39m src/domain/island/expression.test.ts [2m([22m[2m16 tests[22m[2m)[22m[90m 73[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:07.7395249Z  [32m✓[39m src/components/island/three/optionalFurnitureTrial.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 87338[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:07.7398825Z    [33m[2m✓[22m[39m borrowed tools choose an actually usable legal trial location[2m > [22mrechecks the chosen resident using the same borrowed model and retains a usable position on reselection [33m1621[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:07.7402343Z    [33m[2m✓[22m[39m borrowed tools choose an actually usable legal trial location[2m > [22muses the new connecting floor for the formerly blocked furniture-03 hammock without moving saved furniture [33m3477[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:07.7406163Z    [33m[2m✓[22m[39m borrowed tools choose an actually usable legal trial location[2m > [22mkeeps the furniture-02 narrow passage blocked for the actual body, then accepts only a child-requested usable preview [33m13273[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:07.7408290Z    [33m[2m✓[22m[39m borrowed tools choose an actually usable legal trial location[2m > [22mdrops an old explicit search on movement, lifecycle pause and foreground resume [33m712[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:07.7410221Z    [33m[2m✓[22m[39m borrowed tools choose an actually usable legal trial location[2m > [22mtelescope preflights every selected resident then retains the same real model through sequential trials [33m17753[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:07.7412588Z    [33m[2m✓[22m[39m borrowed tools choose an actually usable legal trial location[2m > [22mhammock preflights every selected resident then retains the same real model through sequential trials [33m9890[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:07.7415533Z    [33m[2m✓[22m[39m borrowed tools choose an actually usable legal trial location[2m > [22mtea-table preflights every selected resident then retains the same real model through sequential trials [33m40365[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:10.2745350Z  [32m✓[39m src/domain/park/park.test.ts [2m([22m[2m131 tests[22m[2m)[22m[33m 441[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:12.0623478Z  [32m✓[39m src/domain/explore/__tests__/learningSegmentPersistence.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 135[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:14.4664934Z  [32m✓[39m src/domain/learning/attemptPersistence.test.ts [2m([22m[2m24 tests[22m[2m)[22m[33m 561[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:18.6769384Z  [32m✓[39m src/domain/island/furnitureRepository.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 2293[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:18.6771931Z    [33m[2m✓[22m[39m atomic optional furniture acquisition[2m > [22mearns stars through ordinary answers, acquires telescope, reloads and resumes the same learning reservation [33m694[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:18.6774997Z    [33m[2m✓[22m[39m atomic optional furniture acquisition[2m > [22mearns stars through ordinary answers, acquires hammock, reloads and resumes the same learning reservation [33m415[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:18.6778300Z    [33m[2m✓[22m[39m atomic optional furniture acquisition[2m > [22mearns stars through ordinary answers, acquires tea-table, reloads and resumes the same learning reservation [33m821[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:19.7067601Z  [32m✓[39m src/components/island/three/residentInteraction.test.ts [2m([22m[2m21 tests[22m[2m)[22m[33m 543[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:19.7070527Z    [33m[2m✓[22m[39m reachable, replayable island furniture[2m > [22mreturns blocked when no visible resident can reach the object [33m342[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:21.5212568Z  [32m✓[39m src/components/island/three/growthVisuals.test.ts [2m([22m[2m21 tests[22m[2m)[22m[33m 1304[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:22.8450088Z  [32m✓[39m src/components/island/useIslandPhotos.test.ts [2m([22m[2m15 tests[22m[2m)[22m[33m 776[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:33.6130843Z  [32m✓[39m src/hooks/learningProgression.integration.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 8809[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:33.6135421Z    [33m[2m✓[22m[39m learning progression from real generated questions[2m > [22mreaches 70% promotion through generated normal blocks and persisted answers [33m8450[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:35.9886765Z  [32m✓[39m src/domain/user/repository.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 633[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:35.9889394Z    [33m[2m✓[22m[39m getActiveProfile[2m > [22mdeletes all IndexedDB rows owned by a profile and selects the next profile [33m619[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:36.5885466Z  [32m✓[39m src/components/island/three/navigation.test.ts [2m([22m[2m19 tests[22m[2m)[22m[90m 253[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:44.4413014Z  [32m✓[39m src/components/island/three/cosmeticScenery.test.ts [2m([22m[2m19 tests[22m[2m)[22m[33m 45373[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:44.4435794Z    [33m[2m✓[22m[39m owned cosmetic scenery[2m > [22mleaves the moon-garden legacy scene geometry and rooted tree exactly as authored [33m2538[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:44.4465451Z    [33m[2m✓[22m[39m owned cosmetic scenery[2m > [22mleaves the starry legacy scene geometry and rooted tree exactly as authored [33m1197[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:44.4495474Z    [33m[2m✓[22m[39m owned cosmetic scenery[2m > [22mleaves the candy legacy scene geometry and rooted tree exactly as authored [33m1605[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:44.4525569Z    [33m[2m✓[22m[39m owned cosmetic scenery[2m > [22mleaves the crystal legacy scene geometry and rooted tree exactly as authored [33m1388[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:44.4555640Z    [33m[2m✓[22m[39m owned cosmetic scenery[2m > [22mchanges real canopy silhouettes and house geometry, beyond recoloring [33m2413[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:44.4559036Z    [33m[2m✓[22m[39m owned cosmetic scenery[2m > [22mmoon-garden preserves true ground, light anchors and growth through every accent [33m5523[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:44.4562336Z    [33m[2m✓[22m[39m owned cosmetic scenery[2m > [22mstarry preserves true ground, light anchors and growth through every accent [33m4759[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:44.4565537Z    [33m[2m✓[22m[39m owned cosmetic scenery[2m > [22mcandy preserves true ground, light anchors and growth through every accent [33m4945[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:44.4567982Z    [33m[2m✓[22m[39m owned cosmetic scenery[2m > [22mcrystal preserves true ground, light anchors and growth through every accent [33m4255[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:44.4570735Z    [33m[2m✓[22m[39m owned cosmetic scenery[2m > [22mkeeps crystal shore silhouettes clear of all land, bridge, resident and furniture footprints after expansion [33m808[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:44.4573709Z    [33m[2m✓[22m[39m owned cosmetic scenery[2m > [22mdisposes each owned geometry, material and texture once without touching resident materials [33m9694[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:44.4576177Z    [33m[2m✓[22m[39m owned cosmetic scenery[2m > [22mfits 'moon-garden' theme at grown=false in the same home camera on phone and tablet [33m621[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:44.4578760Z    [33m[2m✓[22m[39m owned cosmetic scenery[2m > [22mfits 'moon-garden' theme at grown=true in the same home camera on phone and tablet [33m1465[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:44.4581132Z    [33m[2m✓[22m[39m owned cosmetic scenery[2m > [22mfits 'starry' theme at grown=false in the same home camera on phone and tablet [33m568[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:44.4583590Z    [33m[2m✓[22m[39m owned cosmetic scenery[2m > [22mfits 'starry' theme at grown=true in the same home camera on phone and tablet [33m934[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:44.4585962Z    [33m[2m✓[22m[39m owned cosmetic scenery[2m > [22mfits 'candy' theme at grown=false in the same home camera on phone and tablet [33m465[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:44.4588138Z    [33m[2m✓[22m[39m owned cosmetic scenery[2m > [22mfits 'candy' theme at grown=true in the same home camera on phone and tablet [33m902[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:44.4590313Z    [33m[2m✓[22m[39m owned cosmetic scenery[2m > [22mfits 'crystal' theme at grown=false in the same home camera on phone and tablet [33m415[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:44.4592592Z    [33m[2m✓[22m[39m owned cosmetic scenery[2m > [22mfits 'crystal' theme at grown=true in the same home camera on phone and tablet [33m875[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:46.7180953Z  [32m✓[39m src/domain/explore/__tests__/learningPlanner.test.ts [2m([22m[2m8 tests[22m[2m)[22m[90m 295[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:48.4336741Z  [32m✓[39m src/domain/explore/__tests__/problemAdapter.test.ts [2m([22m[2m38 tests[22m[2m)[22m[90m 82[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:48.8565213Z  [32m✓[39m src/components/island/three/connectedTerrain.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 48570[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:48.8567603Z    [33m[2m✓[22m[39m connected terrain exterior[2m > [22madds a supported central depth only at maturity without repeating the main decorative lobes [33m554[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:48.8569708Z    [33m[2m✓[22m[39m connected terrain exterior[2m > [22mreturns finite immutable matching rings and caches only plain coordinates [33m743[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:48.8572110Z    [33m[2m✓[22m[39m connected terrain exterior[2m > [22msupports every old ellipse and candidate connector on one y=0 cap at level 1 [33m919[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:48.8575602Z    [33m[2m✓[22m[39m connected terrain exterior[2m > [22msupports every old ellipse and candidate connector on one y=0 cap at level 2 [33m2168[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:48.8578565Z    [33m[2m✓[22m[39m connected terrain exterior[2m > [22mfills only the nested external layer bands and leaves no shore through the connecting floor [33m2498[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:48.8581377Z    [33m[2m✓[22m[39m connected terrain exterior[2m > [22mproves band nesting at every linear breakpoint and actual surface support between the boundaries [33m3749[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:48.8584669Z    [33m[2m✓[22m[39m connected terrain exterior[2m > [22mkeeps world UVs, slot material identity and borrowed textures across every existing style [33m37458[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:51.2395117Z  [32m✓[39m src/domain/island/learningSession.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 857[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:52.5415675Z  [32m✓[39m src/components/island/three/sharedActivityController.test.ts [2m([22m[2m20 tests[22m[2m)[22m[33m 3177[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:52.5466107Z    [33m[2m✓[22m[39m physical sharing lifecycle[2m > [22mflower travels from the source through two actual residents without crossing bodies [33m389[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:15:53.0705097Z  [32m✓[39m src/domain/explore/__tests__/g0NumberSuika.test.ts [2m([22m[2m32 tests[22m[2m)[22m[90m 161[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:03.8025347Z  [32m✓[39m src/components/island/three/sharedDisplayFraming.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 10192[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:03.8031149Z    [33m[2m✓[22m[39m shared photo actual scene sightlines[2m > [22mclears the photographed tree at (.20, -.60), π/2 on 'phone' without hiding or relocating it [33m1784[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:03.8034641Z    [33m[2m✓[22m[39m shared photo actual scene sightlines[2m > [22mclears the photographed tree at (.20, -.60), π/2 on 'tablet' without hiding or relocating it [33m1360[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:03.8037662Z    [33m[2m✓[22m[39m shared photo actual scene sightlines[2m > [22mkeeps every actual saved work part readable at aspect 1.1016949152542372 [33m2051[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:03.8040421Z    [33m[2m✓[22m[39m shared photo actual scene sightlines[2m > [22mkeeps every actual saved work part readable at aspect 1.786046511627907 [33m1948[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:03.8043160Z    [33m[2m✓[22m[39m shared photo actual scene sightlines[2m > [22muses transformed world geometry and caches a stable near view without repeating rays [33m940[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:03.8046474Z    [33m[2m✓[22m[39m shared photo actual scene sightlines[2m > [22mresponds to a real resident entering the chosen sightline and keeps that view when it clears [33m955[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:03.8049431Z    [33m[2m✓[22m[39m shared photo actual scene sightlines[2m > [22mignores invisible and fully transparent meshes, but reports an opaque enclosure as unreadable [33m970[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:06.0700530Z  [32m✓[39m src/components/island/useIslandExpression.test.ts [2m([22m[2m9 tests[22m[2m)[22m[90m 207[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:07.4376332Z  [32m✓[39m src/domain/test/printability.test.ts [2m([22m[2m22 tests[22m[2m)[22m[90m 18[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:09.6649893Z  [32m✓[39m src/domain/island/customizationAppearanceRepository.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 389[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:11.8574460Z  [32m✓[39m src/components/explore/ExploreProblemPanel.test.tsx [2m([22m[2m16 tests[22m[2m)[22m[90m 121[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:32.9649224Z  [32m✓[39m src/components/island/three/sharedJobFraming.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 41253[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:32.9709314Z    [33m[2m✓[22m[39m actual shared job sightlines[2m > [22mreplaces the recorded back view with both actual paws and the same held object at aspect 1.3066202090592334 [33m9533[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:32.9713145Z    [33m[2m✓[22m[39m actual shared job sightlines[2m > [22mreplaces the recorded back view with both actual paws and the same held object at aspect 1.786046511627907 [33m8984[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:32.9716782Z    [33m[2m✓[22m[39m actual shared job sightlines[2m > [22mimproves the lamp view and exposes actual receiver triangles without hiding residual occlusion at aspect 1.3066202090592334 [33m8694[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:32.9720171Z    [33m[2m✓[22m[39m actual shared job sightlines[2m > [22mimproves the lamp view and exposes actual receiver triangles without hiding residual occlusion at aspect 1.786046511627907 [33m7937[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:32.9723370Z    [33m[2m✓[22m[39m actual shared job sightlines[2m > [22mretains its selected contact angle through moving bounds without full searches or GPU allocations [33m3700[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:32.9726074Z    [33m[2m✓[22m[39m actual shared job sightlines[2m > [22mkeeps an unreadable view honest and caps reselection during continuous occlusion [33m2403[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:37.7241236Z  [32m✓[39m src/components/island/three/appearanceRendering.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 25367[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:37.7246699Z    [33m[2m✓[22m[39m independently equipped actual island surfaces[2m > [22mmaps the biscuit surface onto unchanged level land and retires its shared texture once [33m2524[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:37.7250208Z    [33m[2m✓[22m[39m independently equipped actual island surfaces[2m > [22mstarry changes each actual slot while retaining every other slot and rooted identity [33m3164[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:37.7252095Z    [33m[2m✓[22m[39m independently equipped actual island surfaces[2m > [22mcandy changes each actual slot while retaining every other slot and rooted identity [33m3366[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:37.7254643Z    [33m[2m✓[22m[39m independently equipped actual island surfaces[2m > [22mcrystal changes each actual slot while retaining every other slot and rooted identity [33m2889[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:37.7257344Z    [33m[2m✓[22m[39m independently equipped actual island surfaces[2m > [22mresolves the same explicit mix independently of legacy theme history, including accents [33m1679[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:37.7259118Z    [33m[2m✓[22m[39m independently equipped actual island surfaces[2m > [22mkeeps actual level ground and both bridge decks through three full looks and old restoration [33m4696[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:37.7261375Z    [33m[2m✓[22m[39m independently equipped actual island surfaces[2m > [22monly retires changed-slot resources and disposes each visible owned resource once [33m1531[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:37.7264384Z    [33m[2m✓[22m[39m independently equipped actual island surfaces[2m > [22mdistinguishes hidden expanded bridge meshes from currently visible geometry [33m1189[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:37.7267093Z    [33m[2m✓[22m[39m independently equipped actual island surfaces[2m > [22mstarry fits its actual distant silhouettes in the chosen overview at each land stage [33m1581[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:37.7269532Z    [33m[2m✓[22m[39m independently equipped actual island surfaces[2m > [22mcandy fits its actual distant silhouettes in the chosen overview at each land stage [33m1589[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:37.7271112Z    [33m[2m✓[22m[39m independently equipped actual island surfaces[2m > [22mcrystal fits its actual distant silhouettes in the chosen overview at each land stage [33m1156[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:38.0864253Z  [32m✓[39m src/domain/explore/__tests__/g0Whitebox.test.ts [2m([22m[2m13 tests[22m[2m)[22m[90m 23[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:39.0135721Z  [32m✓[39m src/components/island/three/homeInteriorCamera.test.ts [2m([22m[2m16 tests[22m[2m)[22m[33m 61915[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:39.0138332Z    [33m[2m✓[22m[39m a perspective camera inside the same closed house[2m > [22mplaces the real room floor above the unchanged exterior foundation at aspect 1.3220338983050848 [33m1079[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:39.0140399Z    [33m[2m✓[22m[39m a perspective camera inside the same closed house[2m > [22mplaces the real room floor above the unchanged exterior foundation at aspect 2.0210526315789474 [33m739[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:39.0142773Z    [33m[2m✓[22m[39m a perspective camera inside the same closed house[2m > [22mencloses the viewport, shows living objects and all sixteen awards at 390×295, actual cottage=false [33m15712[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:39.0145929Z    [33m[2m✓[22m[39m a perspective camera inside the same closed house[2m > [22mencloses the viewport, shows living objects and all sixteen awards at 768×380, actual cottage=false [33m13107[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:39.0148719Z    [33m[2m✓[22m[39m a perspective camera inside the same closed house[2m > [22mencloses the viewport, shows living objects and all sixteen awards at 390×295, actual cottage=true [33m13724[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:39.0151688Z    [33m[2m✓[22m[39m a perspective camera inside the same closed house[2m > [22mencloses the viewport, shows living objects and all sixteen awards at 768×380, actual cottage=true [33m14680[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:39.0154025Z    [33m[2m✓[22m[39m a perspective camera inside the same closed house[2m > [22mkeeps the whole walking resident on screen at the portrait edges and restores the close view [33m2177[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:44.2312716Z  [32m✓[39m src/components/island/three/sharedDisplayFrameBoundary.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 5602[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:44.2326464Z    [33m[2m✓[22m[39m shared job completion releases the display camera[2m > [22muses the same job candidate for capture, clears it on learning/hidden and returns to the unchanged static display selector [33m1584[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:44.2330070Z    [33m[2m✓[22m[39m shared job completion releases the display camera[2m > [22mkeeps pending work and clears the actual work parts only after commit and settle at 390px (commit first=false) [33m1072[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:44.2333993Z    [33m[2m✓[22m[39m shared job completion releases the display camera[2m > [22mkeeps pending work and clears the actual work parts only after commit and settle at 390px (commit first=true) [33m1072[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:44.2337499Z    [33m[2m✓[22m[39m shared job completion releases the display camera[2m > [22mkeeps pending work and clears the actual work parts only after commit and settle at 768px (commit first=false) [33m852[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:44.2365573Z    [33m[2m✓[22m[39m shared job completion releases the display camera[2m > [22mkeeps pending work and clears the actual work parts only after commit and settle at 768px (commit first=true) [33m1020[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:46.7484742Z  [32m✓[39m src/domain/island/appearance.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 553[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:46.7503080Z    [33m[2m✓[22m[39m one wallet, eighteen parts, three completed recipes[2m > [22mcharges each component once for every prior-ownership subset, independent of purchase order [33m525[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:49.1580362Z  [32m✓[39m src/domain/island/progressiveSupport.test.ts [2m([22m[2m13 tests[22m[2m)[22m[33m 524[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:49.6824406Z  [32m✓[39m src/domain/learning/evidence.test.ts [2m([22m[2m16 tests[22m[2m)[22m[90m 118[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:51.6655266Z  [32m✓[39m src/domain/island/experience.test.ts [2m([22m[2m19 tests[22m[2m)[22m[90m 34[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:51.9045438Z  [32m✓[39m src/components/island/three/runtimeFurnitureClearance.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 18274[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:51.9048680Z    [33m[2m✓[22m[39m runtime trial preparation waits for actual saved-furniture clearance[2m > [22mkeeps the recorded rabbit walking, then resolves and uses the same choice from the real endpoint [33m5434[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:51.9051838Z    [33m[2m✓[22m[39m runtime trial preparation waits for actual saved-furniture clearance[2m > [22mstarts newly required clearance before trial preparation on the same runtime update [33m1556[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:51.9065458Z    [33m[2m✓[22m[39m runtime trial preparation waits for actual saved-furniture clearance[2m > [22mdiscards the old waiting iterator on learning without moving the rabbit to finish [33m1193[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:51.9068475Z    [33m[2m✓[22m[39m runtime trial preparation waits for actual saved-furniture clearance[2m > [22mdiscards the old waiting iterator on exit without moving the rabbit to finish [33m1012[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:51.9071486Z    [33m[2m✓[22m[39m runtime trial preparation waits for actual saved-furniture clearance[2m > [22mdiscards the old waiting iterator on reselection without moving the rabbit to finish [33m9078[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:53.6769747Z  [32m✓[39m src/domain/island/growth.test.ts [2m([22m[2m11 tests[22m[2m)[22m[90m 103[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:54.1792413Z  [32m✓[39m src/components/island/three/treeCanopyGeometry.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 1791[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:54.1797966Z    [33m[2m✓[22m[39m sculpted moon-garden canopy[2m > [22mretains one closed outward surface with finite unit normals and a welded lighting seam [33m413[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:54.1801639Z    [33m[2m✓[22m[39m sculpted moon-garden canopy[2m > [22mkeeps rooted growth, light contact and yellow dots through an owned-theme round trip [33m459[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1505655Z  [32m✓[39m src/components/island/three/optionalFurnitureController.test.ts [2m([22m[2m37 tests[22m[2m)[22m[33m 17568[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1508481Z    [33m[2m✓[22m[39m optional tools use the actual bodies and bounded furniture[2m > [22mstarts the walk clock only after its first actual rendered frame (reduced=false) [33m530[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1535401Z    [33m[2m✓[22m[39m optional tools use the actual bodies and bounded furniture[2m > [22mcancels a prepared walk without borrowing its render clock for the next invitation [33m330[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1559609Z    [33m[2m✓[22m[39m optional tools use the actual bodies and bounded furniture[2m > [22mtelescope uses selected otter with visible actual contacts [33m506[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1595795Z    [33m[2m✓[22m[39m optional tools use the actual bodies and bounded furniture[2m > [22mtelescope uses selected rabbit with visible actual contacts [33m328[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1599128Z    [33m[2m✓[22m[39m optional tools use the actual bodies and bounded furniture[2m > [22mtelescope uses selected fox with visible actual contacts [33m456[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1622807Z    [33m[2m✓[22m[39m optional tools use the actual bodies and bounded furniture[2m > [22mhammock uses selected otter with visible actual contacts [33m521[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1625985Z    [33m[2m✓[22m[39m optional tools use the actual bodies and bounded furniture[2m > [22mhammock uses selected fox with visible actual contacts [33m336[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1628608Z    [33m[2m✓[22m[39m optional tools use the actual bodies and bounded furniture[2m > [22mtea-table uses selected otter with visible actual contacts [33m707[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1631239Z    [33m[2m✓[22m[39m optional tools use the actual bodies and bounded furniture[2m > [22mtea-table uses selected rabbit with visible actual contacts [33m895[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1634053Z    [33m[2m✓[22m[39m optional tools use the actual bodies and bounded furniture[2m > [22mtea-table uses selected fox with visible actual contacts [33m755[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1637187Z    [33m[2m✓[22m[39m optional tools use the actual bodies and bounded furniture[2m > [22mrequires actual rendered contact before transferring the cup [33m311[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1640083Z    [33m[2m✓[22m[39m optional tools use the actual bodies and bounded furniture[2m > [22mtelescope keeps contact and real framing at rotation 1.5707963267948966 in both motion modes [33m324[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1643138Z    [33m[2m✓[22m[39m optional tools use the actual bodies and bounded furniture[2m > [22mtelescope keeps contact and real framing at rotation 3.141592653589793 in both motion modes [33m392[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1646401Z    [33m[2m✓[22m[39m optional tools use the actual bodies and bounded furniture[2m > [22mtelescope keeps contact and real framing at rotation 4.71238898038469 in both motion modes [33m381[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1649515Z    [33m[2m✓[22m[39m optional tools use the actual bodies and bounded furniture[2m > [22mhammock keeps contact and real framing at rotation 1.5707963267948966 in both motion modes [33m452[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1652610Z    [33m[2m✓[22m[39m optional tools use the actual bodies and bounded furniture[2m > [22mhammock keeps contact and real framing at rotation 3.141592653589793 in both motion modes [33m439[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1655943Z    [33m[2m✓[22m[39m optional tools use the actual bodies and bounded furniture[2m > [22mhammock keeps contact and real framing at rotation 4.71238898038469 in both motion modes [33m330[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1659322Z    [33m[2m✓[22m[39m optional tools use the actual bodies and bounded furniture[2m > [22mtea-table keeps contact and real framing at rotation 1.5707963267948966 in both motion modes [33m748[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1662354Z    [33m[2m✓[22m[39m optional tools use the actual bodies and bounded furniture[2m > [22mtea-table keeps contact and real framing at rotation 3.141592653589793 in both motion modes [33m664[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1665514Z    [33m[2m✓[22m[39m optional tools use the actual bodies and bounded furniture[2m > [22mtea-table keeps contact and real framing at rotation 4.71238898038469 in both motion modes [33m603[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1670247Z    [33m[2m✓[22m[39m optional tools use the actual bodies and bounded furniture[2m > [22mtea passes one real cup from otter to rabbit with both hands touching [33m511[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1675489Z    [33m[2m✓[22m[39m optional tools use the actual bodies and bounded furniture[2m > [22mtea passes one real cup from otter to fox with both hands touching [33m682[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1679346Z    [33m[2m✓[22m[39m optional tools use the actual bodies and bounded furniture[2m > [22mtea passes one real cup from rabbit to otter with both hands touching [33m671[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1682379Z    [33m[2m✓[22m[39m optional tools use the actual bodies and bounded furniture[2m > [22mtea passes one real cup from rabbit to fox with both hands touching [33m573[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1685297Z    [33m[2m✓[22m[39m optional tools use the actual bodies and bounded furniture[2m > [22mtea passes one real cup from fox to otter with both hands touching [33m716[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1687950Z    [33m[2m✓[22m[39m optional tools use the actual bodies and bounded furniture[2m > [22mtea passes one real cup from fox to rabbit with both hands touching [33m700[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1690793Z    [33m[2m✓[22m[39m optional tools use the actual bodies and bounded furniture[2m > [22mroutes the actual fox tail around an independent obstacle and the stationary residents [33m1649[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:57.1694480Z    [33m[2m✓[22m[39m optional tools use the actual bodies and bounded furniture[2m > [22mtea-table cancellation drops a borrowed action without replay or changing owned poses [33m334[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:59.0387832Z  [32m✓[39m src/components/island/three/roofSurface.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 4378[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:59.0391850Z    [33m[2m✓[22m[39m default roof material prototype[2m > [22mkeeps opaque, deterministic broad colors continuous across both texture edges [33m783[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:59.0394516Z    [33m[2m✓[22m[39m default roof material prototype[2m > [22mdelivers the mapped face and all four seams through the actual scenery builder without leaking into other styles [33m2829[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:59.0396759Z    [33m[2m✓[22m[39m default roof material prototype[2m > [22mrestores an actual placement clone before retiring the roof pool on an explicit-style switch [33m721[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:59.3986809Z  [32m✓[39m src/domain/math/numberSenseProgress.test.ts [2m([22m[2m32 tests[22m[2m)[22m[90m 32[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:16:59.6679727Z  [32m✓[39m src/components/island/useIslandLearningKeepsakes.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 344[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:00.3142880Z  [32m✓[39m src/domain/islandLife/discoveryJournal.test.ts [2m([22m[2m13 tests[22m[2m)[22m[90m 219[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:00.7521357Z  [32m✓[39m src/components/island/IslandLearningKeepsakes.test.tsx [2m([22m[2m15 tests[22m[2m)[22m[33m 388[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:02.7021510Z  [32m✓[39m src/components/island/three/grassSurface.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 1943[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:02.7024690Z    [33m[2m✓[22m[39m default mint lawn bump surface[2m > [22mkeeps the visible cap texture and retires it once on purchase, restore and exit [33m1146[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:03.1252838Z  [32m✓[39m src/domain/learning/independentProgress.integration.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 432[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:05.1832980Z  [32m✓[39m src/domain/island/rewardGoal.test.ts [2m([22m[2m13 tests[22m[2m)[22m[90m 70[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:05.8378179Z  [32m✓[39m src/components/island/islandWorkshopAudio.test.ts [2m([22m[2m12 tests[22m[2m)[22m[90m 288[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:05.9881793Z  [32m✓[39m src/components/island/three/flagFraming.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 11708[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:05.9901576Z    [33m[2m✓[22m[39m inspection of the actual island flag[2m > [22mkeeps identity and trim in front of actual mature house shapes for legacy and independent styles [33m11533[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:06.6397081Z  [32m✓[39m src/components/island/three/personalScenery.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 3458[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:06.6400150Z    [33m[2m✓[22m[39m house-mounted personal identity[2m > [22mmoon-garden leaves the actual nameplate and roof flag visible from the home camera direction [33m1083[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:06.6409130Z    [33m[2m✓[22m[39m house-mounted personal identity[2m > [22mstarry leaves the actual nameplate and roof flag visible from the home camera direction [33m726[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:06.6412078Z    [33m[2m✓[22m[39m house-mounted personal identity[2m > [22mcandy leaves the actual nameplate and roof flag visible from the home camera direction [33m723[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:06.6415412Z    [33m[2m✓[22m[39m house-mounted personal identity[2m > [22mcrystal leaves the actual nameplate and roof flag visible from the home camera direction [33m714[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:06.7162194Z  [32m✓[39m src/domain/math/writtenArithmetic.test.ts [2m([22m[2m38 tests[22m[2m)[22m[33m 344[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:07.1976588Z  [32m✓[39m tools/island-expression-audio-focused-audit.test.mjs [2m([22m[2m12 tests[22m[2m)[22m[90m 107[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:07.3765628Z  [32m✓[39m src/domain/islandLife/relationObservation.test.ts [2m([22m[2m13 tests[22m[2m)[22m[90m 255[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:09.2244909Z  [32m✓[39m src/domain/learningRepository.test.ts [2m([22m[2m14 tests[22m[2m)[22m[90m 34[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:09.5608238Z  [32m✓[39m src/domain/user/onboarding.test.ts [2m([22m[2m20 tests[22m[2m)[22m[33m 1632[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:11.9358992Z  [32m✓[39m src/components/island/three/workshopPresentation.test.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 2163[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:11.9382990Z    [33m[2m✓[22m[39m borrowing the live world for workshop presentation[2m > [22mkeeps 'otter' supported through waiting, walk cancellation and reentry (reduced=false) [33m606[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:11.9397924Z    [33m[2m✓[22m[39m borrowing the live world for workshop presentation[2m > [22mwalks selected otter outside the board, renders exact hand contact before run, then restores its actual pose [33m310[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:12.3598995Z  [32m✓[39m src/components/island/three/furnitureClearanceController.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 2300[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:12.3615912Z    [33m[2m✓[22m[39m saved furniture clearance runs physical moves in sequence[2m > [22mmoves only the current resident, keeps waiting occupancy, and reaches each preflighted endpoint [33m400[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:12.3618864Z    [33m[2m✓[22m[39m saved furniture clearance runs physical moves in sequence[2m > [22mcontains the whole current bodies and every future route before the second resident starts [33m807[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:12.9801717Z  [32m✓[39m src/components/island/three/natureVisuals.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 585[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:13.5085472Z  [32m✓[39m src/components/challenge/useChallengeSession.test.tsx [2m([22m[2m9 tests[22m[2m)[22m[90m 127[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:13.9078998Z  [32m✓[39m src/domain/island/learningKeepsakes.test.ts [2m([22m[2m32 tests[22m[2m)[22m[90m 63[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:14.4151795Z  [32m✓[39m src/domain/island/learningObservation.test.ts [2m([22m[2m19 tests[22m[2m)[22m[90m 21[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:16.3210923Z  [32m✓[39m src/components/island/useIslandRewardGoal.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 308[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:16.7275317Z  [32m✓[39m src/domain/island/sceneStyle.test.ts [2m([22m[2m6 tests[22m[2m)[22m[90m 58[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:18.0631667Z  [31m❯[39m src/components/island/three/runtimePhotography.test.ts [2m([22m[2m13 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[33m 10093[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:18.0634687Z    [33m[2m✓[22m[39m current-scene photography boundary[2m > [22mrenders before encoding without resetting the current actor or camera [33m1137[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:18.0637429Z [31m   [31m×[31m current-scene photography boundary[2m > [22mphotographs a real house keepsake in the existing island scene at 390×354[33m 868[2mms[22m[31m[39m
+verify-core	Verify core	2026-09-20T03:17:18.0639213Z [31m     → Cannot read properties of undefined (reading 'group')[39m
+verify-core	Verify core	2026-09-20T03:17:18.0641369Z [31m   [31m×[31m current-scene photography boundary[2m > [22mphotographs a real house keepsake in the existing island scene at 768×430[33m 823[2mms[22m[31m[39m
+verify-core	Verify core	2026-09-20T03:17:18.0643166Z [31m     → Cannot read properties of undefined (reading 'group')[39m
+verify-core	Verify core	2026-09-20T03:17:18.0645181Z    [33m[2m✓[22m[39m current-scene photography boundary[2m > [22mcannot render or encode a hidden scene [33m627[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:18.0647225Z    [33m[2m✓[22m[39m current-scene photography boundary[2m > [22mcannot render or encode a offscreen scene [33m594[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:18.0651729Z    [33m[2m✓[22m[39m current-scene photography boundary[2m > [22mcannot render or encode a learning scene [33m786[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:18.0654621Z    [33m[2m✓[22m[39m current-scene photography boundary[2m > [22mcannot render or encode a lost scene [33m703[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:18.0656866Z    [33m[2m✓[22m[39m current-scene photography boundary[2m > [22mcannot render or encode a disposed scene [33m614[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:18.0659324Z    [33m[2m✓[22m[39m current-scene photography boundary[2m > [22mtracks the actual otter and cap before capture without changing its pose [33m959[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:18.0661982Z    [33m[2m✓[22m[39m current-scene photography boundary[2m > [22mtracks the actual rabbit and cap before capture without changing its pose [33m671[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:18.0664966Z    [33m[2m✓[22m[39m current-scene photography boundary[2m > [22mtracks the actual fox and cap before capture without changing its pose [33m672[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:18.0667687Z    [33m[2m✓[22m[39m display photo uses the actual scene before encoding[2m > [22mchecks live tree occlusion before a 390×354 capture [33m862[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:18.0670131Z    [33m[2m✓[22m[39m display photo uses the actual scene before encoding[2m > [22mchecks live tree occlusion before a 768×430 capture [33m774[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:19.3012747Z  [32m✓[39m src/domain/learning/unitPlanning.integration.test.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 508[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:22.1661921Z  [32m✓[39m src/components/island/three/residentTail.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 2402[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:22.1668503Z    [33m[2m✓[22m[39m the same actual tail has a reversible sitting joint[2m > [22motter: original standing shape, clear backboards and standing borrowed pose [33m742[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:22.1670115Z    [33m[2m✓[22m[39m the same actual tail has a reversible sitting joint[2m > [22mkeeps the recorded star handoff visible past the real fox tail in every shared phase [33m1406[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:22.4851208Z  [32m✓[39m src/domain/explore/__tests__/g0ChainShot.test.ts [2m([22m[2m12 tests[22m[2m)[22m[90m 19[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:24.2775551Z  [32m✓[39m src/components/island/three/optionalFurnitureFraming.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 9385[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:24.2786183Z    [33m[2m✓[22m[39m optional tool close views keep the physical cause visible[2m > [22mkeeps the same tea cup and tabletop visible through quaternion-restored handoff at 1.3202856387199153 [33m1064[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:24.2789895Z    [33m[2m✓[22m[39m optional tool close views keep the physical cause visible[2m > [22mkeeps the same tea cup and tabletop visible through quaternion-restored handoff at 2.1429131970179185 [33m779[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:24.2793453Z    [33m[2m✓[22m[39m optional tool close views keep the physical cause visible[2m > [22mframes the real hammock cloth past the house roof at 1.3220338983050848 [33m3460[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:24.2796240Z    [33m[2m✓[22m[39m optional tool close views keep the physical cause visible[2m > [22mframes the real hammock cloth past the house roof at 2.0210526315789474 [33m2703[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:24.2826818Z    [33m[2m✓[22m[39m optional tool close views keep the physical cause visible[2m > [22mkeeps the same front-facing selection through a walk and restores every actual pose after camera inspection [33m1374[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:24.5412075Z  [32m✓[39m src/components/island/useIslandFurniture.test.ts [2m([22m[2m10 tests[22m[2m)[22m[90m 273[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:25.2699191Z  [32m✓[39m src/domain/islandLife/relationSelection.test.ts [2m([22m[2m11 tests[22m[2m)[22m[90m 223[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:26.6450929Z  [32m✓[39m src/components/island/life/useIslandLife.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 904[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:26.8364021Z  [32m✓[39m src/domain/challenge/repository.test.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 677[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:29.0845515Z  [32m✓[39m src/domain/park/writtenArithmeticIntegration.test.ts [2m([22m[2m25 tests[22m[2m)[22m[90m 232[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:29.7444584Z  [32m✓[39m src/components/island/three/sharedActivityVisuals.test.ts [2m([22m[2m12 tests[22m[2m)[22m[90m 224[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:30.3755306Z  [32m✓[39m src/components/island/islandAmbienceAudio.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 343[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:30.8122706Z  [32m✓[39m src/components/island/useIslandMilestoneNotice.test.ts [2m([22m[2m15 tests[22m[2m)[22m[90m 23[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:32.3766422Z  [32m✓[39m src/domain/explore/__tests__/learningSegment.test.ts [2m([22m[2m20 tests[22m[2m)[22m[90m 10[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:33.7833881Z  [32m✓[39m src/components/island/three/learningKeepsakeScenery.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 1029[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:33.7846242Z    [33m[2m✓[22m[39m a finite room for actual learning keepsakes[2m > [22mphysically supports thirteen separate trophies and wall-mounts three papers within a bounded static room [33m711[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:40.2314972Z  [32m✓[39m src/components/island/three/sceneFraming.test.ts [2m([22m[2m15 tests[22m[2m)[22m[33m 5890[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:40.2317469Z    [33m[2m✓[22m[39m frozen learning frame after free play[2m > [22mcontains earned shores in matching album cameras and the home view at 390×190, chapter +0 [33m566[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:40.2320603Z    [33m[2m✓[22m[39m frozen learning frame after free play[2m > [22mcontains earned shores in matching album cameras and the home view at 390×190, chapter 1 [33m794[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:40.2323417Z    [33m[2m✓[22m[39m frozen learning frame after free play[2m > [22mcontains earned shores in matching album cameras and the home view at 390×190, chapter 2 [33m690[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:40.2326137Z    [33m[2m✓[22m[39m frozen learning frame after free play[2m > [22mcontains earned shores in matching album cameras and the home view at 390×190, chapter undefined [33m692[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:40.2329303Z    [33m[2m✓[22m[39m frozen learning frame after free play[2m > [22mcontains earned shores in matching album cameras and the home view at 768×400, chapter 1 [33m445[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:40.2331987Z    [33m[2m✓[22m[39m frozen learning frame after free play[2m > [22mcontains earned shores in matching album cameras and the home view at 768×400, chapter 2 [33m713[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:40.2334998Z    [33m[2m✓[22m[39m frozen learning frame after free play[2m > [22mcontains earned shores in matching album cameras and the home view at 768×400, chapter undefined [33m662[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:42.5576137Z  [32m✓[39m src/components/island/three/optionalFurnitureRuntime.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 1769[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:42.5602102Z    [33m[2m✓[22m[39m optional furniture runtime boundaries[2m > [22mbackground/offscreen pause restores the actual rig and drops both deferred commands and the borrowed model [33m396[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:42.5615791Z    [33m[2m✓[22m[39m incremental trial preparation uses actual controller preflights[2m > [22mdrops a queued Try when backgrounded and requires a new invitation after foreground preparation [33m303[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:44.7111798Z  [32m✓[39m src/domain/levelProgression.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 672[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:44.7114010Z    [33m[2m✓[22m[39m evidence required for level progression[2m > [22muses the same math evidence in the atomic writer and Study service [33m545[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:51.6425213Z  [32m✓[39m src/domain/natureTown/simulation.test.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 6572[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:51.6427305Z    [33m[2m✓[22m[39m Nature Town deterministic simulation[2m > [22mSIM-06/07/11 conserves all food for 20 active minutes and deterministic save continuation [33m5577[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:51.6428764Z    [33m[2m✓[22m[39m Nature Town deterministic simulation[2m > [22mSIM-10 protects carried food when destination is moved [33m585[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:51.9187093Z  [32m✓[39m src/domain/explore/__tests__/wagerRun.test.ts [2m([22m[2m19 tests[22m[2m)[22m[90m 17[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:52.5886641Z  [32m✓[39m src/domain/islandLife/facilityTrips.test.ts [2m([22m[2m10 tests[22m[2m)[22m[90m 219[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:54.8334676Z  [32m✓[39m src/components/island/three/residentOutfit.test.ts [2m([22m[2m13 tests[22m[2m)[22m[33m 1812[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:54.8337142Z    [33m[2m✓[22m[39m optional attached resident outfits[2m > [22motter preserves every original mesh, body proportion, fixed scarf and hand/seat/foot anchor through all appearances [33m762[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:56.5961612Z  [32m✓[39m src/components/island/three/expressionEnvironment.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 29446[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:56.5964873Z    [33m[2m✓[22m[39m reversible expression environment on the existing world[2m > [22mmoon-garden preserves geometry, growth, ground hits and all original material references through every period/season [33m8224[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:56.5968504Z    [33m[2m✓[22m[39m reversible expression environment on the existing world[2m > [22mstarry preserves geometry, growth, ground hits and all original material references through every period/season [33m6251[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:56.5972998Z    [33m[2m✓[22m[39m reversible expression environment on the existing world[2m > [22mcandy preserves geometry, growth, ground hits and all original material references through every period/season [33m7033[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:56.5976064Z    [33m[2m✓[22m[39m reversible expression environment on the existing world[2m > [22mcrystal preserves geometry, growth, ground hits and all original material references through every period/season [33m6374[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:56.5988538Z    [33m[2m✓[22m[39m reversible expression environment on the existing world[2m > [22mreuses same-selection resources, disposes retired clones once, and restores the newest theme after growth/material regeneration [33m1557[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:56.7055743Z  [32m✓[39m src/domain/island/furniture.test.ts [2m([22m[2m11 tests[22m[2m)[22m[90m 35[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:58.9421376Z  [32m✓[39m src/components/island/IslandLearningSupport.test.tsx [2m([22m[2m18 tests[22m[2m)[22m[90m 143[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:59.4544230Z  [32m✓[39m src/components/island/three/cameraPanFraming.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 2211[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:59.4547084Z    [33m[2m✓[22m[39m real normal-island runtime framing[2m > [22mkeeps the new central floor in the actual pan regions and reachable at 390×380 [33m594[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:59.4549627Z    [33m[2m✓[22m[39m real normal-island runtime framing[2m > [22mconstrains extreme swipes to the earned world, expansion 1 [33m319[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:59.4551612Z    [33m[2m✓[22m[39m real normal-island runtime framing[2m > [22mconstrains extreme swipes to the earned world, expansion 2 [33m523[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:17:59.8318406Z  [32m✓[39m src/components/island/three/furniture.test.ts [2m([22m[2m17 tests[22m[2m)[22m[33m 486[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:01.4523648Z  [32m✓[39m src/hooks/blockGenerators.progression.test.ts [2m([22m[2m13 tests[22m[2m)[22m[90m 33[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:01.4994075Z  [32m✓[39m src/domain/natureTown/acceptanceGrowthRandom.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 1693[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:01.4999763Z    [33m[2m✓[22m[39m NT-3 growth and random boundaries (diagnostic fixtures)[2m > [22mRNG-05/07 evaluates once per interval despite repainting, failures, weather and full visitor slots [33m822[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:01.5003162Z    [33m[2m✓[22m[39m NT-3 growth and random boundaries (diagnostic fixtures)[2m > [22mRNG-08 keeps world outcomes identical with different earned learning rights [33m691[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:01.7518859Z  [32m✓[39m src/domain/explore/__tests__/observation.test.ts [2m([22m[2m11 tests[22m[2m)[22m[90m 10[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:03.1368715Z  [32m✓[39m src/components/island/three/workshopResidentFraming.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 1126[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:03.1395523Z    [33m[2m✓[22m[39m the actual workshop resident contact camera[2m > [22mkeeps 'otter', its cap and real source contact visible through layout 'A' [33m493[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:04.2792904Z  [32m✓[39m src/components/island/three/terrainProfile.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 2044[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:04.2795603Z    [33m[2m✓[22m[39m shore garden terrain keeps saved physical land[2m > [22mmain keeps old ellipse centers, chords and boundary samples on the exact flat floor [33m334[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:04.2797553Z    [33m[2m✓[22m[39m shore garden terrain keeps saved physical land[2m > [22meast keeps old ellipse centers, chords and boundary samples on the exact flat floor [33m336[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:04.2799430Z    [33m[2m✓[22m[39m shore garden terrain keeps saved physical land[2m > [22mkeeps western physical bridge/props identical while its terrain is not an eastern mirror [33m764[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:05.3588185Z  [32m✓[39m src/domain/learning/pilotRepository.test.ts [2m([22m[2m6 tests[22m[2m)[22m[90m 254[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:06.0895476Z  [32m✓[39m src/components/island/IslandCustomization.test.tsx [2m([22m[2m9 tests[22m[2m)[22m[90m 110[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:06.5341231Z  [32m✓[39m src/components/explore/DiscoveryReveal.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 59[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:07.9993556Z  [32m✓[39m src/domain/island/subjectSelection.test.ts [2m([22m[2m10 tests[22m[2m)[22m[90m 38[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:08.8932929Z  [32m✓[39m src/domain/island/subjectPreference.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 611[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:09.1938036Z  [32m✓[39m src/components/island/three/furnitureClearance.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 898[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:09.1940872Z    [33m[2m✓[22m[39m saved furniture gives standing residents room to step aside[2m > [22mis deterministic and leaves an enclosed resident blocked without moving its saved furniture [33m740[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:09.6258783Z  [32m✓[39m src/components/island/three/islandCameraControls.test.ts [2m([22m[2m11 tests[22m[2m)[22m[90m 16[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:09.7515465Z  [32m✓[39m src/domain/natureTown/acceptanceSimulation.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 584[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:10.7228224Z  [32m✓[39m src/domain/islandLife/activities.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 719[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:11.0829721Z  [32m✓[39m tools/island-expression-visual-matrix-audit.test.mjs [2m([22m[2m7 tests[22m[2m)[22m[90m 90[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:11.6475275Z  [32m✓[39m src/components/island/three/westNavigation.test.ts [2m([22m[2m10 tests[22m[2m)[22m[90m 262[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:11.7191765Z  [32m✓[39m src/domain/explore/__tests__/runCheckpoint.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 13[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:12.0373931Z  [32m✓[39m src/domain/english/planner.test.ts [2m([22m[2m14 tests[22m[2m)[22m[90m 29[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:12.0970028Z  [32m✓[39m src/components/island/useIslandLearningObservation.test.ts [2m([22m[2m10 tests[22m[2m)[22m[90m 25[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:12.5257924Z  [32m✓[39m tools/island-reward-goal-audit.test.mjs [2m([22m[2m9 tests[22m[2m)[22m[90m 52[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:14.8168398Z  [32m✓[39m src/pages/Explore.test.ts [2m([22m[2m9 tests[22m[2m)[22m[90m 7[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:16.0733062Z  [32m✓[39m src/domain/islandLife/simulation.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 905[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:16.0736231Z    [33m[2m✓[22m[39m island life: time, choice and learning remain separate[2m > [22mintegrates both decay boundaries for newly placed flowers, regardless of refresh frequency [33m303[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:16.5110951Z  [32m✓[39m src/pwa.test.ts [2m([22m[2m12 tests[22m[2m)[22m[90m 82[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:18.3615276Z  [32m✓[39m src/domain/learning/mathCatalog.test.ts [2m([22m[2m6 tests[22m[2m)[22m[90m 102[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:20.2551299Z  [32m✓[39m src/domain/island/experienceAppearance.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 32[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:20.5639934Z  [32m✓[39m src/pwaUpdateUtils.test.ts [2m([22m[2m43 tests[22m[2m)[22m[90m 17[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:20.8785633Z  [32m✓[39m src/domain/test/trigger.test.ts [2m([22m[2m8 tests[22m[2m)[22m[90m 12[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:27.3700973Z  [32m✓[39m src/components/island/three/appearanceFraming.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 14177[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:27.3728544Z    [33m[2m✓[22m[39m appearance viewing uses fixed real-target cameras[2m > [22mkeeps the entire central tree in frame with the same matrix for every style and maturity at aspect 1.1016949152542372 [33m5962[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:27.3732709Z    [33m[2m✓[22m[39m appearance viewing uses fixed real-target cameras[2m > [22mkeeps the entire central tree in frame with the same matrix for every style and maturity at aspect 1.786046511627907 [33m5352[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:27.3737376Z    [33m[2m✓[22m[39m appearance viewing uses fixed real-target cameras[2m > [22mwall, roof and window use one fixed house view without hiding a resident, furniture or display [33m2751[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:27.4775578Z  [32m✓[39m src/components/island/three/expressionResidentWalk.test.ts [2m([22m[2m16 tests[22m[2m)[22m[33m 68935[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:27.4778146Z    [33m[2m✓[22m[39m explicit expression trial uses the actual feet and a bounded legal walk[2m > [22mleaves the actual mature default bench before otter trial, reduced=false [33m9619[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:27.4780855Z    [33m[2m✓[22m[39m explicit expression trial uses the actual feet and a bounded legal walk[2m > [22mleaves the actual mature default bench before rabbit trial, reduced=false [33m3370[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:27.4783729Z    [33m[2m✓[22m[39m explicit expression trial uses the actual feet and a bounded legal walk[2m > [22mleaves the actual mature default bench before fox trial, reduced=false [33m5352[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:27.4805368Z    [33m[2m✓[22m[39m explicit expression trial uses the actual feet and a bounded legal walk[2m > [22mleaves the actual mature default bench before otter trial, reduced=true [33m8555[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:27.4822469Z    [33m[2m✓[22m[39m explicit expression trial uses the actual feet and a bounded legal walk[2m > [22mleaves the actual mature default bench before rabbit trial, reduced=true [33m3138[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:27.4825737Z    [33m[2m✓[22m[39m explicit expression trial uses the actual feet and a bounded legal walk[2m > [22mleaves the actual mature default bench before fox trial, reduced=true [33m5102[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:27.4828699Z    [33m[2m✓[22m[39m explicit expression trial uses the actual feet and a bounded legal walk[2m > [22mcancellation during preparing restores the same seated rig and stops pending departure [33m558[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:27.4832144Z    [33m[2m✓[22m[39m explicit expression trial uses the actual feet and a bounded legal walk[2m > [22mcancellation during departing restores the same seated rig and stops pending departure [33m2980[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:27.4835554Z    [33m[2m✓[22m[39m explicit expression trial uses the actual feet and a bounded legal walk[2m > [22mcancellation during walking restores the same seated rig and stops pending departure [33m3122[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:27.4838352Z    [33m[2m✓[22m[39m explicit expression trial uses the actual feet and a bounded legal walk[2m > [22motter, reduced=false: same rig lands and cancels without moving furniture [33m4998[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:27.4840960Z    [33m[2m✓[22m[39m explicit expression trial uses the actual feet and a bounded legal walk[2m > [22mrabbit, reduced=false: same rig lands and cancels without moving furniture [33m4065[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:27.4843784Z    [33m[2m✓[22m[39m explicit expression trial uses the actual feet and a bounded legal walk[2m > [22mfox, reduced=false: same rig lands and cancels without moving furniture [33m4416[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:27.4846803Z    [33m[2m✓[22m[39m explicit expression trial uses the actual feet and a bounded legal walk[2m > [22motter, reduced=true: same rig lands and cancels without moving furniture [33m5094[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:27.4849759Z    [33m[2m✓[22m[39m explicit expression trial uses the actual feet and a bounded legal walk[2m > [22mrabbit, reduced=true: same rig lands and cancels without moving furniture [33m3949[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:27.4853073Z    [33m[2m✓[22m[39m explicit expression trial uses the actual feet and a bounded legal walk[2m > [22mfox, reduced=true: same rig lands and cancels without moving furniture [33m4383[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:27.8305109Z  [32m✓[39m src/components/island/three/sharedActivityOcclusion.test.ts [2m([22m[2m9 tests[22m[2m)[22m[90m 24[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:28.3035938Z  [32m✓[39m src/components/island/three/worldPalette.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 293[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:29.1286190Z  [32m✓[39m src/components/island/IslandAlbum.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[90m 77[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:31.3010208Z  [32m✓[39m src/domain/test/paperTestRepository.test.ts [2m([22m[2m6 tests[22m[2m)[22m[90m 177[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:31.6844233Z  [32m✓[39m src/components/island/three/geometry.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 3370[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:31.6855569Z    [33m[2m✓[22m[39m island sculpted geometry[2m > [22mkeeps the static scenery and tree within a bounded mesh and triangle budget [33m3024[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:34.4749840Z  [32m✓[39m src/components/island/life/facilityRelations.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 2193[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:34.4792180Z    [33m[2m✓[22m[39m presented facility relations[2m > [22mstands back for care beside an ordinary flower visitor while old snapshots retain the sniff distance [33m1327[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:34.4805688Z    [33m[2m✓[22m[39m presented facility relations[2m > [22mlibrary needs the real carrier and visible prop, source, destination and face [33m323[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:34.4808622Z    [33m[2m✓[22m[39m presented facility relations[2m > [22mgarden-hut needs the real carrier and visible prop, source, destination and face [33m332[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:34.9115403Z  [32m✓[39m src/components/island/three/homeViewFraming.test.ts [2m([22m[2m16 tests[22m[2m)[22m[33m 13377[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:34.9168000Z    [33m[2m✓[22m[39m layout-owned close phone home[2m > [22menlarges nearby life while retaining both residents and the house, without entering manual camera mode [33m1342[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:34.9171253Z    [33m[2m✓[22m[39m layout-owned close phone home[2m > [22mkeeps the first deliberate zoom continuous relative to the closer base frame [33m875[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:34.9173616Z    [33m[2m✓[22m[39m layout-owned close phone home[2m > [22mleaves the existing 768x900 framing unchanged [33m809[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:34.9214711Z    [33m[2m✓[22m[39m layout-owned close phone home[2m > [22mleaves the existing 1024x600 framing unchanged [33m716[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:34.9234901Z    [33m[2m✓[22m[39m layout-owned close phone home[2m > [22mleaves the existing 390x330 framing unchanged [33m785[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:34.9244976Z    [33m[2m✓[22m[39m layout-owned close phone home[2m > [22mdoes not alter the dedicated or overview frame: {"districtFocus":"all"} [33m747[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:34.9275018Z    [33m[2m✓[22m[39m layout-owned close phone home[2m > [22mdoes not alter the dedicated or overview frame: {"districtFocus":"east"} [33m645[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:34.9277408Z    [33m[2m✓[22m[39m layout-owned close phone home[2m > [22mdoes not alter the dedicated or overview frame: {"districtFocus":"west"} [33m885[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:34.9304972Z    [33m[2m✓[22m[39m layout-owned close phone home[2m > [22mdoes not alter the dedicated or overview frame: {"photographing":true} [33m1024[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:34.9334909Z    [33m[2m✓[22m[39m layout-owned close phone home[2m > [22mdoes not alter the dedicated or overview frame: {"readOnly":true} [33m841[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:34.9365108Z    [33m[2m✓[22m[39m layout-owned close phone home[2m > [22mdoes not alter the dedicated or overview frame: {"readOnly":true,"comparisonHabitat":"garden"} [33m731[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:34.9394857Z    [33m[2m✓[22m[39m layout-owned close phone home[2m > [22mdoes not alter the dedicated or overview frame: {"learning":true} [33m807[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:34.9416442Z    [33m[2m✓[22m[39m layout-owned close phone home[2m > [22mdoes not alter the dedicated or overview frame: {"preview":{"id":"move","kind":"flower","position":{"x":0,"z":1},"rotation":0}} [33m771[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:34.9434781Z    [33m[2m✓[22m[39m layout-owned close phone home[2m > [22mdoes not alter the dedicated or overview frame: {"playRequest":{"id":"replay","itemId":"flower"}} [33m880[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:34.9454863Z    [33m[2m✓[22m[39m layout-owned close phone home[2m > [22mreturns from the whole-island view to the same close home frame [33m821[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:34.9457446Z    [33m[2m✓[22m[39m layout-owned close phone home[2m > [22mlets an automatic shared activity keep its authored camera with manual mode still off [33m696[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:34.9525022Z  [32m✓[39m src/components/island/life/encounterObservation.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 2699[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:34.9534980Z    [33m[2m✓[22m[39m requires actual ordinary presentation and explicit input, and coalesces repeated input [33m886[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:34.9565319Z    [33m[2m✓[22m[39m records the bird only after a visible water peek followed by a visible return [33m352[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:34.9567443Z    [33m[2m✓[22m[39m does not record a bird whose water peek was obscured, and layout changes clear the prerequisite [33m406[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:34.9569313Z    [33m[2m✓[22m[39m ignores an asynchronously prepared scene after cancellation [33m417[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:34.9571304Z    [33m[2m✓[22m[39m preserves the gesture across a same-layout mesh rebuild without counting the GPU gap as visible time [33m636[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:35.0714612Z  [32m✓[39m src/components/island/islandAlbumPresentation.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[90m 61[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:36.5705059Z  [32m✓[39m src/components/island/life/worldShadowPresentation.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 887[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:36.5706732Z    [33m[2m✓[22m[39m predicts a tiny shadow needs the close view without recording or leaving its preview gesture behind [33m604[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:37.1878923Z  [32m✓[39m src/components/explore/ExplorePathChoice.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[90m 29[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:38.1077767Z  [32m✓[39m src/components/island/IslandExpression.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[90m 101[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:38.4690024Z  [32m✓[39m src/components/island/islandPhotoCapture.test.ts [2m([22m[2m11 tests[22m[2m)[22m[90m 40[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:38.9815471Z  [32m✓[39m src/components/island/life/residentMotion.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 1849[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:38.9855237Z    [33m[2m✓[22m[39m rendered activity geometry[2m > [22muses the legacy distance-based stride without the new sideways sway [33m684[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:38.9884942Z    [33m[2m✓[22m[39m rendered activity geometry[2m > [22muses the same reply clock for a rabbit tilt and keeps the reduced pose still [33m343[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:39.3809880Z  [32m✓[39m src/components/island/IslandRewardGoal.test.tsx [2m([22m[2m7 tests[22m[2m)[22m[90m 78[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:39.7508364Z  [32m✓[39m src/components/island/tutorial/useIslandTutorial.test.ts [2m([22m[2m6 tests[22m[2m)[22m[90m 12[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:39.9865684Z  [32m✓[39m src/domain/islandLife/economyMigration.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 618[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:39.9885336Z    [33m[2m✓[22m[39m legacy economy checkpoint[2m > [22mpreserves purchases, storage, expansion, styles and mature growth across the boundary [33m336[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:40.1052166Z  [32m✓[39m src/domain/explore/__tests__/discoveryPage.test.ts [2m([22m[2m9 tests[22m[2m)[22m[90m 12[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:40.6162622Z  [32m✓[39m src/components/island/life/runtimeAssets.test.ts [2m([22m[2m6 tests[22m[2m)[22m[90m 53[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:41.0124093Z  [32m✓[39m src/domain/islandLife/diagonalMigration.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 480[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:41.3530288Z  [32m✓[39m src/domain/islandLife/landRules.test.ts [2m([22m[2m6 tests[22m[2m)[22m[90m 220[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:41.3690016Z  [32m✓[39m src/components/explore/rootPullPresentation.test.ts [2m([22m[2m10 tests[22m[2m)[22m[90m 11[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:42.0834216Z  [32m✓[39m src/components/island/IslandGrowth.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[90m 60[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:42.6316075Z  [32m✓[39m src/domain/learning/unitPractice.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 78[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:42.9809599Z  [32m✓[39m src/domain/challenge/engine.test.ts [2m([22m[2m17 tests[22m[2m)[22m[33m 7689[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:42.9812876Z    [33m[2m✓[22m[39m challenge source v1[2m > [22mcovers all 45 ordered pairs, balances each block, exhausts bags, and avoids repeated/reversed neighbors [33m7659[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:43.0255263Z  [32m✓[39m src/domain/math/generators/advanced.test.ts [2m([22m[2m10 tests[22m[2m)[22m[90m 32[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:43.0864934Z  [32m✓[39m src/domain/islandLife/economyRepository.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 1187[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:43.0875281Z    [33m[2m✓[22m[39m atomic v3 economy cutover[2m > [22mincludes the read fact watermark and reconciles a completion committed after that read [33m369[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:43.0925381Z    [33m[2m✓[22m[39m atomic v3 economy cutover[2m > [22mretains a high legacy balance and never replenishes it during a diagnostic time jump [33m434[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:43.7690913Z  [32m✓[39m src/components/island/IslandHomeActions.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[90m 163[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:44.9931891Z  [32m✓[39m src/domain/island/pacing.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 29[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:45.7285696Z  [32m✓[39m src/components/island/three/placementOcclusion.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 1464[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:45.7297075Z    [33m[2m✓[22m[39m editing-only preview visibility[2m > [22mreveals bench behind a resident and restores original materials on cancel [33m425[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:45.8222996Z  [32m✓[39m src/domain/islandLife/placementUndo.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 328[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:46.1447104Z  [32m✓[39m src/domain/islandLife/playTours.test.ts [2m([22m[2m9 tests[22m[2m)[22m[90m 39[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:48.2690316Z  [32m✓[39m src/components/island/three/expressionResidentVisuals.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 4672[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:48.2693673Z    [33m[2m✓[22m[39m expressions stay attached to the original residents[2m > [22motter shows both real patterns with every free/paid outfit while preserving the original face, limbs and contacts [33m629[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:48.2696902Z    [33m[2m✓[22m[39m expressions stay attached to the original residents[2m > [22mtelescope preserves otter real contacts in raincoat and beret [33m390[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:48.2699510Z    [33m[2m✓[22m[39m expressions stay attached to the original residents[2m > [22mtelescope preserves rabbit real contacts in raincoat and beret [33m348[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:48.2702094Z    [33m[2m✓[22m[39m expressions stay attached to the original residents[2m > [22mtelescope preserves fox real contacts in raincoat and beret [33m550[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:48.2705045Z    [33m[2m✓[22m[39m expressions stay attached to the original residents[2m > [22mhammock preserves otter real contacts in raincoat and beret [33m307[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:48.2707647Z    [33m[2m✓[22m[39m expressions stay attached to the original residents[2m > [22mhammock preserves rabbit real contacts in raincoat and beret [33m320[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:48.2715971Z    [33m[2m✓[22m[39m expressions stay attached to the original residents[2m > [22mhammock preserves fox real contacts in raincoat and beret [33m316[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:48.2718586Z    [33m[2m✓[22m[39m expressions stay attached to the original residents[2m > [22mtea-table preserves otter real contacts in raincoat and beret [33m495[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:48.2721274Z    [33m[2m✓[22m[39m expressions stay attached to the original residents[2m > [22mtea-table preserves rabbit real contacts in raincoat and beret [33m603[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:48.2724114Z    [33m[2m✓[22m[39m expressions stay attached to the original residents[2m > [22mtea-table preserves fox real contacts in raincoat and beret [33m558[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:48.5075288Z  [32m✓[39m src/components/explore/PaintedEncounterLineage.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[90m 58[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:49.0080124Z  [32m✓[39m src/components/island/life/readingObservation.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 2551[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:49.0082422Z    [33m[2m✓[22m[39m requires ordinary R5 presentation and both visible book orientations [33m706[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:49.0084785Z    [33m[2m✓[22m[39m does not infer the inverted picture from seeing only the upright book [33m368[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:49.0086684Z    [33m[2m✓[22m[39m ignores a pending scene after cancellation and restores the prop [33m327[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:49.0088485Z    [33m[2m✓[22m[39m cancels when the real reader leaves or its layout changes [33m574[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:49.0090444Z    [33m[2m✓[22m[39m keeps the orientation through a mesh rebuild without crediting an unseen gap [33m574[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:49.2314557Z  [32m✓[39m src/domain/islandLife/placementMigration.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 272[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:49.5364452Z  [32m✓[39m src/components/island/three/expressionFootTrails.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 829[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:49.5375864Z    [33m[2m✓[22m[39m foot marks come from actual planted feet[2m > [22mfollows real stride contact, keeps 24 fixed slots, expires while idle, and never creates marks from an idle timer [33m460[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:50.5445052Z  [32m✓[39m src/domain/islandLife/cadence.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 641[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:51.3018398Z  [32m✓[39m src/domain/explore/__tests__/encounters.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 9[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:52.4489257Z  [32m✓[39m src/domain/explore/__tests__/rapidLoop.test.ts [2m([22m[2m6 tests[22m[2m)[22m[90m 13[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:52.9438343Z  [32m✓[39m src/domain/learning/context.test.ts [2m([22m[2m6 tests[22m[2m)[22m[90m 40[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:52.9545300Z  [32m✓[39m src/components/island/life/relationGaze.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 3357[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:52.9547608Z    [33m[2m✓[22m[39m same-seat R1/R3 gaze[2m > [22mturns pokomoko toward a young plant without moving its seat contact [33m927[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:52.9549730Z    [33m[2m✓[22m[39m same-seat R1/R3 gaze[2m > [22mturns rabbit toward a young plant without moving its seat contact [33m526[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:52.9551927Z    [33m[2m✓[22m[39m same-seat R1/R3 gaze[2m > [22mturns otter toward a young plant without moving its seat contact [33m438[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:52.9554499Z    [33m[2m✓[22m[39m same-seat R1/R3 gaze[2m > [22mlooks at the actual swing occupant after arrival and at the toy while it is empty [33m417[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:53.1838283Z  [32m✓[39m src/components/island/IslandExpressionFlag.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[90m 36[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:53.3743948Z  [32m✓[39m src/domain/explore/__tests__/rapidLoopEligibility.test.ts [2m([22m[2m27 tests[22m[2m)[22m[90m 19[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:53.7545918Z  [32m✓[39m src/components/domain/PrintableTestPreview.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[90m 122[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:53.8069800Z  [32m✓[39m src/domain/math/studyPresentation.test.ts [2m([22m[2m9 tests[22m[2m)[22m[90m 21[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:54.0161809Z  [32m✓[39m src/domain/islandLife/heroVisit.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 395[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:54.9075214Z  [32m✓[39m src/domain/islandLife/plantsWater.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 412[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:56.0355311Z  [32m✓[39m src/domain/island/customization.test.ts [2m([22m[2m20 tests[22m[2m)[22m[90m 21[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:56.3122464Z  [32m✓[39m src/components/island/life/placement.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 2009[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:56.3125614Z    [33m[2m✓[22m[39m placement preview[2m > [22mmatches saved placement rules, including a free cell that blocks another seat [33m384[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:56.3128249Z    [33m[2m✓[22m[39m placement preview[2m > [22mkeeps a resident on the real seat while a copy is previewed elsewhere [33m848[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:56.3130952Z    [33m[2m✓[22m[39m isolation placement presentation[2m > [22mallows blocking an existing entrance and names every affected item without inventing a route [33m333[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:56.3134296Z    [33m[2m✓[22m[39m isolation placement presentation[2m > [22mkeeps static markers after confirmation and clears them when an entrance reconnects [33m419[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:56.6871039Z  [32m✓[39m src/domain/islandLife/walkingSpace.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 221[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:58.4878615Z  [32m✓[39m src/components/island/life/extendedGround.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 3011[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:58.4883697Z    [33m[2m✓[22m[39m rendered groves and water retain exact cells and readable connections[2m > [22mcan see sapling x 3 with its real connecting ground [33m678[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:58.4886875Z    [33m[2m✓[22m[39m rendered groves and water retain exact cells and readable connections[2m > [22mcan see sapling x 6 with its real connecting ground [33m443[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:58.4890207Z    [33m[2m✓[22m[39m rendered groves and water retain exact cells and readable connections[2m > [22mcan see water-bowl x 2 with its real connecting ground [33m354[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:58.4892997Z    [33m[2m✓[22m[39m rendered groves and water retain exact cells and readable connections[2m > [22mshows a five-tree grove while a resident rests under the front crown [33m353[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:58.4896560Z    [33m[2m✓[22m[39m rendered groves and water retain exact cells and readable connections[2m > [22mkeeps water comparison head focus when a reduced-motion memory is replayed with normal motion [33m555[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:58.4899926Z    [33m[2m✓[22m[39m rendered groves and water retain exact cells and readable connections[2m > [22mrests beside a mature tree inside its local shade while retaining the old unversioned pose [33m424[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:18:58.8654470Z  [32m✓[39m src/components/island/islandAlbumMemory.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 10[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:01.2886149Z  [32m✓[39m src/domain/math/answerCompletion.test.ts [2m([22m[2m13 tests[22m[2m)[22m[33m 410[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:01.2892325Z    [33m[2m✓[22m[39m immediate answer-cell completion[2m > [22mcan fill every generated numeric shape without Enter or knowing the right digits [33m401[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:01.6372045Z  [32m✓[39m src/components/island/three/runtimeExpressionResidents.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 4339[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:01.6375277Z    [33m[2m✓[22m[39m expression rendering stays optional inside a read-only scene[2m > [22mpause restores the actual resident, clears every live mark and consumes the interrupted request [33m1788[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:01.6378688Z    [33m[2m✓[22m[39m expression rendering stays optional inside a read-only scene[2m > [22mchanging reduced motion schedules the owned temporary rig instead of resetting it through ordinary updates [33m1138[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:01.6381783Z    [33m[2m✓[22m[39m expression rendering stays optional inside a read-only scene[2m > [22mframes the actual read-only trial and releases that camera on learning and exit [33m1412[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:02.1023678Z  [32m✓[39m src/components/island/three/livingActivities.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 16[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:03.0165818Z  [32m✓[39m src/domain/islandLife/cadenceMigration.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 392[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:04.0740111Z  [32m✓[39m src/components/island/life/gatheringVisibility.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 2303[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:04.0742699Z    [33m[2m✓[22m[39m rendered gathering evidence[2m > [22mrequires visible real items, connecting ground and an unobstructed viewport (growth=0) [33m733[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:04.0745915Z    [33m[2m✓[22m[39m rendered gathering evidence[2m > [22mrequires visible real items, connecting ground and an unobstructed viewport (growth=6) [33m477[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:04.0748548Z    [33m[2m✓[22m[39m rendered gathering evidence[2m > [22mrejects a clipped group and a real opaque object covering its ground [33m300[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:04.0751026Z    [33m[2m✓[22m[39m rendered gathering evidence[2m > [22msees the actual exposed parts of all six mature cells and joins from the island angle [33m456[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:04.0753790Z    [33m[2m✓[22m[39m rendered gathering evidence[2m > [22msees exposed shared ground around a sandbox instead of sampling underneath its rim [33m322[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:04.4835412Z  [32m✓[39m src/domain/islandLife/discovery.test.ts [2m([22m[2m6 tests[22m[2m)[22m[90m 29[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:04.9990776Z  [32m✓[39m src/domain/battle/engine.test.ts [2m([22m[2m10 tests[22m[2m)[22m[90m 15[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:05.4831603Z  [32m✓[39m src/domain/math/generators/subtraction.test.ts [2m([22m[2m10 tests[22m[2m)[22m[90m 14[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:05.7155406Z  [32m✓[39m src/domain/islandLife/sandbox.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 863[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:05.7165886Z    [33m[2m✓[22m[39m sandbox ownership and two-role activity[2m > [22mjoins mixed GP2/GP3 and R3, and allows two different touring roles at a sandbox [33m701[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:05.9239476Z  [32m✓[39m src/utils/audio.test.ts [2m([22m[2m8 tests[22m[2m)[22m[90m 43[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:06.4432307Z  [32m✓[39m src/components/dev/suika/NumberSuikaStage.test.tsx [2m([22m[2m10 tests[22m[2m)[22m[90m 84[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:06.9005409Z  [32m✓[39m src/components/island/life/landscape.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 656[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:07.1121022Z  [32m✓[39m src/domain/learning/englishCatalog.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 274[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:07.8181019Z  [32m✓[39m src/domain/islandLife/heroVisitMigration.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 387[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:08.6606083Z  [32m✓[39m src/components/island/three/waterSurface.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 11770[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:08.6609231Z    [33m[2m✓[22m[39m static ocean and shallow-water resources[2m > [22mkeeps simultaneous palettes and other slots independent at floor level 0 [33m2285[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:08.6612068Z    [33m[2m✓[22m[39m static ocean and shallow-water resources[2m > [22mkeeps simultaneous palettes and other slots independent at floor level 1 [33m2470[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:08.6615100Z    [33m[2m✓[22m[39m static ocean and shallow-water resources[2m > [22mkeeps simultaneous palettes and other slots independent at floor level 2 [33m3524[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:08.6648022Z    [33m[2m✓[22m[39m static ocean and shallow-water resources[2m > [22mreuses and retires water resources without textures at floor level 0 [33m964[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:08.6650462Z    [33m[2m✓[22m[39m static ocean and shallow-water resources[2m > [22mreuses and retires water resources without textures at floor level 1 [33m1198[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:08.6653660Z    [33m[2m✓[22m[39m static ocean and shallow-water resources[2m > [22mreuses and retires water resources without textures at floor level 2 [33m1327[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:08.9950958Z  [32m✓[39m src/components/ikimono/fuwafuwaDailyConversation.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 9[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:09.5362983Z  [32m✓[39m src/domain/island/homeJourney.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 293[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:09.7154269Z  [32m✓[39m src/domain/island/learningChecks.test.ts [2m([22m[2m14 tests[22m[2m)[22m[90m 20[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:09.7562269Z [90mstdout[2m | src/domain/islandLife/replaySnapshot.test.ts[2m > [22m[2mpersistent replay acceleration[2m > [22m[2msurvives cold reopen and matches full replay after 1 and 7 days, purchases and new facts
+verify-core	Verify core	2026-09-20T03:19:09.7570269Z [22m[39msnapshot benchmark {"hours":24,"fullMs":8.774180000000001,"restoreMs":0.915032999999994,"snapshotBytes":6196}
+verify-core	Verify core	2026-09-20T03:19:09.7571560Z
+verify-core	Verify core	2026-09-20T03:19:09.7704428Z [90mstdout[2m | src/domain/islandLife/replaySnapshot.test.ts[2m > [22m[2mpersistent replay acceleration[2m > [22m[2msurvives cold reopen and matches full replay after 1 and 7 days, purchases and new facts
+verify-core	Verify core	2026-09-20T03:19:09.7707859Z [22m[39msnapshot benchmark {"hours":168,"fullMs":7.199692000000027,"restoreMs":0.7183549999999741,"snapshotBytes":6197}
+verify-core	Verify core	2026-09-20T03:19:09.7709053Z
+verify-core	Verify core	2026-09-20T03:19:09.8020848Z [90mstdout[2m | src/domain/islandLife/replaySnapshot.test.ts[2m > [22m[2mpersistent replay acceleration[2m > [22m[2msurvives cold reopen and matches full replay after 1 and 7 days, purchases and new facts
+verify-core	Verify core	2026-09-20T03:19:09.8055451Z [22m[39msnapshot benchmark {"hours":168.0000002777778,"fullMs":12.16932799999995,"restoreMs":0.8931329999999207,"snapshotBytes":6197}
+verify-core	Verify core	2026-09-20T03:19:09.8081440Z
+verify-core	Verify core	2026-09-20T03:19:09.9885094Z  [32m✓[39m src/domain/islandLife/replaySnapshot.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 515[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:09.9887584Z    [33m[2m✓[22m[39m persistent replay acceleration[2m > [22msurvives cold reopen and matches full replay after 1 and 7 days, purchases and new facts [33m484[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:10.0976186Z  [32m✓[39m src/components/island/three/learningReaction.test.ts [2m([22m[2m12 tests[22m[2m)[22m[90m 13[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:10.4575478Z  [32m✓[39m src/domain/islandLife/observationVisit.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 47[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:10.4870521Z  [32m✓[39m src/domain/math/generators/addition.test.ts [2m([22m[2m10 tests[22m[2m)[22m[90m 12[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:10.9240660Z  [32m✓[39m src/domain/islandLife/picnicTable.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 93[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:12.1922116Z  [32m✓[39m src/components/explore/ReturnSummary.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[90m 92[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:12.5875525Z  [32m✓[39m src/components/island/islandDiscoveryGuide.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 30[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:14.6307452Z  [32m✓[39m src/domain/natureTown/learning.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 312[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:15.2455523Z  [32m✓[39m src/domain/islandLife/purchases.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 139[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:15.6454479Z  [32m✓[39m src/components/island/life/useLiveDiscovery.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 112[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:16.0857859Z  [32m✓[39m src/components/dev/g0v2/G0MechanicRemixStage.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[90m 37[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:16.4364004Z  [32m✓[39m src/components/island/three/sharedActivityContinuity.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 5536[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:16.4367186Z    [33m[2m✓[22m[39m shared props remain attached while the real resident poses change phase[2m > [22m'flower' 'left/left' keeps actual holding paws and the prop continuous across every handoff boundary [33m1035[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:16.4406366Z    [33m[2m✓[22m[39m shared props remain attached while the real resident poses change phase[2m > [22m'flower' 'left/right' keeps actual holding paws and the prop continuous across every handoff boundary [33m465[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:16.4410411Z    [33m[2m✓[22m[39m shared props remain attached while the real resident poses change phase[2m > [22m'flower' 'right/left' keeps actual holding paws and the prop continuous across every handoff boundary [33m417[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:16.4414522Z    [33m[2m✓[22m[39m shared props remain attached while the real resident poses change phase[2m > [22m'flower' 'right/right' keeps actual holding paws and the prop continuous across every handoff boundary [33m458[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:16.4430167Z    [33m[2m✓[22m[39m shared props remain attached while the real resident poses change phase[2m > [22m'star' 'left/left' keeps actual holding paws and the prop continuous across every handoff boundary [33m456[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:16.4433835Z    [33m[2m✓[22m[39m shared props remain attached while the real resident poses change phase[2m > [22m'star' 'left/right' keeps actual holding paws and the prop continuous across every handoff boundary [33m393[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:16.4437165Z    [33m[2m✓[22m[39m shared props remain attached while the real resident poses change phase[2m > [22m'bubble' 'left/left' keeps actual holding paws and the prop continuous across every handoff boundary [33m482[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:16.4441229Z    [33m[2m✓[22m[39m shared props remain attached while the real resident poses change phase[2m > [22m'bubble' 'left/right' keeps actual holding paws and the prop continuous across every handoff boundary [33m403[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:16.4445053Z    [33m[2m✓[22m[39m shared props remain attached while the real resident poses change phase[2m > [22m'bubble' 'right/left' keeps actual holding paws and the prop continuous across every handoff boundary [33m415[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:16.4448644Z    [33m[2m✓[22m[39m shared props remain attached while the real resident poses change phase[2m > [22m'bubble' 'right/right' keeps actual holding paws and the prop continuous across every handoff boundary [33m412[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:16.7992237Z  [32m✓[39m src/domain/islandLife/playTourSimulation.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 5492[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:16.8015364Z    [33m[2m✓[22m[39m authoritative GP3 time and interruption[2m > [22mkeeps all three residents circulating during a long absence [33m5183[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:18.2328563Z  [32m✓[39m src/domain/math/profileProgress.test.ts [2m([22m[2m67 tests[22m[2m)[22m[90m 57[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:18.7575301Z  [32m✓[39m src/domain/islandLife/windArch.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 132[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:18.8634283Z  [32m✓[39m src/components/island/life/relationObservation.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 1905[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:18.8655570Z    [33m[2m✓[22m[39m rendered explicit resident selection[2m > [22mlooks at the actual swing user without changing either resident or the bench seat [33m1320[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:18.8685441Z    [33m[2m✓[22m[39m rendered explicit resident selection[2m > [22mselects another mature tree for one table user while the partner retains their original tree [33m583[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:19.6745459Z  [32m✓[39m src/components/island/life/encounterVisual.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 470[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:19.6747701Z    [33m[2m✓[22m[39m X1 travels to the actual bowl and returns without altering owned geometry [33m366[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:19.9621511Z  [32m✓[39m src/components/island/life/liveRelations.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 2628[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:19.9651462Z    [33m[2m✓[22m[39m live rendered bench relations[2m > [22mrequires actual settled gaze, visible head and target (swing=false) [33m668[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:20.1700070Z    [33m[2m✓[22m[39m live rendered bench relations[2m > [22mrequires actual settled gaze, visible head and target (swing=true) [33m349[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:20.1702515Z    [33m[2m✓[22m[39m live rendered bench relations[2m > [22mtracks the actual swing occupant and separates a later visit to the same bench [33m812[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:20.1705572Z    [33m[2m✓[22m[39m live rendered bench relations[2m > [22mnever relabels a free observation visit as a live encounter after closing its panel [33m513[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:20.1707554Z  [32m✓[39m src/domain/islandLife/isolation.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 116[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:20.4485630Z  [32m✓[39m src/components/island/three/islandCameraAnchor.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 29[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:20.9515444Z  [32m✓[39m src/domain/islandLife/waterMagic.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 90[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:21.0985797Z  [32m✓[39m src/domain/islandLife/tourMigration.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 411[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:21.4282840Z  [32m✓[39m src/components/dev/g0/G0WhiteboxStage.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[90m 32[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:21.5726340Z  [32m✓[39m src/domain/islandLife/readingEncounter.test.ts [2m([22m[2m10 tests[22m[2m)[22m[90m 45[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:21.8525258Z  [32m✓[39m src/prototypes/pittari/engine.test.ts [2m([22m[2m18 tests[22m[2m)[22m[90m 43[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:21.9625504Z  [32m✓[39m src/domain/island/catalogExpansion.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 14[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:23.4637380Z  [32m✓[39m src/domain/islandLife/repository.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 4001[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:23.4666008Z    [33m[2m✓[22m[39m independent life persistence[2m > [22mnever awards a diagnostic time jump twice and recovers from backward clock [33m3630[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:23.8393785Z  [32m✓[39m src/components/island/learningGuidance.test.ts [2m([22m[2m13 tests[22m[2m)[22m[90m 12[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:24.0855633Z  [32m✓[39m src/components/domain/answerCompletion.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[90m 78[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:24.9773077Z  [32m✓[39m src/components/island/life/windArch.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 2434[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:24.9775922Z    [33m[2m✓[22m[39m wind and arch rendered geometry[2m > [22mrotates only in normal motion and freezes the recorded mode [33m883[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:24.9778816Z    [33m[2m✓[22m[39m wind and arch rendered geometry[2m > [22mlets all existing residents pass along four cardinal lines without touching any arch triangle bounds [33m1339[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:25.3195573Z  [32m✓[39m src/components/island/three/sharedJobActor.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 701[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:25.3198108Z    [33m[2m✓[22m[39m shared work uses grounded actual hands[2m > [22mholds both real specimen tray handles without feet entering the table [33m366[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:25.3824581Z  [32m✓[39m src/domain/islandLife/discoveryRecall.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 30[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:25.9688918Z  [32m✓[39m src/domain/islandLife/placementClearance.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 126[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:26.0147464Z  [32m✓[39m src/components/island/life/roamingPresentation.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 164[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:26.4645540Z  [32m✓[39m src/domain/math/generators/division.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 95[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:26.6955352Z  [32m✓[39m src/domain/islandLife/facilities.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 324[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:26.9258305Z  [32m✓[39m src/domain/islandLife/extendedGatherings.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 32[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:27.0502607Z  [32m✓[39m tools/island-qualified-audit.test.mjs [2m([22m[2m12 tests[22m[2m)[22m[90m 49[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:27.4215445Z  [32m✓[39m src/components/island/three/residentInterest.test.ts [2m([22m[2m11 tests[22m[2m)[22m[90m 31[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:27.5759845Z  [32m✓[39m src/domain/island/landGeometry.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 213[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:27.9521477Z  [32m✓[39m src/utils/tts.test.ts [2m([22m[2m6 tests[22m[2m)[22m[90m 14[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:28.3085311Z  [32m✓[39m src/utils/pdfGenerator.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 14[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:28.3494721Z  [32m✓[39m src/domain/english/listening.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 12[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:28.6815697Z  [32m✓[39m src/domain/test/paperTest.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 9[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:28.7915451Z  [32m✓[39m src/domain/island/photos.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 34[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:29.0201825Z  [32m✓[39m src/components/island/learningFeedback.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 8[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:29.4995910Z  [32m✓[39m src/components/island/IslandMilestone.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[90m 26[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:29.7242531Z  [32m✓[39m src/components/island/three/connectedScenery.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 5372[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:29.7244722Z    [33m[2m✓[22m[39m one connected island across growth and appearance changes[2m > [22mreplaces only terrain at unlocks, keeping the home, bridges and texture owner alive [33m2605[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:29.7246272Z    [33m[2m✓[22m[39m one connected island across growth and appearance changes[2m > [22msupports all original and connecting floors once at level 1 [33m1136[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:29.7247616Z    [33m[2m✓[22m[39m one connected island across growth and appearance changes[2m > [22msupports all original and connecting floors once at level 2 [33m1630[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:30.2527414Z  [32m✓[39m src/components/domain/WrittenArithmeticGrid.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[90m 43[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:30.8139948Z  [32m✓[39m src/components/island/three/usualPlaceRuntime.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 9[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:31.4225319Z  [32m✓[39m src/components/island/life/sandbox.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 1855[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:31.4227882Z    [33m[2m✓[22m[39m sandbox ordinary making[2m > [22mshows a mountain for one user and a castle for two (users=1) [33m690[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:31.4230178Z    [33m[2m✓[22m[39m sandbox ordinary making[2m > [22mshows a mountain for one user and a castle for two (users=2) [33m317[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:31.4232555Z    [33m[2m✓[22m[39m sandbox ordinary making[2m > [22mgrows the current sand shape over time and replays a captured pose unchanged [33m578[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:31.6935546Z  [32m✓[39m src/components/island/islandWorkshopRequest.test.ts [2m([22m[2m6 tests[22m[2m)[22m[90m 16[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:32.2647946Z  [32m✓[39m src/components/island/three/placementPreview.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 129[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:32.6975260Z  [32m✓[39m src/components/island/three/residentRoaming.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 59[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:33.4976376Z  [32m✓[39m src/components/island/life/picnicMotion.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 1499[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:33.5007134Z    [33m[2m✓[22m[39m real picnic seats and ordinary use[2m > [22mkeeps separate seat contact and shows the current users snack (two=false) [33m687[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:33.5015527Z    [33m[2m✓[22m[39m real picnic seats and ordinary use[2m > [22mkeeps separate seat contact and shows the current users snack (two=true) [33m368[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:34.6351815Z  [32m✓[39m src/components/island/islandCustomizationRequest.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 9[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:34.9468365Z  [32m✓[39m src/components/island/life/canopySculptStudy.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 3792[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:34.9474804Z    [33m[2m✓[22m[39m loads three closed, connected meshes and preserves the traced foreground volume [33m3783[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:34.9795647Z  [32m✓[39m src/domain/learning/independentProgress.test.ts [2m([22m[2m17 tests[22m[2m)[22m[90m 11[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:35.2605338Z  [32m✓[39m src/components/explore/snapRootPresentation.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 7[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:35.2851870Z  [32m✓[39m src/domain/stats/repository.test.ts [2m([22m[2m1 test[22m[2m)[22m[90m 6[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:35.4075992Z  [32m✓[39m src/components/explore/RootPullOpeningArt.test.tsx [2m([22m[2m8 tests[22m[2m)[22m[90m 37[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:36.0869347Z  [32m✓[39m src/components/natureTown/editing.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 63[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:36.5639107Z  [32m✓[39m src/components/island/life/readingBookPose.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 29[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:36.9600824Z  [32m✓[39m src/domain/islandLife/roaming.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 16[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:37.3495482Z  [32m✓[39m src/components/island/life/presentationClock.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 36[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:37.5025571Z  [32m✓[39m src/components/island/useIslandDiscoveries.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 15[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:38.5565987Z  [32m✓[39m src/domain/explore/__tests__/generator.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 704[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:38.5568482Z    [33m[2m✓[22m[39m createExploreMap[2m > [22mkeeps every generated node reachable across multiple seeds [33m696[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:38.6704983Z  [32m✓[39m src/components/island/life/facilities.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 2773[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:38.6712448Z    [33m[2m✓[22m[39m facility entrance uses[2m > [22mshows one held book or tools at the entrance for pokomoko [33m1102[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:38.6715088Z    [33m[2m✓[22m[39m facility entrance uses[2m > [22mshows one held book or tools at the entrance for rabbit [33m577[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:38.6717234Z    [33m[2m✓[22m[39m facility entrance uses[2m > [22mshows one held book or tools at the entrance for otter [33m577[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:38.6719469Z    [33m[2m✓[22m[39m facility entrance uses[2m > [22mkeeps the four-cell preview and only legal anchors while preserving old scenes without props [33m513[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:39.3239449Z  [32m✓[39m src/components/island/islandExperienceRequest.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 13[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:39.6895990Z  [32m✓[39m src/domain/island/visitors.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 29[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:40.1171473Z  [32m✓[39m src/components/island/life/canopyGroundStudy.test.ts [2m([22m[2m6 tests[22m[2m)[22m[90m 14[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:40.4025139Z  [32m✓[39m src/domain/island/navigation.test.ts [2m([22m[2m12 tests[22m[2m)[22m[90m 9[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:40.5025800Z  [32m✓[39m src/domain/stats/aggregation.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 12[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:40.9908365Z  [32m✓[39m src/domain/park/englishPlanning.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 505[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:41.2530228Z  [32m✓[39m src/components/island/IslandPhotos.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[90m 38[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:41.4315620Z  [32m✓[39m src/domain/islandLife/footstepMagic.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 24[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:42.0045411Z  [32m✓[39m src/domain/natureTown/repository.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 282[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:42.0342148Z  [32m✓[39m src/components/island/three/homePresentation.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 167[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:42.4559005Z  [32m✓[39m src/domain/islandLife/waterBench.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 20[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:42.6261460Z  [32m✓[39m src/components/island/life/gatheringCollector.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 213[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:43.0714902Z  [32m✓[39m src/components/explore/FireflyFlowerEncounterArt.test.tsx [2m([22m[2m8 tests[22m[2m)[22m[90m 63[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:44.5384795Z  [32m✓[39m src/domain/islandLife/terminalFacts.test.ts [2m([22m[2m1 test[22m[2m)[22m[90m 124[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:44.8935324Z  [32m✓[39m src/components/ikimono/lifecycle.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 13[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:45.8348961Z  [32m✓[39m src/components/island/three/residentFabric.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 5042[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:45.8350974Z    [33m[2m✓[22m[39m one cloth resident in the shared island[2m > [22mkeeps atlas UVs through body/head batching and every articulated hand/foot [33m4821[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:46.3537412Z  [32m✓[39m src/components/island/three/growthNavigation.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 1047[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:46.3546969Z    [33m[2m✓[22m[39m automatically grown places support real resident life[2m > [22mkeeps all seven anchor objects legal and reachable through the complete chapter [33m988[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:46.8472408Z  [32m✓[39m src/components/explore/MakimodonEncounterArt.test.tsx [2m([22m[2m8 tests[22m[2m)[22m[90m 93[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:47.0233158Z  [32m✓[39m src/components/island/three/residentPortraitFraming.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 789[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:47.0245493Z    [33m[2m✓[22m[39m actual resident outfit portrait[2m > [22mshows otter face, ears and feet at aspect 1.5918367346938775 without changing its pose [33m374[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:47.3725151Z  [32m✓[39m src/domain/island/livingSettings.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 18[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:47.6558227Z  [32m✓[39m src/domain/explore/__tests__/openingExperience.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 8[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:47.9335605Z  [32m✓[39m tools/asset-policy.test.mjs [2m([22m[2m19 tests[22m[2m)[22m[90m 10[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:48.7837587Z  [32m✓[39m src/domain/test/testSet.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 56[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:49.7162312Z  [32m✓[39m src/domain/natureTown/growthJourney.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 1500[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:49.7165246Z    [33m[2m✓[22m[39m grows from the starter through real supply, retained offer, admission and increased demand [33m1439[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:50.3121003Z  [32m✓[39m src/components/island/IslandDirectActions.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[90m 34[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:50.9875220Z  [32m✓[39m src/domain/islandLife/capabilities.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 166[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:51.0258450Z  [32m✓[39m src/components/island/life/sceneBudget.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 1696[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:51.0267195Z    [33m[2m✓[22m[39m keeps +0 placed items within the scene allocation budget [33m575[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:51.0268823Z    [33m[2m✓[22m[39m keeps 30 placed items within the scene allocation budget [33m431[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:51.0270455Z    [33m[2m✓[22m[39m keeps 100 placed items within the scene allocation budget [33m688[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:51.3501544Z  [32m✓[39m src/domain/math/generators/fraction.test.ts [2m([22m[2m6 tests[22m[2m)[22m[90m 12[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:51.3910296Z  [32m✓[39m src/domain/math/hissanEngine.test.ts [2m([22m[2m8 tests[22m[2m)[22m[90m 9[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:53.1532785Z  [32m✓[39m src/components/island/visualLearningGuidance.test.ts [2m([22m[2m6 tests[22m[2m)[22m[90m 8[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:53.6344762Z  [32m✓[39m src/components/explore/ResearchBookStage.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[90m 33[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:54.0252476Z  [32m✓[39m src/domain/math/additionProgress.test.ts [2m([22m[2m9 tests[22m[2m)[22m[90m 12[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:54.6815447Z  [32m✓[39m src/components/natureTown/livingPresentation.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 1247[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:54.6817241Z    [33m[2m✓[22m[39m emits actual pickup and dropoff endpoints once, while preserving food conservation [33m1240[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:55.2255311Z  [32m✓[39m src/components/island/life/footstepPresentation.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 642[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:55.2257437Z    [33m[2m✓[22m[39m uses actual grounded moving feet, never emits while stopped, and bounds trail lifetime and ownership [33m641[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:55.5802575Z  [32m✓[39m src/components/island/islandExpansionPreview.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 16[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:55.9127298Z  [32m✓[39m src/domain/islandLife/economyRules.test.ts [2m([22m[2m12 tests[22m[2m)[22m[90m 12[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:56.2564951Z  [32m✓[39m src/domain/island/tutorialState.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 7[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:58.2196096Z  [32m✓[39m src/domain/park/learningContinuation.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 29[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:58.4901401Z  [32m✓[39m src/components/island/islandCustomizationPreview.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 9[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:59.0995091Z  [32m✓[39m src/components/island/IslandFurniturePlacement.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[90m 33[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:59.4375148Z  [32m✓[39m src/components/island/life/facilityTrips.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 4217[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:59.4405580Z    [33m[2m✓[22m[39m continuous held work and captured transport[2m > [22mkeeps pokomoko and its prop through collection, real walking and use without changing the feet [33m1986[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:59.4408629Z    [33m[2m✓[22m[39m continuous held work and captured transport[2m > [22mkeeps rabbit and its prop through collection, real walking and use without changing the feet [33m1007[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:59.4525626Z    [33m[2m✓[22m[39m continuous held work and captured transport[2m > [22mkeeps otter and its prop through collection, real walking and use without changing the feet [33m1223[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:19:59.8927007Z  [32m✓[39m src/domain/islandLife/groupEncounters.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 76[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:00.4841845Z  [32m✓[39m src/domain/english/examples.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 274[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:00.7765544Z  [32m✓[39m src/components/explore/makimodonPresentation.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 6[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:01.0935416Z  [32m✓[39m src/components/island/life/LifeCatalogPages.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[90m 9[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:01.4169062Z  [32m✓[39m src/components/ikimono/fuwafuwaSpeech.test.ts [2m([22m[2m6 tests[22m[2m)[22m[90m 8[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:01.9205991Z  [32m✓[39m src/domain/english/generator.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 2458[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:01.9208719Z    [33m[2m✓[22m[39m English catalog and choices[2m > [22mevery word produces four unique rendered choices (kanji=false) [33m1331[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:01.9211524Z    [33m[2m✓[22m[39m English catalog and choices[2m > [22mevery word produces four unique rendered choices (kanji=true) [33m1119[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:02.0676603Z  [32m✓[39m src/components/Footer.test.tsx [2m([22m[2m9 tests[22m[2m)[22m[90m 93[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:02.2839814Z  [32m✓[39m src/components/island/life/lifePersistenceMessage.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 9[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:02.5010967Z  [32m✓[39m src/domain/islandLife/shadowMagic.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 22[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:02.7285506Z  [32m✓[39m src/components/island/life/canopyMaterialStudy.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 24[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:02.9775113Z  [32m✓[39m src/components/island/life/stateProjection.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 74[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:03.3342971Z  [32m✓[39m src/domain/math/writtenPlaceValue.test.ts [2m([22m[2m10 tests[22m[2m)[22m[90m 11[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:03.6498932Z  [32m✓[39m src/components/island/islandGrowthPreview.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 12[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:03.9473845Z  [32m✓[39m src/domain/explore/__tests__/rewardPresentation.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 5[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:04.2741002Z  [32m✓[39m src/components/explore/rapidTrailPresentation.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 6[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:04.5915391Z  [32m✓[39m src/domain/explore/__tests__/suikaQuantity.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 9[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:04.8305794Z  [32m✓[39m src/components/island/homeJourney/interior.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 1681[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:04.8308821Z    [33m[2m✓[22m[39m the growing home and its real interior[2m > [22mkeeps the room and camera within the same basic house at 0 answers [33m656[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:04.8311309Z    [33m[2m✓[22m[39m the growing home and its real interior[2m > [22mkeeps the room and camera within the same basic house at 9 answers [33m325[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:04.8313797Z    [33m[2m✓[22m[39m the growing home and its real interior[2m > [22mkeeps the room and camera within the same basic house at 45 answers [33m355[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:05.0652441Z  [32m✓[39m src/components/island/life/plantMagic.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 28[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:05.3875443Z  [32m✓[39m src/domain/natureTown/routing.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 219[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:07.3967597Z  [32m✓[39m src/components/explore/PokkoVisualLineage.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[90m 37[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:07.4004587Z  [32m✓[39m src/components/island/life/residentShadow.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 1449[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:07.4006904Z    [33m[2m✓[22m[39m pokomoko: only the copied shadow waves, and normal shape and cast flags return [33m663[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:07.4008592Z    [33m[2m✓[22m[39m rabbit: only the copied shadow waves, and normal shape and cast flags return [33m395[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:07.4009982Z    [33m[2m✓[22m[39m otter: only the copied shadow waves, and normal shape and cast flags return [33m389[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:07.7263117Z  [32m✓[39m src/domain/explore/__tests__/attemptIdentity.test.ts [2m([22m[2m8 tests[22m[2m)[22m[90m 8[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:07.7385728Z  [32m✓[39m src/domain/explore/__tests__/rewards.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 7[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:08.0305457Z  [32m✓[39m src/components/island/life/growthStatus.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 7[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:08.0818355Z  [32m✓[39m src/domain/explore/__tests__/g0MechanicMetrics.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 6[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:08.4285676Z  [32m✓[39m src/components/island/islandFurnitureTrial.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 36[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:08.5008326Z  [32m✓[39m src/components/island/life/canopyShoreStudy.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 37[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:08.8701830Z  [32m✓[39m src/pwaUpdateRecovery.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 16[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:09.1921962Z  [32m✓[39m src/components/island/life/observationCue.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 7[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:09.8625686Z  [32m✓[39m tools/learning-unit-report.test.mjs [2m([22m[2m2 tests[22m[2m)[22m[90m 141[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:10.2105259Z  [32m✓[39m src/components/ikimono/hitokoto.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 14[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:10.6189083Z  [32m✓[39m src/domain/math/numberEntry.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 255[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:10.9562450Z  [32m✓[39m src/components/island/life/placementWait.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 9[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:11.0837722Z  [32m✓[39m src/components/island/three/homeWalk.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 490[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:11.0859959Z    [33m[2m✓[22m[39m indoor walking[2m > [22mmoves the actual rig, accepts a new destination mid-walk and releases on exit [33m348[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:11.4186644Z  [32m✓[39m src/components/ikimono/fuwafuwaAlbumCopy.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 6[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:11.4839414Z  [32m✓[39m src/components/island/life/plantsWaterGeometry.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 105[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:11.7615808Z  [32m✓[39m tools/asset-pipeline/run_batch.test.mjs [2m([22m[2m4 tests[22m[2m)[22m[90m 5[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:11.8115304Z  [32m✓[39m src/components/island/islandStarReceiptEligibility.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 5[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:12.1352855Z  [32m✓[39m src/domain/math/subtractionProgress.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 8[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:12.1365339Z  [32m✓[39m src/components/island/islandDistrictView.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 9[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:12.4455931Z  [32m✓[39m src/domain/explore/__tests__/runStructure.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 5[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:12.5425237Z  [32m✓[39m src/domain/islandLife/growthIntegration.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 106[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:12.8316580Z  [32m✓[39m src/domain/learning/runtimeUnitPractice.test.ts [2m([22m[2m9 tests[22m[2m)[22m[90m 18[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:13.1566366Z  [32m✓[39m src/components/island/IslandWelcome.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[90m 29[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:13.2525507Z  [32m✓[39m src/components/island/life/canopyAtmosphereStudy.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 12[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:13.5305184Z  [32m✓[39m src/components/island/life/residentWalk.test.ts [2m([22m[2m6 tests[22m[2m)[22m[90m 56[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:13.8425243Z  [32m✓[39m src/domain/math/sequenceProgress.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 8[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:14.1399341Z  [32m✓[39m src/domain/math/fractionInput.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 7[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:14.4265843Z  [32m✓[39m src/domain/learning/reviewBudget.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 7[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:14.7305406Z  [32m✓[39m src/domain/explore/__tests__/encounterPhase.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 5[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:15.2410008Z  [32m✓[39m src/domain/explore/__tests__/fixedTenBenchmark.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 5[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:15.8065441Z  [32m✓[39m src/components/island/IslandRewards.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[90m 25[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:16.4450340Z  [32m✓[39m src/domain/explore/__tests__/replay.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 7[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:17.1211086Z  [32m✓[39m src/components/island/three/workshopGround.test.ts [2m([22m[2m1 test[22m[2m)[22m[90m 242[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:17.5844500Z  [32m✓[39m src/domain/learning/reviewPolicy.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 7[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:17.9165541Z  [32m✓[39m src/domain/benchmark/coldOpenFixedTen.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 9[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:18.1995265Z  [32m✓[39m src/components/island/homeJourney/delivery.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 8[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:18.5215485Z  [32m✓[39m src/hooks/useLearningSessionLease.test.ts [2m([22m[2m1 test[22m[2m)[22m[90m 16[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:18.8339348Z  [32m✓[39m src/components/island/homeJourney/growthReveal.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 6[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:18.9155418Z  [32m✓[39m src/utils/learningDay.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 7[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:19.1235881Z  [32m✓[39m src/domain/math/comparisonProgress.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 7[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:19.4664205Z  [32m✓[39m src/components/domain/answerConfirmGuidance.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 44[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:19.4915785Z  [32m✓[39m src/domain/islandLife/production.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 59[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:19.8117350Z  [32m✓[39m src/components/ikimono/fuwafuwaMilestones.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 7[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:19.8988260Z  [32m✓[39m src/components/explore/AuthoredEncounterArt.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[90m 31[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:20.2895547Z  [32m✓[39m src/components/dev/devStudySelection.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 6[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:20.5965268Z  [32m✓[39m src/components/island/life/growthCue.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 6[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:21.5662052Z  [32m✓[39m src/components/natureTown/residentPose.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 655[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:21.5666575Z    [33m[2m✓[22m[39m uses committed pickup/dropoff without replaying gestures after movement, expiry or reload [33m653[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:21.9316454Z  [32m✓[39m src/components/ikimono/sceneText.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 6[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:22.0063810Z  [32m✓[39m src/components/explore/MakimodonResearchArt.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[90m 43[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:22.2875872Z  [32m✓[39m src/components/island/homeJourney/contacts.test.ts [2m([22m[2m1 test[22m[2m)[22m[90m 10[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:22.3345542Z  [32m✓[39m src/components/island/life/runtimeAssetSlots.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 5[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:22.5751884Z  [32m✓[39m src/domain/math/writtenInput.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 5[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:22.6326066Z  [32m✓[39m src/domain/island/studyRoute.test.ts [2m([22m[2m16 tests[22m[2m)[22m[90m 9[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:22.9566174Z  [32m✓[39m src/components/island/three/sharedCarryRoute.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 10[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:22.9798012Z  [32m✓[39m src/components/ikimono/ikimonoMotion.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 6[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:23.2435063Z  [32m✓[39m src/components/ui/modalLayerManager.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 5[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:23.6742841Z  [32m✓[39m src/components/LaunchRoute.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[90m 23[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:23.7850952Z  [32m✓[39m src/components/island/three/westScenery.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 376[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:23.7853728Z    [33m[2m✓[22m[39m western island scenery[2m > [22mrenders upward-facing land and bridge planks at the western navigation coordinates [33m374[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:24.0198677Z  [32m✓[39m src/components/gate/arithmeticGate.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 7[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:24.1532719Z  [32m✓[39m src/components/home/homeMagicEnergy.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 9[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:24.3626490Z  [32m✓[39m src/domain/island/feature.test.ts [2m([22m[2m6 tests[22m[2m)[22m[90m 6[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:24.5063105Z  [32m✓[39m src/domain/island/expansion.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 7[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:24.7806325Z  [32m✓[39m src/components/island/life/runtimeAssetLod.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 7[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:24.9695517Z  [32m✓[39m src/components/island/life/homeProps.test.ts [2m([22m[2m1 test[22m[2m)[22m[90m 14[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:25.2583648Z  [32m✓[39m src/components/island/life/identity.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 41692[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:25.2586481Z    [33m[2m✓[22m[39m reserves patchwork for Pokomoko and gives the otter natural fur [33m569[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:25.2589047Z    [33m[2m✓[22m[39m keeps every resident mesh, fabric, transform and walking pose identical across C3 and legacy scenery [33m41122[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:25.7961040Z  [32m✓[39m src/components/explore/RootPullDiscoveryReveal.test.tsx [2m([22m[2m1 test[22m[2m)[22m[90m 33[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:26.1181438Z  [32m✓[39m src/components/domain/NumberFieldsLayout.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[90m 17[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:26.5095465Z  [32m✓[39m src/components/ikimono/IkimonoArtwork.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[90m 29[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:26.7967627Z  [32m✓[39m src/components/island/islandDirectTargets.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 7[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:26.8716890Z  [32m✓[39m src/components/explore/exploreAnswerInput.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 4[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:27.0955366Z  [32m✓[39m src/utils/theme.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 5[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:27.2959106Z  [32m✓[39m src/components/island/life/waterMagic.test.ts [2m([22m[2m1 test[22m[2m)[22m[90m 21[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:27.3605854Z  [32m✓[39m src/domain/math/deterministicGeneration.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 86[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:27.6518799Z  [32m✓[39m tools/island-e2e-helpers.test.mjs [2m([22m[2m3 tests[22m[2m)[22m[90m 5[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:27.8260970Z  [32m✓[39m src/components/island/IslandProsePrompt.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[90m 30[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:28.0805730Z  [32m✓[39m src/components/explore/PokkoBaseArt.test.tsx [2m([22m[2m1 test[22m[2m)[22m[90m 34[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:28.1635094Z  [32m✓[39m src/domain/math/hissanTypes.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 4[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:28.4821273Z  [32m✓[39m src/components/island/life/rewardCue.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 4[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:28.6236340Z  [32m✓[39m src/components/island/homeJourney/scene.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 1094[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:28.6238975Z    [33m[2m✓[22m[39m home journey authored growth[2m > [22mkeeps the same home identity while adding the stage 0 structure [33m589[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:29.6561948Z  [32m✓[39m src/components/explore/DiscoveryPageArt.test.tsx [2m([22m[2m1 test[22m[2m)[22m[90m 23[2mms[22m[39m
+verify-core	Verify core	2026-09-20T03:20:29.6875609Z
+verify-core	Verify core	2026-09-20T03:20:29.6949560Z [31m⎯⎯⎯⎯⎯⎯⎯[1m[7m Failed Tests 2 [27m[22m⎯⎯⎯⎯⎯⎯⎯[39m
+verify-core	Verify core	2026-09-20T03:20:29.6950470Z
+verify-core	Verify core	2026-09-20T03:20:29.6953758Z [31m[1m[7m FAIL [27m[22m[39m src/components/island/three/runtimePhotography.test.ts[2m > [22mcurrent-scene photography boundary[2m > [22mphotographs a real house keepsake in the existing island scene at 390×354
+verify-core	Verify core	2026-09-20T03:20:29.6957973Z [31m[1m[7m FAIL [27m[22m[39m src/components/island/three/runtimePhotography.test.ts[2m > [22mcurrent-scene photography boundary[2m > [22mphotographs a real house keepsake in the existing island scene at 768×430
+verify-core	Verify core	2026-09-20T03:20:29.6995190Z [31m[1mTypeError[22m: Cannot read properties of undefined (reading 'group')[39m
+verify-core	Verify core	2026-09-20T03:20:29.6997377Z [36m [2m❯[22m IslandScene.frameKeepsakeRoom src/components/island/three/runtime.ts:[2m2132:31[22m[39m
+verify-core	Verify core	2026-09-20T03:20:29.7135591Z     [90m2130| [39m        const aspect = Math.max(1, this.host.clientWidth) / Math.max(1…
+verify-core	Verify core	2026-09-20T03:20:29.7137839Z     [90m2131| [39m        return fitIslandHomeInteriorCamera(this.homeCamera, this.keeps…
+verify-core	Verify core	2026-09-20T03:20:29.7139466Z     [90m2132| [39m            this.homeResident.group.visible ? new THREE.Box3().setFrom…
+verify-core	Verify core	2026-09-20T03:20:29.7140593Z     [90m   | [39m                              [31m^[39m
+verify-core	Verify core	2026-09-20T03:20:29.7141365Z     [90m2133| [39m    }
+verify-core	Verify core	2026-09-20T03:20:29.7142137Z     [90m2134| [39m    private frameOptionalFurniture() {
+verify-core	Verify core	2026-09-20T03:20:29.7144015Z [90m [2m❯[22m IslandScene.captureImage src/components/island/three/runtime.ts:[2m2250:14[22m[39m
+verify-core	Verify core	2026-09-20T03:20:29.7145789Z [90m [2m❯[22m src/components/island/three/runtimePhotography.test.ts:[2m80:24[22m[39m
+verify-core	Verify core	2026-09-20T03:20:29.7146490Z
+verify-core	Verify core	2026-09-20T03:20:29.7147031Z [31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯[22m[39m
+verify-core	Verify core	2026-09-20T03:20:29.7147440Z
+verify-core	Verify core	2026-09-20T03:20:29.7159945Z [2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m438 passed[39m[22m[90m (439)[39m
+verify-core	Verify core	2026-09-20T03:20:29.7186010Z [2m      Tests [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m4088 passed[39m[22m[90m (4090)[39m
+verify-core	Verify core	2026-09-20T03:20:29.7187260Z [2m   Start at [22m 03:13:21
+verify-core	Verify core	2026-09-20T03:20:29.7197401Z [2m   Duration [22m 427.92s[2m (transform 13.69s, setup 0ms, collect 224.06s, tests 928.02s, environment 131ms, prepare 45.11s)[22m
+verify-core	Verify core	2026-09-20T03:20:29.7198472Z
+verify-core	Verify core	2026-09-20T03:20:29.7247684Z
+verify-core	Verify core	2026-09-20T03:20:29.7277658Z ##[error]TypeError: Cannot read properties of undefined (reading 'group')
+verify-core	Verify core	 ❯ IslandScene.frameKeepsakeRoom src/components/island/three/runtime.ts:2132:31
+verify-core	Verify core	 ❯ IslandScene.captureImage src/components/island/three/runtime.ts:2250:14
+verify-core	Verify core	 ❯ src/components/island/three/runtimePhotography.test.ts:80:24
+verify-core	Verify core
+verify-core	Verify core
+verify-core	Verify core	2026-09-20T03:20:29.7280981Z
+verify-core	Verify core	2026-09-20T03:20:29.7300856Z ##[error]TypeError: Cannot read properties of undefined (reading 'group')
+verify-core	Verify core	 ❯ IslandScene.frameKeepsakeRoom src/components/island/three/runtime.ts:2132:31
+verify-core	Verify core	 ❯ IslandScene.captureImage src/components/island/three/runtime.ts:2250:14
+verify-core	Verify core	 ❯ src/components/island/three/runtimePhotography.test.ts:80:24
+verify-core	Verify core
+verify-core	Verify core
+verify-core	Verify core	2026-09-20T03:20:29.8167589Z ##[error]Process completed with exit code 1.

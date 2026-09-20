@@ -1,0 +1,16 @@
+
+ RUN  v2.1.9 /private/tmp/sansu-house-release
+
+ ✓ src/components/island/three/homeInteriorCamera.test.ts (15 tests) 190352ms
+   ✓ a perspective camera inside the same closed house > keeps both additional challenge awards visible at aspect 1.3220338983050848 534ms
+   ✓ a perspective camera inside the same closed house > places the real room floor above the unchanged exterior foundation at aspect 1.3220338983050848 2627ms
+   ✓ a perspective camera inside the same closed house > places the real room floor above the unchanged exterior foundation at aspect 2.0210526315789474 2618ms
+   ✓ a perspective camera inside the same closed house > encloses the viewport, shows living objects and all sixteen awards at 390×295, actual cottage=false 54334ms
+   ✓ a perspective camera inside the same closed house > encloses the viewport, shows living objects and all sixteen awards at 768×380, actual cottage=false 41195ms
+   ✓ a perspective camera inside the same closed house > encloses the viewport, shows living objects and all sixteen awards at 390×295, actual cottage=true 46981ms
+   ✓ a perspective camera inside the same closed house > encloses the viewport, shows living objects and all sixteen awards at 768×380, actual cottage=true 41033ms
+
+ Test Files  1 passed (1)
+      Tests  15 passed (15)
+   Start at  11:49:06
+   Duration  193.39s (transform 974ms, setup 0ms, collect 1.58s, tests 190.35s, environment 0ms, prepare 268ms)

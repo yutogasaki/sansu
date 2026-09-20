@@ -1,0 +1,17 @@
+
+ RUN  v2.1.9 /private/tmp/sansu-house-release
+
+ ✓ src/components/island/three/homeWalk.test.ts (3 tests) 133ms
+ ✓ src/components/island/three/homeInteriorCamera.test.ts (16 tests) 23643ms
+   ✓ a perspective camera inside the same closed house > places the real room floor above the unchanged exterior foundation at aspect 1.3220338983050848 424ms
+   ✓ a perspective camera inside the same closed house > places the real room floor above the unchanged exterior foundation at aspect 2.0210526315789474 301ms
+   ✓ a perspective camera inside the same closed house > encloses the viewport, shows living objects and all sixteen awards at 390×295, actual cottage=false 6676ms
+   ✓ a perspective camera inside the same closed house > encloses the viewport, shows living objects and all sixteen awards at 768×380, actual cottage=false 5443ms
+   ✓ a perspective camera inside the same closed house > encloses the viewport, shows living objects and all sixteen awards at 390×295, actual cottage=true 5032ms
+   ✓ a perspective camera inside the same closed house > encloses the viewport, shows living objects and all sixteen awards at 768×380, actual cottage=true 5020ms
+   ✓ a perspective camera inside the same closed house > keeps the whole walking resident on screen at the portrait edges and restores the close view 529ms
+
+ Test Files  2 passed (2)
+      Tests  19 passed (19)
+   Start at  12:06:06
+   Duration  24.36s (transform 258ms, setup 0ms, collect 418ms, tests 23.78s, environment 0ms, prepare 117ms)

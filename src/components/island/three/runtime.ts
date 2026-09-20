@@ -2129,7 +2129,8 @@ export class IslandScene {
         if (!this.keepsakeRoomActive) return false;
         const aspect = Math.max(1, this.host.clientWidth) / Math.max(1, this.host.clientHeight);
         return fitIslandHomeInteriorCamera(this.homeCamera, this.keepsakeRoom, aspect, this.state?.learningKeepsakes?.closeOverview,
-            this.homeResident.group.visible ? new THREE.Box3().setFromObject(this.homeResident.group) : undefined);
+            this.state?.learningKeepsakes?.closeOverview && this.homeResident.group.visible
+                ? new THREE.Box3().setFromObject(this.homeResident.group) : undefined);
     }
     private frameOptionalFurniture() {
         if (this.state?.learning || this.state?.readOnly || this.workshopActive || this.state?.shared?.active || this.state?.preview) return false;
