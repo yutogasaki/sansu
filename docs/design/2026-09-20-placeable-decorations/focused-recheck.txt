@@ -1,0 +1,20 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/.codex/worktrees/island-placeable-props/sansu
+
+ ✓ src/domain/island/growthRepository.test.ts (11 tests) 1829ms
+   ✓ owned atomic living island persistence > aborts growth, snapshot, answer, profile and completion together then saves each once on retry 1212ms
+ ✓ src/domain/island/experienceRepository.test.ts (12 tests) 2777ms
+   ✓ owned atomic experience persistence > rolls back a failed layout application receipt including all positions, cosmetics and optional expression state 1260ms
+   ✓ saved layout application against the current earned world > keeps real later learning/growth, earned new items, spent stars and the saved next plan when restoring an old layout 1206ms
+ ✓ src/domain/islandLife/decorations.test.ts (4 tests) 100ms
+ ✓ src/domain/islandLife/observationVisit.test.ts (5 tests) 20ms
+ ✓ src/hooks/learningProgression.integration.test.ts (12 tests) 8577ms
+   ✓ learning progression from real generated questions > reaches 70% promotion through generated normal blocks and persisted answers 8068ms
+   ✓ learning progression from real generated questions > holds the old math test range when the persisted 30th answer promotes the main level 347ms
+ ✓ src/components/island/life/decorationGeometry.test.ts (1 test) 24ms
+
+ Test Files  6 passed (6)
+      Tests  45 passed (45)
+   Start at  11:57:29
+   Duration  15.16s (transform 996ms, setup 0ms, collect 6.34s, tests 13.33s, environment 1ms, prepare 393ms)
+

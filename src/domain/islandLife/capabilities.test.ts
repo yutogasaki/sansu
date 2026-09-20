@@ -10,7 +10,7 @@ function production(enabled: boolean) {
     vi.stubEnv('VITE_ISLAND_LIFE_PREVIEW','true');vi.stubEnv('VITE_ISLAND_LIFE_DISCOVERY_ENABLED',String(enabled));
 }
 it('requires explicit production capability, without DEV art or preview access',()=>{
-    production(false);expect(lifeCatalogKinds()).toEqual(['flower','bench','swing','lantern']);expect(lifeDiscoveryPresentation()).toEqual({});
+    production(false);expect(lifeCatalogKinds()).toEqual(['flower','bench','swing','lantern','fence','planter']);expect(lifeDiscoveryPresentation()).toEqual({});
     production(true);expect(lifeCatalogKinds()).toEqual(Object.keys(CATALOG));expect(lifeDiscoveryPresentation().waterMagicVersion).toBe(1);
     expect(lifeDiscoveryPresentation()).not.toHaveProperty('worldStyle');
     vi.stubEnv('VITE_ISLAND_LIFE_ENABLED','false');expect(lifeDiscoveryEnabled()).toBe(false);

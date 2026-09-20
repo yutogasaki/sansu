@@ -4,13 +4,13 @@
 .life-catalog-page .life-catalog { margin-top:8px; margin-bottom:4px; padding:3px; }
 .life-catalog-navigation { display:flex; align-items:center; justify-content:center; gap:12px; color:var(--pokomoko-muted); }
 .life-catalog-navigation small,.life-catalog-count { font-size:11px; }
-.life-catalog-dots { display:flex; gap:0; }
+.life-catalog-dots { display:flex; flex-wrap:wrap; justify-content:center; max-width:100%; gap:0; }
 .island-page[data-life-home="true"] .life-menu .life-catalog-dots button { display:grid; place-items:center; width:44px; min-height:44px; padding:0; border:0; background:transparent; box-shadow:none; }
 .life-catalog-dots button span { width:8px; height:8px; border-radius:50%; background:var(--pokomoko-edge); }
 .life-catalog-dots button[aria-pressed="true"] span { width:18px; border-radius:6px; background:var(--pokomoko-blue); }
 .life-catalog-dots button:focus-visible { outline:3px solid var(--pokomoko-blue); outline-offset:-3px; }
 @media(prefers-reduced-motion:reduce) { .life-catalog-scroll { scroll-behavior:auto; } }
-/* Six 44px page targets need their own row in the twelve-item catalog. */
+/* Expanded catalogs keep 44px targets and wrap on narrow screens. */
 .life-catalog-navigation:has(.life-catalog-dots button:nth-child(5)) {
     display:grid; grid-template-columns:1fr auto; gap:0 12px;
 }

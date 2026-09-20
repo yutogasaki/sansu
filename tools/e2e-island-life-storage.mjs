@@ -52,7 +52,7 @@ async function wallet(page) { return Number(await page.locator('[data-life-drops
 const report = { target: base, startHash: await sourceHash(), revision: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
     flags: `production Island=true, Life=true, Discovery=${discovery}, Life preview=false, BuildPlay=false`, fixture: 'No injected profiles, clocks, credits, answers, or database writes; onboarding and purchases through actual UI in disposable contexts',
     failureInjection: failProjection ? 'Explicit IDBObjectStore.put failure for SansuIslandLifeV1/worlds only after a real offline answer; disabled before UI retry' : 'none', buildVersion: build.version,
-    scope: `Actual service worker offline ownership, earned credit projection, placement/storage and native learning. ${discovery ? '12-item catalog and real sapling purchase' : 'Four-item production capability'}. Not all rule journeys, C3 or two-build update.`, humanN: 0, cases: [], pass: false };
+    scope: `Actual service worker offline ownership, earned credit projection, placement/storage and native learning. ${discovery ? '14-item catalog and real sapling purchase' : 'Six-item production capability'}. Not all rule journeys, C3 or two-build update.`, humanN: 0, cases: [], pass: false };
 assert.equal(report.startHash, build.sourceHash);
 const browser = await chromium.launch();
 try {
@@ -82,7 +82,7 @@ try {
             let catalog;
             if (discovery) {
                 catalog=[];
-                for(let i=1;i<=6;i++){
+                for(let i=1;i<=7;i++){
                     await page.getByRole('button',{name:`${i}ページめ`,exact:true}).click();
                     const group=page.getByRole('group',{name:`${i}ページめ`,exact:true});
                     catalog.push(...await group.locator('[data-life-buy]').evaluateAll(nodes=>nodes.map(n=>({kind:n.dataset.lifeBuy,text:n.textContent,disabled:n.disabled}))));
@@ -94,9 +94,9 @@ try {
                         targets:[...n.querySelectorAll('button')].map(b=>{const r=b.getBoundingClientRect();return {width:r.width,height:r.height,inside:r.left>=box.left-1&&r.right<=box.right+1};})};
                 });
                 assert(navigation.scrollWidth<=navigation.width+1);assert(navigation.hintHeight<20&&navigation.countHeight<20);
-                assert(navigation.targets.length===6&&navigation.targets.every(b=>b.width>=44&&b.height>=44&&b.inside));
+                assert(navigation.targets.length===7&&navigation.targets.every(b=>b.width>=44&&b.height>=44&&b.inside));
                 report.navigationChecks??=[];report.navigationChecks.push({device,...navigation});
-                assert.deepEqual(catalog.map(p=>p.kind),['flower','bench','swing','lantern','sapling','water-bowl','picnic-table','pinwheel','flower-arch','sandbox','garden-hut','library']);
+                assert.deepEqual(catalog.map(p=>p.kind),['flower','bench','swing','lantern','sapling','water-bowl','picnic-table','pinwheel','flower-arch','sandbox','garden-hut','library','fence','planter']);
                 await page.getByRole('button',{name:'3ページめ',exact:true}).click();
             }
             await page.locator(`[data-life-buy="${purchaseKind}"]`).click(); await putCell(page, { x: 0, z: 2 });

@@ -13,8 +13,8 @@ async function digest(cutover: PlacementCutover) {
 }
 export function assertPlacementCutover(record: LifeRecord) {
     const c = record.placementCutover;
-    if (!c) { if ((record.version === 15 || (record.version === 16 || (record.version === 17 || record.version === 18)))) throw new Error('配置の切替記録が見つかりません。'); return; }
-    if (![15, 16, 17, 18].includes(record.version) || c.rules !== 'placement-access-v1' || c.profileId !== record.profileId
+    if (!c) { if ((record.version === 15 || (record.version === 16 || (record.version === 17 || (record.version === 18 || record.version === 19))))) throw new Error('配置の切替記録が見つかりません。'); return; }
+    if (![15, 16, 17, 18, 19].includes(record.version) || c.rules !== 'placement-access-v1' || c.profileId !== record.profileId
         || !record.relationCutover || !Number.isFinite(c.at) || c.at < record.relationCutover.at || c.at > record.now
         || !Number.isInteger(c.actionCount) || c.actionCount < record.relationCutover.actionCount || c.actionCount > record.actions.length
         || c.priorActions.length !== c.actionCount || JSON.stringify(c.priorActions) !== JSON.stringify(record.actions.slice(0, c.actionCount))
@@ -26,7 +26,7 @@ export async function verifyPlacementCutover(record: LifeRecord) {
     if (record.placementCutover && record.placementCutover.validationHash !== await digest(record.placementCutover)) throw new Error('配置の切替記録を確認できません。');
 }
 export async function preparePlacementMigration(record: LifeRecord): Promise<LifeRecord> {
-    if ((record.version === 15 || (record.version === 16 || (record.version === 17 || record.version === 18)))) { await verifyPlacementCutover(record); return record; }
+    if ((record.version === 15 || (record.version === 16 || (record.version === 17 || (record.version === 18 || record.version === 19))))) { await verifyPlacementCutover(record); return record; }
     if (!record.relationCutover || record.placementCutover) throw new Error('Unknown placement migration source');
     const before = replayLife(record);
     const cutover: PlacementCutover = { rules: 'placement-access-v1', profileId: record.profileId, at: record.now,

@@ -1,3 +1,4 @@
+import { isDecoration } from '../../../domain/islandLife/decorations';
 import { Check, Sparkles } from 'lucide-react';
 import { CATALOG, LIFE_RULES, type LifeCommand, type LifeItem, type LifeState } from '../../../domain/islandLife/model';
 import LifeProductPreview from './LifeProductPreview';
@@ -6,7 +7,7 @@ export default function LifeAppearance({ state, item, locked, onHero, onAction }
     state: LifeState; item?: LifeItem; locked: boolean; onHero: () => void;
     onAction: (command: LifeCommand, message: string) => Promise<void>;
 }) {
-    const target = item?.kind === 'lantern' ? undefined : item;
+    const target = item && (item.kind === 'lantern' || isDecoration(item.kind)) ? undefined : item;
     const current = target?.style ?? state.heroStyle;
     return <div className="life-appearance">
         <div className="life-section-intro"><b>{target ? CATALOG[target.kind].label : 'ぽこもこ'}の いろ</b>

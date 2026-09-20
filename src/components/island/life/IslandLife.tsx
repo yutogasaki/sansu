@@ -1,3 +1,4 @@
+import { isDecoration } from '../../../domain/islandLife/decorations';
 import { holdPwaUpdateForCriticalPersistence } from '../../../pwa';
 import { lifeCatalogKinds, lifeDiscoveryPresentation } from '../../../domain/islandLife/capabilities';
 import type { FootstepInput } from './footstepPresentation';
@@ -10,7 +11,7 @@ import { placementUndo } from '../../../domain/islandLife/placementUndo';
 import { observationVisit } from '../../../domain/islandLife/observationVisit';
 import { removalRefund } from '../../../domain/islandLife/purchases';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Sparkles, Sprout, Home, Move, Archive, Trash2, Check, X, Undo2, Footprints } from 'lucide-react';
+import { Sparkles, Sprout, Home, Move, RotateCw, Archive, Trash2, Check, X, Undo2, Footprints } from 'lucide-react';
 import { CATALOG, LIFE_CANDIDATE, LIFE_RULES, learningDay, type Cell, type ItemKind, type LifeCommand, type ResidentId } from '../../../domain/islandLife/model';
 import { cellKey, districts, isHouse, isolatedItems, landCells } from '../../../domain/islandLife/space';
 import { replayLife } from '../../../domain/islandLife/simulation';
@@ -39,7 +40,7 @@ import './life-resources.css';
 import './life-world-first.css';
 import './life-isolation.css';
 
-const productStories = { flower: 'めを そだてて おはなに', bench: 'ひとやすみの ばしょ', swing: 'すわって ゆらゆら', lantern: 'あかりの そばに あつまるかな', sapling: '木かげに そだつ なえ', 'water-bowl': '水を のぞく うつわ', 'picnic-table': 'おやつと おしゃべりの ばしょ', pinwheel: 'かぜと くるくる', 'flower-arch': 'おはなの したを くぐろう', sandbox: 'すなで おやまや おしろを', 'garden-hut': 'どうぐを だして おていれ', library: 'ほんを ひらいて ひとやすみ' };
+const productStories = { fence: 'ならべて おにわを かざろう', planter: 'おはなの はちを すきな ばしょへ', flower: 'めを そだてて おはなに', bench: 'ひとやすみの ばしょ', swing: 'すわって ゆらゆら', lantern: 'あかりの そばに あつまるかな', sapling: '木かげに そだつ なえ', 'water-bowl': '水を のぞく うつわ', 'picnic-table': 'おやつと おしゃべりの ばしょ', pinwheel: 'かぜと くるくる', 'flower-arch': 'おはなの したを くぐろう', sandbox: 'すなで おやまや おしろを', 'garden-hut': 'どうぐを だして おていれ', library: 'ほんを ひらいて ひとやすみ' };
 const tabOptions = [
     ['build', 'つくる', Sprout],
     ['items', 'もちもの', Archive],
@@ -195,7 +196,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
         const id = crypto.randomUUID();
         const complete = () => {
             if (undoOf) setUndo(undefined);
-            else if (['buy', 'move', 'store'].includes(command.type)) setUndo({ profileId: record.profileId, actionId: id });
+            else if (['buy', 'move', 'store', 'rotate'].includes(command.type)) setUndo({ profileId: record.profileId, actionId: id });
             setNotice(message); setKind(undefined); setCell(undefined); setMoving(false); setRemoving(false);
             if (command.type === 'visit' && state.footstepMagicVersion) { setFootstepInput({ profileId: record.profileId, id, targetId: command.itemId, source: walkSource }); showWorld(); }
             if (command.type === 'buy') { setSelected(id); setTab('items'); }
@@ -304,7 +305,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
         {menuOpen && !placement && <div ref={menuRef} tabIndex={-1} className="life-controls life-menu" data-life-menu-tab={tab} role="dialog" aria-modal="false" aria-label="しまの メニュー">
             <div className="life-menu-heading"><div className="life-menu-title">{(() => { const Icon = tabOptions.find(([id]) => id === tab)?.[2] ?? Sprout; return <Icon size={17} aria-hidden="true" />; })()}<b>{{ build: 'つくる', items: 'もちもの', style: 'いろ', land: 'ひろげる' }[tab]}</b></div>{tab === 'items' && !item && pageCount > 1 && pager}<button aria-label="メニューを とじる" onClick={() => setMenuOpen(false)}><X size={18} /></button></div>
             <div className="life-menu-body">
-            {undoCommand && <button type="button" data-life-undo disabled={locked || Boolean(error)} onClick={() => void doAction(undoCommand, undoCommand.type === 'store' ? 'しまってある ところに もどしたよ。' : 'まえの ばしょに もどしたよ。', undo!.actionId)}><Undo2 size={16} />もどす</button>}
+            {undoCommand && <button type="button" data-life-undo disabled={locked || Boolean(error)} onClick={() => void doAction(undoCommand, undoCommand.type === 'store' ? 'しまってある ところに もどしたよ。' : undoCommand.type === 'rotate' ? 'まえの むきに もどしたよ。' : 'まえの ばしょに もどしたよ。', undo!.actionId)}><Undo2 size={16} />もどす</button>}
             <div className="life-menu-tabs" role="group" aria-label="しまの ていれ">{tabOptions.map(([id, name, Icon]) =>
                 <button key={id} type="button" aria-pressed={tab === id} onClick={() => openMenuTab(id)}><Icon size={15} /><span>{name}</span></button>)}</div>
             {error && <div className="life-error" role="alert"><p>{error}</p><button onClick={() => void retryAction()} disabled={locked}>もういちど</button><button onClick={() => { cancelPlacement(); retryCompletion.current = undefined; controls.clearError(); }} disabled={locked}>よみなおす</button></div>}
@@ -326,10 +327,11 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
                         <small>{!['flower', 'sapling'].includes(item.kind) ? (item.cell ? 'しまに おいてあるよ' : 'また しまに おけるよ') : !item.cell ? 'おくと また そだつよ' : growth.nextLabel ? `あと 約${growth.remainingHours}じかんで ${growth.nextLabel}` : 'いちばん おおきく そだったよ'}</small>{item.cell && growth.nextLabel && <small>追加で まなばない ときの めやすだよ。</small>}</div>; })()}
                     {isolatedIds.has(item.id) && <p className="life-item-isolation" data-life-isolated-item={item.id}><Footprints size={18} aria-hidden="true" /> ？ ここまで あるけないよ。うごかして すきまを あけると また きてくれるよ。</p>}
                     {['flower', 'sapling' , 'water-bowl', 'bench', 'picnic-table', 'library', 'garden-hut'].includes(item.kind) && item.cell && <button hidden={removing} disabled={locked} onClick={() => { showWorld(); setObservedResident(undefined); setObserved(item.id); if (item.kind === 'bench' || item.kind === 'picnic-table' || isFacility(item.kind)) tryObservation(item.id); }}>みてみる</button>}
-                    <button hidden={removing} disabled={locked || !item.cell || isolatedIds.has(item.id) || (item.kind === 'lantern' || item.kind === 'pinwheel')} onClick={() => void doAction({ type: 'visit', itemId: item.id }, 'ぽこもこの いきさきを きめたよ。だれか くるかな？')}>ぽこもこを よぶ</button>
+                    <button hidden={removing || isDecoration(item.kind)} disabled={locked || !item.cell || isolatedIds.has(item.id) || (item.kind === 'lantern' || item.kind === 'pinwheel')} onClick={() => void doAction({ type: 'visit', itemId: item.id }, 'ぽこもこの いきさきを きめたよ。だれか くるかな？')}>ぽこもこを よぶ</button>
+                    {isDecoration(item.kind) && <button hidden={removing} disabled={locked} onClick={() => void doAction({ type: 'rotate', itemId: item.id, rotation: ((item.rotation ?? 0) + 1) % 4 as 0 | 1 | 2 | 3 }, 'むきを かえたよ。')}><RotateCw size={16} />むきを かえる</button>}
                     <button hidden={removing} disabled={locked} onClick={() => { setMoving(true); setCell(undefined); setRemoving(false); setNotice(''); showWorld(); }}><Move size={16} />{item.cell ? isolatedIds.has(item.id) ? 'むりょうで うごかす' : 'うごかす' : 'おく'}</button>
-                    <button hidden={removing} disabled={locked || !item.cell} onClick={() => void doAction({ type: 'store', itemId: item.id }, 'そだったまま しまったよ。')}><Archive size={16} />しまう</button>
-                    {item.kind !== 'lantern' && <button hidden={removing} disabled={locked} onClick={() => openMenuTab('style')}><Sparkles size={16} />いろを かえる</button>}
+                    <button hidden={removing} disabled={locked || !item.cell} onClick={() => void doAction({ type: 'store', itemId: item.id }, isDecoration(item.kind) ? 'しまったよ。また おけるよ。' : 'そだったまま しまったよ。')}><Archive size={16} />しまう</button>
+                    {item.kind !== 'lantern' && !isDecoration(item.kind) && <button hidden={removing} disabled={locked} onClick={() => openMenuTab('style')}><Sparkles size={16} />いろを かえる</button>}
                     <button className="life-remove-action" hidden={removing} disabled={locked} onClick={() => setRemoving(true)}><Trash2 size={16} />とりのぞく</button>
                     {removing && <div className="life-confirm"><p>とりのぞくと、しずく {removalRefund(item)} が もどるよ。この ものの そだちは もどせないよ。</p>
                         <button disabled={locked} onClick={() => void doAction({ type: 'remove', itemId: item.id }, 'しずくが もどったよ。')}>とりのぞくと きめる</button><button disabled={locked} onClick={() => setRemoving(false)}>やめる</button></div>}
@@ -358,7 +360,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
         </div>
         }
         {!dockOpen && !menuOpen && !placement && <div className="life-dock-closed">
-            {undoCommand && !observed && !memoriesOpen && <button type="button" className="island-secondary" data-life-undo disabled={locked || Boolean(error)} onClick={() => void doAction(undoCommand, undoCommand.type === 'store' ? 'しまってある ところに もどしたよ。' : 'まえの ばしょに もどしたよ。', undo!.actionId)}><Undo2 size={16} />もどす</button>}
+            {undoCommand && !observed && !memoriesOpen && <button type="button" className="island-secondary" data-life-undo disabled={locked || Boolean(error)} onClick={() => void doAction(undoCommand, undoCommand.type === 'store' ? 'しまってある ところに もどしたよ。' : undoCommand.type === 'rotate' ? 'まえの むきに もどしたよ。' : 'まえの ばしょに もどしたよ。', undo!.actionId)}><Undo2 size={16} />もどす</button>}
             {liveDiscovery.error && !observed && !memoriesOpen && <p className="life-dock-closed-notice" role="alert">{liveDiscovery.error}<button type="button" onClick={() => void liveDiscovery.retry()}>もういちど</button></p>}
             {(error || notice) && <p className="life-dock-closed-notice" role="status">{error || notice}{error && <button type="button" onClick={() => openMenuTab(tab)}>ひらく</button>}</p>}
         </div>}

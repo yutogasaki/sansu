@@ -5,7 +5,7 @@ export function lifeDiscoveryEnabled() {
     return lifeEnabled() && (import.meta.env.VITE_ISLAND_LIFE_DISCOVERY_ENABLED === 'true'
         || import.meta.env.DEV && import.meta.env.VITE_ISLAND_LIFE_PREVIEW === 'true');
 }
-const baseKinds: ItemKind[] = ['flower', 'bench', 'swing', 'lantern'];
+const baseKinds: ItemKind[] = ['flower', 'bench', 'swing', 'lantern', 'fence', 'planter'];
 export function lifeCatalogKinds(): ItemKind[] {
     return lifeDiscoveryEnabled() ? Object.keys(CATALOG) as ItemKind[] : [...baseKinds];
 }

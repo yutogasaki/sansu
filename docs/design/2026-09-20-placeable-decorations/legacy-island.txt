@@ -1,0 +1,16 @@
+
+> pokko-fushigi-zukan-app@0.0.0 e2e:island
+> node tools/e2e-island.mjs
+
+PASS growth-phone: 46 real UI sections, all four mature habitats, stable7items, autonomous discovery, 3D history and replay
+PASS growth-tablet: 46 real UI sections, all four mature habitats, stable7items, autonomous discovery, 3D history and replay
+PASS actual WebGL loss, learning in fallback, Three retry and subsequent answer
+PASS normal Island signup and first automatic growth
+PASS phone-keyboard: {"correctP95Ms":223.89999997615814,"incorrectP95Ms":195.5,"correctSamples":21,"incorrectSamples":1}
+PASS phone-touch: {"correctP95Ms":219.39999997615814,"incorrectP95Ms":203.60000002384186,"correctSamples":21,"incorrectSamples":1}
+PASS tablet-fraction: {"correctP95Ms":null,"incorrectP95Ms":199.79999995231628,"correctSamples":0,"incorrectSamples":1}
+PASS phone-hissan: {"correctP95Ms":null,"incorrectP95Ms":199,"correctSamples":0,"incorrectSamples":1}
+PASS phone-math-choice: {"correctP95Ms":202.10000002384186,"incorrectP95Ms":200.29999995231628,"correctSamples":2,"incorrectSamples":1}
+PASS tablet-vocabulary: {"correctP95Ms":null,"incorrectP95Ms":202.39999997615814,"correctSamples":0,"incorrectSamples":1}
+PASS tablet-reduced: {"correctP95Ms":208.5,"incorrectP95Ms":202,"correctSamples":3,"incorrectSamples":1}
+PASS phone-first-learning: {"correctP95Ms":204.20000004768372,"incorrectP95Ms":198.19999992847443,"correctSamples":3,"incorrectSamples":1}

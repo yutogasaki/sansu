@@ -1,3 +1,4 @@
+import { isDecoration } from './decorations';
 import { canStand, fineRoute, routeLength } from './walkingSpace';
 import { isFacility, occupiedCells, occupiesCell } from './footprint';
 import { landBounds, type LandState } from './landRules';
@@ -75,7 +76,7 @@ export function usablePlacement(s: LifeState, itemId: string, p: Cell) {
 }
 /** Connectivity describes use, independently of whether the object can be placed. */
 export function isolatedItems(s: LifeState): LifeItem[] {
-    return s.items.filter(item => item.cell && !pathToActivity(s, homeCell, item));
+    return s.items.filter(item => item.cell && !isDecoration(item.kind) && !pathToActivity(s, homeCell, item));
 }
 export function districts(s: LifeState): District[] {
     const found: District[] = [];

@@ -13,8 +13,8 @@ async function digest(cutover: DiagonalCutover) {
 }
 export function assertDiagonalCutover(record: LifeRecord) {
     const c = record.diagonalCutover;
-    if (!c) { if (record.version === 18) throw new Error('斜め散歩の切替記録が見つかりません。'); return; }
-    if (![18].includes(record.version) || c.rules !== 'diagonal-roam-v1' || c.profileId !== record.profileId
+    if (!c) { if ((record.version === 18 || record.version === 19)) throw new Error('斜め散歩の切替記録が見つかりません。'); return; }
+    if (![18, 19].includes(record.version) || c.rules !== 'diagonal-roam-v1' || c.profileId !== record.profileId
         || !record.heroVisitCutover || !Number.isFinite(c.at) || c.at < record.heroVisitCutover.at || c.at > record.now
         || !Number.isInteger(c.actionCount) || c.actionCount < record.heroVisitCutover.actionCount || c.actionCount > record.actions.length
         || c.priorActions.length !== c.actionCount || JSON.stringify(c.priorActions) !== JSON.stringify(record.actions.slice(0, c.actionCount))
@@ -26,7 +26,7 @@ export async function verifyDiagonalCutover(record: LifeRecord) {
     if (record.diagonalCutover && record.diagonalCutover.validationHash !== await digest(record.diagonalCutover)) throw new Error('斜め散歩の切替記録を確認できません。');
 }
 export async function prepareDiagonalMigration(record: LifeRecord): Promise<LifeRecord> {
-    if (record.version === 18) { await verifyDiagonalCutover(record); return record; }
+    if ((record.version === 18 || record.version === 19)) { await verifyDiagonalCutover(record); return record; }
     if (!record.heroVisitCutover || record.diagonalCutover) throw new Error('Unknown diagonal migration source');
     const before = replayLife(record);
     const cutover: DiagonalCutover = { rules: 'diagonal-roam-v1', profileId: record.profileId, at: record.now,

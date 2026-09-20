@@ -1,3 +1,5 @@
+import fenceStill from '../../../../assets/island-fence-v1/home-runtime/catalog.png';
+import planterStill from '../../../../assets/island-planter-v1/home-runtime/catalog.png';
 import flowerBloomOriginal from '../../../../docs/design/2026-09-19-life-startup-stills/source/flower-bloom-original.png';
 import { useEffect, useRef } from 'react';
 import * as T from 'three';
@@ -20,7 +22,7 @@ export default function LifeProductPreview({ kind, growth = 0, style = 'original
         if (fallback.current) fallback.current.hidden = false;
         const key = `${kind ?? 'pokomoko'}:${stage}:${style}`;
         // The two default home controls use the exact previously rendered PNGs.
-        const cached = key === 'flower:2:original' ? flowerBloomOriginal : stills.get(key);
+        const cached = kind === 'fence' ? fenceStill : kind === 'planter' ? planterStill : key === 'flower:2:original' ? flowerBloomOriginal : stills.get(key);
         if (cached) { target.src = cached; target.hidden = false; if (fallback.current) fallback.current.hidden = true; return; }
         let home: ReturnType<typeof buildHomeJourney> | undefined;
         let renderer: T.WebGLRenderer | undefined;

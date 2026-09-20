@@ -1,0 +1,13 @@
+
+> pokko-fushigi-zukan-app@0.0.0 e2e:pwa-update
+> node tools/e2e-pwa-update.mjs
+
+PWA classic target {
+  directory: '/tmp/sansu-placeable-classic-v2',
+  version: 'placeable-classic-regression-v2:4edb7b65-1c65-411d-a10b-8ccee681633d'
+}
+  ➜  Local:   http://127.0.0.1:4273/
+PASS PWA onboarding safe-router handoff
+PASS PWA protected router recovery handoff
+PASS PWA same-route battle checkpoint
+PASS PWA service-worker-controlled version-drift recovery

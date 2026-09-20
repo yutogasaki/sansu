@@ -16,7 +16,7 @@ export const LIFE_STEP_MS = 1200;
 export const HOUR = 3_600_000;
 export const LIFE_RULES = { dropsPerProblem: 2, dailyGoal: 6, activityMs: HOUR / 2, expansionPrice: 12,
     maxItems: 30, budHours: 2, bloomHours: 6, stylePrice: 4 } as const;
-export type ItemKind = 'flower' | 'bench' | 'swing' | 'lantern' | 'sapling' | 'water-bowl' | 'picnic-table' | 'pinwheel' | 'flower-arch' | 'sandbox' | 'garden-hut' | 'library';
+export type ItemKind = 'flower' | 'bench' | 'swing' | 'lantern' | 'sapling' | 'water-bowl' | 'picnic-table' | 'pinwheel' | 'flower-arch' | 'sandbox' | 'garden-hut' | 'library' | 'fence' | 'planter';
 export type Style = 'original' | 'sunshine' | 'starlight';
 export type ResidentId = 'pokomoko' | 'rabbit' | 'otter';
 export type LandSide = 'east' | 'west' | 'south';
@@ -27,16 +27,18 @@ export const CATALOG: Record<ItemKind, { label: string; price: number }> = {
     sapling: { label: '木の なえ', price: 4 }, 'water-bowl': { label: '水ばち', price: 4 }, 'picnic-table': { label: 'ピクニック テーブル', price: 8 },
     pinwheel: { label: 'かざぐるま', price: 12 }, 'flower-arch': { label: '花の アーチ', price: 12 }, sandbox: { label: 'すなば', price: 18 },
     'garden-hut': { label: 'えんげい 小屋', price: 36 }, library: { label: '森の としょしつ', price: 72 },
+    fence: { label: '木の さく', price: 4 }, planter: { label: 'うえ木ばち', price: 6 },
 };
-export interface LifeItem { id: string; kind: ItemKind; cell?: Cell; growth: number; style: Style; access?: 'front'; paidDrops?: number }
+export interface LifeItem { id: string; kind: ItemKind; cell?: Cell; growth: number; style: Style; rotation?: 0 | 1 | 2 | 3; access?: 'front'; paidDrops?: number }
 export interface Credit { id: string; at: number; day: string }
 export type LifeCommand = { type: 'buy'; kind: ItemKind; cell: Cell }
+    | { type: 'rotate'; itemId: string; rotation: 0 | 1 | 2 | 3 }
     | { type: 'clear-placement'; kind: ItemKind; cell: Cell; itemId?: string }
     | { type: 'move'; itemId: string; cell: Cell } | { type: 'store' | 'remove' | 'visit' | 'observe'; itemId: string }
     | { type: 'observe-relation'; itemId: string; residentId: ResidentId; targetId?: string }
     | { type: 'expand'; side: LandSide } | { type: 'style'; style: Style; itemId?: string };
 export interface LifePurchaseReceipt {
-    priceVersion: 'life-48-v1' | 'life-v3-plants-water-v1' | 'life-v3-picnic-v1' | 'life-v3-wind-arch-v1' | 'life-v3-sandbox-v1' | 'life-v3-facilities-v1'; actualPaidDrops: number; quoteFingerprint: string;
+    priceVersion: 'life-v19-decorations-v1' | 'life-48-v1' | 'life-v3-plants-water-v1' | 'life-v3-picnic-v1' | 'life-v3-wind-arch-v1' | 'life-v3-sandbox-v1' | 'life-v3-facilities-v1'; actualPaidDrops: number; quoteFingerprint: string;
     itemInstanceId: string; committedAt: number;
 }
 export interface LifeLandReceipt {
@@ -44,7 +46,7 @@ export interface LifeLandReceipt {
 }
 export interface LifeAction { id: string; at: number; command: LifeCommand; purchaseReceipt?: LifePurchaseReceipt; landReceipt?: LifeLandReceipt; undoOf?: string }
 export interface LifeRecord {
-    profileId: string; version: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18; revision: number; createdAt: number; realAt: number; now: number;
+    profileId: string; version: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19; revision: number; createdAt: number; realAt: number; now: number;
     credits: Credit[]; actions: LifeAction[]; offsets: { at: number; offset: number }[]; clockIntents: string[];
     activitiesV2At?: number;
     activitiesV2After?: number;
@@ -133,4 +135,4 @@ export function newLife(profileId: string, now: number): LifeRecord {
     return { profileId, version: 1, revision: 0, createdAt: now, realAt: now, now, credits: [], actions: [], offsets: [{ at: now, offset: 0 }], clockIntents: [], activitiesV2At: now, activitiesV2After: 0 };
 }
 
-export function readableLifeVersion(version: number) { return version === 1 || version === 2 || version === 3 || version === 4 || version === 5 || version === 6 || version === 7 || version === 8 || version === 9 || version === 10 || version === 11 || version === 12 || version === 13 || version === 14 || version === 15 || version === 16 || version === 17 || version === 18; }
+export function readableLifeVersion(version: number) { return version === 1 || version === 2 || version === 3 || version === 4 || version === 5 || version === 6 || version === 7 || version === 8 || version === 9 || version === 10 || version === 11 || version === 12 || version === 13 || version === 14 || version === 15 || version === 16 || version === 17 || version === 18 || version === 19; }

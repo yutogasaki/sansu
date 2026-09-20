@@ -1,3 +1,4 @@
+import { isDecoration } from './decorations';
 import { assertDiagonalCutover } from './diagonalMigration';
 import { diagonalRoamRoute } from './diagonalRoam';
 import { enableHeroVisits, expireHeroWait, heroWaitDeadline, HERO_WAIT_MS, isHeroTargetVisit } from './heroVisit';
@@ -143,7 +144,7 @@ export function arrangeVisits(s: LifeState) {
     for (const r of order) {
         if (r.visit && !isRoamVisit(r.visit) && !s.items.some(i => i.id === r.visit!.itemId && i.cell)) { r.visit = undefined; r.cell = { ...homeCell }; }
         if (r.visit || r.playTour) continue;
-        const choices = s.items.filter(i => i.cell && i.kind !== 'lantern' && i.kind !== 'pinwheel').flatMap(i => {
+        const choices = s.items.filter(i => i.cell && !isDecoration(i.kind) && i.kind !== 'lantern' && i.kind !== 'pinwheel').flatMap(i => {
             if (usesCadence(s, r) && r.cadence?.lastItemId === i.id && !(r.id === 'pokomoko' && s.target === i.id)) return [];
             if (i.kind === 'flower-arch' && (r.archCooldownUntil ?? 0) > s.now) return [];
             const reserved = s.activityVersion === 2 || i.kind === 'picnic-table' || i.kind === 'flower-arch' || i.kind === 'sandbox' || isFacility(i.kind) ? reservedActivityCells(s, r.id) : [];
@@ -276,7 +277,7 @@ export function applyCommand(s: LifeState, event: LifeAction) {
         s.items.push(item);
         if (!usablePlacement(s, item.id, c.cell)) { s.items.pop(); fail('そこには おけないよ。べつの ばしょを えらぼう。'); }
         s.items[s.items.length - 1] = { ...item, cell: c.cell }; s.drops -= price;
-        if (s.activityVersion === 2) for (const r of s.residents) {
+        if (s.activityVersion === 2 && !isDecoration(c.kind)) for (const r of s.residents) {
             const likes = favorite(r) === c.kind;
             const close = distance(residentCell(r, s.now, Boolean(s.placementVersion)), c.cell) <= 3;
             const interested = hash(`${event.id}:${r.id}`) % 10 < (likes ? 10 : close ? 7 : 3);
@@ -289,12 +290,17 @@ export function applyCommand(s: LifeState, event: LifeAction) {
     } else if (c.type === 'style') {
         if (!['original', 'sunshine', 'starlight'].includes(c.style)) fail('その いろは まだ ないよ。');
         const item = c.itemId ? s.items.find(i => i.id === c.itemId) : undefined;
+        if (item && isDecoration(item.kind)) fail('この かざりは そのままの いろで つかうよ。');
         if (c.itemId && !item) fail('もう しまってある ものかも。');
         if (!s.styles.includes(c.style)) { if (s.light < LIFE_RULES.stylePrice) fail('ひかりが もうすこし いるよ。'); s.light -= LIFE_RULES.stylePrice; s.styles.push(c.style); }
         if (item) item.style = c.style; else s.heroStyle = c.style;
     } else {
         const item = s.items.find(i => i.id === c.itemId);
         if (!item) fail('その ものが みつからないよ。');
+        if (c.type === 'rotate') {
+            if (!isDecoration(item.kind) || ![0, 1, 2, 3].includes(c.rotation)) fail('その むきには かえられないよ。');
+            item.rotation = c.rotation; return; // Square clearance does not change; preserve resident visits.
+        }
         if (c.type === 'observe-relation') applyRelationObservation(s, c.itemId, c.residentId, c.targetId);
         else if (c.type === 'observe') {
             const plan = observationVisit(s, item.id);
@@ -309,7 +315,7 @@ export function applyCommand(s: LifeState, event: LifeAction) {
                 beginBenchTrip(s, resident, item);
             }
         } else if (c.type === 'visit') {
-            if (!item.cell || (item.kind === 'lantern' || item.kind === 'pinwheel') || !pathToActivity(s, homeCell, item)) fail('ここでは あそべないよ。');
+            if (!item.cell || isDecoration(item.kind) || (item.kind === 'lantern' || item.kind === 'pinwheel') || !pathToActivity(s, homeCell, item)) fail('ここでは あそべないよ。');
             if (item.kind === 'flower-arch') s.residents[0].archCooldownUntil = undefined;
             const changed = s.target !== item.id;
             s.target = item.id;
@@ -353,13 +359,14 @@ export function replayLife(record: LifeRecord, to = record.now): LifeState {
     if (!readableLifeVersion(record.version)) throw new Error('この島のデータは新しい版で開いてください。');
     if (record.version < 15 && record.actions.some(a => a.command.type === 'clear-placement')) throw new Error('配置の切替記録が見つかりません。');
     if (record.version < 14 && record.actions.some(a => a.command.type === 'observe-relation')) throw new Error('この観察は新しい版で開いてください。');
+    if (record.version < 19 && record.actions.some(a => a.command.type === 'rotate' || (a.command.type === 'buy' || a.command.type === 'clear-placement') && isDecoration(a.command.kind))) throw new Error('かざりの保存版を確認できません。');
     const facilityIds = new Set(record.actions.filter(a => a.command.type === 'buy' && isFacility(a.command.kind)).map(a => a.id));
     if (record.version < 12 && record.actions.some(a => a.command.type === 'observe' && facilityIds.has(a.command.itemId))) throw new Error('この観察は新しい版で開いてください。');
     const checkpoint = record.economyCheckpoint;
     assertCheckpointBoundary(record); assertTourCutover(record); assertFacilityCutover(record); assertRelationCutover(record); assertPlacementCutover(record); assertCadenceCutover(record); assertHeroVisitCutover(record); assertDiagonalCutover(record);
     if (record.actions.some(action => action.command.type === 'buy' && action.command.kind === 'sandbox') && record.version < 9) throw new Error('砂場の保存版を確認できません。');
     if (record.actions.some(action => action.command.type === 'buy' && isFacility(action.command.kind)) && record.version < 10) throw new Error('建物の保存版を確認できません。');
-    if (record.actions.some(action => action.landReceipt) && ![5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18].includes(record.version)) throw new Error('土地の保存版を確認できません。');
+    if (record.actions.some(action => action.landReceipt) && ![5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19].includes(record.version)) throw new Error('土地の保存版を確認できません。');
     if (record.actions.some(action => action.command.type === 'buy' && isWindArch(action.command.kind)) && record.version < 8) throw new Error('風車とアーチの保存版を確認できません。');
     if (record.actions.some(action => action.command.type === 'buy' && action.command.kind === 'picnic-table') && record.version < 7) throw new Error('テーブルの保存版を確認できません。');
     if (record.actions.some(action => action.command.type === 'buy' && isPlantsWater(action.command.kind)) && record.version < 6) throw new Error('新しい物の保存版を確認できません。');
@@ -433,10 +440,11 @@ export function commandLife(record: LifeRecord, command: LifeCommand, id: string
     }
     const event: LifeAction = { id, at: now, command, ...(undoOf === undefined ? {} : { undoOf }) };
     if (command.type === 'buy' && (isPlantsWater(command.kind) || command.kind === 'picnic-table' || isWindArch(command.kind) || command.kind === 'sandbox' || isFacility(command.kind)) && !record.tourCutover) throw new Error('島をよみなおしてから えらんでね。');
+    if ((command.type === 'rotate' || (command.type === 'buy' || command.type === 'clear-placement') && isDecoration(command.kind)) && !record.diagonalCutover) throw new Error('島をよみなおしてから えらんでね。');
     if (command.type === 'buy') event.purchaseReceipt = purchaseReceipt(event);
     const state = replayLife(record, now);
     if (command.type === 'expand' && record.tourCutover) event.landReceipt = landReceipt(state, event);
     applyCommand(state, event);
     const facilityObservation = command.type === 'observe' && state.items.some(i => i.id === command.itemId && isFacility(i.kind));
-    return { ...record, version: record.version === 18 ? 18 : record.version === 17 ? 17 : record.version === 16 ? 16 : record.version === 15 ? 15 : record.version === 14 || command.type === 'observe-relation' ? 14 : record.version === 13 ? 13 : record.version === 12 || facilityObservation ? 12 : record.version === 11 ? 11 : record.version === 10 || command.type === 'buy' && isFacility(command.kind) ? 10 : record.version === 9 || command.type === 'buy' && command.kind === 'sandbox' ? 9 : record.version === 8 || command.type === 'buy' && isWindArch(command.kind) ? 8 : record.version === 7 || command.type === 'buy' && command.kind === 'picnic-table' ? 7 : record.version === 6 || command.type === 'buy' && isPlantsWater(command.kind) ? 6 : event.landReceipt ? 5 : command.type === 'observe' && record.version === 1 ? 2 : record.version, now, revision: record.revision + 1, actions: [...record.actions, event] };
+    return { ...record, version: record.version === 19 || command.type === 'rotate' || (command.type === 'buy' || command.type === 'clear-placement') && isDecoration(command.kind) ? 19 : record.version === 18 ? 18 : record.version === 17 ? 17 : record.version === 16 ? 16 : record.version === 15 ? 15 : record.version === 14 || command.type === 'observe-relation' ? 14 : record.version === 13 ? 13 : record.version === 12 || facilityObservation ? 12 : record.version === 11 ? 11 : record.version === 10 || command.type === 'buy' && isFacility(command.kind) ? 10 : record.version === 9 || command.type === 'buy' && command.kind === 'sandbox' ? 9 : record.version === 8 || command.type === 'buy' && isWindArch(command.kind) ? 8 : record.version === 7 || command.type === 'buy' && command.kind === 'picnic-table' ? 7 : record.version === 6 || command.type === 'buy' && isPlantsWater(command.kind) ? 6 : event.landReceipt ? 5 : command.type === 'observe' && record.version === 1 ? 2 : record.version, now, revision: record.revision + 1, actions: [...record.actions, event] };
 }

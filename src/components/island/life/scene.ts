@@ -1,3 +1,4 @@
+import { isDecoration } from '../../../domain/islandLife/decorations';
 import { buildHomeProps } from './homeProps';
 import { gardenRuntimeAsset, runtimeAssetSlot } from './runtimeAssetSlots';
 import { isolationMarker } from './isolationMarker';
@@ -68,6 +69,7 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
             model.root.userData.runtimeAssetSeatY = model.seat!.position.y + .05;
         }
         if (!preview && item.kind === 'garden-hut' && item.style === 'original') runtimeAssetSlot(model.root, 'garden-hut');
+        if (!preview && isDecoration(item.kind) && item.style === 'original') runtimeAssetSlot(model.root, item.kind);
         const gardenAsset = gardenRuntimeAsset(item, preview);
         if (gardenAsset) runtimeAssetSlot(model.root, gardenAsset);
         if (model.sandbox && !preview) sandboxes.set(item.id, model.sandbox);

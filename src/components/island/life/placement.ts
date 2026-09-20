@@ -1,3 +1,4 @@
+import { isDecoration } from '../../../domain/islandLife/decorations';
 import { occupiedCells } from '../../../domain/islandLife/footprint';
 import { CATALOG, type Cell, type ItemKind, type LifeItem, type LifeState } from '../../../domain/islandLife/model';
 import { cellKey, homeCell, isHouse, isolatedItems, landCells, pathToActivity, usablePlacement, vacant } from '../../../domain/islandLife/space';
@@ -11,7 +12,7 @@ export function previewPlacement(state: LifeState, source: ItemKind | LifeItem, 
     const allowed = landCells(state).filter(p => usablePlacement(base, item.id, p)).map(cellKey);
     const valid = Boolean(cell && allowed.includes(cellKey(cell)));
     const trial = { ...base, items: base.items.map(i => i.id === item.id ? { ...item, cell } : i) };
-    const path = cell ? pathToActivity(trial, homeCell, { ...item, cell }) : undefined;
+    const path = cell && !isDecoration(item.kind) ? pathToActivity(trial, homeCell, { ...item, cell }) : undefined;
     const blocked = cell && !valid ? trial.items.find(i => i.cell && !pathToActivity(trial, homeCell, i)) : undefined;
     const previous = blocked && base.items.find(i => i.id === blocked.id);
     const blockedPath = previous?.cell ? pathToActivity(base, homeCell, previous) : undefined;

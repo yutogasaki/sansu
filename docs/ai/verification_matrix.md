@@ -174,3 +174,9 @@ If a task spans more than one change type, use the stricter row.
 `SANSU_CADENCE_HERO_CALL=1` をcadenceハーネスへ加えると、実UIの「ぽこもこを よぶ」後から各幅90秒を観測し、指定した花以外への歩行・指定解除・保存版17・reloadを確認する。呼出成功でメニューは自動的に閉じるため、追加の閉じる操作を送らず非表示を待つ。既存のprofile/credits/花fixtureは実獲得の証拠にしない。
 
 `SANSU_LIFE_HERO_VISIT_UPGRADE=1` をLife two-buildへ指定すると、旧版16で実回答・花購入・実UI呼出を保存し、新版17への更新後に同じぽこもこが別の場所へ歩き出すことを確認する。全native storeと既存の購入/呼出/cadence切替を保持し、新しいheroVisit切替の本人・action prefixとoffline同じ次問を照合する。cadenceUpgradeとは同時指定しない。`heroVisit.test.ts` / `heroVisitMigration.test.ts` は旧無期限滞在の再現、到着済み/道中/30秒待機/運搬/同じ呼出/再送/cache/移行と未完利用時計を検査する。
+
+### 購入できる柵・植木鉢（2026-09-20）
+
+`node tools/e2e-island-decorations.mjs` は `DECORATIONS_URL`（local production）と新しい `DECORATIONS_OUTPUT` を指定する。実初回設定から6問を完了し柵/鉢を購入、回転・移動・収納・再配置、native putの一度のabort/retry、実SW offline reloadと同じ学習への復帰を390/768幅で確認。30個は別の明示credit fixtureから正式な配置commandで作り、GLB要求/bytes・テクスチャ共有・renderer draw calls/triangles・LODを記録する。app/dist/QAの開始終了hashを一致させる。rAFは実機FPS保証ではない。
+
+現行カタログは既定6品、Discovery有効14品（7ページ）。上記の旧4品/12品という検査記述は追加前の範囲で、Life storageハーネスの期待値は14品へ更新する。既存商品の順序は保持する。
