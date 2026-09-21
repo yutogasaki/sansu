@@ -600,3 +600,23 @@ The first rerun then exposed an E2E assumption, not an app regression: at 320×5
 Runtime identity for every capture: `http://127.0.0.1:5200`, revision `f720ca5a`, version `f720ca5a:65ae4ed5-17a0-4ed3-8179-8f81f9045997`, app-root Island=true / NatureTown=false, configured delivery `snap-root-v1`, visual lineage `pokko-field-v1`. Welcome identity is delivery `mystic-island-v1` and candidate `mystic-island-shore-garden-v18`; the navigation runner is `island-navigation-five-tabs-v2`. Reduced motion was enabled, there was no service-worker controller, and all profile fixtures lived in disposable browser contexts. The target is the current Island app, not classic Explore or Nature Town.
 
 The layout and runtime behavior are checked in a local preview. The screenshot confirms the visible scene and actions, but this pass does not score independent visual appeal or establish child comprehension/enjoyment, screen-reader behavior, physical-device feel, release/update behavior, or whole-app completion. Those quality gates remain separate and open.
+
+## Current Island photo gallery compact-screen action (`live-64`, 2026-09-21)
+
+### F-40 — The populated photo action overlapped fixed navigation or sat below the short-landscape viewport (medium, fixed and runtime checked)
+
+The earlier photo check used an empty album, so it missed the taller populated state. On the pre-fix current-Island build (`79f343ed`), the camera action measured y=463.8–507.8 while fixed navigation began at y=493.2 on 320×568, hiding about 14.5px of its hit area. At 390×600, y=516.3–560.3 overlapped navigation beginning at y=534.4 by about 25.9px. On 844×390 the action started at y=356, below the app root's y=324.4 viewport edge. The screenshots below are the populated state, not the empty-album false negative.
+
+The cause was a tall, single-column photo flow whose camera action followed all gallery content while the app navigation remained fixed. It did not adapt to either the short portrait height or short-landscape width. On phones up to 480px wide and 640px high, the first photo thumbnail is now capped at 152px. At widths from 600px and heights up to 430px, photos use a separate scrolling list and a dedicated camera-action rail; opening a photo restores the full-size single-column detail view.
+
+| Viewport / state | Result | Evidence |
+|---|---|---|
+| 320×568 populated gallery | Camera action remains at least 44px high and fully above fixed navigation. | [Before, revision `79f343ed`](evidence/screens/live-64-photo-gallery-2026-09-21/before-320-populated-photos-79f343ed.png), [after](evidence/screens/live-64-photo-gallery-2026-09-21/320-photos.png) |
+| 390×600 populated gallery | Camera action remains fully visible and hit-testable above navigation. | [After](evidence/screens/live-64-photo-gallery-2026-09-21/390-photos.png) |
+| 844×390 and 1024×390 populated galleries | The photo list scrolls independently; the camera action stays in the visible side rail. | [Before, revision `79f343ed`](evidence/screens/live-64-photo-gallery-2026-09-21/before-844-populated-photos-79f343ed.png), [844 after](evidence/screens/live-64-photo-gallery-2026-09-21/844-photos.png), [1024 after](evidence/screens/live-64-photo-gallery-2026-09-21/1024-photos.png) |
+| Photo detail | Full-size single-column detail remains available without being covered by navigation. | [320 detail](evidence/screens/live-64-photo-gallery-2026-09-21/320-photo-detail.png), [844 detail](evidence/screens/live-64-photo-gallery-2026-09-21/844-photo-detail.png) |
+| Four-viewport current-Island route sweep | 107 route/action checks and 74 captures pass; zero page errors. | [Contact sheet](evidence/screens/live-64-photo-gallery-2026-09-21/contact-sheet.html), [run report](evidence/screens/live-64-photo-gallery-2026-09-21/report.json) |
+
+Runtime identity for every capture: `http://127.0.0.1:5200`, revision `b1f72572`, version `b1f72572:471181dc-8870-4f91-8725-04115895aed0`, app-root Island=true / NatureTown=false, configured delivery `snap-root-v1`, visual lineage `pokko-field-v1`, photo delivery `mystic-island-v1`, visual candidate `mystic-island-shore-garden-v18`, navigation candidate `island-navigation-five-tabs-v2`. Reduced motion was enabled, there was no service-worker controller, and the populated photo fixture lived in a disposable browser context. Nature Town and classic Explore were not the target.
+
+This verifies local-preview geometry, navigation separation, and route behavior for the tested sizes. It does not establish independent visual appeal, physical-touch discoverability, assistive-technology behavior, child comprehension/enjoyment, other route/state coverage, or whole-app completion.
