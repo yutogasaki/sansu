@@ -424,6 +424,24 @@
 }
 
 @media (max-width: 767px) and (orientation: portrait) {
+    .battle-result-screen--tug .battle-result-stats {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .battle-result-screen--tug .battle-result-stats > :first-child {
+        grid-column: 1 / -1;
+        min-width: 0;
+    }
+
+    .battle-result-screen--tug .battle-result-stats > :not(:first-child) {
+        min-width: 0;
+    }
+
+    .battle-result-screen--tug .battle-result-stats > :first-child > :last-child {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
     .battle-result-screen .battle-result-metric {
         padding-inline: 6px;
     }

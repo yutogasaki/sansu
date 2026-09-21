@@ -59,7 +59,7 @@ export const BattleResult: React.FC<BattleResultProps> = ({
                             title={cleared ? "ボス げきは！" : "じかんぎれ..."}
                             description={cleared ? "ふたりで ちからを あわせて クリア！" : "もういちど ちょうせんしよう"}
                         />
-                        <Badge variant={cleared ? "success" : "warning"}>
+                        <Badge className="shrink-0 whitespace-nowrap" variant={cleared ? "success" : "warning"}>
                             {cleared ? "きょうりょく せいこう" : "もういちど"}
                         </Badge>
                     </div>
@@ -106,7 +106,7 @@ export const BattleResult: React.FC<BattleResultProps> = ({
     }
 
     return (
-        <div className="battle-result-screen relative flex h-full items-center justify-center bg-transparent px-6 py-5">
+        <div className="battle-result-screen battle-result-screen--tug relative flex h-full items-center justify-center bg-transparent px-6 py-5">
             <div className="pointer-events-none absolute inset-0 overflow-hidden">
                 {Array.from({ length: 12 }, (_, index) => (
                     <motion.div
@@ -140,7 +140,7 @@ export const BattleResult: React.FC<BattleResultProps> = ({
                         title={`${winner.config.name} の かち！`}
                         description="けっかを みて つぎの しょうぶへ いこう"
                     />
-                    <Badge variant="success">しょうり</Badge>
+                    <Badge className="shrink-0 whitespace-nowrap" variant="success">しょうり</Badge>
                 </div>
 
                 <div className="battle-result-stats grid grid-cols-[1.2fr_1fr_1fr] gap-4">

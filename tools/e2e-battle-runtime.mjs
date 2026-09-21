@@ -44,11 +44,70 @@ const startCoopRound = async (page, start) => {
 const endCoopAtTimeout = async page => {
     await page.getByRole('heading', { name: 'じかんぎれ...', exact: true }).waitFor();
 };
+const setDeterministicBattleRandom = async page => {
+    await page.evaluate(() => {
+        window.__battleRuntimeOriginalRandom ??= Math.random;
+        Math.random = () => 0;
+    });
+};
+const restoreBattleRandom = async page => {
+    await page.evaluate(() => {
+        const originalRandom = window.__battleRuntimeOriginalRandom;
+        if (typeof originalRandom === 'function') {
+            Math.random = originalRandom;
+            delete window.__battleRuntimeOriginalRandom;
+        }
+    });
+};
+const startTugRound = async (page, start) => {
+    await setDeterministicBattleRandom(page);
+    await start.click();
+    const p1Visual = page.locator('.battle-player-card').first()
+        .locator('.battle-question-frame [data-visual-count]').first();
+    await p1Visual.waitFor({ timeout: 12000 });
+    const visual = await p1Visual.evaluate(element => ({
+        surface: element.getAttribute('data-visual-surface'),
+        count: Number(element.getAttribute('data-visual-count')),
+    }));
+    assert.equal(visual.surface, 'count-frame', 'The deterministic tug sample uses the visible five-frame counting problem');
+    assert(Number.isInteger(visual.count) && visual.count > 0 && visual.count <= 5,
+        'The visible counting frame has a readable item count');
+    return { visual };
+};
+const winTugRoundFromVisibleCount = async page => {
+    const p1 = page.locator('.battle-player-card').first();
+    for (let targetCorrectCount = 1; targetCorrectCount <= 5; targetCorrectCount += 1) {
+        const visual = p1.locator('.battle-question-frame [data-visual-count]').first();
+        await visual.waitFor({ timeout: 5000 });
+        const visibleCount = await visual.getAttribute('data-visual-count');
+        const choices = p1.locator('.battle-choice-wrap button');
+        const labels = (await choices.allTextContents()).map(label => label.trim());
+        const correctChoiceIndex = labels.findIndex(label => label === visibleCount);
+        assert(correctChoiceIndex >= 0,
+            'The visible item count ' + visibleCount + ' is available as an answer choice');
+
+        await setDeterministicBattleRandom(page);
+        await choices.nth(correctChoiceIndex).click();
+        if (targetCorrectCount < 5) {
+            await page.waitForFunction(expected => {
+                const label = document.querySelector('.battle-player-card .battle-stats span')?.textContent ?? '';
+                return Number(label.replace(/\D/g, '')) === expected;
+            }, targetCorrectCount, { timeout: 5000 });
+            await restoreBattleRandom(page);
+        } else {
+            await page.getByText('プレイヤー1 の かち！', { exact: true }).waitFor({ timeout: 5000 });
+            // The test holds the RNG fixed only while the visible count problem is generated.
+            // Let its short result flourish finish before capturing the stable result state.
+            await page.waitForTimeout(2100);
+            await restoreBattleRandom(page);
+        }
+    }
+};
 const report = {
     target: base,
-    journey: 'Current Island → Other Games → Boss Coop setup → timed play → timeout result → replay setup → end → Island',
+    journey: 'Current Island → Other Games → Boss Coop setup/play/result/replay/end → Tug of War setup/play/win/result/replay → Island',
     viewports,
-    fixture: 'Each run uses a fresh browser context and a disposable native profile. The opening countdown runs normally; only the Battle 1-second interval is accelerated to 10ms in that isolated page to reach the timeout result. No answers are submitted; learning records are compared before and after.',
+    fixture: 'Each run uses a fresh browser context and a disposable native profile. Co-op uses the normal countdown and accelerates only its 1-second interval to 10ms. Tug of War uses grade -2 and a temporary deterministic generator only to render count_5; the test answers from the visible item count and plays to the five-step result. No learning records are changed; stores are compared before and after.',
     captures: [],
     scenarios: [],
     pass: false,
@@ -291,6 +350,126 @@ try {
             }
 
             await page.getByRole('heading', { name: 'ほかの あそび', exact: true }).waitFor();
+            await page.getByRole('button', { name: /つなひき たいせん/ }).click();
+            await page.waitForURL(url => url.hash === '#/battle/play?mode=tug_of_war');
+            if (viewport.width >= 768 && viewport.height > viewport.width) {
+                await page.getByText('タブレットを よこにしてね', { exact: true }).waitFor();
+                const returnToGames = button(page, 'ほかの あそびへ もどる');
+                const returnBox = await returnToGames.boundingBox();
+                assert(returnBox && returnBox.width >= 44 && returnBox.height >= 44,
+                    'Tug of War tablet portrait guidance keeps a 44px-or-larger return target');
+                await capture('tug-tablet-rotate-guidance');
+                await returnToGames.click();
+                await page.waitForURL(url => url.hash === '#/battle');
+                scenario.checks.push('Tug of War tablet portrait provides the same clear rotation and return guidance');
+            } else {
+                await page.locator('.battle-setup-screen').waitFor();
+                const modeGroup = page.getByRole('group', { name: 'あそびの モード' });
+                const tugMode = modeGroup.getByRole('button', { name: /つなひき/ });
+                assert.equal(await tugMode.getAttribute('aria-pressed'), 'true',
+                    'The selected Tug of War card is reflected in Battle setup');
+                const gradeOptions = page.getByRole('button', { name: 'ねんしょう', exact: true });
+                assert.equal(await gradeOptions.count(), 2);
+                const start = button(page, 'スタート！');
+                assert.equal(await start.isEnabled(), false,
+                    'Both tug players must choose a grade before starting');
+                await gradeOptions.first().click();
+                await gradeOptions.last().click();
+                assert.equal(await start.isEnabled(), true,
+                    'Selecting both tug grades enables the start action');
+                await page.waitForTimeout(400);
+                await capture('tug-setup-ready');
+                scenario.checks.push('Tug of War route preserves its selected mode and makes both-player setup operable');
+
+                const round = await startTugRound(page, start);
+                await restoreBattleRandom(page);
+                scenario.tugOpeningQuestion = round.visual;
+                await capture('tug-playing');
+                await winTugRoundFromVisibleCount(page);
+                await capture('tug-result');
+                const tugResult = await page.evaluate(() => {
+                    const labels = ['もう いっかい！', 'おわる'];
+                    const card = document.querySelector('.battle-result-card');
+                    const cardRect = card?.getBoundingClientRect();
+                    return {
+                        documentWidth: document.documentElement.scrollWidth,
+                        viewport: { width: innerWidth, height: innerHeight },
+                        summary: card?.innerText.trim().replace(/\s+/g, ' ') ?? '',
+                        badgeWhiteSpace: card?.querySelector(':scope > div:first-child > span')
+                            ? getComputedStyle(card.querySelector(':scope > div:first-child > span')).whiteSpace
+                            : null,
+                        card: cardRect ? {
+                            x: cardRect.x,
+                            y: cardRect.y,
+                            width: cardRect.width,
+                            height: cardRect.height,
+                            bottom: cardRect.bottom,
+                        } : null,
+                        stats: [...document.querySelectorAll('.battle-result-stats > *')]
+                            .map(element => {
+                                const rect = element.getBoundingClientRect();
+                                return {
+                                    x: rect.x,
+                                    right: rect.right,
+                                    width: rect.width,
+                                    clientWidth: element.clientWidth,
+                                    scrollWidth: element.scrollWidth,
+                                };
+                            }),
+                        actions: [...document.querySelectorAll('button')]
+                            .filter(element => labels.includes(element.innerText.trim().replace(/\s+/g, ' ')))
+                            .map(element => {
+                                const rect = element.getBoundingClientRect();
+                                return {
+                                    label: element.innerText.trim().replace(/\s+/g, ' '),
+                                    x: rect.x,
+                                    y: rect.y,
+                                    width: rect.width,
+                                    height: rect.height,
+                                    bottom: rect.bottom,
+                                };
+                            }),
+                    };
+                });
+                scenario.tugResult = tugResult;
+                assert.equal(tugResult.documentWidth <= viewport.width + 1, true,
+                    'Tug of War result has no horizontal page overflow');
+                assert.match(tugResult.summary, /プレイヤー1 の かち！/,
+                    'Tug of War result names the player who reached the visible goal');
+                assert.equal(tugResult.badgeWhiteSpace, 'nowrap',
+                    'Tug of War result badge stays on a single line');
+                assert(tugResult.card && tugResult.card.x >= 0
+                    && tugResult.card.x + tugResult.card.width <= viewport.width + 1,
+                'Tug of War result card stays within the viewport width');
+                assert.equal(tugResult.stats.length, 3,
+                    'Tug of War result shows winner, duration, and score difference');
+                assert(tugResult.stats.every(stat => stat.x >= tugResult.card.x - 1
+                    && stat.right <= tugResult.card.x + tugResult.card.width + 1
+                    && stat.scrollWidth <= stat.clientWidth + 1),
+                'Tug of War result stat cards stay inside the result card without clipping');
+                assert.equal(tugResult.actions.length, 2,
+                    'Tug of War result offers replay and exit');
+                assert(tugResult.actions.every(action => action.width >= 44 && action.height >= 44
+                    && action.x >= 0 && action.x + action.width <= viewport.width + 1
+                    && action.y >= 0 && action.bottom <= viewport.height + 1),
+                'Tug of War result keeps replay and exit controls visible and touchable');
+                scenario.checks.push('Visible counting problems can advance the rope to a clear, non-shaming winner result');
+                scenario.checks.push('Tug of War result keeps replay and exit controls visible and touchable');
+
+                await button(page, 'もう いっかい！').click();
+                await page.locator('.battle-setup-screen').waitFor();
+                const replayMode = page.getByRole('group', { name: 'あそびの モード' })
+                    .getByRole('button', { name: /つなひき/ });
+                assert.equal(await replayMode.getAttribute('aria-pressed'), 'true',
+                    'Tug of War replay keeps the selected mode');
+                assert.equal(await button(page, 'スタート！').isEnabled(), false,
+                    'Tug of War replay returns to a fresh setup');
+                await capture('tug-replay-setup');
+                scenario.checks.push('Tug of War replay returns to a fresh setup with the mode preserved');
+                await button(page, 'もどる').click();
+                await page.waitForURL(url => url.hash === '#/battle');
+            }
+
             await button(page, 'もどる').click();
             await page.waitForURL(url => url.hash === '#/island');
             await waitMode(page, 'home');
