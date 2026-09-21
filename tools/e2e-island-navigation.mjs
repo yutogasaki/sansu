@@ -105,6 +105,7 @@ try {
         const errors = [];
         let settingsContrast = null;
         let parentCandidateFixture = null;
+        let shortLearningLayout = null;
         page.on('pageerror', error => errors.push(error.message));
         const capture = async name => {
             const file = `${viewport.width}-${name}.png`;
@@ -373,6 +374,37 @@ try {
             assert(draft.some(value => value.includes('1')));
             const saved = await readNative(page, id);
             await capture('learning');
+            if (viewport.width >= 480 && viewport.height <= 600 && viewport.width > viewport.height) {
+                shortLearningLayout = await page.evaluate(() => {
+                    const navigation = document.querySelector('.island-shell-nav');
+                    const navigationRect = navigation?.getBoundingClientRect();
+                    const navigationVisible = !!navigation && !!navigationRect && navigationRect.height > 0
+                        && navigationRect.top < innerHeight && getComputedStyle(navigation).visibility !== 'hidden';
+                    const contentBottom = navigationVisible ? Math.min(innerHeight, navigationRect.top) : innerHeight;
+                    const rect = element => {
+                        const bounds = element?.getBoundingClientRect();
+                        return bounds ? { top: bounds.top, bottom: bounds.bottom, width: bounds.width, height: bounds.height } : null;
+                    };
+                    const keypad = document.querySelector('.park-keypad');
+                    return {
+                        contentBottom,
+                        workbench: rect(document.querySelector('.island-workbench')),
+                        inputs: rect(document.querySelector('.park-inputs')),
+                        keypad: rect(keypad),
+                        keys: [...(keypad?.querySelectorAll('button') ?? [])].map(rect),
+                        actions: rect(document.querySelector('.island-learning-actions')),
+                    };
+                });
+                assert(shortLearningLayout.keypad?.height > 0
+                    && shortLearningLayout.keys.length > 0
+                    && shortLearningLayout.keys.every(key => key.height >= 44 && key.width >= 44
+                        && key.top >= 0 && key.bottom <= shortLearningLayout.contentBottom + 1)
+                    && shortLearningLayout.inputs?.top >= 0
+                    && shortLearningLayout.inputs.bottom <= shortLearningLayout.contentBottom + 1
+                    && shortLearningLayout.actions?.top >= 0
+                    && shortLearningLayout.actions.bottom <= shortLearningLayout.contentBottom + 1,
+                `Short-landscape learning keeps the full 44px keypad, answer and help actions visible: ${JSON.stringify(shortLearningLayout)}`);
+            }
             await button(page, 'とじる').click(); await ordinary('#/settings?section=learning');
             assert.equal(await sourceHandle.evaluate(element => element.isConnected), true);
             assert.deepEqual(await readNative(page, id), saved, 'Closing cannot write an answer or change the reserved plan');
@@ -724,11 +756,11 @@ try {
             await button(page, 'もどる').click();
             await waitMode(page, 'home'); await ordinary('#/island');
             assert.deepEqual(errors, []);
-            report.scenarios.push({ viewport, pass: true, settingsContrast, parentCandidateFixture, checks: ['first-run welcome identity, responsive frame, and visible 44px actions', ...(viewport.width <= 360 ? ['narrow first-run item labels remain single-line', 'five-tab navigation labels fit on one line inside 44px-or-larger targets'] : []), 'explicit profile-add frame preserved', 'top entry without learning', 'stale top query and unknown URL recovery', 'existing-profile onboarding return', 'pending-plan top return without learning writes', 'ordinary tabs', ...(viewport.height <= 430 ? ['play continuation reachable by internal scroll'] : []), 'settings source retained', 'settings small-text contrast on composed surface and opaque paper', 'draft and seven-store equality', 'back/forward', 'home reload without auto-start', 'placement cancel/save', 'camera close', 'real photo/detail close', 'populated photo action remains fully visible above fixed navigation', 'direct learning reload/close', 'curriculum scroll restored', 'direct placement fallback', 'records refresh after answer', 'current-Island parent gate and empty review-candidate copy', 'current-Island parent populated review candidates via display-only fixture', 'parent explanation wraps without horizontal overflow', 'parent return reaches the originating settings section from both states', ...(viewport.width >= 700 ? ['wide Other Games heading aligns with centered choice list'] : []), ...(viewport.height <= 430 ? ['all three primary game choices remain fully visible above the fixed navigation'] : []), 'Island menu → Other Games → Battle guidance/setup and return', ...(viewport.width >= 768 && viewport.height > viewport.width ? ['tablet portrait Battle orientation guidance and return'] : viewport.width <= 767 && viewport.height <= 639 ? ['small-phone Battle screen-size guidance and return'] : ['two-player setup semantics, 44px options, prerequisite guidance, scroll discoverability, and start readiness'])], errors });
+            report.scenarios.push({ viewport, pass: true, settingsContrast, parentCandidateFixture, shortLearningLayout, checks: ['first-run welcome identity, responsive frame, and visible 44px actions', ...(viewport.width <= 360 ? ['narrow first-run item labels remain single-line', 'five-tab navigation labels fit on one line inside 44px-or-larger targets'] : []), 'explicit profile-add frame preserved', 'top entry without learning', 'stale top query and unknown URL recovery', 'existing-profile onboarding return', 'pending-plan top return without learning writes', 'ordinary tabs', ...(viewport.height <= 430 ? ['play continuation reachable by internal scroll'] : []), 'settings source retained', 'settings small-text contrast on composed surface and opaque paper', 'draft and seven-store equality', 'back/forward', 'home reload without auto-start', 'placement cancel/save', 'camera close', 'real photo/detail close', 'populated photo action remains fully visible above fixed navigation', 'direct learning reload/close', ...(viewport.width >= 480 && viewport.height <= 600 && viewport.width > viewport.height ? ['short-landscape learning keeps every 44px keypad key, answer, and help action visible'] : []), 'curriculum scroll restored', 'direct placement fallback', 'records refresh after answer', 'current-Island parent gate and empty review-candidate copy', 'current-Island parent populated review candidates via display-only fixture', 'parent explanation wraps without horizontal overflow', 'parent return reaches the originating settings section from both states', ...(viewport.width >= 700 ? ['wide Other Games heading aligns with centered choice list'] : []), ...(viewport.height <= 430 ? ['all three primary game choices remain fully visible above the fixed navigation'] : []), 'Island menu → Other Games → Battle guidance/setup and return', ...(viewport.width >= 768 && viewport.height > viewport.width ? ['tablet portrait Battle orientation guidance and return'] : viewport.width <= 767 && viewport.height <= 639 ? ['small-phone Battle screen-size guidance and return'] : ['two-player setup semantics, 44px options, prerequisite guidance, scroll discoverability, and start readiness'])], errors });
             console.log(`PASS navigation ${viewport.width}x${viewport.height}`);
         } catch (error) {
             await page.screenshot({ path: `${out}/${viewport.width}-failure.png` }).catch(() => {});
-            report.scenarios.push({ viewport, pass: false, settingsContrast, error: String(error), url: page.url(), errors });
+            report.scenarios.push({ viewport, pass: false, settingsContrast, parentCandidateFixture, shortLearningLayout, error: String(error), url: page.url(), errors });
             throw error;
         } finally { await context.close(); }
     }

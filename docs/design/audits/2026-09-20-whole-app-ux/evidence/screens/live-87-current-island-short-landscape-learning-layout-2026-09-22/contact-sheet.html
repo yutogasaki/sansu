@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>F-48 現行Island 学習画面・短い横画面</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, sans-serif; color: #263145; background: #f6f6f1; }
+    body { max-width: 1200px; margin: 0 auto; padding: 24px; }
+    h1, h2 { line-height: 1.35; }
+    .meta, figure { margin: 0; padding: 16px; border: 1px solid #c9c5d8; border-radius: 16px; background: #fffdf7; }
+    .meta { margin-block: 20px; line-height: 1.8; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: 16px; }
+    figure img { display: block; width: 100%; height: auto; border: 1px solid #dedbe7; border-radius: 8px; }
+    figcaption { margin-top: 10px; line-height: 1.6; }
+    code { overflow-wrap: anywhere; }
+  </style>
+</head>
+<body>
+  <h1>F-48: 599×430の学習テンキー最下段が画面外で補助操作と重なる</h1>
+  <section class="meta">
+    <p><strong>対象:</strong> 現行Island、<code>http://127.0.0.1:5198/#/settings?section=learning&amp;learn=1</code></p>
+    <p><strong>修正前 / live-86:</strong> 表示下端は430px。入力欄 y=169.19–219.19、テンキー y=227.19–451.19。13キーは各96.5×47.5pxだが、最下段は y=395.69–443.19となり13.19px画面外。ヒント/スキップ操作は y=369–414で、最下段キーと約18px重なる。</p>
+    <p><strong>修正後 / live-88:</strong> 短い横画面レイアウトの幅下限を700pxから480pxへ。問題文/支援を左の独立scroll、答え欄とテンキーを右へ配置。599×430では入力 y=102.19–150.19、テンキー y=158.19–384、全13キー各61.5×52.95px、ヒント/スキップ y=384–428（44px）。全て画面内で、キーと補助操作は重ならない。</p>
+    <p><strong>境界回帰 / live-87:</strong> 480×430、599×430、699×430、700×430、1024×390の5 journeysがPASS（147 route/action checks、95 captures、page error 0）。さらに599×430のlive-88単独journeyも29 checks / 19 captures / error 0。runtime revision <code>development-local</code>、version <code>development-local:60d95334-58f8-4594-b548-c113c90cad1c</code>、Island=true / NatureTown=false、root delivery <code>snap-root-v1</code>、Island delivery <code>mystic-island-v1</code>、visual <code>mystic-island-shore-garden-v18</code>、reduced motion、service workerなし。学習/写真fixtureは隔離context終了時に破棄。</p>
+    <p><a href="before-geometry-report.json">live-86 修正前report</a> · <a href="after-boundary-report.json">live-87 境界report</a> · <a href="after-599-geometry-report.json">live-88 座標report</a></p>
+  </section>
+  <h2>修正前</h2>
+  <div class="grid">
+    <figure><img src="before-599-learning.png" alt="599×430でテンキー最下段が画面外へ切れ、ヒント操作と重なる修正前画面"><figcaption>599×430 — 最下段と補助操作が重なり、全キーを使えない</figcaption></figure>
+  </div>
+  <h2>修正後</h2>
+  <div class="grid">
+    <figure><img src="after-480-learning.png" alt="480×430で問題とテンキーを左右に並べ、すべてのキーが表示される修正後画面"><figcaption>480×430 — 新しい最小幅</figcaption></figure>
+    <figure><img src="after-599-learning.png" alt="599×430で全キーとヒント操作が重ならず表示される修正後画面"><figcaption>599×430 — 再現幅で解消</figcaption></figure>
+    <figure><img src="after-1024-learning.png" alt="1024×390で全キーと操作を維持する修正後画面"><figcaption>1024×390 — 既存の短横画面も維持</figcaption></figure>
+  </div>
+</body>
+</html>

@@ -170,7 +170,7 @@
 
 /* Short landscape screens keep the prompt and the complete, fixed-size keypad
    side by side. The only scrollable surface is the prompt/support column. */
-@media (min-width: 700px) and (max-height: 600px) and (orientation: landscape) {
+@media (min-width: 480px) and (max-height: 600px) and (orientation: landscape) {
     .app-container .island-page[data-layout-version][data-mode=learning] {
         padding-bottom: 0;
     }
