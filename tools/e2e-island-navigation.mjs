@@ -120,8 +120,8 @@ try {
                 serviceWorkerControlled: Boolean(navigator.serviceWorker.controller),
                 reducedMotion: matchMedia('(prefers-reduced-motion: reduce)').matches,
             }));
-            assert.equal(metadata.islandFeatureEnabled, true, 'Parent-page evidence must use the current Island-enabled app');
-            assert.equal(metadata.natureTownFeatureEnabled, false, 'Parent-page evidence must not come from the Nature Town preview');
+            assert.equal(metadata.islandFeatureEnabled, true, 'Shared-utility evidence must use the current Island-enabled app');
+            assert.equal(metadata.natureTownFeatureEnabled, false, 'Shared-utility evidence must not come from the Nature Town preview');
             report.captures.push({ file, ...metadata });
         };
         const nav = page.locator('.island-shell-nav');
@@ -521,8 +521,79 @@ try {
             await populatedReturn.click();
             await page.waitForURL('**/#/settings?section=parent');
             await page.getByRole('heading', { name: 'テスト・保護者', exact: true }).waitFor();
+
+            // Continue from the current Island's own menu into the two-player
+            // game. This is a current route, but a shared utility surface, so
+            // record app-root flags rather than inventing an Island candidate.
+            await nav.getByRole('button', { name: 'しま', exact: true }).click();
+            await waitMode(page, 'home'); await ordinary('#/island');
+            await button(page, 'しまのメニュー').click();
+            await page.locator('[data-home-group="more-play"] > summary').click();
+            await page.locator('[data-home-action="other-games"]').click();
+            await page.waitForURL('**/#/battle');
+            await page.getByRole('heading', { name: 'ほかの あそび', exact: true }).waitFor();
+            assert.equal(await page.getByRole('button', { name: /ふたりで きょうりょく/ }).count(), 1);
+            assert.equal(await page.getByRole('button', { name: /つなひき たいせん/ }).count(), 1);
+            await captureUtility('other-games');
+            await button(page, '2人あそびを くわしく えらぶ').click();
+            await page.waitForURL('**/#/battle/play');
+
+            if (viewport.width >= 768 && viewport.height > viewport.width) {
+                await page.getByText('タブレットを よこにしてね', { exact: true }).waitFor();
+                const gateReturn = button(page, 'ほかの あそびへ もどる');
+                const gateReturnBox = await gateReturn.boundingBox();
+                assert(gateReturnBox && gateReturnBox.width >= 44 && gateReturnBox.height >= 44,
+                    'Tablet-portrait guidance keeps a 44px-or-larger return target');
+                await captureUtility('battle-rotate-guidance');
+                await gateReturn.click();
+                await page.waitForURL('**/#/battle');
+            } else {
+                const setup = page.locator('.battle-setup-screen');
+                await setup.waitFor();
+                const playerOneGrades = page.getByRole('group', { name: 'プレイヤー 1のがくねん' });
+                const playerTwoGrades = page.getByRole('group', { name: 'プレイヤー 2のがくねん' });
+                await playerOneGrades.waitFor();
+                await playerTwoGrades.waitFor();
+                await page.getByRole('group', { name: 'プレイヤー 1のアイコン' }).waitFor();
+                await page.getByRole('group', { name: 'プレイヤー 2のアイコン' }).waitFor();
+                const start = button(page, 'スタート！');
+                assert.equal(await start.isEnabled(), false, 'Two-player setup requires both grades before starting');
+                const setupState = await page.evaluate(() => ({
+                    documentWidth: document.documentElement.scrollWidth,
+                    viewportWidth: innerWidth,
+                    playerGroups: [...document.querySelectorAll('.battle-setup-screen [role="group"]')]
+                        .map(group => group.getAttribute('aria-label')),
+                    optionTargets: [...document.querySelectorAll('.battle-setup-screen [aria-pressed]')]
+                        .map(option => {
+                            const rect = option.getBoundingClientRect();
+                            return { width: rect.width, height: rect.height };
+                        }),
+                }));
+                assert(setupState.documentWidth <= viewport.width + 1,
+                    `Battle setup has no horizontal overflow: ${JSON.stringify(setupState)}`);
+                assert(setupState.playerGroups.includes('プレイヤー 1のアイコン')
+                    && setupState.playerGroups.includes('プレイヤー 2のアイコン')
+                    && setupState.playerGroups.includes('プレイヤー 1のがくねん')
+                    && setupState.playerGroups.includes('プレイヤー 2のがくねん'),
+                `Both players' controls expose distinct group names: ${JSON.stringify(setupState.playerGroups)}`);
+                assert(setupState.optionTargets.length >= 36
+                    && setupState.optionTargets.every(target => target.width >= 44 && target.height >= 44),
+                `Battle option targets remain at least 44px: ${JSON.stringify(setupState.optionTargets)}`);
+                await captureUtility('battle-setup');
+                const gradeOptions = page.getByRole('button', { name: '1ねんせい', exact: true });
+                assert.equal(await gradeOptions.count(), 2);
+                await gradeOptions.first().click();
+                await gradeOptions.last().click();
+                assert.equal(await gradeOptions.first().getAttribute('aria-pressed'), 'true');
+                assert.equal(await gradeOptions.last().getAttribute('aria-pressed'), 'true');
+                assert.equal(await start.isEnabled(), true, 'Selecting both grades enables the start action');
+                await button(page, 'もどる').click();
+                await page.waitForURL('**/#/battle');
+            }
+            await button(page, 'もどる').click();
+            await waitMode(page, 'home'); await ordinary('#/island');
             assert.deepEqual(errors, []);
-            report.scenarios.push({ viewport, pass: true, settingsContrast, parentCandidateFixture, checks: ['first-run welcome identity, responsive frame, and visible 44px actions', 'explicit profile-add frame preserved', 'top entry without learning', 'stale top query and unknown URL recovery', 'existing-profile onboarding return', 'pending-plan top return without learning writes', 'ordinary tabs', ...(viewport.height <= 430 ? ['play continuation reachable by internal scroll'] : []), 'settings source retained', 'settings small-text contrast on composed surface and opaque paper', 'draft and seven-store equality', 'back/forward', 'home reload without auto-start', 'placement cancel/save', 'camera close', 'real photo/detail close', 'direct learning reload/close', 'curriculum scroll restored', 'direct placement fallback', 'records refresh after answer', 'current-Island parent gate and empty review-candidate copy', 'current-Island parent populated review candidates via display-only fixture', 'parent explanation wraps without horizontal overflow', 'parent return reaches the originating settings section from both states'], errors });
+            report.scenarios.push({ viewport, pass: true, settingsContrast, parentCandidateFixture, checks: ['first-run welcome identity, responsive frame, and visible 44px actions', 'explicit profile-add frame preserved', 'top entry without learning', 'stale top query and unknown URL recovery', 'existing-profile onboarding return', 'pending-plan top return without learning writes', 'ordinary tabs', ...(viewport.height <= 430 ? ['play continuation reachable by internal scroll'] : []), 'settings source retained', 'settings small-text contrast on composed surface and opaque paper', 'draft and seven-store equality', 'back/forward', 'home reload without auto-start', 'placement cancel/save', 'camera close', 'real photo/detail close', 'direct learning reload/close', 'curriculum scroll restored', 'direct placement fallback', 'records refresh after answer', 'current-Island parent gate and empty review-candidate copy', 'current-Island parent populated review candidates via display-only fixture', 'parent explanation wraps without horizontal overflow', 'parent return reaches the originating settings section from both states', 'Island menu → Other Games → Battle setup and return', ...(viewport.width >= 768 && viewport.height > viewport.width ? ['tablet portrait Battle orientation guidance and return'] : ['two-player setup semantics, 44px options, and start readiness'])], errors });
             console.log(`PASS navigation ${viewport.width}x${viewport.height}`);
         } catch (error) {
             await page.screenshot({ path: `${out}/${viewport.width}-failure.png` }).catch(() => {});
