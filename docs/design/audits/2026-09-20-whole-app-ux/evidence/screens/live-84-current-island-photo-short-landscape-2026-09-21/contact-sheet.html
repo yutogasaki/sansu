@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>F-47 現行Island 写真CTA・短い横画面</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, sans-serif; color: #263145; background: #f6f6f1; }
+    body { max-width: 1200px; margin: 0 auto; padding: 24px; }
+    h1, h2 { line-height: 1.35; }
+    .meta, figure { margin: 0; padding: 16px; border: 1px solid #c9c5d8; border-radius: 16px; background: #fffdf7; }
+    .meta { margin-block: 20px; line-height: 1.8; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: 16px; }
+    figure img { display: block; width: 100%; height: auto; border: 1px solid #dedbe7; border-radius: 8px; }
+    figcaption { margin-top: 10px; line-height: 1.6; }
+    code { overflow-wrap: anywhere; }
+  </style>
+</head>
+<body>
+  <h1>F-47: 短い横画面で写真CTAが固定ナビに隠れる</h1>
+  <section class="meta">
+    <p><strong>対象:</strong> 現行Island、<code>http://127.0.0.1:5198/#/island?view=photos</code></p>
+    <p><strong>修正前:</strong> <code>live-82</code>（599×430）で撮影操作 y=388.77–432.77、固定ナビ上端 y=364.41。44pxの操作全体がナビの後ろに入り、タップできない。<code>live-83</code>（480×430）でも同じ幾何を再現。</p>
+    <p><strong>修正後:</strong> 高さ430px以下では幅にかかわらずアルバム一覧を独立スクロールにし、撮影操作を隣の列へ配置。320×430・480×430・599×430・600×430・1024×390で操作が表示領域内に入り、最小44pxを維持。</p>
+    <p><strong>回帰検査:</strong> <code>live-84</code> は7 viewport、193 route/action checks、131 captures、page error 0。runtime revision <code>development-local</code>、version <code>development-local:60d95334-58f8-4594-b548-c113c90cad1c</code>、app root Island=true / NatureTown=false、configured delivery <code>snap-root-v1</code>、Island delivery <code>mystic-island-v1</code>、visual candidate <code>mystic-island-shore-garden-v18</code>、reduced motion、service workerなし。QA profile/fixtureは隔離context終了時に破棄。</p>
+    <p><strong>標準回帰:</strong> <code>live-85</code> の既定3 viewport（390×844 / 768×1024 / 599×430）もPASS。81 checks、55 captures、page error 0。599×430で写真CTAと主要3入口の可視性を継続検査。<a href="default-regression-report.json">live-85 report</a></p>
+    <p><a href="before-480-report.json">480px修正前report</a> · <a href="before-599-report.json">599px修正前report</a> · <a href="after-report.json">live-84修正後report</a></p>
+  </section>
+  <h2>修正前</h2>
+  <div class="grid">
+    <figure><img src="before-480-photos.png" alt="480×430で写真の撮影操作が固定ナビの下へ隠れている修正前画面"><figcaption>480×430 — <code>live-83</code></figcaption></figure>
+    <figure><img src="before-599-photos.png" alt="599×430で写真の撮影操作が固定ナビの下へ隠れている修正前画面"><figcaption>599×430 — <code>live-82</code></figcaption></figure>
+  </div>
+  <h2>修正後</h2>
+  <div class="grid">
+    <figure><img src="after-320-photos.png" alt="320×430でアルバムをスクロールしながら撮影操作が横に表示される修正後画面"><figcaption>320×430 — 最小幅でも一覧と操作を分離</figcaption></figure>
+    <figure><img src="after-599-photos.png" alt="599×430で撮影操作がナビの上に完全に表示される修正後画面"><figcaption>599×430 — 600px未満の境界</figcaption></figure>
+    <figure><img src="after-1024-photos.png" alt="1024×390で既存の横向きレイアウトが維持される修正後画面"><figcaption>1024×390 — 広い短い横画面でも維持</figcaption></figure>
+  </div>
+</body>
+</html>
