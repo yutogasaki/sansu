@@ -1,6 +1,7 @@
-import React, { useEffect, useId, useRef } from "react";
+import React, { useId, useRef } from "react";
 import { createPortal } from "react-dom";
-import { isTopModalLayer, popModalLayer, pushModalLayer } from "./modalLayerManager";
+import { isTopModalLayer } from "./modalLayerManager";
+import { useModalFocus } from "./useModalFocus";
 import { cn } from "../../utils/cn";
 
 interface ModalProps {
@@ -10,6 +11,7 @@ interface ModalProps {
     children: React.ReactNode;
     footer?: React.ReactNode;
     width?: "sm" | "md" | "lg";
+    initialFocus?: "first" | "dialog";
 }
 
 export const Modal: React.FC<ModalProps> = ({
@@ -18,35 +20,12 @@ export const Modal: React.FC<ModalProps> = ({
     title,
     children,
     footer,
-    width = "sm"
+    width = "sm",
+    initialFocus = "first",
 }) => {
     const titleId = useId();
-    const layerTokenRef = useRef<symbol | null>(null);
-
-    useEffect(() => {
-        if (!isOpen) {
-            return;
-        }
-
-        const layerToken = pushModalLayer(document.body.style);
-        layerTokenRef.current = layerToken;
-
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.key === "Escape" && isTopModalLayer(layerToken)) {
-                onClose();
-            }
-        };
-
-        window.addEventListener("keydown", handleKeyDown);
-
-        return () => {
-            popModalLayer(layerToken, document.body.style);
-            if (layerTokenRef.current === layerToken) {
-                layerTokenRef.current = null;
-            }
-            window.removeEventListener("keydown", handleKeyDown);
-        };
-    }, [isOpen, onClose]);
+    const dialogRef = useRef<HTMLDivElement>(null);
+    const layerTokenRef = useModalFocus(isOpen, onClose, dialogRef, initialFocus);
 
     if (!isOpen) return null;
 
@@ -75,9 +54,11 @@ export const Modal: React.FC<ModalProps> = ({
                 aria-hidden="true"
             />
             <div
+                ref={dialogRef}
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby={title ? titleId : undefined}
+                tabIndex={-1}
                 className={cn(
                     "relative flex max-h-[calc(100dvh-2rem)] w-full flex-col overflow-hidden rounded-[28px] app-glass-strong app-shadow-strong",
                     sizeClasses[width]

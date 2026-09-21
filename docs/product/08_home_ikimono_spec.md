@@ -131,6 +131,8 @@
 - 名前入力:
   - `NameModal` は最大8文字
   - `trim + maxLength` で保存前正規化
+  - 命名面は題名・説明・入力ラベルを持つdialogとし、表示直後に入力へfocusする。開いている間はdialog内にfocusを保ち、決定後は元の操作先が残っていればfocusを戻す
+  - 決定ボタンとEnterは同じ保存経路を使う。空欄の確定は既存どおり「なまえなし」として扱う
 - 表示:
   - 名前チップ: `max-w-[11rem] + truncate`
   - 状態チップ: `max-w-[16rem] + truncate`
@@ -159,5 +161,6 @@
   - `src/components/ikimono/lifecycle.test.ts`
   - `src/components/ikimono/hitokoto.test.ts`
   - `src/components/ikimono/sceneText.test.ts`
+  - `src/components/ikimono/NameModal.test.tsx`: dialog名・説明・入力ラベル・form構造
 - 継続課題:
   - UI表示回帰（長文/狭幅）のテスト強化

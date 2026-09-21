@@ -20,6 +20,7 @@
 家の履歴・空の棚・保存失敗・短い横画面の改善は[家のUI/UXと復帰の検証](design/audits/2026-09-09-house-edges/README.md)を参照。4サイズ、実初回3問、展示と再試行、オフライン再表示を確認した。
 
 島・家・学習の[画面名と戻る操作の統一](design/audits/2026-09-09-ui-ux-continuity/README.md)。実画面の一周、4幅の退出操作、下書き復帰を確認したローカル実装で、公開・子どもの観察は未実施。
+現行ぽこもこ・旧Explore・Nature Townの画面系統、取り違え原因、再発防止策は[全体UX/UI監査の整理](design/audits/2026-09-20-whole-app-ux/README.md#target-version-incident-and-resolution-2026-09-21)を参照。
 実装する統合方針と引継ぎ境界は[家から育つ島47](product/47_home_island_integration_spec.md)。DEVの外/室内/学習の接続と、本番移行・公開の未完を区別する。
 
 家・学習・島の次の作業と統合上の論点は[2026-09-09の全体整合監査](design/2026-09-09-home-island-consistency-audit.md)を参照。採用済み仕様、DEV試作、検討案、並行実装と検証範囲を分け、実行順を整理している。

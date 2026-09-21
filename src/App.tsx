@@ -165,6 +165,8 @@ function App() {
             data-delivery-id={__DELIVERY_ID__}
             data-configured-delivery-id={__DELIVERY_ID__}
             data-visual-lineage-id={__VISUAL_LINEAGE_ID__}
+            data-island-feature-enabled={String(islandEnabled())}
+            data-nature-town-feature-enabled={String(import.meta.env.VITE_NATURE_TOWN_ENABLED === 'true')}
         >
             <HashRouter>
                 <PwaRouteObserver />

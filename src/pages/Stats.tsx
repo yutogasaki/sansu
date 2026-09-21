@@ -66,6 +66,12 @@ interface StableSkill {
     lastCorrectAt?: string;
 }
 
+export const StatsCloseAction: React.FC<{ label: string; onClose: () => void }> = ({ label, onClose }) => (
+    <Button variant="secondary" size="sm" aria-label={label} onClick={onClose}>
+        <Icons.Close className="w-6 h-6" aria-hidden="true" />
+    </Button>
+);
+
 const WEEKDAY_JA = ["日", "月", "火", "水", "木", "金", "土"];
 
 const estimateSessionMinutes = (startMs: number, endMs: number, count: number): number => {
@@ -157,7 +163,7 @@ interface MetricTileProps {
 const MetricTile: React.FC<MetricTileProps> = ({ label, value }) => (
     <InsetPanel className="stats-metric space-y-2 px-4 py-4 text-center">
         <div className="text-2xl font-black tracking-[-0.03em] text-slate-800">{value}</div>
-        <div className="text-xs font-bold text-slate-500">{label}</div>
+        <div className="text-xs font-bold text-pokomoko-muted">{label}</div>
     </InsetPanel>
 );
 
@@ -350,9 +356,7 @@ export const Stats: React.FC = () => {
     const mathRecentCorrect = mathRecent.filter(Boolean).length;
     const vocabRecentCorrect = vocabRecent.filter(Boolean).length;
     const closeAction = navigation ? undefined : (
-        <Button variant="secondary" size="sm" onClick={() => navigate("/")}>
-            <Icons.Close className="w-6 h-6" />
-        </Button>
+        <StatsCloseAction label={t("とじる", "閉じる")} onClose={() => navigate("/")} />
     );
 
     if (loading) {
@@ -410,14 +414,14 @@ export const Stats: React.FC = () => {
                         <div className="grid grid-cols-7 gap-1.5">
                             {weeklyDays.map(day => {
                                 const tone =
-                                    day.count === 0 ? "border-white/80 bg-white/66 text-slate-400" :
+                                    day.count === 0 ? "border-white/80 bg-white/66 text-pokomoko-muted" :
                                         day.count < 10 ? "border-cyan-100/90 bg-cyan-50/82 text-cyan-700" :
                                             day.count < 25 ? "border-sky-100/90 bg-sky-100/84 text-sky-800" :
                                                 "border-sky-200/90 bg-[linear-gradient(180deg,rgba(125,211,252,0.9),rgba(224,242,254,0.92))] text-sky-900 shadow-[0_16px_26px_-20px_rgba(14,165,233,0.45)]";
 
                                 return (
                                     <div key={day.dateKey} className="text-center" aria-label={`${day.label} ${day.count}もん`}>
-                                        <div className="mb-1 text-[10px] font-bold text-slate-500">{day.label}</div>
+                                        <div className="mb-1 text-[10px] font-bold text-pokomoko-muted">{day.label}</div>
                                         <div className={`flex h-9 items-center justify-center rounded-[18px] border text-xs font-black ${tone}`}>
                                             {day.count > 0 ? day.count : "—"}
                                         </div>
@@ -461,6 +465,7 @@ export const Stats: React.FC = () => {
                             <>
                                 <WeeklyTrendChart data={trendData} mode={trendMode} />
                                 <SegmentedControl
+                                    aria-label={t("せいちょう グラフの ひょうじ", "成長グラフの表示")}
                                     className="mx-auto w-full max-w-xs"
                                     value={trendMode}
                                     onChange={setTrendMode}
@@ -470,7 +475,7 @@ export const Stats: React.FC = () => {
                                     ]}
                                 />
                             </>
-                        ) : <p className="text-sm leading-6 text-slate-500">{t("まなんだ ひと もんだいの かずを、グラフで ふりかえれるよ。", "学習した日と問題の数を、グラフで振り返れます。")}</p>}
+                        ) : <p className="text-sm leading-6 text-pokomoko-muted">{t("まなんだ ひと もんだいの かずを、グラフで ふりかえれるよ。", "学習した日と問題の数を、グラフで振り返れます。")}</p>}
 
                         {stableSkills.length > 0 && (
                             <>
@@ -485,7 +490,7 @@ export const Stats: React.FC = () => {
                                                 </Badge>
                                                 <div className="font-bold text-slate-800">{skill.label}</div>
                                             </div>
-                                            <div className="text-[11px] text-slate-500">
+                                            <div className="text-[11px] text-pokomoko-muted">
                                                 つよさ {skill.strength} / かいとう {skill.totalAnswers}かい
                                             </div>
                                         </InsetPanel>
@@ -505,7 +510,7 @@ export const Stats: React.FC = () => {
                                 <InsetPanel key={`${item.id}-weak-${idx}`} className="flex flex-col gap-3 px-4 py-4 land:flex-row land:items-center land:justify-between">
                                     <div className="min-w-0">
                                         <div className="font-bold text-slate-700">{getLabel(item.id, item.subject)}</div>
-                                        <div className="text-xs text-slate-500">
+                                        <div className="text-xs text-pokomoko-muted">
                                             せいかいりつ: {Math.round(item.accuracy * 100)}% ・ さいしゅう: {formatDate(item.lastCorrectAt)}
                                         </div>
                                     </div>
@@ -519,7 +524,7 @@ export const Stats: React.FC = () => {
                                     </Button>
                                 </InsetPanel>
                             )) : (
-                                <InsetPanel className="px-4 py-4 text-xs text-slate-500">{totalStats.count === 0 ? t("まだ きろくが ないよ。まなぶと ここで みられるよ。", "学習すると、練習するところを確認できます。") : t("いまは まとめて れんしゅうする ところは ないよ。", "今はまとめて練習する項目はありません。")}</InsetPanel>
+                                <InsetPanel className="px-4 py-4 text-xs text-pokomoko-muted">{totalStats.count === 0 ? t("まだ きろくが ないよ。まなぶと ここで みられるよ。", "学習すると、練習するところを確認できます。") : t("いまは まとめて れんしゅうする ところは ないよ。", "今はまとめて練習する項目はありません。")}</InsetPanel>
                             )}
                         </div>
                     </SurfacePanel>
@@ -542,7 +547,7 @@ export const Stats: React.FC = () => {
                         {totalStats.count > 0 && <InsetPanel className="flex flex-col gap-3 px-4 py-4 land:flex-row land:items-center land:justify-between">
                             <div>
                                 <div className="font-bold text-slate-700">{t("テストの じゅんび (10もん)", "テスト準備 (10問)")}</div>
-                                <div className="mt-1 text-xs text-slate-500">{t("にがてを さきに かためる", "苦手を先に固める")}</div>
+                                <div className="mt-1 text-xs text-pokomoko-muted">{t("にがてを さきに かためる", "苦手を先に固める")}</div>
                             </div>
                             <Button
                                 size="sm"
@@ -559,7 +564,7 @@ export const Stats: React.FC = () => {
                                     <InsetPanel key={`${item.id}-review-${idx}`} className="flex flex-col gap-3 px-4 py-4 land:flex-row land:items-center land:justify-between">
                                         <div className="min-w-0">
                                             <div className="font-bold text-slate-700">{getLabel(item.id, item.subject)}</div>
-                                            <div className="text-xs text-slate-400">{t("さいしゅう", "最終")}: {formatDate(item.lastCorrectAt)}</div>
+                                            <div className="text-xs text-pokomoko-muted">{t("さいしゅう", "最終")}: {formatDate(item.lastCorrectAt)}</div>
                                         </div>
                                         <Button
                                             size="sm"
@@ -585,7 +590,7 @@ export const Stats: React.FC = () => {
                         {radarData.some(d => d.skillCount > 0) ? (
                             <SkillRadarChart data={radarData} />
                         ) : (
-                            <InsetPanel className="px-4 py-4 text-xs text-slate-500">
+                            <InsetPanel className="px-4 py-4 text-xs text-pokomoko-muted">
                                 {t("さんすう を やると マップが みれるよ。", "算数を学習するとマップが表示されます。")}
                             </InsetPanel>
                         )}
@@ -603,7 +608,7 @@ export const Stats: React.FC = () => {
                                     max={20}
                                     tone="success"
                                 />
-                                <div className="mt-1 text-[11px] text-slate-500">
+                                <div className="mt-1 text-[11px] text-pokomoko-muted">
                                     さいきん: {mathRecentCorrect}/{mathRecent.length || 0}せいかい ・ つぎ Lv{Math.min(profile.mathMainLevel + 1, maxMathLevel)}
                                 </div>
                             </InsetPanel>
@@ -618,7 +623,7 @@ export const Stats: React.FC = () => {
                                     max={20}
                                     tone="primary"
                                 />
-                                <div className="mt-1 text-[11px] text-slate-500">
+                                <div className="mt-1 text-[11px] text-pokomoko-muted">
                                     さいきん: {vocabRecentCorrect}/{vocabRecent.length || 0}せいかい ・ つぎ Lv{Math.min(profile.vocabMainLevel + 1, maxVocabLevel)}
                                 </div>
                             </InsetPanel>
@@ -631,7 +636,7 @@ export const Stats: React.FC = () => {
                             description={t("さいきん の テストけっか を のこしておく", "最近のテスト結果を確認")}
                         />
                         {periodicTestHistory.length === 0 ? (
-                            <InsetPanel className="px-4 py-4 text-xs text-slate-500">{t("テストを うけると、ここに けっかが のこるよ。", "テストを受けると、ここに結果が残ります。")}
+                            <InsetPanel className="px-4 py-4 text-xs text-pokomoko-muted">{t("テストを うけると、ここに けっかが のこるよ。", "テストを受けると、ここに結果が残ります。")}
                                 <Button size="sm" variant="secondary" className="mt-3 min-h-11" onClick={() => navigation ? navigation.open("/settings?section=parent") : navigate("/settings")}>{t("テストの せってい", "テストの設定")}</Button></InsetPanel>
                         ) : (
                             <div className="space-y-2">
@@ -641,10 +646,10 @@ export const Stats: React.FC = () => {
                                             <div className="text-sm font-bold text-slate-700">
                                                 {test.subject === "math" ? t("さんすう", "算数") : t("えいご", "英語")} Lv.{test.level}
                                             </div>
-                                            <div className="mt-0.5 text-[11px] text-slate-500">
+                                            <div className="mt-0.5 text-[11px] text-pokomoko-muted">
                                                 {new Date(test.timestamp).toLocaleString("ja-JP")} / {test.method === "paper" ? t("かみ", "紙") : t("アプリ", "アプリ")}
                                             </div>
-                                            <div className="mt-0.5 text-[11px] text-slate-500">
+                                            <div className="mt-0.5 text-[11px] text-pokomoko-muted">
                                                 {t("じかん", "時間")}: {Math.floor(test.durationSeconds / 60)}:{String(test.durationSeconds % 60).padStart(2, "0")}
                                                 {typeof test.timeLimitSeconds === "number" && (
                                                     <> / {t("せいげん", "制限")}: {Math.floor(test.timeLimitSeconds / 60)}:{String(test.timeLimitSeconds % 60).padStart(2, "0")}</>
@@ -654,7 +659,7 @@ export const Stats: React.FC = () => {
                                         </div>
                                         <div className="shrink-0 text-left land:text-right">
                                             <div className="text-lg font-black text-indigo-600">{test.score}{t("てん", "点")}</div>
-                                            <div className="text-[11px] text-slate-500">{test.correctCount}/{test.totalQuestions}</div>
+                                            <div className="text-[11px] text-pokomoko-muted">{test.correctCount}/{test.totalQuestions}</div>
                                         </div>
                                     </InsetPanel>
                                 ))}
@@ -677,7 +682,7 @@ export const Stats: React.FC = () => {
                                 action={<span className="font-bold">{totalStats.count}かい</span>}
                             />
                             <InsetPanel className="space-y-2 px-4 py-4">
-                                <div className="text-xs font-bold tracking-[0.12em] text-slate-500">にがて たんげん</div>
+                                <div className="text-xs font-bold tracking-[0.12em] text-pokomoko-muted">にがて たんげん</div>
                                 {weakTop3.length > 0 ? (
                                     <div className="flex flex-wrap gap-2">
                                         {weakTop3.slice(0, 2).map(item => (
@@ -687,7 +692,7 @@ export const Stats: React.FC = () => {
                                         ))}
                                     </div>
                                 ) : (
-                                    <div className="text-xs text-slate-500">とくに なし</div>
+                                    <div className="text-xs text-pokomoko-muted">とくに なし</div>
                                 )}
                             </InsetPanel>
                             <InsetPanel className="px-4 py-4 text-xs leading-6 text-slate-600">

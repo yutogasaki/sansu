@@ -6,16 +6,92 @@ import { answerUI, button, readNative, seedNative, waitMode, waitReady, runtimeM
 
 const base = process.env.SANSU_ISLAND_BASE_URL || 'http://127.0.0.1:5219';
 const out = process.env.SANSU_NAVIGATION_OUTPUT || 'output/playwright/island-navigation';
+const defaultViewports = [{ width: 390, height: 844 }, { width: 768, height: 1024 }];
+const viewports = process.env.SANSU_NAVIGATION_VIEWPORTS
+    ? process.env.SANSU_NAVIGATION_VIEWPORTS.split(',').map(value => {
+        const match = /^(\d{3,4})x(\d{3,4})$/.exec(value.trim());
+        if (!match) throw new Error(`Invalid navigation viewport "${value}"; expected WIDTHxHEIGHT`);
+        return { width: Number(match[1]), height: Number(match[2]) };
+    })
+    : defaultViewports;
+const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+})[character]);
+const parseCssColor = value => {
+    const hex = /^#([\da-f]{6})$/i.exec(value.trim());
+    if (hex) {
+        return { channels: [0, 2, 4].map(index => Number.parseInt(hex[1].slice(index, index + 2), 16)), alpha: 1 };
+    }
+    const toSrgb = (lightness, a, b) => {
+        const lRoot = lightness + 0.3963377774 * a + 0.2158037573 * b;
+        const mRoot = lightness - 0.1055613458 * a - 0.0638541728 * b;
+        const sRoot = lightness - 0.0894841775 * a - 1.2914855480 * b;
+        const l = lRoot ** 3;
+        const m = mRoot ** 3;
+        const s = sRoot ** 3;
+        return [
+            4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
+            -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
+            -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s,
+        ].map(channel => {
+            const encoded = channel <= 0.0031308 ? 12.92 * channel : 1.055 * channel ** (1 / 2.4) - 0.055;
+            return Math.max(0, Math.min(1, encoded)) * 255;
+        });
+    };
+    const oklab = /^oklab\(([^)]+)\)$/i.exec(value.trim());
+    const oklch = /^oklch\(([^)]+)\)$/i.exec(value.trim());
+    if (oklab || oklch) {
+        const parts = (oklab ?? oklch)[1].replace('/', ' ').split(/[\s,]+/).filter(Boolean);
+        const lightness = parts[0].endsWith('%') ? Number.parseFloat(parts[0]) / 100 : Number(parts[0]);
+        const a = oklab ? Number(parts[1]) : Number(parts[1]) * Math.cos(Number.parseFloat(parts[2]) * Math.PI / 180);
+        const b = oklab ? Number(parts[2]) : Number(parts[1]) * Math.sin(Number.parseFloat(parts[2]) * Math.PI / 180);
+        const alphaPart = parts[3];
+        const alpha = alphaPart === undefined ? 1 : alphaPart.endsWith('%')
+            ? Number.parseFloat(alphaPart) / 100
+            : Number(alphaPart);
+        return { channels: toSrgb(lightness, a, b), alpha };
+    }
+    const match = /^rgba?\(([^)]+)\)$/i.exec(value.trim());
+    if (!match) throw new Error(`Unsupported computed color: ${value}`);
+    const parts = match[1].replace('/', ' ').split(/[\s,]+/).filter(Boolean);
+    const channels = parts.slice(0, 3).map(channel => channel.endsWith('%')
+        ? Number.parseFloat(channel) * 2.55
+        : Number(channel));
+    const alphaPart = parts[3];
+    const alpha = alphaPart === undefined ? 1 : alphaPart.endsWith('%')
+        ? Number.parseFloat(alphaPart) / 100
+        : Number(alphaPart);
+    return { channels, alpha };
+};
+const compositeCssColors = (layers, base) => {
+    let channels = parseCssColor(base).channels;
+    for (const layer of [...layers].reverse()) {
+        const { channels: foreground, alpha } = parseCssColor(layer);
+        channels = foreground.map((channel, index) => channel * alpha + channels[index] * (1 - alpha));
+    }
+    return `rgb(${channels.map(channel => Math.round(channel)).join(', ')})`;
+};
+const relativeLuminance = color => parseCssColor(color).channels
+    .map(channel => {
+        const srgb = channel / 255;
+        return srgb <= 0.04045 ? srgb / 12.92 : ((srgb + 0.055) / 1.055) ** 2.4;
+    })
+    .reduce((sum, channel, index) => sum + channel * [0.2126, 0.7152, 0.0722][index], 0);
+const contrastRatio = (first, second) => {
+    const luminance = [relativeLuminance(first), relativeLuminance(second)].sort((a, b) => b - a);
+    return Number(((luminance[0] + 0.05) / (luminance[1] + 0.05)).toFixed(2));
+};
 await fs.mkdir(out, { recursive: true });
 const browser = await chromium.launch();
-const report = { target: base, navigationCandidate: 'island-navigation-five-tabs-v2', fixture: 'Native profile only; UI reserves and answers learning, moves starter furniture, and captures a real photo.', captures: [], scenarios: [], pass: false };
+const report = { target: base, navigationCandidate: 'island-navigation-five-tabs-v2', viewports, fixture: 'First-run Welcome is captured before any profile fixture; route scenarios then use a disposable native profile for learning, furniture, and photo checks.', captures: [], scenarios: [], pass: false };
 try {
-    for (const viewport of [{ width: 390, height: 844 }, { width: 768, height: 1024 }]) {
+    for (const viewport of viewports) {
         const context = await browser.newContext({ viewport, reducedMotion: 'reduce' });
         const page = await context.newPage();
         page.setDefaultTimeout(20000);
         page.setDefaultNavigationTimeout(20000);
         const errors = [];
+        let settingsContrast = null;
         page.on('pageerror', error => errors.push(error.message));
         const capture = async name => {
             const file = `${viewport.width}-${name}.png`;
@@ -23,7 +99,10 @@ try {
             // alone can catch a settings detail while its height is still zero.
             await page.waitForTimeout(400);
             await page.screenshot({ path: `${out}/${file}`, animations: 'disabled' });
-            report.captures.push({ file, ...(await runtimeMetadata(page)) });
+            const metadata = await runtimeMetadata(page);
+            assert.equal(metadata.islandFeatureEnabled, true, 'Island navigation evidence must come from an Island-enabled runtime');
+            assert.equal(metadata.delivery, 'mystic-island-v1', 'Island navigation evidence must use the current delivery');
+            report.captures.push({ file, ...metadata });
         };
         const nav = page.locator('.island-shell-nav');
         const learn = page.locator('.island-shell-tab--learn');
@@ -42,6 +121,26 @@ try {
             await page.goto(base);
             await page.waitForURL('**/#/onboarding');
             await page.locator('.island-welcome').waitFor();
+            await page.locator('.island-stage canvas').waitFor();
+            await page.waitForFunction(() => document.body.classList.contains('app-mode-island-first-run'));
+            const welcomeShell = await page.locator('.app-container').boundingBox();
+            assert(welcomeShell && Math.abs(welcomeShell.width - Math.min(viewport.width, 1180)) <= 1,
+                'First-run Island welcome uses the responsive fullscreen app frame');
+            const welcomeStage = await page.locator('.island-stage').boundingBox();
+            const maxWelcomeStageWidth = viewport.height <= 430 ? 680 : 920;
+            assert(welcomeStage && Math.abs(welcomeStage.width - Math.min(viewport.width, maxWelcomeStageWidth)) <= 1,
+                'Welcome island scene keeps a composed width on wide screens');
+            const welcomeMetadata = await runtimeMetadata(page);
+            assert.equal(welcomeMetadata.mode, 'welcome');
+            assert.equal(welcomeMetadata.islandFeatureEnabled, true, 'Welcome identity proves the Island flag is enabled');
+            for (const label of ['おはな', 'あかり', 'まなぶ']) {
+                const target = await page.getByRole('button', { name: label, exact: true }).boundingBox();
+                assert(target && target.width >= 44 && target.height >= 44, `${label} is a 44px-or-larger target`);
+                assert(target && target.x >= 0 && target.x + target.width <= viewport.width
+                    && target.y >= 0 && target.y + target.height <= viewport.height,
+                `${label} is visible without scrolling`);
+            }
+            await capture('welcome');
             const id = await seedNative(page, randomUUID());
             // A two-digit arithmetic profile leaves a real incomplete draft.
             // One-digit bridge questions now submit immediately after one key.
@@ -58,6 +157,14 @@ try {
                 await new Promise((resolve, reject) => { tx.oncomplete = resolve; tx.onerror = () => reject(tx.error); });
                 db.close();
             }, id);
+            await page.goto(base); await waitReady(page);
+            await ordinary('#/island');
+            await page.goto(`${base}/#/onboarding?mode=add`);
+            await page.locator('.island-welcome').waitFor();
+            await page.waitForFunction(() => !document.body.classList.contains('app-mode-island-first-run'));
+            const addProfileShell = await page.locator('.app-container').boundingBox();
+            assert(addProfileShell && Math.abs(addProfileShell.width - Math.min(viewport.width, 430)) <= 1,
+                'Explicit profile-add onboarding keeps its existing utility frame');
             await page.goto(base); await waitReady(page);
             await ordinary('#/island');
             assert.equal((await readNative(page, id)).plan, undefined, 'Top entry does not reserve questions');
@@ -82,6 +189,36 @@ try {
                 const back = heading.getByRole('button');
                 assert.equal(await back.innerText(), 'もどる');
                 await capture(mode);
+                if (action === 'play') {
+                    const playBody = page.locator('.island-play-body');
+                    const scrollHint = page.getByText('つづき', { exact: true });
+                    const hasMoreBelow = await playBody.evaluate(element => element.scrollHeight > element.clientHeight + 1);
+                    assert.equal(await scrollHint.isVisible(), hasMoreBelow,
+                        'The play panel explains when more choices are below the visible area');
+                }
+                if (action === 'play' && viewport.height <= 430) {
+                    const playBody = page.locator('.island-play-body');
+                    const bodyBox = await playBody.boundingBox();
+                    assert(bodyBox && bodyBox.height > 0, 'Play choices have a visible scroll surface');
+                    assert(await playBody.evaluate(element => element.scrollHeight > element.clientHeight), 'Short-landscape play content continues below the first view');
+                    await page.mouse.move(bodyBox.x + bodyBox.width / 2, bodyBox.y + bodyBox.height / 2);
+                    await page.mouse.wheel(0, 500);
+                    await page.waitForFunction(() => {
+                        const element = document.querySelector('.island-play-body');
+                        return !!element && element.scrollTop > 0 && element.scrollTop + element.clientHeight >= element.scrollHeight - 1;
+                    });
+                    await page.getByText('つづき', { exact: true }).waitFor({ state: 'hidden' });
+                    const continueAction = button(page, 'ひかりを とどける');
+                    const actionBox = await continueAction.boundingBox();
+                    const scrolledBodyBox = await playBody.boundingBox();
+                    assert(actionBox && scrolledBodyBox && actionBox.y >= scrolledBodyBox.y && actionBox.y + actionBox.height <= scrolledBodyBox.y + scrolledBodyBox.height,
+                        'Play continuation action is reachable inside the short-landscape scroll surface');
+                    assert(actionBox.height >= 44, 'Play continuation action preserves the minimum target height');
+                    await capture('play-scrolled');
+                    await page.mouse.wheel(0, -500);
+                    await page.waitForFunction(() => document.querySelector('.island-play-body')?.scrollTop === 0);
+                    await page.getByText('つづき', { exact: true }).waitFor({ state: 'visible' });
+                }
                 await back.click(); await waitMode(page, 'home');
             }
             await nav.getByRole('button', { name: 'いえ', exact: true }).click();
@@ -103,11 +240,62 @@ try {
             await nav.getByRole('button', { name: 'いえ', exact: true }).click();
             await waitMode(page, 'keepsakes');
             await page.locator('[data-keepsake-action="album"]').waitFor();
+            await page.locator('[data-keepsake-action="album"]').click();
+            await waitMode(page, 'album');
+            await button(page, 'アルバムから もどる').click();
+            await waitMode(page, 'keepsakes');
+            assert.equal(await page.locator('[data-keepsake-action="album"]').evaluate(element => element === document.activeElement), true,
+                'Returning from the album restores focus to its house entry');
             await nav.getByRole('button', { name: 'しま', exact: true }).click();
             await waitMode(page, 'home');
             await nav.getByRole('button', { name: '設定', exact: true }).click();
             await page.getByRole('button', { name: /^学習 / }).click();
             await ordinary('#/settings?section=learning');
+            const unselectedSubject = page.getByRole('group', { name: '学習する科目' }).locator('button[aria-pressed="false"]').first();
+            const measuredColors = await unselectedSubject.evaluate(element => {
+                const resolveColor = value => {
+                    const probe = document.createElement('span');
+                    probe.style.color = value;
+                    document.body.append(probe);
+                    const resolved = getComputedStyle(probe).color;
+                    probe.remove();
+                    return resolved;
+                };
+                const backgroundLayers = [];
+                for (let node = element; node && node !== document.documentElement; node = node.parentElement) {
+                    backgroundLayers.push(getComputedStyle(node).backgroundColor);
+                }
+                const slateProbe = document.createElement('span');
+                slateProbe.className = 'text-slate-400';
+                document.body.append(slateProbe);
+                const legacySlate400 = getComputedStyle(slateProbe).color;
+                slateProbe.remove();
+                return {
+                    foreground: getComputedStyle(element).color,
+                    mutedToken: resolveColor('var(--pokomoko-muted)'),
+                    paper: resolveColor('var(--pokomoko-paper)'),
+                    canvas: resolveColor('var(--pokomoko-canvas)'),
+                    legacySlate400,
+                    backgroundLayers,
+                };
+            });
+            const composedBackground = compositeCssColors(measuredColors.backgroundLayers, measuredColors.canvas);
+            settingsContrast = {
+                foreground: measuredColors.foreground,
+                composedBackground,
+                ratio: contrastRatio(measuredColors.foreground, composedBackground),
+                paperFloorRatio: contrastRatio(measuredColors.foreground, measuredColors.paper),
+                canvasRatio: contrastRatio(measuredColors.foreground, measuredColors.canvas),
+                legacySlate400OnPaperRatio: contrastRatio(measuredColors.legacySlate400, measuredColors.paper),
+            };
+            assert.equal(settingsContrast.foreground, measuredColors.mutedToken,
+                'Unselected subject text uses the shared Pokomoko muted token');
+            assert(settingsContrast.ratio >= 4.5,
+                `Unselected subject text must meet 4.5:1 against its composed settings background; measured ${settingsContrast.ratio}:1`);
+            assert(settingsContrast.paperFloorRatio >= 4.5,
+                `Unselected subject text must meet 4.5:1 even against opaque paper; measured ${settingsContrast.paperFloorRatio}:1`);
+            assert(settingsContrast.legacySlate400OnPaperRatio < 4.5,
+                'The previous pale slate text remains a failing contrast sentinel on paper');
             await capture('settings-detail');
             const sourceHeading = page.getByRole('heading', { name: '学習', exact: true });
             const sourceHandle = await sourceHeading.elementHandle();
@@ -173,12 +361,26 @@ try {
             assert.deepEqual((await readNative(page, id)).plan, saved.plan, 'Direct learning reload preserves the same reservation');
             await button(page, 'とじる').click(); await ordinary('#/settings?section=learning');
             await button(page, '変更').first().click(); await ordinary('#/settings/curriculum');
-            const curriculumScroll = page.locator('.brand-utility-screen > .overflow-y-auto');
-            await page.waitForFunction(() => { const element = document.querySelector('.brand-utility-screen > .overflow-y-auto'); return element && element.scrollHeight > element.clientHeight + 160; });
+            const curriculumHeading = page.getByRole('heading', { name: 'レベル いちらん', exact: true });
+            await curriculumHeading.waitFor();
+            const curriculumScroll = page.locator('.brand-utility-screen').filter({ has: curriculumHeading }).locator(':scope > .overflow-y-auto');
+            const curriculumScrollHandle = await curriculumScroll.elementHandle();
+            assert(curriculumScrollHandle, 'Curriculum owns a mounted scroll surface');
+            await page.waitForFunction(element => element.scrollHeight > element.clientHeight + 160, curriculumScrollHandle);
             await curriculumScroll.evaluate(element => { element.scrollTop = 160; });
             const scrollTop = await curriculumScroll.evaluate(element => element.scrollTop);
-            await learn.click(); await focus('learning'); await waitReady(page);
+            const learnBox = await learn.boundingBox();
+            assert(learnBox && learnBox.y >= 0 && learnBox.y + learnBox.height <= viewport.height, 'Learning tab is directly tappable in the viewport');
+            await page.mouse.click(learnBox.x + learnBox.width / 2, learnBox.y + learnBox.height / 2);
+            await focus('learning'); await waitReady(page);
             await button(page, 'とじる').click(); await ordinary('#/settings/curriculum');
+            await curriculumHeading.waitFor();
+            await page.waitForFunction(expected => {
+                const screen = [...document.querySelectorAll('.brand-utility-screen')].find(element =>
+                    [...element.querySelectorAll('h1, h2, h3')].some(heading => heading.textContent?.trim() === 'レベル いちらん'));
+                const element = screen?.querySelector(':scope > .overflow-y-auto');
+                return element?.scrollTop === expected;
+            }, scrollTop);
             assert.equal(await curriculumScroll.evaluate(element => element.scrollTop), scrollTop, 'Close restores the curriculum scroll position');
             await button(page, 'もどる').click(); await ordinary('#/settings?section=learning');
             await button(page, 'もどる').click(); await ordinary('#/settings');
@@ -196,16 +398,22 @@ try {
             const metric = page.locator('.stats-metric').filter({ has: page.getByText('かいとう', { exact: true }) });
             assert.match(await metric.innerText(), /^1\s/, 'One saved answer replaces the empty state with the actual answer metric');
             assert.deepEqual(errors, []);
-            report.scenarios.push({ viewport, pass: true, checks: ['top entry without learning', 'stale top query and unknown URL recovery', 'existing-profile onboarding return', 'pending-plan top return without learning writes', 'ordinary tabs', 'settings source retained', 'draft and seven-store equality', 'back/forward', 'home reload without auto-start', 'placement cancel/save', 'camera close', 'real photo/detail close', 'direct learning reload/close', 'curriculum scroll restored', 'direct placement fallback', 'records refresh after answer'], errors });
+            report.scenarios.push({ viewport, pass: true, settingsContrast, checks: ['first-run welcome identity, responsive frame, and visible 44px actions', 'explicit profile-add frame preserved', 'top entry without learning', 'stale top query and unknown URL recovery', 'existing-profile onboarding return', 'pending-plan top return without learning writes', 'ordinary tabs', ...(viewport.height <= 430 ? ['play continuation reachable by internal scroll'] : []), 'settings source retained', 'settings small-text contrast on composed surface and opaque paper', 'draft and seven-store equality', 'back/forward', 'home reload without auto-start', 'placement cancel/save', 'camera close', 'real photo/detail close', 'direct learning reload/close', 'curriculum scroll restored', 'direct placement fallback', 'records refresh after answer'], errors });
             console.log(`PASS navigation ${viewport.width}x${viewport.height}`);
         } catch (error) {
             await page.screenshot({ path: `${out}/${viewport.width}-failure.png` }).catch(() => {});
-            report.scenarios.push({ viewport, pass: false, error: String(error), url: page.url(), errors });
+            report.scenarios.push({ viewport, pass: false, settingsContrast, error: String(error), url: page.url(), errors });
             throw error;
         } finally { await context.close(); }
     }
     report.pass = true;
 } finally {
     await fs.writeFile(`${out}/report.json`, JSON.stringify(report, null, 2));
+    const contactSheet = `<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Island navigation evidence</title><style>body{margin:24px;background:#f6f4ee;color:#25314f;font:14px system-ui,sans-serif}main{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}figure{margin:0;padding:10px;background:#fff;border:1px solid #ded8e8;border-radius:12px}img{display:block;width:100%;height:340px;object-fit:contain;background:#f0eef3;border-radius:8px}figcaption{padding-top:8px;overflow-wrap:anywhere;line-height:1.45}h1{font-size:20px}p{color:#58637b}</style><h1>Island navigation: ${report.pass ? 'PASS' : 'FAIL / INCOMPLETE'}</h1><p>${escapeHtml(report.target)} · ${report.captures.length} captures · ${report.scenarios.length} viewport runs</p><main>${report.captures.map(capture => {
+        const imagePath = encodeURIComponent(capture.file);
+        const caption = `${capture.viewport.width}×${capture.viewport.height} · ${capture.mode} · ${capture.version} · ${capture.delivery} · ${capture.candidate} · ${capture.learningCandidate}`;
+        return `<figure><a href="${imagePath}"><img loading="lazy" src="${imagePath}" alt="${escapeHtml(capture.file)}"></a><figcaption>${escapeHtml(caption)}</figcaption></figure>`;
+    }).join('')}</main></html>`;
+    await fs.writeFile(`${out}/contact-sheet.html`, contactSheet);
     await browser.close();
 }

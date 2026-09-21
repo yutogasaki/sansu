@@ -1,4 +1,4 @@
-import { useRef, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { IslandPanelHeading } from './IslandPanelHeading';
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Check, RotateCw, X } from 'lucide-react';
 import { ISLAND_ITEMS } from '../../domain/island/catalog';
@@ -6,6 +6,7 @@ import { getIslandExpansionLevel } from '../../domain/island/expansion';
 import { getIslandItemAppearanceLevel, getIslandItemGrowthLevel } from '../../domain/island/growth';
 import type { IslandBasicItemKind, IslandItem, IslandItemKind, IslandRecord, IslandPosition } from '../../domain/island/types';
 import type { IslandFurniturePlacementResult } from './islandFurniturePlacement';
+import { hasMoreContentBelow } from './islandPlayScroll';
 import './IslandPanel.css';
 import './IslandWorkspacePanels.css';
 
@@ -127,8 +128,41 @@ export function IslandPlay({ items, disabled, selectedId, message, residentName,
     const body = useRef<HTMLDivElement>(null);
     const placed = items.filter(item => item.position);
     const selected = placed.find(item => item.id === selectedId);
+    const [hasMoreBelow, setHasMoreBelow] = useState(false);
+
+    useEffect(() => {
+        const element = body.current;
+        if (!element) return;
+
+        const updateScrollHint = () => {
+            const next = hasMoreContentBelow(element);
+            setHasMoreBelow(current => current === next ? current : next);
+        };
+
+        updateScrollHint();
+        element.addEventListener('scroll', updateScrollHint, { passive: true });
+        window.addEventListener('resize', updateScrollHint);
+
+        const resizeObserver = typeof ResizeObserver === 'undefined' ? undefined : new ResizeObserver(updateScrollHint);
+        if (resizeObserver) {
+            resizeObserver.observe(element);
+            for (const child of Array.from(element.children)) resizeObserver.observe(child);
+        }
+
+        return () => {
+            element.removeEventListener('scroll', updateScrollHint);
+            window.removeEventListener('resize', updateScrollHint);
+            resizeObserver?.disconnect();
+        };
+    }, [items, selectedId, message, districts]);
+
     return <section className="island-sheet island-play" aria-label="どうぶつと あそぶ">
-        <IslandPanelHeading title={residentName ? `${residentName}と あそぶ` : 'どうぶつと あそぶ'} description="どこで あそぼう？" onExit={onClose} disabled={disabled} exitAriaLabel="あそびから もどる" />
+        <IslandPanelHeading title={residentName ? `${residentName}と あそぶ` : 'どうぶつと あそぶ'} description={
+            <span className="island-play-description">
+                <span>どこで あそぼう？</span>
+                {hasMoreBelow && <span className="island-play-scroll-hint"><ArrowDown size={14} aria-hidden="true" />つづき</span>}
+            </span>
+        } onExit={onClose} disabled={disabled} exitAriaLabel="あそびから もどる" />
         <div className="island-play-body" ref={body}>
         <p className="island-play-message" role="status">{message ?? (placed.length ? 'しまの ものか、したの えを えらんでね。' : 'もちものから おくと、どうぶつが あそべるよ。')}</p>
         {selected && <button className="island-secondary island-play-move" disabled={disabled} onClick={() => onMove(selected)}>{ISLAND_ITEMS[selected.kind].name}を うごかす</button>}

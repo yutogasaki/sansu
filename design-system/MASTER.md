@@ -88,7 +88,7 @@ Accent color is for Utility emphasis and CTA support. It does not constrain worl
 ### Text
 
 - Primary text: `--color-dark` = `#2d3436`
-- Secondary text: `--color-gray-500` = `#8395a7`
+- Secondary text: `--pokomoko-muted` = `#606980`
 
 Avoid pure black.
 
@@ -221,7 +221,8 @@ Do not distribute these colors evenly. A live frame starts from `dominant family
 ## Accessibility And QA
 
 - Keep tap targets comfortably touchable
-- Ensure contrast is readable against soft surfaces
+- Keep normal meaning-bearing text at 4.5:1 contrast (large text at 3:1) against the rendered, composited background, including translucent surfaces
+- Use `--pokomoko-muted` for secondary Utility text; avoid lowering meaningful labels with pale slate colors or text opacity
 - Keep focus states visible when relevant
 - Test the affected screen in loading, empty, success, and error states
 - Verify mobile density before polishing larger layouts

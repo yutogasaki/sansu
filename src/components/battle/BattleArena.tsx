@@ -3,6 +3,7 @@ import { TugOfWarBar } from "./TugOfWarBar";
 import { BossCoopBar } from "./BossCoopBar";
 import { PlayerPanel } from "./PlayerPanel";
 import { BattleGameState, PlayerId } from "../../domain/battle/types";
+import "./BattleResponsive.css";
 
 interface BattleArenaProps {
     state: BattleGameState;
@@ -24,9 +25,9 @@ export const BattleArena: React.FC<BattleArenaProps> = ({
     const totalDamage = state.p1.damageDealt + state.p2.damageDealt;
 
     return (
-        <div className="flex h-full flex-col bg-transparent px-4 py-4">
+        <div className="battle-arena flex h-full flex-col bg-transparent px-4 py-4">
             {/* Top game bar */}
-            <div className="flex-none">
+            <div className="battle-game-bar flex-none">
                 {showBossCoop ? (
                     <BossCoopBar
                         bossHp={state.bossHp}
@@ -49,8 +50,8 @@ export const BattleArena: React.FC<BattleArenaProps> = ({
             </div>
 
             {/* Player panels */}
-            <div className="mt-3 flex min-h-0 flex-1 gap-3">
-                <div className="min-w-0 flex-1">
+            <div className="battle-player-panels mt-3 flex min-h-0 flex-1 gap-3">
+                <div className="battle-player-card min-h-0 min-w-0 flex-1">
                     <PlayerPanel
                         player="p1"
                         gameState={state.p1}
@@ -61,7 +62,7 @@ export const BattleArena: React.FC<BattleArenaProps> = ({
                         disabled={isOver}
                     />
                 </div>
-                <div className="min-w-0 flex-1">
+                <div className="battle-player-card min-h-0 min-w-0 flex-1">
                     <PlayerPanel
                         player="p2"
                         gameState={state.p2}

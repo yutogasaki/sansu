@@ -10,6 +10,8 @@ GitHub Actions should mirror the same baseline for `docs:check` and `verify:core
 
 ## Current Commands
 
+現行アプリのUX/UI監査・実画面作業は `npm run dev` または明示した `npm run dev:island` から開始し、`VITE_ISLAND_ENABLED=true` と `/#/island` を確認する。通常起動はIsland flag-onのIsland画面を開き、port競合はfail-fastにする。`/explore` はIsland有効時も残る任意の副モードで、全体UX監査の主対象に混ぜない。flag-offのclassic起動は専用ownerが明示した場合だけ行う。全ルート共通の `.app-container` はIsland/Nature Townの実feature flagとbuild revisionを公開し、Island画面はさらにdelivery、visual/learning candidateを公開する。各captureでURL/routeと共通rootのflagを照合し、route固有candidateがない共有Utility面は「該当なし」と記録する。必要なmarkerが欠けるcaptureは現行UIの証拠にしない。`npm run verify:core` の `check:current-ui-entry` は標準起動契約、共有root flag、Island画面identity markerを検査する。
+
 `node tools/e2e-island-life-facility-production.mjs` は `SANSU_FACILITY_PRODUCTION_URL`、新規 `SANSU_FACILITY_PRODUCTION_OUTPUT`、絶対pathのapp/dist SHAとversion/flagsを持つ `SANSU_FACILITY_PRODUCTION_MANIFEST` を指定。phone/tabletで初回設定から通常入力60問・施設の実購入・単体利用・R5/R6の明示観察/本人保存・offline再読込を行い、学習等7ストアと所有を比較する。相手が利用中なら案内を確認し、追加購入後の実poseから空いた花を選ぶ。利用中分岐を通らなかった幅の案内表示までPASSとしない。DB注入/時間加速/自然発見の代用ではない。
 
 `node tools/e2e-island-life-facility-replay-production.mjs` は上記の成功結果を `SANSU_FACILITY_PRODUCTION_SOURCE`、新規出力を `SANSU_FACILITY_REPLAY_OUTPUT`、新build manifestを `SANSU_FACILITY_REPLAY_MANIFEST` に指定。同じlocal originへ新buildを配信してから、元の隔離ブラウザを開き、実SW更新とentry JS/versionを照合する。元の保存場面を変更せずofflineでR5/R6を再演し、元scene・残高・学習等7ストアを保持することを検査する。元の獲得buildと新rendererのsourceは別々に記録する。
@@ -29,7 +31,7 @@ GitHub Actions should mirror the same baseline for `docs:check` and `verify:core
 | Command | Purpose |
 |---|---|
 | `node tools/e2e-island-direct-scale.mjs` | `SANSU_DIRECT_URL` と新規 `SANSU_DIRECT_OUTPUT` を指定。合法配置1/9/16個・長い名前・空の配置を明示native fixtureで作り、4サイズで直接操作の大きさ、実hit、眺めとの排他、7store不変、絵と実3Dの遊び、混雑時の移動入口を検査。390幅は実キツネ選択・退出/再読込・明示WebGL故障、320幅は24px文字の診断を含む。`SANSU_DIRECT_BROWSER=webkit` は390幅、`SANSU_DIRECT_WIDTH` は指定幅だけ。`SANSU_DIRECT_BASELINE=1` は旧mainのリスト/重なり再現であり修正候補のPASSではない。実取得・実機・子どもの観察とは区別する |
-| `npm run e2e:island-navigation` | 島有効のDEV/productionを `SANSU_ISLAND_BASE_URL` で指定。phone/tabletでトップ訪問、5項目ナビ、設定詳細の保持、回答下書き・7store不変、履歴の戻る/進む、島再読込で自動開始しないこと、配置取消/保存、実撮影/写真拡大、直リンクfallback、学習後の記録更新を検査。出力先は `SANSU_NAVIGATION_OUTPUT`。nativeプロフィールfixtureのみを作り、学習予約・回答・写真は実UIで行う |
+| `npm run e2e:island-navigation` | 島有効のDEV/productionを `SANSU_ISLAND_BASE_URL` で指定。標準はphone/tablet、`SANSU_NAVIGATION_VIEWPORTS=390x844,768x1024,1280x720` のように指定すると全画面導線を任意viewportで検査できる。トップ訪問、5項目ナビ、設定詳細の保持、半透明面上の補助文字コントラスト（合成背景と不透明paperの両方で4.5:1以上）、回答下書き・7store不変、履歴の戻る/進む、島再読込で自動開始しないこと、配置取消/保存、実撮影/写真拡大、直リンクfallback、学習後の記録更新を検査。出力先は `SANSU_NAVIGATION_OUTPUT`。nativeプロフィールfixtureのみを作り、学習予約・回答・写真は実UIで行う |
 | `node tools/e2e-island-house-edges.mjs` | `SANSU_ISLAND_BASE_URL` と新規 `SANSU_HOUSE_EDGES_OUTPUT` を指定。家内履歴/再読込/学習復帰、実初回3問と賞状展示、写真入口からの復帰、オフライン復旧を4サイズで確認。全16品の資格は明示aggregate fixture、保存abortとroot文字拡大は別診断として記録する |
 | `node tools/e2e-island-photo-exits.mjs` | `SANSU_ISLAND_BASE_URL` と新規 `SANSU_PHOTO_EXITS_OUTPUT` を指定。4サイズで実撮影・保存→一覧→家/写真棚、読込失敗と再試行、削除確認/Esc、削除完了を保留した履歴移動、不明写真/空のおくりものの退出を検査。操作全体の画面内表示・44px・上中下の実hit、学習6store不変と写真receipt4件を照合。native障害注入は明示診断 |
 | `npm run e2e:launch` | `SANSU_LAUNCH_BASE_URL` と `SANSU_LAUNCH_MODE=island/park/classic` を指定。未登録・登録済みのトップ、実探索のactive checkpointを残したトップ/再読込/初回設定再訪、不明URLと残留query、明示的な探索再開を検査する。出力先は `SANSU_LAUNCH_OUTPUT` |
@@ -97,6 +99,8 @@ GitHub Actions should mirror the same baseline for `docs:check` and `verify:core
 旧契約の履歴用と記した6ハーネスは、プロフィールだけの初期化から手動報酬を待つため、現行互換テストとしては実行できない。現在の成長・土地・配置・再演の検証は `e2e:island-living` / `e2e-island-chapters.mjs` を使う。旧ハーネス固有の受渡しや歩行途中の中断をすべて代替したという意味ではない。
 
 ## Matrix
+
+`npm run e2e:smoke` is intentionally a flag-off classic Explore regression suite: it uses `dev:test-server`, an isolated port, and `VITE_ISLAND_ENABLED=false`. Its Explore captures do not count as current Island UX evidence. For the current Island shell use `npm run e2e:island-navigation` against port 5198 and retain the Island flag, delivery/candidates, revision, and viewport metadata.
 
 小数点の手入力・誤答行の全消去は `node tools/e2e-manual-decimal.mjs` で検査する。`SANSU_MANUAL_DECIMAL_URL` に島有効production、`SANSU_MANUAL_DECIMAL_OUTPUT` に新しい出力先を指定。Study/Islandのphone・tabletで、小数点キー/物理キー、小数点の削除と再入力、2桁の一方だけ正解した誤答行の全消去、Enterなし再回答を確認する。明示プロフィールfixtureから通常plannerを通す。旧 `e2e-written-input.mjs` は部分訂正とParkを含む過去契約用で、現行の合格証拠にはしない。
 

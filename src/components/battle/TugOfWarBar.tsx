@@ -29,7 +29,7 @@ export const TugOfWarBar: React.FC<TugOfWarBarProps> = ({
     const p2Intensity = Math.max(0, position) / maxSteps;
 
     return (
-        <div className="w-full rounded-[28px] border border-white/75 px-4 py-3 app-glass-strong shadow-[0_22px_44px_-32px_rgba(15,23,42,0.34)]">
+        <div className="battle-tug-bar w-full rounded-[28px] border border-white/75 px-4 py-3 app-glass-strong shadow-[0_22px_44px_-32px_rgba(15,23,42,0.34)]">
             {/* Names row with cancel button */}
             <div className="flex justify-between items-center mb-1.5 px-1">
                 <div className="flex items-center gap-2">
@@ -53,7 +53,7 @@ export const TugOfWarBar: React.FC<TugOfWarBarProps> = ({
                 {onCancel && (
                     <button
                         onClick={onCancel}
-                        className="app-pill px-2.5 py-1 text-xs font-black text-slate-500 transition-colors hover:bg-white/84 hover:text-slate-700"
+                        className="app-pill min-h-11 px-2.5 py-1 text-xs font-black text-slate-500 transition-colors hover:bg-white/84 hover:text-slate-700"
                     >
                         ✕ やめる
                     </button>

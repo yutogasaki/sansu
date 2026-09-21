@@ -252,6 +252,11 @@ export const ImmersiveEncounter: React.FC<ImmersiveEncounterProps> = ({
 
                         <div
                             className="explore-immersive-equation"
+                            data-prompt-density={
+                                (problem.questionText?.trim().length ?? 0) >= 16
+                                    ? "compact"
+                                    : undefined
+                            }
                             data-testid={definition.problem.equationTestId}
                         >
                             <MathProblemPrompt

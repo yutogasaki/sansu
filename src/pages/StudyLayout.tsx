@@ -695,7 +695,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                         </AnimatePresence>
 
                         {/* Top row: review badge (left) + skip button (right) */}
-                        <div className="absolute top-2 left-3 right-3 flex items-center justify-between z-10 mobile:top-1 mobile:left-2 mobile:right-2">
+                        <div className="absolute top-2 left-3 right-3 z-20 flex items-center justify-between mobile:top-1 mobile:left-2 mobile:right-2">
                             <AnimatePresence>
                                 {currentProblem.isReview ? (
                                     <motion.div
@@ -713,7 +713,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                             {feedback === "none" && (
                                 <button
                                     onClick={onSkip}
-                                    className="app-pill px-3 py-1 text-xs font-black text-slate-500 transition-all hover:bg-white/84 active:scale-95"
+                                    className="app-pill min-h-[44px] px-3 py-1 text-xs font-black text-slate-500 transition-all hover:bg-white/84 active:scale-95"
                                 >
                                     {t("スキップ", "スキップ")}
                                 </button>

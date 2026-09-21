@@ -35,9 +35,9 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
             <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center">
                 <div className="w-6 h-1.5 rounded-full bg-slate-300" />
             </div>
-            <p className="text-slate-500 font-bold text-center">{message}</p>
+            <p className="text-pokomoko-muted font-bold text-center">{message}</p>
             {description && (
-                <p className="text-slate-400 text-sm text-center">{description}</p>
+                <p className="text-pokomoko-muted text-sm text-center">{description}</p>
             )}
             {actionLabel && onAction && (
                 <Button onClick={onAction} size="lg" className="mt-2">

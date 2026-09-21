@@ -37,6 +37,7 @@ export const ExploreHud: React.FC<ExploreHudProps> = ({
     return (
         <header
             data-testid="explore-hud"
+            data-variant={variant}
             className={cn(
                 "flex shrink-0 items-center gap-2.5 px-3 pb-2 pt-[calc(var(--safe-area-top)+8px)] sm:gap-3 sm:px-5",
                 variant === "encounter" && "absolute inset-x-0 top-0 z-30 gap-1.5 px-2 pb-1 pt-[calc(var(--safe-area-top)+4px)] sm:px-3",
@@ -48,7 +49,6 @@ export const ExploreHud: React.FC<ExploreHudProps> = ({
                 disabled={disabled}
                 className={cn(
                     "explore-focus-ring flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/45 bg-[linear-gradient(160deg,rgba(15,88,103,0.94),rgba(28,111,105,0.9))] text-white shadow-[0_16px_30px_-22px_rgba(8,47,73,0.8)] backdrop-blur-md disabled:opacity-45",
-                    variant === "encounter" && "h-10 w-10",
                 )}
                 aria-label={steps > 0 ? "たんけんを おえて 基地へ帰る" : "あそびメニューへ もどる"}
             >

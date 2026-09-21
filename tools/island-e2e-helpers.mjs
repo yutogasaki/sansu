@@ -79,11 +79,13 @@ export async function waitReady(page) {
 
 export async function runtimeMetadata(page) {
     return page.locator('.island-page').evaluate(element => ({
+        url: location.href,
         revision: element.dataset.buildRevision,
         version: element.dataset.buildVersion,
         delivery: element.dataset.deliveryId,
         candidate: element.dataset.visualCandidateId,
         learningCandidate: element.dataset.learningCandidate ?? 'not-applicable',
+        islandFeatureEnabled: element.dataset.islandFeatureEnabled === 'true',
         mode: element.dataset.mode,
         renderer: document.querySelector('[data-renderer]')?.getAttribute('data-renderer'),
         artDirection: document.querySelector('[data-renderer]')?.getAttribute('data-art-direction'),

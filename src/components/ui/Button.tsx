@@ -23,7 +23,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                     variant === "icon" &&
                     "aspect-square rounded-full border-0 bg-[#F0F3F5] p-0 text-slate-700 shadow-sm hover:bg-white",
 
-                    size === "sm" && (variant === "icon" ? "h-10 w-10 text-sm" : "h-10 px-4 text-sm"),
+                    size === "sm" && (variant === "icon"
+                        ? "h-11 w-11 min-h-11 min-w-11 text-sm"
+                        : "min-h-11 px-4 text-sm"),
                     size === "md" && (variant === "icon" ? "h-11 w-11 text-sm" : "h-11 px-5 text-sm"),
                     size === "lg" && (variant === "icon" ? "h-12 w-12 text-base" : "h-12 px-6 text-base"),
                     size === "xl" && (variant === "icon" ? "h-12 w-12 text-base" : "h-12 w-full text-base"),

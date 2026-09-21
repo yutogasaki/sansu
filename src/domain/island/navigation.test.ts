@@ -39,6 +39,8 @@ describe('island navigation contract', () => {
         ['/settings', '?section=profile', '/settings'],
         ['/settings/curriculum', '', '/settings?section=learning'],
         ['/settings', '?section=learning&learn=1', '/settings?section=learning'],
+        ['/parents', '', '/settings?section=parent'],
+        ['/dev', '', '/settings?section=parent'],
         ['/island', '?learn=1', '/island'],
         ['/island', '?view=challenge', '/island?view=keepsakes'],
         ['/island', '?view=placement', '/island?view=inventory'],

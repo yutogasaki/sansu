@@ -1,6 +1,25 @@
 @import "tailwindcss";
 @import "./components/island/PokomokoWorld.css";
 
+/* Tailwind v4 no longer auto-loads the legacy JS screen variants. */
+@custom-variant mobile {
+    @media (max-width: 480px) {
+        @slot;
+    }
+}
+
+@custom-variant land {
+    @media (orientation: landscape) {
+        @slot;
+    }
+}
+
+@custom-variant ipadland {
+    @media (min-width: 768px) and (max-width: 1366px) and (orientation: landscape) {
+        @slot;
+    }
+}
+
 @font-face {
     font-family: "Noto Sans JP";
     src: url("./assets/fonts/NotoSansJP.woff2") format("woff2");
@@ -232,6 +251,10 @@ body {
     overflow: hidden;
 }
 
+body.app-mode-island-first-run .app-container {
+    max-width: 1180px;
+}
+
 body.app-mode-fullscreen .app-container {
     max-width: 1180px;
 }
@@ -243,6 +266,10 @@ body.app-mode-fullscreen .app-container {
 }
 
 @layer utilities {
+    .text-pokomoko-muted {
+        color: var(--pokomoko-muted);
+    }
+
     .app-glass {
         background: var(--app-surface);
         backdrop-filter: blur(var(--blur-md));
@@ -2380,6 +2407,60 @@ body.app-mode-fullscreen .app-container {
     .explore-path-choice .explore-route-card {
         min-height: 82px;
         padding: 8px;
+    }
+}
+
+@media (min-width: 768px) and (max-height: 800px) and (orientation: landscape) {
+    .explore-immersive[data-layout="answer"] {
+        --explore-answer-shelf-size: 53%;
+    }
+
+    .explore-immersive[data-layout="answer"]:has(.explore-immersive-answer-shelf.has-visual-support) {
+        --explore-answer-shelf-size: 63%;
+    }
+
+    .explore-immersive[data-layout="answer"] .explore-immersive-equation[data-prompt-density="compact"] > :first-child {
+        font-size: clamp(22px, 1.875vw, 24px);
+        line-height: 1.15;
+    }
+
+    .explore-immersive[data-layout="answer"]:has(.explore-immersive-answer-shelf.has-visual-support)
+    .explore-immersive-hint {
+        max-height: 76px;
+        margin-top: 8px;
+    }
+
+    .explore-immersive[data-layout="answer"]:has(.explore-immersive-answer-shelf.has-visual-support)
+    .explore-immersive-hint-visual {
+        max-height: 51px;
+    }
+
+    .explore-immersive[data-layout="answer"]:has(.explore-immersive-answer-shelf.has-visual-support)
+    .explore-immersive-hint-visual [data-visual-caption] {
+        display: none;
+    }
+
+    .explore-immersive[data-layout="answer"]:has(.explore-immersive-answer-shelf.has-visual-support)
+    .explore-immersive-hint-visual [data-visual-surface="group"] {
+        padding-block: 6px;
+    }
+
+    .explore-immersive[data-layout="answer"]:has(.explore-immersive-answer-shelf.has-visual-support)
+    .explore-immersive-hint-visual [data-visual-surface="group"] > div:first-child {
+        margin-bottom: 3px;
+    }
+
+    .explore-immersive[data-layout="answer"]:has(.explore-immersive-answer-shelf.has-visual-support)
+    .explore-immersive-hint-visual > div {
+        transform: translateY(-2px) scale(0.66);
+    }
+}
+
+@media (min-width: 768px) and (max-height: 736px) and (orientation: landscape) {
+    .explore-immersive[data-visual-candidate-id="dig-pop-carry-bloom-v3"]:has(
+        .explore-immersive-answer-shelf.has-visual-support
+    ) .snap-root-opening-art__scene {
+        width: 90%;
     }
 }
 

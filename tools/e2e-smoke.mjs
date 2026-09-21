@@ -236,18 +236,21 @@ const waitForServer = async (url, timeoutMs) => {
 };
 
 const startDevServer = (port) => {
+  // This suite is an explicit flag-off classic Explore regression run. Keep it
+  // on an isolated server so the current Island default and its evidence stay distinct.
   const child = spawn(
     process.platform === "win32" ? "cmd.exe" : "sh",
     process.platform === "win32"
-      ? ["/c", `npm run dev -- --host ${HOST} --port ${port} --strictPort`]
-      : ["-c", `npm run dev -- --host ${HOST} --port ${port} --strictPort`],
+      ? ["/c", `npm run dev:test-server -- --host ${HOST} --port ${port} --strictPort`]
+      : ["-c", `npm run dev:test-server -- --host ${HOST} --port ${port} --strictPort`],
     {
       stdio: "pipe",
       windowsHide: true,
-      // The regression suite owns the classic baseline explicitly. Local
-      // development can default to the active Root Pull validation candidate
-      // without silently changing the suite's expected opening contract.
-      env: { ...process.env, VITE_EXPLORE_EXPERIENCE: "classic-v1" },
+      env: {
+        ...process.env,
+        VITE_ISLAND_ENABLED: "false",
+        VITE_EXPLORE_EXPERIENCE: "classic-v1",
+      },
     }
   );
 
@@ -1497,6 +1500,31 @@ const getExploreNumericAnswer = async (page) => {
     /(\d+)\s*こ(?:\s+あります|\s+から)[\s\S]*?(\d+)\s*こ(?:\s+なくなると|\s+へると)/,
   );
   if (takeAwayStory) return Number(takeAwayStory[1]) - Number(takeAwayStory[2]);
+
+  const sequencePanel = problemPanel.locator('[data-visual-surface="sequence"]');
+  if (await sequencePanel.count()) {
+    const slots = await sequencePanel.locator(":scope > div").evaluateAll((elements) => (
+      elements.map((element, index) => ({
+        index,
+        value: element.getAttribute("data-visual-hidden") === "true"
+          ? null
+          : Number(element.getAttribute("data-visual-value")),
+      }))
+    ));
+    const missing = slots.filter((slot) => slot.value === null);
+    const known = slots.filter((slot) => slot.value !== null);
+
+    if (missing.length === 1 && known.length >= 2) {
+      const [first, second] = known;
+      const step = (second.value - first.value) / (second.index - first.index);
+      const expectedAt = (index) => first.value + step * (index - first.index);
+      assert(
+        known.every((slot) => Math.abs(slot.value - expectedAt(slot.index)) < 1e-9),
+        `expected an arithmetic number sequence; got ${slots.map((slot) => slot.value ?? "□").join(", ")}`,
+      );
+      return expectedAt(missing[0].index);
+    }
+  }
 
   const combineStory = questionText?.match(
     /(\d+)\s*こ(?:\s+と[^\d]*|\s+に\s*)(\d+)\s*こ[\s\S]*?(?:あわせて|ふえると)/,

@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useId, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Badge } from "../ui/Badge";
 import { Button } from "../ui/Button";
+import { isTopModalLayer } from "../ui/modalLayerManager";
+import { useModalFocus } from "../ui/useModalFocus";
 import { cn } from "../../utils/cn";
 
 interface PaperTestScoreModalProps {
@@ -26,6 +28,15 @@ export const PaperTestScoreModal: React.FC<PaperTestScoreModalProps> = ({
     error,
 }) => {
     const [selectedScore, setSelectedScore] = useState<number | null>(null);
+    const [focusScopeOpen, setFocusScopeOpen] = useState(isOpen);
+    const dialogRef = useRef<HTMLDivElement>(null);
+    const titleId = useId();
+    const descriptionId = useId();
+    const layerTokenRef = useModalFocus(focusScopeOpen, onDismiss, dialogRef);
+
+    useLayoutEffect(() => {
+        if (isOpen) setFocusScopeOpen(true);
+    }, [isOpen]);
 
     useEffect(() => {
         if (isOpen) {
@@ -39,15 +50,24 @@ export const PaperTestScoreModal: React.FC<PaperTestScoreModalProps> = ({
         }
     };
 
+    const handleExitComplete = () => {
+        if (!isOpen) setFocusScopeOpen(false);
+    };
+
+    const handleBackdropClick = () => {
+        const layerToken = layerTokenRef.current;
+        if (!layerToken || isTopModalLayer(layerToken)) onDismiss();
+    };
+
     return (
-        <AnimatePresence>
+        <AnimatePresence onExitComplete={handleExitComplete}>
             {isOpen && (
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     className="fixed inset-0 z-50 flex items-center justify-center p-4"
-                    onClick={onDismiss}
+                    onClick={handleBackdropClick}
                 >
                     <div className="absolute inset-0 bg-[color:var(--app-overlay)] backdrop-blur-md" aria-hidden="true" />
                     <motion.div
@@ -57,8 +77,12 @@ export const PaperTestScoreModal: React.FC<PaperTestScoreModalProps> = ({
                         transition={{ type: "spring", damping: 20, stiffness: 300 }}
                         className="relative w-full max-w-sm overflow-hidden rounded-[28px] app-glass-strong app-shadow-strong"
                         onClick={(e) => e.stopPropagation()}
+                        ref={dialogRef}
                         role="dialog"
                         aria-modal="true"
+                        aria-labelledby={titleId}
+                        aria-describedby={descriptionId}
+                        tabIndex={-1}
                     >
                         <div className="border-b border-white/75 bg-[linear-gradient(180deg,rgba(255,255,255,0.64),rgba(240,249,255,0.48))] px-6 py-5 text-center">
                             <motion.div
@@ -77,16 +101,16 @@ export const PaperTestScoreModal: React.FC<PaperTestScoreModalProps> = ({
                             <Badge variant={subject === "math" ? "primary" : "success"} className="mx-auto">
                                 {subject === "math" ? "さんすう" : "えいご"} レベル {level}
                             </Badge>
-                            <h2 className="mt-3 text-xl font-black tracking-[-0.02em] text-slate-800">
+                            <h2 id={titleId} className="mt-3 text-xl font-black tracking-[-0.02em] text-slate-800">
                                 テストの てんすう おしえて
                             </h2>
-                            <p className="mt-2 text-sm leading-6 text-slate-500">
+                            <p id={descriptionId} className="mt-2 text-sm leading-6 text-slate-500">
                                 20もん の うち、せいかい した かずを えらんでね。
                             </p>
                         </div>
 
                         <div className="px-5 py-5 text-center">
-                            <div className="grid grid-cols-7 gap-1">
+                            <div role="group" aria-labelledby={descriptionId} className="grid grid-cols-7 gap-1">
                                 {SCORE_OPTIONS.map((score) => (
                                     <button
                                         key={score}
@@ -95,7 +119,7 @@ export const PaperTestScoreModal: React.FC<PaperTestScoreModalProps> = ({
                                         aria-pressed={selectedScore === score}
                                         onClick={() => setSelectedScore(score)}
                                         className={cn(
-                                            "app-pill flex min-h-11 w-full items-center justify-center rounded-[14px] text-sm font-black text-slate-600 transition-all active:scale-[0.98]",
+                                            "app-pill flex min-h-11 w-full items-center justify-center rounded-[14px] text-sm font-black text-slate-600 transition-all active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2BBAA0]/60 focus-visible:ring-offset-2",
                                             selectedScore === score
                                                 ? "border-cyan-100/90 bg-cyan-50/90 text-cyan-700 shadow-[0_14px_24px_-18px_rgba(6,182,212,0.58)]"
                                                 : "hover:bg-white/82 hover:text-slate-800"

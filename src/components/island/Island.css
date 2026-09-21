@@ -109,6 +109,7 @@
 .island-welcome { display: flex; flex-direction: column; justify-content: center; }
 .island-welcome > * { flex-shrink: 0; }
 .island-welcome > header { text-align: center; padding: 22px 20px 0; }
+.island-welcome > .island-stage { width: min(100%, 920px); margin-inline: auto; }
 .island-welcome h1 { font-size: clamp(32px,6vw,44px); font-weight: 750; letter-spacing: .06em; margin-top: 9px; }
 .island-welcome .island-home-controls { width: 100%; }
 .island-welcome-copy { font-size: 16px; line-height: 1.9; text-align: center; margin: 0 0 22px; }
@@ -116,3 +117,14 @@
 .island-onboarding-setup .park-onboarding-content { overflow-y:auto; align-items:flex-start; padding-top:20px; }
 .island-onboarding-setup .park-onboarding-grades { grid-template-columns:repeat(2,minmax(0,1fr)); }
 @media(max-height:740px) { .island-welcome { justify-content:flex-start; --island-stage-height:285px; } }
+@media(max-height:430px) {
+    .island-welcome { --island-stage-height:145px; --island-camera-controls-height:48px; }
+    .island-welcome > header { padding: max(4px,env(safe-area-inset-top)) 12px 0; }
+    .island-welcome h1 { font-size:28px; line-height:1.1; margin-top:0; }
+    .island-welcome > .island-stage { width:min(100%,680px); }
+    .island-welcome .island-home-controls { padding:0 12px 6px; }
+    .island-welcome-play { gap:8px; margin:4px 0 6px; }
+    .island-welcome-play button { min-height:44px; padding:0 8px; gap:6px; }
+    .island-welcome-play svg { width:36px; height:30px; }
+    .island-welcome .island-start { min-height:48px; padding-block:8px; }
+}

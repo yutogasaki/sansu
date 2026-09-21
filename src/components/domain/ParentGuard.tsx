@@ -16,6 +16,7 @@ export const ParentGuard: React.FC<ParentGuardProps> = ({ isOpen, onSuccess, onC
             description="けいさん もんだい に こたえて ください"
             challengeFactory={createAdditionGateChallenge}
             refreshOnError
+            errorText="もういちど ためしてね"
             onCancel={onCancel}
             onSuccess={onSuccess}
         />

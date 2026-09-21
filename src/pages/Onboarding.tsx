@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
+import React, { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Button } from "../components/ui/Button";
 import { Badge } from "../components/ui/Badge";
 import {
@@ -40,12 +40,44 @@ export const Onboarding: React.FC = () => {
             .catch(() => { if (active) setResolution('error'); });
         return () => { active = false; };
     }, [search]);
+    useLayoutEffect(() => {
+        const isFirstIslandRun = resolution === 'first' && islandEnabled();
+        document.body.classList.toggle('app-mode-island-first-run', isFirstIslandRun);
+        return () => document.body.classList.remove('app-mode-island-first-run');
+    }, [resolution]);
     if (!resolution) return <p role="status">じゅんびちゅう…</p>;
     if (resolution === 'error') return <p role="alert">よみこめなかったよ。よみなおして つづけてね。</p>;
     if (resolution === 'launch') return <Navigate to="/" replace />;
     if (resolution === 'first' && islandEnabled()) return <Suspense fallback={<p role="status">しまを ひらいているよ…</p>}><IslandOnboarding /></Suspense>;
     return <LegacyOnboarding key={resolution} intent={resolution === 'add' ? 'add' : 'legacy-first'} />;
 };
+
+export const LegacyOnboardingNameStep: React.FC<{
+    name: string;
+    onNameChange: (value: string) => void;
+    onContinue: () => void;
+}> = ({ name, onNameChange, onContinue }) => (
+    <SurfacePanel className="my-auto w-full shrink-0 border-t-[3px] border-t-cyan-300/80 shadow-[0_28px_54px_-38px_rgba(15,23,42,0.34)] max-w-lg space-y-5 animate-in slide-in-from-right duration-300">
+        <SurfacePanelHeader
+            title={<label htmlFor="legacy-onboarding-name">ニックネームをおしえてね</label>}
+            description={<span id="legacy-onboarding-name-help">あとで かえられるよ</span>}
+        />
+        <input
+            id="legacy-onboarding-name"
+            type="text"
+            value={name}
+            onChange={event => onNameChange(event.target.value)}
+            aria-describedby="legacy-onboarding-name-help"
+            autoComplete="nickname"
+            className="app-glass w-full rounded-[22px] border border-white/85 p-6 text-center text-4xl font-bold text-slate-700 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-200/70"
+            placeholder="あだ名でOK"
+            autoFocus
+        />
+        <Button disabled={!name.trim()} onClick={onContinue} size="xl" className="w-full shadow-lg">
+            次へ
+        </Button>
+    </SurfacePanel>
+);
 
 const LegacyOnboarding: React.FC<{ intent: OnboardingIntent }> = ({ intent }) => {
     const islandOnboarding = islandEnabled();
@@ -257,23 +289,11 @@ const LegacyOnboarding: React.FC<{ intent: OnboardingIntent }> = ({ intent }) =>
 
             <div className={cn("relative z-10 flex min-h-0 flex-1 items-start justify-center overflow-y-auto px-[var(--screen-padding-x)] pt-5 pb-[var(--screen-bottom-padding)]", worldOnboarding && "park-onboarding-content")}>
                 {step === "name" && (
-                    <SurfacePanel className={cn(panelClass, "max-w-lg space-y-5 border-t-cyan-300/80 animate-in slide-in-from-right duration-300")}>
-                        <SurfacePanelHeader
-                            title="ニックネームをおしえてね"
-                            description="あとで かえられるよ"
-                        />
-                        <input
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            className="app-glass w-full rounded-[22px] border border-white/85 p-6 text-center text-4xl font-bold text-slate-700 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-200/70"
-                            placeholder="あだ名でOK"
-                            autoFocus
-                        />
-                        <Button disabled={!trimmedName} onClick={() => setStep("grade")} size="xl" className="w-full shadow-lg">
-                            次へ
-                        </Button>
-                    </SurfacePanel>
+                    <LegacyOnboardingNameStep
+                        name={name}
+                        onNameChange={setName}
+                        onContinue={() => setStep("grade")}
+                    />
                 )}
 
                 {step === "grade" && (

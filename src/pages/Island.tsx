@@ -28,7 +28,7 @@ import { useIslandLearningObservation, type IslandLearningRequest } from '../com
 import { commitIslandLearningSession, isFirstIslandPlan } from '../domain/island/learningSession';
 import { setIslandNextSubject } from '../domain/island/subjectPreference';
 import { findAvailablePosition, ISLAND_ITEMS, isValidIslandPlacement } from '../domain/island/catalog';
-import { ISLAND_DELIVERY_ID, ISLAND_VISUAL_CANDIDATE, ISLAND_LEARNING_CANDIDATE } from '../domain/island/feature';
+import { ISLAND_DELIVERY_ID, ISLAND_VISUAL_CANDIDATE, ISLAND_LEARNING_CANDIDATE, islandEnabled } from '../domain/island/feature';
 import type { IslandBasicItemKind, IslandHabitatId, IslandItem, IslandLearningAction, IslandPlan, IslandRecord } from '../domain/island/types';
 import { selectIslandGrowthTarget, setIslandItemAppearance } from '../domain/island/growthRepository';
 import { holdPwaUpdateForCriticalPersistence, reachPwaUpdateCheckpoint } from '../pwa';
@@ -179,6 +179,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     useLayoutEffect(() => { setLocalHouseSection('home'); setKeepsakeFocus(undefined); }, [navigation?.houseEntry]);
     useLayoutEffect(() => { if (houseSection !== 'keepsakes') setKeepsakeFocus(undefined); }, [houseSection]);
     const [returnToHouse, setReturnToHouse] = useState(false);
+    const focusHouseAlbumOnReturn = useRef(false);
     const [expressionResident, setExpressionResident] = useState<IslandResidentId>();
     const [expressionEntryItem, setExpressionEntryItem] = useState<IslandExpressionItemId>('raincoat');
     const [expressionFlagFocus, setExpressionFlagFocus] = useState(false);
@@ -321,6 +322,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     const home = () => {
         if ((busy && !(['album', 'guide'].includes(screen) && busyKind === 'discovery'))
             || reachPwaUpdateCheckpoint('island-home', { protectNextSession: true })) return;
+        if (returnToHouse && screen === 'album') focusHouseAlbumOnReturn.current = true;
         const destination = returnToHouse && ['album', 'photos', 'shared', 'reward'].includes(screen) ? 'keepsakes' : 'home';
         photos.cancel(); clearEntry(); setNextPlanError(false);
         expression.reset(); setExpressionWalk(undefined); setExpressionResident(undefined);
@@ -340,6 +342,16 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         setPreview(undefined); setFeedback(''); setLearningFeedback(undefined); setReaction(undefined);
         if (navigation) navigation.back(); else setScreen(destination);
     };
+    useLayoutEffect(() => {
+        if (!focusHouseAlbumOnReturn.current || screen !== 'keepsakes' || houseSection !== 'home') return;
+        focusHouseAlbumOnReturn.current = false;
+        const frame = requestAnimationFrame(() => {
+            const target = document.querySelector<HTMLElement>('.island-page [data-keepsake-action="album"]:not(:disabled)')
+                ?? document.querySelector<HTMLElement>('.island-page [data-house-menu-trigger]');
+            target?.focus({ preventScroll: true });
+        });
+        return () => cancelAnimationFrame(frame);
+    }, [screen, houseSection]);
     const learningStarted = useRef(false);
     const beginRequestedLearning = useEffectEvent(() => { void begin(); });
     const exitMismatchedLearning = useEffectEvent(() => navigation?.back());
@@ -635,6 +647,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         data-house-layout={houseOverview ? 'world-first-v1' : undefined} data-house-candidate={houseOverview ? 'house-world-first-v1' : undefined}
         data-visual-candidate-id={ISLAND_VISUAL_CANDIDATE} data-delivery-id={ISLAND_DELIVERY_ID}
         data-learning-candidate={ISLAND_LEARNING_CANDIDATE}
+        data-island-feature-enabled={String(islandEnabled())}
         data-island-revision={island.revision} data-discovery-count={island.growth?.discoveries.length ?? 0}
         data-build-revision={__BUILD_REVISION__} data-build-version={__APP_VERSION__} data-busy={busy}>
         {!['showcase', 'placement'].includes(screen) && <header className="island-header"><div className="island-brand" data-learning-milestone={learning ? Boolean(milestoneNotice.milestone) : undefined}>

@@ -1,6 +1,8 @@
-# docs/product/15_mvp_rollout_verification_spec.md — MVP・段階導入・検証仕様
+# docs/product/15_mvp_rollout_verification_spec.md — 旧Explore MVP・段階導入・検証仕様
 
-> 状態: gameplayは **MVP-0/1**、run・回答receipt・終了status保存は **MVP-2a**、Study共通plannerからSRSへつなぐ最小縦切りは **MVP-2b**、version付きactive checkpointから同じrunへ戻る中断再開は **MVP-2c**、3 / 3 / 2問segment予約は **MVP-2d**、rapid-loop適格性と全source解放guardは **MVP-2e**。`/` は `/explore` へ転送し、連問探索を通常起動面にする。`/battle` の探検基地化と発見図鑑のメモリ内縦切りは実装済み。ユーザー実機で `classic-v1` の旧マキモドンから後続の別rendererへ切り替わるmixed-lineage FAILが確認されたため、production defaultは `snap-root-v1` とする。cold-openは `dig-pop-carry-bloom-v3`、通常Q4〜Q8は `firefly-stumble-bloom-painted-v5` を配線する。このcontainmentをformal Gate B通過や最終visual承認とみなさず、未説明5人テストはHOLDのままとする。発見図鑑のrun横断永続化はまだ行わない。
+> スコープ（2026-09-21）: この仕様は任意の旧Explore route（`/explore`）内のgameplay・run・検証契約を扱う。Island有効時は「ほかの あそび」から明示選択し、flag-off classicも専用の明示起動だけで確認する。現行アプリの標準起動は `npm run dev` → `/#/island`。以下に残る `/` → `/explore`・「通常起動面」等は旧Explore MVP当時の履歴で、現行の起動先は [12_screen_flow_spec.md](12_screen_flow_spec.md)・[28_mystic_island_spec.md](28_mystic_island_spec.md)・[43_island_navigation_spec.md](43_island_navigation_spec.md)を正とする。この文書の「run開始」はExploreを選んだ後の開始を意味し、アプリ全体の起動ではない。
+>
+> 状態: Explore gameplayは **MVP-0/1**、run・回答receipt・終了status保存は **MVP-2a**、Study共通plannerからSRSへつなぐ最小縦切りは **MVP-2b**、version付きactive checkpointから同じrunへ戻る中断再開は **MVP-2c**、3 / 3 / 2問segment予約は **MVP-2d**、rapid-loop適格性と全source解放guardは **MVP-2e**。旧Explore当時は `/` を `/explore` へ転送し、連問探索を通常起動面にしていた。`/battle` の探検基地化と発見図鑑のメモリ内縦切りも同mode用の実装記録である。ユーザー実機で `classic-v1` の旧マキモドンから後続の別rendererへ切り替わるmixed-lineage FAILが確認されたため、旧Explore renderer defaultは `snap-root-v1` でcontainmentした。cold-openは `dig-pop-carry-bloom-v3`、通常Q4〜Q8は `firefly-stumble-bloom-painted-v5` を配線する。このcontainmentをformal Gate B通過や最終visual承認とみなさず、未説明5人テストはHOLDのままとする。発見図鑑のrun横断永続化はまだ行わない。
 
 ## 1. MVPの目的
 
@@ -19,7 +21,7 @@ MVPは学習効果を証明する前に、次を検証する。
 | 項目 | 仕様 |
 |---|---|
 | ルート | `/explore` 新規 |
-| 現行入口 | 通常起動 / 初回設定完了 → `/` → `/explore`。`/battle` からも到達可能 |
+| 現在の到達方法（旧Explore） | Island有効時はIsland内の「ほかの あそび」から明示選択して `/explore`。flag-off classicは専用の `npm run dev:classic` で確認する。`/battle` からも到達可能。現行アプリの標準入口ではない |
 | 状態管理 | 純粋reducer、メモリ内 |
 | 問題 | Study共通planner候補のうち、計画時の解放上限内かつrapid-loop適格な生成済みProblemを新規segmentへ予約する。不足分は別identityのgame-only問題で埋める |
 | SRS書き込み | runへ予約したplanner assignmentと実出題skillが一致する回答だけ。未対応入力・安全fallbackは対象外 |
@@ -94,7 +96,9 @@ MVPは学習効果を証明する前に、次を検証する。
 - planner 1 call / segment、segment atomic rollback、通常planner 3問graybox、fixed-ten throughputを回帰確認し、入力適格性の強化で連問テンポやSRS writerを壊さない
 - 2026-07-23実装証拠ではclean revision `89291b6a0bd39b1246f2e6536991a25a3f71866b` で `verify:core` の814テスト・build・asset gate、全23 smoke scenario、PWA更新3 scenarioを通過し、独立したlearning / runtime / code監査は残存P0/P1なしと判定した。固定10問は4セル各10runで `evidence.eligible = true / pass = true`。all-correct中央値はStudy **124.4問/分**、Explore **262.1問/分**、未丸め比率 **2.106**、Q1 / Q2正解20sample P95 **136.4ms**、Explore同問誤答20sample P95 **451.7ms**。4中断の完全一致、追加0タップ、receipt / assignment / checkpoint整合、除外Dueを含む学習状態不変、fixture / runtime identityを全件通過した
 
-## 5. 起動面統合 / MVP-3
+## 5. 旧Explore MVP-3当時の起動面統合（履歴）
+
+> 以下は2026-07時点で旧Exploreを通常起動面にしたclassic契約。Islandホーム導入後の現行入口・ナビを定義しない。
 
 - `/` から `/explore` への `replace` 転送は前倒しで実施する
 - 旧ホームを通常起動面から外しても、プロフィール・学習ログ・SRS・探索保存を移行しない
@@ -163,7 +167,7 @@ src/domain/explore/problemAdapter.ts
 
 Dexie version 5のrun行にoptional assignmentとversion付きactive checkpointを保存する。index追加がないためversion 6には上げない。回答eventよりcheckpointが1件遅れた場合のtail replay、stale revision拒否、Q7確認cursorまでをrun再開境界とし、発見図鑑のrun横断保存は後続で拡張する。
 
-### Task 7: Launch integration
+### Task 7: Legacy Explore launch integration
 
 `/` の起動面置換と `/battle` の探検基地UIは実施済み。通常起動は直接探索、探索からの退出後は基地から再出発という役割を維持する。発見ノート永続化はMVP-3の後続とする。
 
@@ -181,7 +185,7 @@ npm run build
 
 ### 8.1 cold-open価値ゲート
 
-cold-openは、productionの通常起動面、探検基地、図鑑、production assetへ採用する前に、次の三ゲートを別々に判定する。平均点や総合点をrelease判定へ使わず、一つでもHOLDなら全体をHOLDとする。delivery / feature-flag IDとvisual candidate IDは監査票へ別々に記録し、同じslotの再利用で旧visualの承認を継承しない。
+旧Exploreのcold-openを同modeのproduction入口・探検基地・図鑑・assetへ採用する前に、次の三ゲートを別々に判定する。現行Islandホームの評価や承認を意味しない。平均点や総合点をrelease判定へ使わず、一つでもHOLDならExplore全体をHOLDとする。delivery / feature-flag IDとvisual candidate IDは監査票へ別々に記録し、同じslotの再利用で旧visualの承認を継承しない。
 
 #### Gate A: 視覚的磁力
 
@@ -294,7 +298,7 @@ whole-flow local candidate revision `83210fdf287f4e4673e00e158f9b50f9b5962f1f` �
 - 390×844で世界変化、3つの手掛かり、主操作が同時に読めること
 - 390×844と768×1024で横長plateの全景、式、完全なTenKeyが同時に収まり、縦cropでポッコ・花・しずく・分岐先を欠損しないこと
 - `startExploreRun` 成功前と回答保存中は回答操作が無効で、高速二重送信でも `problem_answered` event、run集計、エネルギー・発見進行が1回だけであること
-- 通常起動と帰還画面からの再出発は、固定cold-openへ道選択なし・0タップで入り、初問前に選んだnodeと固定演出が食い違う状態を作らないこと
+- 旧Exploreのrun開始と帰還画面からの再出発は、固定cold-openへ道選択なし・0タップで入り、初問前に選んだnodeと固定演出が食い違う状態を作らないこと
 - 3問完了後にはじめて2件以上の実際に反映できる道選択が現れ、390×844では通過済み・未到達ノード、番号、同一コストの重複表示で主操作を埋めないこと
 - 同一区間の正解後に続行ボタンや道選択を挟まず次問が出て、ローカル目標650ms・CI上限1500msを満たすこと
 - 通常発見と通常調査手掛かりのtoast表示中も問題入力または次の区間選択が有効で、大発見だけがmodalになること

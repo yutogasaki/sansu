@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button } from "../ui/Button";
 import { Modal } from "../ui/Modal";
-import { cn } from "../../utils/cn";
+import { ArithmeticGateAnswerField } from "./ArithmeticGateAnswerField";
 import { ArithmeticGateChallenge, normalizeGateAnswer } from "./arithmeticGate";
 
 interface ArithmeticGateModalProps {
@@ -38,6 +38,7 @@ export const ArithmeticGateModal: React.FC<ArithmeticGateModalProps> = ({
     const [challenge, setChallenge] = useState<ArithmeticGateChallenge | null>(null);
     const [answer, setAnswer] = useState("");
     const [error, setError] = useState(false);
+    const answerInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         if (!isOpen) {
@@ -48,6 +49,12 @@ export const ArithmeticGateModal: React.FC<ArithmeticGateModalProps> = ({
         setAnswer("");
         setError(false);
     }, [challengeFactory, isOpen]);
+
+    useEffect(() => {
+        if (error) {
+            answerInputRef.current?.focus();
+        }
+    }, [challenge, error]);
 
     if (!isOpen || !challenge) {
         return null;
@@ -99,39 +106,22 @@ export const ArithmeticGateModal: React.FC<ArithmeticGateModalProps> = ({
             <div className="space-y-4">
                 <div className="text-center text-sm leading-6 text-slate-500">{description}</div>
 
-                <div
-                    className={cn(
-                        "rounded-[20px] border border-white/80 bg-white/58 px-4 py-4 text-center text-2xl font-black text-slate-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.3)]",
-                        questionClassName
-                    )}
-                >
-                    {challenge.prompt}
-                </div>
-
-                <form id="arithmetic-gate-form" onSubmit={handleSubmit} className="space-y-3">
-                    <div>
-                        <input
-                            type={inputType}
-                            inputMode={inputMode}
-                            pattern={inputPattern}
-                            value={answer}
-                            onChange={(event) => {
-                                setAnswer(normalizeGateAnswer(event.target.value));
-                                setError(false);
-                            }}
-                            className={cn(
-                                "w-full rounded-[18px] border px-4 py-3 text-center text-2xl font-black text-slate-800 outline-none transition-all app-glass",
-                                showErrorState
-                                    ? "border-red-200 bg-red-50/80 text-red-600"
-                                    : "focus:border-cyan-400 focus:ring-2 focus:ring-cyan-200/70"
-                            )}
-                            placeholder={placeholder}
-                            autoFocus
-                        />
-                        {showErrorState && (
-                            <p className="mt-2 text-center text-xs font-bold text-red-500">{errorText}</p>
-                        )}
-                    </div>
+                <form id="arithmetic-gate-form" onSubmit={handleSubmit} className="space-y-4">
+                    <ArithmeticGateAnswerField
+                        prompt={challenge.prompt}
+                        answer={answer}
+                        inputRef={answerInputRef}
+                        onAnswerChange={(value) => {
+                            setAnswer(normalizeGateAnswer(value));
+                            setError(false);
+                        }}
+                        placeholder={placeholder}
+                        inputType={inputType}
+                        inputMode={inputMode}
+                        inputPattern={inputPattern}
+                        errorText={showErrorState ? errorText : undefined}
+                        questionClassName={questionClassName}
+                    />
                 </form>
             </div>
         </Modal>

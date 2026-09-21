@@ -27,7 +27,7 @@
 }
 
 .printable-test-toolbar h1 { font-size: 20px; font-weight: 700; }
-.printable-test-toolbar h1:focus { outline: none; }
+.printable-test-toolbar h1:focus-visible { outline: 2px solid var(--app-accent-strong); outline-offset: 4px; border-radius: 4px; }
 .printable-test-toolbar button { gap: 8px; flex-shrink: 0; }
 .printable-test-toolbar-actions { margin-top: 8px; }
 .printable-test-toolbar > p { margin: 10px 0 0; font-size: 12px; line-height: 1.7; }

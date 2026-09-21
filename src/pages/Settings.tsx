@@ -382,10 +382,10 @@ export const Settings: React.FC = () => {
             {islandEnabled() && <span className="pokomoko-setting-patch" aria-hidden="true"><SectionIcon size={23} strokeWidth={1.8} /></span>}
             <div className="min-w-0 flex-1">
                 <div className="text-[15px] font-black text-slate-800">{title}</div>
-                <div className="mt-0.5 truncate text-xs text-slate-500">{summary}</div>
+                <div className="mt-0.5 truncate text-xs text-pokomoko-muted">{summary}</div>
             </div>
             <Icons.Back
-                className={`h-5 w-5 shrink-0 text-slate-400 transition-transform duration-200 ${openSection === key ? "-rotate-90" : "rotate-180"}`}
+                className={`h-5 w-5 shrink-0 text-pokomoko-muted transition-transform duration-200 ${openSection === key ? "-rotate-90" : "rotate-180"}`}
             />
         </button>
         );
@@ -411,7 +411,7 @@ export const Settings: React.FC = () => {
                 onClose={() => setPrintPreview(null)}
                 returnFocusTo={printTriggerRef.current}
             />}
-            <Modal isOpen={!!cancelTarget} onClose={() => { if (!isPrinting) setCancelTarget(null); }} title="採点待ちを取り消しますか？"
+            <Modal isOpen={!!cancelTarget} onClose={() => { if (!isPrinting) setCancelTarget(null); }} title="採点待ちを取り消しますか？" initialFocus="dialog"
                 footer={<Button disabled={isPrinting} onClick={handleCancelPaperTest}>採点待ちを取り消す</Button>}>
                 <p className="text-sm text-slate-600">この用紙の点数入力と再印刷を終了します。学習の記録やレベルは変わりません。</p>
                 {paperError && <p role="alert" className="mt-3 text-sm">{paperError}</p>}
@@ -439,13 +439,12 @@ export const Settings: React.FC = () => {
                 )}
             >
                 <div className="space-y-4">
-                    <p className="text-center text-sm text-slate-500">新しい なまえを 入力してください</p>
+                    <p className="text-center text-sm text-pokomoko-muted">新しい なまえを 入力してください</p>
                     <input
                         type="text"
                         value={newName}
                         onChange={(e) => setNewName(e.target.value)}
                         className="w-full rounded-[18px] border border-white/85 bg-white/74 p-3 text-center text-xl font-bold text-slate-800 outline-none transition app-glass focus:border-cyan-400 focus:ring-2 focus:ring-cyan-200/70"
-                        autoFocus
                     />
                 </div>
             </Modal>
@@ -464,7 +463,7 @@ export const Settings: React.FC = () => {
                     <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-rose-100/90 bg-rose-50/80 text-3xl">🗑️</div>
                     <div>
                         <div className="text-lg font-bold text-slate-800">「{deleteTarget?.name}」さん</div>
-                        <p className="mt-2 text-slate-500">本当に データを 消しますか？<br /><span className="text-xs font-bold text-red-500">※ 元には戻せません！</span></p>
+                        <p className="mt-2 text-pokomoko-muted">本当に データを 消しますか？<br /><span className="text-xs font-bold text-red-500">※ 元には戻せません！</span></p>
                     </div>
                 </div>
             </Modal>
@@ -496,16 +495,33 @@ export const Settings: React.FC = () => {
                                         <InsetPanel key={p.id} className="space-y-3 px-4 py-4">
                                             <div className="flex items-center gap-4">
                                                 <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-200/90 bg-slate-50/82 font-black text-slate-600">{p.name?.[0] || "?"}</div>
-                                                <div className="min-w-0 flex-1 cursor-pointer transition-opacity hover:opacity-75" onClick={() => openRenameModal(p)}>
+                                                <button
+                                                    type="button"
+                                                    className="min-h-11 min-w-0 flex-1 rounded-lg text-left transition-opacity hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2BBAA0]/30 focus-visible:ring-offset-2"
+                                                    aria-label={t("なまえを かえる", `${p.name || "ゲスト"}の名前を変更`)}
+                                                    onClick={() => openRenameModal(p)}
+                                                >
                                                     <div className="truncate font-bold text-slate-700">{p.name || "ゲスト"}</div>
-                                                    <div className="text-xs text-slate-500">{GRADES[p.grade] || "???"}</div>
-                                                </div>
+                                                    <div className="text-xs text-pokomoko-muted">{GRADES[p.grade] || "???"}</div>
+                                                </button>
                                             </div>
                                             <div className="flex items-center justify-between gap-3 border-t border-white/70 pt-3">
                                                 {profile?.id === p.id ? <Badge variant="primary">{t("つかってる", "使用中")}</Badge> : <Button size="sm" variant="secondary" className="px-3" onClick={() => handleSwitchProfile(p.id)}>{t("きりかえ", "切替")}</Button>}
                                                 <div className="flex items-center gap-1">
-                                                    <Button size="sm" variant="ghost" className="app-pill h-10 w-10 p-0 text-slate-500 hover:text-slate-700" onClick={() => openRenameModal(p)}>✏️</Button>
-                                                    <Button size="sm" variant="ghost" className="h-10 w-10 rounded-full border border-rose-100/90 bg-rose-50/72 p-0 text-rose-500 hover:bg-rose-50 hover:text-rose-600" onClick={() => openDeleteModal(p)}>🗑️</Button>
+                                                    <Button
+                                                        size="sm"
+                                                        variant="ghost"
+                                                        className="app-pill h-11 w-11 min-w-11 p-0 text-pokomoko-muted hover:text-slate-700"
+                                                        aria-label={t("なまえを かえる", `${p.name || "ゲスト"}の名前を変更`)}
+                                                        onClick={() => openRenameModal(p)}
+                                                    >✏️</Button>
+                                                    <Button
+                                                        size="sm"
+                                                        variant="ghost"
+                                                        className="h-11 w-11 min-w-11 rounded-full border border-rose-100/90 bg-rose-50/72 p-0 text-rose-500 hover:bg-rose-50 hover:text-rose-600"
+                                                        aria-label={t("プロフィールを けす", `${p.name || "ゲスト"}のプロフィールを削除`)}
+                                                        onClick={() => openDeleteModal(p)}
+                                                    >🗑️</Button>
                                                 </div>
                                             </div>
                                         </InsetPanel>
@@ -526,11 +542,12 @@ export const Settings: React.FC = () => {
                                     {profile && needsVocabNextLevelActivation(profile) && <InsetPanel className="space-y-3 p-4">
                                         <p className="text-sm text-slate-700">英語の次のレベルも、少しずつ練習できます。</p>
                                         <Button size="sm" className="min-h-11 w-full" disabled={isActivating} onClick={() => { void handleActivateVocab(); }}>英語 Lv.{profile.vocabMainLevel + 1}の練習を始める</Button>
-                                        <p className="text-xs text-slate-500">今のレベルを続けながら、10問のうち最大3問を新しい単語にします。</p>
+                                        <p className="text-xs text-pokomoko-muted">今のレベルを続けながら、10問のうち最大3問を新しい単語にします。</p>
                                         {activationError && <p role="alert" className="text-sm text-slate-700">保存できませんでした。もう一度お試しください。</p>}
                                     </InsetPanel>}
                                     <SurfacePanelHeader title={t("べんきょう する もの", "学習する科目")} />
                                     <SegmentedControl
+                                        aria-label={t("べんきょう する もの", "学習する科目")}
                                         value={profile?.subjectMode ?? "mix"}
                                         onChange={handleSubjectModeChange}
                                         options={[
@@ -543,7 +560,7 @@ export const Settings: React.FC = () => {
                                     <SettingRow
                                         title={t("ひっさん モード", "筆算モード")}
                                         description={t("おおきい すうじ の とき ひっさん で とける", "大きい数の計算で筆算UIを表示")}
-                                        action={<Button size="sm" variant={profile?.hissanModeEnabled !== false ? "primary" : "secondary"} onClick={async () => { if (!profile) return; await persistProfileUpdate({ ...profile, hissanModeEnabled: !profile.hissanModeEnabled }); }} className="w-20">{profile?.hissanModeEnabled !== false ? "ON" : "OFF"}</Button>}
+                                        action={<Button aria-label={t("ひっさん モード", "筆算モード")} aria-pressed={profile?.hissanModeEnabled !== false} size="sm" variant={profile?.hissanModeEnabled !== false ? "primary" : "secondary"} onClick={async () => { if (!profile) return; await persistProfileUpdate({ ...profile, hissanModeEnabled: !profile.hissanModeEnabled }); }} className="w-20">{profile?.hissanModeEnabled !== false ? "ON" : "OFF"}</Button>}
                                     />
                                     <PanelDivider />
                                     <SurfacePanelHeader title={t("レベル", "レベル")} />
@@ -571,15 +588,15 @@ export const Settings: React.FC = () => {
                         {openSection === "display" && (
                             <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }} className="overflow-hidden">
                                 <div className="space-y-4 px-5 pb-5">
-                                    <SettingRow title={t("おと・BGM", "サウンド")} action={<Button size="sm" variant={sound ? "primary" : "secondary"} onClick={handleSoundToggle} className="w-20">{sound ? "ON" : "OFF"}</Button>} />
+                                    <SettingRow title={t("おと・BGM", "サウンド")} action={<Button aria-label={t("おと・BGM", "サウンド")} aria-pressed={sound} size="sm" variant={sound ? "primary" : "secondary"} onClick={handleSoundToggle} className="w-20">{sound ? "ON" : "OFF"}</Button>} />
                                     <PanelDivider />
-                                    <SettingRow title={t("えいご よみあげ", "英語読み上げ")} action={<Button size="sm" variant={profile?.englishAutoRead ? "primary" : "secondary"} onClick={async () => { if (!profile) return; await persistProfileUpdate({ ...profile, englishAutoRead: !profile.englishAutoRead }); }} className="w-20">{profile?.englishAutoRead ? "ON" : "OFF"}</Button>} />
+                                    <SettingRow title={t("えいご よみあげ", "英語読み上げ")} action={<Button aria-label={t("えいご よみあげ", "英語読み上げ")} aria-pressed={Boolean(profile?.englishAutoRead)} size="sm" variant={profile?.englishAutoRead ? "primary" : "secondary"} onClick={async () => { if (!profile) return; await persistProfileUpdate({ ...profile, englishAutoRead: !profile.englishAutoRead }); }} className="w-20">{profile?.englishAutoRead ? "ON" : "OFF"}</Button>} />
                                     <PanelDivider />
                                     <SurfacePanelHeader title={t("ひょうじ テキスト", "表示テキスト")} />
-                                    <SegmentedControl value={profile?.uiTextMode ?? "standard"} onChange={handleTextModeChange} options={[{ value: "standard", label: t("ふつう", "標準") }, { value: "easy", label: t("やさしい", "やさしい") }]} />
+                                    <SegmentedControl aria-label={t("ひょうじ テキスト", "表示テキスト")} value={profile?.uiTextMode ?? "standard"} onChange={handleTextModeChange} options={[{ value: "standard", label: t("ふつう", "標準") }, { value: "easy", label: t("やさしい", "やさしい") }]} />
                                     <PanelDivider />
                                     <SurfacePanelHeader title={t("にほんご モード", "日本語モード")} />
-                                    <SegmentedControl value={profile?.kanjiMode ? "kanji" : "hiragana"} onChange={async (value) => { if (!profile) return; await persistProfileUpdate({ ...profile, kanjiMode: value === "kanji" }); }} options={[{ value: "hiragana", label: "ひらがな" }, { value: "kanji", label: "漢字" }]} />
+                                    <SegmentedControl aria-label="日本語モード" value={profile?.kanjiMode ? "kanji" : "hiragana"} onChange={async (value) => { if (!profile) return; await persistProfileUpdate({ ...profile, kanjiMode: value === "kanji" }); }} options={[{ value: "hiragana", label: "ひらがな" }, { value: "kanji", label: "漢字" }]} />
                                 </div>
                             </motion.div>
                         )}
@@ -597,13 +614,13 @@ export const Settings: React.FC = () => {
                                     {paperError && !showPaperTestModal && !cancelTarget && <p role="alert" className="text-sm text-slate-700">{paperError}</p>}
                                     {isPrinting && <p role="status" className="text-sm text-slate-600">テストを保存しています…</p>}
                                     <InsetPanel className="space-y-3 px-4 py-4">
-                                        <div className="text-xs font-bold uppercase tracking-[0.18em] text-slate-500">{t("せいげん じかん", "制限時間")}</div>
-                                        <div className="flex flex-wrap gap-2">
+                                        <div className="text-xs font-bold uppercase tracking-[0.18em] text-pokomoko-muted">{t("せいげん じかん", "制限時間")}</div>
+                                        <div role="group" aria-label={t("せいげん じかん", "制限時間")} className="flex flex-wrap gap-2">
                                             {TEST_TIMER_OPTIONS.map(minutes => {
                                                 const selectedMinutes = profile?.periodicTestTimeLimitSeconds ? Math.floor(profile.periodicTestTimeLimitSeconds / 60) : 0;
                                                 const isSelected = selectedMinutes === minutes;
                                                 return (
-                                                    <button key={minutes} type="button" onClick={() => handleTestTimerChange(minutes)} className={`app-pill rounded-full px-3 py-1 text-xs font-black tracking-[0.08em] transition-colors ${isSelected ? "border-slate-200/90 bg-slate-100/88 text-slate-700" : "border-white/80 bg-white/68 text-slate-500"}`}>
+                                                    <button key={minutes} type="button" aria-pressed={isSelected} onClick={() => handleTestTimerChange(minutes)} className={`app-pill min-h-11 min-w-11 rounded-full px-3 py-1 text-xs font-black tracking-[0.08em] transition-colors ${isSelected ? "border-slate-200/90 bg-slate-100/88 text-slate-700" : "border-white/80 bg-white/68 text-pokomoko-muted"}`}>
                                                         {minutes === 0 ? t("なし", "なし") : t(`${minutes}ふん`, `${minutes}分`)}
                                                     </button>
                                                 );
@@ -623,7 +640,7 @@ export const Settings: React.FC = () => {
                                                     <div className="flex flex-wrap items-start justify-between gap-2">
                                                         <div>
                                                             <div className="font-bold text-slate-700">{item.title} Lv.{pendingPaper?.level ?? item.level}</div>
-                                                            {pendingPaper ? <div className="mt-1 text-[11px] text-slate-500">{formatPendingPaperMeta(pendingPaper.createdAt)}</div> : null}
+                                                            {pendingPaper ? <div className="mt-1 text-[11px] text-pokomoko-muted">{formatPendingPaperMeta(pendingPaper.createdAt)}</div> : null}
                                                         </div>
                                                         <Badge variant={status.variant}>{status.label}</Badge>
                                                     </div>

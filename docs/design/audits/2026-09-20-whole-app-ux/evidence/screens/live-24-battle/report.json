@@ -1,0 +1,115 @@
+{
+  "target": "http://127.0.0.1:5233",
+  "candidate": "sansu-whole-ux-2026-09-20-28bd252-live-25",
+  "captureLineage": {
+    "responsiveBattleCaptures": "live-24",
+    "orientationGateTextPolish": "live-25"
+  },
+  "baseRevision": "28bd2526",
+  "runtimeVersion": "development-local:bd9e244d-6b20-426d-9875-d3034f81865e",
+  "flags": {
+    "VITE_ISLAND_ENABLED": true,
+    "VITE_NATURE_TOWN_ENABLED": true
+  },
+  "route": "OtherGames → BattleSetup → /battle/play?mode=boss_coop",
+  "profile": "fresh temporary sound-off profile per isolated browser context; discarded on close",
+  "preferences": {
+    "sound": "off",
+    "reducedMotion": true
+  },
+  "persistence": "No learning answers or persistent progress were written.",
+  "viewports": [
+    {
+      "viewport": "390x844",
+      "mode": "boss_coop numeric",
+      "result": "pass",
+      "checks": [
+        "Two vertically stacked player panels; no document horizontal overflow.",
+        "Both panels expose 13 keypad buttons; minimum target is 44px and all keys stay inside panel and viewport.",
+        "Entering 7 updates the inline answer preview; clear restores the unanswered state; cancel returns to Battle setup.",
+        "Question frame has 123px client height."
+      ],
+      "screenshots": [
+        "390x844-setup-responsive.png",
+        "390x844-playing-responsive.png"
+      ]
+    },
+    {
+      "viewport": "390x667",
+      "mode": "boss_coop numeric",
+      "result": "pass",
+      "checks": [
+        "All 44px-or-larger numeric keys remain within each panel and viewport.",
+        "Question frame has 49px client height; its 22px overflow scrolls within the frame."
+      ],
+      "screenshots": ["390x667-playing-responsive.png"]
+    },
+    {
+      "viewport": "360x640",
+      "mode": "boss_coop numeric",
+      "result": "pass",
+      "checks": [
+        "All numeric keys remain within each panel and viewport; minimum target is 44px.",
+        "Question frames have 35px client height with 71–87px of internal content; the diagrams remain reachable by scrolling."
+      ],
+      "screenshots": ["360x640-playing-responsive.png"]
+    },
+    {
+      "viewport": "844x390",
+      "mode": "boss_coop numeric",
+      "result": "pass",
+      "checks": [
+        "Player panels remain side by side; targets are at least 44px and remain inside panel and viewport.",
+        "Question frame is approximately 52px high and scrollable."
+      ],
+      "screenshots": ["844x390-playing-responsive.png"]
+    },
+    {
+      "viewport": "390x844",
+      "mode": "boss_coop vocabulary choices",
+      "result": "pass",
+      "checks": [
+        "Both player panels expose 2×2 choice grids; all four choices per panel are at least 53px high."
+      ],
+      "screenshots": ["390x844-vocabulary-responsive.png"]
+    },
+    {
+      "viewport": "390x844",
+      "mode": "tug_of_war numeric",
+      "result": "pass",
+      "checks": [
+        "Responsive two-player layout, 13-key panels with 44px minimum targets, and TugOfWarBar are present."
+      ],
+      "screenshots": ["390x844-tug-responsive.png"]
+    },
+    {
+      "viewport": "320x568",
+      "mode": "screen-size gate",
+      "result": "pass",
+      "checks": [
+        "Below the supported 640px viewport height, a size guidance card replaces the cramped game layout.",
+        "The 197×44px 'ほかの あそびへ もどる' control stays on one line and returns to /battle."
+      ],
+      "screenshots": ["320x568-screen-size-gate-nowrap.png"]
+    },
+    {
+      "viewport": "768x1024",
+      "mode": "tablet portrait orientation gate",
+      "result": "pass",
+      "checks": [
+        "Tablet portrait receives a rotation instruction rather than the phone-size gate.",
+        "The 197×44px 'ほかの あそびへ もどる' control stays on one line."
+      ],
+      "screenshots": ["768x1024-tablet-portrait-card-nowrap.png"]
+    }
+  ],
+  "pageErrors": [],
+  "live25Refinement": {
+    "viewport": "320x568 and 768x1024",
+    "buttonTextLineCount": 1,
+    "buttonDimensionsCssPixels": "197x44",
+    "phoneReturnDestination": "/battle",
+    "errors": []
+  },
+  "errors": []
+}

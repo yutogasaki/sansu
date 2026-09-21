@@ -150,6 +150,7 @@ export const CurriculumSettings: React.FC = () => {
                     description="レベルを なおしたい きょうかを えらんでね"
                 />
                 <SegmentedControl
+                    aria-label="表示する教科"
                     value={activeTab}
                     onChange={setActiveTab}
                     options={[

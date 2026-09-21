@@ -1,0 +1,209 @@
+# Whole-app UX/UI Coherence
+
+- Date: 2026-09-20
+- Owner: Codex
+- Status: Active
+- Review By: 2026-09-27
+- Related ADR / Runbooks: `docs/product/design_review_checklist.md`, `docs/ai/verification_matrix.md`
+
+## Goal
+
+現行のぽこもこ（Mystic Island）アプリの入口から目的達成・戻る操作までを横断して確認し、各画面の役割を保ちながら、迷い・操作の詰まり・表示や言葉の不揃いを減らす。既存タスクが持つ課題はそこへ集約し、担当のない高影響な整合課題を優先して直す。
+
+## Canonical UI Target (Fail-Closed)
+
+- 主対象は `VITE_ISLAND_ENABLED=true` のIslandアプリ。標準起動は `npm run dev`（`dev:island`へ委譲）で、`/#/island` を直接開く。ポート競合時は別portへ移らず停止する。
+- Nature Townは別ownerの任意feature route。確認する場合はNature Townタスクから明示起動し、`VITE_NATURE_TOWN_ENABLED` と `/#/nature-town` をIsland shellと区別して記録する。`5233` のpreview URLだけを見て主アプリ/旧ゲームと判断しない。
+- 実画面の記録ではURL/routeと全ルート共通`.app-container`のIsland/Nature Town flag・build revisionを照合する。Island/Nature Townの画面rootはroute固有のdelivery/candidate identityも確認し、candidateを持たない共有Utility面は該当なしと記録する。必要なidentityが欠ける画面は現行UIの証拠として扱わない。
+- `/explore` はIsland有効時も「ほかの あそび」から選べる任意の旧探索モード。Islandの標準起動・全体UX主対象とは分離し、専用ownerのタスクで明示した場合だけ調査する。`VITE_ISLAND_ENABLED=false` のclassic Exploreも専用ownerの明示時のみ開き、どちらも現行PokoMoko全体のカバレッジや完了判定には算入しない。
+- 全画面のfeature flagは共通app root、Island画面のdelivery・visual/learning candidateは画面rootのDOM identity markerで照合する。どれか必要な情報を確認できない画面は現行UIの証拠として扱わない。
+- 旧ExploreとIslandは同じリポジトリ・アプリ名を使うため、画面タイトルやリポジトリ位置だけで対象版を推定しない。
+
+## 2026-09-21 Target Mix-up Retrospective
+
+### 画面系統の整理
+
+| 系統 | 識別方法 | このタスクでの扱い |
+|---|---|---|
+| 現行ぽこもこ / Mystic Island | `VITE_ISLAND_ENABLED=true`、`npm run dev`、port `5198`、`/#/island`。実画面のfeature flagとcandidate/revision markerも照合する | 全体UX/UIの唯一の主対象 |
+| 旧Explore / classic | Island有効時も残る `/explore` は「ほかの あそび」から選ぶ任意の副モード。flag-off classicは明示起動の `npm run dev:classic`、port `5201`、`/#/explore` | 削除・一律redirectしない。専用ownerの確認に限り、現行Islandの監査証拠とは分離する |
+| Nature Town試作 | `VITE_ISLAND_ENABLED=true` と `VITE_NATURE_TOWN_ENABLED=true`、`npm run dev:nature-town`、port `5233`、`/#/nature-town` | 別ownerの独立preview。旧ExploreでもIsland本体でもない。既存preview/作業ファイルを本タスクでは変更しない |
+
+### なぜ取り違えたか
+
+- 変更前の汎用 `npm run dev` はIsland flag-offの開発画面をport `5173`で起動しており、開いた先のclassic Exploreを「現行アプリ」と誤認できる状態だった。
+- 同じrepository・製品名に複数のflag/route/preview serverが同居し、URL・実flag・build/candidate identityを毎回突き合わせないまま、見た目と作業場所を対象版の手掛かりにしてしまった。
+- 親仕様 `01_app_spec.md` だけでなく、画面仕様 `06_screen_specs.md` とMVP検証仕様 `15_mvp_rollout_verification_spec.md` にも、2026-07時点の「通常起動は `/` → `/explore`」が現行契約のように残っていた。同時に仕様12/28/43はIslandを標準ホームとしていたが、旧記述に日付・mode範囲が付かず、正本群が矛盾した起動先を示していた。`01`だけを直した初回整理でも`06`/`15`の残存を拾えず、同じ誤認を再発し得たため、今回3文書のlegacy境界を明記した。
+- whole-app監査の途中資料にはflag-offの`live-36`〜`live-39`画面やExplore所見が残っていた。記録自体は正しい履歴だったが、現行Islandの証拠との境界を先頭で強く分けておらず、広いタスク名の中で混同を招いた。
+- 5233の画面はNature Townの独立previewであり、classic Exploreの旧画面とは別系統。port/route/flagsで見分け、既存processは本タスクから起動・変更・停止していない。
+
+### 判断と再発防止
+
+- 過去のflag-off観察・修正・画像は履歴として保持する。旧Exploreにも利用経路があるため既存機能を壊す一括削除はせず、ただしIslandの監査カバレッジ/完了根拠には数えない。F-30などExplore向け修正も「旧副モードの改善」であり、Island本体を直した証拠とはしない。
+- `npm run dev` をIsland標準起動（5198、`--strictPort`、`/#/island`）に固定し、flag-off classicは`dev:classic`へ分離した。port競合で別serverへ黙って移らない。
+- `verify:core`のcurrent-UI entry guardで標準Island起動、classicの明示opt-in、Nature Townの独立flag/route/port、全route共通app-root flags、Island DOM identity markerを検査する。正しい設定だけでなく、旧defaultやNature Town誤routeを拒否する回帰テストも置く。
+- `npm run e2e:smoke`は旧Explore/classic専用のflag-off回帰試験とし、`dev:test-server`の専用portで動かす。current Islandの`npm run dev`を使わず、全体UXの現行証拠にも数えない。entry guardはこの分離を回帰検査する。
+- 現行入口の編集では親仕様だけでなく、仕様06/12/15/16/28/43の同じ語句・起動前提を横断検索し、旧modeの履歴記述とIslandの現行契約を明示してそろえる。
+- 新しい実画面記録は完全なURL、runtime flags、delivery/candidate ID、build revisionを対で残す。どれかが照合できない証拠は現行UIとして採用しない。監査READMEでは旧画面の履歴と現行証拠を別見出し/candidate IDで保つ。
+
+### 確認できたこと / 未確認
+
+- 本ターンの最終`npm run verify:core`はexit 0：docs、current-UI entry guard、lint、typecheck、456 Vitest files / 4,136 tests、production build、asset budget。旧Explore/classic専用の`npm run e2e:smoke`は隔離flag-off設定で31/31シナリオPASS。現行Islandは`live-50`で4 viewport・65 route/action checks・53 captures PASS。既存Lint warningは`IslandMilestone.tsx`のFast Refresh 1件、build advisoryは8か月前のBrowserslist・空pdf chunk・500kB超chunk。PWA precacheは11.60 MiB / 12.00 MiB。
+- Island有効の5198でタイトルとIsland画面を確認し、メニュー開閉後のfocus復帰を確認した。回答や学習記録は作成していない。
+- 初回の整理時、5233はユーザー提示URLと既存プロジェクト設定からNature Town previewと識別したが、画面の再撮影はしていなかった。5198の一時previewは停止し、5233の既存previewはそのまま保持した。
+- 2026-09-21の追確認では、読み取り専用のHTTP GETで5233が配信するVite変換済みmoduleを確認し、`VITE_ISLAND_ENABLED=true` と `VITE_NATURE_TOWN_ENABLED=true`、`/nature-town` routeを確認。既存processは確認前から稼働しており、起動・停止・profile操作・画面再撮影はしていない。よって提示URLは旧classic ExploreではなくNature Town preview。ただし、今回の追確認はflag/routeの識別までで、画面品質の再評価ではない。
+- 過去のflag-off画面を現行と扱った監査判断は誤りだった。対象版の分離と起動ガードで再発可能性を下げたが、手動画面証拠の取得時には引き続き識別子の目視照合が必要。
+
+## In Scope
+
+- 現行版の主要な子ども向け導線と保護者向け導線を棚卸しし、同じ版の画面証拠とともに入口・主操作・次の行き先・復帰先を対応づける。
+- ナビゲーション名、戻る/閉じる、主操作の優先順位、画面密度、読みやすさ、空/読込/成功/失敗/再試行の状態を横断確認する。
+- phone / tablet / 短い横画面でのはみ出し、遮蔽、タッチ領域、focus、音なし・reduced motion時の理解を確認する。
+- Design Review Checklistと既存課題を照合し、担当のない高影響な不整合だけを小さく修正する。既に所有者がいる課題は当該タスクへ結果を返す。
+
+## Out of Scope
+
+- 異なる役割を持つUtility、学習、ライブ世界、観察、記録を、見た目だけの一律なデザインへ統合すること。
+- 学習ロジック、採点/SRS、保存形式、PWA公開範囲、島・町の大規模美術を本タスクへ持ち込むこと。これらは既存の仕様・タスクで扱う。
+- スクリーンショットや自動テストだけで、子どもの理解・意欲・安全を実証したと扱うこと。
+
+## SSOT References
+
+- [CONSTITUTION.md](../../../CONSTITUTION.md)
+- [親仕様01](../../product/01_app_spec.md)
+- [UIデザインガイド07](../../product/07_ui_design_guideline.md)
+- [画面遷移43](../../product/43_island_navigation_spec.md)
+- [画面レイアウト44](../../product/44_display_layout_spec.md)
+- [デザインレビュー観点](../../product/design_review_checklist.md)
+- [Design System Master](../../../design-system/MASTER.md)
+- [検証マトリクス](../../ai/verification_matrix.md)
+
+## Related Work
+
+- [島・家・学習のUI操作統一監査](../../design/audits/2026-09-09-ui-ux-continuity/README.md)：ナビと退出操作の局所改善済み。未確認の全画面監査とは区別する。
+- [今回の部分監査](../../design/audits/2026-09-20-whole-app-ux/README.md)：現行previewでの主要導線・フォーカス復帰の再現と修正。phone/tablet/短い横画面の証拠は追加済みだが、全体完了は未達。
+- [Whole-app Brand Coherence](2026-07-23-whole-app-brand-coherence.md)：ブランド/visual-lineageの外部確認ゲートは本タスクで代替・解除しない。
+- [学習と島の体験改善](2026-09-07-experience-improvements.md)：学習・島の行動体験は同タスクの範囲を重複実装しない。
+
+## Docs To Touch
+
+- Must update: このタスク、`.agents/tasks/TASKS.md`、監査証拠と修正結果を記す日付付きレポート。画面固有の操作契約は該当SSOTへ反映（命名dialogは `docs/product/08_home_ikimono_spec.md`、バトルセットアップは `docs/product/09_battle_spec.md`、保護者ページの戻り先は `docs/product/43_island_navigation_spec.md`）。
+- Intentionally unchanged: 上記以外の製品仕様。監査で仕様の空白や矛盾が見つかった場合は、実装前に該当SSOTを更新する。
+
+## Plan
+
+1. 標準起動からIsland route・flag・delivery/candidate ID・build revisionを照合する。不一致またはlegacy routeなら監査を止め、先に正しい対象へ切り替える。主要な導線と画面状態を選んで実画面を撮影する。
+2. 画面ごとの役割を保ったまま、階層・操作名・移動/復帰・responsive/accessibilityの差をチェックリストと既存タスクに照合する。
+3. 発見事項を影響度と既存ownerで分類し、未所有の上位項目のみ修正する。仕様決定が必要なものは先にSSOTへ反映する。
+4. 同一候補で対象経路を再確認し、視覚的魅力、無説明理解/安全、runtime整合を別々に報告する。
+
+## Definition of Done
+
+- 同一候補のrevision/flagを記した導線一覧、番号付き実画面/contact sheet、画面に結び付いた発見一覧がある。
+- すべての現行版証拠がCanonical UI Targetを満たす。legacy画面は明示的に分離され、現行版のカバレッジに混入していない。
+- 各発見に影響度と修正先を記録し、既存タスクがownerならそこへ集約、未所有の高影響項目は修正または明示的な次タスクにする。
+- 修正対象のphone/tabletと短い横画面で、主要操作・戻り先・代表的な空/成功/エラー状態を確認する。タッチ領域、focus、音なし/reduced motionは変更に応じて確認する。
+- 変更に適用される検証マトリクス上のチェックが通過し、未実施・未確認の範囲を残す。参加者評価がない場合はその旨を記し、「気持ちよさ」や理解を実証済みとしない。
+
+## Verification
+
+- Commands: `npm run check:current-ui-entry`、`npm run docs:check`、変更範囲に応じて `npm run lint`、`npm run typecheck`、対象test/E2E、`npm run build` / `npm run e2e:smoke`。横断的な挙動変更では検証マトリクスに従い `npm run verify:core` を実行する。
+- Manual checks: 代表phone、tablet、短い横画面で同一候補の主要導線を確認。各画像と記録にrevision・flag・候補IDを残す。視覚、無説明理解/安全、runtimeを相互に代替しない。
+
+## Progress
+
+### Now
+
+- 2026-09-21: 親仕様01の旧Explore起動契約とIsland既定導線の矛盾を修正。`/explore`とflag-off classicを現行ホームから明確に分け、2026-07-24の起動記述を履歴・モード内契約として限定した。現行Islandの標準入口は`/` → `/island`、旧ExploreはIsland内で明示選択する任意モードと記載。`docs:check`、`check:current-ui-entry`、`git diff --check`はPASS。`docs:check`の警告は別タスクのReview By期限超過1件のみ。
+- 2026-09-21: 誤ってflag-offの旧Exploreを現行ぽこもことして確認していたことが判明。以後はIsland flag-onの `/#/island` を唯一の全体UX主対象とし、旧ExploreはIsland有効時の任意副モードとflag-off classicの両方で明示分離する。通常の `npm run dev` をIsland起動へ変更し、ポート競合時の誤った別サーバー表示を防ぐ`--strictPort`、専用ルートを開く指定、`verify:core`内のentry guardを追加。現行Island画面のDOMに実feature flag markerも公開し、candidate/revisionと一緒に照合できるようにした。ルートは「ほかのあそび」からの既存利用を壊さないため削除せず、標準起動・全体監査から分離。過去のflag-off所見と変更は履歴として保持する。
+- 2026-09-21 `live-45`: canonical Island candidateを`390×844 / 768×1024 / 1280×720 / 844×390 / 1024×390`で撮影し、最初の3 viewportは各16、短い横画面はplay内部scroll確認を加えて各17 route/action checksがPASS（計67 capture、page errorなし）。全画像で実URL、Island marker、delivery `mystic-island-v1`、visual `mystic-island-shore-garden-v18`、learning `mystic-island-learning-v2`、revision `development-local:a268ed15-e3af-4d55-9d9f-37ba2d34512c`を確認。sound-off・reduced-motion・service workerなしの隔離contextで、UIから1問回答・家具移動・写真保存を行ったが、context終了でfixtureは破棄。5つのcontact sheetとcapture metadataを[監査レポート](../../design/audits/2026-09-20-whole-app-ux/README.md#current-island-navigation-evidence-live-45-2026-09-21)に保存。
+- 短い横画面の初回scroll-restoration失敗は、URL変更直後に汎用selectorが旧Settingsのscrollerを拾っていたE2E側の待機不足。route URLだけでなく`レベル いちらん`の実見出しと配下scrollerを待ってから検査するよう変更し、844×390と1024×390で修正版E2Eを通した。アプリ側の復元コードは変更していない。`live-45`ではplay panel内の続き操作が見えにくいことを確認し、下記`live-49`でスクロール案内を追加・確認した。物理タッチ端末での案内発見性、子どもの無説明理解は未確認。
+- `live-49`の新規runtime version `development-local:4d899a58-86ab-4483-9123-fdba304cea3d`で844×390 / 1024×390を再撮影。Island flag-on、`mystic-island-v1`、visual `mystic-island-shore-garden-v18`、learning `mystic-island-learning-v2`、revision `development-local`を各captureで照合し、各viewport 17 route/action checks、全28 captures、page errorなしでPASS。内容が下に続く時だけ`↓ つづき`を表示し、scroll末尾で隠れ、上端へ戻ると再表示する。続行CTAは内部scroll後に到達でき、44px以上。新規serverを使った最終画面とreportは[監査レポート](../../design/audits/2026-09-20-whole-app-ux/README.md#play-scroll-continuation-cue-live-49-2026-09-21)へ保存。`live-46`〜`live-48`は案内文言の試行版として保持し、最終証拠には使わない。
+- `npm run verify:core`、`npm run e2e:island-navigation`（844×390 / 1024×390）、`npm run docs:check`、`npm run check:current-ui-entry`、`git diff --check`がPASS。Lintは既存`IslandMilestone.tsx` Fast Refresh warning 1件。buildはBrowserslist・empty pdf chunk・500kB超chunk advisoriesあり。PWA precacheは11.60 MiB / 12.00 MiB。
+- 2026-09-21: 正しいIsland flag-onの`/#/island?learn=1`を844×390で確認し、TenKey下段が画面外へ切れることを再現。高さ600px以下の横画面をIsland学習専用の左右配置にし、質問/支援だけを内部scroll、answer fieldと4段TenKey（各44px以上）、ヒント/スキップを同時表示するよう修正。`node tools/check-current-ui-entry.mjs`、docs check、diff checkは成功。CUA実画面で768×390 / 844×390 / 1024×390と390×844を目視し、全キーと操作が表示されることを確認。学習の回答/保存は行っていない。画面画像をファイル保存していないため、これは局所の実画面確認でありcontact sheet付き監査証拠や理解/安全評価ではない。
+- 同候補の検証：lint、typecheck、build、assets:check、docs:check、UI entry guardはPASS。全454 Vitest files中453 pass・4,127 tests pass、未変更の`src/domain/islandLife/repository.test.ts`内1件だけが全体並列実行で5秒timeout。該当test単独は812msでPASS。Lintは既存`IslandMilestone.tsx` Fast Refresh warning 1件、buildはBrowserslist古さ・empty pdf chunk・large chunkのadvisoryあり。PWA precache 11.59 MiB / 12.00 MiB。
+- 2026-09-20のローカルpreviewで保護者設定、記録の空状態、島、家、アルバム、設定詳細を1280×720で確認。家のアルバムから戻った直後にfocusがページ全体へ落ちる問題を修正し、入口へ戻るfocusと次のTab移動を再確認した。さらに設定のON/OFFが名前なし・選択状態なし、共有セグメント選択に選択状態がない問題を修正し、読み上げツリーで名前と状態が公開されることを確認。プロフィールの名前変更/削除アイコンも同様に名前がなく、名前欄自体もキーボード操作できないことを現行画面で確認。操作意図と対象名が読めるbuttonへ統一し、アイコン操作を44px角に拡張した。修正後は読み上げツリーでボタン名を確認し、名前変更を開いてキャンセルした際に元の操作へfocusが戻ることを確認。保存・削除はしていない。
+- 共通`Modal`に初期focus、双方向Tab trap、openerへのfocus復帰を追加。設定の保護者gateでTabがダイアログ外へ抜け、閉じるとページrootへ落ちる問題を現行画面で再現し、修正後は入力→キャンセル→入力の折返しとEscape後の`開く`ボタン復帰を確認。回答は入力せず、プロフィール/学習状態は変更していない。
+- 紙テストの点数入力dialogは名前・説明の紐付けと独自のfocus管理を欠いていたため、共通focus hookへ統合し意味論テストを追加。live-19では隔離context内だけに20問の一時記録を作り、名前付きscore group、44px操作部、可視focus、Escape後のopener復帰を確認。18/20保存後は一時profile上で得点記録だけが追加され、学習log・memoryは0件、context終了で破棄した。
+- 確認だけのモーダルで唯一のボタンが実行操作の場合、共通Modalの初期focusをdialog本体に置く選択肢を追加し、採点待ち取消ではEnterの誤操作を避ける。
+- 共通`Button size="sm"`のテキスト/アイコン操作が40pxで、44px最小タッチ領域のUI仕様を下回ることを発見。共通primitiveをテキスト高さ44px以上、アイコン44px角に修正し、回帰テスト2件を追加。
+- 共通`SegmentedControl`と定期テストの時間選択肢も高さ44px未満だったため44px以上へ変更。時間選択肢は名前付きgroupと`aria-pressed`で選択状態を公開する。プロフィール名ボタンも最小高44pxに揃えた。
+- ホームのふわふわ命名画面を意味付きdialog・ラベル付き入力・共通focus管理へ揃え、Enterと決定ボタンを同じ保存formへ接続。最大8文字・trim・空欄時の既定名は保持し、命名仕様と静的意味論テストを追記。
+- 探索HUDの「遭遇」variantでは戻るボタンを40pxへ縮める指定が残っていることをソースで確認。44px以上の共通仕様と不一致だが、探索UIは既存の学習・島体験タスクownerへ引き継ぎ、同じ修正を重複実装しない。実画面でのサイズ計測は未実施。
+- 追加ソース走査で学習トップバー、初回導線、ふわふわの複数操作に44px未満らしき指定を確認。共通`.app-pill`自体にも下限はない。該当範囲は[学習と島の体験改善](2026-09-07-experience-improvements.md) ownerへ集約し、ここでは重複実装しない。
+- 印刷プレビューは表示開始時に見出しへfocusする一方、その見出しのoutlineを無条件に消していた。見出しのキーボードfocusだけ既存accent tokenの2px outlineで可視化。live-19で390×844の実previewをキーボード起動し、見出しの可視focus、印刷範囲切替、Escape後の同一ボタンへのfocus復帰を確認。OS印刷/PDF出力は起動していない。
+- 記録の成長グラフは未回答日を正答率0%として描き、スキルマップのツールチップも未練習を0%と表示していた。画面仕様に「未計測は線を切る」「アクセシブルな説明で0%と区別」「レーダーの未練習カテゴリ名を図の近くに表示」を追記。直近7日の正答率は未回答日をnullにして線を切り、週次・レーダー各グラフに名前/説明を付け、ツールチップでも未計測・未練習を区別。未練習カテゴリは単語途中で折れないBadgeにした。live-19の一時データ画面でphone/tablet両方の表示・横overflowなし・12px文字と単語折返しを確認。レーダー形状は未練習カテゴリの点を描かず、記録済みカテゴリだけを未練習軸をまたがない開いた線分で結ぶ。記録あり0%は測定点として残し、全カテゴリ練習済みの場合だけ閉じた塗りつぶし形状を保つ。形状の境界ケース7件、typecheck、対象lintが成功。`live-37`で最新形状をphone/tablet実描画し、記録あり0%と未練習の両tooltip、正答率グラフの未計測gapも確認・撮影済み。
+- 2人ゲームのセットアップをソース確認し、アイコンが40px、学年選択が約25pxで、選択状態の読み上げと名前入力labelも欠けていると判明。学年/アイコンを44px以上にしてfocus可視化、プレイヤー別に名前とグループ名を付け、アイコン/学年は`aria-pressed`で状態を公開。科目グループもプレイヤー別の名前にした。ゲーム挙動・保存は変更なし。Battle spec 09に操作契約を追記し、意味論/サイズの静的テストを追加。phone/tablet/landscapeの描画と操作到達性は確認済み。実スクリーンリーダーの読み上げ順は未確認。
+- 前候補 `sansu-whole-ux-2026-09-20-28bd252-live-09` は `npm run verify:core` 成功（docs、lint、typecheck、446 Vitest files / 4,104 tests、build、asset budget）。Lint既存warningは `IslandMilestone.tsx` のFast Refresh 1件。buildには既存のBrowserslist鮮度・大容量chunk advisoryがあるが成功。PWA precacheは11.57 MiB / 12.00 MiB。
+- source候補 `sansu-whole-ux-2026-09-20-28bd252-live-11` はF-11/F-12までを含み、`npm run verify:core` 成功（docs、lint、typecheck、448 Vitest files / 4,107 tests、production build、asset budget）。lintは既存の `IslandMilestone.tsx` Fast Refresh warning 1件、buildは既存のBrowserslist鮮度・大chunk warningあり。PWA precache 11.57 MiB / 12.00 MiB。
+- source候補 `sansu-whole-ux-2026-09-20-28bd252-live-12` はF-13を含み、`npm run verify:core` 成功（docs、lint、typecheck、449 Vitest files / 4,109 tests、production build、asset budget）。lintは既存の `IslandMilestone.tsx` Fast Refresh warning 1件、buildは既存のBrowserslist鮮度・大chunk warningあり。PWA precache 11.57 MiB / 12.00 MiB。
+- 最新source候補 `sansu-whole-ux-2026-09-20-28bd252-live-13` では、F-13の選択中outlineを2pxへ強めた。BattleSetup対象テスト2件、typecheck、対象lint、docs check、buildとasset budgetは成功。全体verify:coreは直前の `live-12` で成功している。現行候補の実画面・操作は未確認。
+- 844×390の短い横画面でBattleSetupの縦scroll領域が49pxしかなく、1列に並ぶ設定が操作しづらいことを確認。tablet landscapeでは2列に並べ、上部のpadding/間隔を短画面用に調整。Tailwind v4のCSS-native `@custom-variant` でresponsive variantを登録した後、scroll領域は130pxへ増え、content 628px内の学年選択までスクロールで到達。横overflowなし、表示中操作は44px以上。
+- `src/index.css` がTailwind v4を直接importする一方、既存の `mobile:` / `land:` / `ipadland:` variantがCSSに登録されず、実画面とbuild CSSで反映されないことを確認。Tailwind v4の `@custom-variant` で各variantをCSSに明示し、responsive設計を有効化。旧JavaScript設定のtheme extensionまでは読み込まず、色・角丸tokenへの広範な変更を避けた。代表的phone/tablet/landscapeをcontact sheetとE2Eで再確認し、レイアウト崩れを検出しなかった。
+- source候補 `sansu-whole-ux-2026-09-20-28bd252-live-16` の `npm run e2e:island-navigation` が390×844 / 768×1024の両方で成功。各viewportの16 journey checksが通過し、page errorなし。両fixtureとも sound-off profile / reduced motion を使用。844×390ではIsland home・records・settings・Battle setupを確認し、横overflowなし、表示中の操作部は44px以上。
+- 最新 `live-19` でも `npm run e2e:island-navigation` が390×844 / 768×1024で成功。各viewport16 assertions、合計26 capture、page errorなし。同候補で統計データ、点数入力、印刷preview、1280×720保護者gateも一時profileを使って確認。手順・画像・runtime識別子は[部分監査レポート](../../design/audits/2026-09-20-whole-app-ux/README.md)に記録。
+- 最終 `npm run verify:core` 成功：docs check、lint、typecheck、449 Vitest files / 4,111 tests、production build、asset budget。lintは既存 `IslandMilestone.tsx` Fast Refresh warning 1件のみ。buildには既存Browserslist鮮度と大容量chunk advisoryがあるが成功し、PWA precacheは11.58 MiB / 12.00 MiB。
+- 同候補で `npm run verify:core` が成功（docs、lint、typecheck、449 Vitest files / 4,110 tests、production build、asset budget）。lintは既存の `IslandMilestone.tsx` Fast Refresh warning 1件、buildは既存のBrowserslist鮮度・大容量chunk advisoryあり。CSS variantに関する警告はなく、PWA precacheは11.58 MiB / 12.00 MiB。
+- 同候補で空の記録画面、正答後の記録更新、誤答後の同問題再挑戦も確認。誤答の一時profileではcursorを維持したままplan revisionだけ更新し、誤答feedbackが表示された。profile・解答記録はbrowser context終了時に破棄した。
+- 390×844 / 768×1024 / 844×390のcontact sheet、22枚の番号付きscreen capture、Playwright reportsを[監査evidence](../../design/audits/2026-09-20-whole-app-ux/evidence)へ保存。live-19では追加でphone/tabletの26枚contact sheetとグラフ・採点・印刷・保護者gateの画面証拠を保存。runtime version `development-local:bd9e244d-6b20-426d-9875-d3034f81865e`、delivery `mystic-island-v1`、visual candidate `mystic-island-shore-garden-v18`、learning candidate `mystic-island-learning-v2`。source base `28bd2526` のdirty working-tree candidateでありrelease buildではない。CSS警告なしのproduction buildとasset checkも成功（PWA precache 11.58 MiB / 12.00 MiB）。
+- 1280×720の初期preview所見は候補`live-06`の観察。live-19では同じ幅で保護者gateの入力focus、キャンセル、Escape後のopener復帰を再確認。全画面の1280px監査や子どもの参加者評価は未実施であり、楽しさや無説明理解の実証とは扱わない。
+- 候補・所見・未確認範囲は[部分監査レポート](../../design/audits/2026-09-20-whole-app-ux/README.md)。
+- `live-22`で共通算数gateを確認し、入力がplaceholder頼みで算数問題と意味論的に結び付かず、誤答時は問題だけが更新されて説明がなく、Enter/クリック後にfocusがページrootへ落ちる課題（F-18/F-19）を修正。共有入力に明示label・問題文/errorの関連付け・invalid/status semanticsを追加し、`ParentGuard`に中立な再挑戦メッセージ、誤答後の入力focus復帰、error中にも見えるfocus ringを実装。画面仕様06 §8.3へ操作契約を反映し、意味論テストを追加した。
+- `live-22`の隔離ブラウザーで`/parents`と`/settings/curriculum`を390×844、1280×720で確認。キーボード・ポインター双方の誤答送信後に入力へfocusが戻り、label/算数問題/error/statusの関連、`aria-invalid`、可視focus ringを確認。カリキュラム設定は失敗時に初期レベルのまま。390×844の両画面証拠を監査evidenceに保存し、一時profileはcontext終了時に破棄。
+- 最新候補`live-22`の`npm run e2e:island-navigation`は390×844 / 768×1024で成功（各16 journey checks、計26画面capture、page errorなし）。reduced motion・sound-offの隔離contextで実行。runtime `development-local:bd9e244d-6b20-426d-9875-d3034f81865e`、delivery `mystic-island-v1`、visual `mystic-island-shore-garden-v18`、learning `mystic-island-learning-v2`。
+- F-18/F-19を含む現行source候補 `live-22` で `npm run verify:core` 成功：docs check、lint、typecheck、450 Vitest files / 4,113 tests、production build、asset budget。Lintは既存 `IslandMilestone.tsx` Fast Refresh warning 1件。buildには既存Browserslist鮮度・大容量chunk advisoryがあるが成功し、PWA precacheは11.58 MiB / 12.00 MiB。
+- `e2e:island-navigation`に任意viewport指定を追加し、同一の実UI導線を390×844 / 768×1024 / 1280×720で通過。候補`live-23`は各幅16 journey checks・計39画面capture・page errorなし。各幅のcontact sheetとruntime識別子は監査レポートに記録。画面実装は`live-22`から変更なし。
+- 1280×720の記録画面で下端に次セクション見出しが見える点は、隔離contextのDOM計測でスクロール範囲・末尾到達・固定ナビとの非重複を確認。1,178pxの内容を586px表示領域でスクロールし、最後の操作まで到達できるため修正対象にはしなかった。
+- バトル仕様09 §3.2の「スマホ縦/タブレット横」と既存`OrientationGate`が矛盾し、スマホ全体をiPad横画面案内で遮断していた。さらにプレイ中は常に左右分割で、390px幅だとテンキーが約36pxになり、縦積みに変えるだけでは質問図と数字キーが下へ隠れた（F-20）。スマートフォンは高さ640px以上なら利用可、縦向きは2人欄を上下、横向きは左右に配置。問題図は小画面用密度に調整し、短い縦画面では図の専用枠内でスクロールできるようにして、4段すべて44px以上のキー、選択肢、スキップ、終了を維持。320×568では両キー列を44pxで同時表示すると問題図枠が8pxになったため、640px未満は画面サイズ案内に切り替え、タブレット縦向きの回転案内とともに「ほかの遊びへ戻る」44px操作を設けた。390×667、360×640、844×390でBoss/Tug両モードを試し、390×844で入力・消去・中断→設定復帰、選択式語彙、setup headerも確認。内容・勝敗・永続学習状態は変更していない。仕様09とライブ証拠は[監査レポート](../../design/audits/2026-09-20-whole-app-ux/README.md)へ同期した。
+- 320×568/768×1024の案内カードで戻り文言が途中改行される点を、44pxタップ領域を維持したまま一行表示に調整。実ブラウザーで両幅とも197×44px・1行を確認し、320×568から`/battle`へ戻る操作も再確認。更新スクリーンショットと候補系譜を[監査レポート](../../design/audits/2026-09-20-whole-app-ux/README.md)に記録。
+- `live-27`では保護者の空状態ページを1280×720と390×844で確認。desktopはviewport/documentとも1280×720、scroll領域586px/815px/229px。phoneはdocument幅390px、scroll領域710px/815px/105px。両サイズとも最大scroll位置で「設定に戻る」が固定ナビから56px上に収まり、到達可能。下端の「学習履歴」見出しは通常のscroll clippingで遮蔽とは扱わない。入口の「テスト・保護者」からページへ進み、戻りボタンで`/settings?section=parent`へ戻ることをdesktop/phoneで確認。以前は`/settings`へ戻って選択文脈が消えていたため、共通`islandParentUrl`を使うよう修正し、`/parents`直URLのgateキャンセルも同じsectionへ戻す。`navigation.test.ts`に`/parents`・`/dev`のfallback回帰ケースを追加し、43_island_navigation_specへ戻り契約を記載。正規gate以外の学習問題には回答せず、使い捨てPlaywright contextのプロフィールは終了後に残っていないことを確認。画像は[監査レポートのlive-27節](../../design/audits/2026-09-20-whole-app-ux/README.md)へ保存。保護者の履歴/苦手あり状態、tablet、支援技術/子ども参加者評価は未確認。`npm run verify:core`成功（450 files / 4,116 tests、production build、asset budget）；後続の`docs:check`と`git diff --check`も成功。
+- 最新`live-28`では使い捨てGrade 1プロフィールに3件（正答2・skip 1）の記録を作り、保護者ページ390×844の履歴あり状態を確認。内部ID `add_finger` / `share_equal` / `two_more` が露出する問題（F-25）を見つけ、`MATH_SKILL_LABELS`等を使った表示名変換と回帰テストを追加。実画面に「ゆびたしざん」「おなじにわける」「2つおおい」が表示され、内部IDは残らない。履歴あり状態の実画面検証と画面仕様06 §8を更新。scroll領域710px/1004px/294px、最下部CTAは固定ナビから56px上で到達可能、page error/横overflowなし。スクリーンショットと候補ID `sansu-whole-ux-2026-09-20-28bd252-live-28`を[監査レポート](../../design/audits/2026-09-20-whole-app-ux/README.md)へ記録。保護者の苦手あり状態とtabletは未確認。使い捨てプロフィールを削除しbrowser contextが残っていないことを確認。`npm run verify:core`成功（451 files / 4,118 tests、production build、asset budget）；lintは既存Fast Refresh warning 1件、buildには既存Browserslist・空pdf chunk・大chunk advisories。その後の`docs:check`と`git diff --check`も、live-29追加分を含めて成功。
+- `live-29`では、アプリコードを変えずに保護者の空状態を768×1024で追加確認。文書幅768px、スクロール領域890px/890pxでスクロール不要、`設定に戻る`は180×44px、固定ナビまで132px空き、page error・横overflowなし。証拠画像を[監査レポート](../../design/audits/2026-09-20-whole-app-ux/README.md)へ追加。使い捨てプロフィール/ブラウザーsessionは残っていない。保護者の苦手あり・履歴あり状態のtablet表示は引き続き未確認。
+- 最新source候補`live-25`で `npm run verify:core` 成功：docs check、lint、typecheck、450 Vitest files / 4,113 tests、production build、asset budget。BattleSetupの対象3 testsも成功。lintは既存 `IslandMilestone.tsx` Fast Refresh warning 1件、buildは既存Browserslist鮮度・大容量chunk advisoryあり。PWA precache 11.59 MiB / 12.00 MiB。report追記後の`docs:check`と`git diff --check`も成功。実読み上げ、参加者評価、全ルート1280px監査は引き続き未実施。
+- `live-26`の1280×720実画面でBattle setupの右側が中央1180px app frameからはみ出して切れる問題と、長い問題図がプレイ中のテンキー最下段をカード下へ押し出す問題を確認。Battleのrootを`w-full h-full`へ合わせ、幅768px以上・高さ760px以下では問題図だけを176pxの内部スクロール枠にして操作領域を確保した。実ブラウザーで全26 numeric keyが各player panel内に45px高で収まり、図を75pxスクロールして設問文を読めることを確認。さらに両プレイヤーの3択問題も各ボタン144px高で枠内に収まる。390×844では重複mode badgeを隠し、選択肢ラベルを一行へ整えた。setup→play→時間切れ結果→replay→setupも隔離プロフィールで確認。画面証拠は[監査レポート](../../design/audits/2026-09-20-whole-app-ux/README.md)のlive-26節に保存。`BattleSetup`対象4 testsと`npm run verify:core`が成功：docs check、lint、typecheck、450 Vitest files / 4,114 tests、production build、asset budget。lintは既存`IslandMilestone.tsx` Fast Refresh warning 1件、buildはBrowserslist鮮度・空のpdf chunk・大容量chunkのadvisoryあり。PWA precache 11.59 MiB / 12.00 MiB。live-26の検証結果を基礎に、live-27で保護者ページと戻り文脈の別確認を追加した。
+- 2026-09-21: `/stats` の単独ルートfallbackは閉じるアイコンだけでアクセシブル名がないことをソースで確認し、日本語名を付けてXを装飾扱いにした（F-26）。現行`mystic-island-v1`の1280×720記録画面ではこのfallbackが表示されないため、flag-off単独ルートの実描画と支援技術読み上げは未確認。ソース修正として記録し、release/runtime証拠とは扱わない。
+- 2026-09-21: F-26の閉じる操作に「閉じる」「とじる」の日本語名、×印の装飾扱い、最小タッチ領域クラスを検査する回帰テストを追加。2件の対象テストと`npm run verify:core`（452 files / 4,120 tests、build、asset budgetを含む）が成功。flag-off previewは新規プロフィールのない隔離originから`/#/stats`を開くとオンボーディングへredirectしたため、profileを作成せず終了。実ルートのflag-off描画・遷移と支援技術読み上げは引き続き未確認。
+- `sansu-whole-ux-2026-09-20-28bd252-live-33`で、flag-off初回設定のニックネーム入力が表示上の質問文と結び付かず、AX treeで無名fieldになることを390×844実画面で確認（F-27）。可視質問を`label`として入力へ結び、補足を`aria-describedby`へ接続。空欄時の「次へ」disabledを維持し、autocompleteをnicknameに設定。関係と空白/入力済みの操作状態を静的テスト2件で検査し、HMR後の実AX treeでも名前を確認した。プロフィール保存なし。画面画像はローカル保存できていないため、live screenshot証拠/支援技術評価とは扱わない。F-10の戻る操作サイズは既存ownerの範囲として変更なし。
+- 2026-09-21: F-12のRadar描画を未練習軸で切り、練習記録がある点だけの開いた線分に変更。記録あり0%の実測点と完全練習済みの閉じた形状を維持する回帰テスト7件、typecheck、対象lintが成功。
+
+- `sansu-whole-ux-2026-09-20-28bd252-live-32`で`npm run verify:core`が成功。452 Vitest files / 4,125 tests、docs check、lint、typecheck、production build、asset budgetを完了。lintは既存の`IslandMilestone.tsx` Fast Refresh warning 1件、buildは古いBrowserslistデータ・空pdf chunk・500kB超chunk advisoryあり。PWA precacheは11.59 MiB / 12.00 MiB。今回のレーダー形状は実画面未確認。
+- `sansu-whole-ux-2026-09-20-28bd252-live-33`でF-27を含む`npm run verify:core`が成功。docs check、lint、typecheck、Vitest全件、production build、asset budgetを完了。lintは既存`IslandMilestone.tsx`のFast Refresh warning 1件、buildは既存Browserslist・空pdf chunk・500kB超chunk advisoryあり。PWA precache 11.59 MiB / 12.00 MiB。当該候補の時点ではF-27の実画面AX tree画像は未保存、F-12の最新レーダー描画も未確認だったが、F-27画像はlive-34、F-12 runtimeはlive-37で後続確認済み。
+- `live-34`の隔離flag-off previewでF-26を実ルート確認。プロフィールなしの`/#/stats`はonboardingへ誘導されるが、使い捨てプロフィールを実画面で作成後、記録画面に名前付き「閉じる」が表示され、押すとrootの既定画面`/battle`へ戻ることを確認。F-27の空欄name画面、F-26記録画面を390×844で撮影し、保存画像を目視確認。対象フラグは`VITE_ISLAND_ENABLED=false` / `VITE_NATURE_TOWN_ENABLED=false`、build revisionは`development-local`、delivery `snap-root-v1`、visual lineage `pokko-field-v1`、SW controllerなし。F-26の実スクリーンリーダー評価は未実施。
+- F-28では保護者の算数苦手候補・英語苦手候補に内部IDが露出しないよう、共有label resolverと一般表示fallbackを追加。画面仕様06 §8を更新し、既知/未知の算数・英語IDを回帰テスト。使い捨てprofileで実UIから誤答7件を記録したが、対象技能ごとの弱点条件に達せず苦手リストは空のまま。苦手badge自体のrender確認とは扱わず、学習閾値は変更していない。
+- F-29として保護者履歴の「不正解」badgeが390px幅で2行に割れることをlive-34画像で発見。`shrink-0 whitespace-nowrap`を適用し、同じ390×844でlive-35を再撮影して1行表示を確認。F-28表示labelとF-29 before/after画像は[監査レポート](../../design/audits/2026-09-20-whole-app-ux/README.md)に保存。対象コードのfocused test、ESLint、typecheck、docs checkは成功。Playwrightの一時sessionを閉じ、同名sessionを開き直した`/parents`がonboardingへ戻ることを確認したためプロフィールデータは残っていない。
+- 最新`live-35` source candidateで`npm run verify:core`成功：docs check、lint、typecheck、453 Vitest files / 4,127 tests、production build、asset budget。Lintは既存`IslandMilestone.tsx` Fast Refresh warning 1件、buildは既存Browserslist鮮度・空pdf chunk・500kB超chunk advisoryあり。PWA precache 11.59 MiB / 12.00 MiB。
+- 最終のunknown math fallback assertionとTSX整形後も、focused 3 files / 6 tests、対象ESLint、typecheck、docs check、`git diff --check`が成功。画面挙動・レンダリングはlive-35から変更なし。
+- `live-36`の隔離flag-off runtimeで保護者gateを実際に通り、算数4件・英語3件の弱点badge表示を390×844 / 768×1024で確認。直接fixtureした`isWeak=true`行は回答カウンター0、attempt log 0で、弱点判定閾値の証拠ではない。初回表示で既知英単語まで「単語」になる不具合を発見し、カタログの`surface`が無い既知IDは英単語表記を使うようresolver・回帰テスト・仕様を修正。phone/tablet画像を監査レポートへ保存し目視確認、browser console error/warning 0、横overflowなし。focused test 1 file / 2 tests、target ESLint、typecheck、docs check、`git diff --check`が成功（live-35の全体verify:core結果からソース差分はこのresolverとtestのみ）。
+- `live-37`の隔離flag-off `/stats` でF-12の最新チャート形状を実画面確認。phone/tabletとも練習済み3カテゴリだけを開いた線で結び、記録あり0%の点を保持し、未練習3カテゴリは軸から外して近接chipで列挙。実hover tooltipは未練習と記録あり0%を別文で表示。正答率モードは7日のうち学習日1点だけを表示し、SVG説明では残り6日を未計測と読む。390×844 / 768×1024の画像を保存・目視確認、横overflowなし、browser console error/warning 0。プロフィール作成後、回答カウンター/attempt logを整合させた3技能のQAデータを一時fixtureとして投入したため、自然な学習発生や採点閾値の証拠ではない。named browser sessionを閉じて再openすると`/stats`はonboardingに戻り、fixtureを破棄した。app sourceは変更なし、production/release・実スクリーンリーダー評価ではない。
+- `live-38`で保護者の履歴あり状態を768×1024で追加確認。実UIから使い捨てGrade 1プロフィールを作成し、表示専用の5件のrecent-attempt fixture（算数/英語、正解/不正解/skip、長い算数label、未知語fallback）を投入。document/body幅768px、scroll領域896px/1192px/296pxで横overflowなし。最下部の`設定に戻る`は180×44px、固定navとの間隔56px。長い算数名は自然に折り返し、badgeは1行、未知IDは非表示。上下2枚の画像を保存・目視し、browser console error/warning 0、SW controllerなし。閉じた同名sessionで再openした`/parents`がonboardingへ戻るためfixture破棄も確認。学習log・memory・weak flagは一切書かず、学習閾値や参加者評価の証拠ではない。保護者の履歴ありtablet gapは解消、全ルート1280px監査・実スクリーンリーダー・子ども参加者評価は継続。
+- `live-39`でflag-off主要ルートを一巡し、Exploreの問題/テンキー重なりをF-30として発見。最終候補`live-44`では短い横画面の回答棚を問題図なし53%/図あり63%に分け、16字以上のpromptを22–24pxへ縮小、図枠では重複captionを省いてカード内ラベルと絵を切らずに見せる。カード余白も微調整し、1024×700で補助カードをhint枠内に収めた。高さ736px以下はSnap Root sceneを90%幅に収める。画面仕様12へprompt/helper/visualとTenKeyを重ねない契約を追記。1280×720/1024×700/1024×768/768×1024/390×844の同一runtime候補で図とキーは非重複、キー高44–46px、document overflowなし。build revision `development-local`、flags off、delivery `snap-root-v1`、visual candidate `dig-pop-carry-bloom-v3`、SW controllerなし。5枚の文章題画像と候補識別は[監査F-30節](../../design/audits/2026-09-20-whole-app-ux/README.md#f-30--wide-explore-prompt-and-instruction-overlap-the-answer-keypad-high-fixed-and-runtime-checked)。no-support/simple-equation shelfは前段のlive-41確認を補助証拠とし、caption/card調整はvisual-support条件に限定。`ExploreProblemPanel.test.tsx` は1 file / 16 tests passed。
+- 2026-09-21 全体UX/UI監査からのowner引継ぎ F-31: Studyのスキップ行と問題コンテンツがともにz-10で、後から描画される全高promptがスキップ操作を覆い、smokeのStudy直リンク/保護者記録からの定期テスト2経路を阻害することを390×844でヒットテスト再現。top rowをz-20、スキップを44px高にし、中央ヒット対象がbuttonへ戻ること、クリックでスキップ状態と「次へ」が現れることを確認。最終候補live-44のbefore/after画像を保存。同候補の全`e2e:smoke`31シナリオがPASS。before/after画像は[全体UX監査](../../design/audits/2026-09-20-whole-app-ux/README.md#f-31--study-skip-action-was-covered-by-the-question-layer-on-phone-medium-fixed-and-runtime-checked)。使い捨てprofileでは回答なし、スキップ操作だけを一度確認し、閉じた後の新しい`/parents` contextでは`/#/onboarding`へ戻り、profile/log/memory/explore rowsは空。
+- 最終候補live-44で`npm run verify:core`成功：docs check、lint（0 errors、既存IslandMilestone warning 1件）、typecheck、453 files / 4,127 tests、production build、asset budget。`e2e:smoke`は31シナリオすべてPASS。Root Pullが有効な数列問題を受け取る検査補助の前提不足も見つかったため、`tools/e2e-smoke.mjs`だけで等差数列の空欄を読む対応を行い、対象ESLintと全smokeを再確認。fresh contextでは`/parents`がonboardingへredirectし、localStorageとuser-data store全件が空、SW controllerなしを確認。詳細・既存build advisoryは[監査検証節](../../design/audits/2026-09-20-whole-app-ux/README.md#verification-performed)。島/Nature Town flag-on、全状態網羅、実支援技術・参加者評価を含む全体監査は継続。
+
+- 2026-09-21 follow-up root-cause sweep: found the same stale global `/` → `/explore` entry contract in screen spec06 and MVP verification spec15, not just parent spec01. Marked the generic onboarding, five-action classic tab shell, and old Explore launch/cold-open requirements as legacy; linked current entry/navigation to specs12/28/43. The old `/explore` route remains selectable and its behavior was not deleted.
+- `npm run e2e:smoke` initially exposed a second guard gap: its port override was passed through the nested `npm run dev` wrapper, so Vite started canonical 5198 while the runner waited on 4173. It now uses raw `dev:test-server` on a dedicated test port with `VITE_ISLAND_ENABLED=false` and `VITE_EXPLORE_EXPERIENCE=classic-v1`; the current-UI guard rejects accidental inheritance of Island-on. The corrected legacy-only suite passed all 31 scenarios.
+- 2026-09-21 `live-50`: reran canonical Island navigation against `http://127.0.0.1:5198/#/island` at 390×844, 768×1024, 1280×720, and 844×390. All 65 route/action checks passed across 53 screenshots, with Island flag marker, delivery `mystic-island-v1`, visual `mystic-island-shore-garden-v18`, learning `mystic-island-learning-v2`, runtime version `development-local:2e369356-a8be-4057-8218-45f070935a79`, reduced motion, and no service worker recorded; zero page errors. Reviewed current home/play/learning/records screens, including the new complete-keypad landscape learning state. The test profile answered one QA question and exercised furniture/photo flows only inside disposable browser contexts, which were closed; no user data changed. Navigation E2E now saves an HTML contact sheet beside its JSON report.
+- 2026-09-21 `live-51`: under the standard `npm run dev` Island launcher, fixed the first-run Welcome staying in the generic 430px app frame while the current Island home expands to 1180px; `/onboarding` renders outside `Layout`, and its Welcome root had no Island-flag evidence marker. The no-profile route now uses the responsive Island frame, the scene caps at 920px (680px in ≤430px height), and the short-landscape layout keeps flower, lamp, and learning actions visible without scrolling at ≥44px. Explicit `/onboarding?mode=add` keeps its 430px utility frame. `IslandWelcome` now publishes `data-island-feature-enabled`. Four canonical viewports (390×844, 768×1024, 1280×720, 844×390) passed the expanded navigation E2E with 57 captures and zero page errors; runtime version `development-local:60d95334-58f8-4594-b548-c113c90cad1c`, Island flag true, delivery `mystic-island-v1`, visual candidate `mystic-island-shore-garden-v18`, welcome learning candidate not applicable. The Welcome screenshots precede QA-profile setup; later QA writes stayed in disposable browser contexts and were discarded. The [F-33 audit/contact sheet](../../design/audits/2026-09-20-whole-app-ux/README.md#first-run-island-welcome-and-short-landscape-live-51-2026-09-21) records the exact screens. No participant, physical-touch-device, or real-screen-reader evaluation is claimed.
+- 2026-09-21 `live-52`: replaced low-contrast supporting text in shared Utility surfaces and Settings/Stats/Parents with the existing Pokomoko muted token; documented the numeric WCAG contrast rule in the UI guideline, checklist, and Master. The actual Island Settings foreground measured 5.44:1 on its composed background and 5.40:1 on opaque paper; the old Slate-400 sentinel measured 2.59:1. Navigation/contrast E2E passed at 390×844, 768×1024, 1280×720, and 844×390 with 57 captures and no page errors. Runtime was Island flag-on at 5198, Nature Town flag unset, delivery `mystic-island-v1`, visual `mystic-island-shore-garden-v18`, learning `mystic-island-learning-v2`, revision `development-local`, version `development-local:60d95334-58f8-4594-b548-c113c90cad1c`; service worker off. Evidence: [F-34 contact sheet and report](../../design/audits/2026-09-20-whole-app-ux/README.md#f-34--small-supporting-text-was-too-faint-on-shared-utility-surfaces-medium-fixed-and-runtime-checked). QA writes were confined to disposable browser contexts. No participant or real-screen-reader evaluation is claimed.
+- 2026-09-21 `live-53`: closed an identity gap in cross-route evidence. Before the change, the shared `.app-container` had build metadata but no feature-flag markers; the `/onboarding` child already identified itself as Island-on. The shared root now exposes both Island and Nature Town flags, with positive/negative coverage in `check:current-ui-entry`. A fresh isolated browser at the canonical 5198 URL confirmed root `Island=true`, `NatureTown=false`, revision `development-local`, and the Welcome child `delivery=mystic-island-v1`, visual candidate `mystic-island-shore-garden-v18`. No profile or learning data was created. Direct `/parents` without a profile returned to first-run onboarding, so populated Parent content remains unreviewed. This is runtime identity evidence, not visual-quality or release evidence.
+- Final `npm run verify:core` after `live-53` passed: docs check, current-UI entry guard, lint, typecheck, all 456 Vitest files / 4,138 tests, production build, and asset budget. Lint had zero errors and the existing `IslandMilestone.tsx` Fast Refresh warning. Build retained existing stale Browserslist, empty `pdf` chunk, and >500 kB chunk advisories; PWA precache remained 11.60 MiB / 12.00 MiB. `docs:check` reports the unrelated overdue Review By on `docs/tasks/active/2026-09-13-mysterious-island-v3.md`.
+
+### Next
+
+- 支援技術による2人ゲーム設定の実読み上げ順と、子ども参加者による無説明理解・楽しさの評価を行う。自動テスト・DOM確認は参加者/支援技術評価の代替にしない。
+- F-28の弱点badge表示・既知英単語label・phone/tablet折返しは`live-36`で確認済み。ただし表示専用の隔離QA fixtureなので、自然な回答履歴から弱点候補が獲得される閾値/ヒステリシスは未検証であり、学習ルール確認として別途残す。
+- F-26/F-27の名前・操作を実スクリーンリーダーで評価する。ブラウザーAX tree確認は実支援技術の読み上げ評価の代替にしない。
+- 高優先の未所有課題がないか全ルートを継続棚卸しする。Explore F-30は[修正・5viewport実描画確認済み](../../design/audits/2026-09-20-whole-app-ux/README.md#f-30--wide-explore-prompt-and-instruction-overlap-the-answer-keypad-high-fixed-and-runtime-checked)。Study skipの被覆は[修正・実操作とsmoke確認済み](../../design/audits/2026-09-20-whole-app-ux/README.md#f-31--study-skip-action-was-covered-by-the-question-layer-on-phone-medium-fixed-and-runtime-checked)。Island shellの主要導線は`live-45`と現行候補の`live-50`でphone/tablet/desktop/短い横画面を確認したが、全状態網羅ではない。Battle setup/playは1280×720、保護者の空状態は1280×720・768×1024・390×844、履歴あり状態は390×844・768×1024、苦手候補表示fixtureは390×844・768×1024で部分確認した。Nature Townを含むflag-on構成と全ルート全状態網羅は未完了。
+- `live-45`で横画面play continuationは内部scroll後に操作可能と確認済み。初期表示では続き操作が隠れるため、touch端末でのscroll cue発見性は参加者または実端末で評価し、実利用の詰まりが確認された場合に限り最小案内を検討する。
+- owner付き課題を重複修正せず関連タスクへ伝達し、未所有の高影響不整合だけを追加修正して該当検証を完了する。
+- 探索HUDと学習/初回/ふわふわ画面の44px未満候補は[学習と島の体験改善](2026-09-07-experience-improvements.md)へ引継ぎ済み。担当側で重なる箇所を整理し、仕様に合わせて修正・検証する。
+- 2人ゲーム設定の支援技術による読み上げ順を確認する（名前・選択状態の意味論、44px操作領域、横画面でのスクロール到達性は技術確認済み）。
+- 2人ゲームの実スクリーンリーダー読み上げ順、幅768px以上の全画面、問題図の全種類と実端末でのスクロール感を確認する。1280×720では数種類の図とテンキーを確認済みだが、網羅ではない。高さ640px前後では問題図を短い枠内でスクロールするため、実端末/参加者評価で窮屈さが確認された場合は最小高さ640pxの境界を見直す。
+
+### Decision Notes
+
+- 「一貫性」は同じ見た目にすることではなく、同じ意味・操作が予測可能に振る舞い、異なる画面役割は適切に見分けられることとする。
+
+### Risks
+
+- 「全体」を広げすぎて島v3、家、Nature Town、ブランド外部確認の既存ownerを複製しない。横断の証拠づくりと未所有の共通操作課題に集中する。

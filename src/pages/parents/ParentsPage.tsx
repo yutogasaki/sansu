@@ -4,6 +4,8 @@ import { getWeakMathSkillIds, getWeakVocabIds } from '../../domain/learningRepos
 import { ENGLISH_WORDS } from '../../domain/english/words';
 import type { RecentAttempt, UserProfile } from '../../domain/types';
 import { getActiveProfile } from '../../domain/user/repository';
+import { islandParentUrl } from '../../domain/island/navigation';
+import { getParentAttemptLabel, getParentMathSkillLabel, getParentVocabWordLabel } from './parentAttemptLabel';
 import { ParentGateModal } from '../../components/gate/ParentGateModal';
 import { Spinner } from '../../components/ui/Spinner';
 import { Badge } from '../../components/ui/Badge';
@@ -19,6 +21,7 @@ type ParentsRouteState = {
 export const ParentsPage: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const settingsReturnUrl = islandParentUrl(location.pathname, location.search);
     const routeState = location.state as ParentsRouteState | null;
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [weakMathIds, setWeakMathIds] = useState<string[]>([]);
@@ -83,7 +86,7 @@ export const ParentsPage: React.FC = () => {
             <ScreenScaffold title="保護者メニュー" footerSpacing="none" scroll={false}>
                 <ParentGateModal
                     isOpen
-                    onClose={() => navigate('/settings')}
+                    onClose={() => navigate(settingsReturnUrl)}
                     onSuccess={() => setIsGatePassed(true)}
                 />
             </ScreenScaffold>
@@ -139,17 +142,17 @@ export const ParentsPage: React.FC = () => {
                 />
                 <div className="grid grid-cols-2 gap-3">
                     <InsetPanel className="space-y-1 py-4 text-center">
-                        <div className="text-[11px] font-black uppercase tracking-[0.18em] text-slate-500">連続学習</div>
+                        <div className="text-[11px] font-black uppercase tracking-[0.18em] text-pokomoko-muted">連続学習</div>
                         <div className="text-3xl font-black tracking-[-0.04em] text-slate-800">{profile.streak || 0}</div>
-                        <div className="text-xs text-slate-400">日</div>
+                        <div className="text-xs text-pokomoko-muted">日</div>
                     </InsetPanel>
                     <InsetPanel className="space-y-1 py-4 text-center">
-                        <div className="text-[11px] font-black uppercase tracking-[0.18em] text-slate-500">本日の学習</div>
+                        <div className="text-[11px] font-black uppercase tracking-[0.18em] text-pokomoko-muted">本日の学習</div>
                         <div className="text-3xl font-black tracking-[-0.04em] text-slate-800">{profile.todayCount || 0}</div>
-                        <div className="text-xs text-slate-400">回</div>
+                        <div className="text-xs text-pokomoko-muted">回</div>
                     </InsetPanel>
                 </div>
-                <div className="text-center text-xs leading-5 text-slate-400">
+                <div className="text-center text-xs leading-5 text-pokomoko-muted">
                     苦手候補: <span className="font-bold text-slate-600">{weakTotal}</span> 件
                 </div>
             </SurfacePanel>
@@ -167,12 +170,12 @@ export const ParentsPage: React.FC = () => {
                             <div className="flex flex-wrap gap-2">
                                 {weakMathIds.map(id => (
                                     <Badge key={id} variant="warning" className="text-sm">
-                                        {id}
+                                        {getParentMathSkillLabel(id)}
                                     </Badge>
                                 ))}
                             </div>
                         ) : (
-                            <div className="text-sm text-slate-500">現在のところ苦手な問題はありません。</div>
+                            <div className="text-sm text-pokomoko-muted">現在のところ苦手な問題はありません。</div>
                         )}
                     </InsetPanel>
 
@@ -184,14 +187,16 @@ export const ParentsPage: React.FC = () => {
                                     const word = vocabWordMap.get(id);
                                     return (
                                         <Badge key={id} variant="warning" className="text-sm">
-                                            {word?.surface ?? id}
-                                            <span className="ml-1 text-[11px] text-amber-700/80">({word?.japanese || '?'})</span>
+                                            {getParentVocabWordLabel(id, vocabWordMap)}
+                                            {word?.japanese && (
+                                                <span className="ml-1 text-[11px] text-amber-700/80">({word.japanese})</span>
+                                            )}
                                         </Badge>
                                     );
                                 })}
                             </div>
                         ) : (
-                            <div className="text-sm text-slate-500">現在のところ苦手な単語はありません。</div>
+                            <div className="text-sm text-pokomoko-muted">現在のところ苦手な単語はありません。</div>
                         )}
                     </InsetPanel>
                 </div>
@@ -206,18 +211,22 @@ export const ParentsPage: React.FC = () => {
                     <div className="space-y-2">
                         {recentAttempts.map((log: RecentAttempt) => {
                             const badge = getResultBadgeProps(log.result);
+                            const skillLabel = getParentAttemptLabel(log.subject, log.skillId, vocabWordMap);
                             return (
                                 <InsetPanel key={log.id}>
                                     <div className="flex items-start justify-between gap-3">
                                         <div className="min-w-0">
-                                            <div className="text-[11px] font-bold text-slate-400">
+                                            <div className="text-[11px] font-bold text-pokomoko-muted">
                                                 {new Date(log.timestamp).toLocaleString('ja-JP')}
                                             </div>
                                             <div className="mt-1 font-bold text-slate-700">
-                                                {log.subject === 'math' ? 'さんすう' : 'えいご'} / {log.subject === 'vocab' ? (vocabWordMap.get(log.skillId)?.surface ?? log.skillId) : log.skillId}
+                                                {log.subject === 'math' ? 'さんすう' : 'えいご'} / {skillLabel}
                                             </div>
                                         </div>
-                                        <Badge variant={badge.variant} className={badge.className}>
+                                        <Badge
+                                            variant={badge.variant}
+                                            className={`shrink-0 whitespace-nowrap ${badge.className}`}
+                                        >
                                             {badge.label}
                                         </Badge>
                                     </div>
@@ -226,12 +235,12 @@ export const ParentsPage: React.FC = () => {
                         })}
                     </div>
                 ) : (
-                    <InsetPanel className="text-sm text-slate-500">履歴はありません。</InsetPanel>
+                    <InsetPanel className="text-sm text-pokomoko-muted">履歴はありません。</InsetPanel>
                 )}
             </SurfacePanel>
 
             <div className="pb-8 text-center">
-                <Button variant="secondary" className="min-w-[180px]" onClick={() => navigate('/settings')}>
+                <Button variant="secondary" className="min-w-[180px]" onClick={() => navigate(settingsReturnUrl)}>
                     設定に戻る
                 </Button>
             </div>

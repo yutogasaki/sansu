@@ -9,7 +9,7 @@ interface SectionLabelProps extends React.HTMLAttributes<HTMLHeadingElement> {
 export const SectionLabel: React.FC<SectionLabelProps> = ({ className, children, ...props }) => (
     <h2
         className={cn(
-            "px-1 text-[11px] font-black uppercase tracking-[0.22em] text-slate-500/90",
+            "px-1 text-[11px] font-black uppercase tracking-[0.22em] text-pokomoko-muted",
             className
         )}
         {...props}
@@ -54,7 +54,7 @@ export const SurfacePanelHeader: React.FC<SurfacePanelHeaderProps> = ({
         <div className="min-w-0 flex-1 basis-[12rem]">
             <h3 className="text-[15px] font-black tracking-[-0.01em] text-slate-800">{title}</h3>
             {description ? (
-                <p className="mt-1 text-xs font-medium leading-5 text-slate-500">{description}</p>
+                <p className="mt-1 text-xs font-medium leading-5 text-pokomoko-muted">{description}</p>
             ) : null}
         </div>
         {action ? <div className="shrink-0 mobile:flex mobile:w-full mobile:justify-end">{action}</div> : null}
@@ -106,7 +106,7 @@ export const SettingRow: React.FC<SettingRowProps> = ({
         <div className="min-w-0 flex-1 basis-[12rem]">
             <div className="font-bold text-slate-700">{title}</div>
             {description ? (
-                <p className="mt-1 text-xs leading-5 text-slate-500">{description}</p>
+                <p className="mt-1 text-xs leading-5 text-pokomoko-muted">{description}</p>
             ) : null}
         </div>
         {action ? <div className="shrink-0 mobile:flex mobile:w-full mobile:justify-end">{action}</div> : null}
@@ -119,12 +119,14 @@ interface SegmentedControlOption<T extends string> {
 }
 
 interface SegmentedControlProps<T extends string> extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
+    "aria-label": string;
     value: T;
     options: SegmentedControlOption<T>[];
     onChange: (value: T) => void;
 }
 
 export function SegmentedControl<T extends string>({
+    "aria-label": accessibleName,
     className,
     value,
     options,
@@ -140,6 +142,8 @@ export function SegmentedControl<T extends string>({
 
     return (
         <div
+            role="group"
+            aria-label={accessibleName}
             className={cn(
                 "grid gap-1.5 rounded-[16px] border border-white/80 bg-white/55 p-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.38)]",
                 gridClassName,
@@ -155,13 +159,14 @@ export function SegmentedControl<T extends string>({
                     <button
                         key={option.value}
                         type="button"
+                        aria-pressed={isActive}
                         onClick={() => onChange(option.value)}
                         className={cn(
-                            "min-w-0 rounded-[12px] px-3 py-2.5 text-center text-sm font-bold leading-4 transition-all",
+                            "flex min-h-11 min-w-0 items-center justify-center rounded-[12px] px-3 py-2.5 text-center text-sm font-bold leading-4 transition-all",
                             isLastMobileWideOption && "col-span-2 land:col-span-1 sm:col-span-1",
                             isActive
                                 ? "bg-white text-slate-800 shadow-[0_10px_22px_-16px_rgba(15,23,42,0.32)]"
-                                : "text-slate-400 hover:text-slate-600"
+                                : "text-pokomoko-muted hover:text-slate-700"
                         )}
                     >
                         {option.label}
@@ -198,11 +203,11 @@ export const SelectionCard = React.forwardRef<HTMLButtonElement, SelectionCardPr
             <div className="min-w-0 flex-1">
                 <div className="font-bold text-lg text-slate-700 group-hover:text-slate-900">{label}</div>
                 {description ? (
-                    <div className="mt-1 text-xs leading-5 text-slate-400">{description}</div>
+                    <div className="mt-1 text-xs leading-5 text-pokomoko-muted">{description}</div>
                 ) : null}
             </div>
             {trailing ? (
-                <div className="shrink-0 text-slate-300 group-hover:text-cyan-600">
+                <div className="shrink-0 text-pokomoko-muted group-hover:text-cyan-700">
                     {trailing}
                 </div>
             ) : null}

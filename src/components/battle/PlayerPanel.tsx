@@ -81,56 +81,73 @@ export const PlayerPanel: React.FC<PlayerPanelProps> = ({
 
     return (
         <div className={cn(
-            "flex h-full flex-col overflow-hidden rounded-[28px] border border-white/75 shadow-[0_24px_50px_-34px_rgba(15,23,42,0.36)] transition-colors duration-200 app-glass-strong",
+            "battle-player-panel relative flex h-full flex-col overflow-hidden rounded-[28px] border border-white/75 shadow-[0_24px_50px_-34px_rgba(15,23,42,0.36)] transition-colors duration-200 app-glass-strong",
             bgFlash
         )}>
             {/* Problem display + skip */}
-            <div className="flex-none px-4 pt-4 pb-2">
-                <div className="flex items-center justify-between mb-1">
+            <div className="battle-panel-heading flex-none px-4 pt-4 pb-2">
+                <div className="battle-panel-heading-row flex items-center justify-between mb-1">
                     <div className="app-pill px-3 py-1 text-xs font-black text-slate-500">
                         {gameState.config.emoji} {gameState.config.name}
                         <span className="ml-1 text-slate-300">
                             {gameState.config.subject === "vocab" ? "🔤" : "🔢"}
                         </span>
                     </div>
+                    {!isChoice && (
+                        <output className="battle-mobile-answer" aria-label="入力中の答え">
+                            {gameState.userInput || "?"}
+                        </output>
+                    )}
+                    <div className="battle-stats flex flex-none justify-center gap-2 px-4 text-xs font-black">
+                        <span className="app-pill px-2.5 py-1 text-emerald-600">○ {gameState.correctCount}</span>
+                        <span className="app-pill px-2.5 py-1 text-rose-500">× {gameState.incorrectCount}</span>
+                        {showCombo && (
+                            <span className="app-pill px-2.5 py-1 text-cyan-700">🔥 {gameState.combo} コンボ</span>
+                        )}
+                        {showCombo && isLocked && (
+                            <span className="app-pill px-2.5 py-1 text-rose-600">⏳ {gameState.lockSeconds}びょう まって</span>
+                        )}
+                    </div>
                     <button
                         onClick={onSkip}
                         disabled={disabled || isLocked || !problem}
-                        className="app-pill px-2.5 py-1 text-[10px] font-black text-slate-500 transition-colors hover:bg-white/84 hover:text-slate-700 disabled:opacity-30"
+                        className="app-pill min-h-11 px-2.5 py-1 text-[10px] font-black text-slate-500 transition-colors hover:bg-white/84 hover:text-slate-700 disabled:opacity-30"
                     >
                         スキップ ▶
                     </button>
                 </div>
-                <div
-                    className={cn(
-                        "rounded-[22px] border border-white/75 bg-white/52 px-4 py-3 text-center text-2xl font-black text-slate-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.28)]",
-                        isMathProblem
-                            ? "max-h-[15rem] overflow-auto"
-                            : "flex min-h-[4.25rem] items-center justify-center"
-                    )}
-                >
-                    {problem ? (
-                        isMathProblem ? (
-                            <MathProblemPrompt
-                                problem={{
-                                    questionText: problem.questionText,
-                                    questionVisual: problem.questionVisual,
-                                    categoryId: problem.skillId,
-                                }}
-                                className="gap-3"
-                            />
-                        ) : (
-                            problem.questionText
-                        )
-                    ) : "..."}
-                </div>
+            </div>
+
+            <div
+                className={cn(
+                    "battle-question-frame mx-4 mb-2 rounded-[22px] border border-white/75 bg-white/52 px-4 py-3 text-center text-2xl font-black text-slate-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.28)]",
+                    isMathProblem && "battle-math-question",
+                    isMathProblem
+                        ? "max-h-[15rem] overflow-auto"
+                        : "flex min-h-[4.25rem] items-center justify-center"
+                )}
+            >
+                {problem ? (
+                    isMathProblem ? (
+                        <MathProblemPrompt
+                            problem={{
+                                questionText: problem.questionText,
+                                questionVisual: problem.questionVisual,
+                                categoryId: problem.skillId,
+                            }}
+                            className="battle-math-prompt gap-3"
+                        />
+                    ) : (
+                        problem.questionText
+                    )
+                ) : "..."}
             </div>
 
             {/* Number input preview (only for math) */}
             {!isChoice && (
-                <div className="flex-none px-4 pb-2">
+                <div className="battle-answer flex-none px-4 pb-2">
                     <div className={cn(
-                        "flex h-11 items-center justify-center rounded-[18px] border text-xl font-black transition-colors app-glass",
+                        "battle-answer-value flex h-11 items-center justify-center rounded-[18px] border text-xl font-black transition-colors app-glass",
                         feedback === "correct" ? "border-emerald-200 text-emerald-600 bg-emerald-50/82" :
                             feedback === "incorrect" ? "border-rose-200 text-rose-600 bg-rose-50/82" :
                                 "border-white/80 text-slate-800 bg-white/76"
@@ -140,20 +157,8 @@ export const PlayerPanel: React.FC<PlayerPanelProps> = ({
                 </div>
             )}
 
-            {/* Stats */}
-            <div className="flex flex-none justify-center gap-2 px-4 pb-3 text-xs font-black">
-                <span className="app-pill px-2.5 py-1 text-emerald-600">○ {gameState.correctCount}</span>
-                <span className="app-pill px-2.5 py-1 text-rose-500">× {gameState.incorrectCount}</span>
-                {showCombo && (
-                    <span className="app-pill px-2.5 py-1 text-cyan-700">🔥 {gameState.combo} コンボ</span>
-                )}
-                {showCombo && isLocked && (
-                    <span className="app-pill px-2.5 py-1 text-rose-600">⏳ {gameState.lockSeconds}びょう まって</span>
-                )}
-            </div>
-
             {/* Input area */}
-            <div className="flex-1 min-h-0 px-2 pb-2">
+            <div className={cn("battle-keypad-wrap flex-1 min-h-0 px-2 pb-2", isChoice && "battle-choice-wrap")}>
                 {isChoice && problem?.choices ? (
                     <ChoiceGroup
                         choices={problem.choices}
@@ -168,6 +173,8 @@ export const PlayerPanel: React.FC<PlayerPanelProps> = ({
                         onEnter={handleEnter}
                         showDecimal={problem?.showDecimal}
                         compact={isMathProblem && Boolean(problem?.questionVisual)}
+                        minRowHeight={44}
+                        className="battle-ten-key"
                     />
                 )}
             </div>

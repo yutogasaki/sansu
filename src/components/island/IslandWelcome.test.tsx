@@ -13,6 +13,7 @@ describe('profile-free Island welcome', () => {
         expect(markup).toContain('data-mode="welcome"');
         expect(markup).toContain('data-onboarding-world="island"');
         expect(markup).toContain('data-onboarding-candidate="island-touch-first-v1"');
+        expect(markup).toMatch(/data-island-feature-enabled="(?:true|false)"/);
         expect(markup).toContain('おはな');
         expect(markup).toContain('あかり');
         expect(markup).toContain('まなぶ');

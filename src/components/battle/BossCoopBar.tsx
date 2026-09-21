@@ -23,7 +23,7 @@ export const BossCoopBar: React.FC<BossCoopBarProps> = ({
     const danger = remainingSec <= 10;
 
     return (
-        <div className="w-full rounded-[28px] border border-white/75 px-4 py-3 app-glass-strong shadow-[0_22px_44px_-32px_rgba(15,23,42,0.34)]">
+        <div className="battle-boss-bar w-full rounded-[28px] border border-white/75 px-4 py-3 app-glass-strong shadow-[0_22px_44px_-32px_rgba(15,23,42,0.34)]">
             <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                     <span className="text-2xl">🐲</span>
@@ -44,7 +44,7 @@ export const BossCoopBar: React.FC<BossCoopBarProps> = ({
                     {onCancel && (
                         <button
                             onClick={onCancel}
-                            className="app-pill px-2.5 py-1 text-xs font-black text-slate-500 transition-colors hover:bg-white/84 hover:text-slate-700"
+                            className="app-pill min-h-11 px-2.5 py-1 text-xs font-black text-slate-500 transition-colors hover:bg-white/84 hover:text-slate-700"
                         >
                             ✕ やめる
                         </button>

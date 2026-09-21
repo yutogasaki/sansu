@@ -1,0 +1,127 @@
+[
+  {
+    "label": "island-home",
+    "file": "844-landscape-home.png",
+    "url": "http://127.0.0.1:5233/#/island",
+    "metadata": {
+      "revision": "development-local",
+      "version": "development-local:bd9e244d-6b20-426d-9875-d3034f81865e",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "horizontalOverflow": false,
+    "visibleControls": 15,
+    "under44": []
+  },
+  {
+    "label": "records",
+    "file": "844-landscape-records.png",
+    "url": "http://127.0.0.1:5233/#/stats",
+    "metadata": {
+      "revision": "development-local",
+      "version": "development-local:bd9e244d-6b20-426d-9875-d3034f81865e",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "horizontalOverflow": false,
+    "visibleControls": 7,
+    "under44": []
+  },
+  {
+    "label": "settings",
+    "file": "844-landscape-settings.png",
+    "url": "http://127.0.0.1:5233/#/settings",
+    "metadata": {
+      "revision": "development-local",
+      "version": "development-local:bd9e244d-6b20-426d-9875-d3034f81865e",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "horizontalOverflow": false,
+    "visibleControls": 10,
+    "under44": []
+  },
+  {
+    "label": "battle-setup",
+    "file": "844-landscape-battle.png",
+    "url": "http://127.0.0.1:5233/#/battle/play",
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "horizontalOverflow": false,
+    "grid": [
+      {
+        "columns": "400px 400px",
+        "players": [
+          400,
+          400
+        ]
+      }
+    ],
+    "scroll": [
+      {
+        "height": 130,
+        "scrollHeight": 628
+      },
+      {
+        "height": 618,
+        "scrollHeight": 618
+      },
+      {
+        "height": 618,
+        "scrollHeight": 618
+      }
+    ],
+    "under44": [],
+    "bottomScroll": {
+      "height": 130,
+      "scrollHeight": 628,
+      "scrollTop": 498
+    }
+  }
+]

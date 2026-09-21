@@ -65,8 +65,9 @@ This is a review aid, not the primary design spec.
 
 ### Accessibility
 
-- Is contrast acceptable?
+- Do meaning-bearing text labels meet 4.5:1 contrast (3:1 for large text) against the rendered, composited background, including translucent surfaces?
 - Are tap targets large enough?
+- Do icon-only actions expose a concise Japanese accessible name, with decorative icons hidden from assistive technology?
 - Is focus state visible where keyboard or assistive interaction matters?
 - Are success, danger, and failure understandable without relying on color, motion, or sound alone?
 

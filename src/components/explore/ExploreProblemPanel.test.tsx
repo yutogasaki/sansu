@@ -17,13 +17,13 @@ const visualSupportProblem: Problem = {
     ...arbitraryProblem,
     id: "rapid-trail-visual-support-problem",
     categoryId: "add_1d_1",
-    questionText: "2 + 3",
+    questionText: "みかん 1こ と みかん 4こ あわせて いくつ？",
     correctAnswer: "5",
     questionVisual: {
         kind: "addition-items",
         groups: [
-            { emoji: "●", label: "ふたつ", count: 2 },
-            { emoji: "●", label: "みっつ", count: 3 },
+            { emoji: "🍊", label: "みかん", count: 1 },
+            { emoji: "🍊", label: "みかん", count: 4 },
         ],
     },
 };
@@ -181,6 +181,7 @@ describe("ExploreProblemPanel rapid-trail art", () => {
         );
         expect(ready).toContain('class="explore-immersive-message is-ready"');
         expect(ready).toContain('aria-label="この問題の 数のヒント"');
+        expect(ready).toContain('data-prompt-density="compact"');
         expect(correct).toContain('class="explore-immersive-answer-shelf"');
         expect(correct).not.toContain("has-visual-support");
         expect(correct).not.toContain("explore-immersive-message is-ready");
