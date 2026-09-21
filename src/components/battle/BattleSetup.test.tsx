@@ -31,8 +31,16 @@ describe("BattleSetup accessibility", () => {
         const html = renderSetup();
 
         expect(html).toContain("data-battle-setup-scroll");
+        expect(html).toContain('role="region" aria-label="ふたりの せってい"');
         expect(html).toContain('data-battle-grade="player-1"');
         expect(html).toContain('data-battle-grade="player-2"');
+    });
+
+    it("associates the start action with its live readiness explanation", () => {
+        const html = renderSetup();
+
+        expect(html).toContain('id="battle-setup-status" role="status"');
+        expect(html).toContain('aria-describedby="battle-setup-status"');
     });
 
     it("announces the chosen avatar, exposes grades visually and semantically, and keeps 44px option targets", () => {

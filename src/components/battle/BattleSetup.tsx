@@ -346,6 +346,8 @@ export const BattleSetup: React.FC<BattleSetupProps> = ({
             <div
                 ref={setupScrollRef}
                 data-battle-setup-scroll
+                role="region"
+                aria-label="ふたりの せってい"
                 className="mt-3 min-h-0 flex-1 overflow-y-auto overscroll-contain pr-1 ipadland:mt-2"
             >
                 <div className="grid grid-cols-1 gap-3 pb-2 ipadland:grid-cols-2 ipadland:gap-2">
@@ -373,7 +375,7 @@ export const BattleSetup: React.FC<BattleSetupProps> = ({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
             >
-                <p role="status" aria-atomic="true" className="mb-2 flex flex-wrap items-center justify-center gap-x-2 text-center text-sm font-semibold text-slate-600">
+                <p id="battle-setup-status" role="status" aria-atomic="true" className="mb-2 flex flex-wrap items-center justify-center gap-x-2 text-center text-sm font-semibold text-slate-600">
                     <span>{setupStatus}</span>
                     {activeGradeScrollDirection && (
                         <span
@@ -392,6 +394,7 @@ export const BattleSetup: React.FC<BattleSetupProps> = ({
                 <Button
                     onClick={handleStart}
                     disabled={!canStart}
+                    aria-describedby="battle-setup-status"
                     size="xl"
                     className={cn(
                         "w-full text-lg",

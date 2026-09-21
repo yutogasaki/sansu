@@ -944,9 +944,12 @@ try {
                 await playerTwoGrades.waitFor();
                 await page.getByRole('group', { name: 'プレイヤー 1のアイコン' }).waitFor();
                 await page.getByRole('group', { name: 'プレイヤー 2のアイコン' }).waitFor();
+                await page.getByRole('region', { name: 'ふたりの せってい' }).waitFor();
                 const start = button(page, 'スタート！');
                 assert.equal(await start.isEnabled(), false, 'Two-player setup requires both grades before starting');
                 const setupStatus = setup.locator('[role="status"]');
+                assert.equal(await setupStatus.getAttribute('id'), 'battle-setup-status');
+                assert.equal(await start.getAttribute('aria-describedby'), 'battle-setup-status');
                 const setupStatusCopy = () => setupStatus.locator(':scope > span').first().textContent();
                 const expectedScrollCue = async player => page.evaluate(playerNumber => {
                     const viewport = document.querySelector('[data-battle-setup-scroll]');
