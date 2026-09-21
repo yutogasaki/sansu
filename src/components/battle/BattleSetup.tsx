@@ -217,6 +217,13 @@ export const BattleSetup: React.FC<BattleSetupProps> = ({
 
     const canStart = p1.grade !== null && p2.grade !== null && p1.emoji && p2.emoji;
     const currentMode = MODE_COPY[mode];
+    const setupStatus = p1.grade === null && p2.grade === null
+        ? "ふたりの がくねんを えらぶと はじめられるよ"
+        : p1.grade === null
+            ? "プレイヤー1の がくねんを えらぶと はじめられるよ"
+            : p2.grade === null
+                ? "プレイヤー2の がくねんを えらぶと はじめられるよ"
+                : "ふたりの じゅんびが できたよ";
 
     const handleStart = () => {
         if (!canStart) return;
@@ -297,6 +304,9 @@ export const BattleSetup: React.FC<BattleSetupProps> = ({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
             >
+                <p role="status" aria-atomic="true" className="mb-2 text-center text-sm font-semibold text-slate-600">
+                    {setupStatus}
+                </p>
                 <Button
                     onClick={handleStart}
                     disabled={!canStart}

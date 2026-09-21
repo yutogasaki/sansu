@@ -605,6 +605,8 @@ try {
                 await page.getByRole('group', { name: 'プレイヤー 2のアイコン' }).waitFor();
                 const start = button(page, 'スタート！');
                 assert.equal(await start.isEnabled(), false, 'Two-player setup requires both grades before starting');
+                const setupStatus = setup.locator('[role="status"]');
+                assert.equal(await setupStatus.textContent(), 'ふたりの がくねんを えらぶと はじめられるよ');
                 const setupState = await page.evaluate(() => ({
                     documentWidth: document.documentElement.scrollWidth,
                     viewportWidth: innerWidth,
@@ -630,9 +632,11 @@ try {
                 const gradeOptions = page.getByRole('button', { name: '1ねんせい', exact: true });
                 assert.equal(await gradeOptions.count(), 2);
                 await gradeOptions.first().click();
+                assert.equal(await setupStatus.textContent(), 'プレイヤー2の がくねんを えらぶと はじめられるよ');
                 await gradeOptions.last().click();
                 assert.equal(await gradeOptions.first().getAttribute('aria-pressed'), 'true');
                 assert.equal(await gradeOptions.last().getAttribute('aria-pressed'), 'true');
+                assert.equal(await setupStatus.textContent(), 'ふたりの じゅんびが できたよ');
                 assert.equal(await start.isEnabled(), true, 'Selecting both grades enables the start action');
                 await button(page, 'もどる').click();
                 await page.waitForURL('**/#/battle');
@@ -640,7 +644,7 @@ try {
             await button(page, 'もどる').click();
             await waitMode(page, 'home'); await ordinary('#/island');
             assert.deepEqual(errors, []);
-            report.scenarios.push({ viewport, pass: true, settingsContrast, parentCandidateFixture, checks: ['first-run welcome identity, responsive frame, and visible 44px actions', ...(viewport.width <= 360 ? ['narrow first-run item labels remain single-line'] : []), 'explicit profile-add frame preserved', 'top entry without learning', 'stale top query and unknown URL recovery', 'existing-profile onboarding return', 'pending-plan top return without learning writes', 'ordinary tabs', ...(viewport.height <= 430 ? ['play continuation reachable by internal scroll'] : []), 'settings source retained', 'settings small-text contrast on composed surface and opaque paper', 'draft and seven-store equality', 'back/forward', 'home reload without auto-start', 'placement cancel/save', 'camera close', 'real photo/detail close', 'populated photo action remains fully visible above fixed navigation', 'direct learning reload/close', 'curriculum scroll restored', 'direct placement fallback', 'records refresh after answer', 'current-Island parent gate and empty review-candidate copy', 'current-Island parent populated review candidates via display-only fixture', 'parent explanation wraps without horizontal overflow', 'parent return reaches the originating settings section from both states', 'Island menu → Other Games → Battle guidance/setup and return', ...(viewport.width >= 768 && viewport.height > viewport.width ? ['tablet portrait Battle orientation guidance and return'] : viewport.width <= 767 && viewport.height <= 639 ? ['small-phone Battle screen-size guidance and return'] : ['two-player setup semantics, 44px options, and start readiness'])], errors });
+            report.scenarios.push({ viewport, pass: true, settingsContrast, parentCandidateFixture, checks: ['first-run welcome identity, responsive frame, and visible 44px actions', ...(viewport.width <= 360 ? ['narrow first-run item labels remain single-line'] : []), 'explicit profile-add frame preserved', 'top entry without learning', 'stale top query and unknown URL recovery', 'existing-profile onboarding return', 'pending-plan top return without learning writes', 'ordinary tabs', ...(viewport.height <= 430 ? ['play continuation reachable by internal scroll'] : []), 'settings source retained', 'settings small-text contrast on composed surface and opaque paper', 'draft and seven-store equality', 'back/forward', 'home reload without auto-start', 'placement cancel/save', 'camera close', 'real photo/detail close', 'populated photo action remains fully visible above fixed navigation', 'direct learning reload/close', 'curriculum scroll restored', 'direct placement fallback', 'records refresh after answer', 'current-Island parent gate and empty review-candidate copy', 'current-Island parent populated review candidates via display-only fixture', 'parent explanation wraps without horizontal overflow', 'parent return reaches the originating settings section from both states', 'Island menu → Other Games → Battle guidance/setup and return', ...(viewport.width >= 768 && viewport.height > viewport.width ? ['tablet portrait Battle orientation guidance and return'] : viewport.width <= 767 && viewport.height <= 639 ? ['small-phone Battle screen-size guidance and return'] : ['two-player setup semantics, 44px options, prerequisite guidance, and start readiness'])], errors });
             console.log(`PASS navigation ${viewport.width}x${viewport.height}`);
         } catch (error) {
             await page.screenshot({ path: `${out}/${viewport.width}-failure.png` }).catch(() => {});

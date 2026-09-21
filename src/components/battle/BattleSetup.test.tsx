@@ -20,6 +20,13 @@ describe("BattleSetup accessibility", () => {
         expect(html).toContain('aria-label="プレイヤー 2の もんだいの きょうか"');
     });
 
+    it("explains why the start action is unavailable before either grade is selected", () => {
+        const html = renderSetup();
+
+        expect(html).toContain('role="status" aria-atomic="true"');
+        expect(html).toContain("ふたりの がくねんを えらぶと はじめられるよ");
+    });
+
     it("announces the chosen avatar, exposes grades visually and semantically, and keeps 44px option targets", () => {
         const html = renderSetup();
         const optionButtons = [...html.matchAll(/<button\b([^>]*)>/g)]
