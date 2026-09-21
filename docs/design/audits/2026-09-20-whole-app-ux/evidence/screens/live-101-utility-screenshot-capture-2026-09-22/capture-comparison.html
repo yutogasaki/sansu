@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>320px Utility capture comparison</title>
+<style>
+  body { margin: 24px; color: #25314f; background: #f6f4ee; font: 14px system-ui, sans-serif; }
+  main { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; align-items: start; }
+  figure { margin: 0; padding: 12px; background: #fff; border: 1px solid #ded8e8; border-radius: 12px; }
+  img { display: block; max-width: 100%; height: auto; background: #f0eef3; }
+  figcaption { padding-top: 10px; line-height: 1.5; }
+  .crop { width: 320px; }
+</style>
+<h1>下部ナビの撮影差分（320×568）</h1>
+<p>対象は現行Island runtimeの <code>/&#35;/battle</code>。全画面PNGでは下部ナビが写らない一方、同じ実行の要素単体PNGには5タブが写る。比較用の<a href="report.json">report</a>にruntime identity・DOM寸法・hit-testを保存。</p>
+<main>
+  <figure>
+    <a href="320x568-other-games.png"><img src="320x568-other-games.png" alt="320×568 full viewport capture; footer tabs are absent"></a>
+    <figcaption>全画面キャプチャ。ナビのDOMと操作域は存在するが、画像にはアイコン・ラベルが出ない。</figcaption>
+  </figure>
+  <figure>
+    <a href="320x568-other-games-navigation.png"><img class="crop" src="320x568-other-games-navigation.png" alt="320px navigation element capture with all five tabs visible"></a>
+    <figcaption>同じ画面・同じ実行で下部ナビ要素だけを撮影。5タブが表示されている。</figcaption>
+  </figure>
+</main>
+</html>
