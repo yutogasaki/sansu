@@ -10,12 +10,13 @@ const games = [
 
 export function OtherGames() {
     const navigate = useNavigate();
-    return <ScreenScaffold title="ほかの あそび" showBack onBack={() => navigate('/island')}>
-        <div className="mx-auto flex w-full max-w-xl flex-col gap-3 px-[var(--screen-padding-x)] pb-6">
+    return <ScreenScaffold title="ほかの あそび" showBack onBack={() => navigate('/island')} containerClassName="island-other-games-screen">
+        <div className="island-other-games-list mx-auto flex w-full max-w-xl flex-col gap-3 px-[var(--screen-padding-x)] pb-6">
             {games.map(game => {
                 const Icon = game.icon;
                 return <button key={game.to} type="button" onClick={() => navigate(game.to)}
-                    className="app-pill flex min-h-20 items-center gap-4 rounded-2xl p-4 text-left focus-visible:outline-2 focus-visible:outline-offset-2">
+                    data-other-game-choice
+                    className="island-other-game-choice app-pill flex min-h-20 items-center gap-4 rounded-2xl p-4 text-left focus-visible:outline-2 focus-visible:outline-offset-2">
                     <Icon className="h-6 w-6 shrink-0" aria-hidden="true" />
                     <span className="min-w-0 flex-1"><strong className="block">{game.title}</strong><small className="mt-1 block">{game.detail}</small></span>
                     <ArrowRight className="h-5 w-5 shrink-0" aria-hidden="true" />

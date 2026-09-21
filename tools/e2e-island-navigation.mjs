@@ -587,9 +587,43 @@ try {
             await page.locator('[data-home-group="more-play"] > summary').click();
             await page.locator('[data-home-action="other-games"]').click();
             await page.waitForURL('**/#/battle');
-            await page.getByRole('heading', { name: 'ほかの あそび', exact: true }).waitFor();
+            const otherGamesHeading = page.getByRole('heading', { name: 'ほかの あそび', exact: true });
+            await otherGamesHeading.waitFor();
             assert.equal(await page.getByRole('button', { name: /ふたりで きょうりょく/ }).count(), 1);
             assert.equal(await page.getByRole('button', { name: /つなひき たいせん/ }).count(), 1);
+            const otherGamesAlignment = await page.evaluate(() => {
+                const heading = [...document.querySelectorAll('h1')].find(element => element.textContent?.trim() === 'ほかの あそび');
+                const firstChoice = [...document.querySelectorAll('button')].find(element => element.textContent?.includes('ポッコの たんけん'));
+                if (!heading || !firstChoice) throw new Error('The Other Games heading or first choice is missing');
+                const headingRect = heading.getBoundingClientRect();
+                const choiceRect = firstChoice.getBoundingClientRect();
+                const headingCenter = (headingRect.left + headingRect.right) / 2;
+                const choiceCenter = (choiceRect.left + choiceRect.right) / 2;
+                return { headingCenter, choiceCenter, centerDelta: Math.abs(headingCenter - choiceCenter) };
+            });
+            if (viewport.width >= 700) {
+                assert(otherGamesAlignment.centerDelta <= 2,
+                    `Wide Other Games heading aligns with the centered choice list: ${JSON.stringify(otherGamesAlignment)}`);
+            }
+            const otherGamesChoiceLayout = await page.evaluate(() => {
+                const navigation = document.querySelector('.island-shell-nav');
+                const navigationTop = navigation?.getBoundingClientRect().top ?? innerHeight;
+                const choices = [...document.querySelectorAll('[data-other-game-choice]')].map(button => {
+                    const rect = button.getBoundingClientRect();
+                    return {
+                        bottom: rect.bottom,
+                        width: rect.width,
+                        height: rect.height,
+                    };
+                });
+                return { navigationTop, choices };
+            });
+            if (viewport.width >= 600 && viewport.height <= 430) {
+                assert(otherGamesChoiceLayout.choices.length === 3
+                    && otherGamesChoiceLayout.choices.every(choice => choice.bottom <= otherGamesChoiceLayout.navigationTop + 1
+                        && choice.width >= 44 && choice.height >= 44),
+                `Short-landscape game choices stay fully visible above navigation: ${JSON.stringify(otherGamesChoiceLayout)}`);
+            }
             await captureUtility('other-games');
             await button(page, '2人あそびを くわしく えらぶ').click();
             await page.waitForURL('**/#/battle/play');
@@ -685,7 +719,7 @@ try {
             await button(page, 'もどる').click();
             await waitMode(page, 'home'); await ordinary('#/island');
             assert.deepEqual(errors, []);
-            report.scenarios.push({ viewport, pass: true, settingsContrast, parentCandidateFixture, checks: ['first-run welcome identity, responsive frame, and visible 44px actions', ...(viewport.width <= 360 ? ['narrow first-run item labels remain single-line', 'five-tab navigation labels fit on one line inside 44px-or-larger targets'] : []), 'explicit profile-add frame preserved', 'top entry without learning', 'stale top query and unknown URL recovery', 'existing-profile onboarding return', 'pending-plan top return without learning writes', 'ordinary tabs', ...(viewport.height <= 430 ? ['play continuation reachable by internal scroll'] : []), 'settings source retained', 'settings small-text contrast on composed surface and opaque paper', 'draft and seven-store equality', 'back/forward', 'home reload without auto-start', 'placement cancel/save', 'camera close', 'real photo/detail close', 'populated photo action remains fully visible above fixed navigation', 'direct learning reload/close', 'curriculum scroll restored', 'direct placement fallback', 'records refresh after answer', 'current-Island parent gate and empty review-candidate copy', 'current-Island parent populated review candidates via display-only fixture', 'parent explanation wraps without horizontal overflow', 'parent return reaches the originating settings section from both states', 'Island menu → Other Games → Battle guidance/setup and return', ...(viewport.width >= 768 && viewport.height > viewport.width ? ['tablet portrait Battle orientation guidance and return'] : viewport.width <= 767 && viewport.height <= 639 ? ['small-phone Battle screen-size guidance and return'] : ['two-player setup semantics, 44px options, prerequisite guidance, scroll discoverability, and start readiness'])], errors });
+            report.scenarios.push({ viewport, pass: true, settingsContrast, parentCandidateFixture, checks: ['first-run welcome identity, responsive frame, and visible 44px actions', ...(viewport.width <= 360 ? ['narrow first-run item labels remain single-line', 'five-tab navigation labels fit on one line inside 44px-or-larger targets'] : []), 'explicit profile-add frame preserved', 'top entry without learning', 'stale top query and unknown URL recovery', 'existing-profile onboarding return', 'pending-plan top return without learning writes', 'ordinary tabs', ...(viewport.height <= 430 ? ['play continuation reachable by internal scroll'] : []), 'settings source retained', 'settings small-text contrast on composed surface and opaque paper', 'draft and seven-store equality', 'back/forward', 'home reload without auto-start', 'placement cancel/save', 'camera close', 'real photo/detail close', 'populated photo action remains fully visible above fixed navigation', 'direct learning reload/close', 'curriculum scroll restored', 'direct placement fallback', 'records refresh after answer', 'current-Island parent gate and empty review-candidate copy', 'current-Island parent populated review candidates via display-only fixture', 'parent explanation wraps without horizontal overflow', 'parent return reaches the originating settings section from both states', ...(viewport.width >= 700 ? ['wide Other Games heading aligns with centered choice list'] : []), ...(viewport.width >= 600 && viewport.height <= 430 ? ['all three primary game choices remain fully visible above the fixed navigation'] : []), 'Island menu → Other Games → Battle guidance/setup and return', ...(viewport.width >= 768 && viewport.height > viewport.width ? ['tablet portrait Battle orientation guidance and return'] : viewport.width <= 767 && viewport.height <= 639 ? ['small-phone Battle screen-size guidance and return'] : ['two-player setup semantics, 44px options, prerequisite guidance, scroll discoverability, and start readiness'])], errors });
             console.log(`PASS navigation ${viewport.width}x${viewport.height}`);
         } catch (error) {
             await page.screenshot({ path: `${out}/${viewport.width}-failure.png` }).catch(() => {});

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>現行Island「ほかの あそび」表示監査 live-81</title>
+  <style>
+    :root { color-scheme: light; font: 16px/1.55 system-ui, sans-serif; color: #30364f; background: #f8f7f2; }
+    body { margin: 0; padding: 24px; }
+    main { max-width: 1240px; margin: auto; }
+    h1, h2 { line-height: 1.25; }
+    .meta, figure { border: 1px solid #cfc5da; border-radius: 16px; background: #fffdf9; padding: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    figure { margin: 0; }
+    figcaption { margin-bottom: 10px; font-weight: 700; }
+    img { display: block; width: 100%; height: auto; border: 1px solid #e1dbe8; border-radius: 10px; }
+    code { overflow-wrap: anywhere; }
+    @media (max-width: 720px) { body { padding: 12px; } .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<main>
+  <h1>現行Island「ほかの あそび」— live-81</h1>
+  <section class="meta">
+    <p><strong>対象:</strong> <code>http://127.0.0.1:5198/#/battle</code>。Island=true / NatureTown=false、root delivery <code>snap-root-v1</code>、Island delivery <code>mystic-island-v1</code>、visual <code>mystic-island-shore-garden-v18</code>、navigation <code>island-navigation-five-tabs-v2</code>。revision <code>development-local</code>、version <code>development-local:60d95334-58f8-4594-b548-c113c90cad1c</code>。</p>
+    <p><strong>検証:</strong> 320×568 / 390×844 / 768×1024 / 844×390 / 1280×720。137 route/action checks、91 captures、page errors 0。Reduced motion、service workerなし。QAプロフィールとfixtureは隔離ブラウザー内だけで破棄。</p>
+  </section>
+
+  <h2>F-45 — 広い画面の見出しと選択列</h2>
+  <p>修正前の1280pxでは見出し中心x=269.93、選択列中心x=640、差370.07px。広い画面では戻るボタンを左に残し、見出しを選択列中央へ合わせた。回帰条件は中心差2px以内。スマホ幅は既存の左寄せのまま。</p>
+  <div class="grid">
+    <figure><figcaption>修正前 1280×720</figcaption><img src="before-1280-other-games.png" alt="タイトルが左に、ゲーム選択カードが中央に配置された修正前の画面"></figure>
+    <figure><figcaption>修正後 1280×720</figcaption><img src="after-1280-other-games.png" alt="タイトルがゲーム選択カードの中央に揃った画面"></figure>
+  </div>
+
+  <h2>F-46 — 短い横画面の主要選択肢</h2>
+  <p>修正前の844×390では固定ナビ上端y=324.41pxに対し3枚目カード下端がy=344.19pxで、約19.78pxがナビに隠れた。短い横画面だけカードをコンパクト化し、主要3項目をナビより上に表示。各カードは44px以上のタップ領域を保つ。</p>
+  <div class="grid">
+    <figure><figcaption>修正前 844×390</figcaption><img src="before-844-other-games.png" alt="3枚目のゲーム選択カードが固定ナビに一部隠れた画面"></figure>
+    <figure><figcaption>修正後 844×390</figcaption><img src="after-844-other-games.png" alt="3枚のゲーム選択カード全体が固定ナビより上に収まった画面"></figure>
+  </div>
+
+  <p>Before/afterの回帰レポート: <a href="before-alignment-report.json">F-45 再現</a>、<a href="before-landscape-report.json">F-46 再現</a>、<a href="after-report.json">修正後5サイズ</a>。</p>
+</main>
+</body>
+</html>

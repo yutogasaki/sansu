@@ -248,3 +248,25 @@ body.app-mode-island-shell .app-container { max-width: 1120px; }
 .island-shell-tab--learn { flex-direction: column; gap: 1px; box-shadow: none; border: 0; border-radius: 14px; background: #e4ebfa; color: var(--island-shell-blue); font-size: 13px; }
 .island-shell-tab--learn:active { transform: none; box-shadow: none; background: #d7e3fa; }
 .island-shell .utility-layout-content { max-width: 980px; }
+
+@media (min-width: 700px) {
+    .island-other-games-screen > .island-shell-header > div:first-child > div:last-child {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: max-content;
+        max-width: calc(100% - 112px);
+        align-items: center;
+        text-align: center;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@media (min-width: 600px) and (max-height: 430px) {
+    .island-other-games-screen .island-other-games-list { gap: 8px; }
+    .island-other-games-screen .island-other-game-choice {
+        min-height: 64px;
+        gap: 12px;
+        padding: 10px 12px;
+    }
+}
