@@ -633,3 +633,21 @@ The compact-phone and short-landscape passes did not cover the current candidate
 Runtime identity for every capture: `http://127.0.0.1:5200`, revision `e7978858`, version `e7978858:ad5ad720-9281-4fbd-b57e-d4339b02edfd`, app-root Island=true / NatureTown=false, configured delivery `snap-root-v1`, visual lineage `pokko-field-v1`, navigation candidate `island-navigation-five-tabs-v2`. Island routes use `mystic-island-v1` / `mystic-island-shore-garden-v18`; learning captures also record `mystic-island-learning-v2`. Reduced motion was enabled, there was no service-worker controller, and all profile fixtures were confined to disposable browser contexts.
 
 A visual spot-check of Welcome, Island home, learning input, records, settings, photos, parent review, and Battle setup found no additional confirmed high-impact layout defect in those frames. The setup still contains scrollable player panels; this preview pass does not establish physical-device discoverability, and no extra scroll cue is inferred without that evidence. Screen-reader, participant, release/update, and full route/state coverage remain open.
+
+## Current Island Battle setup prerequisite guidance (`live-67`, 2026-09-21)
+
+### F-41 — Disabled Battle start did not explain the missing player grades (medium, fixed and runtime checked)
+
+At 390×844, the second player's grade picker continues below the initial viewport inside a scrollable setup panel. The fixed `スタート！` action correctly stayed disabled until both grades were selected, but the screen did not say why. This made a valid prerequisite look like an unresponsive button, especially when Player 2's unfinished section was below the fold.
+
+The setup now places a concise dynamic `role="status"` message immediately above the fixed action. It names the missing grade selection for Player 1, Player 2, or both, and changes to a ready message when both are selected. The E2E journey asserts all three states. Battle eligibility, focus behavior, persistence, and game rules are unchanged. A before/after comparison is available for the compact phone state.
+
+| Viewport / state | Result | Evidence |
+|---|---|---|
+| 390×844, before vs. after | Before: disabled start had no visible reason. After: the missing two-player grade prerequisite is explained above the fixed action. | [Before, revision `4c023d6f`](evidence/screens/live-67-current-island-battle-setup-guidance-2026-09-21/before-390-battle-setup-4c023d6f.png), [after](evidence/screens/live-67-current-island-battle-setup-guidance-2026-09-21/390-battle-setup.png) |
+| 844×390, 1024×390, and 1280×720 | Status stays clear at short landscape and desktop sizes; the route verifies the missing-grade → one-player-missing → ready transitions. | [Contact sheet](evidence/screens/live-67-current-island-battle-setup-guidance-2026-09-21/contact-sheet.html), [run report](evidence/screens/live-67-current-island-battle-setup-guidance-2026-09-21/report.json) |
+| Four-viewport current-Island route sweep | 106 route/action checks and 74 captures pass; zero page errors. | [Contact sheet](evidence/screens/live-67-current-island-battle-setup-guidance-2026-09-21/contact-sheet.html), [run report](evidence/screens/live-67-current-island-battle-setup-guidance-2026-09-21/report.json) |
+
+Runtime identity for every after capture: `http://127.0.0.1:5200`, revision `ef6ec876`, version `ef6ec876:f9c4808d-b99b-4528-9503-c8e70c3385d0`, app-root Island=true / NatureTown=false, configured delivery `snap-root-v1`. Battle setup is a shared utility surface, so there is no route-specific visual candidate (`not-applicable-shared-utility`). Reduced motion was enabled, there was no service-worker controller, and disposable profile fixtures were used. The before image is from revision `4c023d6f` with Island=true / NatureTown=false.
+
+This verifies local-preview status visibility and state changes, not actual screen-reader announcement order, physical-device scroll discoverability, child comprehension/enjoyment, release/update behavior, or whole-app completion. Those remain separate human and release gates.
