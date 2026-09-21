@@ -1,5 +1,5 @@
 import { IslandToyIcon } from './IslandToyIcon';
-import { useEffect, useRef, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { ArrowRight, BookOpen, Gamepad2, Gift, PackageOpen, Palette, PawPrint, Search, Sparkles, Waves, Menu, X, ChevronDown } from 'lucide-react';
 import './IslandHomeActions.css';
 
@@ -28,6 +28,7 @@ export interface IslandHomeActionsProps {
 export function IslandHomeActions({ comparisonDisabled, onOpenChange, active = true, ...contents }: IslandHomeActionsProps) {
     const dialog = useRef<HTMLDialogElement>(null);
     const trigger = useRef<HTMLButtonElement>(null);
+    const [open, setOpen] = useState(false);
     useEffect(() => {
         if (!active) dialog.current?.close();
     }, [active]);
@@ -35,13 +36,13 @@ export function IslandHomeActions({ comparisonDisabled, onOpenChange, active = t
         const element = dialog.current;
         return () => { element?.close(); onOpenChange?.(false); };
     }, [onOpenChange]);
-    const close = () => { dialog.current?.close(); onOpenChange?.(false); };
+    const close = () => { dialog.current?.close(); setOpen(false); onOpenChange?.(false); };
     const choose = (action: () => void) => { close(); action(); };
     return <div className="island-home-actions">
-        <button ref={trigger} type="button" className="island-menu-trigger" aria-haspopup="dialog" disabled={comparisonDisabled}
-            onClick={() => { dialog.current?.showModal(); onOpenChange?.(true); }}><Menu size={21} aria-hidden="true" /><span>しまのメニュー</span></button>
+        <button ref={trigger} type="button" className="island-menu-trigger" aria-haspopup="dialog" aria-expanded={open} disabled={comparisonDisabled}
+            onClick={() => { dialog.current?.showModal(); setOpen(true); onOpenChange?.(true); }}><Menu size={21} aria-hidden="true" /><span>しまのメニュー</span></button>
         <dialog ref={dialog} className="island-menu" aria-labelledby="island-menu-title"
-            onClose={() => { onOpenChange?.(false); if (active) trigger.current?.focus({ preventScroll: true }); }}
+            onClose={() => { setOpen(false); onOpenChange?.(false); if (active) trigger.current?.focus({ preventScroll: true }); }}
             onClick={event => { if (event.target === event.currentTarget) close(); }}>
             <div className="island-menu-surface">
                 <header className="island-menu-heading"><h2 id="island-menu-title">しまのメニュー</h2>

@@ -69,6 +69,7 @@ describe('native home menu shell', () => {
         const trigger = html.match(/<button[^>]*class="island-menu-trigger"[^>]*>/)?.[0];
         expect(trigger).toBeDefined();
         expect(trigger).toContain('aria-haspopup="dialog"');
+        expect(trigger).toContain('aria-expanded="false"');
         expect(trigger?.includes('disabled=""')).toBe(comparisonDisabled);
         expect(html).toContain('<dialog class="island-menu" aria-labelledby="island-menu-title">');
         expect(html).toContain('<h2 id="island-menu-title">しまのメニュー</h2>');
