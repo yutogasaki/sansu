@@ -77,26 +77,44 @@ export async function waitReady(page) {
     });
 }
 
+export async function appRootMetadata(page) {
+    return page.locator('.app-container').evaluate(element => {
+        const readFlag = value => value === 'true' ? true : value === 'false' ? false : null;
+        return {
+            revision: element.dataset.buildRevision ?? null,
+            version: element.dataset.buildVersion ?? null,
+            configuredDelivery: element.dataset.configuredDeliveryId ?? element.dataset.deliveryId ?? null,
+            visualLineage: element.dataset.visualLineageId ?? null,
+            islandFeatureEnabled: readFlag(element.dataset.islandFeatureEnabled),
+            natureTownFeatureEnabled: readFlag(element.dataset.natureTownFeatureEnabled),
+        };
+    });
+}
+
 export async function runtimeMetadata(page) {
-    return page.locator('.island-page').evaluate(element => ({
-        url: location.href,
-        revision: element.dataset.buildRevision,
-        version: element.dataset.buildVersion,
-        delivery: element.dataset.deliveryId,
-        candidate: element.dataset.visualCandidateId,
-        learningCandidate: element.dataset.learningCandidate ?? 'not-applicable',
-        islandFeatureEnabled: element.dataset.islandFeatureEnabled === 'true',
-        mode: element.dataset.mode,
-        renderer: document.querySelector('[data-renderer]')?.getAttribute('data-renderer'),
-        artDirection: document.querySelector('[data-renderer]')?.getAttribute('data-art-direction'),
-        drawCalls: Number(document.querySelector('[data-renderer]')?.getAttribute('data-draw-calls') ?? 0),
-        expanded: document.querySelector('[data-renderer]')?.getAttribute('data-expanded'),
-        residentAction: document.querySelector('[data-renderer]')?.getAttribute('data-resident-action'),
-        residentItemId: document.querySelector('[data-renderer]')?.getAttribute('data-resident-item-id'),
-        viewport: { width: innerWidth, height: innerHeight },
-        serviceWorkerControlled: Boolean(navigator.serviceWorker.controller),
-        reducedMotion: matchMedia('(prefers-reduced-motion: reduce)').matches,
-    }));
+    const [islandPage, appRoot] = await Promise.all([
+        page.locator('.island-page').evaluate(element => ({
+            url: location.href,
+            revision: element.dataset.buildRevision,
+            version: element.dataset.buildVersion,
+            delivery: element.dataset.deliveryId,
+            candidate: element.dataset.visualCandidateId,
+            learningCandidate: element.dataset.learningCandidate ?? 'not-applicable',
+            islandFeatureEnabled: element.dataset.islandFeatureEnabled === 'true',
+            mode: element.dataset.mode,
+            renderer: document.querySelector('[data-renderer]')?.getAttribute('data-renderer'),
+            artDirection: document.querySelector('[data-renderer]')?.getAttribute('data-art-direction'),
+            drawCalls: Number(document.querySelector('[data-renderer]')?.getAttribute('data-draw-calls') ?? 0),
+            expanded: document.querySelector('[data-renderer]')?.getAttribute('data-expanded'),
+            residentAction: document.querySelector('[data-renderer]')?.getAttribute('data-resident-action'),
+            residentItemId: document.querySelector('[data-renderer]')?.getAttribute('data-resident-item-id'),
+            viewport: { width: innerWidth, height: innerHeight },
+            serviceWorkerControlled: Boolean(navigator.serviceWorker.controller),
+            reducedMotion: matchMedia('(prefers-reduced-motion: reduce)').matches,
+        })),
+        appRootMetadata(page),
+    ]);
+    return { ...islandPage, appRoot };
 }
 
 // Keep every field complete: a one-digit replacement for an eleven-denominator

@@ -2,7 +2,7 @@ import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
 import { promises as fs } from 'node:fs';
 import { randomUUID } from 'node:crypto';
-import { answerUI, button, readNative, seedNative, waitMode, waitReady, runtimeMetadata } from './island-e2e-helpers.mjs';
+import { answerUI, appRootMetadata, button, readNative, seedNative, waitMode, waitReady, runtimeMetadata } from './island-e2e-helpers.mjs';
 
 const base = process.env.SANSU_ISLAND_BASE_URL || 'http://127.0.0.1:5219';
 const out = process.env.SANSU_NAVIGATION_OUTPUT || 'output/playwright/island-navigation';
@@ -81,6 +81,13 @@ const contrastRatio = (first, second) => {
     const luminance = [relativeLuminance(first), relativeLuminance(second)].sort((a, b) => b - a);
     return Number(((luminance[0] + 0.05) / (luminance[1] + 0.05)).toFixed(2));
 };
+const assertCanonicalIslandRoot = appRoot => {
+    assert.equal(appRoot.islandFeatureEnabled, true, 'App-root identity must prove the Island flag is enabled');
+    assert.equal(appRoot.natureTownFeatureEnabled, false, 'App-root identity must exclude the Nature Town preview');
+    assert.ok(appRoot.revision, 'App-root identity must include a build revision');
+    assert.ok(appRoot.version, 'App-root identity must include the unique build version');
+    assert.equal(appRoot.configuredDelivery, 'snap-root-v1', 'App-root identity must use the current configured delivery');
+};
 await fs.mkdir(out, { recursive: true });
 const browser = await chromium.launch();
 const report = { target: base, navigationCandidate: 'island-navigation-five-tabs-v2', viewports, fixture: 'First-run Welcome is captured before any profile fixture; route scenarios then use a disposable native profile for learning, furniture, and photo checks. Parent review candidates are a display-only isWeak fixture in that disposable profile; no threshold is exercised and no attempt log or answer count is added.', captures: [], scenarios: [], pass: false };
@@ -99,29 +106,37 @@ try {
             // Framer Motion uses JS animation; screenshot's CSS animation flag
             // alone can catch a settings detail while its height is still zero.
             await page.waitForTimeout(400);
-            await page.screenshot({ path: `${out}/${file}`, animations: 'disabled' });
             const metadata = await runtimeMetadata(page);
+            assertCanonicalIslandRoot(metadata.appRoot);
+            assert.equal(metadata.appRoot.revision, metadata.revision, 'App-root and Island revision markers must agree');
+            assert.equal(metadata.appRoot.version, metadata.version, 'App-root and Island version markers must agree');
             assert.equal(metadata.islandFeatureEnabled, true, 'Island navigation evidence must come from an Island-enabled runtime');
             assert.equal(metadata.delivery, 'mystic-island-v1', 'Island navigation evidence must use the current delivery');
+            await page.screenshot({ path: `${out}/${file}`, animations: 'disabled' });
             report.captures.push({ file, ...metadata });
         };
         const captureUtility = async name => {
             const file = `${viewport.width}-${name}.png`;
             await page.waitForTimeout(400);
-            await page.screenshot({ path: `${out}/${file}`, animations: 'disabled' });
-            const metadata = await page.locator('.app-container').evaluate(element => ({
+            const appRoot = await appRootMetadata(page);
+            assertCanonicalIslandRoot(appRoot);
+            const routeMetadata = await page.locator('.app-container').evaluate(element => ({
                 url: location.href,
-                revision: element.dataset.buildRevision,
-                rootConfiguredDelivery: element.dataset.deliveryId,
-                islandFeatureEnabled: element.dataset.islandFeatureEnabled === 'true',
-                natureTownFeatureEnabled: element.dataset.natureTownFeatureEnabled === 'true',
                 routeCandidate: 'not-applicable-shared-utility',
                 viewport: { width: innerWidth, height: innerHeight },
                 serviceWorkerControlled: Boolean(navigator.serviceWorker.controller),
                 reducedMotion: matchMedia('(prefers-reduced-motion: reduce)').matches,
             }));
-            assert.equal(metadata.islandFeatureEnabled, true, 'Shared-utility evidence must use the current Island-enabled app');
-            assert.equal(metadata.natureTownFeatureEnabled, false, 'Shared-utility evidence must not come from the Nature Town preview');
+            const metadata = {
+                ...routeMetadata,
+                revision: appRoot.revision,
+                version: appRoot.version,
+                rootConfiguredDelivery: appRoot.configuredDelivery,
+                islandFeatureEnabled: appRoot.islandFeatureEnabled,
+                natureTownFeatureEnabled: appRoot.natureTownFeatureEnabled,
+                appRoot,
+            };
+            await page.screenshot({ path: `${out}/${file}`, animations: 'disabled' });
             report.captures.push({ file, ...metadata });
         };
         const nav = page.locator('.island-shell-nav');
@@ -606,9 +621,13 @@ try {
     await fs.writeFile(`${out}/report.json`, JSON.stringify(report, null, 2));
     const contactSheet = `<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Island navigation evidence</title><style>body{margin:24px;background:#f6f4ee;color:#25314f;font:14px system-ui,sans-serif}main{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}figure{margin:0;padding:10px;background:#fff;border:1px solid #ded8e8;border-radius:12px}img{display:block;width:100%;height:340px;object-fit:contain;background:#f0eef3;border-radius:8px}figcaption{padding-top:8px;overflow-wrap:anywhere;line-height:1.45}h1{font-size:20px}p{color:#58637b}</style><h1>Island navigation: ${report.pass ? 'PASS' : 'FAIL / INCOMPLETE'}</h1><p>${escapeHtml(report.target)} · ${report.captures.length} captures · ${report.scenarios.length} viewport runs</p><main>${report.captures.map(capture => {
         const imagePath = encodeURIComponent(capture.file);
+        const appRoot = capture.appRoot;
+        const rootCaption = appRoot
+            ? `root Island ${appRoot.islandFeatureEnabled} / NatureTown ${appRoot.natureTownFeatureEnabled} · ${appRoot.revision} · ${appRoot.version} · ${appRoot.configuredDelivery}`
+            : 'root identity missing';
         const caption = capture.candidate
-            ? `${capture.viewport.width}×${capture.viewport.height} · ${capture.mode} · ${capture.version} · ${capture.delivery} · ${capture.candidate} · ${capture.learningCandidate}`
-            : `${capture.viewport.width}×${capture.viewport.height} · ${capture.routeCandidate} · root config ${capture.rootConfiguredDelivery} · ${capture.revision} · Island ${capture.islandFeatureEnabled} · Nature Town ${capture.natureTownFeatureEnabled}`;
+            ? `${capture.viewport.width}×${capture.viewport.height} · ${capture.mode} · ${capture.version} · ${capture.delivery} · ${capture.candidate} · ${capture.learningCandidate} · ${rootCaption}`
+            : `${capture.viewport.width}×${capture.viewport.height} · ${capture.routeCandidate} · ${rootCaption}`;
         return `<figure><a href="${imagePath}"><img loading="lazy" src="${imagePath}" alt="${escapeHtml(capture.file)}"></a><figcaption>${escapeHtml(caption)}</figcaption></figure>`;
     }).join('')}</main></html>`;
     await fs.writeFile(`${out}/contact-sheet.html`, contactSheet);
