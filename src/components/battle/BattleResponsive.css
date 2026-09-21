@@ -439,6 +439,14 @@
 }
 
 @media (max-width: 767px) and (orientation: portrait) {
+    .battle-result-screen:not(.battle-result-screen--tug) {
+        padding-inline: 20px;
+    }
+
+    .battle-result-screen:not(.battle-result-screen--tug) .battle-result-stats {
+        gap: 8px;
+    }
+
     .battle-result-screen--tug .battle-result-stats {
         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     }
