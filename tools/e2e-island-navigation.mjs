@@ -290,7 +290,10 @@ try {
                 ['inventory', 'inventory', 'もちものを おく'], ['customization', 'customization', 'しまの きせかえ'],
                 ['experience', 'experience', 'なまえ・けしき'], ['help', 'help', 'あそびかた'],
             ]) {
-                await button(page, 'しまのメニュー').click();
+                const menuTrigger = button(page, 'しまのメニュー');
+                assert.equal(await menuTrigger.getAttribute('aria-expanded'), 'false', 'Home menu starts closed');
+                await menuTrigger.click();
+                assert.equal(await menuTrigger.getAttribute('aria-expanded'), 'true', 'Home menu exposes its open state');
                 if (['inventory', 'customization', 'experience'].includes(action)) await page.locator('[data-home-group=arrange] > summary').click();
                 const entry = page.locator(`[data-home-action=${action}]`);
                 assert.equal((await entry.innerText()).trim(), title, 'The entry names the destination');
