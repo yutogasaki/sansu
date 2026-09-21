@@ -1,8 +1,11 @@
 import { describe, expect, it } from 'vitest';
+import { createElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import { createIsland } from '../../domain/island/catalog';
 import { growIslandAfterCompletedSet, ISLAND_DISCOVERIES } from '../../domain/island/growth';
 import { ISLAND_HABITAT_IDS } from '../../domain/island/types';
 import { firstIslandDiscovery, islandDiscoveryGuide, ISLAND_DISCOVERY_HINTS } from './islandDiscoveryHints';
+import { IslandDiscoveryGuide } from './IslandDiscoveryGuide';
 
 function grownIsland() {
     let island = createIsland('guide-child', 1);
@@ -13,6 +16,14 @@ function grownIsland() {
 }
 
 describe('discovery guide keeps hints separate from observations', () => {
+    it('links the hint toggle to the explanation it reveals', () => {
+        const html = renderToStaticMarkup(createElement(IslandDiscoveryGuide, { island: createIsland('child', 1), disabled: false,
+            onTry: () => undefined, onPlace: () => undefined, onGrow: () => undefined, onClose: () => undefined }));
+        const hintButton = html.match(/<button class="island-text-button"[^>]*>てがかり<\/button>/)?.[0];
+        expect(hintButton).toMatch(/aria-expanded="false"/);
+        expect(hintButton).toMatch(/aria-controls="island-guide-hint-[^"]+"/);
+    });
+
     it('covers every runtime discovery with a physical question and hint', () => {
         expect(Object.keys(ISLAND_DISCOVERY_HINTS).sort()).toEqual(ISLAND_DISCOVERIES.map(entry => entry.id).sort());
         expect(islandDiscoveryGuide(createIsland('child', 1), 'flower-scent')?.status).toBe('grow');

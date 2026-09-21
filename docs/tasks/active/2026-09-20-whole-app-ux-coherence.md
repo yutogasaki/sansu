@@ -231,6 +231,7 @@
 - 2026-09-22 `live-109`: 現行Islandの2人ゲーム設定で、設定全体を名前付き`region`（「ふたりの せってい」）として読み上げ可能にし、無効な「スタート！」と必要な学年案内を`aria-describedby`で関連付けた。既存のプレイヤー1→2のDOM順、選択状態、見た目、ゲーム挙動は変更していない。`BattleSetup.test.tsx` 7 tests、対象ESLint、現行Island `http://127.0.0.1:5198` の390×844 / 568×320 navigationをPASS（計64 checks / 44 captures / page error 0）。CUAのAX treeで名前付き設定regionを確認したが、実スクリーンリーダー・実機・参加者評価の代替ではない。
 - 2026-09-22 `live-110`: 旧画面が通常の配信経路へ混入しないよう、`npm run build` のflag未指定時だけ`VITE_ISLAND_ENABLED=true`を注入するbuild wrapperを追加。明示`VITE_ISLAND_ENABLED=false VITE_BUILD_PLAY_ENABLED=false npm run build`はclassic回帰として保持した。build-env 3 tests / current-entry guard 18 tests、対象ESLint、flag未指定buildの`version.json` Island=true、明示flag-off buildのIsland=false、5299 previewの`/#/island` / root Island=true / title / page error 0を確認。Nature Townの既存差分は変更・commitしていない。
 - 2026-09-22 `live-111` / F-58: 現行Islandの「しまのメニュー」だけ`aria-expanded`がなく、家メニューと開閉状態の意味論が不揃いだったため、native dialogの開閉を小さなstateで公開。`IslandHomeActions` 6 tests、対象ESLint、5198の隔離first-run profileで`false → true → false`、閉じた後のメニュートリガーfocus、Island=true / NatureTown=false、page error 0を確認。既存の`e2e:island-navigation` 390×844 PASSに加え、同E2Eへ閉じた/開いた`aria-expanded`遷移の回帰assertionを追加し、standaloneの対象ブラウザ確認もPASS。実スクリーンリーダー・実機・参加者評価は未完了。
+- 2026-09-22 `live-112` / F-59: 現行Islandの「みつける」の`てがかり`は`aria-expanded`だけで、開いた説明との関係を示していなかったため、`aria-controls`と説明側の安定した`id`を追加。`islandDiscoveryGuide.test.ts` 8 tests、対象ESLint、typecheck、5198の隔離390×844 profileで`false`（説明なし）→`true`（参照先に説明あり）→`false`（説明detach）、Island=true / NatureTown=false、page error 0を確認。変更後の`verify:core`も458 files / 4,160 tests、Island-default build、asset budget 11.61/12.00 MiBでPASS。見た目・発見条件・保存・ルートは変更していない。実スクリーンリーダー・実機・参加者評価は未完了。
 
 ### Next
 
@@ -245,7 +246,7 @@
 - 探索HUDと学習/初回/ふわふわ画面の44px未満候補は[学習と島の体験改善](2026-09-07-experience-improvements.md)へ引継ぎ済み。担当側で重なる箇所を整理し、仕様に合わせて修正・検証する。
 - 2人ゲーム設定の支援技術による読み上げ順を確認する（名前・選択状態の意味論、44px操作領域、横画面でのスクロール到達性は技術確認済み）。
 - 2人ゲームの実スクリーンリーダー読み上げ順、幅768px以上の全画面、問題図の全種類と実端末でのスクロール感を確認する。1280×720では数種類の図とテンキーを確認済みだが、網羅ではない。高さ640px前後では問題図を短い枠内でスクロールするため、実端末/参加者評価で窮屈さが確認された場合は最小高さ640pxの境界を見直す。
-- `live-111`で現行Islandの家メニューとの開閉状態意味論をそろえた。次の実装は、全ルート棚卸しで同じ役割の入口に `aria-expanded` / focus復帰 / 閉じる命名の差が残っていないかを確認し、未所有かつ高影響のものだけを追加修正する。
+- `live-111` / `live-112`で現行Islandの家メニューと発見ヒントの開閉状態・参照関係をそろえた。次の実装は、全ルート棚卸しで同じ役割の入口に `aria-expanded` / focus復帰 / 閉じる命名の差が残っていないかを確認し、未所有かつ高影響のものだけを追加修正する。
 
 ### Decision Notes
 

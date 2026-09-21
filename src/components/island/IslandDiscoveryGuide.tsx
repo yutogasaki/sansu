@@ -38,7 +38,9 @@ export function IslandDiscoveryGuide({ island, disabled, closeDisabled = disable
                             : selected.status === 'visit' ? <p>ときどき やってくるよ。また ながめてみよう。</p> : null}
             </div>
             <div className="island-guide-actions">
-                <button className="island-text-button" aria-expanded={hintId === selected.entry.id} onClick={() => setHintId(hintId === selected.entry.id ? undefined : selected.entry.id)}>てがかり</button>
+                <button className="island-text-button" aria-expanded={hintId === selected.entry.id}
+                    aria-controls={`island-guide-hint-${selected.entry.id}`}
+                    onClick={() => setHintId(hintId === selected.entry.id ? undefined : selected.entry.id)}>てがかり</button>
                 {selected.status === 'grow' ? <button className="island-primary" disabled={disabled} onClick={() => onGrow(selected.habitatId)}>{selected.unlocked ? '育つ すがたを みる' : '育てる ばしょを みる'}</button>
                     : selected.status === 'visit' ? <button className="island-secondary" disabled={disabled} onClick={onClose}>しまを ながめる</button>
                         : <button className="island-primary" disabled={disabled || !selected.item} onClick={() => {
@@ -47,7 +49,7 @@ export function IslandDiscoveryGuide({ island, disabled, closeDisabled = disable
                             else onTry(selected.item.id, selected.entry.id);
                         }}>{selected.status === 'place' ? 'しまに おく' : selected.status === 'arrange' ? 'おきかたを ためす' : selected.seen ? 'もういちど ためす' : 'みにいく'}</button>}
             </div>
-            {hintId === selected.entry.id && <p className="island-guide-hint" role="status">{selected.hint.hint}</p>}
+            {hintId === selected.entry.id && <p id={`island-guide-hint-${selected.entry.id}`} className="island-guide-hint" role="status">{selected.hint.hint}</p>}
         </article>}
         <div className="island-guide-index" role="group" aria-label="みつけものを えらぶ">{entries.map(entry => {
             const seen = island.growth?.discoveries.some(discovery => discovery.id === entry.id);
