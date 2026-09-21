@@ -83,7 +83,7 @@ const contrastRatio = (first, second) => {
 };
 await fs.mkdir(out, { recursive: true });
 const browser = await chromium.launch();
-const report = { target: base, navigationCandidate: 'island-navigation-five-tabs-v2', viewports, fixture: 'First-run Welcome is captured before any profile fixture; route scenarios then use a disposable native profile for learning, furniture, and photo checks.', captures: [], scenarios: [], pass: false };
+const report = { target: base, navigationCandidate: 'island-navigation-five-tabs-v2', viewports, fixture: 'First-run Welcome is captured before any profile fixture; route scenarios then use a disposable native profile for learning, furniture, and photo checks. Parent review candidates are a display-only isWeak fixture in that disposable profile; no threshold is exercised and no attempt log or answer count is added.', captures: [], scenarios: [], pass: false };
 try {
     for (const viewport of viewports) {
         const context = await browser.newContext({ viewport, reducedMotion: 'reduce' });
@@ -92,6 +92,7 @@ try {
         page.setDefaultNavigationTimeout(20000);
         const errors = [];
         let settingsContrast = null;
+        let parentCandidateFixture = null;
         page.on('pageerror', error => errors.push(error.message));
         const capture = async name => {
             const file = `${viewport.width}-${name}.png`;
@@ -465,8 +466,63 @@ try {
             await returnButton.click();
             await page.waitForURL('**/#/settings?section=parent');
             await page.getByRole('heading', { name: 'テスト・保護者', exact: true }).waitFor();
+            const beforeReviewFixture = await readNative(page, id);
+            const fixtureMath = beforeReviewFixture.memoryMath.some(item => item.id === 'add_1d_1')
+                ? { id: 'count_5', label: '5まで数える' }
+                : { id: 'add_1d_1', label: '1桁+1桁(はじめ)' };
+            const fixtureVocab = { id: 'apple', label: 'apple' };
+            await page.evaluate(async ({ profileId, mathId, vocabId }) => {
+                const { db } = await import('/src/db/index.ts');
+                const now = new Date().toISOString();
+                // These explicit isWeak rows exist only to exercise the parent
+                // display. Zero answer counts and no logs make this unsuitable
+                // as evidence for natural weak-state acquisition or thresholds.
+                await db.memoryMath.put({ profileId, id: mathId, strength: 2, nextReview: '2099-01-01',
+                    totalAnswers: 0, correctAnswers: 0, incorrectAnswers: 0, skippedAnswers: 0,
+                    status: 'active', updatedAt: now, isWeak: true });
+                await db.memoryVocab.put({ profileId, id: vocabId, strength: 2, nextReview: '2099-01-01',
+                    totalAnswers: 0, correctAnswers: 0, incorrectAnswers: 0, skippedAnswers: 0,
+                    updatedAt: now, isWeak: true });
+            }, { profileId: id, mathId: fixtureMath.id, vocabId: fixtureVocab.id });
+            const afterReviewFixture = await readNative(page, id);
+            assert.deepEqual(afterReviewFixture.logs, beforeReviewFixture.logs,
+                'Display-only parent fixture adds no attempt logs');
+            assert.equal(afterReviewFixture.memoryMath.find(item => item.id === fixtureMath.id)?.isWeak, true);
+            assert.equal(afterReviewFixture.memoryVocab.find(item => item.id === fixtureVocab.id)?.isWeak, true);
+            assert.equal(afterReviewFixture.memoryMath.find(item => item.id === fixtureMath.id)?.totalAnswers, 0);
+            assert.equal(afterReviewFixture.memoryVocab.find(item => item.id === fixtureVocab.id)?.totalAnswers, 0);
+            parentCandidateFixture = {
+                kind: 'display-only isWeak=true; zero answer counters; no attempt-log delta',
+                mathId: fixtureMath.id,
+                vocabId: fixtureVocab.id,
+                naturalThresholdEvidence: false,
+            };
+            await page.getByRole('button', { name: '開く', exact: true }).first().click();
+            const populatedGate = page.getByRole('dialog', { name: 'ほごしゃ かくにん' });
+            await populatedGate.waitFor();
+            const populatedGatePrompt = page.getByText(/^\d+\s*×\s*\d+\s*=\s*\?$/);
+            const [populatedGateLeft, populatedGateRight] = (await populatedGatePrompt.innerText()).match(/\d+/g).map(Number);
+            await page.getByLabel('答え').fill(String(populatedGateLeft * populatedGateRight));
+            await populatedGate.getByRole('button', { name: 'OK', exact: true }).click();
+            await page.waitForURL('**/#/parents');
+            await page.getByRole('heading', { name: '保護者メニュー', exact: true }).waitFor();
+            await page.getByText('復習候補：2件', { exact: true }).waitFor();
+            await page.getByText(fixtureMath.label, { exact: true }).waitFor();
+            await page.getByText(/^apple/).waitFor();
+            assert.equal(await page.getByText('今は復習候補がありません。', { exact: true }).count(), 0,
+                'Populated review state replaces both empty messages');
+            await reviewHeading.scrollIntoViewIfNeeded();
+            await captureUtility('parent-review-candidates');
+            const populatedReturn = page.getByRole('button', { name: '設定に戻る', exact: true });
+            await populatedReturn.scrollIntoViewIfNeeded();
+            const populatedReturnBox = await populatedReturn.boundingBox();
+            assert(populatedReturnBox && populatedReturnBox.width >= 44 && populatedReturnBox.height >= 44,
+                'Populated parent-page return remains a 44px-or-larger target');
+            await populatedReturn.click();
+            await page.waitForURL('**/#/settings?section=parent');
+            await page.getByRole('heading', { name: 'テスト・保護者', exact: true }).waitFor();
             assert.deepEqual(errors, []);
-            report.scenarios.push({ viewport, pass: true, settingsContrast, checks: ['first-run welcome identity, responsive frame, and visible 44px actions', 'explicit profile-add frame preserved', 'top entry without learning', 'stale top query and unknown URL recovery', 'existing-profile onboarding return', 'pending-plan top return without learning writes', 'ordinary tabs', ...(viewport.height <= 430 ? ['play continuation reachable by internal scroll'] : []), 'settings source retained', 'settings small-text contrast on composed surface and opaque paper', 'draft and seven-store equality', 'back/forward', 'home reload without auto-start', 'placement cancel/save', 'camera close', 'real photo/detail close', 'direct learning reload/close', 'curriculum scroll restored', 'direct placement fallback', 'records refresh after answer', 'current-Island parent gate and review-candidate copy', 'parent explanation wraps without horizontal overflow', 'parent return reaches the originating settings section'], errors });
+            report.scenarios.push({ viewport, pass: true, settingsContrast, parentCandidateFixture, checks: ['first-run welcome identity, responsive frame, and visible 44px actions', 'explicit profile-add frame preserved', 'top entry without learning', 'stale top query and unknown URL recovery', 'existing-profile onboarding return', 'pending-plan top return without learning writes', 'ordinary tabs', ...(viewport.height <= 430 ? ['play continuation reachable by internal scroll'] : []), 'settings source retained', 'settings small-text contrast on composed surface and opaque paper', 'draft and seven-store equality', 'back/forward', 'home reload without auto-start', 'placement cancel/save', 'camera close', 'real photo/detail close', 'direct learning reload/close', 'curriculum scroll restored', 'direct placement fallback', 'records refresh after answer', 'current-Island parent gate and empty review-candidate copy', 'current-Island parent populated review candidates via display-only fixture', 'parent explanation wraps without horizontal overflow', 'parent return reaches the originating settings section from both states'], errors });
             console.log(`PASS navigation ${viewport.width}x${viewport.height}`);
         } catch (error) {
             await page.screenshot({ path: `${out}/${viewport.width}-failure.png` }).catch(() => {});

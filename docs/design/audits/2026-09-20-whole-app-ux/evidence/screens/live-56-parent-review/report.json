@@ -1,0 +1,57 @@
+{
+  "run": "live-56",
+  "result": "pass",
+  "target": "http://127.0.0.1:5198/#/parents",
+  "buildRevision": "development-local",
+  "rootIdentity": {
+    "islandFeatureEnabled": true,
+    "natureTownFeatureEnabled": false,
+    "configuredDelivery": "snap-root-v1",
+    "serviceWorkerControlled": false,
+    "reducedMotion": true
+  },
+  "routeIdentity": {
+    "type": "shared-utility",
+    "routeSpecificDelivery": "not-applicable",
+    "routeSpecificVisualCandidate": "not-applicable"
+  },
+  "viewports": [
+    {
+      "width": 390,
+      "height": 844,
+      "result": "pass",
+      "reviewCandidateCount": 2,
+      "mathLabel": "1桁+1桁(はじめ)",
+      "vocabularyLabel": "apple (りんご)",
+      "capture": "390-parent-candidates.png",
+      "pageErrors": []
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "result": "pass",
+      "reviewCandidateCount": 2,
+      "mathLabel": "1桁+1桁(はじめ)",
+      "vocabularyLabel": "apple (りんご)",
+      "capture": "768-tablet-candidates.png",
+      "pageErrors": []
+    }
+  ],
+  "fixture": {
+    "kind": "display-only",
+    "mathId": "add_1d_1",
+    "vocabularyId": "apple",
+    "isWeak": true,
+    "fixtureAnswerCounters": 0,
+    "attemptLogDelta": 0,
+    "naturalThresholdEvidence": false,
+    "disposableContext": true
+  },
+  "checks": [
+    "actual Settings → parent gate → Parent route in both empty and populated states",
+    "known math label and known English word render instead of internal IDs",
+    "candidate count matches the two visible rows",
+    "return from both states reaches the originating Settings section",
+    "browser page errors: 0"
+  ]
+}
