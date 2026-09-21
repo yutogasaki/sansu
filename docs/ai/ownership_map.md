@@ -62,11 +62,11 @@
 - タスクメモが長期知識になり始めたら、残すべき部分を `docs/wiki/memory.md` か ADR に移す
 - 完了ログから現行挙動を読み取っている状態なら、正本側を更新する
 
-## 探索転換中の読み分け
+## Exploreモードの読み分け（Island標準導線とは分離）
 
-- [product/01_app_spec.md](/docs/product/01_app_spec.md) は、探索転換を含む全体方針と段階導入を支配する親仕様とする
-- `10`〜`16` は、承認済みの探索転換先について各領域を支配する子仕様とする
-- 実装がMVP段階にある間は独立した `/explore` から始め、`15` の判断ゲートを通る前に既存導線を暗黙に置き換えない
+- [product/01_app_spec.md](/docs/product/01_app_spec.md) は現行アプリ全体の方針とIsland標準入口を定める親仕様とする。通常起動は `npm run dev` → port `5198` → `/#/island`。
+- `10`〜`16` は任意の旧Exploreモードのgameplay・学習接続・段階導入を支配する。`/explore` はIsland内で明示選択する副モードであり、アプリ全体の標準起動先ではない。
+- Explore MVPの独立route起動や既存導線を置き換えない判断は、Island標準ホーム採用前の履歴として読む。現在のflag-off classic確認はownerが明示した場合だけ `npm run dev:classic` で行う。
 - 子仕様が親仕様と衝突した場合は、`CONSTITUTION.md` → `01` → 該当子仕様の順で解決し、下位文書を整合させてから実装する
 - `17_open_questions.md` は未決事項の一覧であり、推奨欄だけを確定仕様として実装しない
 - [ai/implementation_plan_explore_mvp.md](/docs/ai/implementation_plan_explore_mvp.md) は実装順の案内であり、プロダクト仕様を上書きしない

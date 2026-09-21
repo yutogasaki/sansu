@@ -2,19 +2,23 @@
 
 > 段階名は [15_mvp_rollout_verification_spec.md](../product/15_mvp_rollout_verification_spec.md) の **MVP-0〜4** を正とする。
 
-## 現在地（MVP-2b + cold-open再検証）
+> スコープ: この計画は任意の旧Exploreモードだけを扱い、現行PokoMokoの標準起動先を定義しない。現行標準起動は `npm run dev` → port `5198` → `/#/island`。Exploreを確認する場合はIsland内から明示選択する。flag-off classicはownerが依頼した確認に限り `npm run dev:classic` を使う。現行の進捗・判断は仕様15とactive taskを正とする。
+
+## 2026-07時点の当時の現在地（MVP-2b + cold-open再検証）
 
 - 仕様書10〜17と親仕様を追加済み
 - 純粋な探索domain、`/explore` 画面、既存問題アダプター、テンキー再利用を実装済み
 - run、回答event、終了statusを保存し、Study共通planner / writerが予約したassignmentだけをSRSへ接続済み
 - 冪等receipt、pure reducer、問題再現性、legacy保存ID、既存 `root-tangle` domainは維持する。発見図鑑の永続化とrun再開は未接続
 - 固定cold-openとしていたマキモドンは承認済み仕様から撤回した。現行の価値契約は「解く → 即世界反応 → 3問目に身体オチ」であり、`opening-root-pull-v1` はproduction未採用の検証器とする
-- 現行の開始導線は次のとおり
+- 当時の開始導線（Island標準ホーム採用前の履歴）は次のとおり
 
 ```text
 探索から退出 / 下部「基地」 → /battle（探検基地）
 通常起動 / onboarding完了 → / → /explore（説明CTAなしでrun開始）
 ```
+
+現在のアプリ全体の入口とExploreの任意導線は、冒頭のスコープ注記・仕様01/12/28/43を参照する。
 
 以下のMVP-0〜4節は実装順の履歴と残作業の境界を示す。現在のproduction採用判断は [15_mvp_rollout_verification_spec.md](../product/15_mvp_rollout_verification_spec.md) のcold-open価値ゲートを優先する。
 
@@ -102,12 +106,12 @@ MVP-0/1では学習リポジトリへの書き込み経路自体を探索から�
 - きろくに発見ノートを追加する
 - 既存 `/study` と2人ゲームURLは維持する
 
-2026-07-19の起動面判断により、旧ホームCTA経由は廃止し `/` から `/explore` へ直結した。MVP-3の探検基地・相棒・きろく統合は、起動ルートとcold-open検証を分けて後続実装する。
+2026-07-19時点の起動面判断（履歴。2026-09-08のIsland標準ホーム採用で置換済み）では、旧ホームCTA経由を廃止し `/` から `/explore` へ直結した。これは当時のExplore MVP運用であり、現在のアプリ標準導線ではない。MVP-3の探検基地・相棒・きろく統合は、当時、起動ルートとcold-open検証を分けて後続実装する判断だった。
 
 ## MVP-4: 主導線の判断
 
-- `/study` の独立した学習導線を残したまま、探索を通常起動面として検証する
-- `/study` を復習・テスト用として残す
+- 2026-07時点の計画では `/study` の独立した学習導線を残しつつExploreを通常起動面として検証する案だった。このapp-root案は2026-09-08にIslandへ置き換わり、現在は実施対象ではない。
+- `/study` を復習・テスト用として残す判断は現在も有効。現行の全体入口は親仕様01と島ナビ仕様43を参照する。
 - `/battle` と下部 `Game` の名称・役割を確定する
 - 探検基地ホームへ全面再設計するか判断する
 

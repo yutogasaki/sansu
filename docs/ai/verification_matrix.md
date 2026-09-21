@@ -10,7 +10,7 @@ GitHub Actions should mirror the same baseline for `docs:check` and `verify:core
 
 ## Current Commands
 
-現行アプリのUX/UI監査・実画面作業は `npm run dev` または明示した `npm run dev:island` から開始し、`VITE_ISLAND_ENABLED=true` と `/#/island` を確認する。通常起動はIsland flag-onのIsland画面を開き、port競合はfail-fastにする。`/explore` はIsland有効時も残る任意の副モードで、全体UX監査の主対象に混ぜない。flag-offのclassic起動は専用ownerが明示した場合だけ行う。全ルート共通の `.app-container` はIsland/Nature Townの実feature flagとbuild revisionを公開し、Island画面はさらにdelivery、visual/learning candidateを公開する。各captureでURL/routeと共通rootのflagを照合し、route固有candidateがない共有Utility面は「該当なし」と記録する。必要なmarkerが欠けるcaptureは現行UIの証拠にしない。`npm run verify:core` の `check:current-ui-entry` は標準起動契約、共有root flag、Island画面identity markerを検査する。
+現行アプリのUX/UI監査・実画面作業は `npm run dev` または明示した `npm run dev:island` から開始し、`VITE_ISLAND_ENABLED=true` と `/#/island` を確認する。通常起動はIsland flag-onのIsland画面を開き、port競合はfail-fastにする。`/explore` はIsland有効時も残る任意の副モードで、全体UX監査の主対象に混ぜない。flag-offのclassic起動は専用ownerが明示した場合だけ行う。全ルート共通の `.app-container` はIsland/Nature Townの実feature flagとbuild revisionを公開し、Island画面はさらにdelivery、visual/learning candidateを公開する。各captureでURL/routeと共通rootのflagを照合し、route固有candidateがない共有Utility面は「該当なし」と記録する。必要なmarkerが欠けるcaptureは現行UIの証拠にしない。`npm run verify:core` の `check:current-ui-entry` は標準起動/flag/route契約、共有root flag、Island画面identity markerに加え、製品仕様01/06/15とmemory・ownership map・Explore実装計画・risk registerの現行入口および旧Exploreの履歴境界を検査する。
 
 `node tools/e2e-island-life-facility-production.mjs` は `SANSU_FACILITY_PRODUCTION_URL`、新規 `SANSU_FACILITY_PRODUCTION_OUTPUT`、絶対pathのapp/dist SHAとversion/flagsを持つ `SANSU_FACILITY_PRODUCTION_MANIFEST` を指定。phone/tabletで初回設定から通常入力60問・施設の実購入・単体利用・R5/R6の明示観察/本人保存・offline再読込を行い、学習等7ストアと所有を比較する。相手が利用中なら案内を確認し、追加購入後の実poseから空いた花を選ぶ。利用中分岐を通らなかった幅の案内表示までPASSとしない。DB注入/時間加速/自然発見の代用ではない。
 
