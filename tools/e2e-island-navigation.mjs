@@ -104,6 +104,25 @@ try {
             assert.equal(metadata.delivery, 'mystic-island-v1', 'Island navigation evidence must use the current delivery');
             report.captures.push({ file, ...metadata });
         };
+        const captureUtility = async name => {
+            const file = `${viewport.width}-${name}.png`;
+            await page.waitForTimeout(400);
+            await page.screenshot({ path: `${out}/${file}`, animations: 'disabled' });
+            const metadata = await page.locator('.app-container').evaluate(element => ({
+                url: location.href,
+                revision: element.dataset.buildRevision,
+                rootConfiguredDelivery: element.dataset.deliveryId,
+                islandFeatureEnabled: element.dataset.islandFeatureEnabled === 'true',
+                natureTownFeatureEnabled: element.dataset.natureTownFeatureEnabled === 'true',
+                routeCandidate: 'not-applicable-shared-utility',
+                viewport: { width: innerWidth, height: innerHeight },
+                serviceWorkerControlled: Boolean(navigator.serviceWorker.controller),
+                reducedMotion: matchMedia('(prefers-reduced-motion: reduce)').matches,
+            }));
+            assert.equal(metadata.islandFeatureEnabled, true, 'Parent-page evidence must use the current Island-enabled app');
+            assert.equal(metadata.natureTownFeatureEnabled, false, 'Parent-page evidence must not come from the Nature Town preview');
+            report.captures.push({ file, ...metadata });
+        };
         const nav = page.locator('.island-shell-nav');
         const learn = page.locator('.island-shell-tab--learn');
         const hash = () => new URL(page.url()).hash;
@@ -397,8 +416,57 @@ try {
             await page.waitForFunction(() => [...document.querySelectorAll('div')].some(element => element.textContent === 'かいとう' && /^1\s*かいとう$/.test(element.parentElement.textContent)));
             const metric = page.locator('.stats-metric').filter({ has: page.getByText('かいとう', { exact: true }) });
             assert.match(await metric.innerText(), /^1\s/, 'One saved answer replaces the empty state with the actual answer metric');
+
+            // Review the caregiver page through its real gate on the current
+            // Island-enabled app. The profile and its single answer are
+            // disposable to this browser context, which is closed below.
+            await page.goto(`${base}/#/settings?section=parent`);
+            await page.getByRole('heading', { name: 'テスト・保護者', exact: true }).waitFor();
+            await page.getByRole('button', { name: '開く', exact: true }).first().click();
+            const gate = page.getByRole('dialog', { name: 'ほごしゃ かくにん' });
+            await gate.waitFor();
+            const gatePrompt = page.getByText(/^\d+\s*×\s*\d+\s*=\s*\?$/);
+            const [gateLeft, gateRight] = (await gatePrompt.innerText()).match(/\d+/g).map(Number);
+            await page.getByLabel('答え').fill(String(gateLeft * gateRight));
+            await gate.getByRole('button', { name: 'OK', exact: true }).click();
+            await page.waitForURL('**/#/parents');
+            await page.getByRole('heading', { name: '保護者メニュー', exact: true }).waitFor();
+            const reviewHeading = page.getByRole('heading', { name: '復習候補', exact: true });
+            await reviewHeading.waitFor();
+            const reviewDescription = '5回以上の回答がある項目が対象です。直近10回の正答率が60%未満で候補に加わり、80%以上になると表示から外れます。';
+            const description = page.getByText(reviewDescription, { exact: true });
+            await description.waitFor();
+            assert.equal(await page.getByText('復習候補：0件', { exact: true }).count(), 1);
+            assert.equal(await page.getByText('今は復習候補がありません。', { exact: true }).count(), 2);
+            const parentLayout = await page.evaluate(() => {
+                const paragraph = [...document.querySelectorAll('p')].find(element => element.textContent?.trim() ===
+                    '5回以上の回答がある項目が対象です。直近10回の正答率が60%未満で候補に加わり、80%以上になると表示から外れます。');
+                if (!paragraph) throw new Error('The review-candidate explanation is not rendered');
+                const box = paragraph.getBoundingClientRect();
+                return {
+                    documentWidth: document.documentElement.scrollWidth,
+                    viewportWidth: innerWidth,
+                    descriptionWidth: box.width,
+                    descriptionHeight: box.height,
+                    descriptionScrollWidth: paragraph.scrollWidth,
+                    descriptionClientWidth: paragraph.clientWidth,
+                };
+            });
+            assert(parentLayout.documentWidth <= viewport.width + 1,
+                `Parent page has no horizontal overflow: ${JSON.stringify(parentLayout)}`);
+            assert(parentLayout.descriptionScrollWidth <= parentLayout.descriptionClientWidth + 1,
+                `Review explanation wraps without clipping: ${JSON.stringify(parentLayout)}`);
+            await captureUtility('parent-summary');
+            const returnButton = page.getByRole('button', { name: '設定に戻る', exact: true });
+            await returnButton.scrollIntoViewIfNeeded();
+            const returnBox = await returnButton.boundingBox();
+            assert(returnBox && returnBox.width >= 44 && returnBox.height >= 44,
+                'Parent-page return remains a 44px-or-larger target');
+            await returnButton.click();
+            await page.waitForURL('**/#/settings?section=parent');
+            await page.getByRole('heading', { name: 'テスト・保護者', exact: true }).waitFor();
             assert.deepEqual(errors, []);
-            report.scenarios.push({ viewport, pass: true, settingsContrast, checks: ['first-run welcome identity, responsive frame, and visible 44px actions', 'explicit profile-add frame preserved', 'top entry without learning', 'stale top query and unknown URL recovery', 'existing-profile onboarding return', 'pending-plan top return without learning writes', 'ordinary tabs', ...(viewport.height <= 430 ? ['play continuation reachable by internal scroll'] : []), 'settings source retained', 'settings small-text contrast on composed surface and opaque paper', 'draft and seven-store equality', 'back/forward', 'home reload without auto-start', 'placement cancel/save', 'camera close', 'real photo/detail close', 'direct learning reload/close', 'curriculum scroll restored', 'direct placement fallback', 'records refresh after answer'], errors });
+            report.scenarios.push({ viewport, pass: true, settingsContrast, checks: ['first-run welcome identity, responsive frame, and visible 44px actions', 'explicit profile-add frame preserved', 'top entry without learning', 'stale top query and unknown URL recovery', 'existing-profile onboarding return', 'pending-plan top return without learning writes', 'ordinary tabs', ...(viewport.height <= 430 ? ['play continuation reachable by internal scroll'] : []), 'settings source retained', 'settings small-text contrast on composed surface and opaque paper', 'draft and seven-store equality', 'back/forward', 'home reload without auto-start', 'placement cancel/save', 'camera close', 'real photo/detail close', 'direct learning reload/close', 'curriculum scroll restored', 'direct placement fallback', 'records refresh after answer', 'current-Island parent gate and review-candidate copy', 'parent explanation wraps without horizontal overflow', 'parent return reaches the originating settings section'], errors });
             console.log(`PASS navigation ${viewport.width}x${viewport.height}`);
         } catch (error) {
             await page.screenshot({ path: `${out}/${viewport.width}-failure.png` }).catch(() => {});
@@ -411,7 +479,9 @@ try {
     await fs.writeFile(`${out}/report.json`, JSON.stringify(report, null, 2));
     const contactSheet = `<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Island navigation evidence</title><style>body{margin:24px;background:#f6f4ee;color:#25314f;font:14px system-ui,sans-serif}main{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}figure{margin:0;padding:10px;background:#fff;border:1px solid #ded8e8;border-radius:12px}img{display:block;width:100%;height:340px;object-fit:contain;background:#f0eef3;border-radius:8px}figcaption{padding-top:8px;overflow-wrap:anywhere;line-height:1.45}h1{font-size:20px}p{color:#58637b}</style><h1>Island navigation: ${report.pass ? 'PASS' : 'FAIL / INCOMPLETE'}</h1><p>${escapeHtml(report.target)} · ${report.captures.length} captures · ${report.scenarios.length} viewport runs</p><main>${report.captures.map(capture => {
         const imagePath = encodeURIComponent(capture.file);
-        const caption = `${capture.viewport.width}×${capture.viewport.height} · ${capture.mode} · ${capture.version} · ${capture.delivery} · ${capture.candidate} · ${capture.learningCandidate}`;
+        const caption = capture.candidate
+            ? `${capture.viewport.width}×${capture.viewport.height} · ${capture.mode} · ${capture.version} · ${capture.delivery} · ${capture.candidate} · ${capture.learningCandidate}`
+            : `${capture.viewport.width}×${capture.viewport.height} · ${capture.routeCandidate} · root config ${capture.rootConfiguredDelivery} · ${capture.revision} · Island ${capture.islandFeatureEnabled} · Nature Town ${capture.natureTownFeatureEnabled}`;
         return `<figure><a href="${imagePath}"><img loading="lazy" src="${imagePath}" alt="${escapeHtml(capture.file)}"></a><figcaption>${escapeHtml(caption)}</figcaption></figure>`;
     }).join('')}</main></html>`;
     await fs.writeFile(`${out}/contact-sheet.html`, contactSheet);

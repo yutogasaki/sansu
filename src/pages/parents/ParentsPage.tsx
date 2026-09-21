@@ -6,6 +6,7 @@ import type { RecentAttempt, UserProfile } from '../../domain/types';
 import { getActiveProfile } from '../../domain/user/repository';
 import { islandParentUrl } from '../../domain/island/navigation';
 import { getParentAttemptLabel, getParentMathSkillLabel, getParentVocabWordLabel } from './parentAttemptLabel';
+import { PARENT_REVIEW_COPY } from './parentReviewCopy';
 import { ParentGateModal } from '../../components/gate/ParentGateModal';
 import { Spinner } from '../../components/ui/Spinner';
 import { Badge } from '../../components/ui/Badge';
@@ -153,14 +154,14 @@ export const ParentsPage: React.FC = () => {
                     </InsetPanel>
                 </div>
                 <div className="text-center text-xs leading-5 text-pokomoko-muted">
-                    苦手候補: <span className="font-bold text-slate-600">{weakTotal}</span> 件
+                    {PARENT_REVIEW_COPY.summary(weakTotal)}
                 </div>
             </SurfacePanel>
 
             <SurfacePanel>
                 <SurfacePanelHeader
-                    title="苦手なところ"
-                    description="正答率が 60% 未満の項目を まとめています"
+                    title={PARENT_REVIEW_COPY.title}
+                    description={PARENT_REVIEW_COPY.description}
                 />
 
                 <div className="space-y-3">
@@ -175,7 +176,7 @@ export const ParentsPage: React.FC = () => {
                                 ))}
                             </div>
                         ) : (
-                            <div className="text-sm text-pokomoko-muted">現在のところ苦手な問題はありません。</div>
+                            <div className="text-sm text-pokomoko-muted">{PARENT_REVIEW_COPY.empty}</div>
                         )}
                     </InsetPanel>
 
@@ -196,7 +197,7 @@ export const ParentsPage: React.FC = () => {
                                 })}
                             </div>
                         ) : (
-                            <div className="text-sm text-pokomoko-muted">現在のところ苦手な単語はありません。</div>
+                            <div className="text-sm text-pokomoko-muted">{PARENT_REVIEW_COPY.empty}</div>
                         )}
                     </InsetPanel>
                 </div>
