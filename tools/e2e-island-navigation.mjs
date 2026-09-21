@@ -110,6 +110,8 @@ try {
         let welcomeLayout = null;
         let photoActionLayout = null;
         let otherGamesChoiceLayout = null;
+        let recordsScrollLayout = null;
+        let recordsHeadingLayout = null;
         let shortLearningLayout = null;
         let shortHelpLayout = null;
         const shortLandscapeWelcome = viewport.width >= 480 && viewport.height <= 600 && viewport.width > viewport.height;
@@ -474,6 +476,80 @@ try {
             await button(page, 'もどる').click(); await ordinary('#/settings');
             await nav.getByRole('button', { name: 'きろく', exact: true }).click(); await ordinary('#/stats');
             await capture('records');
+            const recordsScroll = page.locator('.utility-layout-scroll');
+            const recordsScrollBefore = await recordsScroll.evaluate(element => ({
+                scrollHeight: element.scrollHeight,
+                clientHeight: element.clientHeight,
+                documentScrollHeight: document.documentElement.scrollHeight,
+                navigationTop: document.querySelector('.island-shell-nav')?.getBoundingClientRect().top ?? null,
+            }));
+            assert(recordsScrollBefore.navigationTop !== null,
+                `The records reachability check requires the fixed navigation: ${JSON.stringify(recordsScrollBefore)}`);
+            assert(recordsScrollBefore.documentScrollHeight <= viewport.height + 1,
+                `The records view uses its own scroll surface without document overflow: ${JSON.stringify(recordsScrollBefore)}`);
+            if (recordsScrollBefore.scrollHeight > recordsScrollBefore.clientHeight + 1) {
+                const scrollBox = await recordsScroll.boundingBox();
+                assert(scrollBox && scrollBox.height > 0, 'Records expose a visible scroll surface');
+                await page.mouse.move(scrollBox.x + scrollBox.width / 2, scrollBox.y + scrollBox.height / 2);
+                await page.mouse.wheel(0, 12000);
+                await page.waitForFunction(() => {
+                    const element = document.querySelector('.utility-layout-scroll');
+                    return !!element && element.scrollTop + element.clientHeight >= element.scrollHeight - 1;
+                });
+            }
+            recordsScrollLayout = await recordsScroll.evaluate(element => {
+                const scroll = element.getBoundingClientRect();
+                const navigation = document.querySelector('.island-shell-nav')?.getBoundingClientRect();
+                const parentReport = document.querySelector('#stats-learning-details')?.lastElementChild?.getBoundingClientRect();
+                return {
+                    scrollHeight: element.scrollHeight,
+                    clientHeight: element.clientHeight,
+                    scrollTop: element.scrollTop,
+                    maxScrollTop: element.scrollHeight - element.clientHeight,
+                    documentScrollHeight: document.documentElement.scrollHeight,
+                    scrollBottom: scroll.bottom,
+                    navigationTop: navigation?.top ?? null,
+                    parentReport: parentReport ? { top: parentReport.top, bottom: parentReport.bottom } : null,
+                };
+            });
+            assert(recordsScrollLayout.scrollHeight <= recordsScrollLayout.clientHeight + 1
+                || recordsScrollLayout.scrollTop + recordsScrollLayout.clientHeight >= recordsScrollLayout.scrollHeight - 1,
+            `The records scroll surface reaches its end: ${JSON.stringify(recordsScrollLayout)}`);
+            assert(recordsScrollLayout.parentReport
+                && recordsScrollLayout.parentReport.bottom <= recordsScrollLayout.scrollBottom + 1
+                && recordsScrollLayout.parentReport.bottom <= recordsScrollLayout.navigationTop + 1,
+            `The final records section remains reachable above fixed navigation: ${JSON.stringify(recordsScrollLayout)}`);
+            await capture('records-scrolled-bottom');
+            if (recordsScrollBefore.scrollHeight > recordsScrollBefore.clientHeight + 1) {
+                await page.mouse.wheel(0, -200);
+                await page.waitForFunction(() => {
+                    const scrollElement = document.querySelector('.utility-layout-scroll');
+                    const navigation = document.querySelector('.island-shell-nav')?.getBoundingClientRect();
+                    const heading = document.querySelector('#stats-learning-details')?.lastElementChild?.querySelector('h3')?.getBoundingClientRect();
+                    const scroll = scrollElement?.getBoundingClientRect();
+                    return !!heading && !!scroll && !!navigation
+                        && heading.height > 0
+                        && heading.top >= scroll.top - 1
+                        && heading.bottom <= navigation.top + 1;
+                });
+            }
+            recordsHeadingLayout = await recordsScroll.evaluate(element => {
+                const scroll = element.getBoundingClientRect();
+                const navigation = document.querySelector('.island-shell-nav')?.getBoundingClientRect();
+                const heading = document.querySelector('#stats-learning-details')?.lastElementChild?.querySelector('h3')?.getBoundingClientRect();
+                return {
+                    scrollTop: element.scrollTop,
+                    scrollTopEdge: scroll.top,
+                    navigationTop: navigation?.top ?? null,
+                    heading: heading ? { top: heading.top, bottom: heading.bottom, height: heading.height } : null,
+                };
+            });
+            assert(recordsHeadingLayout.heading
+                && recordsHeadingLayout.heading.top >= recordsHeadingLayout.scrollTopEdge - 1
+                && recordsHeadingLayout.heading.bottom <= recordsHeadingLayout.navigationTop + 1,
+            `The final records heading can be brought into view above fixed navigation: ${JSON.stringify(recordsHeadingLayout)}`);
+            await capture('records-scrolled');
+            await recordsScroll.evaluate(element => { element.scrollTop = 0; });
             await nav.getByRole('button', { name: 'しま', exact: true }).click();
             await waitMode(page, 'home'); await ordinary('#/island');
             assert.deepEqual((await readNative(page, id)).plan, saved.plan);
@@ -881,10 +957,17 @@ try {
             }
             assert.deepEqual(errors, []);
             report.scenarios.push({ viewport, pass: true, settingsContrast, parentCandidateFixture, welcomeLayout, photoActionLayout, otherGamesChoiceLayout, shortLearningLayout, shortHelpLayout, checks: ['first-run welcome identity, responsive frame, and visible 44px actions', ...(shortLandscapeWelcome ? ['short-landscape Welcome keeps the island scene and all three actions visible without scrolling'] : []), ...(viewport.width <= 360 ? ['narrow first-run item labels remain single-line', 'five-tab navigation labels fit on one line inside 44px-or-larger targets'] : []), 'explicit profile-add frame preserved', 'top entry without learning', 'stale top query and unknown URL recovery', 'existing-profile onboarding return', 'pending-plan top return without learning writes', 'ordinary tabs', ...(viewport.height <= 430 ? ['play continuation reachable by internal scroll'] : []), 'settings source retained', 'settings small-text contrast on composed surface and opaque paper', 'draft and seven-store equality', 'back/forward', 'home reload without auto-start', 'placement cancel/save', 'camera close', 'real photo/detail close', 'populated photo action remains fully visible above fixed navigation', 'direct learning reload/close', ...(viewport.width >= 480 && viewport.height <= 600 && viewport.width > viewport.height ? ['short-landscape learning keeps every 44px keypad key, answer, and help action visible'] : []), ...(viewport.width >= 480 && viewport.height <= 400 && viewport.width > viewport.height ? ['short-landscape hint keeps the support, full keypad, answer and next action visible without overlap'] : []), 'curriculum scroll restored', 'direct placement fallback', 'records refresh after answer', 'current-Island parent gate and empty review-candidate copy', 'current-Island parent populated review candidates via display-only fixture', 'parent explanation wraps without horizontal overflow', 'parent return reaches the originating settings section from both states', ...(viewport.width >= 700 ? ['wide Other Games heading aligns with centered choice list'] : []), ...(viewport.height <= 430 ? ['all three primary game choices remain fully visible above the fixed navigation'] : []), 'Island menu → Other Games → Battle guidance/setup and return', ...(viewport.width >= 768 && viewport.height > viewport.width ? ['tablet portrait Battle orientation guidance and return'] : viewport.width <= 767 && viewport.height <= 639 ? ['small-phone Battle screen-size guidance and return'] : ['two-player setup semantics, 44px options, prerequisite guidance, scroll discoverability, and start readiness'])], errors });
+            report.scenarios.at(-1).recordsScrollLayout = recordsScrollLayout;
+            report.scenarios.at(-1).checks.push('records use an internal scroll surface without document overflow');
+            report.scenarios.at(-1).checks.push('the final records section remains reachable above fixed navigation');
+            report.scenarios.at(-1).recordsHeadingLayout = recordsHeadingLayout;
+            report.scenarios.at(-1).checks.push('the final records section heading can be brought into view above fixed navigation');
             console.log(`PASS navigation ${viewport.width}x${viewport.height}`);
         } catch (error) {
             await page.screenshot({ path: `${out}/${viewportTag}-failure.png` }).catch(() => {});
             report.scenarios.push({ viewport, pass: false, settingsContrast, parentCandidateFixture, welcomeLayout, photoActionLayout, otherGamesChoiceLayout, shortLearningLayout, shortHelpLayout, error: String(error), url: page.url(), errors });
+            report.scenarios.at(-1).recordsScrollLayout = recordsScrollLayout;
+            report.scenarios.at(-1).recordsHeadingLayout = recordsHeadingLayout;
             throw error;
         } finally { await context.close(); }
     }
