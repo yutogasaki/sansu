@@ -582,3 +582,21 @@ The additional 1024×768 sweep traversed first-run Welcome, Island home and tabs
 Runtime identity recorded for every capture: `http://127.0.0.1:5200`, build revision `e115e896`, runtime version `e115e896:a1504f4e-471b-4a2e-9a45-7a5cb0d84f95`, root Island=true / NatureTown=false, configured delivery `snap-root-v1`, visual lineage `pokko-field-v1`. Island screens additionally identify `mystic-island-v1` and their visual/learning candidates; shared Utility screens correctly report no route-specific candidate. Reduced motion was enabled and there was no service-worker controller. Disposable browser contexts were closed; no persistent user data was changed. Nature Town's separate uncommitted working-tree changes were not edited or staged, and the preview flag remained false.
 
 This is local-preview layout, navigation, and runtime-identity evidence—not release evidence, a complete route/state audit, or a score of visual appeal, silent comprehension/safety, real screen-reader behavior, physical-touch discoverability, or child-participant experience.
+
+## Current Island narrow-phone first-run (`live-63`, 2026-09-21)
+
+### F-39 — Welcome CTA was below the first viewport on a 320×568 phone (medium, fixed and runtime checked)
+
+The first-run Island Welcome had not been checked at the 320×568 minimum-phone viewport. Before the fix, the welcome page's content measured 621px tall; the “まなぶ” button ended at y=597, 29px below the viewport, and the “おはな” / “あかり” labels wrapped. At widths up to 360px, the item controls now use tighter gaps and padding with smaller icons. At widths up to 360px and heights up to 600px, the scene and surrounding controls compact while preserving a one-line choice label, 44px-or-larger choice targets, and a 48px-or-larger learning CTA. The 320×568 render now keeps the whole CTA visible (top y=489, bottom y=537).
+
+The first rerun then exposed an E2E assumption, not an app regression: at 320×568 the existing Battle `OrientationGate` intentionally shows the “もうすこし 大きな画面で あそんでね” screen instead of setup. The navigation runner now validates that existing guidance, its 44px-or-larger return action, and return to Other Games rather than waiting for the unsupported setup screen.
+
+| Viewport / state | Result | Evidence |
+|---|---|---|
+| 320×568 first-run Welcome | Both choice labels stay on one line; all choice actions and the full “まなぶ” CTA are visible without page scrolling. | [Welcome capture](evidence/screens/live-63-current-island-narrow-phone-320x568/320-welcome.png) |
+| 320×568 Battle entry | The intentional small-screen guidance appears with a 44px-or-larger return action and returns to Other Games. | [Guidance capture](evidence/screens/live-63-current-island-narrow-phone-320x568/320-battle-small-screen-guidance.png) |
+| 320×568 route sweep | 26 route/action checks pass across 18 captures with zero page errors. | [Contact sheet](evidence/screens/live-63-current-island-narrow-phone-320x568/contact-sheet.html), [run report](evidence/screens/live-63-current-island-narrow-phone-320x568/report.json) |
+
+Runtime identity for every capture: `http://127.0.0.1:5200`, revision `f720ca5a`, version `f720ca5a:65ae4ed5-17a0-4ed3-8179-8f81f9045997`, app-root Island=true / NatureTown=false, configured delivery `snap-root-v1`, visual lineage `pokko-field-v1`. Welcome identity is delivery `mystic-island-v1` and candidate `mystic-island-shore-garden-v18`; the navigation runner is `island-navigation-five-tabs-v2`. Reduced motion was enabled, there was no service-worker controller, and all profile fixtures lived in disposable browser contexts. The target is the current Island app, not classic Explore or Nature Town.
+
+The layout and runtime behavior are checked in a local preview. The screenshot confirms the visible scene and actions, but this pass does not score independent visual appeal or establish child comprehension/enjoyment, screen-reader behavior, physical-device feel, release/update behavior, or whole-app completion. Those quality gates remain separate and open.
