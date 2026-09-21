@@ -792,3 +792,17 @@ Checked the shared Records/Stats utility surface in the canonical Island app at 
 The actual browser-wheel journey reaches the end of the internal `.utility-layout-scroll`: 1,222px content in a 256px scrollport, `scrollTop=966` (the maximum), while the document remains 390px high. The scrollport and fixed-nav top both land at y=324.41; the final report section ends at y=299.78. Scrolling up 200px brings its final heading fully into view at y=182.78–206.78, above the fixed nav. The [initial Records view](evidence/screens/live-91-current-island-records-scroll-2026-09-22/844x390-records.png), [bottom of the scroll](evidence/screens/live-91-current-island-records-scroll-2026-09-22/844x390-records-scrolled-bottom.png), [heading back in view](evidence/screens/live-91-current-island-records-scroll-2026-09-22/844x390-records-scrolled.png), [all-screen contact sheet](evidence/screens/live-91-current-island-records-scroll-2026-09-22/contact-sheet.html), and [machine-readable report](evidence/screens/live-91-current-island-records-scroll-2026-09-22/report.json) preserve the run.
 
 This confirms reachability with a desktop browser wheel only; it does not establish touch discoverability on a real device, screen-reader behavior, or child comprehension/enjoyment. No Records defect is confirmed and no cue or production UI change was made. The broader route/state audit remains partial.
+
+## Records scroll responsive matrix (`live-92`, 2026-09-22)
+
+Repeated the internal-scroll and fixed-navigation assertions across the canonical default viewport set: 390×844 phone, 768×1024 tablet, 480×431 and 599×430 short landscape, and 568×320 compact landscape. All five use the same Island-enabled runtime and shared Records surface; all 157 route/action checks pass, with 103 captures and zero page errors. Each Records capture identifies `/#/stats`, revision `development-local`, version `development-local:60d95334-58f8-4594-b548-c113c90cad1c`, root delivery `snap-root-v1`, Island enabled, Nature Town disabled, Island delivery `mystic-island-v1`, visual candidate `mystic-island-shore-garden-v18`, reduced motion on, and service worker off. Records is shared Utility UI, not a separate art candidate. In every viewport, `document.documentElement.scrollHeight` equals the viewport height, the Records content reaches its internal scroll end, the final report section ends 24px above the fixed navigation, and its heading can be reached above navigation (already visible at the lower end on the two tall viewports; brought into view by scrolling up on the shorter ones).
+
+| Viewport | Internal content / viewport | Max scroll | Report bottom / nav top | Final heading y |
+| --- | ---: | ---: | ---: | ---: |
+| 390×844 | 1968 / 710px | 1258px | 753.78 / 778.41px | 372.78–396.78px |
+| 768×1024 | 1222 / 890px | 332px | 933.78 / 958.41px | 616.78–640.78px |
+| 480×431 | 1884 / 297px | 1587px | 340.78 / 365.41px | 183.78–207.78px |
+| 599×430 | 1820 / 296px | 1524px | 339.78 / 364.41px | 246.78–270.78px |
+| 568×320 | 1820 / 186px | 1634px | 229.78 / 254.41px | 136.78–160.78px |
+
+The [five-viewport contact sheet](evidence/screens/live-92-current-island-records-scroll-2026-09-22/contact-sheet.html) and [full machine-readable report](evidence/screens/live-92-current-island-records-scroll-2026-09-22/report.json) retain route captures and runtime identity for every viewport. This remains desktop-wheel/browser evidence, not physical-touch discovery, assistive-technology, or child-participant evidence; no production UI change is warranted by this check alone.
