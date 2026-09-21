@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Badge } from "../ui/Badge";
 import { Button } from "../ui/Button";
@@ -66,8 +66,11 @@ interface PlayerSetup {
     subject: BattleSubject;
 }
 
+type GradeScrollDirection = "up" | "down" | "both";
+
 interface PlayerSetupPanelProps {
     label: string;
+    gradePlayer: 1 | 2;
     setup: PlayerSetup;
     onChange: (s: PlayerSetup) => void;
     defaultName: string;
@@ -95,6 +98,7 @@ const playerToneClassMap = {
 
 const PlayerSetupPanel: React.FC<PlayerSetupPanelProps> = ({
     label,
+    gradePlayer,
     setup,
     onChange,
     defaultName,
@@ -172,7 +176,12 @@ const PlayerSetupPanel: React.FC<PlayerSetupPanelProps> = ({
                 />
             </InsetPanel>
 
-            <InsetPanel role="group" aria-label={`${label}のがくねん`} className="space-y-2 ipadland:px-2 ipadland:py-2">
+            <InsetPanel
+                role="group"
+                aria-label={`${label}のがくねん`}
+                data-battle-grade={`player-${gradePlayer}`}
+                className="space-y-2 ipadland:px-2 ipadland:py-2"
+            >
                 <SectionLabel className="px-0">がくねん</SectionLabel>
                 <div className="grid grid-cols-3 gap-1.5">
                     {([-2, -1, 0, 1, 2, 3, 4, 5, 6] as BattleGrade[]).map((grade) => {
@@ -210,10 +219,61 @@ export const BattleSetup: React.FC<BattleSetupProps> = ({
     const [p1, setP1] = useState<PlayerSetup>({ name: "", grade: null, emoji: "🐱", subject: "math" });
     const [p2, setP2] = useState<PlayerSetup>({ name: "", grade: null, emoji: "🐶", subject: "math" });
     const [mode, setMode] = useState<BattleGameMode>(initialMode);
+    const setupScrollRef = useRef<HTMLDivElement>(null);
+    const [gradeScrollCue, setGradeScrollCue] = useState<{
+        player: 1 | 2;
+        direction: GradeScrollDirection;
+    } | null>(null);
 
     useEffect(() => {
         setMode(initialMode);
     }, [initialMode]);
+
+    const nextGradePlayer = p1.grade === null ? 1 : p2.grade === null ? 2 : null;
+
+    useEffect(() => {
+        const scrollArea = setupScrollRef.current;
+        const gradeGroup = nextGradePlayer
+            ? scrollArea?.querySelector<HTMLElement>(`[data-battle-grade="player-${nextGradePlayer}"]`)
+            : null;
+
+        if (!scrollArea || !gradeGroup || !nextGradePlayer) {
+            setGradeScrollCue(null);
+            return;
+        }
+
+        const updateCue = () => {
+            const viewport = scrollArea.getBoundingClientRect();
+            const target = gradeGroup.getBoundingClientRect();
+            const hiddenAbove = target.top < viewport.top - 1;
+            const hiddenBelow = target.bottom > viewport.bottom + 1;
+
+            const direction = hiddenAbove && hiddenBelow
+                ? "both"
+                : hiddenAbove
+                    ? "up"
+                    : hiddenBelow
+                        ? "down"
+                        : null;
+            setGradeScrollCue(direction ? { player: nextGradePlayer, direction } : null);
+        };
+
+        updateCue();
+        scrollArea.addEventListener("scroll", updateCue, { passive: true });
+        window.addEventListener("resize", updateCue);
+
+        const resizeObserver = typeof ResizeObserver === "undefined"
+            ? null
+            : new ResizeObserver(updateCue);
+        resizeObserver?.observe(scrollArea);
+        resizeObserver?.observe(gradeGroup);
+
+        return () => {
+            scrollArea.removeEventListener("scroll", updateCue);
+            window.removeEventListener("resize", updateCue);
+            resizeObserver?.disconnect();
+        };
+    }, [nextGradePlayer]);
 
     const canStart = p1.grade !== null && p2.grade !== null && p1.emoji && p2.emoji;
     const currentMode = MODE_COPY[mode];
@@ -224,6 +284,9 @@ export const BattleSetup: React.FC<BattleSetupProps> = ({
             : p2.grade === null
                 ? "プレイヤー2の がくねんを えらぶと はじめられるよ"
                 : "ふたりの じゅんびが できたよ";
+    const activeGradeScrollDirection = gradeScrollCue?.player === nextGradePlayer
+        ? gradeScrollCue.direction
+        : null;
 
     const handleStart = () => {
         if (!canStart) return;
@@ -280,10 +343,15 @@ export const BattleSetup: React.FC<BattleSetupProps> = ({
                 />
             </SurfacePanel>
 
-            <div className="mt-3 min-h-0 flex-1 overflow-y-auto overscroll-contain pr-1 ipadland:mt-2">
+            <div
+                ref={setupScrollRef}
+                data-battle-setup-scroll
+                className="mt-3 min-h-0 flex-1 overflow-y-auto overscroll-contain pr-1 ipadland:mt-2"
+            >
                 <div className="grid grid-cols-1 gap-3 pb-2 ipadland:grid-cols-2 ipadland:gap-2">
                     <PlayerSetupPanel
                         label="プレイヤー 1"
+                        gradePlayer={1}
                         setup={p1}
                         onChange={setP1}
                         defaultName="プレイヤー1"
@@ -291,6 +359,7 @@ export const BattleSetup: React.FC<BattleSetupProps> = ({
                     />
                     <PlayerSetupPanel
                         label="プレイヤー 2"
+                        gradePlayer={2}
                         setup={p2}
                         onChange={setP2}
                         defaultName="プレイヤー2"
@@ -304,8 +373,21 @@ export const BattleSetup: React.FC<BattleSetupProps> = ({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
             >
-                <p role="status" aria-atomic="true" className="mb-2 text-center text-sm font-semibold text-slate-600">
-                    {setupStatus}
+                <p role="status" aria-atomic="true" className="mb-2 flex flex-wrap items-center justify-center gap-x-2 text-center text-sm font-semibold text-slate-600">
+                    <span>{setupStatus}</span>
+                    {activeGradeScrollDirection && (
+                        <span
+                            data-battle-scroll-cue={activeGradeScrollDirection}
+                            aria-hidden="true"
+                            className="inline-flex shrink-0 items-center whitespace-nowrap text-xs font-bold text-pokomoko-muted"
+                        >
+                            {activeGradeScrollDirection === "up"
+                                ? "↑ うえへ スクロール"
+                                : activeGradeScrollDirection === "down"
+                                    ? "↓ したへ スクロール"
+                                    : "↕ スクロールしてね"}
+                        </span>
+                    )}
                 </p>
                 <Button
                     onClick={handleStart}

@@ -27,6 +27,14 @@ describe("BattleSetup accessibility", () => {
         expect(html).toContain("ふたりの がくねんを えらぶと はじめられるよ");
     });
 
+    it("identifies the setup scroll area and each player's required grade group", () => {
+        const html = renderSetup();
+
+        expect(html).toContain("data-battle-setup-scroll");
+        expect(html).toContain('data-battle-grade="player-1"');
+        expect(html).toContain('data-battle-grade="player-2"');
+    });
+
     it("announces the chosen avatar, exposes grades visually and semantically, and keeps 44px option targets", () => {
         const html = renderSetup();
         const optionButtons = [...html.matchAll(/<button\b([^>]*)>/g)]

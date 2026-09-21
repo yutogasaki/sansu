@@ -1,0 +1,2260 @@
+{
+  "target": "http://127.0.0.1:5264",
+  "navigationCandidate": "island-navigation-five-tabs-v2",
+  "viewports": [
+    {
+      "width": 390,
+      "height": 844
+    },
+    {
+      "width": 844,
+      "height": 390
+    },
+    {
+      "width": 1024,
+      "height": 768
+    },
+    {
+      "width": 1280,
+      "height": 720
+    }
+  ],
+  "fixture": "First-run Welcome is captured before any profile fixture; route scenarios then use a disposable native profile for learning, furniture, and photo checks. Parent review candidates are a display-only isWeak fixture in that disposable profile; no threshold is exercised and no attempt log or answer count is added.",
+  "captures": [
+    {
+      "file": "390-welcome.png",
+      "url": "http://127.0.0.1:5264/#/onboarding",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "not-applicable",
+      "islandFeatureEnabled": true,
+      "mode": "welcome",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "390-home.png",
+      "url": "http://127.0.0.1:5264/#/island",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "390-play.png",
+      "url": "http://127.0.0.1:5264/#/island?view=play",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "play",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "390-guide.png",
+      "url": "http://127.0.0.1:5264/#/island?view=guide",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "guide",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "390-inventory.png",
+      "url": "http://127.0.0.1:5264/#/island?view=inventory",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "inventory",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "390-customization.png",
+      "url": "http://127.0.0.1:5264/#/island?view=customization",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "customization",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "390-experience.png",
+      "url": "http://127.0.0.1:5264/#/island?view=experience",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "experience",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "390-help.png",
+      "url": "http://127.0.0.1:5264/#/island?view=help",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "help",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "390-house.png",
+      "url": "http://127.0.0.1:5264/#/island?view=keepsakes",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 83,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "390-settings-detail.png",
+      "url": "http://127.0.0.1:5264/#/settings?section=learning",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "390-learning.png",
+      "url": "http://127.0.0.1:5264/#/settings?section=learning&learn=1",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 88,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "390-records.png",
+      "url": "http://127.0.0.1:5264/#/stats",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "390-photo-detail.png",
+      "url": "http://127.0.0.1:5264/#/island?view=photos&photo=%5B%22island-photo%3Av1%22%2C%220301ca1c-420c-4d6d-8e3a-08f3bbd5c8c4%22%2C%22ad103b6b-397f-4836-8790-dadb557b6a37%22%5D",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "photos",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "390-photos.png",
+      "url": "http://127.0.0.1:5264/#/island?view=photos",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "photos",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "390-parent-summary.png",
+      "url": "http://127.0.0.1:5264/#/parents",
+      "routeCandidate": "not-applicable-shared-utility",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "390-parent-review-candidates.png",
+      "url": "http://127.0.0.1:5264/#/parents",
+      "routeCandidate": "not-applicable-shared-utility",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "390-other-games.png",
+      "url": "http://127.0.0.1:5264/#/battle",
+      "routeCandidate": "not-applicable-shared-utility",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "390-battle-setup.png",
+      "url": "http://127.0.0.1:5264/#/battle/play",
+      "routeCandidate": "not-applicable-shared-utility",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "844-welcome.png",
+      "url": "http://127.0.0.1:5264/#/onboarding",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "not-applicable",
+      "islandFeatureEnabled": true,
+      "mode": "welcome",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "844-home.png",
+      "url": "http://127.0.0.1:5264/#/island",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "844-play.png",
+      "url": "http://127.0.0.1:5264/#/island?view=play",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "play",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "844-play-scrolled.png",
+      "url": "http://127.0.0.1:5264/#/island?view=play",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "play",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "844-guide.png",
+      "url": "http://127.0.0.1:5264/#/island?view=guide",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "guide",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "844-inventory.png",
+      "url": "http://127.0.0.1:5264/#/island?view=inventory",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "inventory",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "844-customization.png",
+      "url": "http://127.0.0.1:5264/#/island?view=customization",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "customization",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "844-experience.png",
+      "url": "http://127.0.0.1:5264/#/island?view=experience",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "experience",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "844-help.png",
+      "url": "http://127.0.0.1:5264/#/island?view=help",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "help",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "844-house.png",
+      "url": "http://127.0.0.1:5264/#/island?view=keepsakes",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 84,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "844-settings-detail.png",
+      "url": "http://127.0.0.1:5264/#/settings?section=learning",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "844-learning.png",
+      "url": "http://127.0.0.1:5264/#/settings?section=learning&learn=1",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 88,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "844-records.png",
+      "url": "http://127.0.0.1:5264/#/stats",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "844-photo-detail.png",
+      "url": "http://127.0.0.1:5264/#/island?view=photos&photo=%5B%22island-photo%3Av1%22%2C%22736acfd1-8ca9-494f-b442-b5ab44489831%22%2C%2247c8ad36-716e-475a-9045-41ef04566844%22%5D",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "photos",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "844-photos.png",
+      "url": "http://127.0.0.1:5264/#/island?view=photos",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "photos",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "844-parent-summary.png",
+      "url": "http://127.0.0.1:5264/#/parents",
+      "routeCandidate": "not-applicable-shared-utility",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "844-parent-review-candidates.png",
+      "url": "http://127.0.0.1:5264/#/parents",
+      "routeCandidate": "not-applicable-shared-utility",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "844-other-games.png",
+      "url": "http://127.0.0.1:5264/#/battle",
+      "routeCandidate": "not-applicable-shared-utility",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "844-battle-setup.png",
+      "url": "http://127.0.0.1:5264/#/battle/play",
+      "routeCandidate": "not-applicable-shared-utility",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1024-welcome.png",
+      "url": "http://127.0.0.1:5264/#/onboarding",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "not-applicable",
+      "islandFeatureEnabled": true,
+      "mode": "welcome",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1024-home.png",
+      "url": "http://127.0.0.1:5264/#/island",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1024-play.png",
+      "url": "http://127.0.0.1:5264/#/island?view=play",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "play",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1024-guide.png",
+      "url": "http://127.0.0.1:5264/#/island?view=guide",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "guide",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1024-inventory.png",
+      "url": "http://127.0.0.1:5264/#/island?view=inventory",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "inventory",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1024-customization.png",
+      "url": "http://127.0.0.1:5264/#/island?view=customization",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "customization",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1024-experience.png",
+      "url": "http://127.0.0.1:5264/#/island?view=experience",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "experience",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1024-help.png",
+      "url": "http://127.0.0.1:5264/#/island?view=help",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "help",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1024-house.png",
+      "url": "http://127.0.0.1:5264/#/island?view=keepsakes",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 83,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1024-settings-detail.png",
+      "url": "http://127.0.0.1:5264/#/settings?section=learning",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1024-learning.png",
+      "url": "http://127.0.0.1:5264/#/settings?section=learning&learn=1",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 88,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1024-records.png",
+      "url": "http://127.0.0.1:5264/#/stats",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1024-photo-detail.png",
+      "url": "http://127.0.0.1:5264/#/island?view=photos&photo=%5B%22island-photo%3Av1%22%2C%2266ee7762-9e7b-40db-92e1-904af683eaba%22%2C%227f998eba-cf1e-4c19-8b52-e00453aa486b%22%5D",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "photos",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1024-photos.png",
+      "url": "http://127.0.0.1:5264/#/island?view=photos",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "photos",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1024-parent-summary.png",
+      "url": "http://127.0.0.1:5264/#/parents",
+      "routeCandidate": "not-applicable-shared-utility",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1024-parent-review-candidates.png",
+      "url": "http://127.0.0.1:5264/#/parents",
+      "routeCandidate": "not-applicable-shared-utility",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1024-other-games.png",
+      "url": "http://127.0.0.1:5264/#/battle",
+      "routeCandidate": "not-applicable-shared-utility",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1024-battle-setup.png",
+      "url": "http://127.0.0.1:5264/#/battle/play",
+      "routeCandidate": "not-applicable-shared-utility",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1280-welcome.png",
+      "url": "http://127.0.0.1:5264/#/onboarding",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "not-applicable",
+      "islandFeatureEnabled": true,
+      "mode": "welcome",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1280-home.png",
+      "url": "http://127.0.0.1:5264/#/island",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1280-play.png",
+      "url": "http://127.0.0.1:5264/#/island?view=play",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "play",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1280-guide.png",
+      "url": "http://127.0.0.1:5264/#/island?view=guide",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "guide",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1280-inventory.png",
+      "url": "http://127.0.0.1:5264/#/island?view=inventory",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "inventory",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1280-customization.png",
+      "url": "http://127.0.0.1:5264/#/island?view=customization",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "customization",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1280-experience.png",
+      "url": "http://127.0.0.1:5264/#/island?view=experience",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "experience",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1280-help.png",
+      "url": "http://127.0.0.1:5264/#/island?view=help",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "help",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1280-house.png",
+      "url": "http://127.0.0.1:5264/#/island?view=keepsakes",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 83,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1280-settings-detail.png",
+      "url": "http://127.0.0.1:5264/#/settings?section=learning",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1280-learning.png",
+      "url": "http://127.0.0.1:5264/#/settings?section=learning&learn=1",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 88,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1280-records.png",
+      "url": "http://127.0.0.1:5264/#/stats",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1280-photo-detail.png",
+      "url": "http://127.0.0.1:5264/#/island?view=photos&photo=%5B%22island-photo%3Av1%22%2C%229bed5994-ccac-4b12-bac1-c8626a8cdbf4%22%2C%22fc9d56a4-c753-41ab-b2da-1a1f0e203033%22%5D",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "photos",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1280-photos.png",
+      "url": "http://127.0.0.1:5264/#/island?view=photos",
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "photos",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1280-parent-summary.png",
+      "url": "http://127.0.0.1:5264/#/parents",
+      "routeCandidate": "not-applicable-shared-utility",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1280-parent-review-candidates.png",
+      "url": "http://127.0.0.1:5264/#/parents",
+      "routeCandidate": "not-applicable-shared-utility",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1280-other-games.png",
+      "url": "http://127.0.0.1:5264/#/battle",
+      "routeCandidate": "not-applicable-shared-utility",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "1280-battle-setup.png",
+      "url": "http://127.0.0.1:5264/#/battle/play",
+      "routeCandidate": "not-applicable-shared-utility",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "revision": "554f9ba9",
+      "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "appRoot": {
+        "revision": "554f9ba9",
+        "version": "554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    }
+  ],
+  "scenarios": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pass": true,
+      "settingsContrast": {
+        "foreground": "rgb(96, 105, 128)",
+        "composedBackground": "rgb(255, 254, 252)",
+        "ratio": 5.44,
+        "paperFloorRatio": 5.4,
+        "canvasRatio": 5.11,
+        "legacySlate400OnPaperRatio": 2.59
+      },
+      "parentCandidateFixture": {
+        "kind": "display-only isWeak=true; zero answer counters; no attempt-log delta",
+        "mathId": "add_1d_1",
+        "vocabId": "apple",
+        "naturalThresholdEvidence": false
+      },
+      "checks": [
+        "first-run welcome identity, responsive frame, and visible 44px actions",
+        "explicit profile-add frame preserved",
+        "top entry without learning",
+        "stale top query and unknown URL recovery",
+        "existing-profile onboarding return",
+        "pending-plan top return without learning writes",
+        "ordinary tabs",
+        "settings source retained",
+        "settings small-text contrast on composed surface and opaque paper",
+        "draft and seven-store equality",
+        "back/forward",
+        "home reload without auto-start",
+        "placement cancel/save",
+        "camera close",
+        "real photo/detail close",
+        "populated photo action remains fully visible above fixed navigation",
+        "direct learning reload/close",
+        "curriculum scroll restored",
+        "direct placement fallback",
+        "records refresh after answer",
+        "current-Island parent gate and empty review-candidate copy",
+        "current-Island parent populated review candidates via display-only fixture",
+        "parent explanation wraps without horizontal overflow",
+        "parent return reaches the originating settings section from both states",
+        "Island menu → Other Games → Battle guidance/setup and return",
+        "two-player setup semantics, 44px options, prerequisite guidance, scroll discoverability, and start readiness"
+      ],
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "pass": true,
+      "settingsContrast": {
+        "foreground": "rgb(96, 105, 128)",
+        "composedBackground": "rgb(255, 254, 252)",
+        "ratio": 5.44,
+        "paperFloorRatio": 5.4,
+        "canvasRatio": 5.11,
+        "legacySlate400OnPaperRatio": 2.59
+      },
+      "parentCandidateFixture": {
+        "kind": "display-only isWeak=true; zero answer counters; no attempt-log delta",
+        "mathId": "add_1d_1",
+        "vocabId": "apple",
+        "naturalThresholdEvidence": false
+      },
+      "checks": [
+        "first-run welcome identity, responsive frame, and visible 44px actions",
+        "explicit profile-add frame preserved",
+        "top entry without learning",
+        "stale top query and unknown URL recovery",
+        "existing-profile onboarding return",
+        "pending-plan top return without learning writes",
+        "ordinary tabs",
+        "play continuation reachable by internal scroll",
+        "settings source retained",
+        "settings small-text contrast on composed surface and opaque paper",
+        "draft and seven-store equality",
+        "back/forward",
+        "home reload without auto-start",
+        "placement cancel/save",
+        "camera close",
+        "real photo/detail close",
+        "populated photo action remains fully visible above fixed navigation",
+        "direct learning reload/close",
+        "curriculum scroll restored",
+        "direct placement fallback",
+        "records refresh after answer",
+        "current-Island parent gate and empty review-candidate copy",
+        "current-Island parent populated review candidates via display-only fixture",
+        "parent explanation wraps without horizontal overflow",
+        "parent return reaches the originating settings section from both states",
+        "Island menu → Other Games → Battle guidance/setup and return",
+        "two-player setup semantics, 44px options, prerequisite guidance, scroll discoverability, and start readiness"
+      ],
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "pass": true,
+      "settingsContrast": {
+        "foreground": "rgb(96, 105, 128)",
+        "composedBackground": "rgb(255, 254, 252)",
+        "ratio": 5.44,
+        "paperFloorRatio": 5.4,
+        "canvasRatio": 5.11,
+        "legacySlate400OnPaperRatio": 2.59
+      },
+      "parentCandidateFixture": {
+        "kind": "display-only isWeak=true; zero answer counters; no attempt-log delta",
+        "mathId": "add_1d_1",
+        "vocabId": "apple",
+        "naturalThresholdEvidence": false
+      },
+      "checks": [
+        "first-run welcome identity, responsive frame, and visible 44px actions",
+        "explicit profile-add frame preserved",
+        "top entry without learning",
+        "stale top query and unknown URL recovery",
+        "existing-profile onboarding return",
+        "pending-plan top return without learning writes",
+        "ordinary tabs",
+        "settings source retained",
+        "settings small-text contrast on composed surface and opaque paper",
+        "draft and seven-store equality",
+        "back/forward",
+        "home reload without auto-start",
+        "placement cancel/save",
+        "camera close",
+        "real photo/detail close",
+        "populated photo action remains fully visible above fixed navigation",
+        "direct learning reload/close",
+        "curriculum scroll restored",
+        "direct placement fallback",
+        "records refresh after answer",
+        "current-Island parent gate and empty review-candidate copy",
+        "current-Island parent populated review candidates via display-only fixture",
+        "parent explanation wraps without horizontal overflow",
+        "parent return reaches the originating settings section from both states",
+        "Island menu → Other Games → Battle guidance/setup and return",
+        "two-player setup semantics, 44px options, prerequisite guidance, scroll discoverability, and start readiness"
+      ],
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "pass": true,
+      "settingsContrast": {
+        "foreground": "rgb(96, 105, 128)",
+        "composedBackground": "rgb(255, 254, 252)",
+        "ratio": 5.44,
+        "paperFloorRatio": 5.4,
+        "canvasRatio": 5.11,
+        "legacySlate400OnPaperRatio": 2.59
+      },
+      "parentCandidateFixture": {
+        "kind": "display-only isWeak=true; zero answer counters; no attempt-log delta",
+        "mathId": "add_1d_1",
+        "vocabId": "apple",
+        "naturalThresholdEvidence": false
+      },
+      "checks": [
+        "first-run welcome identity, responsive frame, and visible 44px actions",
+        "explicit profile-add frame preserved",
+        "top entry without learning",
+        "stale top query and unknown URL recovery",
+        "existing-profile onboarding return",
+        "pending-plan top return without learning writes",
+        "ordinary tabs",
+        "settings source retained",
+        "settings small-text contrast on composed surface and opaque paper",
+        "draft and seven-store equality",
+        "back/forward",
+        "home reload without auto-start",
+        "placement cancel/save",
+        "camera close",
+        "real photo/detail close",
+        "populated photo action remains fully visible above fixed navigation",
+        "direct learning reload/close",
+        "curriculum scroll restored",
+        "direct placement fallback",
+        "records refresh after answer",
+        "current-Island parent gate and empty review-candidate copy",
+        "current-Island parent populated review candidates via display-only fixture",
+        "parent explanation wraps without horizontal overflow",
+        "parent return reaches the originating settings section from both states",
+        "Island menu → Other Games → Battle guidance/setup and return",
+        "two-player setup semantics, 44px options, prerequisite guidance, scroll discoverability, and start readiness"
+      ],
+      "errors": []
+    }
+  ],
+  "pass": true
+}
