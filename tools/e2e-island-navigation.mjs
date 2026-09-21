@@ -9,8 +9,10 @@ const out = process.env.SANSU_NAVIGATION_OUTPUT || 'output/playwright/island-nav
 const defaultViewports = [
     { width: 390, height: 844 },
     { width: 768, height: 1024 },
-    // Just below the short-landscape layout breakpoint: keep overflow regressions observable.
+    // Narrow short-landscape Welcome/photo breakpoint and the compact-phone landscape route.
+    { width: 480, height: 431 },
     { width: 599, height: 430 },
+    { width: 568, height: 320 },
 ];
 const viewports = process.env.SANSU_NAVIGATION_VIEWPORTS
     ? process.env.SANSU_NAVIGATION_VIEWPORTS.split(',').map(value => {
@@ -95,7 +97,7 @@ const assertCanonicalIslandRoot = appRoot => {
 };
 await fs.mkdir(out, { recursive: true });
 const browser = await chromium.launch();
-const report = { target: base, navigationCandidate: 'island-navigation-five-tabs-v2', viewports, fixture: 'First-run Welcome is captured before any profile fixture; route scenarios then use a disposable native profile for learning, furniture, and photo checks. Parent review candidates are a display-only isWeak fixture in that disposable profile; no threshold is exercised and no attempt log or answer count is added.', captures: [], scenarios: [], pass: false };
+const report = { target: base, navigationCandidate: 'island-navigation-five-tabs-v2', viewports, fixture: 'First-run Welcome is captured before any profile fixture; route scenarios then use a disposable native profile for learning, furniture, and photo checks. Short-landscape help checks record one support_opened event and its normal due-check/relearning safeguard only in that disposable profile; no answer, learning-attempt log, or answer count is created. Parent review candidates are a display-only isWeak fixture in that disposable profile; no threshold is exercised and no attempt log or answer count is added.', captures: [], scenarios: [], pass: false };
 try {
     for (const viewport of viewports) {
         const context = await browser.newContext({ viewport, reducedMotion: 'reduce' });
@@ -105,10 +107,16 @@ try {
         const errors = [];
         let settingsContrast = null;
         let parentCandidateFixture = null;
+        let welcomeLayout = null;
+        let photoActionLayout = null;
+        let otherGamesChoiceLayout = null;
         let shortLearningLayout = null;
+        let shortHelpLayout = null;
+        const shortLandscapeWelcome = viewport.width >= 480 && viewport.height <= 600 && viewport.width > viewport.height;
+        const viewportTag = `${viewport.width}x${viewport.height}`;
         page.on('pageerror', error => errors.push(error.message));
         const capture = async name => {
-            const file = `${viewport.width}-${name}.png`;
+            const file = `${viewportTag}-${name}.png`;
             // Framer Motion uses JS animation; screenshot's CSS animation flag
             // alone can catch a settings detail while its height is still zero.
             await page.waitForTimeout(400);
@@ -122,7 +130,7 @@ try {
             report.captures.push({ file, ...metadata });
         };
         const captureUtility = async name => {
-            const file = `${viewport.width}-${name}.png`;
+            const file = `${viewportTag}-${name}.png`;
             await page.waitForTimeout(400);
             const appRoot = await appRootMetadata(page);
             assertCanonicalIslandRoot(appRoot);
@@ -186,10 +194,36 @@ try {
             const welcomeShell = await page.locator('.app-container').boundingBox();
             assert(welcomeShell && Math.abs(welcomeShell.width - Math.min(viewport.width, 1180)) <= 1,
                 'First-run Island welcome uses the responsive fullscreen app frame');
+            welcomeLayout = await page.evaluate(() => {
+                const bounds = selector => {
+                    const element = document.querySelector(selector);
+                    const box = element?.getBoundingClientRect();
+                    return box ? { top: box.top, bottom: box.bottom, left: box.left, right: box.right, width: box.width, height: box.height } : null;
+                };
+                return {
+                    scrollHeight: document.querySelector('.island-welcome')?.scrollHeight ?? null,
+                    header: bounds('.island-welcome > header'),
+                    stage: bounds('.island-welcome > .island-stage'),
+                    controls: bounds('.island-welcome > .island-home-controls'),
+                    actions: [...document.querySelectorAll('.island-welcome .island-home-controls button')].map(button => {
+                        const box = button.getBoundingClientRect();
+                        return { name: button.innerText, top: box.top, bottom: box.bottom, left: box.left, right: box.right, width: box.width, height: box.height };
+                    }),
+                };
+            });
             const welcomeStage = await page.locator('.island-stage').boundingBox();
-            const maxWelcomeStageWidth = viewport.height <= 430 ? 680 : 920;
-            assert(welcomeStage && Math.abs(welcomeStage.width - Math.min(viewport.width, maxWelcomeStageWidth)) <= 1,
-                'Welcome island scene keeps a composed width on wide screens');
+            if (shortLandscapeWelcome) {
+                assert(welcomeLayout.scrollHeight <= viewport.height + 1,
+                    `Short-landscape Welcome keeps its primary route within the initial viewport: ${JSON.stringify(welcomeLayout)}`);
+                assert(welcomeLayout.header.bottom <= welcomeLayout.stage.top + 1
+                    && welcomeLayout.stage.right <= welcomeLayout.controls.left + 1
+                    && welcomeLayout.stage.width >= viewport.width * 0.5,
+                `Short-landscape Welcome keeps a substantial island scene beside its actions: ${JSON.stringify(welcomeLayout)}`);
+            } else {
+                const maxWelcomeStageWidth = viewport.height <= 430 ? 680 : 920;
+                assert(welcomeStage && Math.abs(welcomeStage.width - Math.min(viewport.width, maxWelcomeStageWidth)) <= 1,
+                    'Welcome island scene keeps a composed width on wide screens');
+            }
             const welcomeMetadata = await runtimeMetadata(page);
             assert.equal(welcomeMetadata.mode, 'welcome');
             assert.equal(welcomeMetadata.islandFeatureEnabled, true, 'Welcome identity proves the Island flag is enabled');
@@ -383,26 +417,48 @@ try {
                     const contentBottom = navigationVisible ? Math.min(innerHeight, navigationRect.top) : innerHeight;
                     const rect = element => {
                         const bounds = element?.getBoundingClientRect();
-                        return bounds ? { top: bounds.top, bottom: bounds.bottom, width: bounds.width, height: bounds.height } : null;
+                        return bounds ? { top: bounds.top, bottom: bounds.bottom, left: bounds.left, right: bounds.right, width: bounds.width, height: bounds.height } : null;
                     };
                     const keypad = document.querySelector('.park-keypad');
                     return {
                         contentBottom,
+                        viewportHeight: innerHeight,
+                        documentScrollHeight: document.documentElement.scrollHeight,
+                        learningPageScrollHeight: document.querySelector('.island-page')?.scrollHeight ?? null,
                         workbench: rect(document.querySelector('.island-workbench')),
+                        progress: rect(document.querySelector('.island-learning-progress')),
+                        progressControls: [...document.querySelectorAll('.island-learning-progress button')].map(rect),
+                        feedback: rect(document.querySelector('.island-workbench-message')),
+                        question: rect(document.querySelector('.park-question')),
+                        support: rect(document.querySelector('.park-support')),
                         inputs: rect(document.querySelector('.park-inputs')),
                         keypad: rect(keypad),
                         keys: [...(keypad?.querySelectorAll('button') ?? [])].map(rect),
                         actions: rect(document.querySelector('.island-learning-actions')),
+                        actionButtons: [...document.querySelectorAll('.island-learning-actions button')].map(rect),
                     };
                 });
-                assert(shortLearningLayout.keypad?.height > 0
+                assert(shortLearningLayout.documentScrollHeight <= shortLearningLayout.viewportHeight + 1
+                    && shortLearningLayout.learningPageScrollHeight <= shortLearningLayout.viewportHeight + 1
+                    && shortLearningLayout.progress?.height > 0
+                    && shortLearningLayout.progress.bottom <= shortLearningLayout.contentBottom + 1
+                    && shortLearningLayout.progressControls.every(control => control.width >= 44 && control.height >= 44
+                        && control.top >= 0 && control.bottom <= shortLearningLayout.contentBottom + 1)
+                    && shortLearningLayout.question?.height > 0
+                    && shortLearningLayout.question.bottom <= shortLearningLayout.contentBottom + 1
+                    && (!shortLearningLayout.support || (shortLearningLayout.support.top >= 0
+                        && shortLearningLayout.support.bottom <= shortLearningLayout.contentBottom + 1))
+                    && shortLearningLayout.keypad?.height > 0
                     && shortLearningLayout.keys.length > 0
                     && shortLearningLayout.keys.every(key => key.height >= 44 && key.width >= 44
                         && key.top >= 0 && key.bottom <= shortLearningLayout.contentBottom + 1)
-                    && shortLearningLayout.inputs?.top >= 0
-                    && shortLearningLayout.inputs.bottom <= shortLearningLayout.contentBottom + 1
+                    && (!shortLearningLayout.inputs || (shortLearningLayout.inputs.top >= 0
+                        && shortLearningLayout.inputs.bottom <= shortLearningLayout.contentBottom + 1))
                     && shortLearningLayout.actions?.top >= 0
-                    && shortLearningLayout.actions.bottom <= shortLearningLayout.contentBottom + 1,
+                    && shortLearningLayout.actions.bottom <= shortLearningLayout.contentBottom + 1
+                    && shortLearningLayout.actionButtons.length > 0
+                    && shortLearningLayout.actionButtons.every(action => action.height >= 44 && action.width >= 44
+                        && action.top >= 0 && action.bottom <= shortLearningLayout.contentBottom + 1),
                 `Short-landscape learning keeps the full 44px keypad, answer and help actions visible: ${JSON.stringify(shortLearningLayout)}`);
             }
             await button(page, 'とじる').click(); await ordinary('#/settings?section=learning');
@@ -453,7 +509,7 @@ try {
             await capture('photo-detail');
             await button(page, 'とじる').click(); await ordinary('#/island?view=photos');
             await capture('photos');
-            const photoActionLayout = await button(page, 'しゃしんを とる').evaluate(element => {
+            photoActionLayout = await button(page, 'しゃしんを とる').evaluate(element => {
                 const action = element.getBoundingClientRect();
                 const navigation = document.querySelector('.island-shell-nav')?.getBoundingClientRect();
                 const page = document.querySelector('.island-page')?.getBoundingClientRect();
@@ -642,7 +698,7 @@ try {
                 assert(otherGamesAlignment.centerDelta <= 2,
                     `Wide Other Games heading aligns with the centered choice list: ${JSON.stringify(otherGamesAlignment)}`);
             }
-            const otherGamesChoiceLayout = await page.evaluate(() => {
+            otherGamesChoiceLayout = await page.evaluate(() => {
                 const navigation = document.querySelector('.island-shell-nav');
                 const navigationTop = navigation?.getBoundingClientRect().top ?? innerHeight;
                 const choices = [...document.querySelectorAll('[data-other-game-choice]')].map(button => {
@@ -755,12 +811,80 @@ try {
             }
             await button(page, 'もどる').click();
             await waitMode(page, 'home'); await ordinary('#/island');
+            if (viewport.width >= 480 && viewport.height <= 400 && viewport.width > viewport.height) {
+                await learn.click(); await focus('learning'); await waitReady(page);
+                const hintAnswer = page.locator('.park-keypad').getByRole('button', { name: '1', exact: true });
+                await hintAnswer.click();
+                const beforeHint = await readNative(page, id);
+                const hintPlan = beforeHint.plan;
+                await button(page, 'ヒントを みる').click();
+                await page.locator('.island-answer-stage[data-support-stage=hint]').waitFor();
+                await page.locator('.park-support').waitFor();
+                const afterHint = await readNative(page, id);
+                assert.deepEqual(afterHint.logs, beforeHint.logs, 'Opening a hint does not add an answer log');
+                assert.equal(afterHint.plan.cursor, hintPlan.cursor, 'Opening a hint does not advance the reserved question');
+                assert.equal(afterHint.plan.slots[afterHint.plan.cursor].assisted, true, 'The disposable plan records the opened hint');
+                const skillId = hintPlan.slots[hintPlan.cursor].problem.categoryId;
+                const memoryStore = hintPlan.subject === 'math' ? 'memoryMath' : 'memoryVocab';
+                const memoryBeforeHint = beforeHint[memoryStore].find(memory => memory.id === skillId);
+                const memoryAfterHint = afterHint[memoryStore].find(memory => memory.id === skillId);
+                assert(memoryAfterHint, 'Opening a hint keeps the independent relearning safeguard for this skill');
+                for (const counter of ['totalAnswers', 'correctAnswers', 'incorrectAnswers', 'skippedAnswers']) {
+                    assert.equal(memoryAfterHint[counter], memoryBeforeHint?.[counter] ?? 0,
+                        `Opening a hint does not change the ${counter} answer count`);
+                }
+                await capture('learning-hint');
+                shortHelpLayout = await page.evaluate(() => {
+                    const navigation = document.querySelector('.island-shell-nav');
+                    const navigationRect = navigation?.getBoundingClientRect();
+                    const contentBottom = navigation && navigationRect && navigationRect.top < innerHeight
+                        ? Math.min(innerHeight, navigationRect.top) : innerHeight;
+                    const rect = element => {
+                        const bounds = element?.getBoundingClientRect();
+                        return bounds ? { top: bounds.top, bottom: bounds.bottom, left: bounds.left, right: bounds.right, width: bounds.width, height: bounds.height } : null;
+                    };
+                    const keypad = document.querySelector('.park-keypad');
+                    return {
+                        contentBottom,
+                        viewportHeight: innerHeight,
+                        documentScrollHeight: document.documentElement.scrollHeight,
+                        progress: rect(document.querySelector('.island-learning-progress')),
+                        progressControls: [...document.querySelectorAll('.island-learning-progress button')].map(rect),
+                        question: rect(document.querySelector('.park-question')),
+                        support: rect(document.querySelector('.park-support')),
+                        inputs: rect(document.querySelector('.park-inputs')),
+                        keypad: rect(keypad),
+                        keys: [...(keypad?.querySelectorAll('button') ?? [])].map(rect),
+                        actions: rect(document.querySelector('.island-learning-actions')),
+                        actionButtons: [...document.querySelectorAll('.island-learning-actions button')].map(rect),
+                    };
+                });
+                assert(shortHelpLayout.documentScrollHeight <= shortHelpLayout.viewportHeight + 1
+                    && shortHelpLayout.progress?.bottom <= shortHelpLayout.contentBottom + 1
+                    && shortHelpLayout.progressControls.every(control => control.width >= 44 && control.height >= 44
+                        && control.top >= 0 && control.bottom <= shortHelpLayout.contentBottom + 1)
+                    && shortHelpLayout.question?.bottom <= shortHelpLayout.contentBottom + 1
+                    && shortHelpLayout.support?.height > 0
+                    && shortHelpLayout.support.top >= 0
+                    && shortHelpLayout.support.bottom <= shortHelpLayout.actions?.top + 1
+                    && shortHelpLayout.keypad?.height > 0
+                    && shortHelpLayout.keys.length > 0
+                    && shortHelpLayout.keys.every(key => key.width >= 44 && key.height >= 44
+                        && key.top >= 0 && key.bottom <= shortHelpLayout.contentBottom + 1)
+                    && (!shortHelpLayout.inputs || (shortHelpLayout.inputs.top >= 0
+                        && shortHelpLayout.inputs.bottom <= shortHelpLayout.contentBottom + 1))
+                    && shortHelpLayout.actionButtons.length > 0
+                    && shortHelpLayout.actionButtons.every(action => action.width >= 44 && action.height >= 44
+                        && action.top >= 0 && action.bottom <= shortHelpLayout.contentBottom + 1),
+                `Short-landscape hint keeps support, full keypad, answer and next action visible without overlap: ${JSON.stringify(shortHelpLayout)}`);
+                await button(page, 'とじる').click(); await waitMode(page, 'home'); await ordinary('#/island');
+            }
             assert.deepEqual(errors, []);
-            report.scenarios.push({ viewport, pass: true, settingsContrast, parentCandidateFixture, shortLearningLayout, checks: ['first-run welcome identity, responsive frame, and visible 44px actions', ...(viewport.width <= 360 ? ['narrow first-run item labels remain single-line', 'five-tab navigation labels fit on one line inside 44px-or-larger targets'] : []), 'explicit profile-add frame preserved', 'top entry without learning', 'stale top query and unknown URL recovery', 'existing-profile onboarding return', 'pending-plan top return without learning writes', 'ordinary tabs', ...(viewport.height <= 430 ? ['play continuation reachable by internal scroll'] : []), 'settings source retained', 'settings small-text contrast on composed surface and opaque paper', 'draft and seven-store equality', 'back/forward', 'home reload without auto-start', 'placement cancel/save', 'camera close', 'real photo/detail close', 'populated photo action remains fully visible above fixed navigation', 'direct learning reload/close', ...(viewport.width >= 480 && viewport.height <= 600 && viewport.width > viewport.height ? ['short-landscape learning keeps every 44px keypad key, answer, and help action visible'] : []), 'curriculum scroll restored', 'direct placement fallback', 'records refresh after answer', 'current-Island parent gate and empty review-candidate copy', 'current-Island parent populated review candidates via display-only fixture', 'parent explanation wraps without horizontal overflow', 'parent return reaches the originating settings section from both states', ...(viewport.width >= 700 ? ['wide Other Games heading aligns with centered choice list'] : []), ...(viewport.height <= 430 ? ['all three primary game choices remain fully visible above the fixed navigation'] : []), 'Island menu → Other Games → Battle guidance/setup and return', ...(viewport.width >= 768 && viewport.height > viewport.width ? ['tablet portrait Battle orientation guidance and return'] : viewport.width <= 767 && viewport.height <= 639 ? ['small-phone Battle screen-size guidance and return'] : ['two-player setup semantics, 44px options, prerequisite guidance, scroll discoverability, and start readiness'])], errors });
+            report.scenarios.push({ viewport, pass: true, settingsContrast, parentCandidateFixture, welcomeLayout, photoActionLayout, otherGamesChoiceLayout, shortLearningLayout, shortHelpLayout, checks: ['first-run welcome identity, responsive frame, and visible 44px actions', ...(shortLandscapeWelcome ? ['short-landscape Welcome keeps the island scene and all three actions visible without scrolling'] : []), ...(viewport.width <= 360 ? ['narrow first-run item labels remain single-line', 'five-tab navigation labels fit on one line inside 44px-or-larger targets'] : []), 'explicit profile-add frame preserved', 'top entry without learning', 'stale top query and unknown URL recovery', 'existing-profile onboarding return', 'pending-plan top return without learning writes', 'ordinary tabs', ...(viewport.height <= 430 ? ['play continuation reachable by internal scroll'] : []), 'settings source retained', 'settings small-text contrast on composed surface and opaque paper', 'draft and seven-store equality', 'back/forward', 'home reload without auto-start', 'placement cancel/save', 'camera close', 'real photo/detail close', 'populated photo action remains fully visible above fixed navigation', 'direct learning reload/close', ...(viewport.width >= 480 && viewport.height <= 600 && viewport.width > viewport.height ? ['short-landscape learning keeps every 44px keypad key, answer, and help action visible'] : []), ...(viewport.width >= 480 && viewport.height <= 400 && viewport.width > viewport.height ? ['short-landscape hint keeps the support, full keypad, answer and next action visible without overlap'] : []), 'curriculum scroll restored', 'direct placement fallback', 'records refresh after answer', 'current-Island parent gate and empty review-candidate copy', 'current-Island parent populated review candidates via display-only fixture', 'parent explanation wraps without horizontal overflow', 'parent return reaches the originating settings section from both states', ...(viewport.width >= 700 ? ['wide Other Games heading aligns with centered choice list'] : []), ...(viewport.height <= 430 ? ['all three primary game choices remain fully visible above the fixed navigation'] : []), 'Island menu → Other Games → Battle guidance/setup and return', ...(viewport.width >= 768 && viewport.height > viewport.width ? ['tablet portrait Battle orientation guidance and return'] : viewport.width <= 767 && viewport.height <= 639 ? ['small-phone Battle screen-size guidance and return'] : ['two-player setup semantics, 44px options, prerequisite guidance, scroll discoverability, and start readiness'])], errors });
             console.log(`PASS navigation ${viewport.width}x${viewport.height}`);
         } catch (error) {
-            await page.screenshot({ path: `${out}/${viewport.width}-failure.png` }).catch(() => {});
-            report.scenarios.push({ viewport, pass: false, settingsContrast, parentCandidateFixture, shortLearningLayout, error: String(error), url: page.url(), errors });
+            await page.screenshot({ path: `${out}/${viewportTag}-failure.png` }).catch(() => {});
+            report.scenarios.push({ viewport, pass: false, settingsContrast, parentCandidateFixture, welcomeLayout, photoActionLayout, otherGamesChoiceLayout, shortLearningLayout, shortHelpLayout, error: String(error), url: page.url(), errors });
             throw error;
         } finally { await context.close(); }
     }

@@ -270,3 +270,266 @@
         grid-area: 1 / 2 / 4 / 3;
     }
 }
+
+/* At very short landscape heights, use the left column for progress, prompt
+   and support controls so the full-size answer pad can keep all four rows. */
+@media (min-width: 480px) and (max-height: 400px) and (orientation: landscape) {
+    .app-container .island-page[data-layout-version][data-mode=learning] > .island-header {
+        flex: 0 0 44px;
+        height: 44px;
+        min-height: 44px;
+        padding: 0 12px;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] > .island-header .island-brand > svg {
+        width: 22px;
+        height: 22px;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] > .island-header .island-brand h1 {
+        font-size: 14px;
+        line-height: 1.2;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] > .island-workbench {
+        flex: 1;
+        min-height: 0;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(260px, 1.35fr);
+        grid-template-rows: minmax(0, 1fr);
+        column-gap: 8px;
+        padding: 0 8px 1px;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench > .island-learning-progress {
+        grid-area: 1 / 1;
+        z-index: 3;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) max-content;
+        grid-template-rows: 44px 14px;
+        align-self: start;
+        min-width: 0;
+        height: 58px;
+        padding: 0;
+        column-gap: 3px;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-learning-label {
+        grid-area: 1 / 1;
+        min-width: 0;
+        gap: 3px;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-learning-patch {
+        width: 18px;
+        height: 18px;
+        flex: 0 0 18px;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-learning-label .island-subject-choice {
+        min-width: 100px;
+        min-height: 44px;
+        height: 44px;
+        padding: 2px 3px;
+        gap: 0;
+        font-size: 12px;
+        line-height: 1.1;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-subject-choice > span,
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-subject-choice > small {
+        gap: 2px;
+        font-size: 12px;
+        line-height: 1.1;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-learning-count {
+        grid-area: 1 / 2;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-learning-count small { font-size: 9px; }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-light-trail {
+        grid-area: 2 / 1 / 3 / -1;
+        justify-content: space-between;
+        min-width: 0;
+        padding: 0;
+        gap: 1px;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-light-seed {
+        width: 14px;
+        height: 14px;
+        flex: 0 0 14px;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench > .island-workbench-message {
+        grid-area: 1 / 1;
+        z-index: 4;
+        align-self: start;
+        justify-content: flex-start;
+        width: 100%;
+        height: 38px;
+        margin-top: 58px;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench-message:not(:has(.island-answer-result)) {
+        display: none;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench-message .island-answer-result {
+        max-width: 100%;
+        gap: 4px;
+        padding: 1px 5px;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench-message .island-answer-result__symbol,
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench-message .island-answer-result__symbol > svg {
+        width: 20px;
+        height: 20px;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench-message .island-answer-result p {
+        overflow-wrap: anywhere;
+        white-space: normal;
+        font-size: 11px;
+        line-height: 1.15;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench > .island-answer-stage {
+        grid-area: 1 / 1 / 2 / -1;
+        z-index: 1;
+        display: block;
+        min-width: 0;
+        min-height: 0;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench .island-answer {
+        position: relative;
+        display: grid;
+        width: 100%;
+        max-width: none;
+        height: 100%;
+        min-height: 0;
+        margin: 0;
+        grid-template-columns: minmax(0, 1fr) minmax(260px, 1.35fr);
+        grid-template-rows: 52px minmax(0, 1fr);
+        column-gap: 8px;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench .island-answer .park-question {
+        grid-area: 1 / 1 / 3 / 2;
+        min-width: 0;
+        min-height: 0;
+        margin: 0;
+        padding: 64px 4px 52px;
+        overflow: auto;
+        overscroll-behavior: contain;
+        align-items: safe center;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench:has(.island-answer-result) .island-answer .park-question {
+        padding-top: 100px;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench:has(.english-listening-entry) .island-answer .park-question {
+        padding-bottom: 100px;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench .island-answer .park-inputs {
+        grid-area: 1 / 2;
+        min-width: 0;
+        min-height: 48px;
+        margin: 0;
+        padding-inline: 4px;
+        gap: 4px;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench .island-answer .park-input {
+        min-width: 44px;
+        min-height: 48px;
+        padding-inline: 4px;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench .island-answer .park-keypad {
+        grid-area: 2 / 2;
+        align-self: stretch;
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+        max-height: none;
+        padding: 0;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench .island-answer .park-keypad > div {
+        padding: 3px;
+        gap: 2px;
+        border-radius: 18px;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench .island-answer .park-choices {
+        grid-area: 1 / 2 / 3 / 3;
+        align-self: center;
+        min-width: 0;
+        max-height: 100%;
+        overflow: auto;
+        margin: 0;
+        padding: 4px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 6px;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench .island-answer .park-choices button {
+        min-width: 0;
+        min-height: 44px;
+        padding: 4px 6px;
+        font-size: 13px;
+        line-height: 1.3;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench .island-answer[data-input-type=hissan] .park-keypad {
+        grid-area: 1 / 2 / 3 / 3;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench .island-answer:has(.park-support) .park-question {
+        padding-bottom: 124px;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench:has(.english-listening-entry) .island-answer:has(.park-support) .park-question {
+        padding-bottom: 156px;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench .island-answer .park-support {
+        grid-area: 1 / 1 / 3 / 2;
+        z-index: 2;
+        align-self: end;
+        min-height: 0;
+        max-height: 64px;
+        margin: 0 0 52px;
+        overflow: auto;
+        overscroll-behavior: contain;
+        padding: 4px 7px;
+        font-size: 11px;
+        line-height: 1.35;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench:has(.english-listening-entry) .island-answer .park-support {
+        max-height: 48px;
+        margin-bottom: 100px;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-answer-stage[data-support-stage=model] .island-answer .park-support {
+        grid-area: 1 / 1 / 3 / -1;
+        align-self: stretch;
+        max-height: none;
+        margin: 0;
+        padding: 8px;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench > .island-learning-actions {
+        grid-area: 1 / 1;
+        z-index: 3;
+        align-self: end;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        min-width: 0;
+        min-height: 44px;
+        margin: 0;
+        padding-top: 3px;
+        gap: 4px;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench > .island-learning-actions > :only-child,
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench > .island-learning-actions > .english-listening-entry {
+        grid-column: 1 / -1;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench:has(.english-listening-entry) > .island-learning-actions {
+        grid-template-rows: repeat(2, 44px);
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench > .island-learning-actions > button {
+        min-width: 0;
+        min-height: 44px;
+        height: 44px;
+        padding: 2px 3px;
+        gap: 3px;
+        font-size: 10px;
+        line-height: 1.15;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench > .island-learning-actions .island-primary {
+        min-height: 44px;
+        height: 44px;
+        padding: 3px;
+        font-size: 12px;
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench > .island-learning-actions .english-listening-entry {
+        font-size: 10px;
+    }
+}
