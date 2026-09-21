@@ -6,6 +6,7 @@ const scripts = {
   "dev:island":
     "VITE_ISLAND_ENABLED=true vite --host 127.0.0.1 --port 5198 --strictPort --open /#/island",
   "dev:test-server": "vite",
+  build: "tsc -b && node tools/build-app.mjs && npm run assets:check",
   "dev:classic":
     "VITE_ISLAND_ENABLED=false vite --host 127.0.0.1 --port 5201 --strictPort --open /#/explore",
   "dev:nature-town":
@@ -28,6 +29,10 @@ const smokeSource = [
   'VITE_ISLAND_ENABLED: "false"',
   'VITE_EXPLORE_EXPERIENCE: "classic-v1"',
 ].join(" ");
+const buildDefaultsSource = [
+  "if (env.VITE_ISLAND_ENABLED === undefined)",
+  'env.VITE_ISLAND_ENABLED = "true"',
+].join(" ");
 const entryDocs = {
   memory:
     "Current UI target (2026-09-21): current PokoMoko is Island-on: `npm run dev` → port 5198 → `/#/island`. This historical launch contract must not be used to infer the current app entry.",
@@ -49,6 +54,7 @@ const guardInput = (overrides = {}) => ({
   appRootSource,
   islandPageSource,
   smokeSource,
+  buildDefaultsSource,
   entryDocs,
   ...overrides,
 });
@@ -94,6 +100,16 @@ describe("current UI entry guard", () => {
         guardInput({ scripts: { ...scripts, ...overrides } }),
       ),
     ).toContain(expectedFailure);
+  });
+
+  it("rejects a generic build that can silently produce the classic app", () => {
+    expect(
+      findCurrentUiEntryFailures(guardInput({
+        scripts: { ...scripts, build: "tsc -b && vite build && npm run assets:check" },
+      })),
+    ).toContain(
+      "a plain production build must default to Island while preserving explicit classic opt-out",
+    );
   });
 
   it.each([

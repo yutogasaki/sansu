@@ -30,7 +30,7 @@
         "learning:report": "node tools/learning-unit-report.mjs",
         "typecheck": "tsc -b --pretty false",
         "assets:check": "node tools/check-asset-budget.mjs",
-        "build": "tsc -b && vite build && npm run assets:check",
+        "build": "tsc -b && node tools/build-app.mjs && npm run assets:check",
         "lint": "eslint .",
         "test": "vitest",
         "test:run": "vitest run",

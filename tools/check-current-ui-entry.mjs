@@ -17,6 +17,10 @@ const smokeSource = await fs.readFile(
   new URL("./e2e-smoke.mjs", import.meta.url),
   "utf8",
 );
+const buildDefaultsSource = await fs.readFile(
+  new URL("./build-env.mjs", import.meta.url),
+  "utf8",
+);
 const [memory, ownershipMap, explorePlan, riskRegister, parentSpec, screenSpec, rolloutSpec] =
   await Promise.all(
     [
@@ -43,6 +47,7 @@ const failures = findCurrentUiEntryFailures({
   appRootSource,
   islandPageSource,
   smokeSource,
+  buildDefaultsSource,
   entryDocs,
 });
 if (failures.length > 0) {

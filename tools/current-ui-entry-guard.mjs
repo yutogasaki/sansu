@@ -3,6 +3,7 @@ export function findCurrentUiEntryFailures({
   appRootSource,
   islandPageSource,
   smokeSource,
+  buildDefaultsSource,
   entryDocs = {},
 }) {
   const checks = [
@@ -36,6 +37,12 @@ export function findCurrentUiEntryFailures({
         smokeSource.includes("npm run dev:test-server") &&
         smokeSource.includes('VITE_ISLAND_ENABLED: "false"') &&
         smokeSource.includes('VITE_EXPLORE_EXPERIENCE: "classic-v1"'),
+    ],
+    [
+      "a plain production build must default to Island while preserving explicit classic opt-out",
+      scripts.build?.includes("node tools/build-app.mjs") &&
+        buildDefaultsSource?.includes("env.VITE_ISLAND_ENABLED === undefined") &&
+        buildDefaultsSource?.includes('env.VITE_ISLAND_ENABLED = "true"'),
     ],
     [
       "Nature Town must remain an explicit preview on its own route and port",
