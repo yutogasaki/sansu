@@ -7,6 +7,8 @@ import { answerUI, appRootMetadata, button, readNative, seedNative, waitMode, wa
 const base = process.env.SANSU_ISLAND_BASE_URL || 'http://127.0.0.1:5219';
 const out = process.env.SANSU_NAVIGATION_OUTPUT || 'output/playwright/island-navigation';
 const defaultViewports = [
+    // Minimum supported phone portrait: scroll hints should stay absent when the inventory fits.
+    { width: 320, height: 568 },
     { width: 390, height: 844 },
     { width: 768, height: 1024 },
     // Narrow short-landscape Welcome/photo breakpoint and the compact-phone landscape route.
@@ -292,7 +294,10 @@ try {
                 const back = heading.getByRole('button');
                 assert.equal(await back.innerText(), 'もどる');
                 await capture(mode);
-                if (action === 'inventory' && viewport.width >= 480 && viewport.height <= 600 && viewport.width > viewport.height) {
+                if (action === 'inventory' && (
+                    (viewport.width >= 480 && viewport.height <= 600 && viewport.width > viewport.height)
+                    || (viewport.width <= 360 && viewport.height >= 500 && viewport.height > viewport.width)
+                )) {
                     const inventoryPage = page.locator('.island-page');
                     const readInventoryLayout = () => inventoryPage.evaluate(element => {
                         const rect = value => {
