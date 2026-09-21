@@ -136,7 +136,10 @@ try {
         };
         const captureUtility = async name => {
             const file = `${viewportTag}-${name}.png`;
-            await page.waitForTimeout(400);
+            // Shared utility routes can expose the navigation in the DOM before
+            // Chromium has painted its tab contents after a route transition.
+            // Let the first composed frame settle before saving visual evidence.
+            await page.waitForTimeout(800);
             const appRoot = await appRootMetadata(page);
             assertCanonicalIslandRoot(appRoot);
             const routeMetadata = await page.locator('.app-container').evaluate(element => ({
