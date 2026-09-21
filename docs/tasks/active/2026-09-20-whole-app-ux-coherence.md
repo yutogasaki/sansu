@@ -227,6 +227,7 @@
 - The post-F-35 `npm run verify:core` passed docs, current-entry guard, lint, typecheck, full Vitest, production build, and asset budget. Only the existing unrelated docs-date warning, one Fast Refresh lint warning, and existing Browserslist/pdf/large-chunk build advisories remain.
 
 - 2026-09-22 `live-106`: plain `npm run build` をそのまま配信した5298では `version.json` の `island.enabled=false` を検出してPWA検査をfail-closed停止。`VITE_ISLAND_ENABLED=true npm run build` で再ビルドし、Island=true / NatureTown=false、root `snap-root-v1`、Island delivery/candidate/learning candidate、revision/versionを照合した本番previewで `e2e:island-pwa` の保護フロー8件をPASS。更新保留中の学習、保存保留の画面遷移、回答/成長/成熟チェックポイント、旧Explore再開、旧Island移行、実Service Workerでのオフライン復帰と同一plan再開を確認。report/contact sheetは監査READMEの`live-106`参照。実二世代更新、実機、実読み上げ、参加者評価は未確認。
+- 2026-09-22 `live-108`: 旧画面を現行扱いに戻さないための明示classic release回帰を再実行。`VITE_ISLAND_ENABLED=false VITE_BUILD_PLAY_ENABLED=false`でcurrent-entry guard、lint/typecheck、full Vitest、build/assets、classic smoke 31件をPASS。PWA update/two-build harnessに残っていた「あだ名でOK」をrole名として探す古いselectorをplaceholderへ修正し、onboarding安全引継ぎ・保護router・Battle checkpoint・実SW version driftの4件、実old→new SW更新・途中入力/保存保持・stale-worker復旧・offline/cache/data保持をPASS。classicは意図した回帰対象であり、現行IslandのUX証跡には数えない。既知warningは未解消の期限切れReview By、IslandMilestone Fast Refresh、Browserslist、空pdf chunk、large chunk。実機/実読み上げ/参加者評価は未完了。
 
 ### Next
 

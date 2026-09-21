@@ -102,7 +102,7 @@ async function openOld() {
 
 async function beginProfile(page, name) {
     await page.getByRole('button', { name: 'たんけんを はじめる', exact: true }).click();
-    await page.getByRole('textbox', { name: 'あだ名でOK' }).fill(name);
+    await page.getByPlaceholder('あだ名でOK').fill(name);
 }
 async function finishProfile(page) {
     await page.getByRole('button', { name: '次へ', exact: true }).click();
@@ -151,7 +151,7 @@ try {
     });
     await pause(5000); // Negative assertion spans the real recovery timer.
     assert.equal(await bundle(protectedTab.page), protectedTab.oldBundle);
-    assert.equal(await protectedTab.page.getByRole('textbox', { name: 'あだ名でOK' }).inputValue(), '更新途中の入力');
+    assert.equal(await protectedTab.page.getByPlaceholder('あだ名でOK').inputValue(), '更新途中の入力');
     assert.equal(protectedTab.navigations.length, 0);
     assert.deepEqual(await stored(safe.page), before);
     assert.equal(await safe.page.evaluate(() => localStorage.getItem('pwa-retention-probe')), 'retain');

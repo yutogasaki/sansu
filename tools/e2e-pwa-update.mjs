@@ -195,7 +195,7 @@ const verifyOnboardingSafeHandoff = async (page, markerRequests) => {
   await assertUpdateStillDeferred(page, loadCountBefore, markerRequests, 0);
 
   const markedNavigation = waitForMarkedNavigation(page, version);
-  await page.getByRole("textbox", { name: "あだ名でOK" }).fill("PWAテスト");
+  await page.getByPlaceholder("あだ名でOK").fill("PWAテスト");
   await page.getByRole("button", { name: "次へ" }).click();
   await page.getByRole("button", { name: /小学 1 年生/ }).click();
   await page.getByRole("button", { name: /さんすう だけ/ }).click();
@@ -437,7 +437,7 @@ const main = async () => {
     await installPwaE2EControl(serviceWorkerPage);
     await serviceWorkerPage.goto("/#/onboarding");
     await serviceWorkerPage.getByRole("button", { name: "たんけんを はじめる" }).click();
-    await serviceWorkerPage.getByRole("textbox", { name: "あだ名でOK" }).fill("PWA実更新");
+    await serviceWorkerPage.getByPlaceholder("あだ名でOK").fill("PWA実更新");
     await serviceWorkerPage.getByRole("button", { name: "次へ" }).click();
     await serviceWorkerPage.getByRole("button", { name: /小学 1 年生/ }).click();
     await serviceWorkerPage.getByRole("button", { name: /さんすう だけ/ }).click();
