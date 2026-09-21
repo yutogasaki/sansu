@@ -9,6 +9,8 @@ const out = process.env.SANSU_NAVIGATION_OUTPUT || 'output/playwright/island-nav
 const defaultViewports = [
     // Minimum supported phone portrait: scroll hints should stay absent when the inventory fits.
     { width: 320, height: 568 },
+    // Compact-phone learning header breakpoint: the full Island name must still fit.
+    { width: 360, height: 640 },
     { width: 390, height: 844 },
     { width: 768, height: 1024 },
     // Narrow short-landscape Welcome/photo breakpoint and the compact-phone landscape route.
@@ -115,6 +117,7 @@ try {
         let inventoryScrollLayout = null;
         let recordsScrollLayout = null;
         let recordsHeadingLayout = null;
+        let compactLearningHeaderLayout = null;
         let shortLearningLayout = null;
         let shortHelpLayout = null;
         const shortLandscapeWelcome = viewport.width >= 480 && viewport.height <= 600 && viewport.width > viewport.height;
@@ -488,6 +491,39 @@ try {
             assert.equal(hash(), '#/settings?section=learning&learn=1');
             assert.equal(await sourceHandle.evaluate(element => element.isConnected), true, 'Source detail stays mounted');
             assert.equal(await sourceHeading.isVisible(), false, 'Source detail is covered');
+            if (viewport.width <= 360 && viewport.height > viewport.width) {
+                compactLearningHeaderLayout = await page.evaluate(() => {
+                    const heading = document.querySelector('.island-page[data-mode=learning] > .island-header .island-brand h1');
+                    const header = document.querySelector('.island-page[data-mode=learning] > .island-header');
+                    const workbench = document.querySelector('.island-workbench');
+                    const rect = element => {
+                        const bounds = element?.getBoundingClientRect();
+                        return bounds ? { top: bounds.top, bottom: bounds.bottom, width: bounds.width, height: bounds.height } : null;
+                    };
+                    return {
+                        heading: heading?.textContent?.trim() ?? null,
+                        headingScrollWidth: heading?.scrollWidth ?? null,
+                        headingClientWidth: heading?.clientWidth ?? null,
+                        header: rect(header),
+                        workbench: rect(workbench),
+                        actions: [...document.querySelectorAll('.island-page[data-mode=learning] > .island-header .island-header-actions button')]
+                            .map(button => ({ name: button.innerText.trim(), ...rect(button) })),
+                        documentWidth: document.documentElement.scrollWidth,
+                    };
+                });
+                assert.equal(compactLearningHeaderLayout.heading, 'ふしぎな しま',
+                    `Compact learning header retains the complete Island name: ${JSON.stringify(compactLearningHeaderLayout)}`);
+                assert(compactLearningHeaderLayout.headingScrollWidth <= compactLearningHeaderLayout.headingClientWidth + 1,
+                    `Compact learning header does not ellipsize the Island name: ${JSON.stringify(compactLearningHeaderLayout)}`);
+                assert(compactLearningHeaderLayout.header?.height <= 65
+                    && compactLearningHeaderLayout.workbench?.top <= compactLearningHeaderLayout.header.bottom + 1,
+                `Compact learning header does not take extra vertical workspace: ${JSON.stringify(compactLearningHeaderLayout)}`);
+                assert(compactLearningHeaderLayout.actions.length === 2
+                    && compactLearningHeaderLayout.actions.every(action => action.width >= 44 && action.height >= 44),
+                `Compact learning header keeps sound and close actions at least 44px: ${JSON.stringify(compactLearningHeaderLayout)}`);
+                assert(compactLearningHeaderLayout.documentWidth <= viewport.width + 1,
+                    `Compact learning header does not cause horizontal overflow: ${JSON.stringify(compactLearningHeaderLayout)}`);
+            }
             await page.locator('.park-keypad').getByRole('button', { name: '1', exact: true }).click();
             const draft = await page.locator('.park-input').allTextContents();
             assert(draft.some(value => value.includes('1')));
@@ -1039,7 +1075,7 @@ try {
                 await button(page, 'とじる').click(); await waitMode(page, 'home'); await ordinary('#/island');
             }
             assert.deepEqual(errors, []);
-            report.scenarios.push({ viewport, pass: true, settingsContrast, parentCandidateFixture, welcomeLayout, photoActionLayout, otherGamesChoiceLayout, shortLearningLayout, shortHelpLayout, checks: ['first-run welcome identity, responsive frame, and visible 44px actions', ...(shortLandscapeWelcome ? ['short-landscape Welcome keeps the island scene and all three actions visible without scrolling'] : []), ...(viewport.width <= 360 ? ['narrow first-run item labels remain single-line', 'five-tab navigation labels fit on one line inside 44px-or-larger targets'] : []), 'explicit profile-add frame preserved', 'top entry without learning', 'stale top query and unknown URL recovery', 'existing-profile onboarding return', 'pending-plan top return without learning writes', 'ordinary tabs', ...(viewport.height <= 430 ? ['play continuation reachable by internal scroll'] : []), 'settings source retained', 'settings small-text contrast on composed surface and opaque paper', 'draft and seven-store equality', 'back/forward', 'home reload without auto-start', 'placement cancel/save', 'camera close', 'real photo/detail close', 'populated photo action remains fully visible above fixed navigation', 'direct learning reload/close', ...(viewport.width >= 480 && viewport.height <= 600 && viewport.width > viewport.height ? ['short-landscape learning keeps every 44px keypad key, answer, and help action visible'] : []), ...(viewport.width >= 480 && viewport.height <= 400 && viewport.width > viewport.height ? ['short-landscape hint keeps the support, full keypad, answer and next action visible without overlap'] : []), 'curriculum scroll restored', 'direct placement fallback', 'records refresh after answer', 'current-Island parent gate and empty review-candidate copy', 'current-Island parent populated review candidates via display-only fixture', 'parent explanation wraps without horizontal overflow', 'parent return reaches the originating settings section from both states', ...(viewport.width >= 700 ? ['wide Other Games heading aligns with centered choice list'] : []), ...(viewport.height <= 430 ? ['all three primary game choices remain fully visible above the fixed navigation'] : []), 'Island menu → Other Games → Battle guidance/setup and return', ...(viewport.width >= 768 && viewport.height > viewport.width ? ['tablet portrait Battle orientation guidance and return'] : viewport.width <= 767 && viewport.height <= 639 ? ['small-phone Battle screen-size guidance and return'] : ['two-player setup semantics, 44px options, prerequisite guidance, scroll discoverability, and start readiness'])], errors });
+            report.scenarios.push({ viewport, pass: true, settingsContrast, parentCandidateFixture, welcomeLayout, photoActionLayout, otherGamesChoiceLayout, compactLearningHeaderLayout, shortLearningLayout, shortHelpLayout, checks: ['first-run welcome identity, responsive frame, and visible 44px actions', ...(shortLandscapeWelcome ? ['short-landscape Welcome keeps the island scene and all three actions visible without scrolling'] : []), ...(viewport.width <= 360 ? ['narrow first-run item labels remain single-line', 'five-tab navigation labels fit on one line inside 44px-or-larger targets'] : []), 'explicit profile-add frame preserved', 'top entry without learning', 'stale top query and unknown URL recovery', 'existing-profile onboarding return', 'pending-plan top return without learning writes', 'ordinary tabs', ...(viewport.height <= 430 ? ['play continuation reachable by internal scroll'] : []), 'settings source retained', 'settings small-text contrast on composed surface and opaque paper', 'draft and seven-store equality', 'back/forward', 'home reload without auto-start', 'placement cancel/save', 'camera close', 'real photo/detail close', 'populated photo action remains fully visible above fixed navigation', 'direct learning reload/close', ...(viewport.width <= 360 && viewport.height > viewport.width ? ['compact-phone learning header shows full Island name without shrinking controls or vertical workspace'] : []), ...(viewport.width >= 480 && viewport.height <= 600 && viewport.width > viewport.height ? ['short-landscape learning keeps every 44px keypad key, answer, and help action visible'] : []), ...(viewport.width >= 480 && viewport.height <= 400 && viewport.width > viewport.height ? ['short-landscape hint keeps the support, full keypad, answer and next action visible without overlap'] : []), 'curriculum scroll restored', 'direct placement fallback', 'records refresh after answer', 'current-Island parent gate and empty review-candidate copy', 'current-Island parent populated review candidates via display-only fixture', 'parent explanation wraps without horizontal overflow', 'parent return reaches the originating settings section from both states', ...(viewport.width >= 700 ? ['wide Other Games heading aligns with centered choice list'] : []), ...(viewport.height <= 430 ? ['all three primary game choices remain fully visible above the fixed navigation'] : []), 'Island menu → Other Games → Battle guidance/setup and return', ...(viewport.width >= 768 && viewport.height > viewport.width ? ['tablet portrait Battle orientation guidance and return'] : viewport.width <= 767 && viewport.height <= 639 ? ['small-phone Battle screen-size guidance and return'] : ['two-player setup semantics, 44px options, prerequisite guidance, scroll discoverability, and start readiness'])], errors });
             report.scenarios.at(-1).recordsScrollLayout = recordsScrollLayout;
             report.scenarios.at(-1).checks.push('records use an internal scroll surface without document overflow');
             report.scenarios.at(-1).checks.push('the final records section remains reachable above fixed navigation');
@@ -1050,7 +1086,7 @@ try {
             console.log(`PASS navigation ${viewport.width}x${viewport.height}`);
         } catch (error) {
             await page.screenshot({ path: `${out}/${viewportTag}-failure.png` }).catch(() => {});
-            report.scenarios.push({ viewport, pass: false, settingsContrast, parentCandidateFixture, welcomeLayout, photoActionLayout, otherGamesChoiceLayout, shortLearningLayout, shortHelpLayout, error: String(error), url: page.url(), errors });
+            report.scenarios.push({ viewport, pass: false, settingsContrast, parentCandidateFixture, welcomeLayout, photoActionLayout, otherGamesChoiceLayout, compactLearningHeaderLayout, shortLearningLayout, shortHelpLayout, error: String(error), url: page.url(), errors });
             report.scenarios.at(-1).recordsScrollLayout = recordsScrollLayout;
             report.scenarios.at(-1).recordsHeadingLayout = recordsHeadingLayout;
             report.scenarios.at(-1).inventoryScrollLayout = inventoryScrollLayout;

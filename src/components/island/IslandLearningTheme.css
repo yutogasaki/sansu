@@ -7,6 +7,15 @@
     background: var(--pokomoko-paper);
     border-bottom: 1px solid var(--pokomoko-edge);
 }
+@media (max-width: 360px) {
+    .app-container .island-page[data-layout-version][data-mode=learning] > .island-header {
+        gap: 8px;
+        padding-inline: max(8px, env(safe-area-inset-left)) max(8px, env(safe-area-inset-right));
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning] > .island-header .island-brand h1 {
+        font-size: 15px;
+    }
+}
 .app-container .island-page[data-mode=learning] > .island-workbench {
     --island-workbench-paper: var(--pokomoko-paper);
     width: calc(100% - 24px);
