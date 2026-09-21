@@ -13,6 +13,7 @@ const scripts = {
 };
 
 const appRootSource = [
+  "data-build-version={__APP_VERSION__}",
   "data-island-feature-enabled={String(islandEnabled())}",
   "data-nature-town-feature-enabled={String(import.meta.env.VITE_NATURE_TOWN_ENABLED === 'true')}",
 ].join(" ");
@@ -181,6 +182,19 @@ describe("current UI entry guard", () => {
       })),
     ).toContain(
       "the shared application root must expose Island and Nature Town feature flags on every route",
+    );
+  });
+
+  it("rejects shared-route evidence without a unique runtime build version", () => {
+    expect(
+      findCurrentUiEntryFailures(guardInput({
+        appRootSource: appRootSource.replace(
+          "data-build-version={__APP_VERSION__}",
+          "",
+        ),
+      })),
+    ).toContain(
+      "the shared application root must expose the unique runtime build version on every route",
     );
   });
 

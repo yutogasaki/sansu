@@ -26,7 +26,7 @@ const metricToneClassMap: Record<NonNullable<ResultMetricProps["tone"]>, string>
 };
 
 const ResultMetric: React.FC<ResultMetricProps> = ({ label, value, tone = "default" }) => (
-    <InsetPanel className="space-y-1 py-4 text-center">
+    <InsetPanel className="battle-result-metric space-y-1 py-4 text-center">
         <div className={`text-2xl font-black tracking-[-0.04em] ${metricToneClassMap[tone]}`}>{value}</div>
         <div className="text-[11px] font-bold tracking-[0.12em] text-slate-500">{label}</div>
     </InsetPanel>
@@ -52,8 +52,8 @@ export const BattleResult: React.FC<BattleResultProps> = ({
 
     if (isBossCoop) {
         return (
-            <div className="flex h-full items-center justify-center bg-transparent px-6 py-5">
-                <SurfacePanel className="w-full max-w-4xl space-y-5">
+            <div className="battle-result-screen flex h-full items-center justify-center bg-transparent px-6 py-5">
+                <SurfacePanel className="battle-result-card w-full max-w-4xl space-y-5">
                     <div className="flex items-start justify-between gap-4">
                         <SurfacePanelHeader
                             title={cleared ? "ボス げきは！" : "じかんぎれ..."}
@@ -64,7 +64,7 @@ export const BattleResult: React.FC<BattleResultProps> = ({
                         </Badge>
                     </div>
 
-                    <div className="grid grid-cols-3 gap-3">
+                    <div className="battle-result-stats grid grid-cols-3 gap-3">
                         <ResultMetric
                             label="ボスHP"
                             value={`${state.bossHp}/${state.bossMaxHp}`}
@@ -77,14 +77,14 @@ export const BattleResult: React.FC<BattleResultProps> = ({
                         />
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
-                        <InsetPanel className="space-y-2 text-center">
+                    <div className="battle-result-players grid grid-cols-2 gap-4">
+                        <InsetPanel className="battle-result-player space-y-2 text-center">
                             <div className="text-3xl">{state.p1.config.emoji}</div>
                             <div className="font-black text-slate-800">{state.p1.config.name}</div>
                             <div className="text-2xl font-black text-sky-700">{state.p1.damageDealt}</div>
                             <div className="text-xs font-bold text-slate-400">ダメージ</div>
                         </InsetPanel>
-                        <InsetPanel className="space-y-2 text-center">
+                        <InsetPanel className="battle-result-player space-y-2 text-center">
                             <div className="text-3xl">{state.p2.config.emoji}</div>
                             <div className="font-black text-slate-800">{state.p2.config.name}</div>
                             <div className="text-2xl font-black text-amber-700">{state.p2.damageDealt}</div>
@@ -92,7 +92,7 @@ export const BattleResult: React.FC<BattleResultProps> = ({
                         </InsetPanel>
                     </div>
 
-                    <div className="flex gap-3">
+                    <div className="battle-result-actions flex gap-3">
                         <Button onClick={onPlayAgain} size="xl" className="flex-1 bg-[linear-gradient(135deg,#2BBAA0,#38bdf8)]">
                             もう いっかい！
                         </Button>
@@ -106,7 +106,7 @@ export const BattleResult: React.FC<BattleResultProps> = ({
     }
 
     return (
-        <div className="relative flex h-full items-center justify-center bg-transparent px-6 py-5">
+        <div className="battle-result-screen relative flex h-full items-center justify-center bg-transparent px-6 py-5">
             <div className="pointer-events-none absolute inset-0 overflow-hidden">
                 {Array.from({ length: 12 }, (_, index) => (
                     <motion.div
@@ -134,7 +134,7 @@ export const BattleResult: React.FC<BattleResultProps> = ({
                 ))}
             </div>
 
-            <SurfacePanel className="relative z-10 w-full max-w-4xl space-y-5">
+            <SurfacePanel className="battle-result-card relative z-10 w-full max-w-4xl space-y-5">
                 <div className="flex items-start justify-between gap-4">
                     <SurfacePanelHeader
                         title={`${winner.config.name} の かち！`}
@@ -143,7 +143,7 @@ export const BattleResult: React.FC<BattleResultProps> = ({
                     <Badge variant="success">しょうり</Badge>
                 </div>
 
-                <div className="grid grid-cols-[1.2fr_1fr_1fr] gap-4">
+                <div className="battle-result-stats grid grid-cols-[1.2fr_1fr_1fr] gap-4">
                     <InsetPanel className="flex items-center gap-4">
                         <div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-4xl text-emerald-700">
                             {winner.config.emoji}
@@ -161,14 +161,14 @@ export const BattleResult: React.FC<BattleResultProps> = ({
                     <ResultMetric label="せいかいさ" value={winner.correctCount - loser.correctCount} tone="mint" />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                    <InsetPanel className="space-y-2 text-center">
+                <div className="battle-result-players grid grid-cols-2 gap-4">
+                    <InsetPanel className="battle-result-player space-y-2 text-center">
                         <div className="text-3xl">{winner.config.emoji}</div>
                         <div className="font-black text-slate-800">{winner.config.name}</div>
                         <div className="text-2xl font-black text-emerald-700">{winner.correctCount}</div>
                         <div className="text-xs font-bold text-slate-400">せいかい</div>
                     </InsetPanel>
-                    <InsetPanel className="space-y-2 text-center">
+                    <InsetPanel className="battle-result-player space-y-2 text-center">
                         <div className="text-3xl">{loser.config.emoji}</div>
                         <div className="font-black text-slate-800">{loser.config.name}</div>
                         <div className="text-2xl font-black text-sky-700">{loser.correctCount}</div>
@@ -176,7 +176,7 @@ export const BattleResult: React.FC<BattleResultProps> = ({
                     </InsetPanel>
                 </div>
 
-                <div className="flex gap-3">
+                <div className="battle-result-actions flex gap-3">
                     <Button onClick={onPlayAgain} size="xl" className="flex-1 bg-[linear-gradient(135deg,#2BBAA0,#38bdf8)]">
                         もう いっかい！
                     </Button>

@@ -187,6 +187,72 @@
 }
 
 @media (max-height: 500px) and (orientation: landscape) {
+    .battle-result-screen {
+        padding: 8px 16px;
+    }
+
+    .battle-result-screen .battle-result-card {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 12px;
+    }
+
+    .battle-result-screen .battle-result-card > :not([hidden]) ~ :not([hidden]) {
+        margin-top: 0;
+    }
+
+    .battle-result-stats,
+    .battle-result-players,
+    .battle-result-actions {
+        gap: 8px;
+    }
+
+    .battle-result-screen .battle-result-metric {
+        padding-block: 10px;
+    }
+
+    .battle-result-screen .battle-result-player {
+        display: grid;
+        grid-template-columns: 32px minmax(0, 1fr) auto;
+        grid-template-rows: minmax(0, auto) minmax(0, auto);
+        align-items: center;
+        column-gap: 8px;
+        row-gap: 1px;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .battle-result-screen .battle-result-player > :not([hidden]) ~ :not([hidden]) {
+        margin-top: 0;
+    }
+
+    .battle-result-screen .battle-result-player > :nth-child(1) {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+        font-size: 28px;
+        line-height: 1;
+    }
+
+    .battle-result-screen .battle-result-player > :nth-child(2) {
+        grid-column: 2;
+        grid-row: 1;
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .battle-result-screen .battle-result-player > :nth-child(3) {
+        grid-column: 3;
+        grid-row: 1 / span 2;
+        font-size: 20px;
+        line-height: 1;
+    }
+
+    .battle-result-screen .battle-result-player > :nth-child(4) {
+        grid-column: 2;
+        grid-row: 2;
+    }
+
     .battle-arena {
         padding: 6px 8px;
     }
@@ -357,7 +423,18 @@
     }
 }
 
-@media (min-width: 768px) and (max-height: 760px) {
+@media (max-width: 767px) and (orientation: portrait) {
+    .battle-result-screen .battle-result-metric {
+        padding-inline: 6px;
+    }
+
+    .battle-result-screen .battle-result-metric > :last-child {
+        letter-spacing: 0;
+        white-space: nowrap;
+    }
+}
+
+@media (min-width: 768px) and (max-height: 800px) {
     .battle-arena {
         padding-top: 8px;
         padding-bottom: 8px;

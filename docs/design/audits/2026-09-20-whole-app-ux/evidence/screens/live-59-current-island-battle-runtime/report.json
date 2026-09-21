@@ -1,0 +1,2240 @@
+{
+  "target": "http://127.0.0.1:5198",
+  "journey": "Current Island → Other Games → Boss Coop setup → timed play → timeout result → replay setup → end → Island",
+  "viewports": [
+    {
+      "width": 390,
+      "height": 844
+    },
+    {
+      "width": 768,
+      "height": 1024
+    },
+    {
+      "width": 1024,
+      "height": 768
+    },
+    {
+      "width": 1280,
+      "height": 720
+    },
+    {
+      "width": 844,
+      "height": 390
+    },
+    {
+      "width": 1024,
+      "height": 390
+    }
+  ],
+  "fixture": "Each run uses a fresh browser context and a disposable native profile. The opening countdown runs normally; only the Battle 1-second interval is accelerated to 10ms in that isolated page to reach the timeout result. No answers are submitted; learning records are compared before and after.",
+  "captures": [
+    {
+      "file": "390x844-other-games.png",
+      "url": "http://127.0.0.1:5198/#/battle",
+      "revision": "development-local",
+      "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "routeCandidate": "not-applicable-shared-utility",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "390x844-battle-setup-ready.png",
+      "url": "http://127.0.0.1:5198/#/battle/play?mode=boss_coop",
+      "revision": "development-local",
+      "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "routeCandidate": "not-applicable-shared-utility",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "390x844-battle-playing.png",
+      "url": "http://127.0.0.1:5198/#/battle/play?mode=boss_coop",
+      "revision": "development-local",
+      "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "routeCandidate": "not-applicable-shared-utility",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "390x844-battle-timeout-result.png",
+      "url": "http://127.0.0.1:5198/#/battle/play?mode=boss_coop",
+      "revision": "development-local",
+      "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "routeCandidate": "not-applicable-shared-utility",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "390x844-battle-replay-setup.png",
+      "url": "http://127.0.0.1:5198/#/battle/play?mode=boss_coop",
+      "revision": "development-local",
+      "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "routeCandidate": "not-applicable-shared-utility",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "768x1024-other-games.png",
+      "url": "http://127.0.0.1:5198/#/battle",
+      "revision": "development-local",
+      "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "routeCandidate": "not-applicable-shared-utility",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "768x1024-tablet-rotate-guidance.png",
+      "url": "http://127.0.0.1:5198/#/battle/play?mode=boss_coop",
+      "revision": "development-local",
+      "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "routeCandidate": "not-applicable-shared-utility",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "1024x768-other-games.png",
+      "url": "http://127.0.0.1:5198/#/battle",
+      "revision": "development-local",
+      "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "routeCandidate": "not-applicable-shared-utility",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "1024x768-battle-setup-ready.png",
+      "url": "http://127.0.0.1:5198/#/battle/play?mode=boss_coop",
+      "revision": "development-local",
+      "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "routeCandidate": "not-applicable-shared-utility",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "1024x768-battle-playing.png",
+      "url": "http://127.0.0.1:5198/#/battle/play?mode=boss_coop",
+      "revision": "development-local",
+      "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "routeCandidate": "not-applicable-shared-utility",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "1024x768-battle-timeout-result.png",
+      "url": "http://127.0.0.1:5198/#/battle/play?mode=boss_coop",
+      "revision": "development-local",
+      "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "routeCandidate": "not-applicable-shared-utility",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "1024x768-battle-replay-setup.png",
+      "url": "http://127.0.0.1:5198/#/battle/play?mode=boss_coop",
+      "revision": "development-local",
+      "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "routeCandidate": "not-applicable-shared-utility",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "1280x720-other-games.png",
+      "url": "http://127.0.0.1:5198/#/battle",
+      "revision": "development-local",
+      "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "routeCandidate": "not-applicable-shared-utility",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "1280x720-battle-setup-ready.png",
+      "url": "http://127.0.0.1:5198/#/battle/play?mode=boss_coop",
+      "revision": "development-local",
+      "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "routeCandidate": "not-applicable-shared-utility",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "1280x720-battle-playing.png",
+      "url": "http://127.0.0.1:5198/#/battle/play?mode=boss_coop",
+      "revision": "development-local",
+      "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "routeCandidate": "not-applicable-shared-utility",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "1280x720-battle-timeout-result.png",
+      "url": "http://127.0.0.1:5198/#/battle/play?mode=boss_coop",
+      "revision": "development-local",
+      "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "routeCandidate": "not-applicable-shared-utility",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "1280x720-battle-replay-setup.png",
+      "url": "http://127.0.0.1:5198/#/battle/play?mode=boss_coop",
+      "revision": "development-local",
+      "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "routeCandidate": "not-applicable-shared-utility",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "844x390-other-games.png",
+      "url": "http://127.0.0.1:5198/#/battle",
+      "revision": "development-local",
+      "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "routeCandidate": "not-applicable-shared-utility",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "844x390-battle-setup-ready.png",
+      "url": "http://127.0.0.1:5198/#/battle/play?mode=boss_coop",
+      "revision": "development-local",
+      "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "routeCandidate": "not-applicable-shared-utility",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "844x390-battle-playing.png",
+      "url": "http://127.0.0.1:5198/#/battle/play?mode=boss_coop",
+      "revision": "development-local",
+      "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "routeCandidate": "not-applicable-shared-utility",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "844x390-battle-timeout-result.png",
+      "url": "http://127.0.0.1:5198/#/battle/play?mode=boss_coop",
+      "revision": "development-local",
+      "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "routeCandidate": "not-applicable-shared-utility",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "844x390-battle-replay-setup.png",
+      "url": "http://127.0.0.1:5198/#/battle/play?mode=boss_coop",
+      "revision": "development-local",
+      "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "routeCandidate": "not-applicable-shared-utility",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "1024x390-other-games.png",
+      "url": "http://127.0.0.1:5198/#/battle",
+      "revision": "development-local",
+      "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "routeCandidate": "not-applicable-shared-utility",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "viewport": {
+        "width": 1024,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "1024x390-battle-setup-ready.png",
+      "url": "http://127.0.0.1:5198/#/battle/play?mode=boss_coop",
+      "revision": "development-local",
+      "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "routeCandidate": "not-applicable-shared-utility",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "viewport": {
+        "width": 1024,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "1024x390-battle-playing.png",
+      "url": "http://127.0.0.1:5198/#/battle/play?mode=boss_coop",
+      "revision": "development-local",
+      "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "routeCandidate": "not-applicable-shared-utility",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "viewport": {
+        "width": 1024,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "1024x390-battle-timeout-result.png",
+      "url": "http://127.0.0.1:5198/#/battle/play?mode=boss_coop",
+      "revision": "development-local",
+      "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "routeCandidate": "not-applicable-shared-utility",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "viewport": {
+        "width": 1024,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "1024x390-battle-replay-setup.png",
+      "url": "http://127.0.0.1:5198/#/battle/play?mode=boss_coop",
+      "revision": "development-local",
+      "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+      "rootConfiguredDelivery": "snap-root-v1",
+      "routeCandidate": "not-applicable-shared-utility",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false,
+      "viewport": {
+        "width": 1024,
+        "height": 390
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    }
+  ],
+  "scenarios": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pass": true,
+      "pageErrors": [],
+      "checks": [
+        "Island menu opens the shared Other Games page",
+        "Co-op route preserves its selected mode and makes both-player setup operable",
+        "Both timed play panels expose questions and reachable 44px answer controls",
+        "Timeout result metrics keep readable single-line labels",
+        "Timeout is non-shaming and offers visible replay and exit actions",
+        "Replay returns to a fresh, ready-to-configure co-op setup",
+        "Return reaches the same Island and leaves learning records unchanged"
+      ],
+      "countdown": {
+        "questions": [
+          "4 5 6 7 いちばん ちいさい かずは？",
+          "🍎 🍎 🍎 🍎 🍎 5になるには あといくつ？"
+        ]
+      },
+      "playing": {
+        "documentWidth": 390,
+        "panels": [
+          {
+            "x": 8,
+            "y": 92,
+            "width": 374,
+            "height": 368,
+            "questionText": "4 5 6 7 いちばん ちいさい かずは？",
+            "sections": [
+              {
+                "className": "battle-panel-heading flex-none px-4 pt-4 pb-2",
+                "x": 9,
+                "y": 93,
+                "width": 372,
+                "height": 48,
+                "bottom": 141,
+                "clientHeight": 48,
+                "scrollHeight": 48,
+                "flex": "0 0 auto",
+                "minHeight": "auto",
+                "maxHeight": "none",
+                "overflowY": "visible"
+              },
+              {
+                "className": "battle-question-frame mx-4 mb-2 rounded-[22px] border border-white/75 bg-white/52 px-4 py-3 text-center text-2xl font-black text-slate-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.28)] battle-math-question max-h-[15rem] overflow-auto",
+                "x": 15,
+                "y": 141,
+                "width": 360,
+                "height": 191,
+                "bottom": 332,
+                "clientHeight": 189,
+                "scrollHeight": 189,
+                "flex": "1 1 0%",
+                "minHeight": "0px",
+                "maxHeight": "none",
+                "overflowY": "auto"
+              },
+              {
+                "className": "battle-keypad-wrap flex-1 min-h-0 px-2 pb-2 battle-choice-wrap",
+                "x": 9,
+                "y": 335,
+                "width": 372,
+                "height": 124,
+                "bottom": 459,
+                "clientHeight": 124,
+                "scrollHeight": 124,
+                "flex": "0 0 124px",
+                "minHeight": "124px",
+                "maxHeight": "none",
+                "overflowY": "visible"
+              }
+            ],
+            "visualSurfaces": [
+              "number-line"
+            ],
+            "controls": [
+              {
+                "label": "7",
+                "x": 20,
+                "y": 340,
+                "width": 173,
+                "height": 53,
+                "insidePanel": true
+              },
+              {
+                "label": "4",
+                "x": 197,
+                "y": 340,
+                "width": 173,
+                "height": 53,
+                "insidePanel": true
+              },
+              {
+                "label": "5",
+                "x": 20,
+                "y": 397,
+                "width": 173,
+                "height": 53,
+                "insidePanel": true
+              }
+            ]
+          },
+          {
+            "x": 8,
+            "y": 468,
+            "width": 374,
+            "height": 368,
+            "questionText": "🍎 🍎 🍎 🍎 🍎 5になるには あといくつ？",
+            "sections": [
+              {
+                "className": "battle-panel-heading flex-none px-4 pt-4 pb-2",
+                "x": 9,
+                "y": 469,
+                "width": 372,
+                "height": 48,
+                "bottom": 517,
+                "clientHeight": 48,
+                "scrollHeight": 48,
+                "flex": "0 0 auto",
+                "minHeight": "auto",
+                "maxHeight": "none",
+                "overflowY": "visible"
+              },
+              {
+                "className": "battle-question-frame mx-4 mb-2 rounded-[22px] border border-white/75 bg-white/52 px-4 py-3 text-center text-2xl font-black text-slate-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.28)] battle-math-question max-h-[15rem] overflow-auto",
+                "x": 15,
+                "y": 517,
+                "width": 360,
+                "height": 123,
+                "bottom": 640,
+                "clientHeight": 121,
+                "scrollHeight": 121,
+                "flex": "1 1 0%",
+                "minHeight": "0px",
+                "maxHeight": "none",
+                "overflowY": "auto"
+              },
+              {
+                "className": "battle-answer flex-none px-4 pb-2",
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "bottom": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0,
+                "flex": "0 0 auto",
+                "minHeight": "0px",
+                "maxHeight": "none",
+                "overflowY": "visible"
+              },
+              {
+                "className": "battle-keypad-wrap flex-1 min-h-0 px-2 pb-2",
+                "x": 9,
+                "y": 643,
+                "width": 372,
+                "height": 192,
+                "bottom": 835,
+                "clientHeight": 192,
+                "scrollHeight": 192,
+                "flex": "0 0 192px",
+                "minHeight": "192px",
+                "maxHeight": "none",
+                "overflowY": "visible"
+              }
+            ],
+            "visualSurfaces": [
+              "count-frame"
+            ],
+            "controls": [
+              {
+                "label": "7",
+                "x": 18,
+                "y": 646,
+                "width": 87,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "8",
+                "x": 107,
+                "y": 646,
+                "width": 87,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "9",
+                "x": 196,
+                "y": 646,
+                "width": 87,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "こたえを けす",
+                "x": 285,
+                "y": 646,
+                "width": 87,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "4",
+                "x": 18,
+                "y": 692,
+                "width": 87,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "5",
+                "x": 107,
+                "y": 692,
+                "width": 87,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "6",
+                "x": 196,
+                "y": 692,
+                "width": 87,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "ひとつ もどす",
+                "x": 285,
+                "y": 692,
+                "width": 87,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "1",
+                "x": 18,
+                "y": 738,
+                "width": 87,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "2",
+                "x": 107,
+                "y": 738,
+                "width": 87,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "3",
+                "x": 196,
+                "y": 738,
+                "width": 87,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "0",
+                "x": 107,
+                "y": 784,
+                "width": 87,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "こたえる",
+                "x": 285,
+                "y": 784,
+                "width": 87,
+                "height": 44,
+                "insidePanel": true
+              }
+            ]
+          }
+        ],
+        "viewport": {
+          "width": 390,
+          "height": 844
+        }
+      },
+      "timeoutResult": {
+        "documentWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "metrics": [
+          {
+            "label": "ボスHP",
+            "width": 80.65625,
+            "height": 17.59375,
+            "clientWidth": 81,
+            "scrollWidth": 81
+          },
+          {
+            "label": "チームダメージ",
+            "width": 80.671875,
+            "height": 17.59375,
+            "clientWidth": 81,
+            "scrollWidth": 81
+          },
+          {
+            "label": "のこりじかん",
+            "width": 80.65625,
+            "height": 17.59375,
+            "clientWidth": 81,
+            "scrollWidth": 81
+          }
+        ],
+        "actions": [
+          {
+            "label": "もう いっかい！",
+            "x": 41,
+            "y": 575.59375,
+            "width": 147,
+            "height": 48
+          },
+          {
+            "label": "おわる",
+            "x": 200,
+            "y": 575.59375,
+            "width": 149,
+            "height": 48
+          }
+        ]
+      }
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "pass": true,
+      "pageErrors": [],
+      "checks": [
+        "Island menu opens the shared Other Games page",
+        "Tablet portrait explains landscape play and keeps a large return action",
+        "Return reaches the same Island and leaves learning records unchanged"
+      ]
+    },
+    {
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "pass": true,
+      "pageErrors": [],
+      "checks": [
+        "Island menu opens the shared Other Games page",
+        "Co-op route preserves its selected mode and makes both-player setup operable",
+        "Both timed play panels expose questions and reachable 44px answer controls",
+        "Timeout result metrics keep readable single-line labels",
+        "Timeout is non-shaming and offers visible replay and exit actions",
+        "Replay returns to a fresh, ready-to-configure co-op setup",
+        "Return reaches the same Island and leaves learning records unchanged"
+      ],
+      "countdown": {
+        "questions": [
+          "なし 🍐 🍐 🍐 🍐 + なし 🍐 あわせて いくつ？",
+          "● ● てんは いくつ？"
+        ]
+      },
+      "playing": {
+        "documentWidth": 1024,
+        "panels": [
+          {
+            "x": 16,
+            "y": 163.59375,
+            "width": 492,
+            "height": 596.40625,
+            "questionText": "なし 🍐 🍐 🍐 🍐 + なし 🍐 あわせて いくつ？",
+            "sections": [
+              {
+                "className": "battle-panel-heading flex-none px-4 pt-4 pb-2",
+                "x": 17,
+                "y": 164.59375,
+                "width": 490,
+                "height": 72,
+                "bottom": 236.59375,
+                "clientHeight": 72,
+                "scrollHeight": 72,
+                "flex": "0 0 auto",
+                "minHeight": "auto",
+                "maxHeight": "none",
+                "overflowY": "visible"
+              },
+              {
+                "className": "battle-question-frame mx-4 mb-2 rounded-[22px] border border-white/75 bg-white/52 px-4 py-3 text-center text-2xl font-black text-slate-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.28)] battle-math-question max-h-[15rem] overflow-auto",
+                "x": 33,
+                "y": 236.59375,
+                "width": 458,
+                "height": 176,
+                "bottom": 412.59375,
+                "clientHeight": 174,
+                "scrollHeight": 232,
+                "flex": "0 1 auto",
+                "minHeight": "auto",
+                "maxHeight": "176px",
+                "overflowY": "auto"
+              },
+              {
+                "className": "battle-answer flex-none px-4 pb-2",
+                "x": 17,
+                "y": 420.59375,
+                "width": 490,
+                "height": 52,
+                "bottom": 472.59375,
+                "clientHeight": 52,
+                "scrollHeight": 52,
+                "flex": "0 0 auto",
+                "minHeight": "auto",
+                "maxHeight": "none",
+                "overflowY": "visible"
+              },
+              {
+                "className": "battle-keypad-wrap flex-1 min-h-0 px-2 pb-2",
+                "x": 17,
+                "y": 472.59375,
+                "width": 490,
+                "height": 286.40625,
+                "bottom": 759,
+                "clientHeight": 286,
+                "scrollHeight": 286,
+                "flex": "1 1 0%",
+                "minHeight": "0px",
+                "maxHeight": "none",
+                "overflowY": "visible"
+              }
+            ],
+            "visualSurfaces": [
+              "group",
+              "group"
+            ],
+            "controls": [
+              {
+                "label": "7",
+                "x": 38,
+                "y": 485.59375,
+                "width": 106,
+                "height": 57.09375,
+                "insidePanel": true
+              },
+              {
+                "label": "8",
+                "x": 152,
+                "y": 485.59375,
+                "width": 106,
+                "height": 57.09375,
+                "insidePanel": true
+              },
+              {
+                "label": "9",
+                "x": 266,
+                "y": 485.59375,
+                "width": 106,
+                "height": 57.09375,
+                "insidePanel": true
+              },
+              {
+                "label": "こたえを けす",
+                "x": 380,
+                "y": 485.59375,
+                "width": 106,
+                "height": 57.09375,
+                "insidePanel": true
+              },
+              {
+                "label": "4",
+                "x": 38,
+                "y": 550.6875,
+                "width": 106,
+                "height": 57.109375,
+                "insidePanel": true
+              },
+              {
+                "label": "5",
+                "x": 152,
+                "y": 550.6875,
+                "width": 106,
+                "height": 57.109375,
+                "insidePanel": true
+              },
+              {
+                "label": "6",
+                "x": 266,
+                "y": 550.6875,
+                "width": 106,
+                "height": 57.109375,
+                "insidePanel": true
+              },
+              {
+                "label": "ひとつ もどす",
+                "x": 380,
+                "y": 550.6875,
+                "width": 106,
+                "height": 57.109375,
+                "insidePanel": true
+              },
+              {
+                "label": "1",
+                "x": 38,
+                "y": 615.796875,
+                "width": 106,
+                "height": 57.09375,
+                "insidePanel": true
+              },
+              {
+                "label": "2",
+                "x": 152,
+                "y": 615.796875,
+                "width": 106,
+                "height": 57.09375,
+                "insidePanel": true
+              },
+              {
+                "label": "3",
+                "x": 266,
+                "y": 615.796875,
+                "width": 106,
+                "height": 57.09375,
+                "insidePanel": true
+              },
+              {
+                "label": "0",
+                "x": 152,
+                "y": 680.890625,
+                "width": 106,
+                "height": 57.109375,
+                "insidePanel": true
+              },
+              {
+                "label": "こたえる",
+                "x": 380,
+                "y": 680.890625,
+                "width": 106,
+                "height": 57.109375,
+                "insidePanel": true
+              }
+            ]
+          },
+          {
+            "x": 516,
+            "y": 163.59375,
+            "width": 492,
+            "height": 596.40625,
+            "questionText": "● ● てんは いくつ？",
+            "sections": [
+              {
+                "className": "battle-panel-heading flex-none px-4 pt-4 pb-2",
+                "x": 517,
+                "y": 164.59375,
+                "width": 490,
+                "height": 72,
+                "bottom": 236.59375,
+                "clientHeight": 72,
+                "scrollHeight": 72,
+                "flex": "0 0 auto",
+                "minHeight": "auto",
+                "maxHeight": "none",
+                "overflowY": "visible"
+              },
+              {
+                "className": "battle-question-frame mx-4 mb-2 rounded-[22px] border border-white/75 bg-white/52 px-4 py-3 text-center text-2xl font-black text-slate-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.28)] battle-math-question max-h-[15rem] overflow-auto",
+                "x": 533,
+                "y": 236.59375,
+                "width": 458,
+                "height": 132,
+                "bottom": 368.59375,
+                "clientHeight": 130,
+                "scrollHeight": 130,
+                "flex": "0 1 auto",
+                "minHeight": "auto",
+                "maxHeight": "176px",
+                "overflowY": "auto"
+              },
+              {
+                "className": "battle-keypad-wrap flex-1 min-h-0 px-2 pb-2 battle-choice-wrap",
+                "x": 517,
+                "y": 376.59375,
+                "width": 490,
+                "height": 382.40625,
+                "bottom": 759,
+                "clientHeight": 382,
+                "scrollHeight": 382,
+                "flex": "1 1 0%",
+                "minHeight": "0px",
+                "maxHeight": "none",
+                "overflowY": "visible"
+              }
+            ],
+            "visualSurfaces": [
+              "count-frame"
+            ],
+            "controls": [
+              {
+                "label": "2",
+                "x": 538,
+                "y": 389.59375,
+                "width": 218,
+                "height": 168.203125,
+                "insidePanel": true
+              },
+              {
+                "label": "1",
+                "x": 768,
+                "y": 389.59375,
+                "width": 218,
+                "height": 168.203125,
+                "insidePanel": true
+              },
+              {
+                "label": "3",
+                "x": 538,
+                "y": 569.796875,
+                "width": 218,
+                "height": 168.203125,
+                "insidePanel": true
+              }
+            ]
+          }
+        ],
+        "viewport": {
+          "width": 1024,
+          "height": 768
+        }
+      },
+      "timeoutResult": {
+        "documentWidth": 1024,
+        "viewport": {
+          "width": 1024,
+          "height": 768
+        },
+        "metrics": [
+          {
+            "label": "ボスHP",
+            "width": 253.328125,
+            "height": 17.59375,
+            "clientWidth": 253,
+            "scrollWidth": 253
+          },
+          {
+            "label": "チームダメージ",
+            "width": 253.328125,
+            "height": 17.59375,
+            "clientWidth": 253,
+            "scrollWidth": 253
+          },
+          {
+            "label": "のこりじかん",
+            "width": 253.34375,
+            "height": 17.59375,
+            "clientWidth": 253,
+            "scrollWidth": 253
+          }
+        ],
+        "actions": [
+          {
+            "label": "もう いっかい！",
+            "x": 81,
+            "y": 537.59375,
+            "width": 424,
+            "height": 48
+          },
+          {
+            "label": "おわる",
+            "x": 517,
+            "y": 537.59375,
+            "width": 426,
+            "height": 48
+          }
+        ]
+      }
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "pass": true,
+      "pageErrors": [],
+      "checks": [
+        "Island menu opens the shared Other Games page",
+        "Co-op route preserves its selected mode and makes both-player setup operable",
+        "Both timed play panels expose questions and reachable 44px answer controls",
+        "Timeout result metrics keep readable single-line labels",
+        "Timeout is non-shaming and offers visible replay and exit actions",
+        "Replay returns to a fresh, ready-to-configure co-op setup",
+        "Return reaches the same Island and leaves learning records unchanged"
+      ],
+      "countdown": {
+        "questions": [
+          "なし 🍐 🍐 🍐 − なくなる なし 🍐 🍐 のこりは いくつ？",
+          "1 2 3 4 5 6 7 いちばん ちいさい かずは？"
+        ]
+      },
+      "playing": {
+        "documentWidth": 1280,
+        "panels": [
+          {
+            "x": 66,
+            "y": 163.59375,
+            "width": 570,
+            "height": 548.40625,
+            "questionText": "なし 🍐 🍐 🍐 − なくなる なし 🍐 🍐 のこりは いくつ？",
+            "sections": [
+              {
+                "className": "battle-panel-heading flex-none px-4 pt-4 pb-2",
+                "x": 67,
+                "y": 164.59375,
+                "width": 568,
+                "height": 72,
+                "bottom": 236.59375,
+                "clientHeight": 72,
+                "scrollHeight": 72,
+                "flex": "0 0 auto",
+                "minHeight": "auto",
+                "maxHeight": "none",
+                "overflowY": "visible"
+              },
+              {
+                "className": "battle-question-frame mx-4 mb-2 rounded-[22px] border border-white/75 bg-white/52 px-4 py-3 text-center text-2xl font-black text-slate-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.28)] battle-math-question max-h-[15rem] overflow-auto",
+                "x": 83,
+                "y": 236.59375,
+                "width": 536,
+                "height": 176,
+                "bottom": 412.59375,
+                "clientHeight": 174,
+                "scrollHeight": 249,
+                "flex": "0 1 auto",
+                "minHeight": "auto",
+                "maxHeight": "176px",
+                "overflowY": "auto"
+              },
+              {
+                "className": "battle-answer flex-none px-4 pb-2",
+                "x": 67,
+                "y": 420.59375,
+                "width": 568,
+                "height": 52,
+                "bottom": 472.59375,
+                "clientHeight": 52,
+                "scrollHeight": 52,
+                "flex": "0 0 auto",
+                "minHeight": "auto",
+                "maxHeight": "none",
+                "overflowY": "visible"
+              },
+              {
+                "className": "battle-keypad-wrap flex-1 min-h-0 px-2 pb-2",
+                "x": 67,
+                "y": 472.59375,
+                "width": 568,
+                "height": 238.40625,
+                "bottom": 711,
+                "clientHeight": 238,
+                "scrollHeight": 238,
+                "flex": "1 1 0%",
+                "minHeight": "0px",
+                "maxHeight": "none",
+                "overflowY": "visible"
+              }
+            ],
+            "visualSurfaces": [
+              "group",
+              "action",
+              "group"
+            ],
+            "controls": [
+              {
+                "label": "7",
+                "x": 88,
+                "y": 485.59375,
+                "width": 125.5,
+                "height": 45.09375,
+                "insidePanel": true
+              },
+              {
+                "label": "8",
+                "x": 221.5,
+                "y": 485.59375,
+                "width": 125.5,
+                "height": 45.09375,
+                "insidePanel": true
+              },
+              {
+                "label": "9",
+                "x": 355,
+                "y": 485.59375,
+                "width": 125.5,
+                "height": 45.09375,
+                "insidePanel": true
+              },
+              {
+                "label": "こたえを けす",
+                "x": 488.5,
+                "y": 485.59375,
+                "width": 125.5,
+                "height": 45.09375,
+                "insidePanel": true
+              },
+              {
+                "label": "4",
+                "x": 88,
+                "y": 538.6875,
+                "width": 125.5,
+                "height": 45.109375,
+                "insidePanel": true
+              },
+              {
+                "label": "5",
+                "x": 221.5,
+                "y": 538.6875,
+                "width": 125.5,
+                "height": 45.109375,
+                "insidePanel": true
+              },
+              {
+                "label": "6",
+                "x": 355,
+                "y": 538.6875,
+                "width": 125.5,
+                "height": 45.109375,
+                "insidePanel": true
+              },
+              {
+                "label": "ひとつ もどす",
+                "x": 488.5,
+                "y": 538.6875,
+                "width": 125.5,
+                "height": 45.109375,
+                "insidePanel": true
+              },
+              {
+                "label": "1",
+                "x": 88,
+                "y": 591.796875,
+                "width": 125.5,
+                "height": 45.09375,
+                "insidePanel": true
+              },
+              {
+                "label": "2",
+                "x": 221.5,
+                "y": 591.796875,
+                "width": 125.5,
+                "height": 45.09375,
+                "insidePanel": true
+              },
+              {
+                "label": "3",
+                "x": 355,
+                "y": 591.796875,
+                "width": 125.5,
+                "height": 45.09375,
+                "insidePanel": true
+              },
+              {
+                "label": "0",
+                "x": 221.5,
+                "y": 644.890625,
+                "width": 125.5,
+                "height": 45.109375,
+                "insidePanel": true
+              },
+              {
+                "label": "こたえる",
+                "x": 488.5,
+                "y": 644.890625,
+                "width": 125.5,
+                "height": 45.109375,
+                "insidePanel": true
+              }
+            ]
+          },
+          {
+            "x": 644,
+            "y": 163.59375,
+            "width": 570,
+            "height": 548.40625,
+            "questionText": "1 2 3 4 5 6 7 いちばん ちいさい かずは？",
+            "sections": [
+              {
+                "className": "battle-panel-heading flex-none px-4 pt-4 pb-2",
+                "x": 645,
+                "y": 164.59375,
+                "width": 568,
+                "height": 72,
+                "bottom": 236.59375,
+                "clientHeight": 72,
+                "scrollHeight": 72,
+                "flex": "0 0 auto",
+                "minHeight": "auto",
+                "maxHeight": "none",
+                "overflowY": "visible"
+              },
+              {
+                "className": "battle-question-frame mx-4 mb-2 rounded-[22px] border border-white/75 bg-white/52 px-4 py-3 text-center text-2xl font-black text-slate-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.28)] battle-math-question max-h-[15rem] overflow-auto",
+                "x": 661,
+                "y": 236.59375,
+                "width": 536,
+                "height": 152,
+                "bottom": 388.59375,
+                "clientHeight": 150,
+                "scrollHeight": 150,
+                "flex": "0 1 auto",
+                "minHeight": "auto",
+                "maxHeight": "176px",
+                "overflowY": "auto"
+              },
+              {
+                "className": "battle-keypad-wrap flex-1 min-h-0 px-2 pb-2 battle-choice-wrap",
+                "x": 645,
+                "y": 396.59375,
+                "width": 568,
+                "height": 314.40625,
+                "bottom": 711,
+                "clientHeight": 314,
+                "scrollHeight": 314,
+                "flex": "1 1 0%",
+                "minHeight": "0px",
+                "maxHeight": "none",
+                "overflowY": "visible"
+              }
+            ],
+            "visualSurfaces": [
+              "number-line"
+            ],
+            "controls": [
+              {
+                "label": "1",
+                "x": 666,
+                "y": 409.59375,
+                "width": 257,
+                "height": 134.203125,
+                "insidePanel": true
+              },
+              {
+                "label": "7",
+                "x": 935,
+                "y": 409.59375,
+                "width": 257,
+                "height": 134.203125,
+                "insidePanel": true
+              },
+              {
+                "label": "4",
+                "x": 666,
+                "y": 555.796875,
+                "width": 257,
+                "height": 134.203125,
+                "insidePanel": true
+              }
+            ]
+          }
+        ],
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "timeoutResult": {
+        "documentWidth": 1280,
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "metrics": [
+          {
+            "label": "ボスHP",
+            "width": 253.328125,
+            "height": 17.59375,
+            "clientWidth": 253,
+            "scrollWidth": 253
+          },
+          {
+            "label": "チームダメージ",
+            "width": 253.328125,
+            "height": 17.59375,
+            "clientWidth": 253,
+            "scrollWidth": 253
+          },
+          {
+            "label": "のこりじかん",
+            "width": 253.34375,
+            "height": 17.59375,
+            "clientWidth": 253,
+            "scrollWidth": 253
+          }
+        ],
+        "actions": [
+          {
+            "label": "もう いっかい！",
+            "x": 209,
+            "y": 513.59375,
+            "width": 424,
+            "height": 48
+          },
+          {
+            "label": "おわる",
+            "x": 645,
+            "y": 513.59375,
+            "width": 426,
+            "height": 48
+          }
+        ]
+      }
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "pass": true,
+      "pageErrors": [],
+      "checks": [
+        "Island menu opens the shared Other Games page",
+        "Co-op route preserves its selected mode and makes both-player setup operable",
+        "Both timed play panels expose questions and reachable 44px answer controls",
+        "Timeout result metrics keep readable single-line labels",
+        "Timeout is non-shaming and offers visible replay and exit actions",
+        "Replay returns to a fresh, ready-to-configure co-op setup",
+        "Return reaches the same Island and leaves learning records unchanged"
+      ],
+      "countdown": {
+        "questions": [
+          "● ● てんは いくつ？",
+          "いちご 🍓 🍓 🍓 🍓 🍓 − なくなる いちご 🍓 🍓 のこりは いくつ？"
+        ]
+      },
+      "playing": {
+        "documentWidth": 844,
+        "panels": [
+          {
+            "x": 8,
+            "y": 92,
+            "width": 410,
+            "height": 290,
+            "questionText": "● ● てんは いくつ？",
+            "sections": [
+              {
+                "className": "battle-panel-heading flex-none px-4 pt-4 pb-2",
+                "x": 9,
+                "y": 93,
+                "width": 408,
+                "height": 46,
+                "bottom": 139,
+                "clientHeight": 46,
+                "scrollHeight": 46,
+                "flex": "0 0 auto",
+                "minHeight": "auto",
+                "maxHeight": "none",
+                "overflowY": "visible"
+              },
+              {
+                "className": "battle-question-frame mx-4 mb-2 rounded-[22px] border border-white/75 bg-white/52 px-4 py-3 text-center text-2xl font-black text-slate-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.28)] battle-math-question max-h-[15rem] overflow-auto",
+                "x": 15,
+                "y": 139,
+                "width": 396,
+                "height": 116,
+                "bottom": 255,
+                "clientHeight": 114,
+                "scrollHeight": 114,
+                "flex": "1 1 0%",
+                "minHeight": "0px",
+                "maxHeight": "176px",
+                "overflowY": "auto"
+              },
+              {
+                "className": "battle-keypad-wrap flex-1 min-h-0 px-2 pb-2 battle-choice-wrap",
+                "x": 9,
+                "y": 257,
+                "width": 408,
+                "height": 124,
+                "bottom": 381,
+                "clientHeight": 124,
+                "scrollHeight": 124,
+                "flex": "0 0 124px",
+                "minHeight": "124px",
+                "maxHeight": "none",
+                "overflowY": "visible"
+              }
+            ],
+            "visualSurfaces": [
+              "count-frame"
+            ],
+            "controls": [
+              {
+                "label": "3",
+                "x": 20,
+                "y": 262,
+                "width": 191,
+                "height": 53,
+                "insidePanel": true
+              },
+              {
+                "label": "1",
+                "x": 215,
+                "y": 262,
+                "width": 191,
+                "height": 53,
+                "insidePanel": true
+              },
+              {
+                "label": "2",
+                "x": 20,
+                "y": 319,
+                "width": 191,
+                "height": 53,
+                "insidePanel": true
+              }
+            ]
+          },
+          {
+            "x": 426,
+            "y": 92,
+            "width": 410,
+            "height": 290,
+            "questionText": "いちご 🍓 🍓 🍓 🍓 🍓 − なくなる いちご 🍓 🍓 のこりは いくつ？",
+            "sections": [
+              {
+                "className": "battle-panel-heading flex-none px-4 pt-4 pb-2",
+                "x": 427,
+                "y": 93,
+                "width": 408,
+                "height": 46,
+                "bottom": 139,
+                "clientHeight": 46,
+                "scrollHeight": 46,
+                "flex": "0 0 auto",
+                "minHeight": "auto",
+                "maxHeight": "none",
+                "overflowY": "visible"
+              },
+              {
+                "className": "battle-question-frame mx-4 mb-2 rounded-[22px] border border-white/75 bg-white/52 px-4 py-3 text-center text-2xl font-black text-slate-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.28)] battle-math-question max-h-[15rem] overflow-auto",
+                "x": 433,
+                "y": 139,
+                "width": 396,
+                "height": 48,
+                "bottom": 187,
+                "clientHeight": 46,
+                "scrollHeight": 87,
+                "flex": "1 1 0%",
+                "minHeight": "0px",
+                "maxHeight": "176px",
+                "overflowY": "auto"
+              },
+              {
+                "className": "battle-answer flex-none px-4 pb-2",
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "bottom": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0,
+                "flex": "0 0 auto",
+                "minHeight": "0px",
+                "maxHeight": "none",
+                "overflowY": "visible"
+              },
+              {
+                "className": "battle-keypad-wrap flex-1 min-h-0 px-2 pb-2",
+                "x": 427,
+                "y": 189,
+                "width": 408,
+                "height": 192,
+                "bottom": 381,
+                "clientHeight": 192,
+                "scrollHeight": 192,
+                "flex": "0 0 192px",
+                "minHeight": "192px",
+                "maxHeight": "none",
+                "overflowY": "visible"
+              }
+            ],
+            "visualSurfaces": [
+              "group",
+              "action",
+              "group"
+            ],
+            "controls": [
+              {
+                "label": "7",
+                "x": 436,
+                "y": 192,
+                "width": 96,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "8",
+                "x": 534,
+                "y": 192,
+                "width": 96,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "9",
+                "x": 632,
+                "y": 192,
+                "width": 96,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "こたえを けす",
+                "x": 730,
+                "y": 192,
+                "width": 96,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "4",
+                "x": 436,
+                "y": 238,
+                "width": 96,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "5",
+                "x": 534,
+                "y": 238,
+                "width": 96,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "6",
+                "x": 632,
+                "y": 238,
+                "width": 96,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "ひとつ もどす",
+                "x": 730,
+                "y": 238,
+                "width": 96,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "1",
+                "x": 436,
+                "y": 284,
+                "width": 96,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "2",
+                "x": 534,
+                "y": 284,
+                "width": 96,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "3",
+                "x": 632,
+                "y": 284,
+                "width": 96,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "0",
+                "x": 534,
+                "y": 330,
+                "width": 96,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "こたえる",
+                "x": 730,
+                "y": 330,
+                "width": 96,
+                "height": 44,
+                "insidePanel": true
+              }
+            ]
+          }
+        ],
+        "viewport": {
+          "width": 844,
+          "height": 390
+        }
+      },
+      "timeoutResult": {
+        "documentWidth": 844,
+        "viewport": {
+          "width": 844,
+          "height": 390
+        },
+        "metrics": [
+          {
+            "label": "ボスHP",
+            "width": 230.65625,
+            "height": 17.59375,
+            "clientWidth": 231,
+            "scrollWidth": 231
+          },
+          {
+            "label": "チームダメージ",
+            "width": 230.671875,
+            "height": 17.59375,
+            "clientWidth": 231,
+            "scrollWidth": 231
+          },
+          {
+            "label": "のこりじかん",
+            "width": 230.65625,
+            "height": 17.59375,
+            "clientWidth": 231,
+            "scrollWidth": 231
+          }
+        ],
+        "actions": [
+          {
+            "label": "もう いっかい！",
+            "x": 29,
+            "y": 312.09375,
+            "width": 388,
+            "height": 48
+          },
+          {
+            "label": "おわる",
+            "x": 425,
+            "y": 312.09375,
+            "width": 390,
+            "height": 48
+          }
+        ]
+      }
+    },
+    {
+      "viewport": {
+        "width": 1024,
+        "height": 390
+      },
+      "pass": true,
+      "pageErrors": [],
+      "checks": [
+        "Island menu opens the shared Other Games page",
+        "Co-op route preserves its selected mode and makes both-player setup operable",
+        "Both timed play panels expose questions and reachable 44px answer controls",
+        "Timeout result metrics keep readable single-line labels",
+        "Timeout is non-shaming and offers visible replay and exit actions",
+        "Replay returns to a fresh, ready-to-configure co-op setup",
+        "Return reaches the same Island and leaves learning records unchanged"
+      ],
+      "countdown": {
+        "questions": [
+          "1 2 ? 4 5 → 1 つぎの かずは？",
+          "🌸 🌸 🌸 🌸 🌸 5になるには あといくつ？"
+        ]
+      },
+      "playing": {
+        "documentWidth": 1024,
+        "panels": [
+          {
+            "x": 8,
+            "y": 92,
+            "width": 500,
+            "height": 290,
+            "questionText": "1 2 ? 4 5 → 1 つぎの かずは？",
+            "sections": [
+              {
+                "className": "battle-panel-heading flex-none px-4 pt-4 pb-2",
+                "x": 9,
+                "y": 93,
+                "width": 498,
+                "height": 46,
+                "bottom": 139,
+                "clientHeight": 46,
+                "scrollHeight": 46,
+                "flex": "0 0 auto",
+                "minHeight": "auto",
+                "maxHeight": "none",
+                "overflowY": "visible"
+              },
+              {
+                "className": "battle-question-frame mx-4 mb-2 rounded-[22px] border border-white/75 bg-white/52 px-4 py-3 text-center text-2xl font-black text-slate-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.28)] battle-math-question max-h-[15rem] overflow-auto",
+                "x": 15,
+                "y": 139,
+                "width": 486,
+                "height": 48,
+                "bottom": 187,
+                "clientHeight": 46,
+                "scrollHeight": 117,
+                "flex": "1 1 0%",
+                "minHeight": "0px",
+                "maxHeight": "176px",
+                "overflowY": "auto"
+              },
+              {
+                "className": "battle-answer flex-none px-4 pb-2",
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "bottom": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0,
+                "flex": "0 0 auto",
+                "minHeight": "0px",
+                "maxHeight": "none",
+                "overflowY": "visible"
+              },
+              {
+                "className": "battle-keypad-wrap flex-1 min-h-0 px-2 pb-2",
+                "x": 9,
+                "y": 189,
+                "width": 498,
+                "height": 192,
+                "bottom": 381,
+                "clientHeight": 192,
+                "scrollHeight": 192,
+                "flex": "0 0 192px",
+                "minHeight": "192px",
+                "maxHeight": "none",
+                "overflowY": "visible"
+              }
+            ],
+            "visualSurfaces": [
+              "number-line"
+            ],
+            "controls": [
+              {
+                "label": "7",
+                "x": 18,
+                "y": 192,
+                "width": 118.5,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "8",
+                "x": 138.5,
+                "y": 192,
+                "width": 118.5,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "9",
+                "x": 259,
+                "y": 192,
+                "width": 118.5,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "こたえを けす",
+                "x": 379.5,
+                "y": 192,
+                "width": 118.5,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "4",
+                "x": 18,
+                "y": 238,
+                "width": 118.5,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "5",
+                "x": 138.5,
+                "y": 238,
+                "width": 118.5,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "6",
+                "x": 259,
+                "y": 238,
+                "width": 118.5,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "ひとつ もどす",
+                "x": 379.5,
+                "y": 238,
+                "width": 118.5,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "1",
+                "x": 18,
+                "y": 284,
+                "width": 118.5,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "2",
+                "x": 138.5,
+                "y": 284,
+                "width": 118.5,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "3",
+                "x": 259,
+                "y": 284,
+                "width": 118.5,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "0",
+                "x": 138.5,
+                "y": 330,
+                "width": 118.5,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "こたえる",
+                "x": 379.5,
+                "y": 330,
+                "width": 118.5,
+                "height": 44,
+                "insidePanel": true
+              }
+            ]
+          },
+          {
+            "x": 516,
+            "y": 92,
+            "width": 500,
+            "height": 290,
+            "questionText": "🌸 🌸 🌸 🌸 🌸 5になるには あといくつ？",
+            "sections": [
+              {
+                "className": "battle-panel-heading flex-none px-4 pt-4 pb-2",
+                "x": 517,
+                "y": 93,
+                "width": 498,
+                "height": 46,
+                "bottom": 139,
+                "clientHeight": 46,
+                "scrollHeight": 46,
+                "flex": "0 0 auto",
+                "minHeight": "auto",
+                "maxHeight": "none",
+                "overflowY": "visible"
+              },
+              {
+                "className": "battle-question-frame mx-4 mb-2 rounded-[22px] border border-white/75 bg-white/52 px-4 py-3 text-center text-2xl font-black text-slate-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.28)] battle-math-question max-h-[15rem] overflow-auto",
+                "x": 523,
+                "y": 139,
+                "width": 486,
+                "height": 48,
+                "bottom": 187,
+                "clientHeight": 46,
+                "scrollHeight": 61,
+                "flex": "1 1 0%",
+                "minHeight": "0px",
+                "maxHeight": "176px",
+                "overflowY": "auto"
+              },
+              {
+                "className": "battle-answer flex-none px-4 pb-2",
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "bottom": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0,
+                "flex": "0 0 auto",
+                "minHeight": "0px",
+                "maxHeight": "none",
+                "overflowY": "visible"
+              },
+              {
+                "className": "battle-keypad-wrap flex-1 min-h-0 px-2 pb-2",
+                "x": 517,
+                "y": 189,
+                "width": 498,
+                "height": 192,
+                "bottom": 381,
+                "clientHeight": 192,
+                "scrollHeight": 192,
+                "flex": "0 0 192px",
+                "minHeight": "192px",
+                "maxHeight": "none",
+                "overflowY": "visible"
+              }
+            ],
+            "visualSurfaces": [
+              "count-frame"
+            ],
+            "controls": [
+              {
+                "label": "7",
+                "x": 526,
+                "y": 192,
+                "width": 118.5,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "8",
+                "x": 646.5,
+                "y": 192,
+                "width": 118.5,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "9",
+                "x": 767,
+                "y": 192,
+                "width": 118.5,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "こたえを けす",
+                "x": 887.5,
+                "y": 192,
+                "width": 118.5,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "4",
+                "x": 526,
+                "y": 238,
+                "width": 118.5,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "5",
+                "x": 646.5,
+                "y": 238,
+                "width": 118.5,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "6",
+                "x": 767,
+                "y": 238,
+                "width": 118.5,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "ひとつ もどす",
+                "x": 887.5,
+                "y": 238,
+                "width": 118.5,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "1",
+                "x": 526,
+                "y": 284,
+                "width": 118.5,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "2",
+                "x": 646.5,
+                "y": 284,
+                "width": 118.5,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "3",
+                "x": 767,
+                "y": 284,
+                "width": 118.5,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "0",
+                "x": 646.5,
+                "y": 330,
+                "width": 118.5,
+                "height": 44,
+                "insidePanel": true
+              },
+              {
+                "label": "こたえる",
+                "x": 887.5,
+                "y": 330,
+                "width": 118.5,
+                "height": 44,
+                "insidePanel": true
+              }
+            ]
+          }
+        ],
+        "viewport": {
+          "width": 1024,
+          "height": 390
+        }
+      },
+      "timeoutResult": {
+        "documentWidth": 1024,
+        "viewport": {
+          "width": 1024,
+          "height": 390
+        },
+        "metrics": [
+          {
+            "label": "ボスHP",
+            "width": 258.65625,
+            "height": 17.59375,
+            "clientWidth": 259,
+            "scrollWidth": 259
+          },
+          {
+            "label": "チームダメージ",
+            "width": 258.671875,
+            "height": 17.59375,
+            "clientWidth": 259,
+            "scrollWidth": 259
+          },
+          {
+            "label": "のこりじかん",
+            "width": 258.65625,
+            "height": 17.59375,
+            "clientWidth": 259,
+            "scrollWidth": 259
+          }
+        ],
+        "actions": [
+          {
+            "label": "もう いっかい！",
+            "x": 77,
+            "y": 312.09375,
+            "width": 430,
+            "height": 48
+          },
+          {
+            "label": "おわる",
+            "x": 515,
+            "y": 312.09375,
+            "width": 432,
+            "height": 48
+          }
+        ]
+      }
+    }
+  ],
+  "pass": true
+}

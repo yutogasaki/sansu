@@ -15,6 +15,7 @@
         "dev:test-server": "vite",
         "e2e:island": "node tools/e2e-island.mjs",
         "e2e:island-navigation": "node tools/e2e-island-navigation.mjs",
+        "e2e:battle-runtime": "node tools/e2e-battle-runtime.mjs",
         "e2e:launch": "node tools/e2e-launch.mjs",
         "e2e:island-pwa": "node tools/e2e-island-pwa.mjs",
         "benchmark:island-fixed-ten": "node tools/e2e-island-throughput.mjs",

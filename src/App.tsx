@@ -162,6 +162,7 @@ function App() {
         <div
             className="app-container"
             data-build-revision={__BUILD_REVISION__}
+            data-build-version={__APP_VERSION__}
             data-delivery-id={__DELIVERY_ID__}
             data-configured-delivery-id={__DELIVERY_ID__}
             data-visual-lineage-id={__VISUAL_LINEAGE_ID__}

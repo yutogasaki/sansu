@@ -55,6 +55,10 @@ export function findCurrentUiEntryFailures({
       ].every((part) => appRootSource.includes(part)),
     ],
     [
+      "the shared application root must expose the unique runtime build version on every route",
+      appRootSource.includes("data-build-version={__APP_VERSION__}"),
+    ],
+    [
       "the Island screen must expose the runtime feature flag beside its candidate identity",
       islandPageSource.includes(
         "data-island-feature-enabled={String(islandEnabled())}",
