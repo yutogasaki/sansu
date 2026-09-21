@@ -615,7 +615,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     // Reserve one crop for the entire section, including later diagrams and their help.
     const complex = Boolean(plan?.slots.some(candidate => candidate.problem.inputType === 'multi-number'
         || candidate.problem.questionVisual?.kind === 'operation-base10' || parkHissanGrid(candidate.problem)));
-    if (loadError) return <div className="island-loading" role="alert">しまを ひらけなかったよ。<button className="island-primary" onClick={() => window.location.reload()}>もういちど ひらく</button></div>;
+    if (loadError) return <IslandLoadingError />;
     if (opening || !island) return <div className="island-loading" role="status">しまを ひらいているよ…</div>;
     const valid = Boolean(preview?.position && isValidIslandPlacement(island, preview.id, preview.position, preview.rotation));
     const growthLook = direct?.preview ? islandGrowthPreview(island, 'garden') : screen === 'growth' && growthPreviewHabitat ? islandGrowthPreview(island, growthPreviewHabitat) : undefined;
@@ -981,6 +981,13 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     </main>;
 }
 
+function IslandLoadingError() {
+    return <div className="island-loading" role="alert">
+        しまを ひらけなかったよ。
+        <button className="island-primary" onClick={() => window.location.reload()}>もういちど ひらく</button>
+    </div>;
+}
+
 export default function Island() {
     const [initial, setInitial] = useState<UserProfile | null>();
     const [error, setError] = useState(false);
@@ -999,6 +1006,6 @@ export default function Island() {
     useEffect(() => {
         if (app && !profile) navigate('/onboarding', { replace: true });
     }, [app, profile, navigate]);
-    if (error) return <div className="island-loading" role="alert">まだ ひらけなかったよ。<button onClick={() => window.location.reload()}>もういちど</button></div>;
+    if (error) return <IslandLoadingError />;
     return profile ? <IslandSession key={profile.id} profile={profile} /> : <div className="island-loading" role="status">しまを ひらいているよ…</div>;
 }

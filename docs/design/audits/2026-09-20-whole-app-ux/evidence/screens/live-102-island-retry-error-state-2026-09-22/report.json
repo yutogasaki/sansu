@@ -1,0 +1,359 @@
+{
+  "sourceRevision": "f3e59609",
+  "target": "http://127.0.0.1:5198/#/island",
+  "runtime": {
+    "revision": "development-local",
+    "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+    "island": true,
+    "natureTown": false,
+    "configuredDelivery": "snap-root-v1"
+  },
+  "candidateDuringError": "No route-specific Island candidate is rendered while the shared error fallback is active. After reload, the same context reports the actual Island route candidate.",
+  "fixture": "Each case uses a fresh Playwright browser context and one disposable profile; no learning activity. Failure overrides are tab-local and disappear on a real browser reload.",
+  "harnessNote": "DEV React StrictMode replays mount effects. A single injected transaction failure is consumed by the discarded first effect and normal startup then succeeds, so the confirmed read-error case rejects both initial island-table transactions. A profile read is filtered to getActiveProfile called from Island.tsx, not PrivateRoute.",
+  "transactionFailureViewports": [
+    {
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "measured": {
+        "role": "alert",
+        "text": "しまを ひらけなかったよ。\nもういちど ひらく",
+        "buttonText": "もういちど ひらく",
+        "buttonClass": "island-primary",
+        "alertRect": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 502.40625
+        },
+        "buttonRect": {
+          "x": 71.765625,
+          "y": 247,
+          "width": 176.46875,
+          "height": 54
+        },
+        "color": "rgb(255, 255, 255)",
+        "background": "rgb(49, 95, 181)",
+        "borderColor": "rgb(37, 72, 140)",
+        "boxShadow": "rgb(37, 72, 140) 0px 3px 0px 0px",
+        "document": {
+          "width": 320,
+          "height": 568
+        },
+        "viewport": {
+          "width": 320,
+          "height": 568
+        }
+      },
+      "faultsInjected": 2,
+      "recovered": true,
+      "pageErrors": 0,
+      "storesBefore": {
+        "islands": 0,
+        "islandPlans": 0,
+        "islandEvents": 0,
+        "logs": 0,
+        "memoryMath": 0,
+        "memoryVocab": 0
+      },
+      "storesAfter": {
+        "islands": 1,
+        "islandPlans": 0,
+        "islandEvents": 0,
+        "logs": 0,
+        "memoryMath": 0,
+        "memoryVocab": 0
+      },
+      "recoveredRuntime": {
+        "url": "http://127.0.0.1:5198/#/island",
+        "revision": "development-local",
+        "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "mystic-island-learning-v2",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 86,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 320,
+          "height": 568
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true,
+        "appRoot": {
+          "revision": "development-local",
+          "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 568,
+        "height": 320
+      },
+      "measured": {
+        "role": "alert",
+        "text": "しまを ひらけなかったよ。\nもういちど ひらく",
+        "buttonText": "もういちど ひらく",
+        "buttonClass": "island-primary",
+        "alertRect": {
+          "x": 0,
+          "y": 0,
+          "width": 568,
+          "height": 254.40625
+        },
+        "buttonRect": {
+          "x": 195.765625,
+          "y": 123,
+          "width": 176.46875,
+          "height": 54
+        },
+        "color": "rgb(255, 255, 255)",
+        "background": "rgb(49, 95, 181)",
+        "borderColor": "rgb(37, 72, 140)",
+        "boxShadow": "rgb(37, 72, 140) 0px 3px 0px 0px",
+        "document": {
+          "width": 568,
+          "height": 320
+        },
+        "viewport": {
+          "width": 568,
+          "height": 320
+        }
+      },
+      "faultsInjected": 2,
+      "recovered": true,
+      "pageErrors": 0,
+      "storesBefore": {
+        "islands": 0,
+        "islandPlans": 0,
+        "islandEvents": 0,
+        "logs": 0,
+        "memoryMath": 0,
+        "memoryVocab": 0
+      },
+      "storesAfter": {
+        "islands": 1,
+        "islandPlans": 0,
+        "islandEvents": 0,
+        "logs": 0,
+        "memoryMath": 0,
+        "memoryVocab": 0
+      },
+      "recoveredRuntime": {
+        "url": "http://127.0.0.1:5198/#/island",
+        "revision": "development-local",
+        "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "mystic-island-learning-v2",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 86,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 568,
+          "height": 320
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true,
+        "appRoot": {
+          "revision": "development-local",
+          "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      }
+    }
+  ],
+  "profileResolutionViewports": [
+    {
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "faultsInjected": 2,
+      "measured": {
+        "role": "alert",
+        "text": "しまを ひらけなかったよ。\nもういちど ひらく",
+        "buttonText": "もういちど ひらく",
+        "buttonClass": "island-primary",
+        "alertRect": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 502.40625
+        },
+        "buttonRect": {
+          "x": 71.765625,
+          "y": 247,
+          "width": 176.46875,
+          "height": 54
+        },
+        "color": "rgb(255, 255, 255)",
+        "background": "rgb(49, 95, 181)",
+        "borderColor": "rgb(37, 72, 140)",
+        "boxShadow": "rgb(37, 72, 140) 0px 3px 0px 0px",
+        "document": {
+          "width": 320,
+          "height": 568
+        },
+        "viewport": {
+          "width": 320,
+          "height": 568
+        }
+      },
+      "recovered": true,
+      "pageErrors": 0,
+      "storesBefore": {
+        "islands": 0,
+        "islandPlans": 0,
+        "islandEvents": 0,
+        "logs": 0,
+        "memoryMath": 0,
+        "memoryVocab": 0
+      },
+      "storesAfter": {
+        "islands": 1,
+        "islandPlans": 0,
+        "islandEvents": 0,
+        "logs": 0,
+        "memoryMath": 0,
+        "memoryVocab": 0
+      },
+      "recoveredRuntime": {
+        "url": "http://127.0.0.1:5198/#/island",
+        "revision": "development-local",
+        "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "mystic-island-learning-v2",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 86,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 320,
+          "height": 568
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true,
+        "appRoot": {
+          "revision": "development-local",
+          "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 568,
+        "height": 320
+      },
+      "faultsInjected": 2,
+      "measured": {
+        "role": "alert",
+        "text": "しまを ひらけなかったよ。\nもういちど ひらく",
+        "buttonText": "もういちど ひらく",
+        "buttonClass": "island-primary",
+        "alertRect": {
+          "x": 0,
+          "y": 0,
+          "width": 568,
+          "height": 254.40625
+        },
+        "buttonRect": {
+          "x": 195.765625,
+          "y": 123,
+          "width": 176.46875,
+          "height": 54
+        },
+        "color": "rgb(255, 255, 255)",
+        "background": "rgb(49, 95, 181)",
+        "borderColor": "rgb(37, 72, 140)",
+        "boxShadow": "rgb(37, 72, 140) 0px 3px 0px 0px",
+        "document": {
+          "width": 568,
+          "height": 320
+        },
+        "viewport": {
+          "width": 568,
+          "height": 320
+        }
+      },
+      "recovered": true,
+      "pageErrors": 0,
+      "storesBefore": {
+        "islands": 0,
+        "islandPlans": 0,
+        "islandEvents": 0,
+        "logs": 0,
+        "memoryMath": 0,
+        "memoryVocab": 0
+      },
+      "storesAfter": {
+        "islands": 1,
+        "islandPlans": 0,
+        "islandEvents": 0,
+        "logs": 0,
+        "memoryMath": 0,
+        "memoryVocab": 0
+      },
+      "recoveredRuntime": {
+        "url": "http://127.0.0.1:5198/#/island",
+        "revision": "development-local",
+        "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "mystic-island-learning-v2",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 86,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 568,
+          "height": 320
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true,
+        "appRoot": {
+          "revision": "development-local",
+          "version": "development-local:60d95334-58f8-4594-b548-c113c90cad1c",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      }
+    }
+  ],
+  "pass": true
+}

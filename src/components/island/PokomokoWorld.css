@@ -25,6 +25,13 @@ body:has(.island-page), body:has(.island-page) #root { background: var(--pokomok
 .app-container .island-page .island-play-entry { background: var(--pokomoko-rose); }
 .app-container .island-page .island-workbench { --island-workbench-paper: var(--pokomoko-paper); }
 .app-container .island-loading { background: var(--pokomoko-canvas); color: var(--pokomoko-ink); }
+.app-container .island-loading .island-primary {
+    color: #fff;
+    background: var(--pokomoko-blue);
+    border-color: var(--pokomoko-blue-deep);
+    box-shadow: 0 3px 0 var(--pokomoko-blue-deep);
+}
+.app-container .island-loading .island-primary:active { box-shadow: 0 1px 0 var(--pokomoko-blue-deep); }
 .app-container .island-welcome .pokomoko-wordmark { margin-top: 0; line-height: 1.3; color: var(--pokomoko-ink); }
 .pokomoko-wordmark > span { display: block; letter-spacing: .055em; }
 .pokomoko-wordmark > small { display: block; font-size: 15px; letter-spacing: .13em; font-weight: 600; margin-top: 5px; }
