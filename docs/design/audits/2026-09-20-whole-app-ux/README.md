@@ -651,3 +651,30 @@ The setup now places a concise dynamic `role="status"` message immediately above
 Runtime identity for every after capture: `http://127.0.0.1:5200`, revision `ef6ec876`, version `ef6ec876:f9c4808d-b99b-4528-9503-c8e70c3385d0`, app-root Island=true / NatureTown=false, configured delivery `snap-root-v1`. Battle setup is a shared utility surface, so there is no route-specific visual candidate (`not-applicable-shared-utility`). Reduced motion was enabled, there was no service-worker controller, and disposable profile fixtures were used. The before image is from revision `4c023d6f` with Island=true / NatureTown=false.
 
 This verifies local-preview status visibility and state changes, not actual screen-reader announcement order, physical-device scroll discoverability, child comprehension/enjoyment, release/update behavior, or whole-app completion. Those remain separate human and release gates.
+
+## Current Island compact-phone route sweep (`live-68`, 2026-09-21)
+
+The canonical Island route survey was extended to 320×568 and 360×640 so the first-run shell, learning, records, photos, settings, parent views, Other Games, and Battle entry could be compared at the narrow-phone boundary. This supplements the 390px phone runs; it is not a claim that every route state is covered.
+
+| Viewport | Coverage | Result | Evidence |
+|---|---|---|---|
+| 320×568 | First-run Welcome, Island routes, photos/detail, parent views, Other Games, and Battle's intentional small-screen guidance/return | 27 route/action checks; 18 captures; zero errors | [Contact sheet](evidence/screens/live-68-current-island-edge-phone-2026-09-21/contact-sheet.html), [report](evidence/screens/live-68-current-island-edge-phone-2026-09-21/report.json) |
+| 360×640 | Same narrow-phone route sweep; Battle reaches two-player setup at the supported minimum height | 27 route/action checks; 18 captures; zero errors | [Contact sheet](evidence/screens/live-68-current-island-edge-phone-2026-09-21/contact-sheet.html), [report](evidence/screens/live-68-current-island-edge-phone-2026-09-21/report.json) |
+
+Each capture identifies `http://127.0.0.1:5264`, revision `14b5fcc1`, version `14b5fcc1:7c43d8a1-57a4-41eb-908a-c2cb4d528106`, app-root Island=true / NatureTown=false, configured delivery `snap-root-v1`, and route-appropriate delivery/candidate metadata. Navigation captures use `island-navigation-five-tabs-v2`; shared Battle/Utility surfaces correctly report no route-specific visual candidate. Reduced motion was on and no service worker controlled the preview. Screens were visually spot-checked across Welcome, home, learning, play, records, settings, photos, parent review, and Battle entry. The disposable browser fixture did not alter the user's profile. The route sweep did not include the eventual Battle timeout-result state; that required the focused flow below.
+
+## F-42: Current Island Battle result label clipped at 360×640 (`live-69`, 2026-09-21)
+
+The focused current-Island Battle flow exposed a narrow-phone issue missed by the route sweep: in the cooperative timeout result at 360×640, the `チームダメージ` label needed 76px but its metric column exposed only 71px. The forced single-line label therefore overflowed by 5px. The pre-fix screenshot and failing report retain the measured state: [result before fix](evidence/screens/live-69-current-island-battle-edge-phone-2026-09-21/before-360x640-battle-timeout-result.png), [before report](evidence/screens/live-69-current-island-battle-edge-phone-2026-09-21/before-report.json).
+
+The phone-portrait cooperative result now uses 20px horizontal screen padding and an 8px metric gap. The original 11px label size and three equal metric columns are preserved; at 360×640 each label now has 76px, with `clientWidth === scrollWidth`. The selector excludes Tug of War. Replay and exit remain visible at 48px high. The fix is committed as `554f9ba9`.
+
+| Viewport | Runtime result | Evidence |
+|---|---|---|
+| 360×640 | 12 focused Battle checks pass; all three labels fit at 76px; replay and exit are 48px high and within the screen | [Result after fix](evidence/screens/live-69-current-island-battle-edge-phone-2026-09-21/360x640-battle-timeout-result.png) |
+| 390×844 | 12 focused Battle checks pass; all three labels fit at 86px; replay and exit remain within the result card | [Result](evidence/screens/live-69-current-island-battle-edge-phone-2026-09-21/390x844-battle-timeout-result.png) |
+| Both viewports | 24 route/action checks, 30 captures, zero page errors. The journey covers Other Games → cooperative setup/play/timeout/result/replay/end and Tug of War setup/play/win/result/replay. The five Battle question visuals use disposable fixtures; learning records are compared before/after and remain unchanged. | [Contact sheet](evidence/screens/live-69-current-island-battle-edge-phone-2026-09-21/contact-sheet.html), [after report](evidence/screens/live-69-current-island-battle-edge-phone-2026-09-21/report.json) |
+
+Every after-capture reports revision `554f9ba9`, version `554f9ba9:6a6b273b-a8c0-4ec2-ac59-60fd4f53db08`, app-root Island=true / NatureTown=false, configured delivery `snap-root-v1`, shared Utility candidate not applicable, reduced motion enabled, and no service-worker controller.
+
+`npm run verify:core` passed: docs and current-entry checks, lint, typecheck, 457 Vitest files / 4,153 tests, production build, and asset budget (PWA precache 11.60 MiB / 12.00 MiB). Existing/non-blocking diagnostics were one `IslandMilestone.tsx` Fast Refresh lint warning; the overdue Review By warning for the unrelated `2026-09-13-mysterious-island-v3.md`; stale Browserslist data, the empty `pdf` chunk, and a bundle chunk over 500 kB. `git diff --check` also passed. This is local-preview evidence only: physical-device touch discovery, actual screen-reader order, participant comprehension/enjoyment, release/update behavior, Nature Town, and full route/state coverage remain open.
