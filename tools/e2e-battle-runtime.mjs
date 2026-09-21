@@ -138,8 +138,9 @@ const forceNextBattleSkill = async (page, grade, skillId) => {
 };
 const readBattleQuestionVisual = async page => page.locator('.battle-player-card').first().evaluate(card => {
     const frame = card.querySelector('.battle-question-frame');
+    const scrollArea = frame?.querySelector('[data-battle-question-scroll-area]');
     const panel = card.querySelector('.battle-player-panel');
-    if (!frame) return null;
+    if (!frame || !scrollArea) return null;
     const kind = frame.querySelector('[data-visual-surface="count-frame"]')
         ? 'single-items'
         : frame.querySelector('[data-visual-group-row="base10"]')
@@ -159,9 +160,15 @@ const readBattleQuestionVisual = async page => page.locator('.battle-player-card
             y: frameRect.y,
             width: frameRect.width,
             height: frameRect.height,
-            clientHeight: frame.clientHeight,
-            scrollHeight: frame.scrollHeight,
-            scrollTop: frame.scrollTop,
+        },
+        scrollArea: {
+            clientHeight: scrollArea.clientHeight,
+            scrollHeight: scrollArea.scrollHeight,
+            scrollTop: scrollArea.scrollTop,
+            isScrollable: scrollArea.getAttribute('data-battle-question-scrollable') === 'true',
+            tabIndex: scrollArea.getAttribute('tabindex'),
+            role: scrollArea.getAttribute('role'),
+            ariaLabel: scrollArea.getAttribute('aria-label'),
         },
         surfaces: [...frame.querySelectorAll('[data-visual-surface]')].map(surface => {
             const rect = surface.getBoundingClientRect();
@@ -226,6 +233,16 @@ const runBattleQuestionVisualMatrix = async (page, capture, scenario) => {
                 ) === expectedKind;
             }, visualCase.kind, { timeout: 12000 });
 
+            await page.waitForFunction(() => {
+                const area = document.querySelector('.battle-player-card [data-battle-question-scroll-area]');
+                if (!area) return false;
+                const overflow = area.scrollHeight > area.clientHeight + 1;
+                return area.getAttribute('data-battle-question-scrollable') === String(overflow);
+            });
+            await page.waitForFunction(() => document.querySelector(
+                '.battle-player-card [data-battle-question-scroll-area]'
+            )?.scrollTop === 0);
+
             const snapshot = await readBattleQuestionVisual(page);
             assert.equal(snapshot?.kind, visualCase.kind,
                 'Battle renders the requested ' + visualCase.kind + ' question visual');
@@ -251,23 +268,53 @@ const runBattleQuestionVisualMatrix = async (page, capture, scenario) => {
                 questionFrameHeight: snapshot.frame.height,
                 surfaces: snapshot.surfaces.map(surface => surface.type),
                 controls: snapshot.controls.length,
-                scrollable: snapshot.frame.scrollHeight > snapshot.frame.clientHeight + 1,
+                scrollable: snapshot.scrollArea.scrollHeight > snapshot.scrollArea.clientHeight + 1,
             };
+            assert.equal(snapshot.scrollArea.scrollTop, 0,
+                'The ' + visualCase.kind + ' question starts at its first row');
+            assert.equal(snapshot.scrollArea.isScrollable, entry.scrollable,
+                'The ' + visualCase.kind + ' scroll cue matches the measured question overflow');
             scenario.questionVisuals.push(entry);
             await capture('battle-visual-' + visualCase.kind);
 
             if (entry.scrollable) {
-                const frame = page.locator('.battle-player-card').first().locator('.battle-question-frame');
-                await frame.evaluate(element => { element.scrollTop = element.scrollHeight; });
+                const scrollArea = page.locator('.battle-player-card').first().locator('[data-battle-question-scroll-area]');
+                const scrollCue = page.locator('.battle-player-card').first().locator('[data-battle-question-scroll-cue]');
+                assert.equal(await scrollArea.getAttribute('tabindex'), '0',
+                    'An overflowing question is reachable by keyboard scrolling');
+                assert.equal(await scrollArea.getAttribute('role'), 'region',
+                    'An overflowing question is labelled as a navigable region');
+                assert.match(await scrollArea.getAttribute('aria-label') ?? '', /スクロール/,
+                    'The scrollable question explains its continuation to assistive technology');
+                assert.equal(await scrollCue.getAttribute('data-battle-question-scroll-cue'), 'down',
+                    'The visible cue initially points toward the hidden continuation');
+                entry.scrollCueAtStart = 'down';
+
+                await scrollArea.focus();
+                assert.equal(await scrollArea.evaluate(element => document.activeElement === element), true,
+                    'The overflowing question region receives keyboard focus');
+                await page.keyboard.press('End');
+                await page.waitForFunction(() => document.querySelector(
+                    '.battle-player-card [data-battle-question-scroll-cue]'
+                )?.getAttribute('data-battle-question-scroll-cue') === 'up');
                 const scrolled = await readBattleQuestionVisual(page);
-                assert(scrolled.frame.scrollTop > 0,
-                    'The ' + visualCase.kind + ' diagram can scroll within its question frame');
+                assert(scrolled.scrollArea.scrollTop > 0,
+                    'The ' + visualCase.kind + ' diagram can scroll within its question region');
+                assert.equal(await scrollCue.getAttribute('data-battle-question-scroll-cue'), 'up',
+                    'After reaching the end, the cue offers the way back to the start');
                 assert(scrolled.controls.every(control => control.width >= 44 && control.height >= 44
                     && control.y >= 0 && control.bottom <= scrolled.viewport.height + 1),
                 'Scrolling the ' + visualCase.kind + ' diagram leaves answer controls visible');
                 entry.scrolledToEnd = true;
+                entry.scrollCueAtEnd = 'up';
                 await capture('battle-visual-' + visualCase.kind + '-scroll-end');
-                await frame.evaluate(element => { element.scrollTop = 0; });
+            } else {
+                const scrollArea = page.locator('.battle-player-card').first().locator('[data-battle-question-scroll-area]');
+                assert.equal(await scrollArea.getAttribute('tabindex'), null,
+                    'A fitting question does not add an unnecessary keyboard focus stop');
+                assert.equal(await page.locator('.battle-player-card').first()
+                    .locator('[data-battle-question-scroll-cue]').count(), 0,
+                'A fitting question does not show a continuation cue');
             }
         }
 
@@ -282,7 +329,7 @@ const runBattleQuestionVisualMatrix = async (page, capture, scenario) => {
         'single-items',
         'subtraction-items',
     ], 'The current Battle question-visual inventory is rendered in the runtime flow');
-    scenario.checks.push('All five Battle math question-visual kinds render with visible answers; overflow diagrams scroll inside their question frames');
+    scenario.checks.push('All five Battle math question-visual kinds render with visible answers; overflow shows a directional cue, supports keyboard scrolling, and resets each new question to the top');
 };
 const winTugRoundFromVisibleCount = async page => {
     const p1 = page.locator('.battle-player-card').first();
@@ -317,7 +364,7 @@ const report = {
     target: base,
     journey: 'Current Island → Other Games → Boss Coop setup/play/result/replay/end → Tug of War setup/play/win/result/replay → Island',
     viewports,
-    fixture: 'Each run uses a fresh browser context and a disposable native profile. Co-op uses the normal countdown and accelerates only its 1-second interval to 10ms. Tug of War uses grade -2 and a temporary deterministic generator only to render a five-frame counting problem; the test answers from the visible item count and plays to the five-step result. A separate diagnostic Tug session selects representative skills for all five Battle math visual kinds using one-shot random selection and advances only with Skip, never submitting answers. No learning records are changed; stores are compared before and after.',
+    fixture: 'Each run uses a fresh browser context and a disposable native profile. Co-op uses the normal countdown and accelerates only its 1-second interval to 10ms. Tug of War uses grade -2 and a temporary deterministic generator only to render a five-frame counting problem; the test answers from the visible item count and plays to the five-step result. A separate diagnostic Tug session selects representative skills for all five Battle math visual kinds using one-shot random selection and advances only with Skip, never submitting answers. Overflowing question regions expose a visible, keyboard-scrollable cue that updates at each end, and a new question resets to the first row. No learning records are changed; stores are compared before and after.',
     captures: [],
     scenarios: [],
     pass: false,

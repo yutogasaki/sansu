@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "../../utils/cn";
 import { TenKey } from "../domain/TenKey";
 import { ChoiceGroup } from "../domain/ChoiceGroup";
@@ -17,6 +17,17 @@ interface PlayerPanelProps {
 }
 
 type Feedback = "none" | "correct" | "incorrect";
+type QuestionScrollDirection = "down" | "up" | "both" | null;
+
+interface QuestionScrollState {
+    scrollable: boolean;
+    direction: QuestionScrollDirection;
+}
+
+const EMPTY_QUESTION_SCROLL_STATE: QuestionScrollState = {
+    scrollable: false,
+    direction: null,
+};
 
 export const PlayerPanel: React.FC<PlayerPanelProps> = ({
     gameState,
@@ -27,11 +38,57 @@ export const PlayerPanel: React.FC<PlayerPanelProps> = ({
     disabled = false,
 }) => {
     const [feedback, setFeedback] = useState<Feedback>("none");
+    const questionScrollAreaRef = useRef<HTMLDivElement>(null);
+    const [questionScroll, setQuestionScroll] = useState<QuestionScrollState>(EMPTY_QUESTION_SCROLL_STATE);
     const problem = gameState.currentProblem;
     const isChoice = problem?.inputType === "choice";
     const isMathProblem = gameState.config.subject === "math";
     const isLocked = gameState.lockSeconds > 0;
     const { scheduleTimeout, clearScheduledTimeouts } = useTimeoutScheduler();
+
+    useEffect(() => {
+        const scrollArea = questionScrollAreaRef.current;
+        if (!isMathProblem || !scrollArea) {
+            setQuestionScroll(EMPTY_QUESTION_SCROLL_STATE);
+            return;
+        }
+
+        // A new question always starts at the top, even if the previous diagram
+        // was scrolled to reveal its lower rows.
+        scrollArea.scrollTop = 0;
+
+        const updateScrollState = () => {
+            const maxScrollTop = Math.max(0, scrollArea.scrollHeight - scrollArea.clientHeight);
+            const scrollable = maxScrollTop > 1;
+            const direction: QuestionScrollDirection = !scrollable
+                ? null
+                : scrollArea.scrollTop <= 1
+                    ? "down"
+                    : scrollArea.scrollTop >= maxScrollTop - 1
+                        ? "up"
+                        : "both";
+
+            setQuestionScroll(current => current.scrollable === scrollable && current.direction === direction
+                ? current
+                : { scrollable, direction });
+        };
+
+        updateScrollState();
+        scrollArea.addEventListener("scroll", updateScrollState, { passive: true });
+        window.addEventListener("resize", updateScrollState);
+
+        const resizeObserver = typeof ResizeObserver === "undefined"
+            ? undefined
+            : new ResizeObserver(updateScrollState);
+        resizeObserver?.observe(scrollArea);
+        for (const child of Array.from(scrollArea.children)) resizeObserver?.observe(child);
+
+        return () => {
+            scrollArea.removeEventListener("scroll", updateScrollState);
+            window.removeEventListener("resize", updateScrollState);
+            resizeObserver?.disconnect();
+        };
+    }, [isMathProblem, problem?.id]);
 
     const flashFeedback = useCallback((type: Feedback) => {
         clearScheduledTimeouts();
@@ -123,24 +180,49 @@ export const PlayerPanel: React.FC<PlayerPanelProps> = ({
                     "battle-question-frame mx-4 mb-2 rounded-[22px] border border-white/75 bg-white/52 px-4 py-3 text-center text-2xl font-black text-slate-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.28)]",
                     isMathProblem && "battle-math-question",
                     isMathProblem
-                        ? "max-h-[15rem] overflow-auto"
+                        ? "max-h-[15rem] overflow-hidden"
                         : "flex min-h-[4.25rem] items-center justify-center"
                 )}
             >
-                {problem ? (
-                    isMathProblem ? (
-                        <MathProblemPrompt
-                            problem={{
-                                questionText: problem.questionText,
-                                questionVisual: problem.questionVisual,
-                                categoryId: problem.skillId,
-                            }}
-                            className="battle-math-prompt gap-3"
-                        />
-                    ) : (
-                        problem.questionText
-                    )
+                {isMathProblem ? (
+                    <div
+                        ref={questionScrollAreaRef}
+                        data-battle-question-scroll-area
+                        data-battle-question-scrollable={questionScroll.scrollable ? "true" : "false"}
+                        role={questionScroll.scrollable ? "region" : undefined}
+                        aria-label={questionScroll.scrollable
+                            ? `${gameState.config.name}の もんだい。スクロールして つづきを見られます`
+                            : undefined}
+                        tabIndex={questionScroll.scrollable ? 0 : undefined}
+                        className="battle-question-scroll-area"
+                    >
+                        {problem ? (
+                            <MathProblemPrompt
+                                problem={{
+                                    questionText: problem.questionText,
+                                    questionVisual: problem.questionVisual,
+                                    categoryId: problem.skillId,
+                                }}
+                                className="battle-math-prompt gap-3"
+                            />
+                        ) : "..."}
+                    </div>
+                ) : problem ? (
+                    problem.questionText
                 ) : "..."}
+                {isMathProblem && questionScroll.scrollable && (
+                    <span
+                        data-battle-question-scroll-cue={questionScroll.direction ?? undefined}
+                        aria-hidden="true"
+                        className="battle-question-scroll-cue"
+                    >
+                        {questionScroll.direction === "down"
+                            ? "↓ つづき"
+                            : questionScroll.direction === "up"
+                                ? "↑ もどる"
+                                : "↕ うごかしてね"}
+                    </span>
+                )}
             </div>
 
             {/* Number input preview (only for math) */}
