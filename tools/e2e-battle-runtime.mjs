@@ -11,6 +11,7 @@ const defaultViewports = [
     { width: 768, height: 1024 },
     { width: 1024, height: 768 },
     { width: 1280, height: 720 },
+    { width: 768, height: 390 },
     { width: 844, height: 390 },
     { width: 1024, height: 390 },
 ];
@@ -25,7 +26,7 @@ const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character =>
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
 })[character]);
 const viewportId = viewport => viewport.width + 'x' + viewport.height;
-const startCoopRound = async (page, start) => {
+const startBattleRound = async (page, start) => {
     await start.click();
     await page.waitForFunction(() => {
         const frames = [...document.querySelectorAll('.battle-question-frame')];
@@ -72,7 +73,216 @@ const startTugRound = async (page, start) => {
     assert.equal(visual.surface, 'count-frame', 'The deterministic tug sample uses the visible five-frame counting problem');
     assert(Number.isInteger(visual.count) && visual.count > 0 && visual.count <= 5,
         'The visible counting frame has a readable item count');
-    return { visual };
+    const layout = await page.locator('.battle-player-card').first()
+        .locator('.battle-question-frame').evaluate(frame => {
+            const panel = frame.closest('.battle-player-panel');
+            const rect = frame.getBoundingClientRect();
+            return {
+                frameHeight: rect.height,
+                controls: [...(panel?.querySelectorAll('.battle-keypad-wrap button') ?? [])].map(control => {
+                    const bounds = control.getBoundingClientRect();
+                    return { width: bounds.width, height: bounds.height, x: bounds.x, y: bounds.y, bottom: bounds.bottom };
+                }),
+                viewport: { width: innerWidth, height: innerHeight },
+                documentWidth: document.documentElement.scrollWidth,
+            };
+        });
+    assert(layout.controls.length > 0 && layout.controls.every(control => control.width >= 44
+        && control.height >= 44 && control.x >= 0
+        && control.x + control.width <= layout.viewport.width + 1
+        && control.y >= 0 && control.bottom <= layout.viewport.height + 1),
+    'The single-items visual keeps its answer choices at least 44px and visible');
+    assert(layout.documentWidth <= layout.viewport.width + 1,
+        'The single-items visual has no page-level horizontal overflow');
+    if (layout.viewport.width >= 768 && layout.viewport.height <= 500) {
+        assert(layout.frameHeight >= 96,
+            'Short landscape keeps a useful single-items question viewport beside its answer choices');
+    }
+    return { visual: { kind: 'single-items', ...visual, ...layout } };
+};
+const randomValueForBattleSkill = async (page, grade, skillId) => {
+    const selection = await page.evaluate(async ({ grade, skillId }) => {
+        const [{ GRADE_TO_LEVELS, EXCLUDED_SKILLS }, { getAvailableSkills }] = await Promise.all([
+            import('/src/domain/battle/gradeMapping.ts'),
+            import('/src/domain/math/curriculum.ts'),
+        ]);
+        const { min, max } = GRADE_TO_LEVELS[grade];
+        const allSkills = getAvailableSkills(max);
+        const belowMin = min > 1 ? new Set(getAvailableSkills(min - 1)) : new Set();
+        const eligible = allSkills.filter(skillId => !belowMin.has(skillId)
+            && !EXCLUDED_SKILLS.has(skillId));
+        const pool = eligible.length > 0
+            ? eligible
+            : allSkills.filter(skillId => !EXCLUDED_SKILLS.has(skillId));
+        const index = pool.indexOf(skillId);
+        return {
+            index,
+            size: pool.length,
+            randomValue: index >= 0 ? (index + 0.5) / pool.length : null,
+        };
+    }, { grade, skillId });
+
+    assert(selection.index >= 0 && selection.size > 0,
+        'The requested visual sample skill is eligible for Battle grade ' + grade);
+    return selection.randomValue;
+};
+const forceNextBattleSkill = async (page, grade, skillId) => {
+    const randomValue = await randomValueForBattleSkill(page, grade, skillId);
+    await page.evaluate(value => {
+        const originalRandom = Math.random;
+        Math.random = () => {
+            Math.random = originalRandom;
+            return value;
+        };
+    }, randomValue);
+};
+const readBattleQuestionVisual = async page => page.locator('.battle-player-card').first().evaluate(card => {
+    const frame = card.querySelector('.battle-question-frame');
+    const panel = card.querySelector('.battle-player-panel');
+    if (!frame) return null;
+    const kind = frame.querySelector('[data-visual-surface="count-frame"]')
+        ? 'single-items'
+        : frame.querySelector('[data-visual-group-row="base10"]')
+            ? 'operation-base10'
+            : frame.querySelector('[data-visual-surface="number-line"]')
+                ? 'number-line'
+                : frame.querySelector('[data-visual-operator="−"]')
+                    ? 'subtraction-items'
+                    : frame.querySelector('[data-visual-operator="+"]')
+                        ? 'addition-items'
+                        : null;
+    const frameRect = frame.getBoundingClientRect();
+    return {
+        kind,
+        frame: {
+            x: frameRect.x,
+            y: frameRect.y,
+            width: frameRect.width,
+            height: frameRect.height,
+            clientHeight: frame.clientHeight,
+            scrollHeight: frame.scrollHeight,
+            scrollTop: frame.scrollTop,
+        },
+        surfaces: [...frame.querySelectorAll('[data-visual-surface]')].map(surface => {
+            const rect = surface.getBoundingClientRect();
+            return {
+                type: surface.getAttribute('data-visual-surface'),
+                width: rect.width,
+                height: rect.height,
+                scrollWidth: surface.scrollWidth,
+                clientWidth: surface.clientWidth,
+            };
+        }),
+        controls: [...(panel?.querySelectorAll('.battle-keypad-wrap button') ?? [])].map(control => {
+            const rect = control.getBoundingClientRect();
+            return {
+                label: control.getAttribute('aria-label') || control.innerText.trim(),
+                x: rect.x,
+                y: rect.y,
+                width: rect.width,
+                height: rect.height,
+                bottom: rect.bottom,
+            };
+        }),
+        viewport: { width: innerWidth, height: innerHeight },
+        documentWidth: document.documentElement.scrollWidth,
+    };
+});
+const runBattleQuestionVisualMatrix = async (page, capture, scenario) => {
+    const visualCases = [
+        { kind: 'addition-items', grade: 1, skillId: 'add_tiny' },
+        { kind: 'number-line', grade: 1, skillId: 'count_order' },
+        { kind: 'subtraction-items', grade: 1, skillId: 'sub_tiny' },
+        { kind: 'operation-base10', grade: 3, skillId: 'add_2d1d_nc_bridge' },
+    ];
+    scenario.questionVisuals = scenario.questionVisuals ?? [];
+
+    for (const grade of [1, 3]) {
+        const gradeLabel = grade + 'ねんせい';
+        const gradeOptions = page.getByRole('button', { name: gradeLabel, exact: true });
+        assert.equal(await gradeOptions.count(), 2,
+            'Both Battle players can select grade ' + gradeLabel);
+        await gradeOptions.first().click();
+        await gradeOptions.last().click();
+
+        const start = button(page, 'スタート！');
+        assert.equal(await start.isEnabled(), true,
+            'Both player grades are required before the visual matrix round starts');
+        await startBattleRound(page, start);
+
+        for (const visualCase of visualCases.filter(candidate => candidate.grade === grade)) {
+            await forceNextBattleSkill(page, grade, visualCase.skillId);
+            await page.locator('.battle-player-card').first()
+                .getByRole('button', { name: /スキップ/ }).click();
+            await page.waitForFunction(expectedKind => {
+                const frame = document.querySelector('.battle-player-card .battle-question-frame');
+                return Boolean(frame) && (
+                    frame.querySelector('[data-visual-surface="count-frame"]') ? 'single-items'
+                        : frame.querySelector('[data-visual-group-row="base10"]') ? 'operation-base10'
+                            : frame.querySelector('[data-visual-surface="number-line"]') ? 'number-line'
+                                : frame.querySelector('[data-visual-operator="−"]') ? 'subtraction-items'
+                                    : frame.querySelector('[data-visual-operator="+"]') ? 'addition-items'
+                                        : null
+                ) === expectedKind;
+            }, visualCase.kind, { timeout: 12000 });
+
+            const snapshot = await readBattleQuestionVisual(page);
+            assert.equal(snapshot?.kind, visualCase.kind,
+                'Battle renders the requested ' + visualCase.kind + ' question visual');
+            assert(snapshot.surfaces.some(surface => surface.width > 0 && surface.height > 0),
+                'The ' + visualCase.kind + ' diagram has a visible rendered surface');
+            assert(snapshot.documentWidth <= snapshot.viewport.width + 1,
+                'The ' + visualCase.kind + ' diagram does not create page-level horizontal overflow');
+            assert(snapshot.controls.length > 0
+                && snapshot.controls.every(control => control.width >= 44 && control.height >= 44
+                    && control.x >= 0 && control.x + control.width <= snapshot.viewport.width + 1
+                    && control.y >= 0 && control.bottom <= snapshot.viewport.height + 1),
+            'Answer controls stay at least 44px and visible beside the ' + visualCase.kind + ' diagram');
+            if (snapshot.viewport.width >= 768 && snapshot.viewport.height <= 500) {
+                assert(snapshot.frame.height >= 96,
+                    'Short landscape keeps a useful question viewport beside the full answer keypad');
+            }
+
+            const entry = {
+                kind: visualCase.kind,
+                grade,
+                skillId: visualCase.skillId,
+                viewport: snapshot.viewport,
+                questionFrameHeight: snapshot.frame.height,
+                surfaces: snapshot.surfaces.map(surface => surface.type),
+                controls: snapshot.controls.length,
+                scrollable: snapshot.frame.scrollHeight > snapshot.frame.clientHeight + 1,
+            };
+            scenario.questionVisuals.push(entry);
+            await capture('battle-visual-' + visualCase.kind);
+
+            if (entry.scrollable) {
+                const frame = page.locator('.battle-player-card').first().locator('.battle-question-frame');
+                await frame.evaluate(element => { element.scrollTop = element.scrollHeight; });
+                const scrolled = await readBattleQuestionVisual(page);
+                assert(scrolled.frame.scrollTop > 0,
+                    'The ' + visualCase.kind + ' diagram can scroll within its question frame');
+                assert(scrolled.controls.every(control => control.width >= 44 && control.height >= 44
+                    && control.y >= 0 && control.bottom <= scrolled.viewport.height + 1),
+                'Scrolling the ' + visualCase.kind + ' diagram leaves answer controls visible');
+                entry.scrolledToEnd = true;
+                await capture('battle-visual-' + visualCase.kind + '-scroll-end');
+                await frame.evaluate(element => { element.scrollTop = 0; });
+            }
+        }
+
+        await page.getByRole('button', { name: /やめる/ }).click();
+        await page.locator('.battle-setup-screen').waitFor();
+    }
+
+    assert.deepEqual(scenario.questionVisuals.map(visual => visual.kind).sort(), [
+        'addition-items',
+        'number-line',
+        'operation-base10',
+        'single-items',
+        'subtraction-items',
+    ], 'The current Battle question-visual inventory is rendered in the runtime flow');
+    scenario.checks.push('All five Battle math question-visual kinds render with visible answers; overflow diagrams scroll inside their question frames');
 };
 const winTugRoundFromVisibleCount = async page => {
     const p1 = page.locator('.battle-player-card').first();
@@ -107,7 +317,7 @@ const report = {
     target: base,
     journey: 'Current Island → Other Games → Boss Coop setup/play/result/replay/end → Tug of War setup/play/win/result/replay → Island',
     viewports,
-    fixture: 'Each run uses a fresh browser context and a disposable native profile. Co-op uses the normal countdown and accelerates only its 1-second interval to 10ms. Tug of War uses grade -2 and a temporary deterministic generator only to render count_5; the test answers from the visible item count and plays to the five-step result. No learning records are changed; stores are compared before and after.',
+    fixture: 'Each run uses a fresh browser context and a disposable native profile. Co-op uses the normal countdown and accelerates only its 1-second interval to 10ms. Tug of War uses grade -2 and a temporary deterministic generator only to render a five-frame counting problem; the test answers from the visible item count and plays to the five-step result. A separate diagnostic Tug session selects representative skills for all five Battle math visual kinds using one-shot random selection and advances only with Skip, never submitting answers. No learning records are changed; stores are compared before and after.',
     captures: [],
     scenarios: [],
     pass: false,
@@ -210,7 +420,7 @@ try {
                     window.setInterval = (callback, delay, ...args) =>
                         nativeSetInterval(callback, delay === 1000 ? 10 : delay, ...args);
                 });
-                const round = await startCoopRound(page, start);
+                const round = await startBattleRound(page, start);
                 const playing = await page.evaluate(() => ({
                     documentWidth: document.documentElement.scrollWidth,
                     panels: [...document.querySelectorAll('.battle-player-panel')].map(panel => {
@@ -343,7 +553,7 @@ try {
 
                 await gradeOptions.first().click();
                 await gradeOptions.last().click();
-                await startCoopRound(page, start);
+                await startBattleRound(page, start);
                 await endCoopAtTimeout(page);
                 await button(page, 'おわる').click();
                 await page.waitForURL(url => url.hash === '#/battle');
@@ -384,6 +594,14 @@ try {
                 const round = await startTugRound(page, start);
                 await restoreBattleRandom(page);
                 scenario.tugOpeningQuestion = round.visual;
+                scenario.questionVisuals = [{
+                    kind: round.visual.kind,
+                    grade: -2,
+                    questionFrameHeight: round.visual.frameHeight,
+                    surfaces: ['count-frame'],
+                    controls: round.visual.controls.length,
+                    viewport,
+                }];
                 await capture('tug-playing');
                 await winTugRoundFromVisibleCount(page);
                 await capture('tug-result');
@@ -466,6 +684,7 @@ try {
                     'Tug of War replay returns to a fresh setup');
                 await capture('tug-replay-setup');
                 scenario.checks.push('Tug of War replay returns to a fresh setup with the mode preserved');
+                await runBattleQuestionVisualMatrix(page, capture, scenario);
                 await button(page, 'もどる').click();
                 await page.waitForURL(url => url.hash === '#/battle');
             }

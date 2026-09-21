@@ -1,11 +1,54 @@
 import { describe, expect, it, vi } from "vitest";
 import { battleReducer, createInitialBattleState, generateBattleMathProblem } from "./engine";
+import { EXCLUDED_SKILLS, GRADE_TO_LEVELS } from "./gradeMapping";
+import { getAvailableSkills } from "../math/curriculum";
 import { PlayerConfig } from "./types";
 
 const p1Config: PlayerConfig = { name: "P1", grade: 3, emoji: "A", subject: "math" };
 const p2Config: PlayerConfig = { name: "P2", grade: 3, emoji: "B", subject: "math" };
 
 describe("battleReducer", () => {
+    it("enumerates every question-visual kind available to Battle grades", () => {
+        const originalRandom = Math.random;
+        const randomSpy = vi.spyOn(Math, "random");
+        const visuals = new Set<string>();
+
+        try {
+            for (const grade of [-2, -1, 0, 1, 2, 3, 4, 5, 6] as const) {
+                const { min, max } = GRADE_TO_LEVELS[grade];
+                const skills = getAvailableSkills(max);
+                const belowMin = min > 1 ? new Set(getAvailableSkills(min - 1)) : new Set<string>();
+                const eligible = skills.filter(skill => !belowMin.has(skill) && !EXCLUDED_SKILLS.has(skill));
+                const pool = eligible.length > 0
+                    ? eligible
+                    : skills.filter(skill => !EXCLUDED_SKILLS.has(skill));
+
+                for (let index = 0; index < pool.length; index += 1) {
+                    let randomCalls = 0;
+                    randomSpy.mockImplementation(() => {
+                        randomCalls += 1;
+                        return randomCalls === 1 ? (index + 0.5) / pool.length : originalRandom();
+                    });
+
+                    const problem = generateBattleMathProblem(grade);
+                    if (problem.questionVisual) {
+                        visuals.add(problem.questionVisual.kind);
+                    }
+                }
+            }
+        } finally {
+            randomSpy.mockRestore();
+        }
+
+        expect([...visuals].sort()).toEqual([
+            "addition-items",
+            "number-line",
+            "operation-base10",
+            "single-items",
+            "subtraction-items",
+        ]);
+    });
+
     it("keeps math visuals on battle problems when the source skill has a visual prompt", () => {
         const spy = vi.spyOn(Math, "random").mockReturnValue(0);
 
