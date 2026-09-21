@@ -146,6 +146,25 @@ try {
             await nav.waitFor();
             assert.equal(hash(), expected);
             assert.deepEqual(await nav.getByRole('button').allTextContents(), ['しま', 'いえ', 'まなぶ', 'きろく', '設定']);
+            if (viewport.width <= 360) {
+                const labelLayout = await nav.locator('.island-shell-tab').evaluateAll(buttons => buttons.map(button => {
+                    const label = button.querySelector('span');
+                    const buttonBounds = button.getBoundingClientRect();
+                    const range = document.createRange();
+                    range.selectNodeContents(label);
+                    const labelBounds = range.getBoundingClientRect();
+                    return {
+                        label: label.textContent?.trim(),
+                        lines: range.getClientRects().length,
+                        fits: labelBounds.left >= buttonBounds.left && labelBounds.right <= buttonBounds.right,
+                        targetWidth: buttonBounds.width,
+                        targetHeight: buttonBounds.height,
+                    };
+                }));
+                assert(labelLayout.every(item => item.lines === 1 && item.fits
+                    && item.targetWidth >= 44 && item.targetHeight >= 44),
+                `Main navigation labels stay on one line inside 44px targets at ${viewport.width}px: ${JSON.stringify(labelLayout)}`);
+            }
         };
         const focus = async mode => {
             await waitMode(page, mode);
@@ -666,7 +685,7 @@ try {
             await button(page, 'もどる').click();
             await waitMode(page, 'home'); await ordinary('#/island');
             assert.deepEqual(errors, []);
-            report.scenarios.push({ viewport, pass: true, settingsContrast, parentCandidateFixture, checks: ['first-run welcome identity, responsive frame, and visible 44px actions', ...(viewport.width <= 360 ? ['narrow first-run item labels remain single-line'] : []), 'explicit profile-add frame preserved', 'top entry without learning', 'stale top query and unknown URL recovery', 'existing-profile onboarding return', 'pending-plan top return without learning writes', 'ordinary tabs', ...(viewport.height <= 430 ? ['play continuation reachable by internal scroll'] : []), 'settings source retained', 'settings small-text contrast on composed surface and opaque paper', 'draft and seven-store equality', 'back/forward', 'home reload without auto-start', 'placement cancel/save', 'camera close', 'real photo/detail close', 'populated photo action remains fully visible above fixed navigation', 'direct learning reload/close', 'curriculum scroll restored', 'direct placement fallback', 'records refresh after answer', 'current-Island parent gate and empty review-candidate copy', 'current-Island parent populated review candidates via display-only fixture', 'parent explanation wraps without horizontal overflow', 'parent return reaches the originating settings section from both states', 'Island menu → Other Games → Battle guidance/setup and return', ...(viewport.width >= 768 && viewport.height > viewport.width ? ['tablet portrait Battle orientation guidance and return'] : viewport.width <= 767 && viewport.height <= 639 ? ['small-phone Battle screen-size guidance and return'] : ['two-player setup semantics, 44px options, prerequisite guidance, scroll discoverability, and start readiness'])], errors });
+            report.scenarios.push({ viewport, pass: true, settingsContrast, parentCandidateFixture, checks: ['first-run welcome identity, responsive frame, and visible 44px actions', ...(viewport.width <= 360 ? ['narrow first-run item labels remain single-line', 'five-tab navigation labels fit on one line inside 44px-or-larger targets'] : []), 'explicit profile-add frame preserved', 'top entry without learning', 'stale top query and unknown URL recovery', 'existing-profile onboarding return', 'pending-plan top return without learning writes', 'ordinary tabs', ...(viewport.height <= 430 ? ['play continuation reachable by internal scroll'] : []), 'settings source retained', 'settings small-text contrast on composed surface and opaque paper', 'draft and seven-store equality', 'back/forward', 'home reload without auto-start', 'placement cancel/save', 'camera close', 'real photo/detail close', 'populated photo action remains fully visible above fixed navigation', 'direct learning reload/close', 'curriculum scroll restored', 'direct placement fallback', 'records refresh after answer', 'current-Island parent gate and empty review-candidate copy', 'current-Island parent populated review candidates via display-only fixture', 'parent explanation wraps without horizontal overflow', 'parent return reaches the originating settings section from both states', 'Island menu → Other Games → Battle guidance/setup and return', ...(viewport.width >= 768 && viewport.height > viewport.width ? ['tablet portrait Battle orientation guidance and return'] : viewport.width <= 767 && viewport.height <= 639 ? ['small-phone Battle screen-size guidance and return'] : ['two-player setup semantics, 44px options, prerequisite guidance, scroll discoverability, and start readiness'])], errors });
             console.log(`PASS navigation ${viewport.width}x${viewport.height}`);
         } catch (error) {
             await page.screenshot({ path: `${out}/${viewport.width}-failure.png` }).catch(() => {});

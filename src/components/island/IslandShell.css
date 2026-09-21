@@ -214,6 +214,7 @@ body.app-mode-island-shell .app-container {
 @media(max-width:360px) {
     .island-shell-eyebrow { font-size: 10px; }
     .island-shell-nav { gap: 8px; padding-inline: 14px; }
+    .island-shell-tab { padding-inline: 2px; white-space: nowrap; }
     .island-shell .pokomoko-setting-trigger { gap: 10px; padding-inline: 14px; }
 }
 

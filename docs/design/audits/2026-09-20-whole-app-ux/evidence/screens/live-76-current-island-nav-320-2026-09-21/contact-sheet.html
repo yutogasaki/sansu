@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Current Island navigation at 320×568</title>
+<style>
+  :root { color-scheme: light; font: 15px/1.5 system-ui, sans-serif; color: #30364f; background: #f8f7f2; }
+  body { margin: 24px; }
+  h1 { font-size: 1.25rem; }
+  p { max-width: 72ch; }
+  main { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 320px)); gap: 18px; align-items: start; }
+  figure { margin: 0; padding: 12px; border: 1px solid #ded1ef; border-radius: 16px; background: #fffdf9; }
+  img { display: block; width: 100%; height: auto; border-radius: 10px; }
+  figcaption { margin-top: 8px; }
+</style>
+<h1>現行Islandの5タブナビ — 320×568</h1>
+<p>修正前後のホームと、修正後の記録画面。修正前は「まなぶ」「きろく」が2行、修正後は一行でボタン内に収まり、各ボタンの幅・高さは44px以上。</p>
+<p>Runtime: http://127.0.0.1:5198 · Island=true · NatureTown=false · delivery=mystic-island-v1 · visual=mystic-island-shore-garden-v18 · revision=development-local · version=development-local:60d95334-58f8-4594-b548-c113c90cad1c · reduced motion · no service worker.</p>
+<main>
+  <figure><img src="before-320-home.png" alt="320×568 home before fix"><figcaption>修正前：ホーム。ラベルの2行化をPlaywrightのDOM行矩形でも再現。<a href="before-report.json">失敗report</a></figcaption></figure>
+  <figure><img src="after-320-home.png" alt="320×568 home after fix"><figcaption>修正後：ホームの5タブがすべて一行。</figcaption></figure>
+  <figure><img src="after-320-records.png" alt="320×568 records after fix"><figcaption>修正後：記録画面でも選択中の「きろく」が一行。</figcaption></figure>
+</main>
+</html>
