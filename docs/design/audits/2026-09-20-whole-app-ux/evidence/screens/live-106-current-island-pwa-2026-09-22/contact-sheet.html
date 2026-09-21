@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Current Island PWA / offline evidence</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; background: #f4f3ee; color: #24364d; }
+    body { margin: 24px; }
+    main { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; max-width: 1120px; }
+    figure { margin: 0; padding: 12px; background: #fff; border: 1px solid #d8d8d1; border-radius: 14px; }
+    img { display: block; width: 100%; height: 440px; object-fit: contain; background: #eef0ed; border-radius: 10px; }
+    figcaption { margin-top: 10px; line-height: 1.5; overflow-wrap: anywhere; }
+    a { color: #245da8; }
+  </style>
+</head>
+<body>
+  <h1>Current Island PWA / offline evidence</h1>
+  <p>Island-enabled production preview at <code>http://127.0.0.1:5298</code>. Runtime and store assertions are in <a href="pwa-report.json">pwa-report.json</a>.</p>
+  <main>
+    <figure><img src="pwa-restored-learning.png" alt="学習画面へ復帰した状態"><figcaption>保護された学習セッションからホーム経由で復帰</figcaption></figure>
+    <figure><img src="pwa-legacy-deferred-gift.png" alt="旧データ移行とギフト保持の状態"><figcaption>旧データ移行後も未受取ギフトを保持</figcaption></figure>
+    <figure><img src="offline-reduced-resume.png" alt="オフライン復帰した学習状態"><figcaption>Service Worker 制御下のオフライン復帰・回答保持</figcaption></figure>
+  </main>
+</body>
+</html>
