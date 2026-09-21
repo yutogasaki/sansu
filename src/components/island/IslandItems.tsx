@@ -107,8 +107,37 @@ export function IslandRewards({ island, intro = false, disabled, onChoose, onCon
 export function IslandInventory({ items, disabled, onSelect, onClose, onFurniture }: {
     items: IslandItem[]; disabled: boolean; onSelect: (item: IslandItem) => void; onClose: () => void; onFurniture?: () => void;
 }) {
-    return <section className="island-sheet island-panel island-inventory-panel" aria-label="しまの もちもの">
-        <IslandPanelHeading title="もちものを おく" description="どれを うごかす？" onExit={onClose} disabled={disabled} exitAriaLabel="もちものから もどる" />
+    const panel = useRef<HTMLElement>(null);
+    const [hasMoreBelow, setHasMoreBelow] = useState(false);
+
+    useEffect(() => {
+        const page = panel.current?.closest<HTMLElement>('.island-page');
+        if (!page) return;
+
+        const updateScrollHint = () => {
+            const next = hasMoreContentBelow(page);
+            setHasMoreBelow(current => current === next ? current : next);
+        };
+        updateScrollHint();
+        page.addEventListener('scroll', updateScrollHint, { passive: true });
+        window.addEventListener('resize', updateScrollHint);
+
+        const resizeObserver = typeof ResizeObserver === 'undefined' ? undefined : new ResizeObserver(updateScrollHint);
+        resizeObserver?.observe(page);
+        if (panel.current) resizeObserver?.observe(panel.current);
+
+        return () => {
+            page.removeEventListener('scroll', updateScrollHint);
+            window.removeEventListener('resize', updateScrollHint);
+            resizeObserver?.disconnect();
+        };
+    }, [items.length]);
+
+    return <section ref={panel} className="island-sheet island-panel island-inventory-panel" aria-label="しまの もちもの">
+        <IslandPanelHeading title="もちものを おく" description={<span className="island-inventory-description">
+            <span>どれを うごかす？</span>
+            {hasMoreBelow && <span className="island-inventory-scroll-hint"><ArrowDown size={14} aria-hidden="true" />つづき</span>}
+        </span>} onExit={onClose} disabled={disabled} exitAriaLabel="もちものから もどる" />
         <div className="island-inventory">{items.map((item, index) => <button key={item.id} disabled={disabled} className="island-reward"
             aria-label={`${ISLAND_ITEMS[item.kind].name} ${index + 1}を うごかす`} onClick={() => onSelect(item)}>
             <ItemPicture kind={item.kind} /><strong>{ISLAND_ITEMS[item.kind].name}</strong><small>{item.position ? 'しまに ある' : item.autoPlacementBlocked ? 'おく ばしょを えらべるよ' : 'しまって ある'}</small>

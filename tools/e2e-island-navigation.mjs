@@ -110,6 +110,7 @@ try {
         let welcomeLayout = null;
         let photoActionLayout = null;
         let otherGamesChoiceLayout = null;
+        let inventoryScrollLayout = null;
         let recordsScrollLayout = null;
         let recordsHeadingLayout = null;
         let shortLearningLayout = null;
@@ -291,6 +292,80 @@ try {
                 const back = heading.getByRole('button');
                 assert.equal(await back.innerText(), 'もどる');
                 await capture(mode);
+                if (action === 'inventory' && viewport.width >= 480 && viewport.height <= 600 && viewport.width > viewport.height) {
+                    const inventoryPage = page.locator('.island-page');
+                    const readInventoryLayout = () => inventoryPage.evaluate(element => {
+                        const rect = value => {
+                            const bounds = value?.getBoundingClientRect();
+                            return bounds ? { top: bounds.top, bottom: bounds.bottom, width: bounds.width, height: bounds.height } : null;
+                        };
+                        const navigation = document.querySelector('.island-shell-nav');
+                        return {
+                            scrollHeight: element.scrollHeight,
+                            clientHeight: element.clientHeight,
+                            scrollTop: element.scrollTop,
+                            maxScrollTop: Math.max(0, element.scrollHeight - element.clientHeight),
+                            documentScrollHeight: document.documentElement.scrollHeight,
+                            scrollport: rect(element),
+                            navigationTop: navigation?.getBoundingClientRect().top ?? null,
+                            items: [...element.querySelectorAll('.island-inventory > button')].map(item => ({
+                                rect: rect(item),
+                                name: rect(item.querySelector('strong')),
+                                description: rect(item.querySelector('small')),
+                            })),
+                            furnitureAction: rect(element.querySelector('.island-inventory-panel > .island-secondary')),
+                        };
+                    });
+                    const before = await readInventoryLayout();
+                    const scrollHint = page.locator('.island-inventory-scroll-hint');
+                    const hasMoreBefore = before.scrollHeight > before.clientHeight + 1;
+                    const itemCardsFullyVisible = layout => layout.items.length > 0
+                        && layout.items.every(item => item.rect && item.name && item.description
+                            && item.rect.top >= layout.scrollport.top - 1
+                            && item.rect.bottom <= layout.navigationTop + 1
+                            && item.name.top >= layout.scrollport.top - 1
+                            && item.name.bottom <= layout.navigationTop + 1
+                            && item.description.bottom <= layout.navigationTop + 1);
+                    inventoryScrollLayout = { before, hasMoreBefore, itemsView: before, after: null };
+                    assert(before.navigationTop !== null && before.documentScrollHeight <= viewport.height + 1,
+                        `The inventory uses an app-bounded scroll surface: ${JSON.stringify(before)}`);
+                    assert.equal(await scrollHint.isVisible(), hasMoreBefore,
+                        'The inventory heading signals when the page has more content below');
+                    if (hasMoreBefore && !itemCardsFullyVisible(before)) {
+                        const scrollBox = await inventoryPage.boundingBox();
+                        assert(scrollBox && scrollBox.height > 0, 'Short-landscape inventory has a visible scroll surface');
+                        await page.mouse.move(scrollBox.x + scrollBox.width / 2, scrollBox.y + scrollBox.height / 2);
+                        await page.mouse.wheel(0, 100);
+                        await page.waitForFunction(() => {
+                            const element = document.querySelector('.island-page');
+                            return !!element && element.scrollTop > 0;
+                        });
+                    }
+                    const itemsView = await readInventoryLayout();
+                    inventoryScrollLayout.itemsView = itemsView;
+                    assert(itemCardsFullyVisible(itemsView),
+                        `Every short-landscape inventory card and label is reachable above navigation: ${JSON.stringify(inventoryScrollLayout)}`);
+                    if (hasMoreBefore) {
+                        await scrollHint.waitFor({ state: itemsView.scrollTop + itemsView.clientHeight >= itemsView.scrollHeight - 1 ? 'hidden' : 'visible' });
+                    }
+                    if (itemsView.scrollTop > 0) await capture('inventory-scrolled-items');
+                    if (hasMoreBefore && itemsView.scrollTop + itemsView.clientHeight < itemsView.scrollHeight - 1) {
+                        await page.mouse.wheel(0, 12000);
+                        await page.waitForFunction(() => {
+                            const element = document.querySelector('.island-page');
+                            return !!element && element.scrollTop + element.clientHeight >= element.scrollHeight - 1;
+                        });
+                        await scrollHint.waitFor({ state: 'hidden' });
+                    }
+                    const after = await readInventoryLayout();
+                    inventoryScrollLayout.after = after;
+                    assert(!after.furnitureAction || after.furnitureAction.bottom <= after.navigationTop + 1,
+                        `The short-landscape inventory's furniture action is reachable above navigation: ${JSON.stringify(inventoryScrollLayout)}`);
+                    if (after.scrollTop > 0) await capture('inventory-scrolled-bottom');
+                    await inventoryPage.evaluate(element => { element.scrollTop = 0; });
+                    await page.waitForFunction(() => document.querySelector('.island-page')?.scrollTop === 0);
+                    if (hasMoreBefore) await scrollHint.waitFor({ state: 'visible' });
+                }
                 if (action === 'play') {
                     const playBody = page.locator('.island-play-body');
                     const scrollHint = page.getByText('つづき', { exact: true });
@@ -962,12 +1037,15 @@ try {
             report.scenarios.at(-1).checks.push('the final records section remains reachable above fixed navigation');
             report.scenarios.at(-1).recordsHeadingLayout = recordsHeadingLayout;
             report.scenarios.at(-1).checks.push('the final records section heading can be brought into view above fixed navigation');
+            report.scenarios.at(-1).inventoryScrollLayout = inventoryScrollLayout;
+            if (inventoryScrollLayout) report.scenarios.at(-1).checks.push('short-landscape inventory scroll cue tracks content; item labels and furniture action are reachable above fixed navigation');
             console.log(`PASS navigation ${viewport.width}x${viewport.height}`);
         } catch (error) {
             await page.screenshot({ path: `${out}/${viewportTag}-failure.png` }).catch(() => {});
             report.scenarios.push({ viewport, pass: false, settingsContrast, parentCandidateFixture, welcomeLayout, photoActionLayout, otherGamesChoiceLayout, shortLearningLayout, shortHelpLayout, error: String(error), url: page.url(), errors });
             report.scenarios.at(-1).recordsScrollLayout = recordsScrollLayout;
             report.scenarios.at(-1).recordsHeadingLayout = recordsHeadingLayout;
+            report.scenarios.at(-1).inventoryScrollLayout = inventoryScrollLayout;
             throw error;
         } finally { await context.close(); }
     }

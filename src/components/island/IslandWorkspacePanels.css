@@ -39,6 +39,8 @@
 .island-page .island-inventory-panel .island-reward strong { font-size: 14px; line-height: 1.55; }
 .island-page .island-inventory-panel .island-reward small { margin: 0; font-size: 12px; line-height: 1.5; }
 .island-page .island-inventory-panel > .island-secondary { width: 100%; }
+.island-inventory-description { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
+.island-inventory-scroll-hint { display: inline-flex; align-items: center; gap: 3px; color: var(--pokomoko-muted); font-size: 12px; font-weight: 650; white-space: nowrap; }
 
 .island-page .island-placement-toolbar {
     display: flex;
