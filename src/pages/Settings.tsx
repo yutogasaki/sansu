@@ -370,11 +370,13 @@ export const Settings: React.FC = () => {
     const sectionIcons = { profile: UserRound, learning: BookOpen, display: Volume2, parent: ShieldCheck };
     const sectionButton = (key: keyof typeof sectionIcons, title: string, summary: string) => {
         const SectionIcon = sectionIcons[key];
+        const sectionId = `settings-panel-${key}`;
         return (
         <button
             type="button"
             onClick={() => toggleSection(key)}
             aria-expanded={openSection === key}
+            aria-controls={navigation ? sectionId : undefined}
             aria-current={navigation && openSection === key ? "page" : undefined}
             data-setting-section={key}
             className="pokomoko-setting-trigger flex w-full items-center justify-between gap-3 rounded-[20px] px-5 py-4 text-left transition-colors hover:bg-white/30 active:scale-[0.99]"
@@ -482,7 +484,7 @@ export const Settings: React.FC = () => {
                     <p>{t("べんきょうや おとの せっていを かえられるよ。", "現在の設定を確認・変更できます。")}</p>
                 </div>}
                 {/* ── プロフィール ── */}
-                <SurfacePanel hidden={Boolean(navigation && openSection !== "profile")} className="overflow-hidden rounded-[28px] p-0">
+                <SurfacePanel id="settings-panel-profile" hidden={Boolean(navigation && openSection !== "profile")} className="overflow-hidden rounded-[28px] p-0">
                     {!navigation && sectionButton("profile", t("プロフィール", "プロフィール"), `${profile?.name || "ゲスト"} · ${GRADES[profile?.grade ?? 1] || "???"}`)}
                     <AnimatePresence>
                         {openSection === "profile" && (
@@ -533,7 +535,7 @@ export const Settings: React.FC = () => {
                 </SurfacePanel>
 
                 {/* ── 学習 ── */}
-                <SurfacePanel hidden={Boolean(navigation && openSection !== "learning")} className="overflow-hidden rounded-[28px] p-0">
+                <SurfacePanel id="settings-panel-learning" hidden={Boolean(navigation && openSection !== "learning")} className="overflow-hidden rounded-[28px] p-0">
                     {!navigation && sectionButton("learning", t("べんきょう", "学習"), `${subjectLabel} · ${hissanLabel} · Lv.${profile?.mathMainLevel ?? 1}/${profile?.vocabMainLevel ?? 1}`)}
                     <AnimatePresence>
                         {openSection === "learning" && (
@@ -582,7 +584,7 @@ export const Settings: React.FC = () => {
                 </SurfacePanel>
 
                 {/* ── 表示とサウンド ── */}
-                <SurfacePanel hidden={Boolean(navigation && openSection !== "display")} className="overflow-hidden rounded-[28px] p-0">
+                <SurfacePanel id="settings-panel-display" hidden={Boolean(navigation && openSection !== "display")} className="overflow-hidden rounded-[28px] p-0">
                     {!navigation && sectionButton("display", t("みため と おと", "表示とサウンド"), `${soundLabel} · ${textLabel} · ${kanjiLabel}`)}
                     <AnimatePresence>
                         {openSection === "display" && (
@@ -604,7 +606,7 @@ export const Settings: React.FC = () => {
                 </SurfacePanel>
 
                 {/* ── テスト・保護者 ── */}
-                <SurfacePanel hidden={Boolean(navigation && openSection !== "parent")} className="overflow-hidden rounded-[28px] p-0">
+                <SurfacePanel id="settings-panel-parent" hidden={Boolean(navigation && openSection !== "parent")} className="overflow-hidden rounded-[28px] p-0">
                     {!navigation && sectionButton("parent", t("テスト・おとなむけ", "テスト・保護者"), t("ていきテスト · ほごしゃメニュー", "定期テスト · 保護者メニュー"))}
                     <AnimatePresence>
                         {openSection === "parent" && (

@@ -54,6 +54,7 @@ function LayoutSlot({ island, layoutId, disabled, previewLayoutId, onAction, onP
     'island' | 'disabled' | 'previewLayoutId' | 'onAction' | 'onPreview'> & { layoutId: IslandLayoutId }) {
     const saved = getIslandExperience(island).layouts.find(layout => layout.id === layoutId);
     const [deleting, setDeleting] = useState(false);
+    const deleteConfirmationId = `island-layout-delete-${layoutId}`;
     const number = ISLAND_LAYOUT_IDS.indexOf(layoutId) + 1;
     const isPreview = previewLayoutId === layoutId;
     return <article className="island-experience-layout" data-layout-slot={layoutId} data-layout-saved={Boolean(saved)}>
@@ -70,9 +71,10 @@ function LayoutSlot({ island, layoutId, disabled, previewLayoutId, onAction, onP
             <button className={isPreview ? 'island-primary' : 'island-secondary'} disabled={disabled} data-experience-action="apply-layout"
                 onClick={() => { void onAction({ type: 'apply-layout', layoutId }); }}><Check size={16} aria-hidden="true" />この けしきに する</button>
             <button className="island-icon-button" disabled={disabled} aria-label={`${saved.name}の きろくを けす`}
-                aria-expanded={deleting} onClick={() => setDeleting(value => !value)}><Trash2 size={17} aria-hidden="true" /></button>
+                aria-expanded={deleting} aria-controls={deleteConfirmationId}
+                onClick={() => setDeleting(value => !value)}><Trash2 size={17} aria-hidden="true" /></button>
         </div>}
-        {saved && deleting && <div className="island-experience-delete"><p>この きろくを けす？<small>しまの ものは のこるよ。</small></p>
+        {saved && deleting && <div id={deleteConfirmationId} className="island-experience-delete" role="group" aria-label={`${saved.name}の きろくを けす かくにん`}><p>この きろくを けす？<small>しまの ものは のこるよ。</small></p>
             <button className="island-secondary" disabled={disabled} onClick={() => { void onAction({ type: 'delete-layout', layoutId }).then(ok => { if (ok) setDeleting(false); }); }}>きろくを けす</button>
             <button className="island-text-button" disabled={disabled} onClick={() => setDeleting(false)}>やめる</button></div>}
     </article>;
