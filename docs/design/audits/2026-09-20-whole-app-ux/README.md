@@ -920,3 +920,11 @@ Impact: P3. Two current Island-adjacent disclosure surfaces exposed `aria-expand
 The saved-scene delete control now points to a labelled confirmation group for its layout slot. Settings category buttons now point to stable panel IDs in Island navigation mode; the classic/legacy stacked Settings presentation keeps its existing local behavior without adding a misleading ancestor reference. No delete, cancel, settings navigation, or visible layout behavior changed.
 
 The focused saved-scene semantics test passes, target ESLint/typecheck pass, and a disposable 390×844 Island browser flow created one temporary saved scene, verified the delete toggle `false → true`, its labelled group, cancel/detach, then verified the Settings `学習` control references `settings-panel-learning`. Runtime identity was Island=true / NatureTown=false with zero page errors. This is browser/DOM evidence, not a real screen-reader or physical-device evaluation.
+
+## F-61: Photo removal confirmation was not tied to its trigger (`live-114`, 2026-09-22)
+
+Impact: P3. The current Island photo detail already moved focus into its removal confirmation and restored focus on cancel/Escape, but the removal trigger did not expose its expanded state or identify the confirmation group. This made a careful keyboard path less explicit to assistive technology.
+
+The photo removal trigger now exposes `aria-expanded` and `aria-controls`, and the conditional confirmation group has the matching stable `id`. The remove/cancel/Escape behavior, focus restoration, photo data, and visible layout are unchanged.
+
+The focused `IslandPhotos.test.tsx` suite passes 6 tests, target ESLint and typecheck pass, and a disposable 390×844 Island browser flow seeded one temporary valid PNG, opened the real photo detail, verified the trigger `false → true`, confirmation group, Escape close, and focus restoration. Runtime identity was Island=true / NatureTown=false with zero page errors. This is browser/DOM evidence, not a real screen-reader or physical-device evaluation.

@@ -233,6 +233,7 @@
 - 2026-09-22 `live-111` / F-58: 現行Islandの「しまのメニュー」だけ`aria-expanded`がなく、家メニューと開閉状態の意味論が不揃いだったため、native dialogの開閉を小さなstateで公開。`IslandHomeActions` 6 tests、対象ESLint、5198の隔離first-run profileで`false → true → false`、閉じた後のメニュートリガーfocus、Island=true / NatureTown=false、page error 0を確認。既存の`e2e:island-navigation` 390×844 PASSに加え、同E2Eへ閉じた/開いた`aria-expanded`遷移の回帰assertionを追加し、standaloneの対象ブラウザ確認もPASS。実スクリーンリーダー・実機・参加者評価は未完了。
 - 2026-09-22 `live-112` / F-59: 現行Islandの「みつける」の`てがかり`は`aria-expanded`だけで、開いた説明との関係を示していなかったため、`aria-controls`と説明側の安定した`id`を追加。`islandDiscoveryGuide.test.ts` 8 tests、対象ESLint、typecheck、5198の隔離390×844 profileで`false`（説明なし）→`true`（参照先に説明あり）→`false`（説明detach）、Island=true / NatureTown=false、page error 0を確認。変更後の`verify:core`も458 files / 4,160 tests、Island-default build、asset budget 11.61/12.00 MiBでPASS。見た目・発見条件・保存・ルートは変更していない。実スクリーンリーダー・実機・参加者評価は未完了。
 - 2026-09-22 `live-113` / F-60: 現行Islandの保存景色削除確認と設定カテゴリの`aria-expanded`に、制御対象を示す`aria-controls`を追加。保存景色のsemantics test 1件、対象ESLint/typecheck、5198の隔離390×844で保存→削除開閉`false → true`→キャンセルdetach、設定「学習」→`settings-panel-learning`参照、Island=true / NatureTown=false、page error 0を確認。見た目・削除/設定動作は変更していない。実スクリーンリーダー・実機・参加者評価は未完了。
+- 2026-09-22 `live-114` / F-61: 現行Islandの写真詳細で、写真をはずす確認UIのトリガーに`aria-expanded`と`aria-controls`、確認groupに対応IDを追加。`IslandPhotos.test.tsx` 6 tests、対象ESLint/typecheck、5198の隔離390×844で実写真を注入して`false → true`、確認表示、Escape閉じ、focus復帰、Island=true / NatureTown=false、page error 0を確認。見た目・削除処理・Escape動作は変更していない。実スクリーンリーダー・実機・参加者評価は未完了。
 
 ### Next
 
@@ -247,7 +248,7 @@
 - 探索HUDと学習/初回/ふわふわ画面の44px未満候補は[学習と島の体験改善](2026-09-07-experience-improvements.md)へ引継ぎ済み。担当側で重なる箇所を整理し、仕様に合わせて修正・検証する。
 - 2人ゲーム設定の支援技術による読み上げ順を確認する（名前・選択状態の意味論、44px操作領域、横画面でのスクロール到達性は技術確認済み）。
 - 2人ゲームの実スクリーンリーダー読み上げ順、幅768px以上の全画面、問題図の全種類と実端末でのスクロール感を確認する。1280×720では数種類の図とテンキーを確認済みだが、網羅ではない。高さ640px前後では問題図を短い枠内でスクロールするため、実端末/参加者評価で窮屈さが確認された場合は最小高さ640pxの境界を見直す。
-- `live-111`〜`live-113`で現行Islandの家メニュー・発見ヒント・保存景色削除・設定カテゴリの開閉状態と参照関係をそろえた。次の実装は、全ルート棚卸しで同じ役割の入口に `aria-expanded` / focus復帰 / 閉じる命名の差が残っていないかを確認し、未所有かつ高影響のものだけを追加修正する。
+- `live-111`〜`live-114`で現行Islandの家メニュー・発見ヒント・保存景色削除・設定カテゴリ・写真削除の開閉状態と参照関係をそろえた。次の実装は、全ルート棚卸しで同じ役割の入口に `aria-expanded` / focus復帰 / 閉じる命名の差が残っていないかを確認し、未所有かつ高影響のものだけを追加修正する。
 
 ### Decision Notes
 

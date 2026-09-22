@@ -17,7 +17,7 @@ function Gallery({ photos }: { photos: PhotoState }) {
         <IslandPhotoGallery photos={photos} disabled={false} onCamera={vi.fn()} onClose={vi.fn()} onLearn={vi.fn()} />
     </IslandNavigationContext.Provider>;
 }
-const render = (photos: PhotoState, detail = true) => renderToStaticMarkup(<MemoryRouter initialEntries={[`/island?view=photos${detail ? '&photo=missing' : ''}`]}><Gallery photos={photos} /></MemoryRouter>);
+const render = (photos: PhotoState, detail = true, photoId = 'missing') => renderToStaticMarkup(<MemoryRouter initialEntries={[`/island?view=photos${detail ? `&photo=${encodeURIComponent(photoId)}` : ''}`]}><Gallery photos={photos} /></MemoryRouter>);
 const exit = (html: string) => html.match(/<button[^>]*class="[^"]*island-panel-back[^"]*"[^>]*>/)?.[0];
 describe('photo exits survive missing data', () => {
     it.each(['loading', 'read-error', 'missing'] as const)('keeps one visible close control for %s detail', mode => {
@@ -46,5 +46,21 @@ describe('photo exits survive missing data', () => {
         const html = render(photos, false);
         expect(exit(html)).toContain('しゃしんの アルバムから もどる');
         expect(html).toContain('data-exit-kind="back"');
+    });
+});
+
+describe('photo deletion disclosure semantics', () => {
+    it('links the delete trigger to its confirmation group', () => {
+        const photos = state();
+        photos.snapshot = { album: { profileId: 'child', version: 1, revision: 1 }, photos: [{
+            id: 'photo-1', profileId: 'child', version: 1, capturedAt: 100, islandName: 'こもれび', composition: 'island',
+            image: { mime: 'image/png', width: 1, height: 1, bytes: 1, sha256: 'a'.repeat(64) },
+            thumbnail: { mime: 'image/png', width: 1, height: 1, bytes: 1, sha256: 'b'.repeat(64) },
+        }] };
+        const html = render(photos, true, 'photo-1');
+        const deleteButton = html.match(/<button[^>]*class="island-text-button"[^>]*>/)?.[0];
+        expect(deleteButton).toContain('aria-expanded="false"');
+        expect(deleteButton).toContain('aria-controls="island-photo-delete-confirmation"');
+        expect(html).not.toContain('id="island-photo-delete-confirmation"');
     });
 });

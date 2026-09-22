@@ -76,6 +76,7 @@ function PhotoDetail({ photo, photos, decoration, disabled, onRemove }: { photo:
     const [readAttempt, setReadAttempt] = useState(0);
     const deleteTrigger = useRef<HTMLButtonElement>(null);
     const cancelDelete = useRef<HTMLButtonElement>(null);
+    const deleteConfirmationId = 'island-photo-delete-confirmation';
     const dismissDelete = () => { setConfirmDelete(false); deleteTrigger.current?.focus({ preventScroll: true }); };
     useEffect(() => { if (confirmDelete) cancelDelete.current?.focus(); }, [confirmDelete]);
     // Leaving or changing profile cancels delivery of a delayed image read.
@@ -94,10 +95,12 @@ function PhotoDetail({ photo, photos, decoration, disabled, onRemove }: { photo:
             <span>{photo.islandName} · {new Date(photo.capturedAt).toLocaleDateString('ja-JP', { month: 'long', day: 'numeric' })}</span></figcaption><IslandAlbumStamp decoration={decoration} /></figure>
         <div className="island-photo-actions"><button className="island-secondary" disabled={!exportBlob}
             onClick={() => exportBlob && downloadStoredIslandPhoto(exportBlob)}><Download size={18} />PNGで とりだす</button>
-            <button ref={deleteTrigger} className="island-text-button" disabled={disabled || photos.processing} onClick={() => setConfirmDelete(true)}><Trash2 size={17} />この しゃしんを はずす</button></div>
+            <button ref={deleteTrigger} className="island-text-button" disabled={disabled || photos.processing}
+                aria-expanded={confirmDelete} aria-controls={deleteConfirmationId}
+                onClick={() => setConfirmDelete(true)}><Trash2 size={17} />この しゃしんを はずす</button></div>
         {downloadError && <div className="island-photo-error" role="alert"><p>しゃしんを ひらけなかったよ。もういちど ためせるよ。</p>
             <button className="island-secondary" disabled={disabled || photos.processing} onClick={() => setReadAttempt(value => value + 1)}>しゃしんを ひらきなおす</button></div>}
-        {confirmDelete && <div className="island-photo-delete" role="group" aria-label="しゃしんを はずす かくにん" onKeyDown={event => {
+        {confirmDelete && <div id={deleteConfirmationId} className="island-photo-delete" role="group" aria-label="しゃしんを はずす かくにん" onKeyDown={event => {
             if (event.key === 'Escape' && !disabled && !photos.processing) { event.preventDefault(); event.stopPropagation(); dismissDelete(); }
         }}><p>この しゃしんを たなから はずす？</p>
             <button ref={cancelDelete} className="island-secondary" disabled={disabled || photos.processing} onClick={dismissDelete}>のこしておく</button>
