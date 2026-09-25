@@ -1,0 +1,58 @@
+{
+  "scope": "Local disposable Chromium phone/tablet two-build update with real learning/purchase and offline restart. Not installed-iPhone timing or visual acceptance.",
+  "sourceBase": "8d3bd8f582d0e9546ae02e3cd6a0325da39cff80",
+  "sourceFilesSha256": "210a3b80e9d8c3cdeaf1c9923d930212bfc6f9e85f6e134e0de118c50da8dce4",
+  "sourceFileCount": 1553,
+  "rulesKey": "life-rules-v1:78f947fafe98b44c8c3dfa20cb7d14b8636209c7845b01a2d708a59d3fff8a6e",
+  "builds": [
+    {
+      "version": "development-local:6abb6eac-75c4-43da-a53d-41ebc0da7838",
+      "revision": "development-local",
+      "delivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "park": {
+        "enabled": false,
+        "renderer": "retired"
+      },
+      "island": {
+        "enabled": true,
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "mystic-island-learning-v2",
+        "residentCandidate": "patchwork-otter-v1",
+        "artDirection": "moon-garden"
+      }
+    },
+    {
+      "version": "development-local:5bc9e624-ed7f-4846-b6ac-97b302781948",
+      "revision": "development-local",
+      "delivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "park": {
+        "enabled": false,
+        "renderer": "retired"
+      },
+      "island": {
+        "enabled": true,
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "mystic-island-learning-v2",
+        "residentCandidate": "patchwork-otter-v1",
+        "artDirection": "moon-garden"
+      }
+    }
+  ],
+  "flags": {
+    "VITE_ISLAND_ENABLED": true,
+    "VITE_ISLAND_LIFE_ENABLED": true,
+    "VITE_ISLAND_RUNTIME_ASSETS": true
+  },
+  "pass": true,
+  "cases": 2,
+  "rawReport": "output/playwright/replay-rules-final-redeploy-20260925/report.json",
+  "core": {
+    "files": 462,
+    "tests": 4177,
+    "note": "Final compiler-input guard followed by focused tests, typecheck, lint, rebuild and two-build run."
+  }
+}

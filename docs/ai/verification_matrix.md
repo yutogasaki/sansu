@@ -186,3 +186,8 @@ If a task spans more than one change type, use the stricter row.
 `node tools/e2e-island-decorations.mjs` は `DECORATIONS_URL`（local production）と新しい `DECORATIONS_OUTPUT` を指定する。実初回設定から6問を完了し柵/鉢を購入、回転・移動・収納・再配置、native putの一度のabort/retry、実SW offline reloadと同じ学習への復帰を390/768幅で確認。30個は別の明示credit fixtureから正式な配置commandで作り、GLB要求/bytes・テクスチャ共有・renderer draw calls/triangles・LODを記録する。app/dist/QAの開始終了hashを一致させる。rAFは実機FPS保証ではない。
 
 現行カタログは既定6品、Discovery有効14品（7ページ）。上記の旧4品/12品という検査記述は追加前の範囲で、Life storageハーネスの期待値は14品へ更新する。既存商品の順序は保持する。
+
+
+### 再生ルールが変わらない更新の起動キャッシュ
+
+`SANSU_LIFE_REPLAY_REUSE=1` をLife two-buildハーネスへ加えると、異なるapp versionの2ビルドで本人recordの `life-rules-v1` トークンが同じことを、通常更新とoffline再起動の保存照合に追加する。両ビルドの計算ルール・compiler設定・依存lock・公開Vite設定を揃える。実学習/購入/途中回答の保持は既存の旅程で確認する。旧UUIDキャッシュの破棄は通常two-buildとsnapshotの単体検査で別に確認する。トークン一致だけを再生時間の短縮や実機iPhoneの解決証拠にしない。

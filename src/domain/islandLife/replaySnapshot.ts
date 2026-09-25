@@ -9,8 +9,9 @@ export interface LifeReplaySnapshot {
     state: LifeState;
     digest: string;
 }
-// Invalidate on every deployment, including changes to any simulation dependency.
-const build = __APP_VERSION__;
+// UI-only deployments must not force a cold replay of the owner's entire history.
+// The build tool fingerprints runtime rules, transitive dependencies and flags.
+const build = __LIFE_REPLAY_VERSION__;
 async function digest(payload: unknown) {
     const bytes = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(JSON.stringify(payload)));
     return Array.from(new Uint8Array(bytes), byte => byte.toString(16).padStart(2, '0')).join('');

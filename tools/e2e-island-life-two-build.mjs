@@ -26,6 +26,7 @@ const bundles = await Promise.all([oldDir, newDir].map(async root => modulePath(
 assert(bundles.every(Boolean)); assert.notEqual(bundles[0], bundles[1]);
 const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.webp': 'image/webp', '.png': 'image/png', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.mp3': 'audio/mpeg' };
 const interruption = process.env.SANSU_LIFE_UPDATE_INTERRUPTION === '1';
+const replayReuse = process.env.SANSU_LIFE_REPLAY_REUSE === '1';
 const discoveryUpgrade = process.env.SANSU_LIFE_DISCOVERY_UPGRADE === '1';
 const cadenceUpgrade = process.env.SANSU_LIFE_CADENCE_UPGRADE === '1';
 const heroVisitUpgrade = process.env.SANSU_LIFE_HERO_VISIT_UPGRADE === '1';
@@ -68,6 +69,11 @@ function retained(before, after) {
     assert.deepEqual(after.SansuDatabase, before.SansuDatabase, 'Every native store remains unchanged');
     assert.equal(after.SansuIslandLifeV1.worlds.length, 1);
     const old = before.SansuIslandLifeV1.worlds[0], next = after.SansuIslandLifeV1.worlds[0];
+    if (replayReuse) {
+        assert.match(old.replaySnapshot?.build ?? '', /^life-rules-v1:/);
+        assert.equal(next.replaySnapshot?.build, old.replaySnapshot.build,
+            'Unchanged replay rules must survive an app-version update');
+    }
     if (cadenceUpgrade && old.version === 15 && next.version === 16) {
         assert(next.cadenceCutover); assert.equal(next.cadenceCutover.profileId, old.profileId);
         assert.deepEqual(next.cadenceCutover.priorActions, old.actions);

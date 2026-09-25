@@ -39,3 +39,16 @@ The reviewed index was exported outside the shared checkout, with unrelated loca
 The exported build passed all six phone/tablet startup cases (normal, interaction, failed GLBs), plus stored-profile reload and learning return. Life learning mounted no hidden legacy stage. Observed learning→island first frames were 1,071ms and 1,091ms. Report: `output/playwright/startup-20260925-index/report.json`; version `development-local:1935f30b-88a7-400b-972a-1c9b8386f3b9`; build/probe fingerprint `bfcf7d4718cc4334fb9fa01140601dd85b384478ac85cab05f13a4ab5a31d4cd` matched at start/end. The shared-tree purchase/offline and classic smoke results above remain separately identified; they were not relabeled as isolated-build results.
 
 Final evidence-only edits receive another exported-index docs check before commit. No installed-device performance or deployment completion is claimed.
+
+
+## Installed-iPhone follow-up: retain unchanged replay rules
+
+The user reports >30 seconds of blank content after opening the installed home-screen icon; bottom tabs appear but do not react. This is unresolved on the actual device. Opening explicitly disables navigation, so disabled tabs do not independently prove a synchronous JS stall. Public desktop WebKit and Chromium did not reproduce the delay with their disposable saves.
+
+A separate synthetic test confirms a significant startup path: the app-build UUID invalidates every persisted simulation snapshot on each deployment. [Historical replay measurements](history-replay.json) show 7/14/21 logical days taking 3.46/6.91/10.67 seconds to replay in Node, versus less than 1ms to verify/restore/replay a matching snapshot. These are CPU diagnostics, not full-page or iPhone timings.
+
+The follow-up changes the existing snapshot `build` token to an automatically calculated `life-rules-v1` SHA-256. Its inputs are replay, repository and snapshot runtime dependency sources (including transitive imports, re-exports and literal dynamic imports), package-lock, compiler/build configuration, hash implementation, execution mode and public Vite settings. Unresolved or computed imports fail closed. Erased type-only edges do not bring unrelated UI callers into the dependency graph. UI/art/docs outside the graph and app-version UUID changes alone retain the snapshot. Relevant compiler/config changes conservatively invalidate it.
+
+Snapshot format, checksums, ownership/history/clock validation, atomic writes and fallback replay are unchanged. Old UUID snapshots rebuild once. Changed simulation rules, new authoritative history and unattended intervals can still require expensive replay. This is not evidence that the user's installed-iPhone issue is solved.
+
+Focused dependency-fingerprint and snapshot-integrity regressions passed (6 tests). Full core passed (462 files / 4,177 tests), followed by focused tests/typecheck and production builds after the final conservative compiler-input guard. Existing fast-refresh and bundle-size warnings remain. Browser update evidence is recorded in the active performance task; no participant/visual change is claimed.

@@ -7,6 +7,8 @@ Durable completion history and verification facts still belong in `docs/done/YYY
 
 ## Current Index
 
+- 2026-09-25: 同じ再生ルールの更新で島キャッシュを保持。core 4,177 tests・両幅の更新/offline PASS。旧キャッシュの初回再構築と実機30秒待ちの確認は継続 -> `docs/done/2026-09.md`
+
 - 2026-09-25: 島の起動計測・小物読み込み分散と、Life学習中の見えない旧3D生成を除去。core・両幅の保存/配置/offline・classic smoke PASS。再起動の待ちと実機確認は残る。未公開 -> `docs/done/2026-09.md`
 
 - 2026-09-22: 仕様・タスクを人向けに分類し、Nature Townを今の島へ取り込む方針へ統一。旧S1は履歴へ退避、docs確認PASS。機能移植・公開は未実施 -> `docs/done/2026-09.md`

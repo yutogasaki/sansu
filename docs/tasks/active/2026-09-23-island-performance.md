@@ -1,5 +1,15 @@
 # Island / iPhone PWA performance
 
+## 2026-09-25 installed-iPhone follow-up (mitigation verified; real-device issue open)
+
+- User reports >30 seconds of white content after opening the home-screen icon, with bottom tabs visible and unresponsive. This is not reproduced on the actual device. `IslandSession` disables tabs during its opening transaction, so nonresponsive tabs alone do not prove a blocked JS thread.
+- Public revision `8d3bd8f` was confirmed deployed. Disposable desktop WebKit with iPhone 13 settings reached a fresh welcome in 601ms and a stored empty island frame in 1,029ms. Chromium public cold-network synthetic six-item island reached a paint opportunity in 2,187ms; seven-day synthetic catch-up in 2,401ms. These are desktop engine measurements, not installed-device evidence. Raw reports: `output/playwright/iphone-30s-webkit-20260925/`, `output/playwright/iphone-30s-public-20260925/`.
+- Found an independently measurable startup penalty: every app build UUID invalidates persisted replay projections, even for docs or artwork changes. A separate Node/Vite synthetic empty current-rule island with 7/14/21 logical days took 3,463/6,913/10,669ms for full replay versus 0.93/0.60/0.71ms for verified projection restore plus replay. The third requested wall-clock day was 28, but the seven-day catch-up cap made the actual history 21 days. Never label this as a 28-day replay or real iPhone speedup. Raw report: `output/playwright/iphone-freeze/history.json`.
+- Specification 48 now keys projections to a build-time hash of replay/repository/snapshot runtime dependency sources, the package lock, compiler/build configuration, hash implementation, mode and public Vite settings. Literal dynamic imports and re-exports are followed; missing or computed imports fail the build. Type-only edges are erased. Build UUID and UI/art/docs outside that dependency graph no longer invalidate results. Integrity, owner, history and timestamp checks remain unchanged.
+- Limitations: existing build-UUID projections require one full rebuild on first adoption; genuine rule/history changes and unattended time still require computation. This addresses repeated unnecessary replay, not a proven fix for this user's 30-second launch. No real-device acceptance is claimed.
+- Verification: core PASS (462 files / 4,177 tests); final compiler-input guard then focused 6 tests, typecheck, targeted lint and Life production builds PASS. Final independent builds retained the same rules token through actual SW update and offline restart at both widths. Evidence: [verification identity](../../design/2026-09-25-island-startup-performance/replay-rules-verification.json), raw `output/playwright/replay-rules-final-redeploy-20260925/report.json`. Earlier old-UUID → rules-token update also passed both widths (`output/playwright/replay-rules-upgrade-20260925/report.json`), before the final conservative compiler-input guard. First-adoption replay and actual-device delay remain open.
+
+
 - Review By: 2026-09-30
 
 ## Startup scheduling follow-up, 2026-09-25

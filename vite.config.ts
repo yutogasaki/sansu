@@ -5,6 +5,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 import { loadEnv } from 'vite'
 import path from 'path'
 import { randomUUID } from 'node:crypto'
+import { lifeReplayVersion } from './tools/life-replay-version'
 
 // https://vitejs.dev/config/
 
@@ -49,6 +50,10 @@ const resolveBuildMetadata = (mode: string) => {
 
     return {
         appVersion,
+        replayVersion: lifeReplayVersion(process.cwd(), {
+            ...Object.fromEntries(Object.entries(env).filter(([key]) => key.startsWith('VITE_'))),
+            MODE: mode, NODE_ENV: process.env.NODE_ENV ?? '',
+        }),
         buildRevision,
         deliveryId,
         visualLineage,
@@ -105,6 +110,7 @@ export default defineConfig(({ mode }) => {
     return {
         define: {
             __APP_VERSION__: JSON.stringify(buildMetadata.appVersion),
+            __LIFE_REPLAY_VERSION__: JSON.stringify(buildMetadata.replayVersion),
             __BUILD_REVISION__: JSON.stringify(buildMetadata.buildRevision),
             __DELIVERY_ID__: JSON.stringify(buildMetadata.deliveryId),
             __VISUAL_LINEAGE_ID__: JSON.stringify(buildMetadata.visualLineage),

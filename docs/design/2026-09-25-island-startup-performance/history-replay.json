@@ -1,0 +1,24 @@
+{
+  "sourceRevision": "8d3bd8f582d0e9546ae02e3cd6a0325da39cff80",
+  "scope": "Node/Vite synthetic current-rule empty island. No user data. Timings compare full replay against digest-verified projection restore plus replay, excluding database IO and rendering. Three sequential updateLife calls at wall-clock days 7, 14, 28 produce logical days 7, 14, 21 due to seven-day cap. Not installed-iPhone measurements.",
+  "runs": [
+    {
+      "days": 7,
+      "logicalDays": 7,
+      "full": 3462.5137920000006,
+      "cached": 0.9271250000001601
+    },
+    {
+      "days": 14,
+      "logicalDays": 14,
+      "full": 6913.245916,
+      "cached": 0.603625000003376
+    },
+    {
+      "days": 28,
+      "logicalDays": 21,
+      "full": 10668.546750000001,
+      "cached": 0.7138750000012806
+    }
+  ]
+}
