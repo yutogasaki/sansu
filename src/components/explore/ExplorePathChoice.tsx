@@ -29,8 +29,8 @@ const choiceHeading = (count: number) => {
 };
 
 const ROUTE_PREVIEW_ASSETS: Record<2 | 3, string> = {
-    2: "/assets/explore/route-choice/scene-fork-two-dew-path-pokko-v2.jpg",
-    3: "/assets/explore/route-choice/scene-fork-three-dew-path-pokko-v2.jpg",
+    2: "/assets/explore/route-choice/scene-fork-two-dew-path-pokko-v2.webp",
+    3: "/assets/explore/route-choice/scene-fork-three-dew-path-pokko-v2.webp",
 };
 
 const getRoutePreviewMood = (kind: ExploreNode["kind"]) => {

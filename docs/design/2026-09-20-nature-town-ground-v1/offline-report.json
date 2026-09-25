@@ -1,0 +1,39 @@
+{
+  "target": "http://127.0.0.1:5342",
+  "version": {
+    "version": "development-local:d8f163fd-c26d-4dc4-92d0-9076bbaa8f70",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "candidate": "nature-town-ground-a-v1",
+  "checks": [
+    {
+      "width": 390,
+      "touchSelection": true,
+      "normalMotion": true,
+      "offlineSprites": true,
+      "runtimeWebGL": false
+    },
+    {
+      "width": 768,
+      "touchSelection": true,
+      "normalMotion": true,
+      "offlineSprites": true,
+      "runtimeWebGL": false
+    }
+  ],
+  "pass": true
+}

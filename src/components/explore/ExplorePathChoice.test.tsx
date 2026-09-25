@@ -98,8 +98,8 @@ describe("ExplorePathChoice", () => {
         );
 
         expect(markup).toContain('data-branch-count="3"');
-        expect(markup).toContain("scene-fork-three-dew-path-pokko-v2.jpg");
-        expect(markup).not.toContain("scene-fork-two-dew-path-pokko-v2.jpg");
+        expect(markup).toContain("scene-fork-three-dew-path-pokko-v2.webp");
+        expect(markup).not.toContain("scene-fork-two-dew-path-pokko-v2.webp");
         expect(markup.match(/data-testid="explore-route-preview"/g)).toHaveLength(3);
         expect(markup).toContain('data-branch-index="0"');
         expect(markup).toContain('data-branch-index="1"');
@@ -140,7 +140,7 @@ describe("ExplorePathChoice", () => {
         expect(markup).toContain('data-preview-mood="hidden"');
         expect(markup).toContain('data-route-kind="soil"');
         expect(markup).toContain('data-route-kind="mystery"');
-        expect(markup.match(/scene-fork-two-dew-path-pokko-v2\.jpg/g)).toHaveLength(3);
+        expect(markup.match(/scene-fork-two-dew-path-pokko-v2\.webp/g)).toHaveLength(3);
         expect(markup).toContain('aria-label="やわらかい土へ すすむ"');
         expect(markup).toContain('aria-label="なぞの壁へ すすむ"');
     });

@@ -45,16 +45,16 @@ describe("Root Pull opening presentation", () => {
 
     it("maps every state to the agreed local authored asset", () => {
         expect(ROOT_PULL_STAGE_PRESENTATIONS.ready.imageSrc).toBe(
-            "/assets/explore/opening-root-pull-v1/ready.jpg",
+            "/assets/explore/opening-root-pull-v1/ready.webp",
         );
         expect(ROOT_PULL_STAGE_PRESENTATIONS["small-pull"].imageSrc).toBe(
-            "/assets/explore/opening-root-pull-v1/pull-one.jpg",
+            "/assets/explore/opening-root-pull-v1/pull-one.webp",
         );
         expect(ROOT_PULL_STAGE_PRESENTATIONS["bigger-pull"].imageSrc).toBe(
-            "/assets/explore/opening-root-pull-v1/pull-two.jpg",
+            "/assets/explore/opening-root-pull-v1/pull-two.webp",
         );
         expect(ROOT_PULL_STAGE_PRESENTATIONS["comic-release"].imageSrc).toBe(
-            "/assets/explore/opening-root-pull-v1/payoff.jpg",
+            "/assets/explore/opening-root-pull-v1/payoff.webp",
         );
     });
 
@@ -65,13 +65,13 @@ describe("Root Pull opening presentation", () => {
         const leafHat = getRootPullStagePresentation("comic-release", "v2", "leaf-hat");
 
         expect(visorBeat.imageSrc).toBe(
-            "/assets/explore/opening-root-pull-v2/pull-one.jpg",
+            "/assets/explore/opening-root-pull-v2/pull-one.webp",
         );
         expect(visorBeat.title).toContain("ぺろん");
         expect(straightLegBeat.title).toContain("あしが ぴーん");
-        expect(dirtHat.imageSrc).toContain("payoff-dirt-hat.jpg");
+        expect(dirtHat.imageSrc).toContain("payoff-dirt-hat.webp");
         expect(dirtHat.title).toContain("つちぼうし");
-        expect(leafHat.imageSrc).toContain("payoff-leaf-hat.jpg");
+        expect(leafHat.imageSrc).toContain("payoff-leaf-hat.webp");
         expect(leafHat.title).toContain("はっぱぼうし");
         expect(dirtHat.imageSrc).not.toBe(leafHat.imageSrc);
         expect(getRootPullStatusCopy("bigger-pull", "correct", "v2", "dirt-hat"))

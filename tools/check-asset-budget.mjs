@@ -109,6 +109,14 @@ const main = async () => {
   }
 
   const precacheSet = new Set(precacheUrls);
+  if (precacheSet.has('fonts/NotoSansJP-Japanese.woff2')) {
+    errors.push('unused public Japanese WOFF2 must not be downloaded during PWA installation');
+  }
+  for (const size of [192, 512]) {
+    if (precacheSet.has(`icons/icon-maskable-${size}.png`)) {
+      errors.push(`byte-identical maskable ${size}px icon must not be downloaded twice during PWA installation`);
+    }
+  }
   for (const name of ['tap', 'step', 'correct', 'incorrect', 'start', 'clear', 'level_up']) {
     const url = `sounds/${name}.mp3`;
     const file = publicFiles.find(candidate => candidate.relativePath === url);

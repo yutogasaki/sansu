@@ -1,0 +1,10 @@
+/* Inert audit record; these are live-preview direction styles, not imported by the app. */
+/* A — selected: broad, diffuse pasture masses with near-invisible cell boundaries. */
+.direction-a .town-map{background-color:#b7d1a4;background-image:radial-gradient(ellipse 45% 38% at 18% 22%,rgba(238,229,160,.58) 0%,rgba(218,225,165,.32) 42%,transparent 87%),radial-gradient(ellipse 51% 39% at 78% 66%,rgba(91,148,91,.42) 0%,rgba(113,164,100,.23) 47%,transparent 93%),radial-gradient(ellipse 44% 34% at 37% 91%,rgba(222,222,159,.38) 0%,transparent 83%),linear-gradient(145deg,#b7d1a4 0%,#bed5a3 53%,#a9c99c 100%)}
+.direction-a .town-cell.ground:not(.path):not(.bridge):not(.channel){background:transparent;border-color:rgba(61,106,67,.03)}
+/* B — higher contrast patches and stronger cell boundaries. */
+.direction-b .town-map{background-color:#b4d1a6;background-image:radial-gradient(ellipse 48% 37% at 18% 46%,rgba(203,222,162,.48) 0%,rgba(203,222,162,.22) 44%,transparent 88%),radial-gradient(ellipse 39% 27% at 71% 16%,rgba(235,224,164,.34) 0%,transparent 86%),radial-gradient(ellipse 52% 36% at 73% 83%,rgba(123,166,103,.27) 0%,rgba(123,166,103,.12) 45%,transparent 94%),linear-gradient(22deg,rgba(99,148,91,.10),transparent 48%),linear-gradient(150deg,#b5d0a6 0%,#bdd4a7 55%,#afcda0 100%)}
+.direction-b .town-cell.ground:not(.path):not(.bridge):not(.channel){background:transparent;border-color:rgba(52,101,62,.14)}
+/* C — a calm, nearly flat ground plane retaining a more visible map grid. */
+.direction-c .town-map{background-color:#b4d1a8;background-image:linear-gradient(135deg,#b6d2a9 0%,#b1d0a5 50%,#b7d3aa 100%)}
+.direction-c .town-cell.ground:not(.path):not(.bridge):not(.channel){background:rgba(238,245,213,.10);border-color:rgba(56,111,66,.085)}

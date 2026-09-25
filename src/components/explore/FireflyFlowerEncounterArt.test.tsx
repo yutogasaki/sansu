@@ -32,9 +32,9 @@ describe("FireflyFlowerEncounterArt", () => {
         const ringingMarkup = renderStage("ringing-petals");
         const lightPathMarkup = renderStage("light-path");
 
-        expect(dewMarkup).toContain("scene-waiting-stumble-bloom-pokko-v5.jpg");
-        expect(dewMarkup).toContain("scene-dew-trail-stumble-bloom-pokko-v5.jpg");
-        expect(dewMarkup).toContain("scene-light-path-stumble-bloom-pokko-v5.jpg");
+        expect(dewMarkup).toContain("scene-waiting-stumble-bloom-pokko-v5.webp");
+        expect(dewMarkup).toContain("scene-dew-trail-stumble-bloom-pokko-v5.webp");
+        expect(dewMarkup).toContain("scene-light-path-stumble-bloom-pokko-v5.webp");
         expect(dewMarkup).toContain('data-painted-stage="dew-trail" data-active="true"');
         expect(warmMarkup).toContain('data-painted-stage="warm-bud" data-active="true"');
         expect(ringingMarkup).toContain('data-painted-stage="ringing-petals" data-active="true"');

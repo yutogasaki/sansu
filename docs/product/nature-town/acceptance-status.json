@@ -314,7 +314,7 @@
       "condition": "390×844／768×1024、音なし、動き抑制",
       "expected": "主要操作、経路不通、受渡し、入居が読み取れる",
       "status": "NOT_RUN",
-      "evidence": "Partial 2026-09-19: both 390x844/768x1024 with sound OFF and reduced motion; actual UI placement, farm pickup, disconnected supply/undo, admission captured with fixed overview. Blind observer page and original runtime shots: docs/design/2026-09-19-nature-town-silent-review/README.md. Runtime capture PASS, independent observers 0/5; readability/safety remains unverified."
+      "evidence": "Partial 2026-09-19 and 2026-09-20: both 390x844/768x1024 with sound OFF and reduced motion; actual UI placement, farm pickup, disconnected supply/undo, admission captured with fixed overview. Previous set: docs/design/2026-09-19-nature-town-silent-review/README.md. Ground candidate nature-town-ground-a-v1 and current blind observer set: docs/design/2026-09-20-nature-town-ground-v1/README.md and docs/design/2026-09-20-nature-town-ground-v1/observer/observer.html. Runtime captures PASS; independent responses remain 0, so readability/safety is unverified and status stays NOT_RUN."
     },
     {
       "id": "SAFE-07",

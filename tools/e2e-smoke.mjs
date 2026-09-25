@@ -107,71 +107,71 @@ const ROOT_TANGLE_OBSERVATION_FOCALS =
   PAINTED_ENCOUNTER_FOCALS["explore-encounter-root-tangle:root-tangle-dew-gag"];
 const FIREFLY_PAINTED_STAGE_CONTRACT = {
   waiting: {
-    asset: "/assets/explore/firefly-flower/scene-waiting-stumble-bloom-pokko-v5.jpg",
+    asset: "/assets/explore/firefly-flower/scene-waiting-stumble-bloom-pokko-v5.webp",
     actorFace: [360, 435],
     actorFeet: [280, 635],
     actionPayoff: [1000, 330],
   },
   "dew-trail": {
-    asset: "/assets/explore/firefly-flower/scene-dew-trail-stumble-bloom-pokko-v5.jpg",
+    asset: "/assets/explore/firefly-flower/scene-dew-trail-stumble-bloom-pokko-v5.webp",
     actorFace: [340, 410],
     actorFeet: [240, 625],
     actionPayoff: [300, 265],
   },
   "warm-bud": {
-    asset: "/assets/explore/firefly-flower/scene-warm-bud-stumble-bloom-pokko-v5.jpg",
+    asset: "/assets/explore/firefly-flower/scene-warm-bud-stumble-bloom-pokko-v5.webp",
     actorFace: [320, 380],
     actorFeet: [500, 605],
     actionPayoff: [260, 140],
   },
   "ringing-petals": {
-    asset: "/assets/explore/firefly-flower/scene-ringing-petals-stumble-bloom-pokko-v5.jpg",
+    asset: "/assets/explore/firefly-flower/scene-ringing-petals-stumble-bloom-pokko-v5.webp",
     actorFace: [290, 405],
     actorFeet: [475, 605],
     actionPayoff: [730, 345],
   },
   "light-path": {
-    asset: "/assets/explore/firefly-flower/scene-light-path-stumble-bloom-pokko-v5.jpg",
+    asset: "/assets/explore/firefly-flower/scene-light-path-stumble-bloom-pokko-v5.webp",
     actorFace: [410, 370],
     actorFeet: [420, 630],
     actionPayoff: [985, 305],
   },
 };
 const REQUIRED_VISUAL_ASSET_SHA256 = {
-  "/assets/explore/opening-snap-root-carry-bloom-v3/scene-ready.jpg":
-    "d7f338adbe08f219e2f8721394f4cb81be985378b3c2f13d682f870ebaaa7ac2",
-  "/assets/explore/opening-snap-root-carry-bloom-v3/scene-dig-one.jpg":
-    "cc3f19cbb88591a5caad738ec83d57c908bffed77e44f3bc8ab8230997e9d72e",
-  "/assets/explore/opening-snap-root-carry-bloom-v3/scene-dig-two.jpg":
-    "5fdca23b5d3ae174fc8459a854e2cee263a82bb5634a863f0be6536e587f4929",
-  "/assets/explore/opening-snap-root-carry-bloom-v3/scene-popped.jpg":
-    "3c2ed5cf890f3be30698da900d8ffba17a051f3c0ebb17f3fe4e5047b43c233c",
-  "/assets/explore/light-bridge/scene-idle-leaf-carry-bloom-pokko-v7.jpg":
-    "a9f985178feb7911b73eec42b9e3ace657df036e8700937b55aea48d80422afa",
-  "/assets/explore/light-bridge/scene-complete-leaf-carry-bloom-pokko-v7.jpg":
-    "f1fdfad9425bb535705518570427f1ca0563aefc0333fc3eabe344bda903e3f5",
-  "/assets/explore/light-bridge/scene-crossed-leaf-carry-bloom-pokko-v7.jpg":
-    "abab4542ddddacb1dd485eff7c6d3927d8ac9f3a471235c528eab4146941086b",
-  "/assets/explore/root-tangle/scene-tangled-carry-bloom-pokko-v7.jpg":
-    "62c0b3306ad834b250f9f7ef33becfa1e5f34994b353a69b13c6acba9618187b",
-  "/assets/explore/root-tangle/scene-open-carry-bloom-pokko-v7.jpg":
-    "0e57a38bedc079f23904b2991efa34649eb4e402db851d13eaae7a468c2fcca4",
-  "/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.jpg":
-    "17d265e09b1c576bc9ff4ff2c93fe38fd267b62dab65d21accf849bc18faa9b9",
-  "/assets/explore/route-choice/scene-fork-two-dew-path-pokko-v2.jpg":
-    "7587c7e460a587fcecff2da7e8ddea73520d68cf4ecaa8141657ac0086809041",
-  "/assets/explore/route-choice/scene-fork-three-dew-path-pokko-v2.jpg":
-    "43b29df9ea4b6ac0025341565224d60d7b4596ec97eb483a41a48ac057af7d99",
-  "/assets/explore/firefly-flower/scene-waiting-stumble-bloom-pokko-v5.jpg":
-    "79b4b69f5843e1927d1f2bc6dd693a68dc003f92cdf7fd094712bcb67d7ffeae",
-  "/assets/explore/firefly-flower/scene-dew-trail-stumble-bloom-pokko-v5.jpg":
-    "9bacadb8e625da373b4cee014d2f5725f1f8e3c1f7126c60fff7db4e32394293",
-  "/assets/explore/firefly-flower/scene-warm-bud-stumble-bloom-pokko-v5.jpg":
-    "86c4d34264f72ce3d7a247b739cde31c0c55b3fc4598d5fcf2160d83df8e9cf6",
-  "/assets/explore/firefly-flower/scene-ringing-petals-stumble-bloom-pokko-v5.jpg":
-    "5d95d253530ab2ea8761b21bc1fe6793123939109e021b24e3b76025822341a3",
-  "/assets/explore/firefly-flower/scene-light-path-stumble-bloom-pokko-v5.jpg":
-    "200e4c9502318a2bd6aefe62bde641c855480c27855ee5f8681f225376a91ce4",
+  "/assets/explore/opening-snap-root-carry-bloom-v3/scene-ready.webp":
+    "fe44f1b7c6e36c4c96f9fe7bd9e43899ea936cd90af9fcec44c70eea5700edad",
+  "/assets/explore/opening-snap-root-carry-bloom-v3/scene-dig-one.webp":
+    "5dc23f200e889b623cb67dc4e8711584bf827f6a45d3b188aa0f1c6d1d4f962c",
+  "/assets/explore/opening-snap-root-carry-bloom-v3/scene-dig-two.webp":
+    "5f0f8d1c444346dd65af43afce41664201ad9b48ffc7484353ef8e6dc6bee81c",
+  "/assets/explore/opening-snap-root-carry-bloom-v3/scene-popped.webp":
+    "bf16192f0af349861e876bc2b3605efa0cdcb94e510d47b67728b655df4e1b27",
+  "/assets/explore/light-bridge/scene-idle-leaf-carry-bloom-pokko-v7.webp":
+    "72788b9167d8679e446dab71131fce298924a02bddfa95988c61e77e288c8008",
+  "/assets/explore/light-bridge/scene-complete-leaf-carry-bloom-pokko-v7.webp":
+    "67bd079655029f834915666808b33f551379aa77b93c9756c035c7fea8435abd",
+  "/assets/explore/light-bridge/scene-crossed-leaf-carry-bloom-pokko-v7.webp":
+    "d43c50ac7a2d51645de226379d71b0d0511e2e9d61ccdd7df4c4c8b2232a2539",
+  "/assets/explore/root-tangle/scene-tangled-carry-bloom-pokko-v7.webp":
+    "d966ab2a35828569a6575ebc26dbc3ec9b7cab21da05fcf180bdbdc78c5dc477",
+  "/assets/explore/root-tangle/scene-open-carry-bloom-pokko-v7.webp":
+    "a1aa7436e4c89c81434cc081a445c5faa121a0036771dfe6b4999cfd276c8128",
+  "/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.webp":
+    "eacf0065761eb31e41d82abe7728a2d1251bcff7250b00c8e5dcee552bf2c5aa",
+  "/assets/explore/route-choice/scene-fork-two-dew-path-pokko-v2.webp":
+    "7ae1478f5814210fa96964ad1fb40a4b5f11b453ca5c945bcdf27cf93fd9b44e",
+  "/assets/explore/route-choice/scene-fork-three-dew-path-pokko-v2.webp":
+    "0e9c9452d938f119fae58489414ca166c0684b08a703bcad53aa8074abe2c0ca",
+  "/assets/explore/firefly-flower/scene-waiting-stumble-bloom-pokko-v5.webp":
+    "98b22e52e1f018472cdd98c61db3a484dfa8d9d49564872eb940a37cf43fe92a",
+  "/assets/explore/firefly-flower/scene-dew-trail-stumble-bloom-pokko-v5.webp":
+    "c7ffa99c2baf167e86f4e679b39ee79bbb541b63f3ec1929e8c6e92a46ad494b",
+  "/assets/explore/firefly-flower/scene-warm-bud-stumble-bloom-pokko-v5.webp":
+    "61c8efe79508ee7189c6b96e4eba1c643f21342130c6d47488556ceb1b121d3b",
+  "/assets/explore/firefly-flower/scene-ringing-petals-stumble-bloom-pokko-v5.webp":
+    "3a2fff92eff04ff7b24e8c714f829fbbedb3f25daa7f38d9334a19783b933120",
+  "/assets/explore/firefly-flower/scene-light-path-stumble-bloom-pokko-v5.webp":
+    "9dad90c337bd896e2650727c7da5f29b205a9d429ef806f22beb1fc9a7b30842",
 };
 const LEGACY_VISUAL_AUDIT_DIR = path.resolve(
   "docs/design/breakout-loop-2026-07-21/runtime-painted-v2-audit",
@@ -1068,7 +1068,7 @@ const assertSnapRootPaintedResolution = async (page, viewport) => {
   assert(result.oldNestCount === 0, `${viewport.width}px painted DOM should not retain nest nodes: ${JSON.stringify(result)}`);
   assert(result.oldWateringAssetCount === 0, `${viewport.width}px painted DOM should not retain watering assets: ${JSON.stringify(result)}`);
   assert(result.paintedVisible, `${viewport.width}px popped painted frame should remain visible: ${JSON.stringify(result)}`);
-  assert(result.paintedCurrentSrc.includes("/opening-snap-root-carry-bloom-v3/scene-popped.jpg"), `${viewport.width}px should render the shared popped frame: ${JSON.stringify(result)}`);
+  assert(result.paintedCurrentSrc.includes("/opening-snap-root-carry-bloom-v3/scene-popped.webp"), `${viewport.width}px should render the shared popped frame: ${JSON.stringify(result)}`);
 };
 
 const scenarioSnapRootBreakthrough = async (
@@ -1135,7 +1135,7 @@ const scenarioSnapRootBreakthrough = async (
   const uniquePaintedRequests = [...new Set(paintedRequests)];
   assert(uniquePaintedRequests.length === 4, `Snap Root should preload exactly one four-frame set: ${JSON.stringify(uniquePaintedRequests)}`);
   assert(
-    uniquePaintedRequests.every((path) => !path.endsWith("-tablet.jpg")),
+    uniquePaintedRequests.every((path) => !path.endsWith("-tablet.webp")),
     `Snap Root should not download a second viewport-specific asset set: ${JSON.stringify(uniquePaintedRequests)}`,
   );
   const reducedMotionTransitionMs = await page.locator(".snap-root-opening-art__painted").evaluate((image) => {
@@ -2059,7 +2059,7 @@ const scenarioExploreInterruptionResume = async (browser) => {
     assert(
       await genericQ7PaintedScene.locator("img").evaluate((image) => (
         image instanceof HTMLImageElement
-        && image.currentSrc.endsWith("/assets/explore/firefly-flower/scene-light-path-stumble-bloom-pokko-v5.jpg")
+        && image.currentSrc.endsWith("/assets/explore/firefly-flower/scene-light-path-stumble-bloom-pokko-v5.webp")
       )),
       "generic Q7 should decode the current same-camera Firefly Flower plate",
     );
@@ -4006,8 +4006,8 @@ const readPaintedEncounterCrop = async (surface, surfaceIdentity) => {
       && sceneId !== "light-bridge-idle";
     const physicalPayoffId = activeScene.getAttribute("data-action-prop");
     const physicalPayoffExpectedAsset = sceneId === "light-bridge-crossed"
-      ? "/assets/explore/light-bridge/scene-crossed-leaf-carry-bloom-pokko-v7.jpg"
-      : "/assets/explore/light-bridge/scene-complete-leaf-carry-bloom-pokko-v7.jpg";
+      ? "/assets/explore/light-bridge/scene-crossed-leaf-carry-bloom-pokko-v7.webp"
+      : "/assets/explore/light-bridge/scene-complete-leaf-carry-bloom-pokko-v7.webp";
     const physicalPayoffPass = !physicalPayoffRequired || Boolean(
       physicalPayoffId === "bridge-leaf-clasp"
       && activeScene.currentSrc.endsWith(physicalPayoffExpectedAsset)
@@ -5766,8 +5766,8 @@ const runVisualAuditViewport = async (
       `route fork art must expose a supported branch count; got ${routeBranchCount}`,
     );
     const expectedRouteAsset = routeBranchCount === 3
-      ? "/assets/explore/route-choice/scene-fork-three-dew-path-pokko-v2.jpg"
-      : "/assets/explore/route-choice/scene-fork-two-dew-path-pokko-v2.jpg";
+      ? "/assets/explore/route-choice/scene-fork-three-dew-path-pokko-v2.webp"
+      : "/assets/explore/route-choice/scene-fork-two-dew-path-pokko-v2.webp";
     const routeForkImage = routeForkArt.locator("img");
     const expectsRouteForkArt = (
       viewport.width < 600 && viewport.height >= 800
@@ -5972,7 +5972,7 @@ const runVisualAuditViewport = async (
       resolvedRootCrop.activeScene?.decoded
         && resolvedRootCrop.projection?.valid
         && resolvedRootCrop.activeScene.currentSrc.endsWith(
-          "/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.jpg",
+          "/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.webp",
         ),
       `Q7 continuity reference must be the decoded committed crossed world scene: ${JSON.stringify(resolvedRootCrop)}`,
     );
@@ -6106,7 +6106,7 @@ const runVisualAuditViewport = async (
     };
     assert(
       observationCapture.surfaceMedia.visibleImages.some((image) => (
-        image.currentSrc.endsWith("/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.jpg")
+        image.currentSrc.endsWith("/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.webp")
       )),
       "root observation must render the crossed root-tangle scene from the committed encounter",
     );

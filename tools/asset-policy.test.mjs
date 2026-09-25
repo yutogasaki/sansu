@@ -37,7 +37,7 @@ describe("asset production policy", () => {
     expect(isExploreArtworkPath("assets/explore/root-tangle/scene-open.jpg")).toBe(true);
     expect(isExploreArtworkPath("assets/explore/new-pack/scene-complete.avif")).toBe(true);
     expect(isExploreArtworkPath(
-      "assets/explore/opening-snap-root-carry-bloom-v3/scene-dig-two.jpg",
+      "assets/explore/opening-snap-root-carry-bloom-v3/scene-dig-two.webp",
     )).toBe(true);
     expect(isExploreArtworkPath("assets/explore/new-pack/raw-scene.png")).toBe(false);
   });
@@ -53,7 +53,7 @@ describe("asset production policy", () => {
 
   it("keeps the carry-bloom candidates outside the deprecated contract", () => {
     expect(isDeprecatedExploreArtworkPath(
-      "assets/explore/firefly-flower/scene-waiting-stumble-bloom-pokko-v5.jpg",
+      "assets/explore/firefly-flower/scene-waiting-stumble-bloom-pokko-v5.webp",
     )).toBe(false);
   });
 

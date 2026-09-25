@@ -127,12 +127,12 @@ const startDevServer = (port) => {
   const child = spawn(
     process.platform === "win32" ? "cmd.exe" : "sh",
     process.platform === "win32"
-      ? ["/c", `npm run dev -- --host ${HOST} --port ${port} --strictPort`]
-      : ["-c", `npm run dev -- --host ${HOST} --port ${port} --strictPort`],
+      ? ["/c", `npm run dev:test-server -- --host ${HOST} --port ${port} --strictPort`]
+      : ["-c", `npm run dev:test-server -- --host ${HOST} --port ${port} --strictPort`],
     {
       stdio: "pipe",
       windowsHide: true,
-      env: { ...process.env, VITE_EXPLORE_EXPERIENCE: "classic-v1" },
+      env: { ...process.env, VITE_ISLAND_ENABLED: "false", VITE_EXPLORE_EXPERIENCE: "classic-v1" },
     },
   );
   child.stdout.on("data", (chunk) => process.stdout.write(chunk));

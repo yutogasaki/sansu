@@ -1,29 +1,48 @@
-# Task Docs
+# タスク文書の読み方
 
-## Purpose
+タスク文書は「今の作業」を管理する場所です。製品のルールを決める仕様書や、過去の完了記録とは分けます。
 
-Task docs capture active execution context only.
+## どこを見ればよいか
 
-## Split
+| 知りたいこと | 場所 |
+|---|---|
+| 今、実行中の仕事 | [現在のタスク一覧](../../.agents/tasks/TASKS.md) |
+| 人・実機・外部回答を待つ仕事 | [保留中](../../.agents/tasks/BLOCKED.md) |
+| 次に行う候補と順番 | [全体バックログ](backlog.md) |
+| 実行中タスクの詳しい経緯 | [`active/`](active/) |
+| 終了したタスクの古い詳細 | [`archive/`](archive/) |
+| 完了した事実 | [`docs/done/`](../done/) と[完了一覧](../../.agents/tasks/DONE.md) |
 
-- `.agents/tasks/TASKS.md`
-  Shared active queue for Codex and Claude Code
-- `.agents/tasks/BLOCKED.md`
-  Shared blocked queue
-- `.agents/tasks/DONE.md`
-  Shared completion index
-- `docs/tasks/backlog.md`
-  Global backlog and prioritization
-- `docs/tasks/active/`
-  Detailed execution files for the small set of tasks currently being executed
-- `docs/tasks/archive/`
-  Retired task or status detail kept only for reference
+## タスクの分類
 
-## Lifecycle
+- **現行アプリの仕上げ**：今使う「不思議な島」、家、学習、共通画面を直接改善する。
+- **自然と町を育てる**：Nature Townの仕組みを今の島へ取り込む。別作品として仕上げない。
+- **過去の試作**：別の町画面など、役割を終えた案と検証記録。`archive/`へ退避し、現在の作業と分ける。
+- **横断管理**：複数の個別作業をつなぐ目的や対応表。同じ実装を重複させない。
+- **保留**：人の観察、実機、外部判断など、今の自動作業だけでは閉じられない。
 
-1. Pull from backlog into `.agents/tasks/TASKS.md`
-2. Create or update the detailed file under `docs/tasks/active/`
-3. Keep scope small
-4. Close by removing the active queue entry and moving durable facts to `docs/done/` and, if needed, `docs/wiki/memory.md`
-5. Move stale task detail or retired status notes into `docs/tasks/archive/` when they no longer belong in hot docs
-6. Run `npm run docs:check` after task-doc changes
+## 1件のタスクに書くこと
+
+1. 何を良くする仕事か
+2. 今回含めること、含めないこと
+3. 参照する仕様
+4. 完了と判断する条件
+5. 必要な検証
+6. 現在地と次の一手
+
+一覧には短い要約だけを置き、検証番号、画面枚数、長い経緯は詳細ファイルへ書きます。
+
+## 作業の流れ
+
+1. バックログから、実際に着手する項目だけを現在のタスク一覧へ移す。
+2. 必要なら `active/` に詳細ファイルを作る。
+3. 仕様変更がある場合は、タスク文書ではなく該当仕様を先に更新する。
+4. 小さな区切りで実装と検証を行う。
+5. 完了した事実を `docs/done/YYYY-MM.md` へ移し、現在の一覧から外す。
+6. 詳細が現在の作業でなくなったら `archive/` へ移す。
+7. `npm run docs:check` を実行する。
+
+## 状態を混同しない
+
+`実装済み`、`検証済み`、`公開済み`、`実機確認済み`、`参加者確認済み`はそれぞれ別の状態です。
+自動検査の合格だけで、実機操作や子どもの理解・楽しさまで確認したことにはしません。

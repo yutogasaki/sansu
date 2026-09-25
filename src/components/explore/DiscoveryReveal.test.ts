@@ -147,7 +147,7 @@ describe("discovery reveal interaction contract", () => {
         expect(markup).toContain('data-visual-mode="observation"');
         expect(markup).toContain('data-visual-candidate-id="firefly-field-book-painted-v5"');
         expect(markup).toContain('data-visual-mode="field-book"');
-        expect(markup).toContain("/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.jpg");
+        expect(markup).toContain("/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.webp");
         expect(markup).toContain("object-contain");
         expect(markup).toContain(ROOT_TANGLE_OBSERVATION.copy.action);
         expect(markup).toContain(ROOT_TANGLE_OBSERVATION.copy.reaction);
@@ -176,7 +176,7 @@ describe("discovery reveal interaction contract", () => {
         expect(markup).toContain('data-painted-stage="light-path"');
         expect(markup).toContain('data-light-path="complete"');
         expect(markup).toContain('data-discovery-complete="true"');
-        expect(markup).toContain("/assets/explore/firefly-flower/scene-light-path-stumble-bloom-pokko-v5.jpg");
+        expect(markup).toContain("/assets/explore/firefly-flower/scene-light-path-stumble-bloom-pokko-v5.webp");
         expect(markup).toContain("花のまんなかに 四滴！");
         expect(markup).toContain("葉帽子が片目へずれた");
         expect(markup).toContain("尻もちのまま にっこり");

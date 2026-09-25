@@ -30,7 +30,7 @@ describe("Pokko visual lineage", () => {
 
         expect(markup).toContain('data-visual-candidate-id="firefly-field-book-painted-v5"');
         expect(markup).toContain('data-visual-mode="field-book"');
-        expect(markup).toContain("/assets/explore/firefly-flower/scene-waiting-stumble-bloom-pokko-v5.jpg");
+        expect(markup).toContain("/assets/explore/firefly-flower/scene-waiting-stumble-bloom-pokko-v5.webp");
         expect(markup).toContain('data-character-id="pokko"');
         expect(markup).not.toContain("firefly-research-pokko-v1");
     });

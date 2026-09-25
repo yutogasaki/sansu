@@ -1,0 +1,60 @@
+{
+  "date": "2026-09-20",
+  "candidateId": "nature-town-ground-a-v1",
+  "gitHead": "28bd252613ba3170d8769500e7e9f43480035bcc",
+  "workingTreeSourceHashes": {
+    "src/components/natureTown/town.css": "edb06919bee52bc2d2ffdce81ae60a04a208ad49a4060b5beeb25cf2bef3b696",
+    "src/pages/NatureTown.tsx": "5e5ebb4939f10faadc9cee8aa82b55be768c8b52ed042326caca33dca497a417",
+    "tools/e2e-nature-town-acting.mjs": "6f81f9acec3f95e2ce940a1461fc96d5e25cb770d4328d8048861fc7ca854f85",
+    "tools/e2e-nature-town-sprites.mjs": "4db544656c90f8950189793f9d4e29a99a5f4315263971e3c0bc45ccedeb3464",
+    "tools/e2e-nature-town-living.mjs": "1640497a0b00290c576daa6a05d4257ec30650ca81c6948f4031a40b6f4309bb",
+    "tools/e2e-nature-town.mjs": "3464544823b15198faff6ff469d08310bbfbc0c3f9c1a3ff0b1419eadc6056c2"
+  },
+  "build": {
+    "command": "VITE_ISLAND_ENABLED=true VITE_NATURE_TOWN_ENABLED=true npm run build",
+    "previewTarget": "http://127.0.0.1:5342/#/nature-town",
+    "version": "development-local:d8f163fd-c26d-4dc4-92d0-9076bbaa8f70",
+    "revision": "development-local",
+    "globalDelivery": "snap-root-v1",
+    "featureFlags": {
+      "VITE_ISLAND_ENABLED": true,
+      "VITE_NATURE_TOWN_ENABLED": true
+    },
+    "natureTownRuntimeCandidateAttribute": "nature-town-ground-a-v1",
+    "viteVersion": "7.3.1",
+    "distFiles": {
+      "dist/version.json": "c8975ee0d4425eca097fb1aa5ec7f22e619135f901350db074f8aa33238b116a",
+      "dist/assets/NatureTown-DXNK-Fbd.js": "eeb182d36192d2bc75dbdd61c98f1047665f502a59fcc5c5890dfe5d75bfae29",
+      "dist/assets/NatureTown-CusrCJWB.css": "b87b747533e6826dbcdaa227404f480699f05dc4c77527d8c25f0e86a7f8b61a"
+    },
+    "cacheState": "Local Vite preview build. The offline candidate/sprite check passed after reload; two-build update was not run for this CSS-only candidate."
+  },
+  "devComparisonTarget": "http://127.0.0.1:5233/#/nature-town",
+  "supplementalFlaggedPreviewRun": {
+    "kind": "nature-town-acting-e2e",
+    "previewTarget": "http://127.0.0.1:5342",
+    "version": "development-local:b1a2ba72-3bc6-4f73-8910-e15856642b9d",
+    "revision": "development-local",
+    "globalDelivery": "snap-root-v1",
+    "featureFlags": {
+      "VITE_ISLAND_ENABLED": true,
+      "VITE_NATURE_TOWN_ENABLED": true
+    },
+    "natureTownRuntimeCandidateAttribute": "nature-town-ground-a-v1",
+    "report": "acting-report.json",
+    "runtimePass": true
+  },
+  "assetBudget": "PASS: 124 unique precache files, 11.56 MiB / 12.00 MiB",
+  "evidence": {
+    "nearCropScreens": [
+      "final-390.png",
+      "final-768.png"
+    ],
+    "directionComparison": "candidate-comparison.html",
+    "criticalPath": "critical-path.html",
+    "silentObserverSet": "observer/observer.html",
+    "runtimeReport": "runtime-report.json",
+    "mapEditingReport": "editing-report.json",
+    "offlineReport": "offline-report.json"
+  }
+}

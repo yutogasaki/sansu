@@ -46,7 +46,8 @@
 .town-prop-art{position:absolute;pointer-events:none;width:54px;height:65px;max-width:none;left:50%;bottom:9%;transform:translateX(-50%);object-fit:contain;filter:drop-shadow(0 3px 2px #345e4733)}
 .town-prop-tree{width:65px;height:78px}.town-prop-bench,.town-prop-flowers{width:46px;height:55px;bottom:-3%}
 .town-map.overview .town-prop-art{width:36px;height:43px}.town-map.overview .town-prop-tree{width:43px;height:52px}.town-map.overview .town-prop-bench,.town-map.overview .town-prop-flowers{width:31px;height:37px}
-.nature-town .town-cell.ground{background:#aed5b0;border-color:#78b19018}.nature-town .town-cell.ground:nth-child(5n){background:#b2d8b2}.nature-town .town-cell.ground.path{background:#ead5a4;border-color:#d9bd83}
+.nature-town .town-map{background-color:#b7d1a4;background-image:radial-gradient(ellipse 45% 38% at 18% 22%,rgba(238,229,160,.58) 0%,rgba(218,225,165,.32) 42%,transparent 87%),radial-gradient(ellipse 51% 39% at 78% 66%,rgba(91,148,91,.42) 0%,rgba(113,164,100,.23) 47%,transparent 93%),radial-gradient(ellipse 44% 34% at 37% 91%,rgba(222,222,159,.38) 0%,transparent 83%),linear-gradient(145deg,#b7d1a4 0%,#bed5a3 53%,#a9c99c 100%)}
+.nature-town .town-cell.ground:not(.path):not(.bridge):not(.channel){background:transparent;border-color:rgba(61,106,67,.03)}
 /* Art may extend above its cell; subsequent ground buttons must not paint over it. */
 .town-prop-art{z-index:2}
 .town-resident-marker .town-cargo{bottom:25px}

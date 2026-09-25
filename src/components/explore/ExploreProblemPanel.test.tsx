@@ -224,7 +224,7 @@ describe("ExploreProblemPanel Root Pull opening", () => {
 
         expect(markup).toContain('data-camera-key="opening-root-pull-side-v1"');
         expect(markup).toContain('data-stage="ready"');
-        expect(markup).toContain("/assets/explore/opening-root-pull-v1/ready.jpg");
+        expect(markup).toContain("/assets/explore/opening-root-pull-v1/ready.webp");
         expect(markup).toContain('data-question-text="7 × 8"');
         expect(markup).toContain('data-skill-id="mul_arbitrary_family"');
         expect(markup).toContain("こたえて、ぐいっ！");
@@ -235,7 +235,7 @@ describe("ExploreProblemPanel Root Pull opening", () => {
         const markup = renderRootPullPanel(1, "incorrect");
 
         expect(markup).toContain('data-stage="small-pull"');
-        expect(markup).toContain("/assets/explore/opening-root-pull-v1/pull-one.jpg");
+        expect(markup).toContain("/assets/explore/opening-root-pull-v1/pull-one.webp");
         expect(markup).toContain("まだ ぬけない。もういちど！");
         expect(markup).toContain('role="alert"');
     });
@@ -244,7 +244,7 @@ describe("ExploreProblemPanel Root Pull opening", () => {
         const markup = renderRootPullPanel(2, "correct");
 
         expect(markup).toContain('data-stage="comic-release"');
-        expect(markup).toContain("/assets/explore/opening-root-pull-v1/payoff.jpg");
+        expect(markup).toContain("/assets/explore/opening-root-pull-v1/payoff.webp");
         expect(markup).toContain('data-actor-state="safe-seated"');
         expect(markup).toContain('data-subject-state="free"');
         expect(markup).toContain("スポン！ しりもちも だいせいこう");
@@ -254,7 +254,7 @@ describe("ExploreProblemPanel Root Pull opening", () => {
         const markup = renderRootPullPanel(0, "correct", "v2", "leaf-hat");
 
         expect(markup).toContain('data-asset-set="v2"');
-        expect(markup).toContain("/assets/explore/opening-root-pull-v2/pull-one.jpg");
+        expect(markup).toContain("/assets/explore/opening-root-pull-v2/pull-one.webp");
         expect(markup).toContain("ぺろん！ はっぱで まえが みえない");
         expect(markup).toContain(">1</button>");
         expect(markup).toContain(">2</button>");
@@ -265,7 +265,7 @@ describe("ExploreProblemPanel Root Pull opening", () => {
         const markup = renderRootPullPanel(2, "correct", "v2", "leaf-hat");
 
         expect(markup).toContain('data-payoff-variant="leaf-hat"');
-        expect(markup).toContain("/assets/explore/opening-root-pull-v2/payoff-leaf-hat.jpg");
+        expect(markup).toContain("/assets/explore/opening-root-pull-v2/payoff-leaf-hat.webp");
         expect(markup).toContain("スポン！ はっぱぼうし だいせいこう");
     });
 });
@@ -286,8 +286,8 @@ describe("ExploreProblemPanel Snap Root opening", () => {
         expect(markup).toContain('data-contact-state="none"');
         expect(markup).toContain('data-subject-contact="none"');
         expect(markup).toContain('data-lift-contact="none"');
-        expect(markup).toContain("/assets/explore/opening-snap-root-carry-bloom-v3/scene-ready.jpg");
-        expect(markup).not.toContain("scene-ready-tablet.jpg");
+        expect(markup).toContain("/assets/explore/opening-snap-root-carry-bloom-v3/scene-ready.webp");
+        expect(markup).not.toContain("scene-ready-tablet.webp");
         expect(markup).toContain(">1</button>");
         expect(markup).toContain(">2</button>");
         expect(markup).toContain(">3</button>");
@@ -300,7 +300,7 @@ describe("ExploreProblemPanel Snap Root opening", () => {
         expect(markup).toContain('data-actor-state="digging"');
         expect(markup).toContain('data-subject-state="rising"');
         expect(markup).toContain('data-action-state="dig-one"');
-        expect(markup).toContain("/assets/explore/opening-snap-root-carry-bloom-v3/scene-dig-one.jpg");
+        expect(markup).toContain("/assets/explore/opening-snap-root-carry-bloom-v3/scene-dig-one.webp");
         expect(markup).toContain("だいじょうぶ。もういちど！");
         expect(markup).toContain('role="alert"');
     });
@@ -313,7 +313,7 @@ describe("ExploreProblemPanel Snap Root opening", () => {
         expect(markup).toContain('data-subject-state="free-standing"');
         expect(markup).toContain('data-action-state="pop"');
         expect(markup).toContain('data-contact-state="none"');
-        expect(markup).toContain("/assets/explore/opening-snap-root-carry-bloom-v3/scene-popped.jpg");
+        expect(markup).toContain("/assets/explore/opening-snap-root-carry-bloom-v3/scene-popped.webp");
         expect(markup).toContain("できた！ つちぼうし！");
         expect(markup).not.toContain("data-payoff-variant");
         expect(markup).not.toContain("data-watering-state");

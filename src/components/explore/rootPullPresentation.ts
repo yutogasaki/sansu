@@ -43,7 +43,7 @@ export const ROOT_PULL_STAGE_PRESENTATIONS: Readonly<
     Record<RootPullOpeningStage, RootPullStagePresentation>
 > = {
     ready: {
-        imageSrc: `${ROOT_PULL_ASSET_BASE}/ready.jpg`,
+        imageSrc: `${ROOT_PULL_ASSET_BASE}/ready.webp`,
         actorState: "watching",
         subjectState: "asking",
         actionState: "offered-leaves",
@@ -53,7 +53,7 @@ export const ROOT_PULL_STAGE_PRESENTATIONS: Readonly<
         actionDescription: "生き物が葉を相棒へ差し出し、いっしょに上へ出ようとしている。",
     },
     "small-pull": {
-        imageSrc: `${ROOT_PULL_ASSET_BASE}/pull-one.jpg`,
+        imageSrc: `${ROOT_PULL_ASSET_BASE}/pull-one.webp`,
         actorState: "small-brace",
         subjectState: "rising",
         actionState: "small-pull",
@@ -63,7 +63,7 @@ export const ROOT_PULL_STAGE_PRESENTATIONS: Readonly<
         actionDescription: "相棒と生き物が同じ葉を引き合い、土から少し抜けた。",
     },
     "bigger-pull": {
-        imageSrc: `${ROOT_PULL_ASSET_BASE}/pull-two.jpg`,
+        imageSrc: `${ROOT_PULL_ASSET_BASE}/pull-two.webp`,
         actorState: "full-brace",
         subjectState: "almost-free",
         actionState: "bigger-pull",
@@ -73,7 +73,7 @@ export const ROOT_PULL_STAGE_PRESENTATIONS: Readonly<
         actionDescription: "強く引いた葉は切れず、生き物と土がいっしょに大きく持ち上がった。",
     },
     "comic-release": {
-        imageSrc: `${ROOT_PULL_ASSET_BASE}/payoff.jpg`,
+        imageSrc: `${ROOT_PULL_ASSET_BASE}/payoff.webp`,
         actorState: "safe-seated",
         subjectState: "free",
         actionState: "release",
@@ -88,14 +88,14 @@ const ROOT_PULL_V2_STAGE_ASSETS: Readonly<Record<Exclude<
     RootPullOpeningStage,
     "comic-release"
 >, string>> = {
-    ready: `${ROOT_PULL_V2_ASSET_BASE}/ready.jpg`,
-    "small-pull": `${ROOT_PULL_V2_ASSET_BASE}/pull-one.jpg`,
-    "bigger-pull": `${ROOT_PULL_V2_ASSET_BASE}/pull-two.jpg`,
+    ready: `${ROOT_PULL_V2_ASSET_BASE}/ready.webp`,
+    "small-pull": `${ROOT_PULL_V2_ASSET_BASE}/pull-one.webp`,
+    "bigger-pull": `${ROOT_PULL_V2_ASSET_BASE}/pull-two.webp`,
 };
 
 const ROOT_PULL_V2_PAYOFF_ASSETS: Readonly<Record<RootPullPayoffVariant, string>> = {
-    "dirt-hat": `${ROOT_PULL_V2_ASSET_BASE}/payoff-dirt-hat.jpg`,
-    "leaf-hat": `${ROOT_PULL_V2_ASSET_BASE}/payoff-leaf-hat.jpg`,
+    "dirt-hat": `${ROOT_PULL_V2_ASSET_BASE}/payoff-dirt-hat.webp`,
+    "leaf-hat": `${ROOT_PULL_V2_ASSET_BASE}/payoff-leaf-hat.webp`,
 };
 
 const ROOT_PULL_V2_SMALL_PULL_PRESENTATION: RootPullStagePresentation = {

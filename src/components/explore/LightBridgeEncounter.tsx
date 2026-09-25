@@ -9,9 +9,9 @@ import {
 
 const LIGHT_BRIDGE_DEFINITION: ImmersiveEncounterDefinition = {
     scene: {
-        idleSrc: "/assets/explore/light-bridge/scene-idle-leaf-carry-bloom-pokko-v7.jpg",
-        completeSrc: "/assets/explore/light-bridge/scene-complete-leaf-carry-bloom-pokko-v7.jpg",
-        resolvedSrc: "/assets/explore/light-bridge/scene-crossed-leaf-carry-bloom-pokko-v7.jpg",
+        idleSrc: "/assets/explore/light-bridge/scene-idle-leaf-carry-bloom-pokko-v7.webp",
+        completeSrc: "/assets/explore/light-bridge/scene-complete-leaf-carry-bloom-pokko-v7.webp",
+        resolvedSrc: "/assets/explore/light-bridge/scene-crossed-leaf-carry-bloom-pokko-v7.webp",
         completeActionProp: "bridge-leaf-clasp",
         resolvedActionProp: "bridge-leaf-clasp",
     },

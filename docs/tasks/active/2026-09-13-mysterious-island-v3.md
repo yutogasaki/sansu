@@ -1,5 +1,7 @@
 # 不思議な島 v3
 
+> 2026-09-22: Nature Townと別々の絵を作らず、[今の島への統合方針](../../product/island-nature-integration.md)に従う。このタスクは島全体の絵・地形・光・発見を担当し、自然・収穫・配送・入居の接続は[統合タスク](2026-09-22-island-nature-integration.md)へ集約する。今の島を捨てて町の平面地図へ置き換えない。
+
 ## Goal / SSOT
 
 添付v3に沿って段階実装する。正本は[仕様50](../../product/50_mysterious_island_discovery_spec.md)。元HEADと差分はgit履歴・検証時の記録に残す。
@@ -45,7 +47,7 @@
 - 添付manifest全件の内容hash一致を確認。SOURCE_EXCERPTSのみ拡張子を `.md.txt` へ変更し元キーから対応付けた。
 - 全体移行、価格切替、成長の直近24時間積算、有限ひかり、追加土地/所有上限、表示記録、本人保存、再演、Bは未完。学習writerと旧schemaは変更していない。外部送信/公開なし。
 
-- Review By: 2026-09-20
+- Review By: 2026-09-29
 
 ## Docs To Touch
 

@@ -181,7 +181,7 @@ delivery / feature-flag ID `snap-root-v1` の現行containment visual candidate�
 #### `dig-pop-carry-bloom-v3` authoring / flattened delivery
 
 - authoring sourceは承認済みの相棒・根生物・スコップreferenceと直前frameを使い、camera、比率、顔、葉、道具、色面を固定して作用差分だけを編集する。characterや背景をstateごとに無関係な指示から作り直さない
-- deliveryはUI文字なしの1280×720 flattened JPEGを `ready / dig-one / dig-two / popped` の4枚だけ持ち、mobile / tabletで同じsourceを共有する。各frameは800KiB以下とし、問題、答え、進捗、TenKey、状態文言はDOMへ残す。旧portrait / tablet専用8枚をpublicとPWA precacheへ残さない
+- deliveryはUI文字なしの1280×720 flattened WebPを `ready / dig-one / dig-two / popped` の4枚だけ持ち、mobile / tabletで同じsourceを共有する。既存JPEGからの配信形式変更では構図・色面・細部と安全な因果を実表示で比較し、画質を落として容量だけを合わせない。各frameは800KiB以下とし、問題、答え、進捗、TenKey、状態文言はDOMへ残す。旧portrait / tablet専用8枚をpublicとPWA precacheへ残さない
 - visual candidate ID、stage、actor、対象、action、asset load状態、reduced motionはDOMの安定属性とARIA descriptionで検査でき、画像内文字やファイル名だけを判定根拠にしない
 - payoff variantは作らない。最初の安全証明は一つのcanonical `popped` で行い、別オチは視覚的磁力、身体完全性、silent testを別々に通過した後だけ追加する
 - reduced motionでは承認済み静止frameを即時差し替え、transition、土の飛散、跳ね、回転、zoomを止める。状態や最終位置は省略しない

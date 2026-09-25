@@ -1,0 +1,154 @@
+{
+  "target": "http://127.0.0.1:5342",
+  "version": {
+    "version": "development-local:d8f163fd-c26d-4dc4-92d0-9076bbaa8f70",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "scope": "Disposable profile, UI placement/move/undo/admission. Diagnostic timer pulses drive actual saved ticks; no world/offer/food injection. Both widths reduced motion and sound OFF. Blind screenshots hide surrounding UI copy without changing geometry. Independent observers have not participated.",
+  "participants": [],
+  "devices": [
+    {
+      "width": 390,
+      "reducedMotion": true,
+      "sound": "OFF",
+      "stages": [
+        {
+          "id": "01",
+          "name": "before-house",
+          "tick": 0,
+          "population": 3,
+          "candidate": "nature-town-ground-a-v1"
+        },
+        {
+          "id": "02",
+          "name": "placed-house",
+          "tick": 0,
+          "population": 3,
+          "candidate": "nature-town-ground-a-v1"
+        },
+        {
+          "id": "03",
+          "name": "before-transfer",
+          "tick": 0,
+          "population": 3,
+          "candidate": "nature-town-ground-a-v1"
+        },
+        {
+          "id": "04",
+          "name": "actual-pickup",
+          "tick": 39,
+          "population": 3,
+          "candidate": "nature-town-ground-a-v1"
+        },
+        {
+          "id": "05",
+          "name": "disconnected",
+          "tick": 39,
+          "population": 3,
+          "candidate": "nature-town-ground-a-v1"
+        },
+        {
+          "id": "06",
+          "name": "restored",
+          "tick": 39,
+          "population": 3,
+          "candidate": "nature-town-ground-a-v1"
+        },
+        {
+          "id": "07",
+          "name": "offer",
+          "tick": 300,
+          "population": 3,
+          "candidate": "nature-town-ground-a-v1"
+        },
+        {
+          "id": "08",
+          "name": "admitted",
+          "tick": 300,
+          "population": 4,
+          "candidate": "nature-town-ground-a-v1"
+        }
+      ],
+      "runtimePass": true
+    },
+    {
+      "width": 768,
+      "reducedMotion": true,
+      "sound": "OFF",
+      "stages": [
+        {
+          "id": "01",
+          "name": "before-house",
+          "tick": 0,
+          "population": 3,
+          "candidate": "nature-town-ground-a-v1"
+        },
+        {
+          "id": "02",
+          "name": "placed-house",
+          "tick": 0,
+          "population": 3,
+          "candidate": "nature-town-ground-a-v1"
+        },
+        {
+          "id": "03",
+          "name": "before-transfer",
+          "tick": 0,
+          "population": 3,
+          "candidate": "nature-town-ground-a-v1"
+        },
+        {
+          "id": "04",
+          "name": "actual-pickup",
+          "tick": 39,
+          "population": 3,
+          "candidate": "nature-town-ground-a-v1"
+        },
+        {
+          "id": "05",
+          "name": "disconnected",
+          "tick": 39,
+          "population": 3,
+          "candidate": "nature-town-ground-a-v1"
+        },
+        {
+          "id": "06",
+          "name": "restored",
+          "tick": 39,
+          "population": 3,
+          "candidate": "nature-town-ground-a-v1"
+        },
+        {
+          "id": "07",
+          "name": "offer",
+          "tick": 300,
+          "population": 3,
+          "candidate": "nature-town-ground-a-v1"
+        },
+        {
+          "id": "08",
+          "name": "admitted",
+          "tick": 300,
+          "population": 4,
+          "candidate": "nature-town-ground-a-v1"
+        }
+      ],
+      "runtimePass": true
+    }
+  ],
+  "runtimePass": true
+}

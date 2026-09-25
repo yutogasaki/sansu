@@ -9,8 +9,69 @@ const walk = dir => fs.readdirSync(path.join(root, dir), { withFileTypes: true }
 const title = file => read(file).match(/^# (.+)$/m)?.[1] || path.basename(file);
 const href = (from, to) => path.relative(path.dirname(from), to).split(path.sep).map(encodeURIComponent).join('/');
 const pages = [['.agents/index.html', '概要'], ['.agents/tasks/index.html', 'タスク'], ['docs/index.html', 'ドキュメント']];
-const queue = [...read('.agents/tasks/TASKS.md').matchAll(/^- (.+?) -> (docs\/tasks\/active\/[^\s`]+\.md)\s*$/gm)].map(m => ({ name: m[1], file: m[2] }));
+const queue = (() => {
+  let category = 'その他';
+  const items = [];
+  for (const line of read('.agents/tasks/TASKS.md').split('\n')) {
+    const heading = line.match(/^### (.+)$/);
+    if (heading) category = heading[1];
+    const tableItem = line.match(/^\| ([^|]+?) \| \[(.+?)\]\(\.\.\/\.\.\/(docs\/tasks\/active\/[^\s)]+\.md)\) \| ([^|]+?) \| ([^|]+?) \|$/);
+    const linkedItem = line.match(/^- \[(.+?)\]\(\.\.\/\.\.\/(docs\/tasks\/active\/[^\s)]+\.md)\)：(.+)$/);
+    const legacyItem = line.match(/^- (.+?) -> (docs\/tasks\/active\/[^\s`]+\.md)\s*$/);
+    if (tableItem) items.push({ name: `${tableItem[2]}：${tableItem[4]} 次：${tableItem[5]}`, file: tableItem[3], category: tableItem[1].trim() });
+    else if (linkedItem) items.push({ name: `${linkedItem[1]}：${linkedItem[3]}`, file: linkedItem[2], category });
+    else if (legacyItem) items.push({ name: legacyItem[1], file: legacyItem[2], category });
+  }
+  return items;
+})();
 const docs = walk('docs');
+const docGroups = [
+  {
+    label: 'はじめに',
+    description: '仕様・タスク・共有知識の入口。何を探すか迷ったときはここから。',
+    matches: file => ['docs/index.md', 'docs/product/island-nature-integration.md', 'docs/product/README.md', 'docs/tasks/README.md', 'docs/wiki/index.md'].includes(file),
+  },
+  {
+    label: '自然と町の仕組みの再利用資料',
+    description: '旧Nature Townで検証した計算と操作。別の町として仕上げず、統合方針に従って今の島へ取り込む。',
+    matches: file => file.startsWith('docs/product/nature-town/'),
+  },
+  {
+    label: '仕様（何を作るか）',
+    description: '製品、学習、画面、島、別モードのルール。現行・旧モード・試作の区別は「仕様書の地図」を参照。',
+    matches: file => file.startsWith('docs/product/') && !file.startsWith('docs/product/archive/'),
+  },
+  {
+    label: 'タスク（今何をするか）',
+    description: '実行中の詳細、次の候補、過去のタスク資料。現在地は「現在のタスク一覧」を優先。',
+    matches: file => file.startsWith('docs/tasks/') && !file.startsWith('docs/tasks/archive/'),
+  },
+  {
+    label: '設計・実画面・検証記録',
+    description: '特定の版や画面で確認した証拠。現行仕様や現在のタスクの代わりにはしない。',
+    matches: file => file.startsWith('docs/design/'),
+  },
+  {
+    label: '開発と検証のルール',
+    description: '検証方針、共同作業、リリース、保存移行などの手順。',
+    matches: file => file.startsWith('docs/ai/') || file.startsWith('docs/runbooks/'),
+  },
+  {
+    label: '共有知識と設計判断',
+    description: '複数の仕事で長く使う用語、リスク、分析、設計判断。',
+    matches: file => file.startsWith('docs/wiki/') || file.startsWith('docs/adr/'),
+  },
+  {
+    label: '過去の案・試作',
+    description: '現在の作業から退避した資料。削除ではなく履歴の保管。今の仕様や開発指示として読まない。',
+    matches: file => file.startsWith('docs/product/archive/') || file.startsWith('docs/tasks/archive/'),
+  },
+  {
+    label: '完了履歴',
+    description: '過去に完了した事実。現在の挙動は仕様書で確認する。',
+    matches: file => file.startsWith('docs/done/'),
+  },
+];
 function card(output, file, name = title(file), expanded = false) {
   const text = read(file);
   const excerpt = text.replace(/^---\n[\s\S]*?\n---\n/, '').split('\n').filter(l => l.trim() && !/^(#|\||```)/.test(l)).slice(0, 2).join(' ').slice(0, 210);
@@ -19,12 +80,20 @@ function card(output, file, name = title(file), expanded = false) {
 function render([output, label]) {
   let content;
   if (label === '概要') {
-    content = `<section class="intro"><p class="eyebrow">REPOSITORY OVERVIEW</p><h2>ぽこもこと不思議な島</h2><p>子どもがくり返し遊びたくなる、算数・英語の学習PWA。学習と島の暮らしをつなぎ、学習記録は端末内に保存します。</p><div class="stats"><span><strong>${queue.length}</strong> 実行キュー</span><span><strong>${docs.length}</strong> ドキュメント</span><span>React 19 / TypeScript / Vite / Dexie</span></div></section><h2 class="section-title">リポジトリの入口</h2><section class="grid">${['CONSTITUTION.md', 'docs/product/01_app_spec.md', '.agents/agent-guide.md', 'docs/ai/verification_matrix.md', 'docs/tasks/backlog.md', 'docs/ai/ownership_map.md'].map(f => card(output, f)).join('')}</section><section class="intro"><h2>ローカルで使う</h2><p>アプリの起動</p><pre>nvm use\nnpm ci\nnpm run dev</pre><p>このHTMLを更新 / 更新漏れを確認</p><pre>npm run agent:index\nnpm run agent:index:check</pre><p>HTMLは閲覧用の生成物です。内容を変えるときは元のMarkdownを編集して再生成してください。</p></section>`;
+    content = `<section class="intro"><p class="eyebrow">REPOSITORY OVERVIEW</p><h2>ぽこもこと不思議な島</h2><p>子どもがくり返し遊びたくなる、算数・英語の学習PWA。学習と島の暮らしをつなぎ、学習記録は端末内に保存します。</p><div class="stats"><span><strong>${queue.length}</strong> 実行キュー</span><span><strong>${docs.length}</strong> ドキュメント</span><span>React 19 / TypeScript / Vite / Dexie</span></div></section><h2 class="section-title">人向けの入口</h2><section class="grid">${['docs/index.md', 'docs/product/README.md', '.agents/tasks/TASKS.md', 'docs/tasks/backlog.md'].map(f => card(output, f)).join('')}</section><h2 class="section-title">開発ルールの入口</h2><section class="grid">${['CONSTITUTION.md', 'docs/product/01_app_spec.md', '.agents/agent-guide.md', 'docs/ai/verification_matrix.md', 'docs/ai/ownership_map.md'].map(f => card(output, f)).join('')}</section><section class="intro"><h2>ローカルで使う</h2><p>アプリの起動</p><pre>nvm use\nnpm ci\nnpm run dev</pre><p>このHTMLを更新 / 更新漏れを確認</p><pre>npm run agent:index\nnpm run agent:index:check</pre><p>HTMLは閲覧用の生成物です。内容を変えるときは元のMarkdownを編集して再生成してください。</p></section>`;
   } else if (label === 'タスク') {
-    content = `<p>実行キューに登録された ${queue.length} 件。ここへの登録は、実装済み・リリース済みを意味しません。</p><section class="grid">${queue.map(t => card(output, t.file, t.name, true)).join('')}</section><h2 class="section-title">保留・計画・完了記録</h2><section class="grid">${['.agents/tasks/BLOCKED.md', 'docs/tasks/backlog.md', '.agents/tasks/DONE.md'].map(f => card(output, f, title(f), true)).join('')}</section>`;
+    const categories = [...new Set(queue.map(item => item.category))];
+    content = `<p>実行キューに登録された ${queue.length} 件。「何の話か／現在地／次の一手」で分類しています。登録は実装済み・公開済みを意味しません。</p>${categories.map(category => `<section class="doc-group"><h2 class="section-title">${esc(category)}</h2><div class="grid">${queue.filter(item => item.category === category).map(item => card(output, item.file, item.name, true)).join('')}</div></section>`).join('')}<h2 class="section-title">保留・計画・完了記録</h2><section class="grid">${['.agents/tasks/BLOCKED.md', 'docs/tasks/backlog.md', '.agents/tasks/DONE.md'].map(f => card(output, f, title(f), true)).join('')}</section>`;
   } else {
-    const groups = [...new Set(docs.map(f => f.split('/')[1]))];
-    content = groups.map(group => `<section class="doc-group"><h2 class="section-title">${esc(group)}</h2><div class="grid">${docs.filter(f => f.split('/')[1] === group).map(f => card(output, f)).join('')}</div></section>`).join('');
+    const assigned = new Set();
+    const sections = docGroups.map(group => {
+      const files = docs.filter(file => !assigned.has(file) && group.matches(file));
+      files.forEach(file => assigned.add(file));
+      return { ...group, files };
+    });
+    const remaining = docs.filter(file => !assigned.has(file));
+    if (remaining.length) sections.push({ label: 'その他', description: '上の分類に含まれない補助文書。', files: remaining });
+    content = sections.filter(section => section.files.length).map(section => `<section class="doc-group"><h2 class="section-title">${esc(section.label)}</h2><p>${esc(section.description)}</p><div class="grid">${section.files.map(file => card(output, file)).join('')}</div></section>`).join('');
   }
   return `<!doctype html>
 <html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="tools/generate-agent-index.mjs"><title>Sansu · ${label}</title><style>

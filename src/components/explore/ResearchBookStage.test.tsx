@@ -22,7 +22,7 @@ describe("ResearchBookStage", () => {
         expect(markup).toContain('data-visual-candidate-id="firefly-field-book-painted-v5"');
         expect(markup).toContain('data-visual-mode="field-book"');
         expect(markup).toContain('data-character-id="pokko"');
-        expect(markup).toContain("/assets/explore/firefly-flower/scene-light-path-stumble-bloom-pokko-v5.jpg");
+        expect(markup).toContain("/assets/explore/firefly-flower/scene-light-path-stumble-bloom-pokko-v5.webp");
         expect(markup).toContain("object-fit:contain");
         expect(markup).not.toContain("firefly-research-pokko-v1");
     });
@@ -41,7 +41,7 @@ describe("ResearchBookStage", () => {
 
         expect(markup).toContain('data-visual-candidate-id="root-tangle-carry-bloom-v4"');
         expect(markup).toContain('data-camera-key="root-tangle-side-v4"');
-        expect(markup).toContain("/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.jpg");
+        expect(markup).toContain("/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.webp");
         expect(markup).toContain("object-fit:contain");
     });
 

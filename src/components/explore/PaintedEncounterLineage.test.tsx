@@ -66,9 +66,9 @@ describe("painted encounter visual lineage", () => {
             "light-bridge-side-v4",
             "light-bridge-carry-bloom-v4",
         );
-        expect(markup).toContain("/assets/explore/light-bridge/scene-idle-leaf-carry-bloom-pokko-v7.jpg");
-        expect(markup).toContain("/assets/explore/light-bridge/scene-complete-leaf-carry-bloom-pokko-v7.jpg");
-        expect(markup).toContain("/assets/explore/light-bridge/scene-crossed-leaf-carry-bloom-pokko-v7.jpg");
+        expect(markup).toContain("/assets/explore/light-bridge/scene-idle-leaf-carry-bloom-pokko-v7.webp");
+        expect(markup).toContain("/assets/explore/light-bridge/scene-complete-leaf-carry-bloom-pokko-v7.webp");
+        expect(markup).toContain("/assets/explore/light-bridge/scene-crossed-leaf-carry-bloom-pokko-v7.webp");
         expect(markup).not.toContain("explore-immersive-art--layered");
     });
 
@@ -110,9 +110,9 @@ describe("painted encounter visual lineage", () => {
             "root-tangle-side-v4",
             "root-tangle-carry-bloom-v4",
         );
-        expect(markup).toContain("/assets/explore/root-tangle/scene-tangled-carry-bloom-pokko-v7.jpg");
-        expect(markup).toContain("/assets/explore/root-tangle/scene-open-carry-bloom-pokko-v7.jpg");
-        expect(markup).toContain("/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.jpg");
+        expect(markup).toContain("/assets/explore/root-tangle/scene-tangled-carry-bloom-pokko-v7.webp");
+        expect(markup).toContain("/assets/explore/root-tangle/scene-open-carry-bloom-pokko-v7.webp");
+        expect(markup).toContain("/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.webp");
         expect(markup).not.toContain("explore-immersive-art--layered");
     });
 

@@ -3,14 +3,12 @@ import { Layout } from "./components/Layout";
 import { lazy, Suspense, useEffect, useLayoutEffect, useState } from "react";
 import { Onboarding } from "./pages/Onboarding";
 import { Study } from "./pages/Study";
-import { Stats } from "./pages/Stats";
 import { Settings } from "./pages/Settings";
 import { CurriculumSettings } from "./pages/CurriculumSettings";
 import { DevMode } from "./pages/DevMode";
 import { ParentsPage } from "./pages/parents/ParentsPage";
 import { Battle } from "./pages/Battle";
 import { GameHub } from "./pages/GameHub";
-import { Explore } from "./pages/Explore";
 import { Spinner } from "./components/ui/Spinner";
 import { loadSounds, setSoundEnabled } from "./utils/audio";
 import { getActiveProfile } from "./domain/user/repository";
@@ -22,6 +20,8 @@ import { islandStudyDestination } from "./domain/island/studyRoute";
 
 const NatureTown = lazy(() => import('./pages/NatureTown'));
 const Island = lazy(() => import('./pages/Island'));
+const Explore = lazy(() => import('./pages/Explore').then(module => ({ default: module.Explore })));
+const Stats = lazy(() => import('./pages/Stats').then(module => ({ default: module.Stats })));
 
 type ProfileResolution = "loading" | "ready" | "missing";
 
@@ -247,12 +247,12 @@ function App() {
                         } />
                         <Route path="/explore" element={
                             <PrivateRoute>
-                                <Explore />
+                                <Suspense fallback={<Spinner fullScreen message="たんけんを じゅんびちゅう…" />}><Explore /></Suspense>
                             </PrivateRoute>
                         } />
                         <Route path="/stats" element={
                             <PrivateRoute>
-                                <Stats />
+                                <Suspense fallback={<Spinner fullScreen message="きろくを よみこみちゅう…" />}><Stats /></Suspense>
                             </PrivateRoute>
                         } />
                         <Route path="/settings" element={

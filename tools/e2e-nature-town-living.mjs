@@ -14,7 +14,7 @@ try {
   const page=await context.newPage();page.setDefaultTimeout(20000);const errors=[];page.on('pageerror',e=>errors.push(e.message));
   try {
    await page.goto(base);await page.waitForURL('**/#/onboarding');await page.locator('.island-welcome').waitFor();await seedNative(page,`Living ${width}`);await page.goto(`${base}/#/nature-town`);
-   await page.locator('[data-candidate="nature-town-living-s1"]').waitFor();
+   await page.locator('[data-candidate="nature-town-ground-a-v1"]').waitFor();
    await page.getByRole('button',{name:'1倍',exact:true}).click();
    await page.screenshot({path:`${out}/${width}-ready.png`});
    let captures=[];

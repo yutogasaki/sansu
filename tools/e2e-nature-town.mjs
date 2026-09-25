@@ -13,7 +13,7 @@ try {
   const context=await browser.newContext({viewport,reducedMotion:viewport.width===768?'reduce':'no-preference'}),page=await context.newPage();
   page.setDefaultTimeout(20000);const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto(base);await page.waitForURL('**/#/onboarding');await page.locator('.island-welcome').waitFor();const profileId=await seedNative(page,`Nature ${viewport.width}`);await page.goto(`${base}/#/nature-town`);
-  await page.locator('[data-candidate="nature-town-living-s1"]').waitFor();
+  await page.locator('[data-candidate="nature-town-ground-a-v1"]').waitFor();
   await page.getByRole('button',{name:'一時停止',exact:true}).click();
   await page.screenshot({path:`${out}/${viewport.width}-ready.png`});
   assert.equal(await page.locator('.nature-town').getAttribute('data-population'),'3');

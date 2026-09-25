@@ -1,31 +1,27 @@
-# Shared Task Queue
+# 今進めていること
 
-## Purpose
+この表だけ見れば、現在の作業の全体像が分かります。
+細かい検査番号や過去の経緯は「詳しい記録」の中に置き、ここには載せません。
 
-CodexとClaude Codeの共有実行キュー。詳細は `docs/tasks/active/`、全体の推奨順と実装済み項目は [バックログ](../../docs/tasks/backlog.md)、外部確認待ちは [保留キュー](BLOCKED.md) を参照。
+| 分類 | 仕事 | 今どこまで進んだか | 次にすること |
+|---|---|---|---|
+| 見た目・使いやすさ | [全体の画面と使い方](../../docs/tasks/active/2026-09-20-whole-app-ux-coherence.md) | 入口、戻る操作、小さい画面、読み上げ用の基本対応を改善した | 実際の端末、実際の読み上げ、子どもが説明なしで使えるかを確認する |
+| 見た目・使いやすさ | [不思議な島の改善版](../../docs/tasks/active/2026-09-13-mysterious-island-v3.md) | 島の入口と一部の発見体験を改善した | 巨大な植物、光と影、地形のつながりを整え、今の版との差を確認する |
+| 島で暮らす・つくる | [家・室内・学習をつなぐ](../../docs/tasks/active/2026-09-09-home-journey-preview.md) | 開発版で一連の流れをつなぎ、基本動作を確認した | 今の家画面と合わせ、本番用の絵と公開範囲を決める |
+| 自然と町を育てる | [今の島へ仕組みを取り込む](../../docs/tasks/active/2026-09-22-island-nature-integration.md) | 今の島を本体にする方針へ統一し、別の町を仕上げる作業を退避した | 同じ絵・同じ住人で、育つ→運ぶ→食べる仕組みをつなぐ。コードの移植はこれから |
+| 島で暮らす・つくる | [島でできることの対応表](../../docs/tasks/active/2026-09-08-island-experience.md) | 全体整理。学ぶ・育つ・暮らす・試す・残す、の採用内容と残りを対応づけた | 個別の作業を上の担当へつなぎ、同じ作業を重複させない |
+| 学ぶ | [学習と島の楽しさ](../../docs/tasks/active/2026-09-07-experience-improvements.md) | 全体整理。学習のテンポと島の暮らしを一緒に確認する観点を整理した | 個別の問題を担当タスクへつなぎ、ここでは重複して実装しない |
 
-## Rules
+分類の全体像と過去の案は[統合方針](../../docs/product/island-nature-integration.md)へ。保存・実機の確認待ちは[保留中](BLOCKED.md)、独立した町の旧作業は[過去の記録](../../docs/tasks/archive/2026-09-16-nature-town-s1.md)へ分けています。
 
-- 実行中のタスクを一行ずつ記す。履歴や将来候補を混ぜない。
-- 同じ残件は既存の詳細へ集約し、横断目的ごとに重複起票しない。
-- 閉じた区切りは `docs/done/YYYY-MM.md` に記録する。
-- 実装済み・検証済み・公開済みを区別する。
+## 別の一覧
 
-## Current Queue
+- [今すぐ進められないもの](BLOCKED.md)：実機、子どもの観察、外部判断などを待っている。
+- [次にやる候補](../../docs/tasks/backlog.md)：まだ着手していない仕事を含む。
+- [終わったこと](DONE.md)：過去の完了記録。
 
-- Nature Town S1：受入46/47。次は町全体の空間構成・受渡し、実iOS。SAFE-06の独立回答待ちは保留キューを参照 -> docs/tasks/active/2026-09-16-nature-town-s1.md
-- Mysterious island v3：島ホーム入口は局所改善済み。次は世界美術（巨大植物・局所陰・地形接続）と現行版の残件照合。C3/Human評価は未完 -> docs/tasks/active/2026-09-13-mysterious-island-v3.md
-- Home journey connection preview：接続試作は検査済み、本制作・最終美術・公開範囲は未完。現行の家UI変更と対象系統を照合 -> docs/tasks/active/2026-09-09-home-journey-preview.md
-- Full island experience from benchmark：採用項目の横断索引。Goal方式の追加分析は停止済み、既存の通常実装と残件を保持 -> docs/tasks/active/2026-09-08-island-experience.md
-- Learning rhythm and island game experience：学習と暮らしの横断目的。個別実装はv3/家/S1と重複させず参照する -> docs/tasks/active/2026-09-07-experience-improvements.md
-- Whole-app UX/UI coherence：旧Exploreとの取り違え原因を整理し、通常devをIsland (`/#/island`)へfail-closed固定。F-44で320pxナビ、F-45〜47で「ほかの あそび」/短横画面の主要3入口/写真CTA、F-48〜52で短横画面の学習/Welcome/遊び/写真境界、F-53で短横在庫のscroll案内、F-55で島/プロフィール読込エラーCTAを現行ぽこもこへ統一。`live-81`は5 / 137 checks / 91 captures、`live-84`は7 / 193 / 131、`live-85`は3 / 81 / 55、`live-87`は5 / 147 / 95、`live-88`は599px geometry / 29 / 19、`live-89`は4 / 123 / 79、`live-90`は480×431/599×430/phone/tabletで4 / 111 / 73、短横画面geometryは3 / 89 / 57、すべてpage error 0。`live-91`は844×390のRecords内部scrollを35 checks / 22 captures、`live-92`は5 viewportでRecords末尾・見出し到達を157 / 103、`live-97`は5 viewportでInventory cue/card/副CTA到達を160 / 107、`live-98`は320×568のcue非表示/no-overflow負条件を32 / 20。`live-99`はUtility capture待ちを400→800msへ延長し320×568で32 / 20、標準6 viewportで192 / 127を通過したが、`live-101`で320px `/battle` のフル画面PNGにナビ欠落が続くと訂正（33 checks pass、DOM/hit-test・nav単体captureは正常、表示の実端末確認は未完了）。`live-100`はF-54の幅360以下タイトル表示を320/360/390で95 / 60、標準7 viewportで226 / 147、`live-102`は2エラー経路×2 viewportで復帰、標準7 viewportで226 / 147 / page error 0、`verify:core` 457 files / 4,154 tests PASS。`e2e:island-navigation`の既定viewportへ320×568と360×640を追加。旧Exploreは任意副モード、Nature Town (`5233`)は別owner previewで変更なし。未完了: 全ルート/状態棚卸し、実端末のスクロール発見性/画面表示、実読み上げ、参加者理解/楽しさ、release/update評価 -> docs/tasks/active/2026-09-20-whole-app-ux-coherence.md
-  - `live-103`：Islandの主要導線を1024×768 / 1440×900で30 checks/viewport、40 captures、page error 0。Welcome・島/家・学習・設定・記録・保護者・Battle setupまでの幅広画面証拠を追加。親画面CTAの自然なtouch発見性、全状態、実読み上げ/参加者評価は未完了。
-  - `live-104` / `live-105` F-56：Battle問題図の初期表示を1024×768ほか4 viewportで再検証。余裕ある画面では図の表示域を広げ、残るoverflowには方向付きcueとキーボード操作可能なregionを追加。新問時のscroll reset、5種の図、44px回答域、Endキー到達を含む59 captures / 0 page errors。[証跡](../../docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-105-current-island-battle-scroll-cue-2026-09-22/contact-sheet.html)。実機/実読み上げ/参加者評価は未完了。
-  - `live-106`：Island flagを明示した本番previewでPWA保護フロー8件、実Service Workerオフライン復帰、旧データ移行をPASS。plain buildのIsland=falseはfail-closedで採用せず、`VITE_ISLAND_ENABLED=true`再ビルドを証跡化。実二世代更新・実機/実読み上げ/参加者評価は未完了。
-  - `live-108`：旧画面を現行扱いに戻さない明示classic release回帰をPASS。current-entry guard、classic smoke 31件、PWA update 4件、実old→new SW更新/保存保持/失敗復旧を確認。PWA harnessの古い入力selectorをplaceholderへ修正。classicは現行IslandのUX証跡には数えず、実機/実読み上げ/参加者評価は未完了。
-  - `live-109`：現行Islandの2人ゲーム設定で、設定全体を名前付きregionとして読み上げ可能にし、無効な「スタート！」と必要な学年案内を`aria-describedby`で関連付け。BattleSetup静的7 tests、対象ESLint、390×844 / 568×320の現行Island navigation（計64 checks、44 captures、page error 0）をPASS。実スクリーンリーダー/実機/参加者評価は未完了。
-  - `live-110`：flag未指定の`npm run build`にもIsland既定を適用し、`npm run build && npm run preview`で旧画面を誤配信しないbuild wrapperを追加。明示flag-off classic buildは回帰用に保持。build-env 3 tests、current-entry guard 18 tests、対象ESLint、Island=true / classic=falseのmanifest、5299 previewの`/#/island`・root marker・page error 0を確認。Nature Townの既存差分は変更・commitしていない。実機/実読み上げ/参加者評価は未完了。
-  - `live-111`：現行Islandの「しまのメニュー」に`aria-expanded`を追加し、家メニューと開閉状態の意味論を統一。IslandHomeActions 6 tests、対象ESLint、5198の隔離first-run profileで`false → true → false`・focus復帰・Island=true / NatureTown=false・page error 0、既存の390×844 navigation E2EをPASS。続く回帰ガードで同E2Eに閉じた/開いた`aria-expanded`遷移を追加し、standalone対象ブラウザ確認もPASS。Nature Townは未変更。実機/実読み上げ/参加者評価は未完了。
-  - `live-112`：現行Islandの「みつける」の`てがかり`に`aria-controls`と説明側IDを追加し、開閉状態と内容の参照関係を統一。islandDiscoveryGuide 8 tests、対象ESLint/typecheck、5198の隔離390×844で`false → true → false`・参照先表示・Island=true / NatureTown=false・page error 0、`verify:core` 458 files / 4,160 tests・Island-default build・asset budget 11.61/12.00 MiBを確認。Nature Townは未変更。実機/実読み上げ/参加者評価は未完了。
-  - `live-113`：現行Islandの保存景色削除確認と設定カテゴリの`aria-expanded`に`aria-controls`を追加し、制御対象との参照関係を統一。保存景色semantics test 1件、対象ESLint/typecheck、5198の隔離390×844で保存→削除開閉`false → true`→キャンセルdetach、設定「学習」→`settings-panel-learning`参照、Island=true / NatureTown=false・page error 0を確認。Nature Townは未変更。実機/実読み上げ/参加者評価は未完了。
-  - `live-114`：現行Islandの写真削除確認トリガーに`aria-expanded`と`aria-controls`を追加し、確認groupとの参照関係を統一。IslandPhotos 6 tests、対象ESLint/typecheck、5198の隔離390×844で実写真の削除確認`false → true`→Escape閉じ・focus復帰、Island=true / NatureTown=false・page error 0を確認。Nature Townは未変更。実機/実読み上げ/参加者評価は未完了。
+## この表の約束
+
+- 「作った」「自動確認した」「公開した」「実機で確認した」「子どもが使えた」は別の状態として書く。
+- 1つの残作業には1つの担当を決め、複数のタスクへ同じ内容を書かない。
+- 終わった仕事はこの表から外し、完了記録へ移す。

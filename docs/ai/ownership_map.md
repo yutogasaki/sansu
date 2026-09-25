@@ -15,6 +15,9 @@
 
 | 話題 | 正本 | 補助文書 | 更新するタイミング |
 |---|---|---|---|
+| 今の島とNature Townの統合・旧試作の扱い | [product/island-nature-integration.md](/docs/product/island-nature-integration.md) | 01、48、50、nature-town/00、統合タスク | 統合範囲、引き継ぐ機能、現在の絵・学習・保存の保護、旧試作の扱いが変わるとき |
+| 仕様書を人向けに探す分類 | [product/README.md](/docs/product/README.md) | [index.md](/docs/index.md) | 仕様の追加・削除、現行/旧モード/試作/提案の位置づけ、主要な入口が変わるとき。個別仕様の内容は各正本へ書く |
+| 文書全体の入口と役割 | [index.md](/docs/index.md) | [tasks/README.md](/docs/tasks/README.md), [product/README.md](/docs/product/README.md) | 文書の置き場所、読み始める入口、仕様/タスク/履歴の役割分担が変わるとき |
 | 暮らす島の次期地区解放・品揃え・特殊施設 | [product/49_island_growth_catalog_spec.md](/docs/product/49_island_growth_catalog_spec.md) | 01、48 | 恒久解放、商品、組み合わせ、効果範囲、次期成長・経済を変えるとき。現行runtimeと区別する |
 | 家から育つ島の統合と引継ぎ | [product/47_home_island_integration_spec.md](/docs/product/47_home_island_integration_spec.md) | 01、30、42、45 | 公開範囲、成長方式、旧成果の引継ぎ、外/室内/学習の接続が変わるとき |
 | 家からの学習チャレンジ | [product/46_home_learning_challenge_spec.md](/docs/product/46_home_learning_challenge_spec.md) | 01、31、34、42、43 | 専用出題・時間・中断・結果・賞・学習接触の境界が変わるとき |

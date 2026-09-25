@@ -11,7 +11,7 @@ describe("RootPullDiscoveryReveal", () => {
         expect(markup).toContain('role="dialog"');
         expect(markup).toContain('data-opening-discovery="root-pull"');
         expect(markup).toContain('data-stage="comic-release"');
-        expect(markup).toContain("/assets/explore/opening-root-pull-v1/payoff.jpg");
+        expect(markup).toContain("/assets/explore/opening-root-pull-v1/payoff.webp");
         expect(markup).toContain("土から スポンと ぬけた 根っこの子");
         expect(markup).toContain("あいぼうは いきおいで しりもち");
         expect(markup).not.toContain("ぜんぶ まきもどった");

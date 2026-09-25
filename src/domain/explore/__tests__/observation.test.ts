@@ -38,7 +38,7 @@ describe("exploration observation catalog", () => {
             mode: "observation",
             cameraKey: ROOT_TANGLE_OBSERVATION.camera.key,
             sceneId: "root-tangle-dew-gag",
-            sceneSrc: "/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.jpg",
+            sceneSrc: "/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.webp",
         }));
         expect(ROOT_TANGLE_OBSERVATION.camera.key).toBe("root-tangle-side-v4");
         expect(getExploreObservationForEncounter("light-bridge")).toBeUndefined();

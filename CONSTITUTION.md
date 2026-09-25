@@ -1,5 +1,7 @@
 # Sansu / ポッコのふしぎずかん Constitution
 
+2026-09-22: Nature Town is no longer a separate product direction. Integrate its nature, transport, population and land systems into the current Island, retaining the existing art, characters, home and learning flow. Follow `docs/product/island-nature-integration.md`; preserve both existing saves and distinguish adopted integration from implemented migration. Do not continue a separate town art direction or infer permission to overwrite saves or deploy.
+
 2026-09-10: The user authorized the next island prototype in `docs/product/48_island_life_spec.md`: learning earns creative choices; placement, time and autonomous residents produce different lives. Pokomoko alone receives destination choices. Learning participation, daily achievement and independent mastery remain distinct. The initial DEV prototype uses a separate game database. On 2026-09-11 the user authorized household production use with fresh ownership and no ownership migration; learning records remain intact. Existing modes retain their own progression and saved rights.
 
 ## 0. Purpose

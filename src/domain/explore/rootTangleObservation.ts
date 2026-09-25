@@ -16,7 +16,7 @@ export const ROOT_TANGLE_OBSERVATION = {
         surfaceId: "explore-observation-root-tangle",
         cameraKey: "root-tangle-side-v4",
         sceneId: "root-tangle-dew-gag",
-        sceneSrc: "/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.jpg",
+        sceneSrc: "/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.webp",
     },
     camera: {
         key: "root-tangle-side-v4",

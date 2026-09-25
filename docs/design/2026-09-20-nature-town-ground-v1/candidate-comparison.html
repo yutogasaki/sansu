@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nature Town 地面 candidate 比較</title>
+<style>body{font:15px system-ui,sans-serif;background:#faf8f1;color:#243747;margin:24px}h1{font-size:22px}section{margin:30px 0}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}figure{margin:0}img{width:100%;height:auto;border:1px solid #d8dfd6;background:white}figcaption{font-size:12px;margin:5px 0}@media(max-width:700px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}</style>
+</head>
+<body>
+<h1>Nature Town · 地面表現の実画面比較</h1>
+<p>同じ一時停止状態を390×844／768×1024で撮影。方向A/B/CだけCSSを注入したruntime previewで、最終候補はソースへ実装後に再撮影。</p>
+<section><h2>390×844</h2><div class="grid">
+<figure><img src="baseline-390.png" alt="実装前"><figcaption>実装前</figcaption></figure>
+<figure><img src="direction-a-preview-injected-390.png" alt="方向A"><figcaption>A · 広い連続色面</figcaption></figure>
+<figure><img src="direction-b-preview-injected-390.png" alt="方向B"><figcaption>B · 強めの濃淡と境界</figcaption></figure>
+<figure><img src="direction-c-preview-injected-390.png" alt="方向C"><figcaption>C · 静かな単色面</figcaption></figure>
+</div></section>
+<section><h2>768×1024</h2><div class="grid">
+<figure><img src="baseline-768.png" alt="実装前"><figcaption>実装前</figcaption></figure>
+<figure><img src="direction-a-preview-injected-768.png" alt="方向A"><figcaption>A · 広い連続色面</figcaption></figure>
+<figure><img src="direction-b-preview-injected-768.png" alt="方向B"><figcaption>B · 強めの濃淡と境界</figcaption></figure>
+<figure><img src="direction-c-preview-injected-768.png" alt="方向C"><figcaption>C · 静かな単色面</figcaption></figure>
+</div></section>
+</body>
+</html>

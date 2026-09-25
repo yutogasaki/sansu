@@ -1,13 +1,13 @@
-# Shared Blocked Queue
+# 今すぐ進められないもの
 
-## Purpose
+人の確認、実際の端末、外部判断などを待っている項目です。
+一部の確認を待っているだけなら、ほかの作業まで止めません。
 
-外部確認待ち・明示HOLDの一覧。タスク全体と一部ゲートの保留を区別する。確認待ち以外の実装は [共有キュー](TASKS.md) で継続できる。
+| 分類 | 何を待っているか | 今わかっていること | 次にすること |
+|---|---|---|---|
+| 記録・保存・安心 | [Safariで家の写真を保存できるか](../../docs/tasks/archive/2026-09-20-house-webkit-photo-save.md) | 自動操作用の一時ブラウザでは失敗し、通常に近い保存付きブラウザでは成功した | 実際のSafariまたはホーム画面へ追加したiPhone/iPad版で、撮影・保存・再読込する |
+| 自然と町を育てる | [統合後の島を子どもが理解できるか](../../docs/tasks/active/2026-09-22-island-nature-integration.md) | 統合後の画面はまだない。旧試作の独立回答も0人で、合格は引き継げない | 今の島で遊べる一周を作った後、その画面で観察する。旧町画面の確認待ちで統合作業を止めない |
+| 昔の探索ゲーム | [最初の体験を続けたいと思うか](../../docs/tasks/active/2026-07-21-cold-open-value-loop.md) | 絵の魅力と「もう一度遊びたいか」が未確認 | 今の不思議な島やNature Townと混ぜず、再開する候補と合格条件を決める |
+| 昔の探索ゲーム | [画面全体の絵柄がそろっているか](../../docs/tasks/active/2026-07-23-whole-app-brand-coherence.md) | 自動確認だけでは、魅力・説明なしの理解・安全を判断できない | 同じ版の一連の画面を人が確認する |
 
-## Current Blocked Items
-
-- 家の写真保存 / Safari確認：Playwrightの非永続WebKitではBlobのIndexedDB保存が失敗し、新規の永続WebKit profileでは同じblobの保存が成功。実Safari通常profile/iOS PWAの確認が必要。WebKit 188438でも同じエラー報告あり -> docs/tasks/archive/2026-09-20-house-webkit-photo-save.md
-
-- Nature Town S1 / SAFE-06・参加者評価：独立回答0人。観察セットは準備済み。独立観察の実回答を記録して再判定する。最終美術と実iOS作業まで停止した意味ではない -> docs/tasks/active/2026-09-16-nature-town-s1.md
-- Cold-open Value Loop：既存候補は美術/再プレイ等がHOLD。現行の島・町と分けて保持し、採用候補と未達ゲートを再確認してから再開する。学習・保存の既存実装を廃止しない -> docs/tasks/active/2026-07-21-cold-open-value-loop.md
-- Whole-app brand coherence：詳細の状態はAwaiting external validation。同一版の全経路で美術・無説明理解/安全・実装整合の外部確認が必要 -> docs/tasks/active/2026-07-23-whole-app-brand-coherence.md
+条件が満たされたら、[現在のタスク](TASKS.md)へ戻すか[完了記録](DONE.md)へ移します。

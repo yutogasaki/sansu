@@ -9,9 +9,9 @@ import {
 
 const ROOT_TANGLE_DEFINITION: ImmersiveEncounterDefinition = {
     scene: {
-        idleSrc: "/assets/explore/root-tangle/scene-tangled-carry-bloom-pokko-v7.jpg",
-        completeSrc: "/assets/explore/root-tangle/scene-open-carry-bloom-pokko-v7.jpg",
-        resolvedSrc: "/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.jpg",
+        idleSrc: "/assets/explore/root-tangle/scene-tangled-carry-bloom-pokko-v7.webp",
+        completeSrc: "/assets/explore/root-tangle/scene-open-carry-bloom-pokko-v7.webp",
+        resolvedSrc: "/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.webp",
     },
     visualIdentity: {
         lineageId: "pokko-field-v1",

@@ -116,7 +116,10 @@ export default defineConfig(({ mode }) => {
                 injectRegister: false,
                 registerType: 'autoUpdate',
                 includeAssets: [
-                    'icons/*',
+                    // The maskable icon files are byte-identical copies. Both
+                    // manifest purposes use these two canonical URLs.
+                    'icons/icon-192.png',
+                    'icons/icon-512.png',
                     'sounds/*.mp3',
                     ikimonoArtworkGlob,
                     exploreArtworkGlob,
@@ -132,7 +135,10 @@ export default defineConfig(({ mode }) => {
                     // Explicit includeAssets above owns approved offline media;
                     // this glob covers the app shell and the two bundled Life control stills.
                     globPatterns: ['**/*.{js,css,html,ico,woff,woff2}', 'assets/flower-bloom-original-*.png', 'assets/pokomoko-original-*.png', 'assets/town-*.png'],
-                    globIgnores: ['visual-tests/**/*'],
+                    // The public Japanese WOFF2 is not referenced by the app. Keep
+                    // the bundled UI font, but do not download this PDF-era copy
+                    // during every fresh PWA installation.
+                    globIgnores: ['visual-tests/**/*', 'fonts/NotoSansJP-Japanese.woff2'],
                     runtimeCaching: [
                         {
                             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
@@ -178,6 +184,9 @@ export default defineConfig(({ mode }) => {
                     manualChunks: {
                         react: ["react", "react-dom", "react-router-dom"],
                         motion: ["framer-motion"],
+                        // Recharts also imports clsx. Own it separately so the
+                        // Island shell does not preload the entire charts chunk.
+                        utils: ["clsx"],
                         charts: ["recharts", "d3-array", "d3-scale", "d3-shape", "d3-time", "d3-interpolate", "d3-color", "d3-ease"],
                         data: ["dexie", "dexie-react-hooks"],
                         pdf: ["pdf-lib", "@pdf-lib/fontkit", "fontkit"],

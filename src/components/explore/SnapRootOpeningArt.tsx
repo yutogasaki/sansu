@@ -10,10 +10,10 @@ import "./SnapRootOpeningArt.css";
 const PAINTED_ASSET_BASE = "/assets/explore/opening-snap-root-carry-bloom-v3";
 
 const PAINTED_BY_STAGE: Readonly<Record<SnapRootOpeningStage, string>> = {
-    ready: `${PAINTED_ASSET_BASE}/scene-ready.jpg`,
-    "dig-one": `${PAINTED_ASSET_BASE}/scene-dig-one.jpg`,
-    "dig-two": `${PAINTED_ASSET_BASE}/scene-dig-two.jpg`,
-    popped: `${PAINTED_ASSET_BASE}/scene-popped.jpg`,
+    ready: `${PAINTED_ASSET_BASE}/scene-ready.webp`,
+    "dig-one": `${PAINTED_ASSET_BASE}/scene-dig-one.webp`,
+    "dig-two": `${PAINTED_ASSET_BASE}/scene-dig-two.webp`,
+    popped: `${PAINTED_ASSET_BASE}/scene-popped.webp`,
 };
 
 const ACTOR_STATE_BY_STAGE: Readonly<Record<SnapRootOpeningStage, string>> = {

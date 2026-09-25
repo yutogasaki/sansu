@@ -11,10 +11,10 @@ const renderStage = (stage: RootPullOpeningStage) => renderToStaticMarkup(
 
 describe("RootPullOpeningArt", () => {
     it.each([
-        ["ready", "watching", "asking", "offered-leaves", "ready.jpg"],
-        ["small-pull", "small-brace", "rising", "small-pull", "pull-one.jpg"],
-        ["bigger-pull", "full-brace", "almost-free", "bigger-pull", "pull-two.jpg"],
-        ["comic-release", "safe-seated", "free", "release", "payoff.jpg"],
+        ["ready", "watching", "asking", "offered-leaves", "ready.webp"],
+        ["small-pull", "small-brace", "rising", "small-pull", "pull-one.webp"],
+        ["bigger-pull", "full-brace", "almost-free", "bigger-pull", "pull-two.webp"],
+        ["comic-release", "safe-seated", "free", "release", "payoff.webp"],
     ] as const)(
         "renders the %s state with one stable camera contract",
         (stage, actorState, subjectState, actionState, filename) => {
