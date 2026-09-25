@@ -7,6 +7,8 @@ Durable completion history and verification facts still belong in `docs/done/YYY
 
 ## Current Index
 
+- 2026-09-25: 島の起動計測・小物読み込み分散と、Life学習中の見えない旧3D生成を除去。core・両幅の保存/配置/offline・classic smoke PASS。再起動の待ちと実機確認は残る。未公開 -> `docs/done/2026-09.md`
+
 - 2026-09-19: Studyの退場中「次へ」による問題飛ばしを修正。PWA4件・clean commitのfixed-ten40run正式PASS -> `docs/done/2026-09.md`
 
 - 2026-09-19: Nature Townの全身受渡し4ポーズ・既存立体素材・offline画像を実装。両幅の実配送／入居／更新を確認。受入46/47、最終美術・独立観察は継続 -> `docs/done/2026-09.md`

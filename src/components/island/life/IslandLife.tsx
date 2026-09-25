@@ -15,6 +15,7 @@ import { Sparkles, Sprout, Home, Move, RotateCw, Archive, Trash2, Check, X, Undo
 import { CATALOG, LIFE_CANDIDATE, LIFE_RULES, learningDay, type Cell, type ItemKind, type LifeCommand, type ResidentId } from '../../../domain/islandLife/model';
 import { cellKey, districts, isHouse, isolatedItems, landCells } from '../../../domain/islandLife/space';
 import { replayLife } from '../../../domain/islandLife/simulation';
+import { timeLifeWork } from './startupTiming';
 import type { useIslandLife } from './useIslandLife';
 import LifeWorld from './LifeWorld';
 import LifeObservation from './LifeObservation';
@@ -82,7 +83,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
     const lastObservedObservation = useRef<Record<string, string> | undefined>(undefined);
     const state = useMemo(() => {
         if (!record) return undefined;
-        const current = replayLife(record);
+        const current = timeLifeWork('state-replay', () => replayLife(record));
         return { ...current, ...lifeDiscoveryPresentation(current.items),
             worldStyle: import.meta.env.DEV && import.meta.env.VITE_ISLAND_LIFE_PREVIEW === 'true'
                 ? 'canopy-dots-c3-v1' as const : 'moon-garden-v1' as const };
@@ -271,7 +272,12 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
         </button>}
         </div>
         <div className="life-viewport">
-        <LifeWorld onFrame={clearance.onFrame} inspectShadow={(itemId, residentId, worldAt) => { if (locked) return; showWorld(); setGathering(undefined); setObservedResident(residentId); setShadowRequest({ id: crypto.randomUUID(), worldAt, monotonicAt: performance.now() }); setObserved(itemId); }} observationOpen={Boolean(observed || memoriesOpen)} footstepInput={footstepInput} profileId={record.profileId} presented={liveDiscovery.presented} state={state} selected={selected} cell={cell} placement={placement} onCell={chooseCell} controlsVisible={!menuOpen && !dockOpen && !observed && !memoriesOpen}>
+        <LifeWorld onFrame={clearance.onFrame} inspectShadow={(itemId, residentId, worldAt) => { if (locked) return; showWorld(); setGathering(undefined); setObservedResident(residentId); setShadowRequest({ id: crypto.randomUUID(), worldAt, monotonicAt: performance.now() }); setObserved(itemId); }} observationOpen={Boolean(observed || memoriesOpen)} footstepInput={footstepInput} profileId={record.profileId} presented={liveDiscovery.presented} state={state} changeKey={JSON.stringify([record.profileId, record.version,
+            record.actions.length, record.actions[record.actions.length - 1]?.id,
+            record.credits.length, record.credits[record.credits.length - 1]?.id,
+            record.clockIntents.length, record.clockIntents[record.clockIntents.length - 1],
+            record.offsets.length, record.offsets[record.offsets.length - 1]?.offset])}
+            selected={selected} cell={cell} placement={placement} onCell={chooseCell} controlsVisible={!menuOpen && !dockOpen && !observed && !memoriesOpen}>
             <button ref={buildTrigger} className="life-home-action life-build-action" type="button" disabled={locked} onClick={() => openMenuTab('build')}>
                 <LifeProductPreview kind="flower" growth={LIFE_RULES.bloomHours} /><span>つくる</span>
             </button>

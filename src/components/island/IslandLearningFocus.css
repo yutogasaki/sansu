@@ -1,5 +1,5 @@
-/* Learning owns the viewport. The hidden scene stays mounted so returning home
-   preserves its runtime; its visibility observer pauses offscreen rendering. */
+/* Learning owns the viewport. Legacy mode retains its paused hidden scene;
+   Life mode does not mount this different world behind the questions. */
 .island-page[data-mode=learning] {
     display: flex;
     flex-direction: column;

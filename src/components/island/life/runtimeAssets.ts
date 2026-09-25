@@ -25,6 +25,7 @@ import lampNear from '../../../../assets/island-streetlamp-v1/runtime/near.glb?u
 import lampFar from '../../../../assets/island-streetlamp-v1/runtime/far-geometry.glb?url';
 import { projectedDiameter, selectFarAsset } from './runtimeAssetLod';
 import type { RuntimeAssetKind } from './runtimeAssetSlots';
+import { startLifeTiming } from './startupTiming';
 
 const urls = { fence: [fenceNear, fenceFar], 'watering-can': [wateringcanNear, wateringcanFar], planter: [planterNear, planterFar], mailbox: [mailboxNear, mailboxFar], tree: [treeNear, treeFar], rock: [rockNear, rockFar], bench: [benchNear, benchFar], 'garden-hut': [hutNear, hutFar], flowerbed: [flowerNear, flowerFar], streetlamp: [lampNear, lampFar] };
 type Asset = { near: T.Object3D; far: T.Object3D; bounds: T.Box3 };
@@ -45,8 +46,11 @@ export class LifeRuntimeAssets {
     private readonly loader: GLTFLoader;
     private readonly assets = new Map<RuntimeAssetKind, Asset>();
     private readonly pending = new Set<RuntimeAssetKind>();
+    private readonly queued = new Set<RuntimeAssetKind>();
+    private nextLoadAt = performance.now() + 200;
     private readonly failed = new Set<RuntimeAssetKind>();
     private slots: Slot[] = [];
+    private readonly targets = new Map<RuntimeAssetKind, T.Object3D[]>();
     private root?: T.Object3D;
     private disposed = false;
     private readonly position = new T.Vector3();
@@ -55,17 +59,30 @@ export class LifeRuntimeAssets {
     constructor(renderer: T.WebGLRenderer, private readonly changed: () => void) {
         const manager = new T.LoadingManager();
         manager.setURLModifier(url => url.endsWith('basis_transcoder.js') ? decoderJs : url.endsWith('basis_transcoder.wasm') ? decoderWasm : url);
-        this.ktx = new KTX2Loader(manager).setTranscoderPath('/').detectSupport(renderer);
+        this.ktx = new KTX2Loader(manager).setTranscoderPath('/').setWorkerLimit(1).detectSupport(renderer);
         this.loader = new GLTFLoader(manager).setKTX2Loader(this.ktx);
     }
     bind(root: T.Object3D) {
         this.detach(); this.root = root;
-        const targets: T.Object3D[] = [];
-        root.traverse(o => { if (o.userData.runtimeAssetKind) targets.push(o); });
-        for (const target of targets) {
-            const kind = target.userData.runtimeAssetKind as RuntimeAssetKind;
+        root.traverse(o => {
+            const kind = o.userData.runtimeAssetKind as RuntimeAssetKind | undefined;
+            if (!kind) return;
+            const targets = this.targets.get(kind) ?? [];
+            targets.push(o); this.targets.set(kind, targets);
+        });
+        for (const kind of this.targets.keys()) {
             const asset = this.assets.get(kind);
-            if (!asset) { if (!this.pending.has(kind) && !this.failed.has(kind)) void this.load(kind); continue; }
+            if (!asset) { if (!this.pending.has(kind) && !this.failed.has(kind)) this.queued.add(kind); continue; }
+            this.attach(kind, asset);
+        }
+        this.changed();
+    }
+    private attach(kind: RuntimeAssetKind, asset: Asset) {
+        const finish = startLifeTiming(`asset-attach:${kind}`);
+        // A completed download only replaces its own fallbacks. Rebinding the
+        // entire world here cloned every already-loaded prop again, resetting
+        // its LOD and multiplying startup work on a populated island.
+        for (const target of this.targets.get(kind) ?? []) {
             const original = target.children.map(o => [o, o.visible] as [T.Object3D, boolean]);
             // Measure in target coordinates, preserving the caller's position, scale and rotation.
             const local = new T.Group(); for (const child of target.children) local.add(child.clone(true));
@@ -90,11 +107,21 @@ export class LifeRuntimeAssets {
             original.forEach(([o]) => { o.visible = false; }); target.add(visual);
             this.slots.push({ target, visual, near, far, porch, original, size: sourceSize.clone().multiply(scale), isFar: false });
         }
-        this.changed();
+        finish();
+    }
+    /** Called only after a visible frame; never start all decoders at once. */
+    advanceLoading(now = performance.now(), allowed = true) {
+        if (!allowed || this.disposed || !this.root || this.pending.size || now < this.nextLoadAt) return;
+        const kind = this.queued.values().next().value;
+        if (!kind) return;
+        this.queued.delete(kind);
+        void this.load(kind).finally(() => { this.nextLoadAt = performance.now() + 150; });
     }
     private async load(kind: RuntimeAssetKind) {
         this.pending.add(kind);
+        const finish = startLifeTiming(`asset-load:${kind}`);
         const loaded = await Promise.allSettled(urls[kind].map(url => this.loader.loadAsync(url)));
+        finish();
         this.pending.delete(kind);
         if (this.disposed || loaded.some(r => r.status === 'rejected')) {
             for (const r of loaded) if (r.status === 'fulfilled') release(r.value.scene);
@@ -118,8 +145,9 @@ export class LifeRuntimeAssets {
             o.castShadow = o.receiveShadow = true;
         } });
         if (missingMaterial) { release(near); release(far); this.failed.add(kind); this.changed(); return; }
-        this.assets.set(kind, { near, far, bounds: new T.Box3().setFromObject(near) });
-        if (this.root) this.bind(this.root);
+        const asset = { near, far, bounds: new T.Box3().setFromObject(near) };
+        this.assets.set(kind, asset);
+        if (this.root) { this.attach(kind, asset); this.changed(); }
     }
     update(camera: T.Camera, height: number) {
         camera.getWorldPosition(this.cameraPosition); let changed = false;
@@ -131,10 +159,10 @@ export class LifeRuntimeAssets {
         }
         if (changed) this.changed();
     }
-    describe() { return { candidate: 'island-life-runtime-assets-v3', homePropsCandidate: 'island-home-props-v1', loaded: [...this.assets.keys()], failed: [...this.failed], pending: [...this.pending], instances: this.slots.length, byKind: Object.fromEntries([...this.assets.keys()].map(kind => [kind, this.slots.filter(slot => slot.target.userData.runtimeAssetKind === kind).length])), far: this.slots.filter(s => s.isFar).length }; }
+    describe() { return { candidate: 'island-life-runtime-assets-v3', homePropsCandidate: 'island-home-props-v1', loaded: [...this.assets.keys()], failed: [...this.failed], pending: [...this.pending, ...this.queued], loading: [...this.pending], instances: this.slots.length, byKind: Object.fromEntries([...this.assets.keys()].map(kind => [kind, this.slots.filter(slot => slot.target.userData.runtimeAssetKind === kind).length])), far: this.slots.filter(s => s.isFar).length }; }
     detach() {
         for (const slot of this.slots) { slot.visual.removeFromParent(); slot.porch?.geometry.dispose(); slot.porch?.material.dispose(); slot.original.forEach(([o, visible]) => { o.visible = visible; }); }
-        this.slots = []; this.root = undefined;
+        this.slots = []; this.targets.clear(); this.queued.clear(); this.root = undefined;
     }
     dispose() {
         this.disposed = true; this.detach();

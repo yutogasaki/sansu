@@ -3,6 +3,7 @@ import { lifePersistenceMessage } from './lifePersistenceMessage';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { lifeEnabled, type LifeRecord } from '../../../domain/islandLife/model';
 import { terminalFacts, updateLife, type LifeIntent } from '../../../domain/islandLife/repository';
+import { startLifeTiming } from './startupTiming';
 
 export function useIslandLife(profileId: string, active: boolean) {
     const [record, setRecord] = useState<LifeRecord>();
@@ -35,6 +36,7 @@ export function useIslandLife(profileId: string, active: boolean) {
                 ownRefresh.current = undefined;
             }
             operation = (async () => {
+                const finishRestore = !latest.current ? startLifeTiming('initial-restore') : undefined;
                 try {
                     const facts = await terminalFacts(profileId);
                     if (token !== generation.current || request && (!visible.current || screenToken !== screenGeneration.current)) return false;
@@ -56,7 +58,7 @@ export function useIslandLife(profileId: string, active: boolean) {
                         setError(lifePersistenceMessage(e)); retryIntent.current = request;
                     }
                     return false;
-                }
+                } finally { finishRestore?.(); }
             })();
             running.current = operation;
             return await operation;

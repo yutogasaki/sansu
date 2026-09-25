@@ -20,11 +20,13 @@ import type { CameraPanFraming, CameraPanPoint } from '../three/cameraPanFraming
 import { buildLifeScene } from './scene';
 import type { PlacementPreview } from './placement';
 import { LifePresentationClock } from './presentationClock';
+import { canReuseLifeScene, type LifeSceneInput } from './sceneReuse';
+import { startLifeTiming, timeLifeWork } from './startupTiming';
 
 type Content = ReturnType<typeof buildLifeScene>;
-type LifeWorldProps = { onFrame?: (state: LifeState) => void; inspectShadow?: (itemId: string, residentId: ResidentId, worldAt: number) => void; observationOpen?: boolean; footstepInput?: FootstepInput; prepareFootstepReplay?: () => Promise<DiscoveryScene | undefined>; profileId?: string; presented?: (event: DiscoveryScene, evidence: PresentationEvidence) => void; state: LifeState; selected?: string; cell?: Cell; placement?: PlacementPreview; onCell: (cell: Cell) => void; controlsVisible: boolean; children: ReactNode };
+type LifeWorldProps = { onFrame?: (state: LifeState) => void; inspectShadow?: (itemId: string, residentId: ResidentId, worldAt: number) => void; observationOpen?: boolean; footstepInput?: FootstepInput; prepareFootstepReplay?: () => Promise<DiscoveryScene | undefined>; profileId?: string; presented?: (event: DiscoveryScene, evidence: PresentationEvidence) => void; state: LifeState; changeKey?: string; selected?: string; cell?: Cell; placement?: PlacementPreview; onCell: (cell: Cell) => void; controlsVisible: boolean; children: ReactNode };
 
-export default function LifeWorld({ onFrame, inspectShadow, observationOpen = false, footstepInput, prepareFootstepReplay, profileId, presented, state, selected, cell, placement, onCell, controlsVisible, children }: LifeWorldProps) {
+export default function LifeWorld({ onFrame, inspectShadow, observationOpen = false, footstepInput, prepareFootstepReplay, profileId, presented, state, changeKey, selected, cell, placement, onCell, controlsVisible, children }: LifeWorldProps) {
     const behindObservation = useRef(observationOpen);
     useEffect(() => { behindObservation.current = observationOpen; }, [observationOpen]);
     const footsteps = useRef({ input: footstepInput, prepareReplay: prepareFootstepReplay });
@@ -35,7 +37,7 @@ export default function LifeWorld({ onFrame, inspectShadow, observationOpen = fa
     const stateAtMount = useRef(state), placementAtMount = useRef(placement);
     const frameObserver = useRef(onFrame);
     useEffect(() => { frameObserver.current = onFrame; }, [onFrame]);
-    const update = useRef<((state: LifeState, selected?: string, cell?: Cell, placement?: PlacementPreview) => void) | null>(null);
+    const update = useRef<((input: LifeSceneInput) => void) | null>(null);
     const controlCamera = useRef<((action: IslandCameraAction) => void) | undefined>(undefined);
     const overviewRef = useRef(false);
     const reframe = useRef<(() => void) | undefined>(undefined);
@@ -45,14 +47,28 @@ export default function LifeWorld({ onFrame, inspectShadow, observationOpen = fa
     useEffect(() => { choose.current = onCell; }, [onCell]);
     useEffect(() => {
         const node = host.current; if (!node) return;
+        const finishFirstFrame = startLifeTiming('world-first-frame');
+        let firstRenderedAt: number | undefined, interactionAt = -Infinity;
+        const noteInteraction = () => { interactionAt = performance.now(); };
+        window.addEventListener('pointerdown', noteInteraction, true);
+        window.addEventListener('pointermove', noteInteraction, true);
+        window.addEventListener('wheel', noteInteraction, { capture: true, passive: true });
+        window.addEventListener('keydown', noteInteraction, true);
         let renderer: T.WebGLRenderer;
-        try { renderer = new T.WebGLRenderer({ antialias: true }); } catch { setFailed(true); return; }
+        try { renderer = timeLifeWork('renderer-create', () => new T.WebGLRenderer({ antialias: true })); } catch {
+            window.removeEventListener('pointerdown', noteInteraction, true); window.removeEventListener('pointermove', noteInteraction, true);
+            window.removeEventListener('wheel', noteInteraction, true); window.removeEventListener('keydown', noteInteraction, true);
+            setFailed(true); return;
+        }
         let content: Content | undefined, currentState = stateAtMount.current, currentPlacement = placementAtMount.current;
+        let builtInput: LifeSceneInput | undefined;
         const presentationClock = new LifePresentationClock();
         let runtimeAssets: LifeRuntimeAssets | undefined, assetsCancelled = false;
         let assetsStarted = false;
+        const canStartAsset = () => firstRenderedAt !== undefined && performance.now() - firstRenderedAt >= 200
+            && performance.now() - interactionAt >= 250 && !currentPlacement;
         const startAssets = () => {
-            if (assetsStarted || !anyRuntimeAssetsEnabled) return;
+            if (assetsStarted || !anyRuntimeAssetsEnabled || !canStartAsset()) return;
             assetsStarted = true;
             node.dataset.runtimeAssets = 'loading';
             void import('./runtimeAssets').then(({ LifeRuntimeAssets }) => {
@@ -139,14 +155,21 @@ export default function LifeWorld({ onFrame, inspectShadow, observationOpen = fa
             node.dataset.lifeCamera = JSON.stringify({ projection: camera.projectionMatrix.toArray(), view: camera.matrixWorldInverse.toArray(), cameraView: cameraControls.view });
         };
         reframe.current = () => { cameraControls.reset(false); resize(); };
-        update.current = (next, selection, point, preview) => {
+        update.current = (input) => {
+            const { state: next, selected: selection, cell: point, placement: preview } = input;
             presentationClock.prepare(next, performance.now());
             if (document.visibilityState !== 'visible' || renderer.getContext().isContextLost()) presentationClock.resume(performance.now(), true);
+            if (content && canReuseLifeScene(builtInput, input)) {
+                currentState = next; currentPlacement = preview;
+                builtInput = input;
+                return;
+            }
             if (Boolean(preview) !== Boolean(currentPlacement)) cameraControls.reset(false);
             currentState = next; currentPlacement = preview;
             runtimeAssets?.detach();
             if (content) { scene.remove(content.root); content.dispose(); }
-            content = buildLifeScene(next, selection, point, preview); scene.add(content.root);
+            content = timeLifeWork('scene-build', () => buildLifeScene(next, selection, point, preview)); scene.add(content.root);
+            builtInput = input;
             runtimeAssets?.bind(content.root);
             node.dataset.lifeWorldStyle = content.root.userData.worldStyle;
             const atmosphere = next.worldStyle === 'canopy-dots-c3-v1' ? canopyAtmosphereStudy : undefined;
@@ -156,7 +179,7 @@ export default function LifeWorld({ onFrame, inspectShadow, observationOpen = fa
             node.dataset.lifeVisualCandidate = atmosphere ? (canopyClearanceCandidate ?? `canopy-atmosphere-${atmosphere}-study-v1`) : canopy?.userData.sculptStatus ? canopy.userData.visualCandidate : content.root.getObjectByName('life-landscape')?.userData.visualCandidate ?? canopy?.userData.visualCandidate ?? content.root.userData.worldStyle;
             node.dataset.lifeLandscapeVersion = next.landscapeVersion ?? 'original';
             node.dataset.lifeTourVersion = String(next.tourVersion ?? 0);
-            resize();
+            timeLifeWork('scene-frame', resize);
         };
         const observer = new ResizeObserver(resize); observer.observe(node);
         const ray = new T.Raycaster();
@@ -224,7 +247,13 @@ export default function LifeWorld({ onFrame, inspectShadow, observationOpen = fa
             if (content && document.visibilityState === 'visible' && !renderer.getContext().isContextLost()) { content.faceIsolationSigns(camera);
                 runtimeAssets?.update(camera, node.clientHeight);
                 if (runtimeAssets) node.dataset.runtimeAssets = JSON.stringify(runtimeAssets.describe());
-                renderer.render(scene, camera); node.dataset.rendered = 'true'; startAssets(); frameObserver.current?.(content.snapshot()); footprint.sample(content, performance.now());
+                if (firstRenderedAt === undefined) {
+                    timeLifeWork('first-render-submit', () => renderer.render(scene, camera));
+                    firstRenderedAt = performance.now(); finishFirstFrame();
+                } else renderer.render(scene, camera);
+                node.dataset.rendered = 'true'; startAssets();
+                runtimeAssets?.advanceLoading(performance.now(), canStartAsset());
+                frameObserver.current?.(content.snapshot()); footprint.sample(content, performance.now());
                 presentationClock.resume(performance.now());
                 shadows.sample(performance.now());
                 if (discovery.current.profileId !== discoveryOwner) {
@@ -277,6 +306,8 @@ export default function LifeWorld({ onFrame, inspectShadow, observationOpen = fa
         renderer.domElement.addEventListener('webglcontextlost', lost); renderer.domElement.addEventListener('webglcontextrestored', restored);
         return () => {
             assetsCancelled = true; runtimeAssets?.dispose(); delete node.dataset.runtimeAssets;
+            window.removeEventListener('pointerdown', noteInteraction, true); window.removeEventListener('pointermove', noteInteraction, true);
+            window.removeEventListener('wheel', noteInteraction, true); window.removeEventListener('keydown', noteInteraction, true);
             collector?.cancel(); cancelAnimationFrame(raf); observer.disconnect(); update.current = null; controlCamera.current = undefined; reframe.current = undefined; cameraControls.cancel(); shadows.dispose(); footprint.dispose(); studyLighting?.dispose(); content?.dispose();
             document.removeEventListener('visibilitychange', hidden);
             renderer.domElement.removeEventListener('click', click);
@@ -291,7 +322,7 @@ export default function LifeWorld({ onFrame, inspectShadow, observationOpen = fa
             emotes.forEach(badge => badge.remove()); delete node.dataset.lifePoses; delete node.dataset.lifeRender; delete node.dataset.lifeCamera;
         };
     }, []);
-    useEffect(() => { update.current?.(state, selected, cell, placement); }, [state, selected, cell, placement]);
+    useEffect(() => { update.current?.({ state, changeKey, selected, cell, placement }); }, [state, changeKey, selected, cell, placement]);
     return <><div ref={host} className="life-world" data-placing={Boolean(placement)} />
         {placement && <div className="life-placement-camera">
             <IslandCameraToolbar view={cameraView} onAction={action => controlCamera.current?.(action)} />
