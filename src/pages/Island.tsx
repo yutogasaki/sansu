@@ -9,7 +9,6 @@ import type { TutorialId } from '../domain/island/tutorialState';
 import { useLearningSessionLease } from '../hooks/useLearningSessionLease';
 import { ChallengePanel } from '../components/challenge/ChallengePanel';
 import { ChallengeHomeCard } from '../components/challenge/ChallengeHomeCard';
-import HomeJourneyPreview from '../components/island/homeJourney/HomeJourneyPreview';
 import { homeJourneyEnabled } from '../domain/island/homeJourney';
 import { crossedHomeJourneyStep } from '../components/island/homeJourney/growthReveal';
 import { useEffect, useEffectEvent, useLayoutEffect, useRef, useState } from 'react';
@@ -33,12 +32,12 @@ import type { IslandBasicItemKind, IslandHabitatId, IslandItem, IslandLearningAc
 import { selectIslandGrowthTarget, setIslandItemAppearance } from '../domain/island/growthRepository';
 import { holdPwaUpdateForCriticalPersistence, reachPwaUpdateCheckpoint } from '../pwa';
 import { playSound, setSoundEnabled } from '../utils/audio';
-import IslandStage from '../components/island/IslandStage';
+
 import { IslandInventory, IslandPlacement, IslandPlacementActions, IslandPlay, IslandRewards } from '../components/island/IslandItems';
 import { useIslandActions } from '../components/island/useIslandActions';
 import { useIslandDiscoveries } from '../components/island/useIslandDiscoveries';
 import { IslandDistricts, IslandGrowthChoices, IslandGrowthSummary, type IslandDistrict } from '../components/island/IslandGrowth';
-import { IslandAlbum } from '../components/island/IslandAlbum';
+
 import { getIslandGrowthMilestone, isIslandHabitatUnlocked } from '../domain/island/growth';
 import { IslandMilestoneNotice, IslandMilestoneReturn, type IslandMilestone } from '../components/island/IslandMilestone';
 import { runIslandMilestoneLearningAction, useIslandMilestoneNotice } from '../components/island/useIslandMilestoneNotice';
@@ -49,7 +48,7 @@ import { IslandSoundControl } from '../components/island/IslandSoundControl';
 import { islandFeedbackForReceipt, type IslandLearningFeedback, type IslandReaction } from '../components/island/learningFeedback';
 import { getIslandCosmetics } from '../domain/island/customization';
 import type { IslandAppearanceSlotId } from '../domain/island/appearance';
-import { IslandCustomization, IslandCustomizationPreviewNotice } from '../components/island/IslandCustomization';
+import { IslandCustomizationPreviewNotice } from '../components/island/IslandCustomizationPreviewNotice';
 import { IslandRewardGoal, IslandRewardGoalFeedback } from '../components/island/IslandRewardGoal';
 import { IslandHomeActions } from '../components/island/IslandHomeActions';
 import { IslandLearningKeepsakes } from '../components/island/IslandLearningKeepsakes';
@@ -63,31 +62,30 @@ import { useIslandCustomization } from '../components/island/useIslandCustomizat
 import { IslandStarReceipt } from '../components/island/IslandStarReceipt';
 import { islandPlanStars } from '../domain/island/pacing';
 import { islandStarReceipt } from '../components/island/islandStarReceiptEligibility';
-import { IslandDiscoveryGuide } from '../components/island/IslandDiscoveryGuide';
+
 import { islandDiscoveryGuide } from '../components/island/islandDiscoveryHints';
 import { islandGrowthPreview } from '../components/island/islandGrowthPreview';
 import { getIslandExperience, ISLAND_RESIDENT_IDS, ISLAND_RESIDENT_PROFILES, type IslandResidentId } from '../domain/island/experience';
 import { getOwnedIslandFurniture, isIslandOptionalFurnitureKind, type IslandOptionalFurnitureKind } from '../domain/island/furniture';
-import { IslandFurniture } from '../components/island/IslandFurniture';
+
 import { useIslandFurniture } from '../components/island/useIslandFurniture';
 import { islandFurnitureTrial } from '../components/island/islandFurnitureTrial';
 import { furniturePlacementKey, type IslandFurniturePlacementResult } from '../components/island/islandFurniturePlacement';
-import { IslandExperiencePanel } from '../components/island/IslandExperiencePanel';
+
 import { useIslandExperience } from '../components/island/useIslandExperience';
-import { IslandExpression } from '../components/island/IslandExpression';
+
 import { useIslandExpression } from '../components/island/useIslandExpression';
 import { getIslandExpression, type IslandExpressionEquipAction, type IslandExpressionItemId, type IslandExpressionRequirement } from '../domain/island/expression';
 import { useIslandAmbience } from '../components/island/useIslandAmbience';
-import { IslandPhotoCamera, IslandPhotoGallery } from '../components/island/IslandPhotos';
 import { useIslandPhotos } from '../components/island/useIslandPhotos';
-import { IslandSharedMemories, type IslandDisplayPreview } from '../components/island/IslandSharedMemories';
+import type { IslandDisplayPreview } from '../components/island/IslandSharedMemories';
 import { findSharedDisplayPosition } from '../components/island/islandSharedPlacement';
-import { IslandWorkReplay } from '../components/island/IslandWorkReplay';
+
 import { useIslandSharedMemories } from '../components/island/useIslandSharedMemories';
 import { isValidSharedDisplayPlacement, resolveSharedTarget, SHARED_DISPLAY_IDS, sharedDisplayKey, sharedTargetName, sharedWorkCaptureKey,
     type SharedDisplayId, type SharedTarget, type SharedTargetRef } from '../domain/island/sharedMemories';
 import type { IslandSharedSceneRequest, IslandStageState } from '../components/island/three/types';
-import { IslandWorkshop, type IslandWorkshopView } from '../components/island/IslandWorkshop';
+import type { IslandWorkshopView } from '../components/island/IslandWorkshop';
 import { useIslandWorkshop } from '../components/island/useIslandWorkshop';
 import { useIslandWorkshopAudio } from '../components/island/useIslandWorkshopAudio';
 import { getIslandWorkshop, getWorkshopSpecimenName, workshopSpecimenIdentity } from '../domain/island/workshop';
@@ -114,6 +112,19 @@ function sharingHint(items: IslandItem[], selectedId: string) {
 }
 
 const IslandLife = lazy(() => import('../components/island/life/IslandLife'));
+const HomeJourneyPreview = lazy(() => import('../components/island/homeJourney/HomeJourneyPreview'));
+const IslandStage = lazy(() => import('../components/island/IslandStage'));
+const IslandAlbum = lazy(() => import('../components/island/IslandAlbum').then(module => ({ default: module.IslandAlbum })));
+const IslandCustomization = lazy(() => import('../components/island/IslandCustomization').then(module => ({ default: module.IslandCustomization })));
+const IslandDiscoveryGuide = lazy(() => import('../components/island/IslandDiscoveryGuide').then(module => ({ default: module.IslandDiscoveryGuide })));
+const IslandFurniture = lazy(() => import('../components/island/IslandFurniture').then(module => ({ default: module.IslandFurniture })));
+const IslandExperiencePanel = lazy(() => import('../components/island/IslandExperiencePanel').then(module => ({ default: module.IslandExperiencePanel })));
+const IslandExpression = lazy(() => import('../components/island/IslandExpression').then(module => ({ default: module.IslandExpression })));
+const IslandPhotoCamera = lazy(() => import('../components/island/IslandPhotos').then(module => ({ default: module.IslandPhotoCamera })));
+const IslandPhotoGallery = lazy(() => import('../components/island/IslandPhotos').then(module => ({ default: module.IslandPhotoGallery })));
+const IslandSharedMemories = lazy(() => import('../components/island/IslandSharedMemories').then(module => ({ default: module.IslandSharedMemories })));
+const IslandWorkReplay = lazy(() => import('../components/island/IslandWorkReplay').then(module => ({ default: module.IslandWorkReplay })));
+const IslandWorkshop = lazy(() => import('../components/island/IslandWorkshop').then(module => ({ default: module.IslandWorkshop })));
 
 function IslandSession({ profile }: { profile: UserProfile }) {
     const navigate = useNavigate();
@@ -670,7 +681,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         {(error || loadError) && <div className="island-error" role="alert"><p>{error}</p><button className="island-text-button" onClick={() => window.location.reload()}>よみなおす</button></div>}
         {screen === 'placement' && preview && <IslandPlacementActions valid={valid} disabled={busy} onSave={savePlacement} onCancel={cancelPlacement} />}
         {active && screen === 'home' && lifeEnabled() && <Suspense fallback={<p role="status">しまを ひらいているよ…</p>}><IslandLife controls={lifeControls} onHome={enterHouse} disabled={busy || preparingLearning} islandName={island.experience?.islandName ?? 'ふしぎな しま'} /></Suspense>}
-        {active && homeJourneyScene && <HomeJourneyPreview key={profile.id} state={island.homeJourney}
+        {active && homeJourneyScene && <Suspense fallback={<p role="status">しまを ひらいているよ…</p>}><HomeJourneyPreview key={profile.id} state={island.homeJourney}
             room={keepsakeRoomActive ? { state: island.learningKeepsakes, completedSets: island.completedSets, selectedId: keepsakeFocus, challengeDisplayed: challengeSummary?.displayed } : undefined}
             onHomeEnter={!busy && screen === 'home' ? enterHouse : undefined}
             onHomeAction={!busy && screen === 'keepsakes' ? action => {
@@ -679,10 +690,10 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                 else if (!keepsakes.pending) { keepsakes.select(action.id); setKeepsakeFocus(action.id); setHouseSection('keepsakes'); }
             } : undefined}
             photographing={screen === 'camera'} photoRequestId={screen === 'camera' ? photos.requestId : undefined} onPhoto={photos.consume}
-            growthAt={homeJourneyGrowthAt} onGrowthShown={() => setHomeJourneyGrowthAt(undefined)} />}
+            growthAt={homeJourneyGrowthAt} onGrowthShown={() => setHomeJourneyGrowthAt(undefined)} /></Suspense>}
         {/* Life learning hides the world. Do not create a legacy WebGL world
             behind the questions just to destroy it when returning home. */}
-        {active && !(lifeEnabled() && (screen === 'home' || learning)) && !homeJourneyScene && !['help', 'album', 'photos', 'inventory', 'challenge'].includes(screen) && <IslandStage onTutorialReady={setTutorialStageReady} onCameraPractice={() => tutorial.practice('view')} closeHomeView={screen === 'home'} compactCameraControls={screen === 'home' || screen === 'play'} items={stageIsland.items} completedSets={island.completedSets} pulse={pulse} learning={learning}
+        {active && !(lifeEnabled() && (screen === 'home' || learning)) && !homeJourneyScene && !['help', 'album', 'photos', 'inventory', 'challenge'].includes(screen) && <Suspense fallback={<p role="status">しまを ひらいているよ…</p>}><IslandStage onTutorialReady={setTutorialStageReady} onCameraPractice={() => tutorial.practice('view')} closeHomeView={screen === 'home'} compactCameraControls={screen === 'home' || screen === 'play'} items={stageIsland.items} completedSets={island.completedSets} pulse={pulse} learning={learning}
             challengeDisplayed={challengeSummary?.displayed}
             directInteractions={screen === 'home' && !busy && !homeMenuOpen && !tutorial.current && !direct?.preview}
             directPlaySelection={direct?.target.kind === 'resident'}
@@ -797,13 +808,13 @@ function IslandSession({ profile }: { profile: UserProfile }) {
             onItemSelect={!learning && !busy && !['customization', 'guide', 'growth', 'experience', 'expression', 'showcase', 'workshop', 'camera', 'photos', 'shared', 'furniture', 'keepsakes'].includes(screen) ? id => {
                 if (screen === 'play') play(id);
                 else { const item = island.items.find(candidate => candidate.id === id); if (item) select(item); }
-            } : undefined} />}
+            } : undefined} /></Suspense>}
         {tutorial.current && !customization.error && <IslandTutorial id={tutorial.current.id} onShown={tutorial.shown} onClose={tutorial.dismiss}
             text={tutorial.current.id === 'growth' && screen === 'home' ? '学んだぶん、しまが 育ったよ。育った すがたを みてみよう。' : undefined}
             action={tutorial.current.id === 'growth' && screen === 'home' ? 'みにいく' : undefined}
             onAction={() => { tutorial.practice('growth'); setAlbumComparison(latestMilestone?.habitats[0] ?? island.growth?.focus ?? 'garden'); setScreen('album'); }} />}
         {screen === 'placement' && <IslandDistricts island={island} value={district} disabled={busy} onChange={setDistrict} />}
-        {learning && learningLease !== 'ready' ? <section className="island-sheet" role="status"><p>{learningLease === 'loading' ? 'じゅんびしているよ' : 'ほかの がめんの まなびを とじてから、もういちど ひらこう。'}</p></section>
+        <Suspense fallback={<section className="island-sheet" role="status"><p>じゅんびしているよ…</p></section>}>{learning && learningLease !== 'ready' ? <section className="island-sheet" role="status"><p>{learningLease === 'loading' ? 'じゅんびしているよ' : 'ほかの がめんの まなびを とじてから、もういちど ひらこう。'}</p></section>
             : learning && nextPlanError ? <section className="island-sheet island-learning-retry">
             <p role="status">{plan?.status === 'completed' ? 'ここまで といたぶんは のこっているよ。' : 'まだ もんだいを ひらけなかったよ。'}</p>
             <button className="island-primary" disabled={busy} onClick={() => void begin()}>つづきの もんだいを ひらく</button>
@@ -926,12 +937,12 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                         const look = islandGrowthPreview(island, habitat);
                         setGrowthViewHabitat(look ? habitat : 'garden'); setGrowthPreviewHabitat(look ? habitat : undefined); setScreen('growth');
                     }} />
-                : screen === 'album' ? <IslandAlbum island={island} initialComparison={albumComparison} disabled={busy} closeDisabled={comparisonDisabled} onClose={home}
+                : screen === 'album' ? <Suspense fallback={<section className="island-sheet" role="status"><p>アルバムを ひらいているよ…</p></section>}><IslandAlbum island={island} initialComparison={albumComparison} disabled={busy} closeDisabled={comparisonDisabled} onClose={home}
                     onPhotos={openPhotos}
                     onShared={() => openShared()}
                     onWorkshop={id => { openWorkshop(); setWorkshopView(view => ({ ...view, mode: id ? 'observe' : 'build', selectedSpecimenId: id ?? view.selectedSpecimenId })); }}
                     onPlace={id => { const item = island.items.find(candidate => candidate.id === id); if (item) select(item); }}
-                    onTry={tryDiscovery} />
+                    onTry={tryDiscovery} /></Suspense>
                 : screen === 'placement' && preview ? <IslandPlacement hideActions item={preview} valid={valid} disabled={busy} availability={placementAvailability}
                     onFindUsable={furniturePlacementChoice ? () => { setPlacementSuggestionId(undefined); setFurniturePlacementSearch(crypto.randomUUID()); } : undefined}
                     onArrangeSurroundings={furniturePlacementChoice ? () => {
@@ -968,7 +979,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                             <IslandRewardGoalFeedback controls={rewardGoal} disabled={busy} />
                         </div>
                     </IslandHomeActions>
-                </section>}
+                </section>}</Suspense>
         {plan && slot && <IslandLearningPanel plan={plan} active={active && learning && learningLease === 'ready' && !nextPlanError}
             hintPending={busyKind === 'learning-hint' && active && learning && !preparingLearning}
             intro={isFirstIslandPlan(plan)} observation={active && learning && !listening.isOpen ? observation : undefined}

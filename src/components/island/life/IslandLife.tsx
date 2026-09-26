@@ -10,16 +10,13 @@ import { useLiveDiscovery } from './useLiveDiscovery';
 import { placementUndo } from '../../../domain/islandLife/placementUndo';
 import { observationVisit } from '../../../domain/islandLife/observationVisit';
 import { removalRefund } from '../../../domain/islandLife/purchases';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { Sparkles, Sprout, Home, Move, RotateCw, Archive, Trash2, Check, X, Undo2, Footprints } from 'lucide-react';
 import { CATALOG, LIFE_CANDIDATE, LIFE_RULES, learningDay, type Cell, type ItemKind, type LifeCommand, type ResidentId } from '../../../domain/islandLife/model';
 import { cellKey, districts, isHouse, isolatedItems, landCells } from '../../../domain/islandLife/space';
 import { replayLife } from '../../../domain/islandLife/simulation';
 import { timeLifeWork } from './startupTiming';
 import type { useIslandLife } from './useIslandLife';
-import LifeWorld from './LifeWorld';
-import LifeObservation from './LifeObservation';
-import LifeMemories from './LifeMemories';
 import LifeProductPreview from './LifeProductPreview';
 import LifeResidentsSummary from './LifeResidentsSummary';
 import LifeResidentPortrait from './LifeResidentPortrait';
@@ -40,6 +37,10 @@ import './life-belongings.css';
 import './life-resources.css';
 import './life-world-first.css';
 import './life-isolation.css';
+
+const LifeObservation = lazy(() => import('./LifeObservation'));
+const LifeMemories = lazy(() => import('./LifeMemories'));
+const LifeWorld = lazy(() => import('./LifeWorld'));
 
 const productStories = { fence: 'ならべて おにわを かざろう', planter: 'おはなの はちを すきな ばしょへ', flower: 'めを そだてて おはなに', bench: 'ひとやすみの ばしょ', swing: 'すわって ゆらゆら', lantern: 'あかりの そばに あつまるかな', sapling: '木かげに そだつ なえ', 'water-bowl': '水を のぞく うつわ', 'picnic-table': 'おやつと おしゃべりの ばしょ', pinwheel: 'かぜと くるくる', 'flower-arch': 'おはなの したを くぐろう', sandbox: 'すなで おやまや おしろを', 'garden-hut': 'どうぐを だして おていれ', library: 'ほんを ひらいて ひとやすみ' };
 const tabOptions = [
@@ -88,6 +89,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
             worldStyle: import.meta.env.DEV && import.meta.env.VITE_ISLAND_LIFE_PREVIEW === 'true'
                 ? 'canopy-dots-c3-v1' as const : 'moon-garden-v1' as const };
     }, [record]);
+    const places = useMemo(() => state ? districts(state) : [], [state]);
     useEffect(() => {
         if (!observed) { setGathering(undefined); observationOrigin.current = undefined; return; }
         const target = state?.items.find(i => i.id === observed && i.cell);
@@ -136,8 +138,10 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
         return () => window.removeEventListener('keydown', close);
     }, [menuOpen, dockOpen, observed, memoriesOpen]);
     useEffect(() => {
-        if (!record) return;
-        const current = replayLife(record);
+        if (!record || !state) return;
+        // Cues describe the same saved state as the world. Reuse its replay;
+        // even a replay-cache hit clones and validates the saved history.
+        const current = state;
         let previousDrops = lastObservedDrops.current;
         let previousLight = lastObservedLight.current;
         let previousGrowth = lastObservedGrowth.current;
@@ -180,7 +184,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
         if (transitions.length) setGrownItems(transitions);
         const observations = observationTransitions(current, previousObservation);
         if (observations.length) setObservationCues(observations);
-    }, [record]);
+    }, [record, state]);
     useEffect(() => {
         if (earnedDrops === undefined && earnedLight === undefined && !grownItems.length && !observationCues.length) return;
         const id = window.setTimeout(() => { setEarnedDrops(undefined); setEarnedLight(undefined); setGrownItems([]); setObservationCues([]); }, 7000);
@@ -189,8 +193,8 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
     if (!state || !record) return <section className="life-controls"><p role="status">{error ?? 'しまを ひらいているよ…'}</p>
         <button className="island-secondary" onClick={() => void refresh()}>もういちど</button></section>;
     const locked = disabled || busy;
-    const places = districts(state);
-    const isolatedIds = new Set(state.placementVersion === 1 ? isolatedItems(state).map(i => i.id) : []);
+    const isolatedIds = new Set(menuOpen && tab === 'items' && !placement && state.placementVersion === 1
+        ? isolatedItems(state).map(i => i.id) : []);
     const doAction = async (command: LifeCommand, message: string, undoOf?: string, walkSource: 'live' | 'current-context-test' = 'live') => {
         if (locked || actionRunning.current) return;
         setNotice('');
@@ -199,7 +203,10 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
             if (undoOf) setUndo(undefined);
             else if (['buy', 'move', 'store', 'rotate'].includes(command.type)) setUndo({ profileId: record.profileId, actionId: id });
             setNotice(message); setKind(undefined); setCell(undefined); setMoving(false); setRemoving(false);
-            if (command.type === 'visit' && state.footstepMagicVersion) { setFootstepInput({ profileId: record.profileId, id, targetId: command.itemId, source: walkSource }); showWorld(); }
+            if (command.type === 'visit') {
+                if (state.footstepMagicVersion) setFootstepInput({ profileId: record.profileId, id, targetId: command.itemId, source: walkSource });
+                showWorld();
+            }
             if (command.type === 'buy') { setSelected(id); setTab('items'); }
             if (command.type === 'buy' || command.type === 'move') showWorld();
             if (command.type === 'remove') setSelected(undefined);
@@ -251,10 +258,11 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
         if (error) { setMenuOpen(true); setDockOpen(false); return; }
         setDockOpen(true);
     };
-    const products = lifeCatalogKinds().filter(kind => !isFacility(kind) || !state.items.some(i => i.kind === kind));
+    const products = menuOpen && !placement && tab === 'build'
+        ? lifeCatalogKinds().filter(kind => !isFacility(kind) || !state.items.some(i => i.kind === kind)) : [];
     const pageCount = Math.max(1, Math.ceil((tab === 'build' ? products.length : state.items.length) / 2));
     const currentPage = Math.min(page, pageCount - 1);
-    const cells = landCells(state), cellPages = Math.ceil(cells.length / 6);
+    const cells = placement && gridOpen ? landCells(state) : [], cellPages = Math.ceil(cells.length / 6);
     const pager = <div className="life-pager"><button aria-label="まえの ページ" disabled={currentPage === 0} onClick={() => setPage(currentPage - 1)}>←</button><span>{currentPage + 1} / {pageCount}</span><button aria-label="つぎの ページ" disabled={currentPage + 1 === pageCount} onClick={() => setPage(currentPage + 1)}>→</button></div>;
     const goal = Math.min(LIFE_RULES.dailyGoal, state.days[learningDay(state.now)] ?? 0);
     const notificationTab = grownItems.length || observationCues.length ? 'items' : earnedDrops !== undefined ? 'build' : 'style';
@@ -272,7 +280,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
         </button>}
         </div>
         <div className="life-viewport">
-        <LifeWorld onFrame={clearance.onFrame} inspectShadow={(itemId, residentId, worldAt) => { if (locked) return; showWorld(); setGathering(undefined); setObservedResident(residentId); setShadowRequest({ id: crypto.randomUUID(), worldAt, monotonicAt: performance.now() }); setObserved(itemId); }} observationOpen={Boolean(observed || memoriesOpen)} footstepInput={footstepInput} profileId={record.profileId} presented={liveDiscovery.presented} state={state} changeKey={JSON.stringify([record.profileId, record.version,
+        <Suspense fallback={<p className="life-world-loading" role="status">しまを えがいているよ…</p>}><LifeWorld onFrame={clearance.onFrame} inspectShadow={(itemId, residentId, worldAt) => { if (locked) return; showWorld(); setGathering(undefined); setObservedResident(residentId); setShadowRequest({ id: crypto.randomUUID(), worldAt, monotonicAt: performance.now() }); setObserved(itemId); }} observationOpen={Boolean(observed || memoriesOpen)} footstepInput={footstepInput} profileId={record.profileId} presented={liveDiscovery.presented} state={state} changeKey={JSON.stringify([record.profileId, record.version,
             record.actions.length, record.actions[record.actions.length - 1]?.id,
             record.credits.length, record.credits[record.credits.length - 1]?.id,
             record.clockIntents.length, record.clockIntents[record.clockIntents.length - 1],
@@ -284,16 +292,16 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
             <button ref={informationTrigger} className="life-home-action" type="button" aria-label="しまの ようす" aria-expanded={dockOpen} aria-controls="life-dock-dialog" onClick={openLifeControls}>
                 <LifeResidentPortrait resident="pokomoko" style={state.heroStyle} /><span>ようす</span>
             </button>
-        </LifeWorld>
+        </LifeWorld></Suspense>
         {observed && !placement && !menuOpen && !dockOpen && (() => {
             const target = state.items.find(i => i.id === observed && i.cell && (gathering || ['flower', 'sapling', 'water-bowl', 'bench', 'picnic-table', 'library', 'garden-hut'].includes(i.kind)));
-            return target ? <LifeObservation key={`${record.profileId}:${target.id}:${target.cell!.x}:${target.cell!.z}:${target.style}`}
+            return target ? <Suspense fallback={<p role="status">しまの ようすを ひらいているよ…</p>}><LifeObservation key={`${record.profileId}:${target.id}:${target.cell!.x}:${target.cell!.z}:${target.style}`}
                 record={record} state={state} item={target} initialResidentId={observedResident} initialShadowRequest={shadowRequest} gathering={gathering} close={() => setObserved(undefined)} memories={openMemories} tryVisit={() => tryObservation(target.id)} selectionFailure={error}
-                tryRelation={(targetId, residentId) => locked ? Promise.resolve(false) : refresh({ id: crypto.randomUUID(), revision: record.revision, command: { type: 'observe-relation', itemId: target.id, residentId, ...(targetId ? { targetId } : {}) } })} /> : null;
+                tryRelation={(targetId, residentId) => locked ? Promise.resolve(false) : refresh({ id: crypto.randomUUID(), revision: record.revision, command: { type: 'observe-relation', itemId: target.id, residentId, ...(targetId ? { targetId } : {}) } })} /></Suspense> : null;
         })()}
-        {memoriesOpen && <LifeMemories key={record.profileId} profileId={record.profileId} state={state} walk={id => { setMemoriesOpen(false); void doAction({ type: 'visit', itemId: id }, 'いきさきを きめたよ', undefined, 'current-context-test'); }} close={() => setMemoriesOpen(false)}
+        {memoriesOpen && <Suspense fallback={<p role="status">しまの おもいでを ひらいているよ…</p>}><LifeMemories key={record.profileId} profileId={record.profileId} state={state} walk={id => { setMemoriesOpen(false); void doAction({ type: 'visit', itemId: id }, 'いきさきを きめたよ', undefined, 'current-context-test'); }} close={() => setMemoriesOpen(false)}
             observe={(id, residentId) => { setGathering(undefined); setMemoriesOpen(false); setObservedResident(residentId); setObserved(id); if (!residentId) tryObservation(id); }}
-            observeGathering={group => { setGathering(group); setMemoriesOpen(false); setObserved(group.participantIds[0]); }} />}
+            observeGathering={group => { setGathering(group); setMemoriesOpen(false); setObserved(group.participantIds[0]); }} /></Suspense>}
         {placement && <div className="life-placement life-controls" data-life-placement-valid={placement.valid} data-life-placement-cell={cell && cellKey(cell)}>
             <h3>{CATALOG[placement.item.kind].label}を {moving ? 'うごかす' : 'おく'}</h3>
             <p role="status">{clearance.clearing ? 'ばしょを あけているよ…' : <>{cell && (placement.valid ? placement.isolated.length ? <Footprints size={18} /> : <Check size={18} /> : <X size={18} />)}{placement.reason}</>}</p>

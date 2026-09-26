@@ -132,26 +132,27 @@ try {
             await page.getByRole('button', { name: 'まなぶ', exact: true }).click(); await page.locator('.island-learning[data-input-ready="true"]').waitFor();
             const offlineBefore = await readNative(page); const answered = (await attempt(page, offlineBefore, { touch: true })).after;
             assert(answered.islandEvents.length > offlineBefore.islandEvents.length);
-            if (failProjection) await page.evaluate(() => {
-                window.lifePutFailures = 0; window.originalLifePut = IDBObjectStore.prototype.put;
+            const projectionTarget = page.workers().find(worker => worker.url().includes('lifeUpdate')) ?? page;
+            if (failProjection) await projectionTarget.evaluate(() => {
+                globalThis.lifePutFailures = 0; globalThis.originalLifePut = IDBObjectStore.prototype.put;
                 IDBObjectStore.prototype.put = function (...args) {
                     if (this.name === 'worlds' && this.transaction.db.name === 'SansuIslandLifeV1') {
-                        window.lifePutFailures++; throw new DOMException('QA Life projection unavailable', 'QuotaExceededError');
+                        globalThis.lifePutFailures++; throw new DOMException('QA Life projection unavailable', 'QuotaExceededError');
                     }
-                    return window.originalLifePut.apply(this, args);
+                    return globalThis.originalLifePut.apply(this, args);
                 };
             });
             await page.getByRole('button', { name: 'とじる', exact: true }).click(); await ready(page);
             let fault;
             if (failProjection) {
-                await page.waitForFunction(() => window.lifePutFailures > 0);
+                await until(() => projectionTarget.evaluate(() => globalThis.lifePutFailures), count => count > 0, 'Life writer must encounter the injected fault');
                 const failed = await life(page); sameOwnership(stored, failed); assert.deepEqual(await readNative(page), answered);
                 await page.getByRole('button', { name: 'ひらく', exact: true }).first().click();
                 await page.locator('.life-error').waitFor();
                 assert.equal(await page.locator('.life-error p').innerText(), 'しまの きろくを たしかめられなかったよ。もういちど ためしてね。');
                 await page.screenshot({ path: `${out}/${device}-projection-failed.png` });
-                fault = { attempts: await page.evaluate(() => window.lifePutFailures), retainedCredits: failed.credits.length, nativeSaved: true };
-                await page.evaluate(() => { IDBObjectStore.prototype.put = window.originalLifePut; delete window.originalLifePut; });
+                fault = { attempts: await projectionTarget.evaluate(() => globalThis.lifePutFailures), retainedCredits: failed.credits.length, nativeSaved: true };
+                await projectionTarget.evaluate(() => { IDBObjectStore.prototype.put = globalThis.originalLifePut; delete globalThis.originalLifePut; });
                 await page.locator('.life-error').getByRole('button', { name: 'もういちど', exact: true }).click();
                 await page.locator('.life-error').waitFor({ state: 'hidden' }); await closeMenu(page);
             }

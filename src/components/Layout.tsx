@@ -7,6 +7,8 @@ import "./island/IslandShell.css";
 import { IslandNavigationContext, useIslandNavigationState } from './island/useIslandNavigation';
 import { Spinner } from './ui/Spinner';
 
+import { IslandRenderBoundary } from './island/IslandRenderBoundary';
+
 const Island = React.lazy(() => import('../pages/Island'));
 
 export const Layout: React.FC = () => {
@@ -49,7 +51,7 @@ export const Layout: React.FC = () => {
                     <Outlet />
                 </div>
                 {navigation.mounted && <div className="island-session-host" hidden={!navigation.active} inert={!navigation.active || undefined}>
-                    <React.Suspense fallback={<Spinner fullScreen message="しまを じゅんびちゅう…" />}><Island /></React.Suspense>
+                    <IslandRenderBoundary><React.Suspense fallback={<Spinner fullScreen message="しまを じゅんびちゅう…" />}><Island /></React.Suspense></IslandRenderBoundary>
                 </div>}
             </main>
 

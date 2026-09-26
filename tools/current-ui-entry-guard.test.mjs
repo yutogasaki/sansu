@@ -32,6 +32,8 @@ const smokeSource = [
 const buildDefaultsSource = [
   "if (env.VITE_ISLAND_ENABLED === undefined)",
   'env.VITE_ISLAND_ENABLED = "true"',
+  "if (env.VITE_ISLAND_LIFE_ENABLED === undefined)",
+  'env.VITE_ISLAND_LIFE_ENABLED = "true"',
 ].join(" ");
 const entryDocs = {
   memory:
@@ -108,7 +110,7 @@ describe("current UI entry guard", () => {
         scripts: { ...scripts, build: "tsc -b && vite build && npm run assets:check" },
       })),
     ).toContain(
-      "a plain production build must default to Island while preserving explicit classic opt-out",
+      "a plain production build must default to Island Life while preserving explicit opt-outs",
     );
   });
 

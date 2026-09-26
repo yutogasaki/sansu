@@ -8,6 +8,7 @@ import { previewIslandCustomization as previewAction } from '../../domain/island
 import type { IslandRecord } from '../../domain/island/types';
 import { sameIslandCosmetics } from './islandCustomizationPreview';
 import { IslandRewardGoal, IslandRewardGoalChoice, IslandRewardGoalFeedback, type IslandRewardGoalControls } from './IslandRewardGoal';
+export { IslandCustomizationPreviewNotice } from './IslandCustomizationPreviewNotice';
 import './IslandCustomization.css';
 import './IslandPanel.css';
 
@@ -16,11 +17,6 @@ const setNames: Record<IslandThemeId, string> = { 'moon-garden': '', starry: '�
 
 function Stars({ amount }: { amount: number }) {
     return <span className="island-customization-stars"><Star size={15} aria-hidden="true" /><span>{amount}<span className="island-customization-unit">こ</span></span></span>;
-}
-
-export function IslandCustomizationPreviewNotice({ preview, saved }: { preview: IslandCosmetics; saved: IslandCosmetics }) {
-    return <span className="island-customization-stage-label" data-testid="island-customization-preview-label">
-        <Sparkles size={14} aria-hidden="true" />{sameIslandCosmetics(preview, saved) ? 'いまの しま' : 'おためし'}</span>;
 }
 
 const partLabels: Record<IslandAppearancePartId, string> = { sky: 'そら', ground: 'じめん・みち', water: 'みず', house: 'おうち', plants: 'しょくぶつ', bridge: 'はし' };

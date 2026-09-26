@@ -2,7 +2,8 @@ import { holdPwaUpdateForCriticalPersistence } from '../../../pwa';
 import { lifePersistenceMessage } from './lifePersistenceMessage';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { lifeEnabled, type LifeRecord } from '../../../domain/islandLife/model';
-import { terminalFacts, updateLife, type LifeIntent } from '../../../domain/islandLife/repository';
+import { terminalFacts, type LifeIntent } from '../../../domain/islandLife/repository';
+import { updateLifeResponsive } from './lifeUpdateClient';
 import { startLifeTiming } from './startupTiming';
 
 export function useIslandLife(profileId: string, active: boolean) {
@@ -40,7 +41,7 @@ export function useIslandLife(profileId: string, active: boolean) {
                 try {
                     const facts = await terminalFacts(profileId);
                     if (token !== generation.current || request && (!visible.current || screenToken !== screenGeneration.current)) return false;
-                    const updated = await updateLife(profileId, facts, request);
+                    const updated = await updateLifeResponsive(profileId, facts, request);
                     if (token !== generation.current) return false;
                     const previous = latest.current;
                     if (!request) {

@@ -21,7 +21,7 @@ import { assertCheckpointBoundary, checkpointLegacyRecord } from './economyMigra
 import { effectiveGrowthHours, issueFiniteLight, GROWTH_WINDOW_MS } from './economyRules';
 import { placementUndo } from './placementUndo';
 import { observationVisit } from './observationVisit';
-import { plantThresholds, readableLifeVersion, CATALOG, HOUR, LIFE_RULES, LIFE_STEP_MS, ROAM_VISIT_PREFIX, isRoamVisit, vigor, type LifeAction, type LifeCommand, type LifeRecord, type LifeState, type LifeResident, type Cell } from './model';
+import { plantThresholds, readableLifeVersion, CATALOG, HOUR, LIFE_RULES, LIFE_STEP_MS, ROAM_VISIT_PREFIX, isRoamVisit, vigor, type Credit, type LifeAction, type LifeCommand, type LifeRecord, type LifeState, type LifeResident, type Cell } from './model';
 import { blocksWalking, cellKey, districts, homeCell, isHouse, isolatedItems, landCells, route, sameCell, usablePlacement, pathToActivity, walkable } from './space';
 import { isWindArch, isPlantsWater, commandFingerprint, paidDrops, purchaseReceipt, removalRefund } from './purchases';
 
@@ -355,6 +355,37 @@ export function applyCommand(s: LifeState, event: LifeAction) {
     }
     arrangeVisits(s);
 }
+function applyCredit(s: LifeState, c: Credit) {
+    s.drops += LIFE_RULES.dropsPerProblem;
+    if (s.economy) s.economy.completionTimes = [...s.economy.completionTimes.filter(at => at > s.now - GROWTH_WINDOW_MS), c.at];
+    s.days[c.day] = (s.days[c.day] ?? 0) + 1;
+    if (s.days[c.day] === LIFE_RULES.dailyGoal) s.lastAchievement = c.at;
+}
+
+/** Reuse only a validated prefix; late facts and simultaneous prior events replay normally. */
+export function cacheAppendedCredits(previous: LifeRecord, next: LifeRecord): boolean {
+    if (next.credits.length <= previous.credits.length) return false;
+    const oldKey = cadenceReplayKey(previous, previous.now);
+    if (!oldKey || cadenceReplayKey({ ...next, credits: previous.credits }, next.now) !== oldKey
+        || JSON.stringify(next.credits.slice(0, previous.credits.length)) !== JSON.stringify(previous.credits)) return false;
+    const added = next.credits.slice(previous.credits.length).sort((a, b) => a.at - b.at);
+    const s = cachedLifeState(oldKey, added[0].at);
+    if (!s || !next.diagonalCutover || s.now <= next.diagonalCutover.at
+        || added[0].at < previous.now || next.now < added[added.length - 1].at
+        || previous.actions.some(a => a.at >= added[0].at)
+        || previous.credits.some(c => c.at >= added[0].at)) return false;
+    const known = new Set(previous.credits.map(c => c.id));
+    for (const c of added) {
+        if (!Number.isFinite(c.at) || known.has(c.id)) return false;
+        known.add(c.id);
+        advanceLifeState(s, c.at);
+        applyCredit(s, c);
+    }
+    advanceLifeState(s, next.now);
+    rememberLifeState(cadenceReplayKey(next, next.now), s);
+    return true;
+}
+
 export function replayLife(record: LifeRecord, to = record.now): LifeState {
     if (!readableLifeVersion(record.version)) throw new Error('この島のデータは新しい版で開いてください。');
     if (record.version < 15 && record.actions.some(a => a.command.type === 'clear-placement')) throw new Error('配置の切替記録が見つかりません。');
@@ -402,10 +433,7 @@ export function replayLife(record: LifeRecord, to = record.now): LifeState {
         advanceLifeState(s, Math.max(s.now, event.at));
         if (event.credit) {
             const c = event.credit; if (credited.has(c.id)) continue; credited.add(c.id);
-            s.drops += LIFE_RULES.dropsPerProblem;
-            if (s.economy) s.economy.completionTimes = [...s.economy.completionTimes.filter(at => at > s.now - GROWTH_WINDOW_MS), c.at];
-            s.days[c.day] = (s.days[c.day] ?? 0) + 1;
-            if (s.days[c.day] === LIFE_RULES.dailyGoal) s.lastAchievement = c.at;
+            applyCredit(s, c);
         } else if (event.switchVersion) {
             s.activityVersion = 2;
             for (const r of s.residents) { r.cell = residentCell(r, s.now, Boolean(s.placementVersion)); r.visit = undefined; }

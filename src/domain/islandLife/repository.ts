@@ -13,7 +13,7 @@ import { readableLifeVersion } from './model';
 import Dexie, { type Table } from 'dexie';
 import { db, type SansuDatabase } from '../../db';
 import { HOUR, learningDay, newLife, type Credit, type LifeCommand, type LifeRecord } from './model';
-import { commandLife, replayLife } from './simulation';
+import { cacheAppendedCredits, commandLife, replayLife } from './simulation';
 import { commandFingerprint } from './purchases';
 
 /** Separate ownership database; production never imports diagnostic preview time or items. */
@@ -115,6 +115,7 @@ export async function updateLife(profileId: string, facts: TerminalFact[], inten
         next = await Dexie.waitFor(prepareCadenceMigration(next));
         next = await Dexie.waitFor(prepareHeroVisitMigration(next));
         next = await Dexie.waitFor(prepareDiagonalMigration(next));
+        cacheAppendedCredits(previous, next);
         if (intent?.command) next = commandLife(next, intent.command, intent.id, next.now, intent.undoOf);
         const state = replayLife(next); // Reject invalid transactions before any write.
         next = { ...next, replaySnapshot: await Dexie.waitFor(createLifeSnapshot(next, state)) };
