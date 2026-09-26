@@ -425,6 +425,16 @@ export function replayLife(record: LifeRecord, to = record.now): LifeState {
     rememberLifeState(cacheKey, s);
     return s;
 }
+function cacheAppliedCommand(record: LifeRecord, state: LifeState) {
+    // Only append after the final cutover. At its exact timestamp cold replay
+    // schedules residents before the action, unlike the frozen cutover state.
+    if (!record.diagonalCutover || state.now <= record.diagonalCutover.at) return;
+    // Match replay's final scheduling pass, including commands such as rotation
+    // and clearance that return early from applyCommand.
+    advanceLifeState(state, state.now);
+    rememberLifeState(cadenceReplayKey(record, state.now), state);
+}
+
 export function commandLife(record: LifeRecord, command: LifeCommand, id: string, now: number, undoOf?: string): LifeRecord {
     if (!readableLifeVersion(record.version)) throw new Error('この島のデータは新しい版で開いてください。');
     if (command.type === 'clear-placement' && record.version < 15) throw new Error('配置の切替記録が見つかりません。');
@@ -446,5 +456,9 @@ export function commandLife(record: LifeRecord, command: LifeCommand, id: string
     if (command.type === 'expand' && record.tourCutover) event.landReceipt = landReceipt(state, event);
     applyCommand(state, event);
     const facilityObservation = command.type === 'observe' && state.items.some(i => i.id === command.itemId && isFacility(i.kind));
-    return { ...record, version: record.version === 19 || command.type === 'rotate' || (command.type === 'buy' || command.type === 'clear-placement') && isDecoration(command.kind) ? 19 : record.version === 18 ? 18 : record.version === 17 ? 17 : record.version === 16 ? 16 : record.version === 15 ? 15 : record.version === 14 || command.type === 'observe-relation' ? 14 : record.version === 13 ? 13 : record.version === 12 || facilityObservation ? 12 : record.version === 11 ? 11 : record.version === 10 || command.type === 'buy' && isFacility(command.kind) ? 10 : record.version === 9 || command.type === 'buy' && command.kind === 'sandbox' ? 9 : record.version === 8 || command.type === 'buy' && isWindArch(command.kind) ? 8 : record.version === 7 || command.type === 'buy' && command.kind === 'picnic-table' ? 7 : record.version === 6 || command.type === 'buy' && isPlantsWater(command.kind) ? 6 : event.landReceipt ? 5 : command.type === 'observe' && record.version === 1 ? 2 : record.version, now, revision: record.revision + 1, actions: [...record.actions, event] };
+    const next: LifeRecord = { ...record, version: record.version === 19 || command.type === 'rotate' || (command.type === 'buy' || command.type === 'clear-placement') && isDecoration(command.kind) ? 19 : record.version === 18 ? 18 : record.version === 17 ? 17 : record.version === 16 ? 16 : record.version === 15 ? 15 : record.version === 14 || command.type === 'observe-relation' ? 14 : record.version === 13 ? 13 : record.version === 12 || facilityObservation ? 12 : record.version === 11 ? 11 : record.version === 10 || command.type === 'buy' && isFacility(command.kind) ? 10 : record.version === 9 || command.type === 'buy' && command.kind === 'sandbox' ? 9 : record.version === 8 || command.type === 'buy' && isWindArch(command.kind) ? 8 : record.version === 7 || command.type === 'buy' && command.kind === 'picnic-table' ? 7 : record.version === 6 || command.type === 'buy' && isPlantsWater(command.kind) ? 6 : event.landReceipt ? 5 : command.type === 'observe' && record.version === 1 ? 2 : record.version, now, revision: record.revision + 1, actions: [...record.actions, event] };
+    // All commands have been validated and applied above. Reuse that work when
+    // saving the appended log instead of replaying the entire island again.
+    cacheAppliedCommand(next, state);
+    return next;
 }
