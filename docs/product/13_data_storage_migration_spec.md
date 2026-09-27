@@ -1,5 +1,7 @@
 # docs/product/13_data_storage_migration_spec.md — データ・保存・移行仕様
 
+> 次期 `living-fantasy-v1` の保存境界・一度だけの財布変換・旧全品保持・完全バックアップは[51のデータ章](living-fantasy/06-data-and-migration.md)が設計正本。未実装の次期契約であり、以下の現在のschemaや既存端末を変換したという記録ではない。
+
 ## 1. 基本方針
 
 ### ぽこもこの連続正解の遊び（2026-09-27）
@@ -7,6 +9,17 @@
 `IslandRecord.learningParty` はoptionalなv1拡張。`version: 1`、`streak`（0〜99999）、`light`（0〜30）、`rideRemaining`（0〜3）を持つ。未導入の保存は省略を空状態として表示し、過去の学習履歴から加算しない。10/20/30のスタンプはlightから導出する。未知版・範囲外は保存検証で拒否し、既存の値を黙って初期化しない。
 
 正式な回答transaction内で採点済みの一問完了・独力・支援の事実から更新し、island revisionとともに保存する。既存のreceipt IDによる再送抑止、本人照合、保存abortを共有する。途中行、演出タイマー、UI再表示は獲得根拠にしない。採点・SRS・ほし/しずく・既存所有物とは独立し、後続の島writerはoptional fieldを保持する。新tableやIndexedDB schema versionの変更はない。[UI仕様07](07_ui_design_guideline.md#ぽこもこと学ぶ瞬間の演出2026-09-27)を遊びの正本とする。
+
+
+### 現行Lifeの食料の切替（2026-09-27）
+
+育成・配送・食事の最初の一周は、既存 `SansuIslandLifeV1.worlds` の本人の `LifeRecord` にoptionalな `foodCutover` を追加する。DB名・store/indexと通常学習writerを変えず、Nature Townの `SansuNatureTownV02` を自動合算しない。切替には時刻、既存action数、過去actionの写しと検証digestを記録する。初回の食料切替と同じtransactionで保存版20へ進め、水路購入前から旧writerを拒否する。切替前の行動には食料規則を適用せず、切替後の鉢・食卓・住人の運搬はLifeの再生時計で決定的に再現する。再生snapshotは既存の消去可能なprojectionであり、正本は切替境界とLifeの行動・学習事実である。
+
+収穫済みの1個は鉢・食卓・運搬中・保管分のいずれか一箇所にだけ属する。途中の経路変更は鉢または保管分へ戻す。収納と再配置では在庫を保持し、撤去時は保管分へ移す。同じintentの再送は既存のrevision/receipt照合で先に終了し、収穫や食事を二重計上しない。破損した切替境界は読み込みを拒否し、旧保存を削除しない。
+
+「みずみち」の購入は同じ `LifeRecord.actions` に版20・`life-v20-channel-v1` の購入receiptとして保存する。既存の `foodCutover` より前へ新しい水路規則を遡及適用しない。通水状態と所有地の水分目標値は配置から再計算する表示・計算値であり、新しいDB storeや二つ目の時計は持たない。収納と再配置では同じ購入済みIDと価格を保ち、再送で同じ水路を増やさない。旧版19までの購入・土地・住人・食料在庫はそのまま読み取る。
+
+土の時間変化はoptionalな `soilCutover` に開始時刻・既存action数・過去actionの写しと検証digestを保存する。食料の切替より前には置けない。切替時点の所有地は水分0.20から始まり、その後の水分はLifeの履歴と実時間から決定的に再生する。配置変更直後の土を瞬時に新しい目標値へ置き換えず、開いた土地だけ0.20で追加する。再生snapshotの水分値は消去できるprojectionであり、正本は切替境界と既存の履歴である。新しく保存する発見場面には撮影時の土の状態を凍結し、旧場面の内容とhashを変えない。旧収穫は切替前の成長式のまま再生し、同じDB/storeと学習writerを使う。
 
 2026-09-09に[仕様35のカテゴリをまたぐ「ほしいもの」](35_island_customization_spec.md#カテゴリをまたぐほしいもの1件)を採用した。旧 `customization.desiredItemId` と `desire / clear-desire` receiptを保ち、家具・身支度だけをoptional `IslandRecord.rewardGoal` v1へ保存する。省略は追加目標なしで、読み取り時の移行・自動生成は行わない。両fieldの同時目標、未知版/ID、所持済み目標は拒否する。DB v8のstore/index、島schemaVersion、UserProfile、学習予約と評価、写真storeは変更しない。
 

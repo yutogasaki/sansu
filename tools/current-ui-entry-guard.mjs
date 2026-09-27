@@ -112,8 +112,8 @@ export function findCurrentUiEntryFailures({
         ),
     ],
     [
-      "the parent app spec must keep Explore optional and out of the current app entry",
-      entryDocs.parentSpec?.includes("旧ExploreはIslandホームとは別の任意モード") &&
+      "the parent app spec must keep Explore direct-URL-only and out of the Island entry",
+      entryDocs.parentSpec?.includes("旧ExploreはIslandホームとは別の旧モードで、直接URLからのみ明示的に開く") &&
         entryDocs.parentSpec.includes("現行アプリの通常起動先を定義しない"),
     ],
     [

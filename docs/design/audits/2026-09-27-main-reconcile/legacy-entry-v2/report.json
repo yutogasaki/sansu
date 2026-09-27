@@ -1,0 +1,79 @@
+{
+  "target": "http://127.0.0.1:5390",
+  "fixture": "Disposable native profile; actual UI answer and navigation. No injected earned rewards.",
+  "cases": [
+    {
+      "width": 390,
+      "runtime": {
+        "url": "http://127.0.0.1:5390/#/island?learn=1",
+        "revision": "development-local",
+        "version": "development-local:55e0dfb4-d0cf-47b3-8933-d681e8de29ec",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "mystic-island-learning-v2",
+        "islandFeatureEnabled": true,
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 88,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true,
+        "appRoot": {
+          "revision": "development-local",
+          "version": "development-local:55e0dfb4-d0cf-47b3-8933-d681e8de29ec",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "logs": 1,
+      "planId": "[\"island-plan-v1\",\"aa0655ac-8fb3-4f82-b829-11502e51e22e\",0]",
+      "pass": true
+    },
+    {
+      "width": 768,
+      "runtime": {
+        "url": "http://127.0.0.1:5390/#/island?learn=1",
+        "revision": "development-local",
+        "version": "development-local:55e0dfb4-d0cf-47b3-8933-d681e8de29ec",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "mystic-island-learning-v2",
+        "islandFeatureEnabled": true,
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 88,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true,
+        "appRoot": {
+          "revision": "development-local",
+          "version": "development-local:55e0dfb4-d0cf-47b3-8933-d681e8de29ec",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "logs": 1,
+      "planId": "[\"island-plan-v1\",\"a2ff4199-45fd-4519-bdac-0e1b9a8f0e65\",0]",
+      "pass": true
+    }
+  ],
+  "pass": true
+}

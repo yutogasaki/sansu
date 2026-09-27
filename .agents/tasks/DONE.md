@@ -13,6 +13,14 @@ Durable completion history and verification facts still belong in `docs/done/YYY
 
 - 2026-09-27: ぽこもこの入力・正解・区間完了の演出を実装。main抽出候補のcore4,213・画面/入力14条件PASS。先行共有候補のfixed-ten80 runもPASS。動画あり、公開版・実機/子どもの観察は別確認 -> `docs/done/2026-09.md`
 
+- 2026-09-27: ぽこもこの元のモデル・模様・portraitを復元。プレビューを同じ実アプリの表示へ揃え、Nature Townは部分統合と明記。固定版で関連検査・両幅の実獲得/水/再演/offlineを確認。全画面美術・全統合・公開は継続 -> `docs/done/2026-09.md`
+
+- 2026-09-27: Three.jsの幻想の庭・昼夕夜・普通の庭の水反応と思い出を実装。core4,218、両幅の実獲得/offline、fixed-ten80 run PASS。最終美術・全v1・実機/子どもの観察は継続、未公開 -> `docs/done/2026-09.md`
+
+- 2026-09-27: 幻想の暮らしの包括仕様51と8章、58要件節・26受入ケースを策定。B方向、遊び・経済・発見・画面・移行・共有を定義し現行と区別。docs/portal確認PASS、実装・公開は未実施 -> `docs/done/2026-09.md`
+
+- 2026-09-27: 今の島で土が時間とともに湿り乾く。鉢の育ち・地面・文字と保存境界を接続。core、DEV両幅、classic smoke PASS。実機・子どもの理解と来訪/入居は継続 -> `docs/done/2026-09.md`
+
 - 2026-09-26: 島の追加学習の差分反映・復元Worker・白紙時の回復案内。core、両幅の保存/offline/更新とブラウザー応答を検査。実機と残りの描画負荷は継続 -> `docs/done/2026-09.md`
 
 - 2026-09-25: 同じ再生ルールの更新で島キャッシュを保持。core 4,177 tests・両幅の更新/offline PASS。旧キャッシュの初回再構築と実機30秒待ちの確認は継続 -> `docs/done/2026-09.md`
@@ -145,3 +153,5 @@ Durable completion history and verification facts still belong in `docs/done/YYY
 - 2026-09-09: 島の入口名と画面見出し、戻る/閉じる、家内の一段戻りを統一。3,423 tests・smoke31・ナビ2幅・退出操作4幅を確認 -> `docs/done/2026-09.md`
 - 2026-09-09 家の履歴・棚の空状態・保存再確認・短い画面を改善。4サイズ/3428unit/smoke31 PASS -> docs/done/2026-09.md
 - 2026-09-09 写真の読込/削除中断・家への帰還・空報酬・短い横向き撮影を改善。4サイズ/3440unit通過 -> docs/done/2026-09.md
+
+- 2026-09-27: 手元変更のbackupと最新mainへの整理。公開済み保存/報酬/ぽこもこを維持し、旧試作・入口と資料を整理 -> `docs/done/2026-09.md`

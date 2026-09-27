@@ -21,7 +21,7 @@
 ## SSOT References
 
 - [親仕様](../../product/01_app_spec.md)
-- [試作仕様](../../product/27_gameplay_first_pittari_spec.md)
+- [試作仕様（終了・履歴）](../../product/archive/27_gameplay_first_pittari_spec.md)
 
 ## Docs To Touch
 

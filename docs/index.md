@@ -2,10 +2,12 @@
 
 2026-09-27: [幻想の庭と自然の暮らしを本番へ統合](design/2026-09-27-fantasy-production/README.md)。元のぽこもこ、学習、持ち物を保持し、更新・オフライン・互換復旧を検証。全v1と実機確認は別。
 
-[HTMLで見る](index.html) · [現在のタスク](../.agents/tasks/index.html) · [仕様書の地図](product/README.md)
+[HTMLで見る](index.html) · [仕様と実装のマップ](../.agents/map.html) · [現在のタスク](../.agents/tasks/index.html) · [仕様書の地図](product/README.md)
 
 このページは「どの文書を見れば何が分かるか」を人向けに案内する入口です。
 最新情報を探すときは、長い完了ログや検証番号からではなく、下の分類から入ってください。
+
+**次期の設計を読む：[51 幻想の暮らし・包括仕様](product/51_living_fantasy_island_spec.md)。** 2026-09-27策定。世界観・美術・遊び・学習・経済・発見・画面・保存移行・共有・検証を8章に整理。[現在のプレビュー](design/2026-09-27-living-fantasy-first-playable/index.html)は実アプリを直接表示します。ぽこもこは[元のデザインを維持](design/2026-09-27-pokomoko-restored/README.md)し、Nature Townの自然・物流は同じ島へ部分統合しています。[続きの範囲](tasks/active/2026-09-27-living-fantasy-first-playable.md)を残し、最終美術・v1全体の完成・公開とは区別しています。
 
 **まず読む：[今の島に、自然と町の仕組みを取り込む](product/island-nature-integration.md)。** 今の島を本体にし、Nature Townを別作品としては進めません。何を残し、何を取り込むかを一枚にまとめました。
 
@@ -23,6 +25,8 @@
 1. [現在のタスク](../.agents/tasks/TASKS.md)：今どこまで進み、次に何をするか。
 2. [仕様書の地図](product/README.md)：今の仕様、将来案、昔の仕様の区別。
 3. [保留中](../.agents/tasks/BLOCKED.md)：人や実機の確認を待っているもの。
+
+[仕様と実装のHTMLマップ](../.agents/map.html)では、主な機能の現在地、関連仕様とコード、仕様書や画像・3D素材のファイル容量をまとめて見られます。
 
 ## 目的から選ぶ
 
@@ -88,7 +92,7 @@
 - 旧探索モード（Explore）は[探索仕様10](product/10_exploration_game_spec.md)から[旧Explore検証15](product/15_mvp_rollout_verification_spec.md)まで。現在の「不思議な島」の標準入口ではない。
 - 2人ゲームは[バトル仕様09](product/09_battle_spec.md)。任意のレガシーモード。
 - 旧遊園地（Park）は[遊園地仕様22](product/22_shared_subject_build_and_play_spec.md)。公開終了後の保守・保存契約。
-- ぴったり連鎖は[仕様27](product/27_gameplay_first_pittari_spec.md)。限定範囲の独立試作。
+- 終了した試作「ぴったり連鎖」は[過去の資料](product/archive/README.md)に保管しています。
 
 詳しい分類と「現行／旧モード／試作／提案」の区別は[仕様書の地図](product/README.md)を参照してください。
 

@@ -1,0 +1,62 @@
+{
+  "target": "http://127.0.0.1:5390",
+  "layout": "world-first-v2",
+  "fixture": "Native profile only; learning and destinations opened through UI.",
+  "scenarios": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "captures": [],
+      "checks": [],
+      "errors": [],
+      "pass": false,
+      "layout": {
+        "stage": {
+          "width": 390,
+          "height": 778.40625,
+          "top": 0,
+          "bottom": 778.40625
+        },
+        "nav": {
+          "width": 390,
+          "height": 65.59375,
+          "top": 778.40625,
+          "bottom": 844
+        },
+        "dock": {
+          "width": 97.25,
+          "height": 50.59375,
+          "top": 717.8125,
+          "bottom": 768.40625
+        },
+        "tabTargets": [
+          {
+            "width": 65,
+            "height": 50
+          },
+          {
+            "width": 65,
+            "height": 50
+          },
+          {
+            "width": 67,
+            "height": 44
+          },
+          {
+            "width": 65,
+            "height": 44
+          },
+          {
+            "width": 65,
+            "height": 44
+          }
+        ],
+        "documentWidth": 390
+      }
+    }
+  ],
+  "pass": false,
+  "error": "AssertionError [ERR_ASSERTION]: Compact navigation retains more room for the world\n    at file:///Users/yutogasaki/.codex/worktrees/fantasy-production/sansu/tools/e2e-island-home-layout.mjs:43:13"
+}

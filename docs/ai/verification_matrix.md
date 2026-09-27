@@ -100,7 +100,15 @@ Islandの画面captureは `tools/island-e2e-helpers.mjs` の `runtimeMetadata` �
 
 旧契約の履歴用と記した6ハーネスは、プロフィールだけの初期化から手動報酬を待つため、現行互換テストとしては実行できない。現在の成長・土地・配置・再演の検証は `e2e:island-living` / `e2e-island-chapters.mjs` を使う。旧ハーネス固有の受渡しや歩行途中の中断をすべて代替したという意味ではない。
 
+`node tools/e2e-island-legacy-entry.mjs` は `SANSU_ISLAND_BASE_URL` と未使用の `SANSU_LEGACY_ENTRY_OUTPUT` を指定し、Life無効の旧Island面で390/768幅のメニュー整理、実回答後の旧 `/battle`・`/explore` 直接URL、同じ学習への復帰と保存保持を検査する。プロフィールだけのfixtureを使い、報酬は注入しない。現行Lifeの美術・自然獲得・PWAの証明とは区別する。
+
 ## Matrix
+
+次期 `living-fantasy-v1`（初期候補を実装、全体は継続）の追加受入は[仕様51の検証章](../product/living-fantasy/08-delivery-and-acceptance.md)に定義する。現行の検査やclassic smokeを次期候補の合格へ流用せず、このmatrixの共通checksと次期の対象ケースを両方満たす。仕様策定だけの作業はdocs-onlyとして検証し、次期の美術・理解・runtimeのPASSとは区別する。
+
+初期候補 `living-fantasy-garden-v2` は `npm run dev:island-fantasy` と `npm run e2e:island-fantasy`。後者は `SANSU_FANTASY_URL`、新しい `SANSU_FANTASY_OUTPUT` を受け付ける。DEVの実回答3問→6しずく→花購入/配置→再読込/同じ予約への復帰を、追加creditなしで検査する。別プロフィールのcredit/24時間送りfixtureでphone/tabletの昼夕夜・通常の水の星・本人保存・当時の庭の再演とsource、hidden/遮蔽/編集/context loss時の非計上を確認する。source hash、実root/candidate、cache状態をcaptureごとに保持する。8品の場面でdraw calls/trianglesを検査するが、30品・実機FPS・自然な数時間後の復帰の合格とはしない。
+
+本番形式では `tools/e2e-island-fantasy-production.mjs` に `SANSU_FANTASY_PRODUCTION_URL`、未使用の `SANSU_FANTASY_PRODUCTION_OUTPUT`、実buildと一致する `SANSU_FANTASY_MANIFEST` を渡す。fixture書込なしで初回設定・実回答4問・購入/配置・通常SWありのoffline起動/追加回答/再読込を両幅で確認する。現在のv2は[ぽこもこの復元と実画面の記録](../design/2026-09-27-pokomoko-restored/README.md)へ。元モデルとの一致、既存portrait、各captureの描画予算を確認する。[v1の記録](../design/2026-09-27-living-fantasy-first-playable/README.md)は取り下げたキャラクター試作の履歴であり、現在の合格へ流用しない。2 build更新、全保存移行、最終美術、子どもの理解は別に検証する。
 
 `npm run e2e:smoke` is intentionally a flag-off classic Explore regression suite: it uses `dev:test-server`, an isolated port, and `VITE_ISLAND_ENABLED=false`. Its Explore captures do not count as current Island UX evidence. For the current Island shell use `npm run e2e:island-navigation` against port 5198 and retain the Island flag, delivery/candidates, revision, and viewport metadata.
 
@@ -185,7 +193,7 @@ If a task spans more than one change type, use the stricter row.
 
 `node tools/e2e-island-decorations.mjs` は `DECORATIONS_URL`（local production）と新しい `DECORATIONS_OUTPUT` を指定する。実初回設定から6問を完了し柵/鉢を購入、回転・移動・収納・再配置、native putの一度のabort/retry、実SW offline reloadと同じ学習への復帰を390/768幅で確認。30個は別の明示credit fixtureから正式な配置commandで作り、GLB要求/bytes・テクスチャ共有・renderer draw calls/triangles・LODを記録する。app/dist/QAの開始終了hashを一致させる。rAFは実機FPS保証ではない。
 
-現行カタログは既定6品、Discovery有効14品（7ページ）。上記の旧4品/12品という検査記述は追加前の範囲で、Life storageハーネスの期待値は14品へ更新する。既存商品の順序は保持する。
+現行カタログは既定10品（5ページ。花・ベンチ・ブランコ・明かり・柵・鉢・木・水ばち・食卓・みずみち）、Discovery有効15品（8ページ）。上記の旧4品/12品という検査記述は追加前の範囲。現行の食料・水・木陰の実装確認は `npm run e2e:island-food-loop` と `foodLoop.test.ts`、通水・切断・土の乾湿・保存は `npm run e2e:island-water-channel` と `waterChannels.test.ts` / `soilMoisture.test.ts` で分け、既存商品の順序と所有を保つ。土の画面検査はDEV診断時計で6時間ずつ進める。これは実機の経過時間、オフライン更新、子どもの無説明理解の代わりではない。
 
 
 ### 再生ルールが変わらない更新の起動キャッシュ

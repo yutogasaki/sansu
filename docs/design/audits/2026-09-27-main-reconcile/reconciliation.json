@@ -1,0 +1,49 @@
+{
+  "base": "620236a5b54534af9658e5788fba85d84a22b302",
+  "backupRef": "refs/heads/backup/pre-main-sync-20260927-214035",
+  "backupCommit": "83a6a34e85d438a6d1502c5ced7e38c38fe09cdc",
+  "remoteAtIntegration": "4af6d892e68ec5a73d8dca471199f0c011e13da3",
+  "protectedInputs": [
+    {
+      "path": "src/domain/islandLife/foodLoop.ts",
+      "sha256": "aa7a8690b399227e47655e3f7ace492dfb208ef576d2b9cb43ab039507f3b6a3",
+      "unchangedFrom": "4af6d892e68ec5a73d8dca471199f0c011e13da3"
+    },
+    {
+      "path": "src/domain/islandLife/repository.ts",
+      "sha256": "ce37657baea7897a93b9eca38fad75cd2304c7a764770017a7e21ac41822968e",
+      "unchangedFrom": "4af6d892e68ec5a73d8dca471199f0c011e13da3"
+    },
+    {
+      "path": "src/components/island/life/lifeUpdateClient.ts",
+      "sha256": "333580a1cc5da4b4180559bec799209cc5c01099c978dea224c6d590012275b3",
+      "unchangedFrom": "4af6d892e68ec5a73d8dca471199f0c011e13da3"
+    },
+    {
+      "path": "src/components/island/life/lifeUpdate.worker.ts",
+      "sha256": "b2a4de3b502629eb6d69fada3bcb1d904a7328c17657598217be969cd3c49fbb",
+      "unchangedFrom": "4af6d892e68ec5a73d8dca471199f0c011e13da3"
+    },
+    {
+      "path": "src/components/island/life/useIslandLife.ts",
+      "sha256": "93642bc6815492dc8d5fb71b4a136c0379c31205dd6a313eaf80699a7e7b3c9a",
+      "unchangedFrom": "4af6d892e68ec5a73d8dca471199f0c011e13da3"
+    },
+    {
+      "path": "src/domain/island/learningParty.ts",
+      "sha256": "1742e9cb97402878ba47b974373c856c800f0b02db66f5342187e98620b950cf",
+      "unchangedFrom": "4af6d892e68ec5a73d8dca471199f0c011e13da3"
+    },
+    {
+      "path": "src/components/island/IslandAnswerFeedback.tsx",
+      "sha256": "eca6b6ffbe0cccfd0ecf0c37e4bded989ad83d3e654dd1410c486d2bd1e322b5",
+      "unchangedFrom": "4af6d892e68ec5a73d8dca471199f0c011e13da3"
+    },
+    {
+      "path": "vercel.json",
+      "sha256": "a532da00c339f1bba0da6f98d2e8af39bd9bb5476a557b55fe04e7babd12bf61",
+      "unchangedFrom": "4af6d892e68ec5a73d8dca471199f0c011e13da3"
+    }
+  ],
+  "scope": "Only pending prototype/menu retirement and documentation/portal changes. Keep published fantasy, enrollment-clock and version-20 writer fixes, learning streak rides and collectibles."
+}

@@ -1,6 +1,6 @@
 # ぴったり連鎖 — 新規12盤面のローカル受入
 
-日付: 2026-09-06。仕様: [27](../../../product/27_gameplay_first_pittari_spec.md)。元試作の再現ではなく、新作 `pittari-positive-v1`。
+日付: 2026-09-06。仕様: [27（終了・履歴）](../../../product/archive/27_gameplay_first_pittari_spec.md)。元試作の再現ではなく、新作 `pittari-positive-v1`。
 
 ## 実行対象
 

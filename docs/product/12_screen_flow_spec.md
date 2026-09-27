@@ -1,25 +1,29 @@
 # docs/product/12_screen_flow_spec.md — 画面・遷移仕様
 
+> 次期 `living-fantasy-v1` の3タブ・画面状態・既存URL互換は[51の画面章](living-fantasy/05-screens-and-accessibility.md)を参照する。現行の画面と保存予約は以下の契約で維持し、仕様策定だけではrouteを切り替えない。
+
+> 2026-09-27 現行入口：島メニューから旧探索・2人遊びへの入口は撤去。`/explore`・`/battle`・`/battle/play` は直接URLで開け、保存データを維持する。旧遊園地の `/park` は通常ホームへ転送する。以下の古い入口・旧モード起動記述より、この決定を優先する。
+
 > 2026-09-09: Island有効時のタブ表示、学習開始、階層・集中画面の戻り方は[仕様43](43_island_navigation_spec.md)に従う。未完了予約だけでは島訪問時に学習を開かない。
 
-> 2026-09-09の起動導線: Island有効時は `/` → `/island` をホームとし、`/battle` は「ほかの あそび」の一覧とする。Island無効かつBuildPlay有効なら `/park`、両方無効なら `/battle` を開く。旧探索や学習の途中でもトップから問題へ飛ばない。
+> 2026-09-27の起動導線: Island有効時は `/` → `/island` をホームとし、無効時は `/battle` を開く。`/battle` は島からの入口を持たない旧ゲーム一覧。旧探索や学習の途中でもトップから問題へ飛ばない。
 
 > 状態: gameplayは **MVP-0/1**、run・回答receipt・終了status保存は **MVP-2a**、Study共通planner / SRS接続は **MVP-2b**。トップは各モードのホームを開き、探索は明示的に開始する。`/battle` は探索優先の「探検基地」へ再編し、既存の学習・2人ゲーム・設定ルートは維持する。
 
 ## 1. ルート方針
 
-Island初回では `/onboarding` をプロフィール不要のWelcome → 「まなぶ」 → 明示的な学習設定 → 原子的な保存 → `/island?start=learn&profile=…` とする。既存プロフィールでの `/onboarding` は `/` へ戻し、設定からの追加だけ `/onboarding?mode=add` を使用する。Island有効時の `/` は常に `/island` を開く。旧active探索runは「ほかの あそび」から保存内容を再開する。詳細は [28_mystic_island_spec.md](28_mystic_island_spec.md) の初回導線。
+Island初回では `/onboarding` をプロフィール不要のWelcome → 「まなぶ」 → 明示的な学習設定 → 原子的な保存 → `/island?start=learn&profile=…` とする。既存プロフィールでの `/onboarding` は `/` へ戻し、設定からの追加だけ `/onboarding?mode=add` を使用する。Island有効時の `/` は常に `/island` を開く。旧active探索runは直接URL `/explore` から保存内容を再開できる。詳細は [28_mystic_island_spec.md](28_mystic_island_spec.md) の初回導線。
 
-`/park` は [22_shared_subject_build_and_play_spec.md](22_shared_subject_build_and_play_spec.md) の作品再演 → 制作選択 → 学習 → 試遊・再編集を全画面表示する。Island無効かつBuildPlay有効時、`/` は旧active探索があっても常に遊園地の作品画面を開く。Island有効時は遊園地を `/battle` の「ほかの あそび」に置き、遊園地のヘッダーから島へ戻れる。未完制作があっても無料再演できる。プロフィールなしはonboardingへ送る。
+`/park` は `/` へ転送し、現行の起動先へ進む。旧作品の保存データを削除しない。以前の遊園地画面の仕様は[22](22_shared_subject_build_and_play_spec.md)で履歴として扱う。
 
 ### 1.1 現行ルート
 
 | ルート | 分類 | 方針 |
 |---|---|---|
-| `/` | 起動エイリアス | モードに応じて `/island`・`/park`・`/battle` へ `replace` 転送する。問題は開始しない |
-| `/battle` | ほかのあそび / 探検基地 | Island有効時は「ほかの あそび」、無効時は探索から戻る探検基地。モードに応じた一覧を表示する |
-| `/battle/play` | 現行維持 | 2人ゲーム本体 |
-| `/explore` | 任意の旧探索ゲーム | Island有効時は「ほかの あそび」から明示選択する副モード。Islandの標準起動先・全体UX監査の主対象ではない。直接URLは維持する |
+| `/` | 起動エイリアス | Island有効時は `/island`、無効時は `/battle` へ `replace` 転送する。問題は開始しない |
+| `/battle` | 旧ゲームの一覧 / 探検基地 | 島に入口は置かない。Island有効時は「ほかの あそび」、無効時は探検基地の画面を直接URLで表示する |
+| `/battle/play` | 旧モード・直接URLのみ | 2人ゲーム本体と保存データを維持する |
+| `/explore` | 旧モード・直接URLのみ | Islandの標準起動先・全体UX監査の主対象ではない。画面と保存データを維持する |
 | `/study` | 維持 | 復習、定期テスト、英語、開発確認を行う既存学習 |
 | `/stats` | 現行維持 | 既存の学習記録。発見ノートはまだ統合しない |
 | `/settings` | 維持 | プロフィール、音、学習設定 |

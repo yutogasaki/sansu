@@ -1,5 +1,7 @@
 # Sansu Design System Master
 
+Next-design scope (2026-09-27): for `living-fantasy-v1`, use [specification 51](../docs/product/51_living_fantasy_island_spec.md), its [art contract](../docs/product/living-fantasy/01-world-and-art.md), and [screen contract](../docs/product/living-fantasy/05-screens-and-accessibility.md). They replace the listed environment-art constraints only for that future target. Pokomoko’s existing face, silhouette, proportions, ears, patchwork and palette must stay unchanged; a character redesign requires separate explicit user authorization. This brief does not mark the concept art, implementation, or release as approved or complete.
+
 ## Status
 
 This file is an AI-facing design brief for implementation work.

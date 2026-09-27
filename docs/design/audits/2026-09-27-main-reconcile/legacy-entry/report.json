@@ -1,0 +1,7 @@
+{
+  "target": "http://127.0.0.1:5390",
+  "fixture": "Disposable native profile; actual UI answer and navigation. No injected earned rewards.",
+  "cases": [],
+  "pass": false,
+  "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(await page.locator('[data-home-action=\"inventory\"]').isVisible())\n\n    at file:///Users/yutogasaki/.codex/worktrees/fantasy-production/sansu/tools/e2e-island-legacy-entry.mjs:28:9"
+}

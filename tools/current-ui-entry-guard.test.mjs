@@ -44,7 +44,7 @@ const entryDocs = {
     "> スコープ: この計画は任意の旧Exploreモードだけを扱い、現行標準起動は `npm run dev` → port `5198` → `/#/island`。\n\n## 2026-07時点の当時の現在地",
   riskRegister: "| Explore-mode scope drift | current prevention |",
   parentSpec:
-    "旧ExploreはIslandホームとは別の任意モード。`/explore` は現行アプリの通常起動先を定義しない。",
+    "旧ExploreはIslandホームとは別の旧モードで、直接URLからのみ明示的に開く。`/explore` は現行アプリの通常起動先を定義しない。",
   screenSpec:
     "> 現行ルートの正本。`npm run dev` はIsland有効で `/` → `/island` を開く。\n> `/explore` は旧Explore/classicの履歴仕様です。",
   rolloutSpec:
@@ -148,8 +148,8 @@ describe("current UI entry guard", () => {
   it.each([
     [
       "parentSpec",
-      "旧ExploreはIslandホームとは別の任意モード",
-      "the parent app spec must keep Explore optional and out of the current app entry",
+      "旧ExploreはIslandホームとは別の旧モードで、直接URLからのみ明示的に開く",
+      "the parent app spec must keep Explore direct-URL-only and out of the Island entry",
     ],
     [
       "screenSpec",

@@ -55,5 +55,5 @@ if (failures.length > 0) {
   for (const failure of failures) console.error(`- ${failure}`);
   process.exitCode = 1;
 } else {
-  console.log("Current UI entry guard passed: dev opens Mystic Island; classic Explore and its smoke suite are explicit; Nature Town is isolated; runtime identity is exposed; product and agent docs keep Explore historical and optional.");
+  console.log("Current UI entry guard passed: dev opens Mystic Island; old Explore stays on a direct URL with an explicit classic smoke suite; Nature Town is isolated; runtime identity is exposed.");
 }
