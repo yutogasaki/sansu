@@ -1,0 +1,460 @@
+{
+  "target": "http://127.0.0.1:5224",
+  "fixture": "DEV profile and learning facts seeded through the Life writer; no child observation",
+  "candidate": "island-food-loop-v1",
+  "scenarios": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "captures": [
+        {
+          "file": "390-carrying.png",
+          "foodCandidate": "island-food-loop-v1",
+          "url": "http://127.0.0.1:5224/#/island",
+          "revision": "development-local",
+          "version": "development-local:e1efaf8e-8942-4c9e-8dc1-5a298a326f91",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "mystic-island-learning-v2",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": true,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:e1efaf8e-8942-4c9e-8dc1-5a298a326f91",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "390-delivered.png",
+          "foodCandidate": "island-food-loop-v1",
+          "url": "http://127.0.0.1:5224/#/island",
+          "revision": "development-local",
+          "version": "development-local:e1efaf8e-8942-4c9e-8dc1-5a298a326f91",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "mystic-island-learning-v2",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": true,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:e1efaf8e-8942-4c9e-8dc1-5a298a326f91",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "390-food-summary.png",
+          "foodCandidate": "island-food-loop-v1",
+          "url": "http://127.0.0.1:5224/#/island",
+          "revision": "development-local",
+          "version": "development-local:e1efaf8e-8942-4c9e-8dc1-5a298a326f91",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "mystic-island-learning-v2",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": true,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:e1efaf8e-8942-4c9e-8dc1-5a298a326f91",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        }
+      ],
+      "seeded": {
+        "plots": {
+          "food-herbs": {
+            "hours": 0.000027777777777959756,
+            "stock": 3
+          }
+        },
+        "tables": {
+          "food-table": 0
+        },
+        "pantry": 0,
+        "harvested": 4,
+        "delivered": 0,
+        "eaten": 0
+      },
+      "delivery": {
+        "plots": {
+          "food-herbs": {
+            "hours": 0.0015277777777779598,
+            "stock": 3
+          }
+        },
+        "tables": {
+          "food-table": 1
+        },
+        "pantry": 0,
+        "harvested": 4,
+        "delivered": 1,
+        "eaten": 0
+      },
+      "meal": {
+        "food": {
+          "plots": {
+            "food-herbs": {
+              "hours": 1.001527777777778,
+              "stock": 0
+            }
+          },
+          "tables": {
+            "food-table": 0
+          },
+          "pantry": 0,
+          "harvested": 4,
+          "delivered": 4,
+          "eaten": 4
+        },
+        "residents": [
+          {
+            "id": "pokomoko",
+            "cell": {
+              "x": 4,
+              "z": 4
+            }
+          },
+          {
+            "id": "rabbit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            }
+          },
+          {
+            "id": "otter",
+            "cell": {
+              "x": 4,
+              "z": 4
+            }
+          }
+        ],
+        "tablePathFromHome": 13
+      },
+      "debug": {
+        "placementVersion": 1,
+        "residents": [
+          {
+            "id": "pokomoko",
+            "cell": {
+              "x": 4,
+              "z": 4
+            }
+          },
+          {
+            "id": "rabbit",
+            "cell": {
+              "x": 0,
+              "z": 4
+            },
+            "visit": "food-table",
+            "foodTrip": "carry"
+          },
+          {
+            "id": "otter",
+            "cell": {
+              "x": 4,
+              "z": 4
+            }
+          }
+        ],
+        "sourcePaths": [
+          17,
+          1,
+          17
+        ],
+        "tableFromSource": 17
+      },
+      "before": {
+        "plots": {
+          "food-herbs": {
+            "hours": 1.001527777777778,
+            "stock": 0
+          }
+        },
+        "tables": {
+          "food-table": 0
+        },
+        "pantry": 0,
+        "harvested": 4,
+        "delivered": 4,
+        "eaten": 4
+      },
+      "after": {
+        "plots": {
+          "food-herbs": {
+            "hours": 1.0026719444444447,
+            "stock": 0
+          }
+        },
+        "tables": {
+          "food-table": 0
+        },
+        "pantry": 0,
+        "harvested": 4,
+        "delivered": 4,
+        "eaten": 4
+      },
+      "errors": [],
+      "pass": true
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "captures": [
+        {
+          "file": "768-carrying.png",
+          "foodCandidate": "island-food-loop-v1",
+          "url": "http://127.0.0.1:5224/#/island",
+          "revision": "development-local",
+          "version": "development-local:e1efaf8e-8942-4c9e-8dc1-5a298a326f91",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "mystic-island-learning-v2",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": true,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:e1efaf8e-8942-4c9e-8dc1-5a298a326f91",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "768-delivered.png",
+          "foodCandidate": "island-food-loop-v1",
+          "url": "http://127.0.0.1:5224/#/island",
+          "revision": "development-local",
+          "version": "development-local:e1efaf8e-8942-4c9e-8dc1-5a298a326f91",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "mystic-island-learning-v2",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": true,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:e1efaf8e-8942-4c9e-8dc1-5a298a326f91",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "768-food-summary.png",
+          "foodCandidate": "island-food-loop-v1",
+          "url": "http://127.0.0.1:5224/#/island",
+          "revision": "development-local",
+          "version": "development-local:e1efaf8e-8942-4c9e-8dc1-5a298a326f91",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "mystic-island-learning-v2",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": true,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:e1efaf8e-8942-4c9e-8dc1-5a298a326f91",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        }
+      ],
+      "seeded": {
+        "plots": {
+          "food-herbs": {
+            "hours": 0.000027777777777959756,
+            "stock": 3
+          }
+        },
+        "tables": {
+          "food-table": 0
+        },
+        "pantry": 0,
+        "harvested": 4,
+        "delivered": 0,
+        "eaten": 0
+      },
+      "delivery": {
+        "plots": {
+          "food-herbs": {
+            "hours": 0.0015277777777779598,
+            "stock": 3
+          }
+        },
+        "tables": {
+          "food-table": 1
+        },
+        "pantry": 0,
+        "harvested": 4,
+        "delivered": 1,
+        "eaten": 0
+      },
+      "meal": {
+        "food": {
+          "plots": {
+            "food-herbs": {
+              "hours": 1.001527777777778,
+              "stock": 0
+            }
+          },
+          "tables": {
+            "food-table": 0
+          },
+          "pantry": 0,
+          "harvested": 4,
+          "delivered": 4,
+          "eaten": 4
+        },
+        "residents": [
+          {
+            "id": "pokomoko",
+            "cell": {
+              "x": 4,
+              "z": 4
+            }
+          },
+          {
+            "id": "rabbit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            }
+          },
+          {
+            "id": "otter",
+            "cell": {
+              "x": 4,
+              "z": 4
+            }
+          }
+        ],
+        "tablePathFromHome": 13
+      },
+      "debug": {
+        "placementVersion": 1,
+        "residents": [
+          {
+            "id": "pokomoko",
+            "cell": {
+              "x": 4,
+              "z": 4
+            }
+          },
+          {
+            "id": "rabbit",
+            "cell": {
+              "x": 0,
+              "z": 4
+            },
+            "visit": "food-table",
+            "foodTrip": "carry"
+          },
+          {
+            "id": "otter",
+            "cell": {
+              "x": 4,
+              "z": 4
+            }
+          }
+        ],
+        "sourcePaths": [
+          17,
+          1,
+          17
+        ],
+        "tableFromSource": 17
+      },
+      "before": {
+        "plots": {
+          "food-herbs": {
+            "hours": 1.001527777777778,
+            "stock": 0
+          }
+        },
+        "tables": {
+          "food-table": 0
+        },
+        "pantry": 0,
+        "harvested": 4,
+        "delivered": 4,
+        "eaten": 4
+      },
+      "after": {
+        "plots": {
+          "food-herbs": {
+            "hours": 1.0030247222222224,
+            "stock": 0
+          }
+        },
+        "tables": {
+          "food-table": 0
+        },
+        "pantry": 0,
+        "harvested": 4,
+        "delivered": 4,
+        "eaten": 4
+      },
+      "errors": [],
+      "pass": true
+    }
+  ],
+  "pass": true
+}

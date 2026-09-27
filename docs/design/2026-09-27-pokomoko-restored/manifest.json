@@ -1,0 +1,85 @@
+{
+  "candidate": "living-fantasy-garden-v2",
+  "worldStyle": "fantasy-garden-v1",
+  "baseRevision": "67406a186e227ef3d66983d2b5dea72739c5d1db",
+  "build": {
+    "version": "development-local:806cd1c5-b188-4e1c-904b-472c587efca4",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "sourceHash": "995c0ea0b437f4c7f0205efce22c8c940d759a8a9009f8177c6414484f0739c4",
+  "sourceSnapshot": "/private/tmp/sansu-pokomoko-restore.7V3VQI",
+  "productionTarget": "http://127.0.0.1:5330",
+  "devTarget": "http://127.0.0.1:5231",
+  "productionFlags": {
+    "VITE_ISLAND_ENABLED": true,
+    "VITE_ISLAND_LIFE_ENABLED": true,
+    "VITE_ISLAND_LIFE_DISCOVERY_ENABLED": true,
+    "VITE_ISLAND_FANTASY_ENABLED": true
+  },
+  "devFlags": {
+    "VITE_ISLAND_ENABLED": true,
+    "VITE_ISLAND_LIFE_PREVIEW": true,
+    "VITE_ISLAND_FANTASY_ENABLED": true
+  },
+  "qa": [
+    {
+      "path": "tools/e2e-island-fantasy.mjs",
+      "sha256": "023d5cca53aa99a79baa6a8b8a0f8e8b365dbd1ddffda84f1de39fcf5315cd6f"
+    },
+    {
+      "path": "tools/e2e-island-fantasy-production.mjs",
+      "sha256": "aeed6176d7f72a6a50d7855986495812c6aab8fbf8c1685b84f51c3ef60fb5c1"
+    },
+    {
+      "path": "tools/island-e2e-helpers.mjs",
+      "sha256": "013b647395a1b0fe63265ec70055519db7b6cf844db4e14171efa99e27854e6b"
+    }
+  ],
+  "reports": {
+    "dev": {
+      "path": "dev/report.json",
+      "sha256": "6f25091d577cd54a9fed449733990de2bf27f971950147bd947383e38b60a158",
+      "pass": true
+    },
+    "production": {
+      "path": "production/report.json",
+      "sha256": "9e0da3400012c5ec337106879d65c7b1ddbdd5df1da9598816a1539aabaf1a17",
+      "pass": true
+    }
+  },
+  "viewports": [
+    {
+      "width": 390,
+      "height": 844
+    },
+    {
+      "width": 768,
+      "height": 1024
+    }
+  ],
+  "captureCount": 30,
+  "originalCharacterReference": "../2026-09-19-life-startup-stills/source/pokomoko-original.png",
+  "gates": {
+    "visual": "Original character restored; whole-world art and screen coherence remain on hold",
+    "silentComprehension": {
+      "status": "not-observed",
+      "independentChildren": 0
+    },
+    "runtime": "Scoped automated verification passed; see README for the timed-out full-suite case and successful affected retries"
+  },
+  "published": false
+}

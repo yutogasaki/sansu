@@ -14,7 +14,7 @@ export const tint = (style: Style) => style === 'sunshine' ? '#f5bf60' : style =
 /** Shared catalog and placed-item model. Growth is always supplied by the caller. */
 export function buildLifeItem(item: LifeItem, materials: IslandMaterials, showSoil = true, encounterBranch = false) {
     if (isDecoration(item.kind)) {
-        const root = buildDecoration(item.kind, materials); root.rotation.y = (item.rotation ?? 0) * Math.PI / 2;
+        const root = buildDecoration(item.kind, materials, item.foodStage, item.waterFlow, item.waterConnections); root.rotation.y = (item.rotation ?? 0) * Math.PI / 2;
         return { root, seat: undefined, pivot: undefined, picnic: undefined, rotor: undefined, sandbox: undefined };
     }
     if (isFacility(item.kind)) return { root: buildFacility(item.kind, materials, item.style), seat: undefined, pivot: undefined, picnic: undefined, rotor: undefined, sandbox: undefined };
@@ -82,6 +82,15 @@ export function buildLifeItem(item: LifeItem, materials: IslandMaterials, showSo
         rim.rotation.x = Math.PI / 2; rim.position.y = .31; g.add(rim);
     } else if (item.kind === 'picnic-table') {
         box(g, '#bd9066', 0, .49, 0, .78, .09, .48);
+        if (item.foodStock) {
+            const harvest = new T.Group(); harvest.name = 'life-table-harvest';
+            ellipsoid(harvest, paint('#ead9aa'), [0, .565, 0], [.19, .025, .13], 12);
+            for (let index = 0; index < Math.min(4, item.foodStock); index++) {
+                const x = (index % 2 ? 1 : -1) * .065, z = (index < 2 ? -1 : 1) * .04;
+                ellipsoid(harvest, paint('#df9b4e'), [x, .618, z], [.067, .052, .06], 12);
+            }
+            g.add(harvest);
+        }
         for (const x of [-.27, .27]) box(g, '#98714e', x, .23, 0, .075, .46, .34);
         const seats = [1, -1].map(side => {
             const seat = box(g, color, 0, .29, side * .38, .70, .10, .16);

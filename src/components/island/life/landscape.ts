@@ -10,6 +10,7 @@ import { cellKey, districts, isHouse } from '../../../domain/islandLife/space';
 import { plantGatherings } from '../../../domain/islandLife/discovery';
 import { canopyShoreStudy, coastWorldOutline, makeCanopyShoreStudy } from './canopyShoreStudy';
 import { canopyGroundVariant, makeCanopyGroundStudy } from './canopyGroundStudy';
+import { soilWetness } from '../../../domain/islandLife/soilMoisture';
 
 /** The playable rectangle stays level. Irregularity belongs outside its cells. */
 export function coastShape(width: number, depth: number) {
@@ -50,6 +51,45 @@ export function buildLandscape(state: LifeState, width: number, point: (c: Cell)
         if (state.worldStyle === 'canopy-dots-c3-v1') grassSurface.material.bumpScale = .24;
     }
     const groundStudy = canopy && canopyGroundVariant ? makeCanopyGroundStudy(grass, root, (landBounds(state).minX + landBounds(state).maxX) / 2, canopyGroundVariant) : undefined;
+
+    // Soft, still patches reveal the soil's actual stored moisture. The water
+    // channel itself shows flow immediately; the neighboring earth lags behind.
+    let soilSurface: T.ShaderMaterial | undefined;
+    let soilGeometry: T.BufferGeometry | undefined;
+    if (state.soilMoisture) {
+        const positions: number[] = [], uvs: number[] = [], strengths: number[] = [], indices: number[] = [];
+        for (const [key, moisture] of Object.entries(state.soilMoisture)) {
+            const strength = soilWetness(moisture);
+            if (strength < .04) continue;
+            const [x, z] = key.split(',').map(Number);
+            if (isHouse({ x, z })) continue;
+            const p = point({ x, z }), index = positions.length / 3;
+            for (const [dx, dz, u, v] of [[-.74, -.74, 0, 0], [.74, -.74, 1, 0], [.74, .74, 1, 1], [-.74, .74, 0, 1]]) {
+                positions.push(p.x + dx, .082, p.z + dz); uvs.push(u, v); strengths.push(strength);
+            }
+            indices.push(index, index + 1, index + 2, index, index + 2, index + 3);
+        }
+        if (indices.length) {
+            soilGeometry = new T.BufferGeometry();
+            soilGeometry.setAttribute('position', new T.Float32BufferAttribute(positions, 3));
+            soilGeometry.setAttribute('uv', new T.Float32BufferAttribute(uvs, 2));
+            soilGeometry.setAttribute('strength', new T.Float32BufferAttribute(strengths, 1));
+            soilGeometry.setIndex(indices);
+            soilGeometry.computeBoundingSphere();
+            soilSurface = new T.ShaderMaterial({ transparent: true, depthWrite: false, side: T.DoubleSide,
+                uniforms: { color: { value: new T.Color('#327c91') } },
+                vertexShader: 'attribute float strength; varying float vStrength; varying vec2 vUv; void main(){vStrength=strength;vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}',
+                fragmentShader: `uniform vec3 color; varying float vStrength; varying vec2 vUv;
+                    void main(){float radius=length((vUv-.5)*2.0);float edge=1.0-smoothstep(.18,1.0,radius);
+                    gl_FragColor=vec4(color,edge*vStrength*.34);
+                    #include <tonemapping_fragment>
+                    #include <colorspace_fragment>
+                    }`,
+            });
+            const patches = new T.Mesh(soilGeometry, soilSurface); patches.name = 'life-soil-moisture';
+            patches.renderOrder = 1; root.add(patches);
+        }
+    }
 
     // A broad, quiet water plane with a shallow shelf and low-contrast current.
     // It carries no hit targets and never changes simulation time or growth.
@@ -174,5 +214,5 @@ export function buildLandscape(state: LifeState, width: number, point: (c: Cell)
         }
     }
     return { root, animate: (at: number, reduced: boolean) => { water.uniforms.time.value = reduced ? 0 : at / 1000 % (Math.PI * 100); },
-        dispose: () => { shoreStudy?.(); groundStudy?.(); materials.forEach(m => m.dispose()); grassSurface?.dispose(); water.dispose(); } };
+        dispose: () => { shoreStudy?.(); groundStudy?.(); materials.forEach(m => m.dispose()); grassSurface?.dispose(); soilGeometry?.dispose(); soilSurface?.dispose(); water.dispose(); } };
 }

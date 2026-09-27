@@ -12,9 +12,9 @@ export type LifeSceneInput = {
 // The motion projection already advances visits between saved snapshots. A
 // periodic clock refresh only needs new geometry when its visible shape changes.
 function geometryKey({ state, selected, cell, placement }: LifeSceneInput) {
-    const { now, residents, drops, light, days, economy, lastAchievement, heroWaitUntil, roamRound, ...shape } = state;
+    const { now, residents, drops, light, days, economy, lastAchievement, heroWaitUntil, roamRound, gardenTime, ...shape } = state;
     void now; void residents; void drops; void light; void days; void economy;
-    void lastAchievement; void heroWaitUntil; void roamRound;
+    void lastAchievement; void heroWaitUntil; void roamRound; void gardenTime;
     return JSON.stringify({ ...shape, items: state.items.map(item => ({ ...item, growth: growthStage(item) })),
         selected, cell, placement: placement && { ...placement,
             item: { ...placement.item, growth: growthStage(placement.item) },

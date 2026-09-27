@@ -17,7 +17,7 @@ describe('placeable decoration contract',()=>{
         try{
             const old=structuredClone(record),buy={id:'fence',revision:record.revision,command:{type:'buy' as const,kind:'fence' as const,cell:{x:0,z:3}}};
             const bought=await updateLife('owner',[],buy,100,db);
-            expect(bought.version).toBe(19);expect(bought.diagonalCutover).toEqual(old.diagonalCutover);
+            expect(bought.version).toBe(20);expect(bought.diagonalCutover).toEqual(old.diagonalCutover);
             expect(bought.actions.slice(0,old.actions.length)).toEqual(old.actions);
             expect(bought.actions.at(-1)?.purchaseReceipt).toMatchObject({priceVersion:'life-v19-decorations-v1',actualPaidDrops:4});
             expect(await updateLife('owner',[],buy,100,db)).toEqual(bought);
@@ -27,7 +27,7 @@ describe('placeable decoration contract',()=>{
             const state=replayLife(turned);expect(state.items[0].rotation).toBe(1);
             expect(state.drops).toBe(replayLife(record).drops-4);
             expect(state.residents).toEqual(replayLife(bought).residents);
-            expect((await updateLife('owner',[],undefined,100,db)).version).toBe(19);
+            expect((await updateLife('owner',[],undefined,100,db)).version).toBe(20);
             const corrupt=structuredClone(turned);corrupt.actions.find(a=>a.id==='fence')!.purchaseReceipt!.actualPaidDrops=0;
             expect(()=>replayLife(corrupt)).toThrow('購入の記録');
             expect(()=>replayLife({...turned,version:18})).toThrow('保存版');
@@ -73,7 +73,7 @@ it('requires a new save version even when a placement-clearance precedes the pur
     const {db,record}=await fixture();
     try{
         const next=commandLife(record,{type:'clear-placement',kind:'fence',cell:{x:0,z:3}},'clear',100);
-        expect(next.version).toBe(19);expect(replayLife(next).items).toHaveLength(0);
+        expect(next.version).toBe(20);expect(replayLife(next).items).toHaveLength(0);
         expect(()=>replayLife({...next,version:18})).toThrow('保存版');
     }finally{await db.delete();}
 });

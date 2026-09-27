@@ -1,6 +1,8 @@
 import { isDecoration } from '../../../domain/islandLife/decorations';
 import { holdPwaUpdateForCriticalPersistence } from '../../../pwa';
 import { lifeCatalogKinds, lifeDiscoveryPresentation } from '../../../domain/islandLife/capabilities';
+import { foodGrowthConditions } from '../../../domain/islandLife/foodLoop';
+import { soilMoistureAt, soilTarget, soilWetness } from '../../../domain/islandLife/soilMoisture';
 import type { FootstepInput } from './footstepPresentation';
 import type { ShadowRequest } from './shadowObservation';
 import { isFacility, occupiesCell } from '../../../domain/islandLife/footprint';
@@ -11,8 +13,9 @@ import { placementUndo } from '../../../domain/islandLife/placementUndo';
 import { observationVisit } from '../../../domain/islandLife/observationVisit';
 import { removalRefund } from '../../../domain/islandLife/purchases';
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
-import { Sparkles, Sprout, Home, Move, RotateCw, Archive, Trash2, Check, X, Undo2, Footprints } from 'lucide-react';
-import { CATALOG, LIFE_CANDIDATE, LIFE_RULES, learningDay, type Cell, type ItemKind, type LifeCommand, type ResidentId } from '../../../domain/islandLife/model';
+import { Sparkles, Sprout, Home, Move, RotateCw, Archive, Trash2, Check, X, Undo2, Footprints, Sun, Sunset, Moon, BookOpen } from 'lucide-react';
+import { fantasyEnabled, gardenTimes, readGardenTime, saveGardenTime, FANTASY_CANDIDATE, type GardenTime } from './fantasy/presentation';
+import { CATALOG, LIFE_CANDIDATE, LIFE_RULES, learningDay, type Cell, type ItemKind, type LifeCommand, type LifeItem, type LifeState, type ResidentId } from '../../../domain/islandLife/model';
 import { cellKey, districts, isHouse, isolatedItems, landCells } from '../../../domain/islandLife/space';
 import { replayLife } from '../../../domain/islandLife/simulation';
 import { timeLifeWork } from './startupTiming';
@@ -37,12 +40,27 @@ import './life-belongings.css';
 import './life-resources.css';
 import './life-world-first.css';
 import './life-isolation.css';
+import './fantasy/fantasy.css';
 
 const LifeObservation = lazy(() => import('./LifeObservation'));
 const LifeMemories = lazy(() => import('./LifeMemories'));
 const LifeWorld = lazy(() => import('./LifeWorld'));
 
-const productStories = { fence: 'ならべて おにわを かざろう', planter: 'おはなの はちを すきな ばしょへ', flower: 'めを そだてて おはなに', bench: 'ひとやすみの ばしょ', swing: 'すわって ゆらゆら', lantern: 'あかりの そばに あつまるかな', sapling: '木かげに そだつ なえ', 'water-bowl': '水を のぞく うつわ', 'picnic-table': 'おやつと おしゃべりの ばしょ', pinwheel: 'かぜと くるくる', 'flower-arch': 'おはなの したを くぐろう', sandbox: 'すなで おやまや おしろを', 'garden-hut': 'どうぐを だして おていれ', library: 'ほんを ひらいて ひとやすみ' };
+const productStories = { fence: 'ならべて おにわを かざろう', planter: 'ハーブを そだてて しょくたくへ', 'water-channel': '水ばちから みずみちを つなぐ', flower: 'めを そだてて おはなに', bench: 'ひとやすみの ばしょ', swing: 'すわって ゆらゆら', lantern: 'あかりの そばに あつまるかな', sapling: '木かげで ハーブの そだちが かわる', 'water-bowl': 'ちかくの ハーブが そだちやすい', 'picnic-table': 'はこんだ ハーブを みんなで たべる', pinwheel: 'かぜと くるくる', 'flower-arch': 'おはなの したを くぐろう', sandbox: 'すなで おやまや おしろを', 'garden-hut': 'どうぐを だして おていれ', library: 'ほんを ひらいて ひとやすみ' };
+function planterSoilLabel(state: LifeState, item: LifeItem) {
+    if (!item.cell || !state.soilMoisture) return undefined;
+    const moisture = soilMoistureAt(state, item.cell), target = soilTarget(state, item.cell);
+    return moisture + .05 < target ? '土に 水が ゆっくり しみているよ。' : moisture > target + .05 ? '土が ゆっくり かわいているよ。'
+        : soilWetness(moisture) > .5 ? '土が しっとり しているよ。' : '土は さらさら しているよ。';
+}
+function planterConditionHint(state: LifeState, item: LifeItem) {
+    if (!item.cell) return 'おくと また そだつよ。';
+    const condition = foodGrowthConditions(state, item);
+    if (state.soilMoisture) {
+        return `そだつと 住人が はこぶよ。${planterSoilLabel(state, item)}${condition.shade > 0 ? '木かげで ゆっくり そだつよ。' : ''}`;
+    }
+    return `そだつと 住人が はこぶよ。${condition.water > 0 ? 'ちかくに 水が あるよ。' : '水ばちを ちかづけると そだちやすいよ。'}${condition.shade > 0 ? '木かげで ゆっくり そだつよ。' : ''}`;
+}
 const tabOptions = [
     ['build', 'つくる', Sprout],
     ['items', 'もちもの', Archive],
@@ -58,6 +76,9 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
     controls: ReturnType<typeof useIslandLife>; onHome: () => void; disabled: boolean; islandName: string;
 }) {
     const { record, error, busy, refresh } = controls;
+    const fantasy = fantasyEnabled();
+    const [timeChoice, setTimeChoice] = useState<{ owner?: string; time: GardenTime }>();
+    const gardenTime = useMemo(() => timeChoice?.owner === record?.profileId ? timeChoice?.time ?? 'day' : readGardenTime(record?.profileId), [timeChoice, record?.profileId]);
     const clearance = usePlacementClearance(controls, disabled);
     const retryPreparation = useRef<(() => Promise<void>) | undefined>(undefined);
     const cancelPlacement = () => { clearance.cancel(); retryPreparation.current = undefined; retryCompletion.current = undefined; };
@@ -86,9 +107,10 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
         if (!record) return undefined;
         const current = timeLifeWork('state-replay', () => replayLife(record));
         return { ...current, ...lifeDiscoveryPresentation(current.items),
-            worldStyle: import.meta.env.DEV && import.meta.env.VITE_ISLAND_LIFE_PREVIEW === 'true'
+            ...(fantasy ? { gardenTime } : {}),
+            worldStyle: fantasy ? 'fantasy-garden-v1' as const : import.meta.env.DEV && import.meta.env.VITE_ISLAND_LIFE_PREVIEW === 'true'
                 ? 'canopy-dots-c3-v1' as const : 'moon-garden-v1' as const };
-    }, [record]);
+    }, [record, fantasy, gardenTime]);
     const places = useMemo(() => state ? districts(state) : [], [state]);
     useEffect(() => {
         if (!observed) { setGathering(undefined); observationOrigin.current = undefined; return; }
@@ -111,6 +133,9 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
     const [kind, setKind] = useState<ItemKind>(), [selected, setSelected] = useState<string>();
     const [cell, setCell] = useState<Cell>(), [moving, setMoving] = useState(false), [removing, setRemoving] = useState(false);
     const [notice, setNotice] = useState('');
+    useEffect(() => {
+        if (fantasy && liveDiscovery.latest?.ruleId === 'M4') setNotice('水の なかに 星が みえたね。おもいでで また みられるよ。');
+    }, [fantasy, liveDiscovery.latest]);
     const [footstepInput, setFootstepInput] = useState<FootstepInput>();
     const [undo, setUndo] = useState<{ profileId: string; actionId: string }>();
     const undoCommand = record && undo?.profileId === record.profileId ? placementUndo(record, undo.actionId) : undefined;
@@ -266,9 +291,26 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
     const pager = <div className="life-pager"><button aria-label="まえの ページ" disabled={currentPage === 0} onClick={() => setPage(currentPage - 1)}>←</button><span>{currentPage + 1} / {pageCount}</span><button aria-label="つぎの ページ" disabled={currentPage + 1 === pageCount} onClick={() => setPage(currentPage + 1)}>→</button></div>;
     const goal = Math.min(LIFE_RULES.dailyGoal, state.days[learningDay(state.now)] ?? 0);
     const notificationTab = grownItems.length || observationCues.length ? 'items' : earnedDrops !== undefined ? 'build' : 'style';
-    return <section className="island-life" data-life-candidate={LIFE_CANDIDATE} data-life-destination={state.target} data-life-revision={record.revision} data-life-drops={state.drops} data-life-light={state.light} data-life-items={state.items.length} data-life-districts={places.map(p => p.label).join(',')} data-life-panel-open={menuOpen || dockOpen || observed || memoriesOpen || Boolean(placement) ? 'true' : undefined}>
+    const foodCarrier = state.residents.find(resident => resident.foodTrip);
+    const foodTableStock = state.food ? Object.values(state.food.tables).reduce((sum, stock) => sum + stock, 0) : 0;
+    const foodPlotStock = state.food ? Object.values(state.food.plots).reduce((sum, plot) => sum + plot.stock, 0) : 0;
+    const channels = state.items.filter(item => item.kind === 'water-channel' && item.cell);
+    const flowingChannels = channels.filter(item => item.waterFlow).length;
+    const placedPlanter = state.items.find(item => item.kind === 'planter' && item.cell);
+    return <section className="island-life" data-life-candidate={fantasy ? FANTASY_CANDIDATE : LIFE_CANDIDATE} data-garden-time={fantasy ? gardenTime : undefined} data-life-food-candidate={state.food ? 'island-food-loop-v1' : undefined} data-life-water-candidate={channels.length ? 'island-water-channel-v1' : undefined} data-life-soil-candidate={state.soilMoisture ? 'island-soil-moisture-v1' : undefined} data-life-water-flow={flowingChannels} data-life-destination={state.target} data-life-revision={record.revision} data-life-drops={state.drops} data-life-light={state.light} data-life-items={state.items.length} data-life-food-delivered={state.food?.delivered} data-life-food-eaten={state.food?.eaten} data-life-districts={places.map(p => p.label).join(',')} data-life-panel-open={menuOpen || dockOpen || observed || memoriesOpen || Boolean(placement) ? 'true' : undefined}>
         <div className="life-hud" data-life-hud="life-world-first-v1">
         <LifeResources state={state} />
+        {fantasy && !menuOpen && !dockOpen && !placement && !observed && !memoriesOpen && <div className="garden-times" role="group" aria-label="庭の じかん">
+            {gardenTimes.map(({ id, label }) => { const Icon = id === 'day' ? Sun : id === 'dusk' ? Sunset : Moon;
+                return <button key={id} type="button" aria-label={label} aria-pressed={gardenTime === id} onClick={() => {
+                    saveGardenTime(record.profileId, id); setTimeChoice({ owner: record.profileId, time: id });
+                }}><Icon size={18} aria-hidden="true" /><span>{label}</span></button>;
+            })}
+        </div>}
+        {!menuOpen && !dockOpen && !placement && !observed && !memoriesOpen && state.food && (foodCarrier || foodTableStock || foodPlotStock) ? <p className="life-food-cue" role="status">
+            {foodTableStock ? `食卓に ハーブ ${foodTableStock}こ。${foodCarrier ? `${foodCarrier.id === 'rabbit' ? 'うさぎ' : 'カワウソ'}が 次を ${foodCarrier.foodTrip?.phase === 'carry' ? 'はこんでるよ' : 'とりにいくよ'}` : 'みんなで たべられるよ'}`
+                : foodCarrier ? `${foodCarrier.id === 'rabbit' ? 'うさぎ' : 'カワウソ'}が ハーブを ${foodCarrier.foodTrip?.phase === 'carry' ? 'はこんでるよ' : 'とりにいくよ'}` : 'うえ木ばちの ハーブが そだったよ'}
+        </p> : null}
         {!menuOpen && !dockOpen && !placement && !observed && !memoriesOpen && (earnedDrops !== undefined || earnedLight !== undefined || grownItems.length > 0 || observationCues.length > 0) && <button className="life-earned" data-life-earned={earnedDrops} data-life-light-earned={earnedLight}
             data-life-growth-earned={grownItems.map(item => item.id).join(',') || undefined} data-life-observation-earned={observationCues.map(item => item.id).join(',') || undefined} aria-live="polite"
             onClick={() => switchTab(notificationTab)}>
@@ -292,6 +334,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
             <button ref={informationTrigger} className="life-home-action" type="button" aria-label="しまの ようす" aria-expanded={dockOpen} aria-controls="life-dock-dialog" onClick={openLifeControls}>
                 <LifeResidentPortrait resident="pokomoko" style={state.heroStyle} /><span>ようす</span>
             </button>
+            {fantasy && <button className="life-home-action garden-memories" type="button" onClick={openMemories}><BookOpen size={27} aria-hidden="true" /><span>おもいで</span></button>}
         </LifeWorld></Suspense>
         {observed && !placement && !menuOpen && !dockOpen && (() => {
             const target = state.items.find(i => i.id === observed && i.cell && (gathering || ['flower', 'sapling', 'water-bowl', 'bench', 'picnic-table', 'library', 'garden-hut'].includes(i.kind)));
@@ -333,16 +376,19 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
             {tab === 'items' && <>
                 <div className="life-items">{!item && state.items.slice(currentPage * 2, currentPage * 2 + 2).map((i, index) => { const growth = lifeGrowthStatus(i, state); return <button key={i.id} data-life-item={i.id} data-life-growth-stage={growth.stage}
                     data-life-growth-next-hours={growth.remainingHours} aria-pressed={selected === i.id} onClick={() => { setSelected(i.id); setMoving(false); setRemoving(false); setCell(undefined); }} disabled={locked}>
-                    <LifeProductPreview kind={i.kind} growth={i.growth} style={i.style} /><span className="life-item-name"><b>{CATALOG[i.kind].label}</b><small>{currentPage * 2 + index + 1}</small></span><span className="life-item-growth">{!i.cell ? <small>しまってある</small> : <>{(i.kind === 'flower' || i.kind === 'sapling') && <GrowthDots status={growth} />}<small>{isolatedIds.has(i.id) ? '？ ここまで あるけないよ' : growth.label}</small>{growth.nextLabel && <small className="life-growth-next">あと 約{growth.remainingHours}じかんで {growth.nextLabel}</small>}</>}</span></button>; })}</div>
+                    <LifeProductPreview kind={i.kind} growth={i.growth} style={i.style} foodStage={i.foodStage} foodStock={i.foodStock} waterFlow={i.waterFlow} waterConnections={i.waterConnections} /><span className="life-item-name"><b>{CATALOG[i.kind].label}</b><small>{currentPage * 2 + index + 1}</small></span><span className="life-item-growth">{!i.cell ? <small>しまってある</small> : <>{(i.kind === 'flower' || i.kind === 'sapling') && <GrowthDots status={growth} />}<small>{i.kind === 'water-channel' ? i.waterFlow ? '水が とおっているよ' : '水ばちと つなげよう' : isolatedIds.has(i.id) ? '？ ここまで あるけないよ' : growth.label}</small>{growth.nextLabel && <small className="life-growth-next">あと 約{growth.remainingHours}じかんで {growth.nextLabel}</small>}</>}</span></button>; })}</div>
                 {!state.items.length && <div className="life-inventory-empty"><Archive size={30} aria-hidden="true" /><b>なにを おこうかな？</b><p>つくった ものが ここに ならぶよ。</p><button className="island-primary" onClick={() => openMenuTab('build')}>つくるものを えらぶ</button></div>}
                 {item && <div className="life-item-actions"><h3><button aria-label="もちものの 一覧へ" onClick={() => { setSelected(undefined); setRemoving(false); }}>←</button> {CATALOG[item.kind].label}</h3>
-                    <LifeProductPreview kind={item.kind} growth={item.growth} style={item.style} />
+                    <LifeProductPreview kind={item.kind} growth={item.growth} style={item.style} foodStage={item.foodStage} foodStock={item.foodStock} waterFlow={item.waterFlow} waterConnections={item.waterConnections} />
                     {(() => { const growth = lifeGrowthStatus(item, state); return <div className="life-item-growth-detail" data-life-growth-stage={growth.stage}><div>{(item.kind === 'flower' || item.kind === 'sapling') && <GrowthDots status={growth} />}<strong>{item.cell ? growth.label : 'しまってある'}</strong></div>
                         <small>{!['flower', 'sapling'].includes(item.kind) ? (item.cell ? 'しまに おいてあるよ' : 'また しまに おけるよ') : !item.cell ? 'おくと また そだつよ' : growth.nextLabel ? `あと 約${growth.remainingHours}じかんで ${growth.nextLabel}` : 'いちばん おおきく そだったよ'}</small>{item.cell && growth.nextLabel && <small>追加で まなばない ときの めやすだよ。</small>}</div>; })()}
+                    {state.food && item.kind === 'planter' && <p className="life-food-item-status">ハーブ {state.food.plots[item.id]?.stock ?? 0}こ。{planterConditionHint(state, item)}</p>}
+                    {state.food && item.kind === 'picnic-table' && <p className="life-food-item-status">とどいた ハーブ {item.foodStock ?? 0}こ。{item.cell ? '住人が すわると たべるよ。' : 'おくと たべられるよ。'}</p>}
+                    {state.food && item.kind === 'water-channel' && <p className="life-food-item-status">{!item.cell ? 'おくと みずみちに なるよ。' : item.waterFlow ? '水ばちから 水が とどいているよ。' : '水ばちに つながるように ならべよう。'}</p>}
                     {isolatedIds.has(item.id) && <p className="life-item-isolation" data-life-isolated-item={item.id}><Footprints size={18} aria-hidden="true" /> ？ ここまで あるけないよ。うごかして すきまを あけると また きてくれるよ。</p>}
                     {['flower', 'sapling' , 'water-bowl', 'bench', 'picnic-table', 'library', 'garden-hut'].includes(item.kind) && item.cell && <button hidden={removing} disabled={locked} onClick={() => { showWorld(); setObservedResident(undefined); setObserved(item.id); if (item.kind === 'bench' || item.kind === 'picnic-table' || isFacility(item.kind)) tryObservation(item.id); }}>みてみる</button>}
                     <button hidden={removing || isDecoration(item.kind)} disabled={locked || !item.cell || isolatedIds.has(item.id) || (item.kind === 'lantern' || item.kind === 'pinwheel')} onClick={() => void doAction({ type: 'visit', itemId: item.id }, 'ぽこもこの いきさきを きめたよ。だれか くるかな？')}>ぽこもこを よぶ</button>
-                    {isDecoration(item.kind) && <button hidden={removing} disabled={locked} onClick={() => void doAction({ type: 'rotate', itemId: item.id, rotation: ((item.rotation ?? 0) + 1) % 4 as 0 | 1 | 2 | 3 }, 'むきを かえたよ。')}><RotateCw size={16} />むきを かえる</button>}
+                    {isDecoration(item.kind) && item.kind !== 'water-channel' && <button hidden={removing} disabled={locked} onClick={() => void doAction({ type: 'rotate', itemId: item.id, rotation: ((item.rotation ?? 0) + 1) % 4 as 0 | 1 | 2 | 3 }, 'むきを かえたよ。')}><RotateCw size={16} />むきを かえる</button>}
                     <button hidden={removing} disabled={locked} onClick={() => { setMoving(true); setCell(undefined); setRemoving(false); setNotice(''); showWorld(); }}><Move size={16} />{item.cell ? isolatedIds.has(item.id) ? 'むりょうで うごかす' : 'うごかす' : 'おく'}</button>
                     <button hidden={removing} disabled={locked || !item.cell} onClick={() => void doAction({ type: 'store', itemId: item.id }, isDecoration(item.kind) ? 'しまったよ。また おけるよ。' : 'そだったまま しまったよ。')}><Archive size={16} />しまう</button>
                     {item.kind !== 'lantern' && !isDecoration(item.kind) && <button hidden={removing} disabled={locked} onClick={() => openMenuTab('style')}><Sparkles size={16} />いろを かえる</button>}
@@ -362,6 +408,18 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
             <div className="life-caption-actions"><button className="island-text-button" onClick={onHome} disabled={locked}><Home size={17} />いえへ</button><button className="life-dock-close" type="button" aria-label="しまの ようすを とじる" onClick={() => setDockOpen(false)}><X size={17} /></button></div></div>
         <div className="life-information-body">
             <LifeResidentsSummary state={state} now={state.now + elapsed} />
+            {state.food && <section className="life-food-summary" aria-label="たべものの くらし">
+                <strong>たべものの くらし</strong>
+                <p>うえ木ばちで 育つ → 住人が はこぶ → テーブルで たべる</p>
+                <p>そだった {state.food.harvested}こ · とどいた {state.food.delivered}こ · たべた {state.food.eaten}こ</p>
+                {channels.length > 0 && <p>みずみち {flowingChannels} / {channels.length} マスに 水が とおっているよ。</p>}
+                {placedPlanter && state.soilMoisture && <p>ハーブ: {planterSoilLabel(state, placedPlanter)}</p>}
+                {!state.soilMoisture && <small>水ばちを ちかづけると はやく そだつよ。木かげでは ゆっくり そだつよ。</small>}
+                {state.soilMoisture && <small>水が とおると 土は ゆっくり しめり、切れると ゆっくり かわるよ。</small>}
+                {state.residents.some(r => r.foodTrip) && <small>{state.residents.find(r => r.foodTrip)?.id === 'rabbit' ? 'うさぎ' : 'カワウソ'}が ハーブを {state.residents.find(r => r.foodTrip)?.foodTrip?.phase === 'carry' ? 'はこんでいるよ。' : 'とりに いっているよ。'}</small>}
+                {!state.items.some(i => i.kind === 'planter' && i.cell) && <small>うえ木ばちを おくと そだつよ。</small>}
+                {!state.items.some(i => i.kind === 'picnic-table' && i.cell) && <small>テーブルを おくと みんなが はこぶよ。</small>}
+            </section>}
             <button type="button" className="life-memory-entry" onClick={openMemories}>しまの おもいで</button>
             <details className="life-island-notes">
                 <summary>そだちと しずく・ひかり<span aria-hidden="true">＋</span></summary>
@@ -378,7 +436,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
             {liveDiscovery.error && !observed && !memoriesOpen && <p className="life-dock-closed-notice" role="alert">{liveDiscovery.error}<button type="button" onClick={() => void liveDiscovery.retry()}>もういちど</button></p>}
             {(error || notice) && <p className="life-dock-closed-notice" role="status">{error || notice}{error && <button type="button" onClick={() => openMenuTab(tab)}>ひらく</button>}</p>}
         </div>}
-        {import.meta.env.DEV && <details className="life-dev"><summary>試作</summary><p>独立した試作の島です。通常の学習記録・旧島の所有物は変更しません。家の中は既存画面です。時間送りはこの島だけに作用します。</p>
+        {import.meta.env.DEV && <details className="life-dev"><summary>開発用の時間送り</summary><p>この表示では島の時間だけを進められます。通常の学習記録は変更しません。</p>
             {[6, 24].map(hours => <button key={hours} disabled={locked} onClick={() => void refresh({ id: crypto.randomUUID(), revision: record.revision, advanceHours: hours as 6 | 24 })}>試作を {hours}時間すすめる</button>)}
         </details>}
     </section>;

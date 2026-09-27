@@ -4,6 +4,7 @@ import { visitRelation } from '../../../domain/islandLife/discovery';
 import { activityPhase } from '../../../domain/islandLife/activity';
 import { type LifeItem, type LifeState, type Visit } from '../../../domain/islandLife/model';
 import { smoothArrival } from './residentWalk';
+import { foodAvailableAtTable } from '../../../domain/islandLife/foodLoop';
 import type { LifeSeat } from './residentMotion';
 
 export const picnicRole = (item: LifeItem, visit: Visit) => visit.path[visit.path.length - 1].z < item.cell!.z ? 1 : 0;
@@ -30,7 +31,7 @@ export function makePicnicMotion(state: LifeState, heads: T.Group[], seats: Map<
             if (!visit || now >= visit.end || activityPhase(visible, resident, now) !== 'picnic-table') return;
             const item = state.items.find(i => i.id === visit.itemId && i.cell); if (!item) return;
             const role = picnicRole(item, visit), furniture = seats.get(item.id)?.picnic;
-            if (furniture) furniture.snacks[role].visible = true;
+            if (furniture) furniture.snacks[role].visible = foodAvailableAtTable(visible, item.id);
             const partner = visible.residents.findIndex((r, i) => i !== index && r.visit?.itemId === item.id && now < r.visit.end
                 && activityPhase(visible, r, now) === 'picnic-table');
             const target = tree(item, visit), relation = relationFor(visit);

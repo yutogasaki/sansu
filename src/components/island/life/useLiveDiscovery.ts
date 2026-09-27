@@ -10,8 +10,9 @@ export function useLiveDiscovery(profileId?: string) {
     const pending = useRef(new Map<string, { event: DiscoveryScene; evidence: PresentationEvidence }>());
     const working = useRef(false);
     const [error, setError] = useState('');
+    const [latest, setLatest] = useState<DiscoveryScene>();
     useEffect(() => {
-        alive.current = true; owner.current = profileId; pending.current = new Map(); setError('');
+        alive.current = true; owner.current = profileId; pending.current = new Map(); setError(''); setLatest(undefined);
         return () => { alive.current = false; };
     }, [profileId]);
     const retry = async () => {
@@ -21,13 +22,14 @@ export function useLiveDiscovery(profileId?: string) {
         const release = holdPwaUpdateForCriticalPersistence();
         try {
             for (const [id, request] of requests) {
-                await recordPresentedScene(request.event.profileId, request.event, request.evidence);
+                const journal = await recordPresentedScene(request.event.profileId, request.event, request.evidence);
                 requests.delete(id);
+                if (alive.current && owner.current === originalOwner && journal?.firstPresented.some(first => first.eventId === id)) setLatest(request.event);
             }
         } catch { if (alive.current && owner.current === originalOwner) setError('みた きろくを のこせなかったよ。'); }
         finally { release(); working.current = false; if (alive.current && pending.current !== requests && pending.current.size) void retry(); }
     };
-    return { error, retry, presented: (event: DiscoveryScene, evidence: PresentationEvidence) => {
+    return { error, retry, latest, presented: (event: DiscoveryScene, evidence: PresentationEvidence) => {
         if (!alive.current || event.profileId !== owner.current) return;
         pending.current.set(event.eventId, { event, evidence }); void retry();
     } };

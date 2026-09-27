@@ -32,7 +32,7 @@ function geometryAllows(state: LifeState, p: Cell) {
     const inside = (x: number, z: number, w: number, d: number) => Math.abs(p.x - x) < w - 1e-8 && Math.abs(p.z - z) < d - 1e-8;
     if (inside(2.5, 0, 1.06, .56)) return false;
     return !state.items.some(item => {
-        if (!item.cell) return false;
+        if (!item.cell || item.kind === 'water-channel') return false;
         // The diagonal posts in windArchGeometry leave both cardinal crossing axes open.
         if (item.kind === 'flower-arch') return [-.43, .43].some(offset => inside(item.cell!.x + offset, item.cell!.z + offset, .1, .1));
         if (isFacility(item.kind)) return inside(item.cell.x + .5, item.cell.z + .5, 1.06, 1.06);

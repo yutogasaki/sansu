@@ -1,4 +1,3 @@
-import { isDecoration } from '../../../domain/islandLife/decorations';
 import { buildHomeProps } from './homeProps';
 import { gardenRuntimeAsset, runtimeAssetSlot } from './runtimeAssetSlots';
 import { isolationMarker } from './isolationMarker';
@@ -15,12 +14,21 @@ import { plantGatherings } from '../../../domain/islandLife/discovery';
 import type { PlacementPreview } from './placement';
 import { buildLandscape } from './landscape';
 import { buildHeritageHouse, buildHeritageTree } from './heritageScenery';
+import { buildFantasyGarden } from './fantasy/garden';
+import { buildGardenCottage } from './fantasy/cottage';
+import type { GardenTime } from './fantasy/presentation';
+import { batchGardenLanterns } from './fantasy/lanternBatch';
+import { batch } from '../three/primitives';
 
 import { buildLifeItem, tint } from './itemGeometry';
 export { tint } from './itemGeometry';
 export function buildLifeScene(state: LifeState, selected?: string, selectedCell?: Cell, placement?: PlacementPreview) {
     const content = buildHomeJourney(undefined, { residentsOnly: true, naturalOtter: true }), root = content.world;
-    const heritageHouse = buildHeritageHouse(content.m, state.worldStyle === 'canopy-dots-c3-v1'), house = heritageHouse.root;
+    const fantasy = state.worldStyle === 'fantasy-garden-v1';
+    const fantasyPaint = fantasy ? new T.MeshStandardMaterial({color:'#ffffff',vertexColors:true,roughness:.85,metalness:0}) : undefined;
+    const fantasyDecorationPaint = fantasy ? new T.MeshStandardMaterial({color:'#ffffff',vertexColors:true,roughness:.8,metalness:0}) : undefined;
+    const fantasyHouse = fantasy ? buildGardenCottage() : undefined;
+    const heritageHouse = fantasyHouse ?? buildHeritageHouse(content.m, state.worldStyle === 'canopy-dots-c3-v1'), house = heritageHouse.root;
     const actors = [content.hero, content.rabbit.pose, content.otter.pose];
     house.removeFromParent(); actors.forEach(a => a.removeFromParent());
     root.clear();
@@ -31,7 +39,14 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
     const box = (parent: T.Object3D, color: string, x: number, y: number, z: number, w: number, h: number, d: number) => {
         const mesh = new T.Mesh(new T.BoxGeometry(w, h, d), paint(color)); mesh.position.set(x, y, z); mesh.castShadow = mesh.receiveShadow = true; parent.add(mesh); return mesh;
     };
-    const landscape = buildLandscape(state, max - min + 1, point); root.add(landscape.root);
+    const fantasyLandscape = fantasy ? buildFantasyGarden(state, point) : undefined;
+    const landscape = fantasyLandscape ?? buildLandscape(state, max - min + 1, point); root.add(landscape.root);
+    const setGardenTime = (time: GardenTime) => {
+        state = { ...state, gardenTime: time };
+        fantasyLandscape?.setTime(time);
+        fantasyHouse?.setTime(time);
+    };
+    if (fantasy) setGardenTime(state.gardenTime ?? 'day');
     const bedIds = new Set([...districts(state).filter(d => d.kind === 'flowers').flatMap(d => d.ids),
         ...plantGatherings(state).flatMap(group => group.map(item => item.id))]);
     const clickables: T.Object3D[] = [];
@@ -40,17 +55,18 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
         const highlighted = placement?.item.cell ? occupiedCells(placement.item) : selected ? occupiedCells(state.items.find(i => i.id === selected) ?? { kind: 'flower' }) : selectedCell ? [selectedCell] : [];
         const active = highlighted.some(p => cellKey(c) === cellKey(p));
         const available = placement?.allowed.includes(cellKey(c));
-        const mesh = new T.Mesh(new T.PlaneGeometry(.91, .91), new T.MeshBasicMaterial({ color: '#fff4c1', transparent: true, opacity: active ? .55 : available ? .18 : .015, depthWrite: false }));
+        const mesh = new T.Mesh(new T.PlaneGeometry(.91, .91), new T.MeshBasicMaterial({ color: '#fff4c1', transparent: true, opacity: active ? .55 : available ? .18 : fantasy ? 0 : .015, depthWrite: false }));
         mesh.rotation.x = -Math.PI / 2; mesh.position.copy(point(c)); mesh.position.y = .085;
+        if (fantasy && !active && !available) mesh.visible = false;
         mesh.userData.cell = c; root.add(mesh); clickables.push(mesh);
 
     }
-    house.add(buildHomeProps(content.m));
+    if (!fantasy) house.add(buildHomeProps(content.m));
     house.position.set(2.5 - center, .035, -1.5); house.scale.setScalar(.8); root.add(house);
     const canopy = state.worldStyle === 'canopy-dots-c3-v1' ? buildCanopyScenery(center) : undefined;
     root.userData.worldStyle = state.worldStyle ?? 'moon-garden-v1';
     if (canopy) root.add(canopy.root);
-    else {
+    else if (!fantasy) {
         const tree = buildHeritageTree(content.m);
         tree.position.set(2.5 - center + 1.25, -.01, -3.05);
         tree.scale.setScalar(.63); runtimeAssetSlot(tree, 'tree'); root.add(tree);
@@ -64,14 +80,29 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
         g.name = preview ? 'life-placement-ghost' : `life-item-${item.id}`;
         const model = buildLifeItem(item, content.m, !bedIds.has(item.id) || preview, Boolean(state.encounterVersion));
         g.add(model.root);
-        if (!preview && item.kind === 'bench' && item.style === 'original') {
+        if (fantasyPaint && ['flower','lantern','bench','sapling','planter','picnic-table'].includes(item.kind)) {
+            // Keep animated snacks, seats and named contact anchors as the same objects.
+            // Only static surfaces share a draw call; Pokomoko's model is untouched.
+            const preserved = new Set<T.Object3D>(model.root.children.filter(child => child.name));
+            if(model.seat)preserved.add(model.seat);
+            model.picnic?.seats.forEach(seat=>preserved.add(seat));
+            model.picnic?.snacks.forEach(snack=>preserved.add(snack));
+            preserved.forEach(part=>part.removeFromParent());
+            batch(model.root,item.kind==='planter'?fantasyDecorationPaint:fantasyPaint);
+            preserved.forEach(part=>{
+                if(part instanceof T.Group && (part.name==='life-table-harvest' || part.name.startsWith('life-picnic-snack-')))batch(part,fantasyPaint);
+                model.root.add(part);
+            });
+        }
+        if (fantasy && item.kind === 'water-bowl') model.root.scale.setScalar(1.18);
+        if (!fantasy && !preview && item.kind === 'bench' && item.style === 'original') {
             runtimeAssetSlot(model.root, 'bench');
             model.root.userData.runtimeAssetSeatY = model.seat!.position.y + .05;
         }
-        if (!preview && item.kind === 'garden-hut' && item.style === 'original') runtimeAssetSlot(model.root, 'garden-hut');
-        if (!preview && isDecoration(item.kind) && item.style === 'original') runtimeAssetSlot(model.root, item.kind);
+        if (!fantasy && !preview && item.kind === 'garden-hut' && item.style === 'original') runtimeAssetSlot(model.root, 'garden-hut');
+        if (!fantasy && !preview && (item.kind === 'fence' || item.kind === 'planter') && item.style === 'original') runtimeAssetSlot(model.root, item.kind);
         const gardenAsset = gardenRuntimeAsset(item, preview);
-        if (gardenAsset) runtimeAssetSlot(model.root, gardenAsset);
+        if (gardenAsset && !fantasy) runtimeAssetSlot(model.root, gardenAsset);
         if (model.sandbox && !preview) sandboxes.set(item.id, model.sandbox);
         if (model.rotor && !preview) rotors.push(model.rotor);
         if (!preview && model.seat) seats.set(item.id, { seat: model.seat, pivot: model.pivot, picnic: model.picnic });
@@ -114,9 +145,10 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
     scarf.rotation.x = Math.PI / 2; scarf.position.y = .59; content.hero.add(scarf);
     actors.forEach((a, i) => { a.name = `life-resident-${state.residents[i].id}`; a.scale.setScalar(i ? .60 : .76); root.add(a); });
     const lightGround = state.footstepMagicVersion && !placement ? buildLanternLight(state, point) : undefined;
+    const disposeBatchedLight = fantasy && lightGround ? batchGardenLanterns(lightGround) : undefined;
     if (lightGround) root.add(lightGround.root);
     const motion = makeLifeMotion(content, state, point, seats, sandboxes);
-    return { root, clickables, lightGround, faceIsolationSigns: (camera: T.Camera) => { isolationSigns.forEach(sign => sign.quaternion.copy(camera.quaternion)); }, feet: () => {
+    return { root, clickables, lightGround, setGardenTime, faceIsolationSigns: (camera: T.Camera) => { isolationSigns.forEach(sign => sign.quaternion.copy(camera.quaternion)); }, feet: () => {
         root.updateMatrixWorld(true);
         return content.heroFeet.map(foot => {
             const box = new T.Box3().setFromObject(foot), center = box.getCenter(new T.Vector3());
@@ -125,11 +157,11 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
     }, width: max - min + 1, depth: Math.max(...cells.map(c => c.z)) + 1, point,
         animate: (at: number, reduced: boolean, decorationAt = at) => { const frozen = state.scenePose === 'captured-v1';
             rotors.forEach(rotor => { rotor.rotation.z = (frozen && state.poseReducedMotion !== undefined ? state.poseReducedMotion : reduced) ? .2 : (frozen ? state.now : decorationAt) / 2300 % (Math.PI * 2); });
-            landscape.animate(decorationAt, reduced); motion.animate(at, reduced, decorationAt); }, audit: motion.audit, snapshot: motion.snapshot,
+            landscape.animate(decorationAt, reduced); motion.animate(at, reduced, decorationAt); }, audit: motion.audit, snapshot: () => ({ ...motion.snapshot(), ...(fantasy ? { gardenTime: state.gardenTime } : {}) }),
         dispose() {
             // Plane overlays use separate transparent materials; shared paints are owned by content.m.
             clickables.filter(o => o instanceof T.Mesh).forEach(o => ((o as T.Mesh).material as T.Material).dispose());
             previewMaterials.forEach(m => m.dispose());
-            lightGround?.dispose(); canopy?.dispose(); landscape.dispose(); heritageHouse.dispose(); content.dispose();
+            disposeBatchedLight?.(); lightGround?.dispose(); canopy?.dispose(); landscape.dispose(); heritageHouse.dispose(); fantasyPaint?.dispose(); fantasyDecorationPaint?.dispose(); content.dispose();
         } };
 }

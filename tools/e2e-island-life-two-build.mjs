@@ -8,10 +8,12 @@ import { readNative } from './island-e2e-helpers.mjs';
 import { attempt } from './island-learning-checks.mjs';
 import { putCell, inventory } from './island-life-ui-helpers.mjs';
 const oldDir = process.env.SANSU_LIFE_OLD_DIR, newDir = process.env.SANSU_LIFE_NEW_DIR, out = process.env.SANSU_LIFE_TWO_BUILD_OUTPUT;
+const rollbackDir = process.env.SANSU_LIFE_ROLLBACK_DIR;
+const buildDirs = [oldDir, newDir, ...(rollbackDir ? [rollbackDir] : [])];
 assert(oldDir && newDir && out); await mkdir(out, { recursive: false });
-const builds = await Promise.all(['OLD', 'NEW'].map(async key => { const path = process.env[`SANSU_LIFE_${key}_MANIFEST`]; assert(path); return JSON.parse(await readFile(path)); }));
+const builds = await Promise.all(['OLD', 'NEW', ...(rollbackDir ? ['ROLLBACK'] : [])].map(async key => { const path = process.env[`SANSU_LIFE_${key}_MANIFEST`]; assert(path); return JSON.parse(await readFile(path)); }));
 async function verifyBuilds() {
-    for (const [index, root] of [oldDir, newDir].entries()) {
+    for (const [index, root] of buildDirs.entries()) {
         for (const file of builds[index].distFiles) {
             assert(file.path.startsWith('dist/')); const bytes = await readFile(resolve(root, file.path.slice(5)));
             assert.equal(createHash('sha256').update(bytes).digest('hex'), file.sha256, file.path);
@@ -22,7 +24,7 @@ async function verifyBuilds() {
 }
 await verifyBuilds(); assert.notEqual(builds[0].version.version, builds[1].version.version);
 const modulePath = html => html.match(/<script\b[^>]*type="module"[^>]*src="([^"]+)"/)?.[1];
-const bundles = await Promise.all([oldDir, newDir].map(async root => modulePath(await readFile(resolve(root, 'index.html'), 'utf8'))));
+const bundles = await Promise.all(buildDirs.map(async root => modulePath(await readFile(resolve(root, 'index.html'), 'utf8'))));
 assert(bundles.every(Boolean)); assert.notEqual(bundles[0], bundles[1]);
 const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.webp': 'image/webp', '.png': 'image/png', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.mp3': 'audio/mpeg' };
 const interruption = process.env.SANSU_LIFE_UPDATE_INTERRUPTION === '1';
@@ -30,8 +32,9 @@ const replayReuse = process.env.SANSU_LIFE_REPLAY_REUSE === '1';
 const discoveryUpgrade = process.env.SANSU_LIFE_DISCOVERY_UPGRADE === '1';
 const cadenceUpgrade = process.env.SANSU_LIFE_CADENCE_UPGRADE === '1';
 const heroVisitUpgrade = process.env.SANSU_LIFE_HERO_VISIT_UPGRADE === '1';
+const natureUpgrade = process.env.SANSU_LIFE_NATURE_UPGRADE === '1';
 const diagonalUpgrade = process.env.SANSU_LIFE_DIAGONAL_UPGRADE === '1';
-assert([cadenceUpgrade, heroVisitUpgrade, diagonalUpgrade].filter(Boolean).length <= 1, 'Select one version upgrade');
+assert([cadenceUpgrade, heroVisitUpgrade, diagonalUpgrade, natureUpgrade].filter(Boolean).length <= 1, 'Select one version upgrade');
 if (discoveryUpgrade) {
     assert.notEqual(builds[0].flags.VITE_ISLAND_LIFE_DISCOVERY_ENABLED, true);
     assert.equal(builds[1].flags.VITE_ISLAND_LIFE_DISCOVERY_ENABLED, true);
@@ -47,7 +50,7 @@ const server = createServer(async (req, res) => {
 await new Promise(resolveListening => server.listen(0, '127.0.0.1', resolveListening));
 const base = `http://127.0.0.1:${server.address().port}`, browser = await chromium.launch();
 const report = { target: base, builds: builds.map(b => ({ revision: b.revision, sourceHash: b.sourceHash, version: b.version, flags: b.flags })), bundles,
-    scope: 'Real old-to-new SW update during a partially completed learning reservation, retained earned Life ownership and all native stores, one reload, offline restart and same next question. No injected profile, credits, timestamps, update events or worker mocks. Empty photo stores do not prove Blob retention.', interruption, discoveryUpgrade, cadenceUpgrade, heroVisitUpgrade, diagonalUpgrade, humanN: 0, cases: [], pass: false };
+    scope: 'Real old-to-new SW update during a partially completed learning reservation, retained earned Life ownership and all native stores, one reload, offline restart and same next question. No injected profile, credits, timestamps, update events or worker mocks. Empty photo stores do not prove Blob retention.', interruption, discoveryUpgrade, cadenceUpgrade, heroVisitUpgrade, diagonalUpgrade, natureUpgrade, humanN: 0, cases: [], pass: false };
 async function snapshot(page) {
     return page.evaluate(async () => {
         const result = {};
@@ -74,7 +77,12 @@ function retained(before, after) {
         assert.equal(next.replaySnapshot?.build, old.replaySnapshot.build,
             'Unchanged replay rules must survive an app-version update');
     }
-    if (cadenceUpgrade && old.version === 15 && next.version === 16) {
+    if (natureUpgrade && old.version < 20 && next.version === 20) {
+        assert(next.foodCutover); assert(next.soilCutover);
+        assert.deepEqual(next.foodCutover.priorActions, old.actions);
+        assert.deepEqual(next.soilCutover.priorActions, old.actions);
+        for (const key of ['diagonalCutover', 'heroVisitCutover', 'cadenceCutover', 'placementCutover']) assert.deepEqual(next[key], old[key]);
+    } else if (cadenceUpgrade && old.version === 15 && next.version === 16) {
         assert(next.cadenceCutover); assert.equal(next.cadenceCutover.profileId, old.profileId);
         assert.deepEqual(next.cadenceCutover.priorActions, old.actions);
         assert.deepEqual(next.placementCutover, old.placementCutover);
@@ -184,6 +192,26 @@ try {
             assert.equal(await page.locator('[data-life-drops]').getAttribute('data-life-drops'), '6'); assert.equal(await page.locator('[data-life-items]').getAttribute('data-life-items'), '1');
             await page.screenshot({ path: `${out}/${device}-new-world.png` });
             let offlineBaseline = after, addedPurchase;
+            if (natureUpgrade) {
+                assert.equal(after.SansuIslandLifeV1.worlds[0].version, 20);
+                assert.equal(await page.locator('.life-world').getAttribute('data-life-visual-candidate'), 'living-fantasy-garden-v2');
+                await page.getByRole('button', { name: 'つくる', exact: true }).click();
+                const buy = page.locator('[data-life-buy="water-channel"]');
+                const index = await page.locator('[data-life-buy]').evaluateAll(nodes => nodes.findIndex(n => n.dataset.lifeBuy === 'water-channel'));
+                assert(index >= 0);
+                await page.getByRole('button', { name: `${Math.floor(index/2)+1}ページめ`, exact: true }).click();
+                await buy.scrollIntoViewIfNeeded(); await buy.click(); await putCell(page, { x: 2, z: 3 });
+                await page.waitForFunction(() => document.querySelector('[data-life-drops]')?.dataset.lifeDrops === '4');
+                offlineBaseline = await snapshot(page);
+                assert.deepEqual(offlineBaseline.SansuDatabase, before.SansuDatabase);
+                const nextRecord = offlineBaseline.SansuIslandLifeV1.worlds[0];
+                assert.deepEqual(nextRecord.actions.slice(0, allActions.length), allActions);
+                addedPurchase = nextRecord.actions.at(-1);
+                assert.equal(addedPurchase.command.kind, 'water-channel');
+                assert.equal(addedPurchase.purchaseReceipt.actualPaidDrops, 2);
+                assert.equal(await page.locator('[data-life-items]').getAttribute('data-life-items'), '2');
+                await page.screenshot({ path: `${out}/${device}-new-channel.png` });
+            }
             if (discoveryUpgrade) {
                 console.log(`${device}: twelve-item catalog and new purchase`);
                 await page.getByRole('button', { name: 'つくる', exact: true }).click();
@@ -218,6 +246,27 @@ try {
             }
             await page.getByRole('button', { name: 'まなぶ', exact: true }).click(); await input(page); assert.deepEqual((await readNative(page)).plan, partial.plan);
             await page.screenshot({ path: `${out}/${device}-offline-same-question.png` });
+            if (rollbackDir) {
+                assert(natureUpgrade, 'Compatible visual rollback requires the nature upgrade scenario');
+                assert.equal(builds[2].flags.VITE_ISLAND_FANTASY_ENABLED, false);
+                const kept = await snapshot(page);
+                deployed = rollbackDir;
+                const rollbackDetected = page.waitForResponse(r => r.url().includes('/version.json') && r.status() === 200);
+                await context.setOffline(false); await page.bringToFront(); await rollbackDetected;
+                await page.evaluate(async () => { await (await navigator.serviceWorker.ready).update(); });
+                await page.waitForTimeout(5000); assert.equal(await bundle(page), bundles[1]);
+                await page.getByRole('button', { name: 'とじる', exact: true }).click();
+                await page.waitForFunction(expected => document.querySelector('script[type="module"][src]')?.getAttribute('src') === expected, bundles[2]);
+                await world(page); retained(kept, await snapshot(page));
+                assert.equal(await page.locator('.life-world').getAttribute('data-life-world-style'), 'moon-garden-v1');
+                assert.equal(await page.locator('[data-life-items]').getAttribute('data-life-items'), '2');
+                await page.screenshot({ path: `${out}/${device}-compatible-rollback.png` });
+                await context.setOffline(true); await page.reload(); await world(page);
+                retained(kept, await snapshot(page));
+                await page.getByRole('button', { name: 'まなぶ', exact: true }).click(); await input(page);
+                assert.deepEqual((await readNative(page)).plan, partial.plan);
+                await page.screenshot({ path: `${out}/${device}-rollback-offline-learning.png` });
+            }
             assert.deepEqual(errors, []); report.cases.push({ device, viewport, cacheBefore, before, after, offlineBaseline, addedPurchase, plan: partial.plan, navigations, errors, pass: true });
         } catch (error) { await page.screenshot({ path: `${out}/${device}-failure.png` }).catch(() => {}); report.failure = { device, error: error.stack, errors, navigations, url: page.url(), text: await page.locator('body').innerText(), snapshot: await snapshot(page).catch(() => null) }; throw error; }
         finally { await context.close(); }

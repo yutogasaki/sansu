@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ぽこもこの島 — 現在のプレビュー</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Hiragino Sans",sans-serif;color:#253c3b;background:#f3f0e6;line-height:1.7}*{box-sizing:border-box}body{margin:0}main{max-width:1120px;margin:auto;padding:28px 22px 48px}h1{font-size:clamp(25px,3vw,38px);line-height:1.4;margin:0 0 12px}h2{font-size:19px;margin:25px 0 10px}p{margin:0 0 14px}a{color:#245c54;text-underline-offset:4px}a:focus-visible{outline:3px solid #d7a94c;outline-offset:4px}.label{font-size:12px;letter-spacing:.08em;color:#657b71}.layout{display:grid;grid-template-columns:390px minmax(0,1fr);gap:40px;align-items:start;margin-top:25px}.phone{margin:0;width:390px;background:white;border:1px solid #bbc7ba;border-radius:15px;overflow:hidden;box-shadow:0 16px 45px #233d341a}iframe{border:0;display:block;width:390px;height:844px;background:#f8f5ed}.phone figcaption{padding:10px 14px;font-size:12px;background:#e5e9de}.identity{display:flex;gap:18px;align-items:center;padding:18px 0;border-block:1px solid #ccd5c7}.identity img{width:90px;height:auto}.identity p{margin:0}.guide{font-size:14px;color:#48615b}ol{padding-left:24px}li{padding:4px 0}table{border-collapse:collapse;width:100%;font-size:14px}th,td{border-bottom:1px solid #ccd5c7;text-align:left;padding:10px 7px;vertical-align:top}th{width:35%;font-weight:600}.action{display:inline-block;background:#345e52;color:white;border-radius:10px;padding:10px 18px;text-decoration:none;margin:4px 0 15px}.small{font-size:12px;color:#657b71}details{margin-top:25px;font-size:13px}summary{cursor:pointer}details p{margin-top:12px}@media(max-width:850px){.layout{grid-template-columns:1fr;gap:28px}.phone{max-width:100%;margin:auto}.intro{max-width:640px}.phone iframe{max-width:100%}.guide{font-size:13px}}@media(max-width:430px){main{padding:20px 8px}.phone{border-radius:8px}.layout{gap:20px}.intro{padding:0 8px}}
+</style>
+</head>
+<body><main>
+<p class="label">現在のローカル実装 · 2026.09.27 · living-fantasy-garden-v2</p>
+<h1>ぽこもこは、元のデザインのまま。</h1>
+<p>下に表示しているのは、実際に操作できるアプリのプレビューです。</p>
+<p class="guide">入口・家・庭の見た目の統一は、まだ途中です。現在のつながりも含めて、実アプリで確認できます。</p>
+<div class="layout">
+<figure class="phone"><iframe src="http://127.0.0.1:5330/#/island" title="現在のぽこもこの島・操作できるプレビュー" allow="autoplay"></iframe><figcaption>390×844の枠内に、同じプレビューURLを直接表示しています。</figcaption></figure>
+<div class="intro">
+<a class="action" href="http://127.0.0.1:5330/#/island" target="_blank" rel="noopener">このプレビューを大きく開く</a>
+<div class="identity"><img src="../2026-09-19-life-startup-stills/source/pokomoko-original.png" alt="既存のぽこもこ。青と生成りの顔、左右で異なる水玉、色と布の切り替え"><p><strong>顔・頭身・耳・布・配色を維持。</strong><br><span class="guide">庭、住人のアイコン、思い出で既存モデルを使います。</span></p></div>
+<h2>最初の状態について</h2>
+<p class="guide">まだプロフィールがない場合は初回設定から始まります。設定・学習の途中なら、その続きを表示します。</p>
+<ol class="guide"><li>「まなぶ」から学年・教科・範囲を選びます。</li><li>最初の3問を終え、「とじる」で庭へ戻ります。</li><li>「つくる」から、獲得したしずくで花などを選び、庭に置けます。</li></ol>
+<p class="guide">以前の資料は、検査用に8品を置き、時間を進めた庭の画像でした。ここでは初期状態と育った見本を混ぜず、今開いているアプリそのものを表示しています。</p>
+<h2>Nature Townとの関係</h2>
+<table><tbody><tr><th>作るもの</th><td>ぽこもこが暮らす一つの島</td></tr><tr><th>部分統合済み</th><td>植物の育成、収穫物の運搬と食事、水路、木陰、土の水分</td></tr><tr><th>これから</th><td>供給から来訪・住人の招待・土地拡張への接続、保存の移行</td></tr><tr><th>世界の見た目</th><td>同じ島の風景・光・不思議を改善。ぽこもこのデザインは維持</td></tr></tbody></table>
+<p class="small" style="margin-top:14px">自然・物流はローカルの部分統合です。全機能の移植・実機検証・公開が済んだ状態ではありません。</p>
+<p><a href="../2026-09-27-pokomoko-restored/README.md">修正内容と確認結果</a> · <a href="../2026-09-27-pokomoko-restored/contact-sheet.html">確認に使った画面</a> · <a href="../../product/island-nature-integration.md">統合方針</a></p>
+<details><summary>取り下げた旧試作の記録</summary><p>変更したぽこもこが写る旧資料は、当時の記録として保存しています。現在のデザインやプレビューの見本には使いません。</p><a href="withdrawn-v1.html">旧試作（取り下げ）を読む</a></details>
+</div></div>
+</main></body></html>
