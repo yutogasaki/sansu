@@ -9,7 +9,7 @@ import { useIslandSpeech } from './useIslandSpeech';
 import { IslandSpeechControl } from './IslandSpeechControl';
 import './IslandAnswerForm.css';
 
-export function IslandAnswerForm({ slot, disabled, deferSubmission, onAnswer, answerReceiptId, retryAnswer, onInteraction, englishAutoRead = false }: Pick<LearningAnswerFormProps, 'disabled' | 'deferSubmission' | 'onAnswer' | 'onInteraction' | 'retryAnswer'> & {
+export function IslandAnswerForm({ slot, disabled, deferSubmission, onAnswer, answerReceiptId, retryAnswer, onInteraction, onDigitInput, englishAutoRead = false }: Pick<LearningAnswerFormProps, 'disabled' | 'deferSubmission' | 'onAnswer' | 'onInteraction' | 'onDigitInput' | 'retryAnswer'> & {
     slot: IslandLearningSlot;
     answerReceiptId?: string;
     englishAutoRead?: boolean;
@@ -26,6 +26,7 @@ export function IslandAnswerForm({ slot, disabled, deferSubmission, onAnswer, an
         deferSubmission={deferSubmission}
         retryAnswer={lastAnswerReceipt.retryAnswer}
         onInteraction={() => { playSound('tap'); onInteraction?.(); }}
+        onDigitInput={onDigitInput}
         onAnswer={answer => { if (!disabled && !model) onAnswer(answer); }} className="island-answer" resetCursorOnClear
         renderPrompt={problem => <IslandProblemPrompt problem={problem}
             speechControl={problem.subject === 'vocab' ? <IslandSpeechControl speech={speech} disabled={disabled} /> : undefined} />}

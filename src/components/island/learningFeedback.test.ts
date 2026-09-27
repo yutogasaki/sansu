@@ -5,6 +5,17 @@ const before = { id: 'reserved-section', cursor: 1 };
 const event = { id: 'saved-answer-receipt', planId: before.id, slotIndex: 1, type: 'answer' as const, result: 'correct' as const };
 
 describe('Island saved answer presentation', () => {
+    it('marks a saved section boundary for both answered and supported completion only', () => {
+        const after = { ...before, cursor: 2, status: 'completed' as const };
+        expect(islandFeedbackForReceipt(before, after, event)?.feedback.sectionCompleted).toBe(true);
+        expect(islandFeedbackForReceipt(before, after, { ...event, type: 'supported_completed', result: 'supported-completion' })?.feedback)
+            .toMatchObject({ kind: 'supported', sectionCompleted: true });
+        expect(islandFeedbackForReceipt(before, { ...after, cursor: before.cursor }, event)?.feedback)
+            .toMatchObject({ kind: 'step' });
+        expect(islandFeedbackForReceipt(before, { ...after, cursor: before.cursor }, event)?.feedback.sectionCompleted).toBeUndefined();
+        expect(islandFeedbackForReceipt(before, after, { ...event, result: 'incorrect' })?.feedback.sectionCompleted).toBeUndefined();
+    });
+
     it('keeps a correct intermediate Hissan row separate from a completed question', () => {
         const intermediate = islandFeedbackForReceipt(before, { ...before }, event);
         expect(intermediate?.feedback.kind).toBe('step');
