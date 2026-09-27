@@ -36,6 +36,7 @@ try {
                     await page.locator('.pokomoko-sprite').evaluate(async el => {
                         const img = new Image(); img.src = getComputedStyle(el).backgroundImage.slice(5, -2);
                         await img.decode();
+                        await document.querySelector('.pokomoko-rim-art').decode();
                         await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
                     });
                 }
@@ -54,16 +55,31 @@ try {
             await page.locator('.pokomoko-sprite').evaluate(async el => { const img = new Image(); img.src = getComputedStyle(el).backgroundImage.slice(5, -2); await img.decode(); });
             await capture('ready');
             row.characterBounds = await page.locator('.pokomoko-play-scene').evaluate(scene => {
-                const s = scene.getBoundingClientRect(), a = scene.querySelector('.pokomoko-learning-actor').getBoundingClientRect();
-                return { sceneHeight: s.height, actorHeight: a.height, contained: a.top >= s.top - 1 && a.bottom <= s.bottom + 1 };
+                const root = scene.closest('.island-workbench'), actor = scene.querySelector('.pokomoko-learning-actor');
+                const r = root.getBoundingClientRect(), a = actor.getBoundingClientRect(), keys = root.querySelector('.park-keypad').getBoundingClientRect();
+                return { position: getComputedStyle(scene.parentElement).position, actorWidth: a.width, actorHeight: a.height,
+                    contained: a.top >= r.top && (a.bottom < keys.top || a.right <= keys.left) && a.left >= r.left && a.right <= r.right };
             });
-            assert(row.characterBounds.sceneHeight >= 75 && row.characterBounds.actorHeight >= 70 && row.characterBounds.contained, 'Full body must fit the real stage');
+            assert.equal(row.characterBounds.position, 'absolute', 'The actor shares the problem board instead of occupying a dashboard row');
+            assert(row.characterBounds.actorWidth >= 110 && row.characterBounds.actorHeight >= 110 && row.characterBounds.contained, 'Full character and feet remain clear of the answer shelf in portrait and side-by-side layouts');
+            const labelSizes = await page.locator('.pokomoko-party-headline, .pokomoko-combo-number').evaluateAll(els => els.map(el => parseFloat(getComputedStyle(el).fontSize)));
+            assert(labelSizes.every(size => size >= 16), 'Play labels must be readable without tiny explanatory copy');
             const layoutData = await page.locator('.park-keypad button').evaluateAll(buttons => buttons.map(el => {
                 const r = el.getBoundingClientRect(); return { name: el.getAttribute('aria-label'), x: r.x, y: r.y, w: r.width, h: r.height, bottom: r.bottom, right: r.right };
             }));
             for (const key of layoutData.filter(k => /^\d$/.test(k.name))) assert(key.w >= 44 && key.h >= 44 && key.bottom <= layout.height && key.right <= layout.width, JSON.stringify(key));
             assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
             row.layout = layoutData;
+            await page.evaluate(() => {
+                window.__pokomokoFlightTrace = [];
+                let present = false;
+                new MutationObserver(() => {
+                    const el = document.querySelector('.pokomoko-input-flight');
+                    if (Boolean(el) === present) return;
+                    present = Boolean(el);
+                    window.__pokomokoFlightTrace.push({ present, at: performance.now(), animation: el ? getComputedStyle(el).animationName : null });
+                }).observe(document.querySelector('.island-workbench'), { childList: true, subtree: true });
+            });
             let saved = await readNative(page, id);
             for (let i = 1; i <= 21; i++) {
                 const result = await answerUI(page, saved.plan, { touch: i % 2 === 0, dev: false }); saved = result.state;
@@ -73,7 +89,14 @@ try {
                 row.answers.push({ i, ms: result.ms, game });
                 assert.equal(await page.locator('.pokomoko-learning-feedback').getAttribute('data-streak'), String(i));
                 if ([1, 3, 5, 8, 14, 21].includes(i)) {
-                    await page.waitForTimeout(300); await capture(`correct-${i}`);
+                    await page.waitForTimeout([5, 14, 21].includes(i) ? 850 : 300); await capture(`correct-${i}`);
+                }
+                if (i === 1) {
+                    await page.waitForFunction(() => window.__pokomokoFlightTrace.some(event => !event.present));
+                    row.inputFlight = await page.evaluate(() => window.__pokomokoFlightTrace.slice(0, 2));
+                    assert(row.inputFlight[0].present && !row.inputFlight[1].present);
+                    assert(row.inputFlight[1].at - row.inputFlight[0].at >= 400, 'Input light must reach its destination before removal');
+                    assert.equal(row.inputFlight[0].animation === 'none', reduced);
                 }
                 if (i === 5) {
                     assert.equal(game.rideRemaining, 3); assert.equal(game.light, 5);
@@ -88,11 +111,13 @@ try {
                         await page.evaluate(async () => { await navigator.serviceWorker.ready; });
                         await page.waitForFunction(() => Boolean(navigator.serviceWorker.controller));
                         row.offlineArtwork = await page.locator('.pokomoko-sprite').evaluate(async el => {
-                            const url = getComputedStyle(el).backgroundImage.slice(5, -2);
-                            const response = await caches.match(url);
-                            return { url, cached: Boolean(response?.ok), bytes: response ? (await response.blob()).size : 0 };
+                            const urls = [getComputedStyle(el).backgroundImage.slice(5, -2), document.querySelector('.pokomoko-rim-art').src];
+                            return Promise.all(urls.map(async url => {
+                                const response = await caches.match(url);
+                                return { url, cached: Boolean(response?.ok), bytes: response ? (await response.blob()).size : 0 };
+                            }));
                         });
-                        assert(row.offlineArtwork.cached && row.offlineArtwork.bytes > 0, 'Full-body artwork must be in the real offline cache');
+                        assert(row.offlineArtwork.every(art => art.cached && art.bytes > 0), 'Character and board artwork must be in the real offline cache');
                         await context.setOffline(true);
                     }
                     await page.reload();

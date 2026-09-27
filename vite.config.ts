@@ -147,7 +147,7 @@ export default defineConfig(({ mode }) => {
                     navigateFallbackDenylist: [/[?&]__app-update=/],
                     // Explicit includeAssets above owns approved offline media;
                     // this glob covers the app shell, Life control stills and learning character poses.
-                    globPatterns: ['**/*.{js,css,html,ico,woff,woff2}', 'assets/flower-bloom-original-*.png', 'assets/pokomoko-original-*.png', 'assets/pokomoko-learning-poses-*.webp', 'assets/town-*.png'],
+                    globPatterns: ['**/*.{js,css,html,ico,woff,woff2}', 'assets/flower-bloom-original-*.png', 'assets/pokomoko-original-*.png', 'assets/pokomoko-learning-poses-*.webp', 'assets/pokomoko-arcade-poses-*.webp', 'assets/pokomoko-arcade-rim-*.webp', 'assets/town-*.png'],
                     // The public Japanese WOFF2 is not referenced by the app. Keep
                     // the bundled UI font, but do not download this PDF-era copy
                     // during every fresh PWA installation.

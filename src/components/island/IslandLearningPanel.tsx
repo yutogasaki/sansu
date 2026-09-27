@@ -14,7 +14,7 @@ import './IslandLearningPanel.css';
 import './IslandLearningFocus.css';
 import './IslandLearningTheme.css';
 import { usePokomokoFeedback } from './usePokomokoFeedback';
-import { PokomokoInputSpark, PokomokoMilestoneFrame } from './PokomokoLearningEffects';
+import { PokomokoInputSpark, PokomokoMilestoneFrame, PokomokoAnswerFlight } from './PokomokoLearningEffects';
 
 function LightSeed({ filled, current }: { filled: boolean; current: boolean }) {
     return <span className="island-light-seed" data-filled={filled} data-current={current} aria-hidden="true">
@@ -74,6 +74,7 @@ export function IslandLearningPanel({ plan, active = true, intro = false, busy, 
         <IslandAnswerFeedback feedback={feedback?.id === dismissedReceipt ? undefined : feedback} party={party} burst={celebration.burst} inputCue={celebration.inputCue} />
         <PokomokoInputSpark cue={celebration.inputCue} />
         <PokomokoMilestoneFrame burst={celebration.burst} />
+        <PokomokoAnswerFlight burst={celebration.burst} />
         <IslandAnswerForm key={`${plan.id}:${plan.cursor}`} slot={slot} disabled={busy && !allowHintDraft} deferSubmission={busy && allowHintDraft} answerReceiptId={answerReceiptId}
             retryAnswer={feedback?.kind === 'retry' ? feedback.retryAnswer : undefined}
             englishAutoRead={englishAutoRead} onInteraction={() => setDismissedReceipt(feedback?.id)}

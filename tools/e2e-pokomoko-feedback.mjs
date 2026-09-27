@@ -150,7 +150,7 @@ try {
                     assert.deepEqual(saved.island.learningParty, initialParty, 'An intermediate row does not advance play');
                     await page.locator('[data-burst=step]').waitFor({ state: 'attached' });
                     assert.equal(await page.locator('[data-result=step]').innerText(), 'このだんは せいかい');
-                    assert.equal(await page.locator('.pokomoko-confetti').count(), 6);
+                    assert.equal(await page.locator('.pokomoko-learning-feedback').getAttribute('data-pose'), 'step');
                     if (steps === 1) await capture('step');
                 }
             } while (saved.plan.cursor === initialCursor && steps < 10);
