@@ -1,0 +1,41 @@
+{
+  "target": "http://127.0.0.1:5290",
+  "source": "Disposable UI-created profile, followed by 200 synthetic credits and 30 legal purchases. Desktop Chromium viewport emulation, not real-phone FPS.",
+  "cases": [
+    {
+      "width": 390,
+      "startupMs": 2312.4835839999996,
+      "frames": {
+        "p50": 43.20000000298023,
+        "p95": 67.30000000447035,
+        "render": {
+          "calls": 223,
+          "triangles": 139536,
+          "geometries": 166,
+          "textures": 8
+        }
+      },
+      "itemCount": 30,
+      "learningPreserved": true,
+      "errors": []
+    },
+    {
+      "width": 768,
+      "startupMs": 2324.685999999998,
+      "frames": {
+        "p50": 68.79999999701977,
+        "p95": 81.60000000149012,
+        "render": {
+          "calls": 223,
+          "triangles": 139536,
+          "geometries": 166,
+          "textures": 8
+        }
+      },
+      "itemCount": 30,
+      "learningPreserved": true,
+      "errors": []
+    }
+  ],
+  "pass": true
+}

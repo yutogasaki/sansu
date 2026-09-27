@@ -1,0 +1,2134 @@
+{
+  "target": "https://sansu-seven.vercel.app",
+  "manifest": "output/fantasy-production/live-manifest.json",
+  "sourceHash": "28a8c721adae05718dc48a518e43b98354b52b123dda35e66955c6d29c711f5c",
+  "version": {
+    "version": "5bd7848d5b9b8cea9b3ed0fadec8f09f564ec8a4:0240ee1a-466b-4a70-982c-d84344cb399f",
+    "revision": "5bd7848d5b9b8cea9b3ed0fadec8f09f564ec8a4",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": true,
+        "fantasy": true,
+        "candidate": "living-fantasy-garden-v2",
+        "saveVersion": 20
+      },
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "humanN": 0,
+  "scenarios": [],
+  "captures": [
+    {
+      "file": "390-welcome.png",
+      "url": "https://sansu-seven.vercel.app/#/onboarding",
+      "revision": "5bd7848d5b9b8cea9b3ed0fadec8f09f564ec8a4",
+      "version": "5bd7848d5b9b8cea9b3ed0fadec8f09f564ec8a4:0240ee1a-466b-4a70-982c-d84344cb399f",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "not-applicable",
+      "islandFeatureEnabled": true,
+      "mode": "welcome",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "5bd7848d5b9b8cea9b3ed0fadec8f09f564ec8a4",
+        "version": "5bd7848d5b9b8cea9b3ed0fadec8f09f564ec8a4:0240ee1a-466b-4a70-982c-d84344cb399f",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": null
+    },
+    {
+      "file": "390-learning.png",
+      "url": "https://sansu-seven.vercel.app/#/island?start=learn&profile=19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+      "revision": "5bd7848d5b9b8cea9b3ed0fadec8f09f564ec8a4",
+      "version": "5bd7848d5b9b8cea9b3ed0fadec8f09f564ec8a4:0240ee1a-466b-4a70-982c-d84344cb399f",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "learning",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "5bd7848d5b9b8cea9b3ed0fadec8f09f564ec8a4",
+        "version": "5bd7848d5b9b8cea9b3ed0fadec8f09f564ec8a4:0240ee1a-466b-4a70-982c-d84344cb399f",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": null
+    }
+  ],
+  "pass": false,
+  "error": "page.waitForFunction: Timeout 30000ms exceeded.\n    at /Users/yutogasaki/.codex/worktrees/fantasy-production/sansu/tools/e2e-island-fantasy-production.mjs:37:14",
+  "failureSave": {
+    "native": {
+      "islands": [
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "schemaVersion": 1,
+          "revision": 3,
+          "completedSets": 1,
+          "pendingRewards": [],
+          "updatedAt": 1790508225713,
+          "items": [
+            {
+              "id": "starter-flower",
+              "kind": "flower",
+              "position": {
+                "x": 1.5,
+                "z": 0.8
+              },
+              "rotation": 0,
+              "habitatId": "garden",
+              "growthLevel": 1
+            },
+            {
+              "id": "starter-lantern",
+              "kind": "lantern",
+              "position": {
+                "x": -1,
+                "z": 0.25
+              },
+              "rotation": 0,
+              "habitatId": "village",
+              "growthLevel": 0
+            },
+            {
+              "id": "living-bench",
+              "kind": "bench",
+              "habitatId": "garden",
+              "rotation": 1.6951513213416582,
+              "growthLevel": 1,
+              "position": {
+                "x": -0.1,
+                "z": 1
+              }
+            }
+          ],
+          "growth": {
+            "version": 1,
+            "expansionLevel": 0,
+            "progress": {
+              "garden": 1,
+              "waterside": 0,
+              "grove": 0,
+              "village": 0
+            },
+            "focus": "garden",
+            "memories": [
+              {
+                "id": "island-growth-initial",
+                "kind": "initial",
+                "capturedAt": 1790508224934,
+                "completedSets": 0,
+                "expansionLevel": 0,
+                "progress": {
+                  "garden": 0,
+                  "waterside": 0,
+                  "grove": 0,
+                  "village": 0
+                },
+                "focus": "garden",
+                "items": [
+                  {
+                    "id": "starter-flower",
+                    "kind": "flower",
+                    "position": {
+                      "x": 1.5,
+                      "z": 0.8
+                    },
+                    "rotation": 0,
+                    "habitatId": "garden",
+                    "growthLevel": 0
+                  },
+                  {
+                    "id": "starter-lantern",
+                    "kind": "lantern",
+                    "position": {
+                      "x": -1,
+                      "z": 0.25
+                    },
+                    "rotation": 0,
+                    "habitatId": "village",
+                    "growthLevel": 0
+                  }
+                ],
+                "cosmetics": {
+                  "themeId": "moon-garden",
+                  "accentId": null,
+                  "appearance": {
+                    "version": 1,
+                    "slots": {
+                      "sky": "legacy-v1:moon-garden:sky",
+                      "ground": "legacy-v1:moon-garden:ground",
+                      "shore": "legacy-v1:moon-garden:shore",
+                      "path": "legacy-v1:moon-garden:path",
+                      "water": "legacy-v1:moon-garden:water",
+                      "houseBody": "legacy-v1:moon-garden:houseBody",
+                      "houseRoof": "legacy-v1:moon-garden:houseRoof",
+                      "houseWindows": "legacy-v1:moon-garden:houseWindows",
+                      "tree": "legacy-v1:moon-garden:tree",
+                      "flower": "legacy-v1:moon-garden:flower",
+                      "mushroom": "legacy-v1:moon-garden:mushroom",
+                      "bridge": "legacy-v1:moon-garden:bridge"
+                    }
+                  }
+                },
+                "sceneStyle": {
+                  "version": 2,
+                  "residentLooks": {
+                    "otter": "original",
+                    "rabbit": "original",
+                    "fox": "original"
+                  },
+                  "ambience": "off",
+                  "emblem": "leaf",
+                  "expression": {
+                    "version": 1,
+                    "residents": {
+                      "otter": {
+                        "outfit": null,
+                        "pattern": null,
+                        "trail": null
+                      },
+                      "rabbit": {
+                        "outfit": null,
+                        "pattern": null,
+                        "trail": null
+                      },
+                      "fox": {
+                        "outfit": null,
+                        "pattern": null,
+                        "trail": null
+                      }
+                    },
+                    "soundscape": null,
+                    "environment": {
+                      "period": null,
+                      "season": null
+                    },
+                    "album": {
+                      "cover": null,
+                      "stamp": null
+                    },
+                    "flagTrim": null
+                  }
+                }
+              }
+            ],
+            "discoveries": [],
+            "pendingAnswers": {
+              "garden": 0,
+              "waterside": 0,
+              "grove": 0,
+              "village": 0
+            }
+          },
+          "pendingPlanId": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",1]",
+          "mathReviewTurn": 2,
+          "customization": {
+            "version": 1,
+            "themeId": "moon-garden",
+            "accentId": null,
+            "points": 3,
+            "ownedItemIds": [
+              "moon-garden"
+            ],
+            "desiredItemId": null
+          }
+        }
+      ],
+      "islandPlans": [
+        {
+          "id": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",0]",
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "schemaVersion": 1,
+          "plannerVersion": "island-learning-v1",
+          "subject": "math",
+          "slots": [
+            {
+              "problem": {
+                "categoryId": "add_1d_1_bridge",
+                "questionText": "1 + 1 =",
+                "correctAnswer": "2",
+                "inputType": "number",
+                "questionVisual": {
+                  "kind": "addition-items",
+                  "prompt": "あわせて いくつ？",
+                  "groups": [
+                    {
+                      "emoji": "🍐",
+                      "label": "なし",
+                      "count": 1
+                    },
+                    {
+                      "emoji": "🍐",
+                      "label": "なし",
+                      "count": 1
+                    }
+                  ]
+                },
+                "learningContext": {
+                  "catalogVersion": "curriculum-v1",
+                  "subject": "math",
+                  "itemId": "add_1d_1_bridge",
+                  "unitId": "math.add-small-increments",
+                  "representation": "bridge",
+                  "variant": "default",
+                  "inputType": "number",
+                  "problemKey": "{\"answer\":\"2\",\"inputType\":\"number\",\"item\":\"add_1d_1_bridge\",\"question\":\"1 + 1 =\",\"visual\":{\"groups\":[{\"count\":1,\"emoji\":\"🍐\",\"label\":\"なし\"},{\"count\":1,\"emoji\":\"🍐\",\"label\":\"なし\"}],\"kind\":\"addition-items\",\"prompt\":\"あわせて いくつ？\"}}"
+                },
+                "id": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",0]:slot-0",
+                "subject": "math",
+                "isReview": false,
+                "isMaintenanceCheck": false
+              },
+              "source": "main",
+              "countsTowardReviewCap": false,
+              "assisted": false,
+              "completed": true,
+              "learningEvidenceAssistance": "independent"
+            },
+            {
+              "problem": {
+                "categoryId": "add_1d_1",
+                "questionText": "1 + 1 =",
+                "correctAnswer": "2",
+                "inputType": "number",
+                "learningContext": {
+                  "catalogVersion": "curriculum-v1",
+                  "subject": "math",
+                  "itemId": "add_1d_1",
+                  "unitId": "math.add-small-increments",
+                  "representation": "symbol",
+                  "variant": "default",
+                  "inputType": "number",
+                  "problemKey": "{\"answer\":\"2\",\"inputType\":\"number\",\"item\":\"add_1d_1\",\"question\":\"1 + 1 =\"}"
+                },
+                "id": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",0]:slot-1",
+                "subject": "math",
+                "isReview": false,
+                "isMaintenanceCheck": false
+              },
+              "source": "main",
+              "countsTowardReviewCap": false,
+              "assisted": false,
+              "completed": true,
+              "learningEvidenceAssistance": "independent"
+            },
+            {
+              "problem": {
+                "categoryId": "add_1d_1_bridge",
+                "questionText": "1 + 1 =",
+                "correctAnswer": "2",
+                "inputType": "number",
+                "questionVisual": {
+                  "kind": "addition-items",
+                  "prompt": "あわせて いくつ？",
+                  "groups": [
+                    {
+                      "emoji": "🍊",
+                      "label": "みかん",
+                      "count": 1
+                    },
+                    {
+                      "emoji": "🍊",
+                      "label": "みかん",
+                      "count": 1
+                    }
+                  ]
+                },
+                "learningContext": {
+                  "catalogVersion": "curriculum-v1",
+                  "subject": "math",
+                  "itemId": "add_1d_1_bridge",
+                  "unitId": "math.add-small-increments",
+                  "representation": "bridge",
+                  "variant": "default",
+                  "inputType": "number",
+                  "problemKey": "{\"answer\":\"2\",\"inputType\":\"number\",\"item\":\"add_1d_1_bridge\",\"question\":\"1 + 1 =\",\"visual\":{\"groups\":[{\"count\":1,\"emoji\":\"🍊\",\"label\":\"みかん\"},{\"count\":1,\"emoji\":\"🍊\",\"label\":\"みかん\"}],\"kind\":\"addition-items\",\"prompt\":\"あわせて いくつ？\"}}"
+                },
+                "id": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",0]:slot-2",
+                "subject": "math",
+                "isReview": false,
+                "isMaintenanceCheck": false
+              },
+              "source": "main",
+              "countsTowardReviewCap": false,
+              "assisted": false,
+              "completed": true,
+              "learningEvidenceAssistance": "independent"
+            }
+          ],
+          "status": "completed",
+          "cursor": 3,
+          "revision": 3,
+          "startedAt": 1790508224940,
+          "rewardId": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",0]:reward",
+          "rewardChoices": [
+            "flower",
+            "bench",
+            "lantern"
+          ],
+          "growthTarget": "garden",
+          "rewardPacing": "answers-v1",
+          "introducedItemIds": [
+            "add_1d_1_bridge",
+            "add_1d_1"
+          ],
+          "completedAt": 1790508225700
+        },
+        {
+          "id": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",1]",
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "schemaVersion": 1,
+          "plannerVersion": "island-learning-v1",
+          "subject": "math",
+          "slots": [
+            {
+              "problem": {
+                "categoryId": "add_1d_1",
+                "questionText": "1 + 2 =",
+                "correctAnswer": "3",
+                "inputType": "number",
+                "learningContext": {
+                  "catalogVersion": "curriculum-v1",
+                  "subject": "math",
+                  "itemId": "add_1d_1",
+                  "unitId": "math.add-small-increments",
+                  "representation": "symbol",
+                  "variant": "default",
+                  "inputType": "number",
+                  "problemKey": "{\"answer\":\"3\",\"inputType\":\"number\",\"item\":\"add_1d_1\",\"question\":\"1 + 2 =\"}"
+                },
+                "id": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",1]:slot-0",
+                "subject": "math",
+                "isReview": false,
+                "isMaintenanceCheck": false
+              },
+              "source": "followup",
+              "countsTowardReviewCap": false,
+              "assisted": false,
+              "completed": false,
+              "learningEvidenceAssistance": "independent"
+            },
+            {
+              "problem": {
+                "categoryId": "add_1d_1",
+                "questionText": "1 + 2 =",
+                "correctAnswer": "3",
+                "inputType": "number",
+                "learningContext": {
+                  "catalogVersion": "curriculum-v1",
+                  "subject": "math",
+                  "itemId": "add_1d_1",
+                  "unitId": "math.add-small-increments",
+                  "representation": "symbol",
+                  "variant": "default",
+                  "inputType": "number",
+                  "problemKey": "{\"answer\":\"3\",\"inputType\":\"number\",\"item\":\"add_1d_1\",\"question\":\"1 + 2 =\"}"
+                },
+                "id": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",1]:slot-1",
+                "subject": "math",
+                "isReview": false,
+                "isMaintenanceCheck": false
+              },
+              "source": "followup",
+              "countsTowardReviewCap": false,
+              "assisted": false,
+              "completed": false,
+              "learningEvidenceAssistance": "independent"
+            },
+            {
+              "problem": {
+                "categoryId": "add_1d_1_bridge",
+                "questionText": "2 + 1 =",
+                "correctAnswer": "3",
+                "inputType": "number",
+                "questionVisual": {
+                  "kind": "addition-items",
+                  "prompt": "あわせて いくつ？",
+                  "groups": [
+                    {
+                      "emoji": "🍐",
+                      "label": "なし",
+                      "count": 2
+                    },
+                    {
+                      "emoji": "🍐",
+                      "label": "なし",
+                      "count": 1
+                    }
+                  ]
+                },
+                "learningContext": {
+                  "catalogVersion": "curriculum-v1",
+                  "subject": "math",
+                  "itemId": "add_1d_1_bridge",
+                  "unitId": "math.add-small-increments",
+                  "representation": "bridge",
+                  "variant": "default",
+                  "inputType": "number",
+                  "problemKey": "{\"answer\":\"3\",\"inputType\":\"number\",\"item\":\"add_1d_1_bridge\",\"question\":\"2 + 1 =\",\"visual\":{\"groups\":[{\"count\":2,\"emoji\":\"🍐\",\"label\":\"なし\"},{\"count\":1,\"emoji\":\"🍐\",\"label\":\"なし\"}],\"kind\":\"addition-items\",\"prompt\":\"あわせて いくつ？\"}}"
+                },
+                "id": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",1]:slot-2",
+                "subject": "math",
+                "isReview": false,
+                "isMaintenanceCheck": false
+              },
+              "source": "main",
+              "countsTowardReviewCap": false,
+              "assisted": false,
+              "completed": false,
+              "learningEvidenceAssistance": "independent"
+            },
+            {
+              "problem": {
+                "categoryId": "add_1d_1_bridge",
+                "questionText": "2 + 1 =",
+                "correctAnswer": "3",
+                "inputType": "number",
+                "questionVisual": {
+                  "kind": "addition-items",
+                  "prompt": "あわせて いくつ？",
+                  "groups": [
+                    {
+                      "emoji": "🍐",
+                      "label": "なし",
+                      "count": 2
+                    },
+                    {
+                      "emoji": "🍐",
+                      "label": "なし",
+                      "count": 1
+                    }
+                  ]
+                },
+                "learningContext": {
+                  "catalogVersion": "curriculum-v1",
+                  "subject": "math",
+                  "itemId": "add_1d_1_bridge",
+                  "unitId": "math.add-small-increments",
+                  "representation": "bridge",
+                  "variant": "default",
+                  "inputType": "number",
+                  "problemKey": "{\"answer\":\"3\",\"inputType\":\"number\",\"item\":\"add_1d_1_bridge\",\"question\":\"2 + 1 =\",\"visual\":{\"groups\":[{\"count\":2,\"emoji\":\"🍐\",\"label\":\"なし\"},{\"count\":1,\"emoji\":\"🍐\",\"label\":\"なし\"}],\"kind\":\"addition-items\",\"prompt\":\"あわせて いくつ？\"}}"
+                },
+                "id": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",1]:slot-3",
+                "subject": "math",
+                "isReview": false,
+                "isMaintenanceCheck": false
+              },
+              "source": "main",
+              "countsTowardReviewCap": false,
+              "assisted": false,
+              "completed": false,
+              "learningEvidenceAssistance": "independent"
+            },
+            {
+              "problem": {
+                "categoryId": "add_1d_1_bridge",
+                "questionText": "2 + 1 =",
+                "correctAnswer": "3",
+                "inputType": "number",
+                "questionVisual": {
+                  "kind": "addition-items",
+                  "prompt": "あわせて いくつ？",
+                  "groups": [
+                    {
+                      "emoji": "🍊",
+                      "label": "みかん",
+                      "count": 2
+                    },
+                    {
+                      "emoji": "🍊",
+                      "label": "みかん",
+                      "count": 1
+                    }
+                  ]
+                },
+                "learningContext": {
+                  "catalogVersion": "curriculum-v1",
+                  "subject": "math",
+                  "itemId": "add_1d_1_bridge",
+                  "unitId": "math.add-small-increments",
+                  "representation": "bridge",
+                  "variant": "default",
+                  "inputType": "number",
+                  "problemKey": "{\"answer\":\"3\",\"inputType\":\"number\",\"item\":\"add_1d_1_bridge\",\"question\":\"2 + 1 =\",\"visual\":{\"groups\":[{\"count\":2,\"emoji\":\"🍊\",\"label\":\"みかん\"},{\"count\":1,\"emoji\":\"🍊\",\"label\":\"みかん\"}],\"kind\":\"addition-items\",\"prompt\":\"あわせて いくつ？\"}}"
+                },
+                "id": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",1]:slot-4",
+                "subject": "math",
+                "isReview": false,
+                "isMaintenanceCheck": false
+              },
+              "source": "main",
+              "countsTowardReviewCap": false,
+              "assisted": false,
+              "completed": false,
+              "learningEvidenceAssistance": "independent"
+            },
+            {
+              "problem": {
+                "categoryId": "add_1d_1",
+                "questionText": "1 + 2 =",
+                "correctAnswer": "3",
+                "inputType": "number",
+                "learningContext": {
+                  "catalogVersion": "curriculum-v1",
+                  "subject": "math",
+                  "itemId": "add_1d_1",
+                  "unitId": "math.add-small-increments",
+                  "representation": "symbol",
+                  "variant": "default",
+                  "inputType": "number",
+                  "problemKey": "{\"answer\":\"3\",\"inputType\":\"number\",\"item\":\"add_1d_1\",\"question\":\"1 + 2 =\"}"
+                },
+                "id": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",1]:slot-5",
+                "subject": "math",
+                "isReview": false,
+                "isMaintenanceCheck": false
+              },
+              "source": "main",
+              "countsTowardReviewCap": false,
+              "assisted": false,
+              "completed": false,
+              "learningEvidenceAssistance": "independent"
+            }
+          ],
+          "status": "active",
+          "cursor": 0,
+          "revision": 0,
+          "startedAt": 1790508225713,
+          "rewardId": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",1]:reward",
+          "rewardChoices": [
+            "swing",
+            "mushroom",
+            "fountain"
+          ],
+          "growthTarget": "garden",
+          "rewardPacing": "answers-v1",
+          "introducedItemIds": []
+        }
+      ],
+      "islandEvents": [
+        {
+          "id": "[\"island-action-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",\"[\\\"island-plan-v1\\\",\\\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\\\",0]\",0]",
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "planId": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",0]",
+          "timestamp": 1790508225124,
+          "type": "answer",
+          "action": {
+            "type": "answer",
+            "answer": "2"
+          },
+          "slotIndex": 0,
+          "result": "correct",
+          "learningLogId": 1,
+          "observation": {
+            "version": 1,
+            "problemId": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",0]:slot-0",
+            "revisionBefore": 0,
+            "supportBefore": "unassisted-slot",
+            "answerScope": "whole",
+            "wholeCompleted": true,
+            "adapterVersion": "island-dom-v1",
+            "eventAt": 1790508225111,
+            "presentation": {
+              "id": "a8838581-a905-48ff-8472-760f8515ee89",
+              "documentId": "02efa2ed-ffb7-46db-9653-1408287259d5",
+              "observedAt": 1790508224951,
+              "inputVersion": "island-input-v1",
+              "inputMode": "number",
+              "referenceVisual": "present"
+            },
+            "elapsedSincePresentationMs": 160,
+            "coverage": "current-presentation",
+            "gaps": []
+          }
+        },
+        {
+          "id": "[\"island-action-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",\"[\\\"island-plan-v1\\\",\\\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\\\",0]\",1]",
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "planId": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",0]",
+          "timestamp": 1790508225418,
+          "type": "answer",
+          "action": {
+            "type": "answer",
+            "answer": "2"
+          },
+          "slotIndex": 1,
+          "result": "correct",
+          "learningLogId": 2,
+          "observation": {
+            "version": 1,
+            "problemId": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",0]:slot-1",
+            "revisionBefore": 1,
+            "supportBefore": "unassisted-slot",
+            "answerScope": "whole",
+            "wholeCompleted": true,
+            "adapterVersion": "island-dom-v1",
+            "eventAt": 1790508225405,
+            "presentation": {
+              "id": "7b47ef42-f1f7-41ec-9fae-747b16d9b0c4",
+              "documentId": "02efa2ed-ffb7-46db-9653-1408287259d5",
+              "observedAt": 1790508225300,
+              "inputVersion": "island-input-v1",
+              "inputMode": "number",
+              "referenceVisual": "absent"
+            },
+            "elapsedSincePresentationMs": 104.40000000596046,
+            "coverage": "current-presentation",
+            "gaps": []
+          }
+        },
+        {
+          "id": "[\"island-action-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",\"[\\\"island-plan-v1\\\",\\\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\\\",0]\",2]",
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "planId": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",0]",
+          "timestamp": 1790508225700,
+          "type": "answer",
+          "action": {
+            "type": "answer",
+            "answer": "2"
+          },
+          "slotIndex": 2,
+          "result": "correct",
+          "learningLogId": 3,
+          "observation": {
+            "version": 1,
+            "problemId": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",0]:slot-2",
+            "revisionBefore": 2,
+            "supportBefore": "unassisted-slot",
+            "answerScope": "whole",
+            "wholeCompleted": true,
+            "adapterVersion": "island-dom-v1",
+            "eventAt": 1790508225684,
+            "presentation": {
+              "id": "0d43aad7-d03c-41e6-9b92-2abff72ecbb2",
+              "documentId": "02efa2ed-ffb7-46db-9653-1408287259d5",
+              "observedAt": 1790508225590,
+              "inputVersion": "island-input-v1",
+              "inputMode": "number",
+              "referenceVisual": "present"
+            },
+            "elapsedSincePresentationMs": 93.89999999850988,
+            "coverage": "current-presentation",
+            "gaps": []
+          }
+        },
+        {
+          "id": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",0]:completed",
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "planId": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",0]",
+          "type": "plan_completed",
+          "timestamp": 1790508225700,
+          "habitatId": "garden"
+        },
+        {
+          "id": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",0]:started",
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "planId": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",0]",
+          "type": "plan_started",
+          "timestamp": 1790508224940
+        },
+        {
+          "id": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",1]:started",
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "planId": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",1]",
+          "type": "plan_started",
+          "timestamp": 1790508225713
+        }
+      ],
+      "logs": [
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "subject": "math",
+          "itemId": "add_1d_1_bridge",
+          "result": "correct",
+          "isReview": false,
+          "timestamp": "2026-09-27T11:23:45.124Z",
+          "learningEvidence": {
+            "completion": "whole-problem",
+            "assistance": "independent",
+            "problem": {
+              "catalogVersion": "curriculum-v1",
+              "subject": "math",
+              "itemId": "add_1d_1_bridge",
+              "unitId": "math.add-small-increments",
+              "representation": "bridge",
+              "inputType": "number",
+              "variant": "default",
+              "problemKey": "{\"answer\":\"2\",\"inputType\":\"number\",\"item\":\"add_1d_1_bridge\",\"question\":\"1 + 1 =\",\"visual\":{\"groups\":[{\"count\":1,\"emoji\":\"🍐\",\"label\":\"なし\"},{\"count\":1,\"emoji\":\"🍐\",\"label\":\"なし\"}],\"kind\":\"addition-items\",\"prompt\":\"あわせて いくつ？\"}}"
+            }
+          },
+          "id": 1
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "subject": "math",
+          "itemId": "add_1d_1",
+          "result": "correct",
+          "isReview": false,
+          "timestamp": "2026-09-27T11:23:45.418Z",
+          "learningEvidence": {
+            "completion": "whole-problem",
+            "assistance": "independent",
+            "problem": {
+              "catalogVersion": "curriculum-v1",
+              "subject": "math",
+              "itemId": "add_1d_1",
+              "unitId": "math.add-small-increments",
+              "representation": "symbol",
+              "inputType": "number",
+              "variant": "default",
+              "problemKey": "{\"answer\":\"2\",\"inputType\":\"number\",\"item\":\"add_1d_1\",\"question\":\"1 + 1 =\"}"
+            }
+          },
+          "id": 2
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "subject": "math",
+          "itemId": "add_1d_1_bridge",
+          "result": "correct",
+          "isReview": false,
+          "timestamp": "2026-09-27T11:23:45.700Z",
+          "learningEvidence": {
+            "completion": "whole-problem",
+            "assistance": "independent",
+            "problem": {
+              "catalogVersion": "curriculum-v1",
+              "subject": "math",
+              "itemId": "add_1d_1_bridge",
+              "unitId": "math.add-small-increments",
+              "representation": "bridge",
+              "inputType": "number",
+              "variant": "default",
+              "problemKey": "{\"answer\":\"2\",\"inputType\":\"number\",\"item\":\"add_1d_1_bridge\",\"question\":\"1 + 1 =\",\"visual\":{\"groups\":[{\"count\":1,\"emoji\":\"🍊\",\"label\":\"みかん\"},{\"count\":1,\"emoji\":\"🍊\",\"label\":\"みかん\"}],\"kind\":\"addition-items\",\"prompt\":\"あわせて いくつ？\"}}"
+            }
+          },
+          "id": 3
+        }
+      ],
+      "memoryMath": [
+        {
+          "id": "add_1d_1",
+          "strength": 1,
+          "nextReview": "2026-09-28T11:23:45.418Z",
+          "totalAnswers": 1,
+          "correctAnswers": 1,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "lastCorrectAt": "2026-09-27T11:23:45.418Z",
+          "lastIndependentCorrectAt": "2026-09-27T11:23:45.418Z",
+          "updatedAt": "2026-09-27T11:23:45.418Z",
+          "status": "active",
+          "isWeak": false,
+          "independentCorrectAnswers": 1,
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a"
+        },
+        {
+          "id": "add_1d_1_bridge",
+          "strength": 1,
+          "nextReview": "2026-09-28T11:23:45.124Z",
+          "totalAnswers": 2,
+          "correctAnswers": 2,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "lastCorrectAt": "2026-09-27T11:23:45.700Z",
+          "lastIndependentCorrectAt": "2026-09-27T11:23:45.700Z",
+          "updatedAt": "2026-09-27T11:23:45.700Z",
+          "status": "active",
+          "isWeak": false,
+          "independentCorrectAnswers": 2,
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "add_5",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "add_finger",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "add_tiny",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "big_small_compare",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "compare_1d",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "compare_2d",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "compose_10",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "compose_5",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "count_10",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "count_100",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "count_5",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "count_50",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "count_back",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "count_color",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "count_dot",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "count_fill",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "count_next_10",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "count_next_20",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "count_oddone",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "count_order",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "count_pair",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "count_read",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "count_shape",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "count_which_more",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "height_compare",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "length_compare",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "one_less",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "one_more",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "one_to_one_match",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "ordinal_small",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "pattern_copy",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "same_count_match",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "same_or_different",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "share_equal",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "sort_by_attribute",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "spatial_words",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "sub_tiny",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "two_less",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "two_more",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "weight_compare",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "which_is_empty",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        },
+        {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "id": "zero_concept",
+          "strength": 5,
+          "nextReview": "2026-10-27T11:23:44.924Z",
+          "totalAnswers": 0,
+          "correctAnswers": 0,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-27T11:23:44.924Z",
+          "status": "retired"
+        }
+      ],
+      "memoryVocab": [],
+      "exploreRuns": [],
+      "island": {
+        "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+        "schemaVersion": 1,
+        "revision": 3,
+        "completedSets": 1,
+        "pendingRewards": [],
+        "updatedAt": 1790508225713,
+        "items": [
+          {
+            "id": "starter-flower",
+            "kind": "flower",
+            "position": {
+              "x": 1.5,
+              "z": 0.8
+            },
+            "rotation": 0,
+            "habitatId": "garden",
+            "growthLevel": 1
+          },
+          {
+            "id": "starter-lantern",
+            "kind": "lantern",
+            "position": {
+              "x": -1,
+              "z": 0.25
+            },
+            "rotation": 0,
+            "habitatId": "village",
+            "growthLevel": 0
+          },
+          {
+            "id": "living-bench",
+            "kind": "bench",
+            "habitatId": "garden",
+            "rotation": 1.6951513213416582,
+            "growthLevel": 1,
+            "position": {
+              "x": -0.1,
+              "z": 1
+            }
+          }
+        ],
+        "growth": {
+          "version": 1,
+          "expansionLevel": 0,
+          "progress": {
+            "garden": 1,
+            "waterside": 0,
+            "grove": 0,
+            "village": 0
+          },
+          "focus": "garden",
+          "memories": [
+            {
+              "id": "island-growth-initial",
+              "kind": "initial",
+              "capturedAt": 1790508224934,
+              "completedSets": 0,
+              "expansionLevel": 0,
+              "progress": {
+                "garden": 0,
+                "waterside": 0,
+                "grove": 0,
+                "village": 0
+              },
+              "focus": "garden",
+              "items": [
+                {
+                  "id": "starter-flower",
+                  "kind": "flower",
+                  "position": {
+                    "x": 1.5,
+                    "z": 0.8
+                  },
+                  "rotation": 0,
+                  "habitatId": "garden",
+                  "growthLevel": 0
+                },
+                {
+                  "id": "starter-lantern",
+                  "kind": "lantern",
+                  "position": {
+                    "x": -1,
+                    "z": 0.25
+                  },
+                  "rotation": 0,
+                  "habitatId": "village",
+                  "growthLevel": 0
+                }
+              ],
+              "cosmetics": {
+                "themeId": "moon-garden",
+                "accentId": null,
+                "appearance": {
+                  "version": 1,
+                  "slots": {
+                    "sky": "legacy-v1:moon-garden:sky",
+                    "ground": "legacy-v1:moon-garden:ground",
+                    "shore": "legacy-v1:moon-garden:shore",
+                    "path": "legacy-v1:moon-garden:path",
+                    "water": "legacy-v1:moon-garden:water",
+                    "houseBody": "legacy-v1:moon-garden:houseBody",
+                    "houseRoof": "legacy-v1:moon-garden:houseRoof",
+                    "houseWindows": "legacy-v1:moon-garden:houseWindows",
+                    "tree": "legacy-v1:moon-garden:tree",
+                    "flower": "legacy-v1:moon-garden:flower",
+                    "mushroom": "legacy-v1:moon-garden:mushroom",
+                    "bridge": "legacy-v1:moon-garden:bridge"
+                  }
+                }
+              },
+              "sceneStyle": {
+                "version": 2,
+                "residentLooks": {
+                  "otter": "original",
+                  "rabbit": "original",
+                  "fox": "original"
+                },
+                "ambience": "off",
+                "emblem": "leaf",
+                "expression": {
+                  "version": 1,
+                  "residents": {
+                    "otter": {
+                      "outfit": null,
+                      "pattern": null,
+                      "trail": null
+                    },
+                    "rabbit": {
+                      "outfit": null,
+                      "pattern": null,
+                      "trail": null
+                    },
+                    "fox": {
+                      "outfit": null,
+                      "pattern": null,
+                      "trail": null
+                    }
+                  },
+                  "soundscape": null,
+                  "environment": {
+                    "period": null,
+                    "season": null
+                  },
+                  "album": {
+                    "cover": null,
+                    "stamp": null
+                  },
+                  "flagTrim": null
+                }
+              }
+            }
+          ],
+          "discoveries": [],
+          "pendingAnswers": {
+            "garden": 0,
+            "waterside": 0,
+            "grove": 0,
+            "village": 0
+          }
+        },
+        "pendingPlanId": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",1]",
+        "mathReviewTurn": 2,
+        "customization": {
+          "version": 1,
+          "themeId": "moon-garden",
+          "accentId": null,
+          "points": 3,
+          "ownedItemIds": [
+            "moon-garden"
+          ],
+          "desiredItemId": null
+        }
+      },
+      "plan": {
+        "id": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",1]",
+        "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+        "schemaVersion": 1,
+        "plannerVersion": "island-learning-v1",
+        "subject": "math",
+        "slots": [
+          {
+            "problem": {
+              "categoryId": "add_1d_1",
+              "questionText": "1 + 2 =",
+              "correctAnswer": "3",
+              "inputType": "number",
+              "learningContext": {
+                "catalogVersion": "curriculum-v1",
+                "subject": "math",
+                "itemId": "add_1d_1",
+                "unitId": "math.add-small-increments",
+                "representation": "symbol",
+                "variant": "default",
+                "inputType": "number",
+                "problemKey": "{\"answer\":\"3\",\"inputType\":\"number\",\"item\":\"add_1d_1\",\"question\":\"1 + 2 =\"}"
+              },
+              "id": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",1]:slot-0",
+              "subject": "math",
+              "isReview": false,
+              "isMaintenanceCheck": false
+            },
+            "source": "followup",
+            "countsTowardReviewCap": false,
+            "assisted": false,
+            "completed": false,
+            "learningEvidenceAssistance": "independent"
+          },
+          {
+            "problem": {
+              "categoryId": "add_1d_1",
+              "questionText": "1 + 2 =",
+              "correctAnswer": "3",
+              "inputType": "number",
+              "learningContext": {
+                "catalogVersion": "curriculum-v1",
+                "subject": "math",
+                "itemId": "add_1d_1",
+                "unitId": "math.add-small-increments",
+                "representation": "symbol",
+                "variant": "default",
+                "inputType": "number",
+                "problemKey": "{\"answer\":\"3\",\"inputType\":\"number\",\"item\":\"add_1d_1\",\"question\":\"1 + 2 =\"}"
+              },
+              "id": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",1]:slot-1",
+              "subject": "math",
+              "isReview": false,
+              "isMaintenanceCheck": false
+            },
+            "source": "followup",
+            "countsTowardReviewCap": false,
+            "assisted": false,
+            "completed": false,
+            "learningEvidenceAssistance": "independent"
+          },
+          {
+            "problem": {
+              "categoryId": "add_1d_1_bridge",
+              "questionText": "2 + 1 =",
+              "correctAnswer": "3",
+              "inputType": "number",
+              "questionVisual": {
+                "kind": "addition-items",
+                "prompt": "あわせて いくつ？",
+                "groups": [
+                  {
+                    "emoji": "🍐",
+                    "label": "なし",
+                    "count": 2
+                  },
+                  {
+                    "emoji": "🍐",
+                    "label": "なし",
+                    "count": 1
+                  }
+                ]
+              },
+              "learningContext": {
+                "catalogVersion": "curriculum-v1",
+                "subject": "math",
+                "itemId": "add_1d_1_bridge",
+                "unitId": "math.add-small-increments",
+                "representation": "bridge",
+                "variant": "default",
+                "inputType": "number",
+                "problemKey": "{\"answer\":\"3\",\"inputType\":\"number\",\"item\":\"add_1d_1_bridge\",\"question\":\"2 + 1 =\",\"visual\":{\"groups\":[{\"count\":2,\"emoji\":\"🍐\",\"label\":\"なし\"},{\"count\":1,\"emoji\":\"🍐\",\"label\":\"なし\"}],\"kind\":\"addition-items\",\"prompt\":\"あわせて いくつ？\"}}"
+              },
+              "id": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",1]:slot-2",
+              "subject": "math",
+              "isReview": false,
+              "isMaintenanceCheck": false
+            },
+            "source": "main",
+            "countsTowardReviewCap": false,
+            "assisted": false,
+            "completed": false,
+            "learningEvidenceAssistance": "independent"
+          },
+          {
+            "problem": {
+              "categoryId": "add_1d_1_bridge",
+              "questionText": "2 + 1 =",
+              "correctAnswer": "3",
+              "inputType": "number",
+              "questionVisual": {
+                "kind": "addition-items",
+                "prompt": "あわせて いくつ？",
+                "groups": [
+                  {
+                    "emoji": "🍐",
+                    "label": "なし",
+                    "count": 2
+                  },
+                  {
+                    "emoji": "🍐",
+                    "label": "なし",
+                    "count": 1
+                  }
+                ]
+              },
+              "learningContext": {
+                "catalogVersion": "curriculum-v1",
+                "subject": "math",
+                "itemId": "add_1d_1_bridge",
+                "unitId": "math.add-small-increments",
+                "representation": "bridge",
+                "variant": "default",
+                "inputType": "number",
+                "problemKey": "{\"answer\":\"3\",\"inputType\":\"number\",\"item\":\"add_1d_1_bridge\",\"question\":\"2 + 1 =\",\"visual\":{\"groups\":[{\"count\":2,\"emoji\":\"🍐\",\"label\":\"なし\"},{\"count\":1,\"emoji\":\"🍐\",\"label\":\"なし\"}],\"kind\":\"addition-items\",\"prompt\":\"あわせて いくつ？\"}}"
+              },
+              "id": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",1]:slot-3",
+              "subject": "math",
+              "isReview": false,
+              "isMaintenanceCheck": false
+            },
+            "source": "main",
+            "countsTowardReviewCap": false,
+            "assisted": false,
+            "completed": false,
+            "learningEvidenceAssistance": "independent"
+          },
+          {
+            "problem": {
+              "categoryId": "add_1d_1_bridge",
+              "questionText": "2 + 1 =",
+              "correctAnswer": "3",
+              "inputType": "number",
+              "questionVisual": {
+                "kind": "addition-items",
+                "prompt": "あわせて いくつ？",
+                "groups": [
+                  {
+                    "emoji": "🍊",
+                    "label": "みかん",
+                    "count": 2
+                  },
+                  {
+                    "emoji": "🍊",
+                    "label": "みかん",
+                    "count": 1
+                  }
+                ]
+              },
+              "learningContext": {
+                "catalogVersion": "curriculum-v1",
+                "subject": "math",
+                "itemId": "add_1d_1_bridge",
+                "unitId": "math.add-small-increments",
+                "representation": "bridge",
+                "variant": "default",
+                "inputType": "number",
+                "problemKey": "{\"answer\":\"3\",\"inputType\":\"number\",\"item\":\"add_1d_1_bridge\",\"question\":\"2 + 1 =\",\"visual\":{\"groups\":[{\"count\":2,\"emoji\":\"🍊\",\"label\":\"みかん\"},{\"count\":1,\"emoji\":\"🍊\",\"label\":\"みかん\"}],\"kind\":\"addition-items\",\"prompt\":\"あわせて いくつ？\"}}"
+              },
+              "id": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",1]:slot-4",
+              "subject": "math",
+              "isReview": false,
+              "isMaintenanceCheck": false
+            },
+            "source": "main",
+            "countsTowardReviewCap": false,
+            "assisted": false,
+            "completed": false,
+            "learningEvidenceAssistance": "independent"
+          },
+          {
+            "problem": {
+              "categoryId": "add_1d_1",
+              "questionText": "1 + 2 =",
+              "correctAnswer": "3",
+              "inputType": "number",
+              "learningContext": {
+                "catalogVersion": "curriculum-v1",
+                "subject": "math",
+                "itemId": "add_1d_1",
+                "unitId": "math.add-small-increments",
+                "representation": "symbol",
+                "variant": "default",
+                "inputType": "number",
+                "problemKey": "{\"answer\":\"3\",\"inputType\":\"number\",\"item\":\"add_1d_1\",\"question\":\"1 + 2 =\"}"
+              },
+              "id": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",1]:slot-5",
+              "subject": "math",
+              "isReview": false,
+              "isMaintenanceCheck": false
+            },
+            "source": "main",
+            "countsTowardReviewCap": false,
+            "assisted": false,
+            "completed": false,
+            "learningEvidenceAssistance": "independent"
+          }
+        ],
+        "status": "active",
+        "cursor": 0,
+        "revision": 0,
+        "startedAt": 1790508225713,
+        "rewardId": "[\"island-plan-v1\",\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",1]:reward",
+        "rewardChoices": [
+          "swing",
+          "mushroom",
+          "fountain"
+        ],
+        "growthTarget": "garden",
+        "rewardPacing": "answers-v1",
+        "introducedItemIds": []
+      }
+    },
+    "life": {
+      "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+      "version": 20,
+      "revision": 3,
+      "createdAt": 1790508228500,
+      "realAt": 1790508256376,
+      "now": 1790508256376,
+      "credits": [],
+      "actions": [],
+      "offsets": [
+        {
+          "at": 1790508228500,
+          "offset": 0
+        }
+      ],
+      "clockIntents": [],
+      "activitiesV2At": 1790508228500,
+      "activitiesV2After": 0,
+      "economyCheckpoint": {
+        "checkpointId": "[\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",\"life-v3.0-rc1\"]",
+        "sourceRules": "life-48-v1",
+        "targetRules": "life-v3.0-rc1",
+        "originalRecord": {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "version": 1,
+          "revision": 0,
+          "createdAt": 1790508228500,
+          "realAt": 1790508228500,
+          "now": 1790508228500,
+          "credits": [],
+          "actions": [],
+          "offsets": [
+            {
+              "at": 1790508228500,
+              "offset": 0
+            }
+          ],
+          "clockIntents": [],
+          "activitiesV2At": 1790508228500,
+          "activitiesV2After": 0
+        },
+        "sourceRecord": {
+          "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+          "version": 1,
+          "revision": 1,
+          "createdAt": 1790508228500,
+          "realAt": 1790508228500,
+          "now": 1790508228500,
+          "credits": [],
+          "actions": [],
+          "offsets": [
+            {
+              "at": 1790508228500,
+              "offset": 0
+            }
+          ],
+          "clockIntents": [],
+          "activitiesV2At": 1790508228500,
+          "activitiesV2After": 0
+        },
+        "sourceFactWatermark": [],
+        "cutoverAt": 1790508228500,
+        "actionCount": 0,
+        "projectedCreditIds": [],
+        "legacyCorrections": [],
+        "initialLightRemainingBudget": 8,
+        "state": {
+          "now": 1790508228500,
+          "activityVersion": 2,
+          "drops": 0,
+          "light": 0,
+          "items": [],
+          "styles": [
+            "original"
+          ],
+          "heroStyle": "original",
+          "days": {},
+          "residents": [
+            {
+              "id": "pokomoko",
+              "cell": {
+                "x": 2,
+                "z": 1
+              },
+              "enjoyed": 0,
+              "enjoyedBy": {}
+            },
+            {
+              "id": "rabbit",
+              "cell": {
+                "x": 3,
+                "z": 1
+              },
+              "enjoyed": 0,
+              "enjoyedBy": {},
+              "visit": {
+                "itemId": "roam:rabbit:994726",
+                "path": [
+                  {
+                    "x": 3,
+                    "z": 1
+                  },
+                  {
+                    "x": 4,
+                    "z": 1
+                  },
+                  {
+                    "x": 4,
+                    "z": 0
+                  }
+                ],
+                "from": {
+                  "x": 3,
+                  "z": 1
+                },
+                "start": 1790508228500,
+                "end": 1790510028500
+              }
+            },
+            {
+              "id": "otter",
+              "cell": {
+                "x": 3,
+                "z": 2
+              },
+              "enjoyed": 0,
+              "enjoyedBy": {}
+            }
+          ],
+          "economy": {
+            "version": "life-v3.0-rc1",
+            "lightRemainingBudget": 8,
+            "completionTimes": []
+          }
+        },
+        "validationHash": "8c5e6aad16d1e52bf432b912c918106d5abfaa8b8e1892503422b7bbbddfb0b8",
+        "completionStatus": "complete"
+      },
+      "tourCutover": {
+        "rules": "gp3-tours-v1",
+        "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+        "at": 1790508228500,
+        "actionCount": 0,
+        "priorActions": [],
+        "validationHash": "c08f87d8efcae92f1c695dab6d43cad415949165f012d0dfbd424f4094bf7507"
+      },
+      "facilityCutover": {
+        "rules": "facility-trips-v1",
+        "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+        "at": 1790508228500,
+        "actionCount": 0,
+        "priorActions": [],
+        "validationHash": "f3bdb602c8b5e5a3390eaaace814911316b6904f68233ec31e8aaf0e7d51696e"
+      },
+      "relationCutover": {
+        "rules": "relation-selection-v1",
+        "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+        "at": 1790508228500,
+        "actionCount": 0,
+        "priorActions": [],
+        "validationHash": "74256f1d1c3a99fc6d7fc4d063cba499cf6d53e871df7fbaf941453e0089cbed"
+      },
+      "placementCutover": {
+        "rules": "placement-access-v1",
+        "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+        "at": 1790508228500,
+        "actionCount": 0,
+        "priorActions": [],
+        "validationHash": "e4ac975b187c714e7e70f10e873cb35ad313349fe54f8aac62ba3aabb8bace4c"
+      },
+      "cadenceCutover": {
+        "rules": "resident-cadence-v1",
+        "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+        "at": 1790508228500,
+        "actionCount": 0,
+        "priorActions": [],
+        "validationHash": "273a58cd9cd9e9edc6955cac5bed43e32e77b047af4a261317e7a0106bfe97d1"
+      },
+      "heroVisitCutover": {
+        "rules": "hero-single-visit-v1",
+        "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+        "at": 1790508228500,
+        "actionCount": 0,
+        "priorActions": [],
+        "validationHash": "c3b1122b1051c13cd757ea6a4444909a7b3d9fe282b6c5b51e164d3bfbe3e1e3"
+      },
+      "diagonalCutover": {
+        "rules": "diagonal-roam-v1",
+        "profileId": "19006fe0-4b8a-4f03-b135-12ea99fccc6a",
+        "at": 1790508228500,
+        "actionCount": 0,
+        "priorActions": [],
+        "validationHash": "154de9c32fa22a4777999f4ba5be1727be6f078160552f0a4274ef5843b39880"
+      },
+      "foodCutover": {
+        "rules": "island-food-v1",
+        "at": 1790508228500,
+        "actionCount": 0,
+        "priorActions": [],
+        "validationHash": "e681a58cce1be765d2041cad3aa7ebdc9ac37cd5e9a607d1e7e90625f1d465ea"
+      },
+      "soilCutover": {
+        "rules": "island-soil-v1",
+        "at": 1790508228500,
+        "actionCount": 0,
+        "priorActions": [],
+        "validationHash": "e9f595dec30017f422f13867f0a0975b1797d0218cdb4b138bec7e14e2f5e3c2"
+      },
+      "replaySnapshot": {
+        "format": 1,
+        "build": "life-rules-v1:e26792845165541f74b0bcc6d83dfdf78d817fb794c65d762a08a331ea44ef64",
+        "key": "{\"profileId\":\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",\"version\":20,\"revision\":0,\"createdAt\":1790508228500,\"realAt\":0,\"now\":0,\"credits\":[],\"actions\":[],\"offsets\":[],\"clockIntents\":[],\"activitiesV2At\":1790508228500,\"activitiesV2After\":0,\"economyCheckpoint\":{\"checkpointId\":\"[\\\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\\\",\\\"life-v3.0-rc1\\\"]\",\"sourceRules\":\"life-48-v1\",\"targetRules\":\"life-v3.0-rc1\",\"originalRecord\":{\"profileId\":\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",\"version\":1,\"revision\":0,\"createdAt\":1790508228500,\"realAt\":1790508228500,\"now\":1790508228500,\"credits\":[],\"actions\":[],\"offsets\":[{\"at\":1790508228500,\"offset\":0}],\"clockIntents\":[],\"activitiesV2At\":1790508228500,\"activitiesV2After\":0},\"sourceRecord\":{\"profileId\":\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",\"version\":1,\"revision\":1,\"createdAt\":1790508228500,\"realAt\":1790508228500,\"now\":1790508228500,\"credits\":[],\"actions\":[],\"offsets\":[{\"at\":1790508228500,\"offset\":0}],\"clockIntents\":[],\"activitiesV2At\":1790508228500,\"activitiesV2After\":0},\"sourceFactWatermark\":[],\"cutoverAt\":1790508228500,\"actionCount\":0,\"projectedCreditIds\":[],\"legacyCorrections\":[],\"initialLightRemainingBudget\":8,\"state\":{\"now\":1790508228500,\"activityVersion\":2,\"drops\":0,\"light\":0,\"items\":[],\"styles\":[\"original\"],\"heroStyle\":\"original\",\"days\":{},\"residents\":[{\"id\":\"pokomoko\",\"cell\":{\"x\":2,\"z\":1},\"enjoyed\":0,\"enjoyedBy\":{}},{\"id\":\"rabbit\",\"cell\":{\"x\":3,\"z\":1},\"enjoyed\":0,\"enjoyedBy\":{},\"visit\":{\"itemId\":\"roam:rabbit:994726\",\"path\":[{\"x\":3,\"z\":1},{\"x\":4,\"z\":1},{\"x\":4,\"z\":0}],\"from\":{\"x\":3,\"z\":1},\"start\":1790508228500,\"end\":1790510028500}},{\"id\":\"otter\",\"cell\":{\"x\":3,\"z\":2},\"enjoyed\":0,\"enjoyedBy\":{}}],\"economy\":{\"version\":\"life-v3.0-rc1\",\"lightRemainingBudget\":8,\"completionTimes\":[]}},\"validationHash\":\"8c5e6aad16d1e52bf432b912c918106d5abfaa8b8e1892503422b7bbbddfb0b8\",\"completionStatus\":\"complete\"},\"tourCutover\":{\"rules\":\"gp3-tours-v1\",\"profileId\":\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",\"at\":1790508228500,\"actionCount\":0,\"priorActions\":[],\"validationHash\":\"c08f87d8efcae92f1c695dab6d43cad415949165f012d0dfbd424f4094bf7507\"},\"facilityCutover\":{\"rules\":\"facility-trips-v1\",\"profileId\":\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",\"at\":1790508228500,\"actionCount\":0,\"priorActions\":[],\"validationHash\":\"f3bdb602c8b5e5a3390eaaace814911316b6904f68233ec31e8aaf0e7d51696e\"},\"relationCutover\":{\"rules\":\"relation-selection-v1\",\"profileId\":\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",\"at\":1790508228500,\"actionCount\":0,\"priorActions\":[],\"validationHash\":\"74256f1d1c3a99fc6d7fc4d063cba499cf6d53e871df7fbaf941453e0089cbed\"},\"placementCutover\":{\"rules\":\"placement-access-v1\",\"profileId\":\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",\"at\":1790508228500,\"actionCount\":0,\"priorActions\":[],\"validationHash\":\"e4ac975b187c714e7e70f10e873cb35ad313349fe54f8aac62ba3aabb8bace4c\"},\"cadenceCutover\":{\"rules\":\"resident-cadence-v1\",\"profileId\":\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",\"at\":1790508228500,\"actionCount\":0,\"priorActions\":[],\"validationHash\":\"273a58cd9cd9e9edc6955cac5bed43e32e77b047af4a261317e7a0106bfe97d1\"},\"heroVisitCutover\":{\"rules\":\"hero-single-visit-v1\",\"profileId\":\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",\"at\":1790508228500,\"actionCount\":0,\"priorActions\":[],\"validationHash\":\"c3b1122b1051c13cd757ea6a4444909a7b3d9fe282b6c5b51e164d3bfbe3e1e3\"},\"diagonalCutover\":{\"rules\":\"diagonal-roam-v1\",\"profileId\":\"19006fe0-4b8a-4f03-b135-12ea99fccc6a\",\"at\":1790508228500,\"actionCount\":0,\"priorActions\":[],\"validationHash\":\"154de9c32fa22a4777999f4ba5be1727be6f078160552f0a4274ef5843b39880\"},\"foodCutover\":{\"rules\":\"island-food-v1\",\"at\":1790508228500,\"actionCount\":0,\"priorActions\":[],\"validationHash\":\"e681a58cce1be765d2041cad3aa7ebdc9ac37cd5e9a607d1e7e90625f1d465ea\"},\"soilCutover\":{\"rules\":\"island-soil-v1\",\"at\":1790508228500,\"actionCount\":0,\"priorActions\":[],\"validationHash\":\"e9f595dec30017f422f13867f0a0975b1797d0218cdb4b138bec7e14e2f5e3c2\"}}",
+        "state": {
+          "now": 1790508256376,
+          "activityVersion": 2,
+          "drops": 0,
+          "light": 0,
+          "items": [],
+          "styles": [
+            "original"
+          ],
+          "heroStyle": "original",
+          "days": {},
+          "residents": [
+            {
+              "id": "pokomoko",
+              "cell": {
+                "x": 0,
+                "z": 1
+              },
+              "enjoyed": 0,
+              "enjoyedBy": {},
+              "cadence": {
+                "round": 2,
+                "useMs": {}
+              }
+            },
+            {
+              "id": "rabbit",
+              "cell": {
+                "x": 0,
+                "z": 4
+              },
+              "enjoyed": 0,
+              "enjoyedBy": {},
+              "visit": {
+                "itemId": "roam:rabbit:4",
+                "path": [
+                  {
+                    "x": 0,
+                    "z": 4
+                  },
+                  {
+                    "x": 5,
+                    "z": 1
+                  }
+                ],
+                "from": {
+                  "x": 0,
+                  "z": 4
+                },
+                "start": 1790508252612,
+                "end": 1790508261410
+              },
+              "cadence": {
+                "round": 2,
+                "useMs": {}
+              }
+            },
+            {
+              "id": "otter",
+              "cell": {
+                "x": 5,
+                "z": 2
+              },
+              "enjoyed": 0,
+              "enjoyedBy": {},
+              "cadence": {
+                "round": 1,
+                "useMs": {}
+              }
+            }
+          ],
+          "economy": {
+            "version": "life-v3.0-rc1",
+            "lightRemainingBudget": 8,
+            "completionTimes": []
+          },
+          "tourVersion": 1,
+          "roamRound": 5,
+          "facilityTripVersion": 1,
+          "relationSelectionVersion": 1,
+          "placementVersion": 1,
+          "cadenceVersion": 1,
+          "heroVisitVersion": 1,
+          "diagonalVersion": 1,
+          "food": {
+            "plots": {},
+            "tables": {},
+            "pantry": 0,
+            "harvested": 0,
+            "delivered": 0,
+            "eaten": 0
+          },
+          "soilMoisture": {
+            "0,0": 0.2,
+            "1,0": 0.2,
+            "2,0": 0.2,
+            "3,0": 0.2,
+            "4,0": 0.2,
+            "5,0": 0.2,
+            "0,1": 0.2,
+            "1,1": 0.2,
+            "2,1": 0.2,
+            "3,1": 0.2,
+            "4,1": 0.2,
+            "5,1": 0.2,
+            "0,2": 0.2,
+            "1,2": 0.2,
+            "2,2": 0.2,
+            "3,2": 0.2,
+            "4,2": 0.2,
+            "5,2": 0.2,
+            "0,3": 0.2,
+            "1,3": 0.2,
+            "2,3": 0.2,
+            "3,3": 0.2,
+            "4,3": 0.2,
+            "5,3": 0.2,
+            "0,4": 0.2,
+            "1,4": 0.2,
+            "2,4": 0.2,
+            "3,4": 0.2,
+            "4,4": 0.2,
+            "5,4": 0.2
+          }
+        },
+        "digest": "28430f54227957bdbec7fe4efce4d4fff0d88b3f0c4a46ae67314599f05ab916"
+      }
+    }
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "target": "https://sansu-seven.vercel.app",
+  "manifest": "output/fantasy-production/live-manifest.json",
+  "sourceHash": "28a8c721adae05718dc48a518e43b98354b52b123dda35e66955c6d29c711f5c",
+  "version": {
+    "version": "5bd7848d5b9b8cea9b3ed0fadec8f09f564ec8a4:0240ee1a-466b-4a70-982c-d84344cb399f",
+    "revision": "5bd7848d5b9b8cea9b3ed0fadec8f09f564ec8a4",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": true,
+        "fantasy": true,
+        "candidate": "living-fantasy-garden-v2",
+        "saveVersion": 20
+      },
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "humanN": 0,
+  "scenarios": [],
+  "captures": [
+    {
+      "file": "390-welcome.png",
+      "url": "https://sansu-seven.vercel.app/#/onboarding",
+      "revision": "5bd7848d5b9b8cea9b3ed0fadec8f09f564ec8a4",
+      "version": "5bd7848d5b9b8cea9b3ed0fadec8f09f564ec8a4:0240ee1a-466b-4a70-982c-d84344cb399f",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "not-applicable",
+      "islandFeatureEnabled": true,
+      "mode": "welcome",
+      "renderer": "loading",
+      "artDirection": null,
+      "drawCalls": 0,
+      "expanded": null,
+      "residentAction": null,
+      "residentItemId": null,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "5bd7848d5b9b8cea9b3ed0fadec8f09f564ec8a4",
+        "version": "5bd7848d5b9b8cea9b3ed0fadec8f09f564ec8a4:0240ee1a-466b-4a70-982c-d84344cb399f",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": null
+    },
+    {
+      "file": "390-learning.png",
+      "url": "https://sansu-seven.vercel.app/#/island?start=learn&profile=6e5b60fd-a212-4d0c-83c2-e13fd60df4bf",
+      "revision": "5bd7848d5b9b8cea9b3ed0fadec8f09f564ec8a4",
+      "version": "5bd7848d5b9b8cea9b3ed0fadec8f09f564ec8a4:0240ee1a-466b-4a70-982c-d84344cb399f",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "learning",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "5bd7848d5b9b8cea9b3ed0fadec8f09f564ec8a4",
+        "version": "5bd7848d5b9b8cea9b3ed0fadec8f09f564ec8a4:0240ee1a-466b-4a70-982c-d84344cb399f",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": null
+    }
+  ],
+  "pass": false,
+  "error": "page.waitForFunction: Timeout 30000ms exceeded.\n    at /Users/yutogasaki/.codex/worktrees/fantasy-production/sansu/tools/e2e-island-fantasy-production.mjs:36:14"
+}

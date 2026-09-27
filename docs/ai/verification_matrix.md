@@ -191,3 +191,12 @@ If a task spans more than one change type, use the stricter row.
 ### 再生ルールが変わらない更新の起動キャッシュ
 
 `SANSU_LIFE_REPLAY_REUSE=1` をLife two-buildハーネスへ加えると、異なるapp versionの2ビルドで本人recordの `life-rules-v1` トークンが同じことを、通常更新とoffline再起動の保存照合に追加する。両ビルドの計算ルール・compiler設定・依存lock・公開Vite設定を揃える。実学習/購入/途中回答の保持は既存の旅程で確認する。旧UUIDキャッシュの破棄は通常two-buildとsnapshotの単体検査で別に確認する。トークン一致だけを再生時間の短縮や実機iPhoneの解決証拠にしない。
+
+
+### 幻想の庭の家庭内本番統合（2026-09-27）
+
+`tools/e2e-island-life-two-build.mjs` の `SANSU_LIFE_NATURE_UPGRADE=1` は、現本番の保存から版20への食料/土の切替・旧action保持・新版で水路を実購入・offlineの同じ次問を検証する。`SANSU_LIFE_ROLLBACK_DIR` / `SANSU_LIFE_ROLLBACK_MANIFEST` を追加すると、同じ版20 writerで幻想だけOFFの実3番目のbuildへSW更新し、水路・残高・学習を保持する。既存の中断フラグも併用できる。`tools/check-island-legacy-writer.mjs` は指定した旧Git revisionの実writerを使い、旧writer拒否・所有保持・学習事実の回復を使い捨てIDBで検査する。
+
+`tools/e2e-island-fantasy-load.mjs` は `SANSU_FANTASY_LOAD_URL` と新しい `SANSU_FANTASY_LOAD_OUTPUT` を指定する。30品は合成creditの明示fixture。表示・学習復帰・学習正本の保持とrender指標を記録し、functional PASSを描画予算・実機FPSのPASSに読み替えない。[今回の対象と結果](../design/2026-09-27-fantasy-production/README.md)。
+
+`tools/e2e-island-fantasy-production.mjs` は固定manifestの公開URLで、実初回設定・4問・購入/配置・SW offline/再起動を確認する。`SANSU_FANTASY_WORKER_DELAY_MS=3500` はWorker取得を遅らせる故障診断で、実際に遅延したrequestを記録する。通常取得と別の結果にし、学習前の合成creditや保存の直接書込で初回の競合を隠さない。

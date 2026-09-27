@@ -3,7 +3,7 @@
 
 ## 幻想の庭の本番統合（2026-09-27）
 
-ユーザーの本番統合依頼に基づき、既存のぽこもこの顔・頭身・耳・布・配色・着替えを維持した `living-fantasy-garden-v2` と、同じLifeの育成・運搬・食事・水路・土の水分を家庭内利用の公開対象にする。[統合計画と検証](../tasks/active/2026-09-27-fantasy-production.md)に従い、既存の学習・財布・所有を継続する。自然の切替は保存版20と同一transactionで保存し、旧writerの書込を拒否する。公開の事実は配信先のrevisionで確認する。
+ユーザーの本番統合依頼に基づき、既存のぽこもこの顔・頭身・耳・布・配色・着替えを維持した `living-fantasy-garden-v2` と、同じLifeの育成・運搬・食事・水路・土の水分を家庭内利用の本番へ統合した。[公開範囲と検証](../design/2026-09-27-fantasy-production/README.md)に従い、既存の学習・財布・所有を継続する。自然の切替は保存版20と同一transactionで保存し、旧writerの書込を拒否する。公開の事実は配信先のrevisionで確認する。
 
 [包括仕様51](51_living_fantasy_island_spec.md)の全v1完成とは区別する。来訪・招待・土地拡張との接続、一通貨化、URL共有、入口・家を含む美術の最終統一、実機と子どもの独立観察は継続する。旧Nature Town DBを自動合算しない。見た目のrollbackでも版20のwriterを保持し、公開前の旧deploymentへ戻さない。
 

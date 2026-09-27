@@ -1,7 +1,105 @@
 <!doctype html>
 <html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="tools/generate-agent-index.mjs"><title>Sansu · タスク</title><style>
 :root{color-scheme:light;--ink:#213b35;--muted:#61736c;--line:#d8e1d9;--paper:#fffef9;--accent:#28634f}*{box-sizing:border-box}body{margin:0;background:#f3f5ef;color:var(--ink);font:15px/1.75 system-ui,-apple-system,sans-serif}a{color:var(--accent);text-underline-offset:4px}header{background:var(--paper);border-bottom:1px solid var(--line)}nav,main{max-width:1180px;margin:auto;padding:20px 28px}nav{display:flex;align-items:center;gap:24px;flex-wrap:wrap}nav strong{margin-right:auto;letter-spacing:.12em}nav a{text-decoration:none;padding:6px 2px}nav a[aria-current]{border-bottom:2px solid var(--accent);font-weight:700}main{padding-top:42px;padding-bottom:70px}h1{font-size:clamp(28px,5vw,44px);letter-spacing:-.035em;margin:0}h2{font-size:18px;line-height:1.5;margin:0 0 10px}p{margin:10px 0}.subtitle,.path,footer{color:var(--muted)}.eyebrow{font-size:12px;letter-spacing:.16em}.intro{padding:28px;background:#e7eee4;border:1px solid var(--line);border-radius:14px;margin:28px 0}.intro h2{font-size:26px}.stats{display:flex;flex-wrap:wrap;gap:24px;margin-top:22px}.stats strong{font-size:30px;margin-right:5px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:22px;overflow-wrap:anywhere}.path{font:12px/1.6 ui-monospace,monospace}.section-title{margin:32px 0 16px}label{display:block;font-weight:600;margin-top:24px}input{width:100%;font:inherit;padding:13px 16px;border:1px solid #93aa9b;border-radius:8px;background:var(--paper);margin:8px 0 24px;color:var(--ink)}summary{cursor:pointer;color:var(--accent);padding:10px 0}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.8 ui-monospace,monospace;background:#f0f3ed;padding:16px;border-radius:8px;max-height:560px;overflow:auto}footer{margin-top:40px;font-size:13px}[hidden]{display:none!important}:focus-visible{outline:3px solid #b27523;outline-offset:4px}@media(max-width:640px){nav,main{padding-left:18px;padding-right:18px}nav{gap:16px}.grid{grid-template-columns:1fr}.intro{padding:20px}.card{padding:18px}}
-</style></head><body><header><nav aria-label="メインナビゲーション"><strong>SANSU</strong><a href="../index.html">概要</a><a href="index.html" aria-current="page">タスク</a><a href="../../docs/index.html">ドキュメント</a></nav></header><main><h1>タスク</h1><p class="subtitle">Sansu repository · Markdownから生成した閲覧用ポータル</p><label for="search">このページを検索</label><input id="search" type="search" placeholder="タイトル・ファイル名・キーワード"><p id="result" role="status" hidden></p><p>実行キューに登録された 6 件。「何の話か／現在地／次の一手」で分類しています。登録は実装済み・公開済みを意味しません。</p><section class="doc-group"><h2 class="section-title">見た目・使いやすさ</h2><div class="grid"><article class="card" data-search="全体の画面と使い方：入口、戻る操作、小さい画面、読み上げ用の基本対応を改善した 次：実際の端末、実際の読み上げ、子どもが説明なしで使えるかを確認する docs/tasks/active/2026-09-20-whole-app-ux-coherence.md # whole-app ux/ui coherence
+</style></head><body><header><nav aria-label="メインナビゲーション"><strong>SANSU</strong><a href="../index.html">概要</a><a href="index.html" aria-current="page">タスク</a><a href="../../docs/index.html">ドキュメント</a></nav></header><main><h1>タスク</h1><p class="subtitle">Sansu repository · Markdownから生成した閲覧用ポータル</p><label for="search">このページを検索</label><input id="search" type="search" placeholder="タイトル・ファイル名・キーワード"><p id="result" role="status" hidden></p><p>実行キューに登録された 7 件。「何の話か／現在地／次の一手」で分類しています。登録は実装済み・公開済みを意味しません。</p><section class="doc-group"><h2 class="section-title">見た目・島で暮らす</h2><div class="grid"><article class="card" data-search="幻想の庭の続き：元のぽこもこを保つ庭と自然の一周を本番へ統合 次：入口・家との美術統一、30品時の軽量化、住人の招待、実機と子どもの観察 docs/tasks/active/2026-09-27-living-fantasy-first-playable.md # 幻想の庭 — 最初の遊べる一周
+
+2026-09-27、ユーザーの「魅力的なデザインやthree.jsも含め、最高の体験へ実装を進める」という依頼で着手。[包括仕様51](../../product/51_living_fantasy_island_spec.md)の段階1〜2に向けた初期候補を実装する。
+
+## 今回の完了範囲
+
+b方向の実3d地形・家・曲がった枝葉・相棒・昼夕夜、通常の庭で触れる水の反応と実表示に基づく思い出保存、既存の学習→購入→配置→発見→思い出→学習の往復を、明示的な次期flagで動かす。phone/tabletの実画面と必要な検査を残す。
+
+経済・成長・住人解放の新規則、完全バックアップと既存データ変換、url共有は次の段階。本段階では既存の経済と保存writerを使用し、見た目だけで新経済への移行済みと扱わない。現行の未commit自然統合作業を保持して接続する。
+
+## 美術の引継ぎ
+
+| 項目 | 引き継ぐ | そのまま使わない |
+|---|---|---|
+| bの空間 | 太い曲がった枝、明るい庭の余白、小さな家と相棒の尺度 | 縦絵の狭い通路、画面中央を塞ぐ枝、隅々の細密描写 |
+| 素材・色 | 暖かな壁と木、青緑の水と陰、まとまりのある葉、琥珀の光 | 全画面の紫・水玉、同じ質感を全素材に被せること |
+| 動き | 水に触る→波紋→小さな星の光、静かな葉揺れ | 常時発光する粒子、突然のcamera移動、演出のための学習停止 |
+| 相棒 | 既存のぽこもこの顔・頭身・耳・布・配色・着替え | b案の相棒、新しい簡略モデル、パッチや配色の独断変更 |
+
+## 検証の扱い
+
+次期flag `vite_island_fantasy_enabled`、候補id、対象url、版、viewport、使用db、fixtureの有無を明記する。作者による実画面確認と、未実施の子どもの無説明理解を分ける。公開前の独立した三ゲートをローカル検査の成功で代用しない。
+
+状態: **上記の初期一周の実装と自動検査は完了。包括仕様の続きと最終美術は継続。** 基準画像は[方向比較](../../design/2026-09-27-world-direction-rethink/readme.md)、実画面・manifest・三ゲート・残件は[初期実装の記録](../../design/2026-09-27-living-fantasy-first-playable/readme.md)へ集約した。
+
+## 続きの範囲
+
+**2026-09-27の指摘:** ぽこもこの変更モデルを取り下げ、既存の顔・頭身・耳・布・配色を維持する。以後のキャラクター変更は別途の明示確認が必要。旧資料と初期プレビューの状態差を解消し、実アプリを直接表示する入口へ揃える。[復元と入口の記録](../../design/2026-09-27-pokomoko-restored/readme.md)を参照。
+
+このタスクは包括仕様の実装の入口として継続する。次は同じ島で自然・運搬・食事が見える一周と、素材・前景/遠景・既存相棒の見え方・水の反応、家と学習を含む画面の統一。nature townの仕組みを捨てず、統合タスクと一つの島へ接続する。美術の差を残したまま粒子や機能数で完成と扱わない。その後の初期セット・一通貨化・住人/発見は、保存adapterと全復旧を伴って進める。実機と子どもの独立観察は未実施。
+
+- review by: 2026-10-04
+
+## docs to touch
+
+- `docs/product/51_living_fantasy_island_spec.md`: 設計と段階的な実装の境界
+- `docs/ai/verification_matrix.md`: この候補の実行方法と証拠の適用範囲
+- `docs/design/2026-09-27-living-fantasy-first-playable/`: 実画面、manifest、確認結果
+- `.agents/tasks/tasks.md` と `docs/done/2026-09.md`: 実装の現在地とこの作業の終了記録
+
+## verification
+
+共通検査は `npm run verify:core`（472ファイル、4,218 tests）とclassicの `npm run e2e:smoke` がpass。`npm run e2e:island-fantasy` で実獲得・2サイズの可視性/思い出保存を確認。専用production e2eで初回設定から4問・購入・配置・実sw offline保存/再読込を両サイズで確認。`npm run benchmark:island-fixed-ten` は80 run、eligible=true、pass。検査条件とsource/qa hashは上記の記録を参照する。
+
+共通検査を全v1の完成と読み替えない。美術はruntime仮採点41/60、無説明理解は0人でhold。公開前には仕様51の全受入・三ゲート・実機・更新を満たす必要がある。
+
+## 2026-09-27 本番統合
+
+元のぽこもこを保つv2を、自然の育成・運搬・食事・水路・土とともに家庭内本番へ統合。[公開記録](../../design/2026-09-27-fantasy-production/readme.md)に固定build・旧→新/中断/互換復旧・実購入/offline・三ゲートを保存した。全v1の完成とは区別し、入口・家の美術統一、30品時の軽量化、実機・子どもの観察は継続する。
+"><h2><a href="../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md">幻想の庭の続き：元のぽこもこを保つ庭と自然の一周を本番へ統合 次：入口・家との美術統一、30品時の軽量化、住人の招待、実機と子どもの観察</a></h2><p class="path">docs/tasks/active/2026-09-27-living-fantasy-first-playable.md</p><p>2026-09-27、ユーザーの「魅力的なデザインやThree.jsも含め、最高の体験へ実装を進める」という依頼で着手。[包括仕様51](../../product/51_living_fantasy_island_spec.md)の段階1〜2に向けた初期候補を実装する。 B方向の実3D地形・家・曲がった枝葉・相棒・昼夕夜、通常の庭で触れる水の反応と実表示に基づく思い出保存、既存の学習→購入→配置→発見→思い出→学習</p><details><summary>詳細を読む</summary><pre># 幻想の庭 — 最初の遊べる一周
+
+2026-09-27、ユーザーの「魅力的なデザインやThree.jsも含め、最高の体験へ実装を進める」という依頼で着手。[包括仕様51](../../product/51_living_fantasy_island_spec.md)の段階1〜2に向けた初期候補を実装する。
+
+## 今回の完了範囲
+
+B方向の実3D地形・家・曲がった枝葉・相棒・昼夕夜、通常の庭で触れる水の反応と実表示に基づく思い出保存、既存の学習→購入→配置→発見→思い出→学習の往復を、明示的な次期flagで動かす。phone/tabletの実画面と必要な検査を残す。
+
+経済・成長・住人解放の新規則、完全バックアップと既存データ変換、URL共有は次の段階。本段階では既存の経済と保存writerを使用し、見た目だけで新経済への移行済みと扱わない。現行の未commit自然統合作業を保持して接続する。
+
+## 美術の引継ぎ
+
+| 項目 | 引き継ぐ | そのまま使わない |
+|---|---|---|
+| Bの空間 | 太い曲がった枝、明るい庭の余白、小さな家と相棒の尺度 | 縦絵の狭い通路、画面中央を塞ぐ枝、隅々の細密描写 |
+| 素材・色 | 暖かな壁と木、青緑の水と陰、まとまりのある葉、琥珀の光 | 全画面の紫・水玉、同じ質感を全素材に被せること |
+| 動き | 水に触る→波紋→小さな星の光、静かな葉揺れ | 常時発光する粒子、突然のcamera移動、演出のための学習停止 |
+| 相棒 | 既存のぽこもこの顔・頭身・耳・布・配色・着替え | B案の相棒、新しい簡略モデル、パッチや配色の独断変更 |
+
+## 検証の扱い
+
+次期flag `VITE_ISLAND_FANTASY_ENABLED`、候補ID、対象URL、版、viewport、使用DB、fixtureの有無を明記する。作者による実画面確認と、未実施の子どもの無説明理解を分ける。公開前の独立した三ゲートをローカル検査の成功で代用しない。
+
+状態: **上記の初期一周の実装と自動検査は完了。包括仕様の続きと最終美術は継続。** 基準画像は[方向比較](../../design/2026-09-27-world-direction-rethink/README.md)、実画面・manifest・三ゲート・残件は[初期実装の記録](../../design/2026-09-27-living-fantasy-first-playable/README.md)へ集約した。
+
+## 続きの範囲
+
+**2026-09-27の指摘:** ぽこもこの変更モデルを取り下げ、既存の顔・頭身・耳・布・配色を維持する。以後のキャラクター変更は別途の明示確認が必要。旧資料と初期プレビューの状態差を解消し、実アプリを直接表示する入口へ揃える。[復元と入口の記録](../../design/2026-09-27-pokomoko-restored/README.md)を参照。
+
+このタスクは包括仕様の実装の入口として継続する。次は同じ島で自然・運搬・食事が見える一周と、素材・前景/遠景・既存相棒の見え方・水の反応、家と学習を含む画面の統一。Nature Townの仕組みを捨てず、統合タスクと一つの島へ接続する。美術の差を残したまま粒子や機能数で完成と扱わない。その後の初期セット・一通貨化・住人/発見は、保存adapterと全復旧を伴って進める。実機と子どもの独立観察は未実施。
+
+- Review By: 2026-10-04
+
+## Docs To Touch
+
+- `docs/product/51_living_fantasy_island_spec.md`: 設計と段階的な実装の境界
+- `docs/ai/verification_matrix.md`: この候補の実行方法と証拠の適用範囲
+- `docs/design/2026-09-27-living-fantasy-first-playable/`: 実画面、manifest、確認結果
+- `.agents/tasks/TASKS.md` と `docs/done/2026-09.md`: 実装の現在地とこの作業の終了記録
+
+## Verification
+
+共通検査は `npm run verify:core`（472ファイル、4,218 tests）とclassicの `npm run e2e:smoke` がPASS。`npm run e2e:island-fantasy` で実獲得・2サイズの可視性/思い出保存を確認。専用production E2Eで初回設定から4問・購入・配置・実SW offline保存/再読込を両サイズで確認。`npm run benchmark:island-fixed-ten` は80 run、eligible=true、PASS。検査条件とsource/QA hashは上記の記録を参照する。
+
+共通検査を全v1の完成と読み替えない。美術はruntime仮採点41/60、無説明理解は0人でHOLD。公開前には仕様51の全受入・三ゲート・実機・更新を満たす必要がある。
+
+## 2026-09-27 本番統合
+
+元のぽこもこを保つv2を、自然の育成・運搬・食事・水路・土とともに家庭内本番へ統合。[公開記録](../../design/2026-09-27-fantasy-production/README.md)に固定build・旧→新/中断/互換復旧・実購入/offline・三ゲートを保存した。全v1の完成とは区別し、入口・家の美術統一、30品時の軽量化、実機・子どもの観察は継続する。
+</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">見た目・使いやすさ</h2><div class="grid"><article class="card" data-search="全体の画面と使い方：入口、戻る操作、小さい画面、読み上げ用の基本対応を改善した 次：実際の端末、実際の読み上げ、子どもが説明なしで使えるかを確認する docs/tasks/active/2026-09-20-whole-app-ux-coherence.md # whole-app ux/ui coherence
 
 - date: 2026-09-20
 - owner: codex
@@ -1951,11 +2049,11 @@ checkpoint02（`../../../output/island-experience/scene-compatibility-checkpoint
 - 2026-09-08: 仕様39の18部位SKU/3完成セット、12装備slot、利用権と差額、旧appearance解決版、全景sceneStyleと成長snapshotをdomain/storageへ実装。担当92tests＋成長/学習関連46tests、型/lint PASS。新しい部位選択/内側slot/無料既定試用/一部だけ試用取消/明示購入/全景保存入口をUIへ接続。全景previewの住民衣装・旗・音も現在のsceneへ接続。rendererは独立部位/material化と実画面前の検査中。
 - 2026-09-08: customizationのunknown exact intent保持/別action拒否/明示retry/単調revision/退出後継続抑止と、experience全景の同receipt再送をUI hookへ接続。customizationはhook13＋UI9＋request4＋preview4の30件を個別にPASS、experienceは20件PASS。独立レビューで見つけた既定の屋根試用→カテゴリ変更時の不正slotと、own commitのliveQuery先着で到着通知を消す競合を修正し回帰を追加した。実UI/実SW offline/速度/全体固定検査はまだこのsourceに対して未実行。F04/F05と自然観察の視覚HOLDも継続する。
 - 2026-09-08: 仕様39 rendererを固定可能まで確認。関連8files/96tests、型/担当lint PASS。部位ごとのgroup/material更新、旧4テーマの表示互換、同じ木/crown・家具・橋床の保持、空のphone/tablet画角内投影を検査。Stage/runtimeのcandidateは `island-cosmetics-parts-v2`、実12slot診断に従来互換版も表示する。これをroot UI/全景hook/遮蔽修正とともにsnapshot07（revision `workshop-20260908-88de0b827246`、951files、127.0.0.1:5392）へ固定。build/資産予算PASS（PWA 10.54MiB/12）。全体検査初回は245files/2716testsのうち学習進行1件が15秒timeout、2715件PASS。buildとの同時実行を外し、制限時間を変えず同固定sourceで全体再実行中。元の失敗ログを保持する。
-</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">自然と町を育てる</h2><div class="grid"><article class="card" data-search="今の島へ仕組みを取り込む：今の島を本体にする方針へ統一し、別の町を仕上げる作業を退避した 次：同じ絵・同じ住人で、育つ→運ぶ→食べる仕組みをつなぐ。コードの移植はこれから docs/tasks/active/2026-09-22-island-nature-integration.md # 今の島に自然と町の仕組みを取り込む
+</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">自然と町を育てる</h2><div class="grid"><article class="card" data-search="今の島へ仕組みを取り込む：同じ島の育成・運搬・食事・水路・土の水分を本番へ統合 次：供給から来訪・入居・土地拡張をつなぐ。実機と子どもの理解を確認 docs/tasks/active/2026-09-22-island-nature-integration.md # 今の島に自然と町の仕組みを取り込む
 
-- 更新日: 2026-09-22
+- 更新日: 2026-09-27
 - review by: 2026-09-29
-- 状態: 仕様と作業の一本化。ゲームの仕組みの移植は未着手。
+- 状態: 同じ島で食料の最初の一周、水ばち・木陰・つながる「みずみち」と土の時間変化を実装し、幻想の庭とともに本番へ統合。来訪・入居、供給と土地拡張の接続、実機確認は未着手。
 - 正本: [統合方針](../../product/island-nature-integration.md)
 - 目的: 同じ島・同じ住人で、配置を変えると育ち方や食べ物の届き方が変わり、住人と土地が増える遊びへ進める。
 
@@ -1966,18 +2064,20 @@ checkpoint02（`../../../output/island-experience/scene-compatibility-checkpoint
 | 現行の島と試作の違いを整理する | 整理済み。絵・画面・座標・時間・学習報酬・保存が別だった |
 | 方針を一本にする | 親仕様と統合方針に反映。今の島を本体にし、町の仕組みを取り込む |
 | 別の町を仕上げるタスクを退避する | 旧s1の記録をarchiveへ移動。コード・データ・検証結果は削除していない |
-| 育つ→運ぶ→食べる仕組みを同じ島へつなぐ | 未着手。既存の道具運搬だけで食料配送があるとは扱わない |
-| 保存と学習を接続する | 未着手。二つのdbや通貨を合算していない |
-| 統合後の画面・動作を確認する | 未実施。旧試作の46/47項目は統合後の完成率ではない |
+| 育つ→運ぶ→食べる仕組みを同じ島へつなぐ | 最初の一周を実装。鉢の収穫物を同じ住人が食卓へ運び、在庫があると食べる。配置と通路で結果が変わる |
+| 水と木陰で育ち方を変える | 現行の水ばち・育った木の位置を鉢ごとに読み、収穫までの時間を変える。移動後も途中の成長と在庫は保持 |
+| みずみちをつなぐ | 水ばちから最大8マスの水路が通水。切断・再接続で遠くの鉢の条件が変わり、在庫は保持 |
+| 土が湿り、乾く | 所有地の土がlifeの実時間で水分目標に近づく。切断・再接続後も現在の水分を保持して変わる。鉢の育ちと地面の淡い色、持ち物の説明へ接続。新しい土地は基本水分から始まる。固定地形水源は未接続 |
+| 保存と学習を接続する | 食料と土は現行lifeの保存・時計と同じ再生に接続し、それぞれの切替境界を追加。通常学習のwriterと旧nature town db・通貨は変更していない。旧版→版20・実獲得・学習往復・offline・互換復旧を両幅で確認 |
+| 統合後の画面・動作を確認する | 純粋計算・保存再開・3dモデルの自動テストと、[食料の画面記録](../../design/2026-09-27-island-food-loop/readme.md)で収穫→運搬→食事→再読込を確認。[水路の画面記録](../../design/2026-09-27-island-water-channel/readme.md)で通水→切断→再接続を確認。[土の画面記録](../../design/2026-09-27-island-soil-moisture/readme.md)でスマホ・タブレット幅の接続→時間経過→切断→乾燥→再接続を確認。実機・利用者確認と、物流を含む実経過の長期観察は残る。旧試作の46/47項目は統合後の完成率ではない |
 
 ## 次にすること
 
-最初の実装単位は「同じ島の一画で、植物を育て、住人が収穫物を運び、食卓に届ける」。既存の家・キャラクター・通常学習は変えない。
+最初の実装単位「同じ島の一画で、植物を育て、住人が収穫物を運び、食卓に届ける」と、水ばち・木陰・水路・土の時間変化から鉢への影響はローカル実装済み。更新とオフラインの学習・所有保持は検証済み。次は実機で一周を確認し、供給から住人と土地の増加をつなぐ。
 
-1. [技術的な対応表](../../product/nature-town/implementation_gap.md)に沿い、島の座標・時計・保存へ自然の計算をつなぐ方式を決める。
-2. 既存の島の素材で畑と食卓を表示し、実在庫の移動を同じ住人に結び付ける。別の町画面は増やさない。
-3. 配置変更、不通と復旧、途中再開、同じ学習への往復を確認する。
-4. その上に来訪・入居・土地拡張を接続する。小さな一周だけで全体完了としない。
+1. 本番相当の更新・オフラインで、鉢→住人のかご→食卓→学習往復と経路不通からの復旧を確認する。
+2. 固定地形水源を現行の島へどう置くか決める。現在の水源は所有した水ばちのみ。
+3. 供給の継続から来訪・入居・土地拡張をつなぐ。小さな一周だけで全体完了としない。
 
 ## 担当の重複を避ける
 
@@ -2000,18 +2100,18 @@ checkpoint02（`../../../output/island-experience/scene-compatibility-checkpoint
 
 変更後の確認：
 
-- 今回は仕様・タスク・案内の変更。アプリコード・画面・保存方式は変更していない。
-- `npm run docs:check` とhtml一覧の再生成で、リンクと作業の入口を確認する。実行結果は完了記録へ残す。
-- 実装時は[検証マトリクス](../../ai/verification_matrix.md)に従い、coreと島の画面・学習・保存・pwa確認を行う。文書チェックだけでは統合実装の合格にしない。
+- 食料の収穫・配送・食事、道の不通、配置変更時の在庫保全、保存境界と再読込、実際の3d住人のかごを自動テストする。
+- `npm run verify:core` と島の関連画面テストを実行し、失敗の原因を分けて記録する。
+- 実機phone/tablet、学習往復、オフライン更新、絵の魅力、子どもの無説明理解を別々に確認する。未確認を完成率へ加えない。
 
 ## docs to touch
 
 更新する文書：親仕様、統合方針、仕様書の地図、タスク一覧、バックログ、nature town資料の入口。島の見た目は48/50、保存方式を変える際は保存仕様13と移行手順も更新する。
-"><h2><a href="../../docs/tasks/active/2026-09-22-island-nature-integration.md">今の島へ仕組みを取り込む：今の島を本体にする方針へ統一し、別の町を仕上げる作業を退避した 次：同じ絵・同じ住人で、育つ→運ぶ→食べる仕組みをつなぐ。コードの移植はこれから</a></h2><p class="path">docs/tasks/active/2026-09-22-island-nature-integration.md</p><p>- 更新日: 2026-09-22 - Review By: 2026-09-29</p><details><summary>詳細を読む</summary><pre># 今の島に自然と町の仕組みを取り込む
+"><h2><a href="../../docs/tasks/active/2026-09-22-island-nature-integration.md">今の島へ仕組みを取り込む：同じ島の育成・運搬・食事・水路・土の水分を本番へ統合 次：供給から来訪・入居・土地拡張をつなぐ。実機と子どもの理解を確認</a></h2><p class="path">docs/tasks/active/2026-09-22-island-nature-integration.md</p><p>- 更新日: 2026-09-27 - Review By: 2026-09-29</p><details><summary>詳細を読む</summary><pre># 今の島に自然と町の仕組みを取り込む
 
-- 更新日: 2026-09-22
+- 更新日: 2026-09-27
 - Review By: 2026-09-29
-- 状態: 仕様と作業の一本化。ゲームの仕組みの移植は未着手。
+- 状態: 同じ島で食料の最初の一周、水ばち・木陰・つながる「みずみち」と土の時間変化を実装し、幻想の庭とともに本番へ統合。来訪・入居、供給と土地拡張の接続、実機確認は未着手。
 - 正本: [統合方針](../../product/island-nature-integration.md)
 - 目的: 同じ島・同じ住人で、配置を変えると育ち方や食べ物の届き方が変わり、住人と土地が増える遊びへ進める。
 
@@ -2022,18 +2122,20 @@ checkpoint02（`../../../output/island-experience/scene-compatibility-checkpoint
 | 現行の島と試作の違いを整理する | 整理済み。絵・画面・座標・時間・学習報酬・保存が別だった |
 | 方針を一本にする | 親仕様と統合方針に反映。今の島を本体にし、町の仕組みを取り込む |
 | 別の町を仕上げるタスクを退避する | 旧S1の記録をarchiveへ移動。コード・データ・検証結果は削除していない |
-| 育つ→運ぶ→食べる仕組みを同じ島へつなぐ | 未着手。既存の道具運搬だけで食料配送があるとは扱わない |
-| 保存と学習を接続する | 未着手。二つのDBや通貨を合算していない |
-| 統合後の画面・動作を確認する | 未実施。旧試作の46/47項目は統合後の完成率ではない |
+| 育つ→運ぶ→食べる仕組みを同じ島へつなぐ | 最初の一周を実装。鉢の収穫物を同じ住人が食卓へ運び、在庫があると食べる。配置と通路で結果が変わる |
+| 水と木陰で育ち方を変える | 現行の水ばち・育った木の位置を鉢ごとに読み、収穫までの時間を変える。移動後も途中の成長と在庫は保持 |
+| みずみちをつなぐ | 水ばちから最大8マスの水路が通水。切断・再接続で遠くの鉢の条件が変わり、在庫は保持 |
+| 土が湿り、乾く | 所有地の土がLifeの実時間で水分目標に近づく。切断・再接続後も現在の水分を保持して変わる。鉢の育ちと地面の淡い色、持ち物の説明へ接続。新しい土地は基本水分から始まる。固定地形水源は未接続 |
+| 保存と学習を接続する | 食料と土は現行Lifeの保存・時計と同じ再生に接続し、それぞれの切替境界を追加。通常学習のwriterと旧Nature Town DB・通貨は変更していない。旧版→版20・実獲得・学習往復・offline・互換復旧を両幅で確認 |
+| 統合後の画面・動作を確認する | 純粋計算・保存再開・3Dモデルの自動テストと、[食料の画面記録](../../design/2026-09-27-island-food-loop/README.md)で収穫→運搬→食事→再読込を確認。[水路の画面記録](../../design/2026-09-27-island-water-channel/README.md)で通水→切断→再接続を確認。[土の画面記録](../../design/2026-09-27-island-soil-moisture/README.md)でスマホ・タブレット幅の接続→時間経過→切断→乾燥→再接続を確認。実機・利用者確認と、物流を含む実経過の長期観察は残る。旧試作の46/47項目は統合後の完成率ではない |
 
 ## 次にすること
 
-最初の実装単位は「同じ島の一画で、植物を育て、住人が収穫物を運び、食卓に届ける」。既存の家・キャラクター・通常学習は変えない。
+最初の実装単位「同じ島の一画で、植物を育て、住人が収穫物を運び、食卓に届ける」と、水ばち・木陰・水路・土の時間変化から鉢への影響はローカル実装済み。更新とオフラインの学習・所有保持は検証済み。次は実機で一周を確認し、供給から住人と土地の増加をつなぐ。
 
-1. [技術的な対応表](../../product/nature-town/IMPLEMENTATION_GAP.md)に沿い、島の座標・時計・保存へ自然の計算をつなぐ方式を決める。
-2. 既存の島の素材で畑と食卓を表示し、実在庫の移動を同じ住人に結び付ける。別の町画面は増やさない。
-3. 配置変更、不通と復旧、途中再開、同じ学習への往復を確認する。
-4. その上に来訪・入居・土地拡張を接続する。小さな一周だけで全体完了としない。
+1. 本番相当の更新・オフラインで、鉢→住人のかご→食卓→学習往復と経路不通からの復旧を確認する。
+2. 固定地形水源を現行の島へどう置くか決める。現在の水源は所有した水ばちのみ。
+3. 供給の継続から来訪・入居・土地拡張をつなぐ。小さな一周だけで全体完了としない。
 
 ## 担当の重複を避ける
 
@@ -2056,9 +2158,9 @@ checkpoint02（`../../../output/island-experience/scene-compatibility-checkpoint
 
 変更後の確認：
 
-- 今回は仕様・タスク・案内の変更。アプリコード・画面・保存方式は変更していない。
-- `npm run docs:check` とHTML一覧の再生成で、リンクと作業の入口を確認する。実行結果は完了記録へ残す。
-- 実装時は[検証マトリクス](../../ai/verification_matrix.md)に従い、coreと島の画面・学習・保存・PWA確認を行う。文書チェックだけでは統合実装の合格にしない。
+- 食料の収穫・配送・食事、道の不通、配置変更時の在庫保全、保存境界と再読込、実際の3D住人のかごを自動テストする。
+- `npm run verify:core` と島の関連画面テストを実行し、失敗の原因を分けて記録する。
+- 実機phone/tablet、学習往復、オフライン更新、絵の魅力、子どもの無説明理解を別々に確認する。未確認を完成率へ加えない。
 
 ## Docs To Touch
 
@@ -2562,6 +2664,8 @@ durable completion history and verification facts still belong in `docs/done/yyy
 
 ## current index
 
+- 2026-09-27: 元のぽこもこを保つ幻想の庭・nature townの基本循環を本番へ統合。初回報酬の取得競合を修正、core4,243・更新/復旧/offline pass。30品負荷・全仕様・実機/独立観察は継続 -&gt; `docs/done/2026-09.md`
+
 - 2026-09-27: ぽこもこの入力・正解・区間完了の演出を実装。main抽出候補のcore4,213・画面/入力14条件pass。先行共有候補のfixed-ten80 runもpass。動画あり、公開版・実機/子どもの観察は別確認 -&gt; `docs/done/2026-09.md`
 
 - 2026-09-26: 島の追加学習の差分反映・復元worker・白紙時の回復案内。core、両幅の保存/offline/更新とブラウザー応答を検査。実機と残りの描画負荷は継続 -&gt; `docs/done/2026-09.md`
@@ -2704,6 +2808,8 @@ This file is a lightweight shared index for recently completed work.
 Durable completion history and verification facts still belong in `docs/done/YYYY-MM.md`.
 
 ## Current Index
+
+- 2026-09-27: 元のぽこもこを保つ幻想の庭・Nature Townの基本循環を本番へ統合。初回報酬の取得競合を修正、core4,243・更新/復旧/offline PASS。30品負荷・全仕様・実機/独立観察は継続 -&gt; `docs/done/2026-09.md`
 
 - 2026-09-27: ぽこもこの入力・正解・区間完了の演出を実装。main抽出候補のcore4,213・画面/入力14条件PASS。先行共有候補のfixed-ten80 runもPASS。動画あり、公開版・実機/子どもの観察は別確認 -&gt; `docs/done/2026-09.md`
 

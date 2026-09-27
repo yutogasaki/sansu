@@ -43,3 +43,7 @@ B方向の実3D地形・家・曲がった枝葉・相棒・昼夕夜、通常�
 共通検査は `npm run verify:core`（472ファイル、4,218 tests）とclassicの `npm run e2e:smoke` がPASS。`npm run e2e:island-fantasy` で実獲得・2サイズの可視性/思い出保存を確認。専用production E2Eで初回設定から4問・購入・配置・実SW offline保存/再読込を両サイズで確認。`npm run benchmark:island-fixed-ten` は80 run、eligible=true、PASS。検査条件とsource/QA hashは上記の記録を参照する。
 
 共通検査を全v1の完成と読み替えない。美術はruntime仮採点41/60、無説明理解は0人でHOLD。公開前には仕様51の全受入・三ゲート・実機・更新を満たす必要がある。
+
+## 2026-09-27 本番統合
+
+元のぽこもこを保つv2を、自然の育成・運搬・食事・水路・土とともに家庭内本番へ統合。[公開記録](../../design/2026-09-27-fantasy-production/README.md)に固定build・旧→新/中断/互換復旧・実購入/offline・三ゲートを保存した。全v1の完成とは区別し、入口・家の美術統一、30品時の軽量化、実機・子どもの観察は継続する。

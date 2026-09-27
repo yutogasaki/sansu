@@ -1,0 +1,13 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/.codex/worktrees/fantasy-production/sansu
+
+ ✓ src/components/island/life/lifeUpdateClient.test.ts (7 tests) 6ms
+ ✓ src/components/island/life/useIslandLife.test.ts (12 tests) 722ms
+ ✓ src/domain/islandLife/repository.test.ts (10 tests) 1476ms
+   ✓ independent life persistence > never awards a diagnostic time jump twice and recovers from backward clock 1228ms
+
+ Test Files  3 passed (3)
+      Tests  29 passed (29)
+   Start at  20:31:13
+   Duration  1.89s (transform 233ms, setup 0ms, collect 636ms, tests 2.20s, environment 0ms, prepare 146ms)
+

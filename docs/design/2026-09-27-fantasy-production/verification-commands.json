@@ -1,0 +1,21 @@
+{
+  "fixedRuntime": "2da8efdf0e0cc82e0becf3bf90ef5a59295a7b0d",
+  "fixedSourceHash": "7ee862fab39cf1ce7708ceec2554626fb476e020df8fcaa8a81aa9b5daea435e",
+  "production": "https://sansu-seven.vercel.app",
+  "qaHarnessSHA256": "11beb204da620242e50bc424699ab16190dd544163a02d4a3995bf9a417b70d4",
+  "normal": {
+    "SANSU_FANTASY_WORKER_DELAY_MS": 0
+  },
+  "delayed": {
+    "SANSU_FANTASY_WORKER_DELAY_MS": 3500
+  },
+  "flags": {
+    "VITE_ISLAND_ENABLED": true,
+    "VITE_ISLAND_LIFE_ENABLED": true,
+    "VITE_ISLAND_LIFE_DISCOVERY_ENABLED": true,
+    "VITE_ISLAND_FANTASY_ENABLED": true,
+    "VITE_ISLAND_LIFE_PREVIEW": false,
+    "VITE_NATURE_TOWN_ENABLED": false
+  },
+  "independentChildObservers": 0
+}

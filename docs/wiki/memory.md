@@ -134,3 +134,8 @@ Cross-cutting durable risks are tracked in `docs/wiki/risk_register.md`.
 - The source doc changed and this file became stale.
 - The fact is no longer durable and should move back into task history.
 - The content belongs in `docs/ai/archive_policy.md`, `docs/ai/ownership_map.md`, or `docs/wiki/risk_register.md` instead.
+
+
+### 2026-09-27 幻想の庭の公開・互換復旧
+
+幻想の庭と自然の一周は同じLifeの家庭内本番へ統合。既存のぽこもこの造形・布・配色・着替えを保持する。食料切替と版20を同一transactionで保存して旧writerを拒否する。見た目を戻す場合も版20 reader/writerを保持してFantasyだけOFFにする。旧deployment、Life OFF、DB削除による代用はしない。旧Nature Town DBは未移行のまま保持する。[公開と検証](../design/2026-09-27-fantasy-production/README.md)。

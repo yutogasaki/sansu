@@ -7,6 +7,8 @@ Durable completion history and verification facts still belong in `docs/done/YYY
 
 ## Current Index
 
+- 2026-09-27: 元のぽこもこを保つ幻想の庭・Nature Townの基本循環を本番へ統合。初回報酬の取得競合を修正、core4,243・更新/復旧/offline PASS。30品負荷・全仕様・実機/独立観察は継続 -> `docs/done/2026-09.md`
+
 - 2026-09-27: ぽこもこの入力・正解・区間完了の演出を実装。main抽出候補のcore4,213・画面/入力14条件PASS。先行共有候補のfixed-ten80 runもPASS。動画あり、公開版・実機/子どもの観察は別確認 -> `docs/done/2026-09.md`
 
 - 2026-09-26: 島の追加学習の差分反映・復元Worker・白紙時の回復案内。core、両幅の保存/offline/更新とブラウザー応答を検査。実機と残りの描画負荷は継続 -> `docs/done/2026-09.md`
