@@ -332,9 +332,8 @@ try {
         await page.waitForURL('**/#/island'); await waitReady(page);
         if (await button(page, 'とじる').isVisible()) { await button(page, 'とじる').click(); await waitMode(page, 'home'); }
         await button(page, 'しまのメニュー').click();
-        await page.locator('[data-home-group="more-play"] > summary').click();
-        await button(page, 'ほかの あそび').click();
-        await page.getByRole('button', { name: /ポッコの たんけん/ }).click();
+        assert.equal(await page.locator('[data-home-action="other-games"]').count(), 0);
+        await page.goto(`${base}/#/explore`);
         await page.waitForURL('**/#/explore');
         const sameReady = await waitForExploreNumericReady(page, { runId: old.runId, problemId: oldReady.problemId, timeout: 15000 });
         const restored = await readNative(page, id);

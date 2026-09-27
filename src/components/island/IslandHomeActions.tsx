@@ -22,7 +22,6 @@ export interface IslandHomeActionsProps {
     onAlbum: () => void;
     onShared: () => void;
     onKeepsakes?: () => void;
-    onOtherGames?: () => void;
 }
 
 export function IslandHomeActions({ comparisonDisabled, onOpenChange, active = true, ...contents }: IslandHomeActionsProps) {
@@ -59,12 +58,11 @@ type IslandHomeMenuContentsProps = Omit<IslandHomeActionsProps, 'active' | 'onOp
 
 /** The action catalog is independent of the native dialog's focus lifecycle. */
 export function IslandHomeMenuContents({ busy, comparisonDisabled, workshopUnlocked, pendingRewards,
-    onPlay, onGuide, onWorkshop, onInventory, onCustomization, onExperience, onRewards, onAlbum, onShared, onKeepsakes, onOtherGames, onHelp, children, onChoose }: IslandHomeMenuContentsProps) {
+    onPlay, onGuide, onWorkshop, onInventory, onCustomization, onExperience, onRewards, onAlbum, onShared, onKeepsakes, onHelp, children, onChoose }: IslandHomeMenuContentsProps) {
     const actions = [
         { id: 'play', label: 'どうぶつと あそぶ', name: 'どうぶつと あそぶ', Icon: PawPrint, onClick: onPlay, disabled: busy },
         { id: 'guide', label: 'みつける', name: 'みつける', Icon: Search, onClick: onGuide, disabled: comparisonDisabled },
         ...(workshopUnlocked ? [{ id: 'workshop', label: 'おためしの いりえ', name: 'おためしの いりえ', Icon: Waves, onClick: onWorkshop, disabled: busy }] : []),
-        ...(onOtherGames ? [{ id: 'other-games', label: 'ほかの あそび', name: 'ほかの あそび', Icon: Gamepad2, onClick: onOtherGames, disabled: busy }] : []),
         { id: 'inventory', label: 'もちものを おく', name: 'もちものを おく', Icon: PackageOpen, onClick: onInventory, disabled: busy },
         { id: 'customization', label: 'しまの きせかえ', name: 'しまの きせかえ', Icon: Sparkles, onClick: onCustomization, disabled: busy },
         { id: 'experience', label: 'なまえ・けしき', name: 'なまえ・けしき', Icon: Palette, onClick: onExperience, disabled: busy },
@@ -96,9 +94,9 @@ export function IslandHomeMenuContents({ busy, comparisonDisabled, workshopUnloc
             <button className="island-secondary island-home-record" disabled={comparisonDisabled} onClick={() => onChoose(onAlbum)} data-home-action="album"><BookOpen size={19} aria-hidden="true" />アルバム</button>
             {workshopUnlocked && <button className="island-secondary island-home-record" disabled={busy} onClick={() => onChoose(onShared)} data-home-action="shared"><PackageOpen size={19} aria-hidden="true" />かざりと きおく</button>}
         </div>}
-        {(workshopUnlocked || onOtherGames) && <details className="island-menu-group" data-home-group="more-play">
+        {workshopUnlocked && <details className="island-menu-group" data-home-group="more-play">
             <summary><Gamepad2 size={22} aria-hidden="true" /><span>もっと あそぶ</span><ChevronDown size={18} aria-hidden="true" /></summary>
-            <div className="island-home-action-grid">{actions.filter(action => ['workshop', 'other-games'].includes(action.id)).map(({ id, label, name, onClick, disabled }) => <button key={id}
+            <div className="island-home-action-grid">{actions.filter(action => action.id === 'workshop').map(({ id, label, name, onClick, disabled }) => <button key={id}
                 className="island-secondary island-home-tile" data-home-action={id} aria-label={name} disabled={disabled} onClick={() => onChoose(onClick)}>
                 <span className="island-home-action-patch" aria-hidden="true"><IslandToyIcon kind={id === 'play' ? 'play' : id === 'guide' ? 'find' : id === 'inventory' ? 'box' : id === 'customization' ? 'display' : id === 'workshop' ? 'boat' : 'palette'} /></span><span>{label}</span>
             </button>)}</div>

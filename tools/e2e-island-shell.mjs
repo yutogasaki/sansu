@@ -165,10 +165,11 @@ try {
             row.preservation.push(await preserved(page, row.profileId, saved, 'reload resumed Island'));
             await capture(page, row, 'learning-resumed');
             await activate(button(page, 'しまへ'), touch); await waitMode(page, 'home');
-            await activate(button(page, 'ほかの あそび'), touch);
+            assert.equal(await page.locator('[data-home-action="other-games"]').count(), 0);
+            await page.goto(`${base}/#/battle`);
             await page.getByRole('heading', { name: 'ほかの あそび', exact: true }).waitFor();
             row.shellChecks.push({ stage: 'other-games', ...await assertShell(page, { mark: false }) });
-            assert(await page.getByRole('button', { name: /ポッコの たんけん/ }).count(), 'Other games keep their explicit identity and remain discoverable');
+            assert(await page.getByRole('button', { name: /ポッコの たんけん/ }).count(), 'Other games remain available by direct URL');
             await capture(page, row, 'other-games');
             await activate(navButton(page, 'しま'), touch); await readyLearning(page);
             row.preservation.push(await preserved(page, row.profileId, saved, 'other-games return'));

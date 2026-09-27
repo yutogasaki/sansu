@@ -65,7 +65,7 @@ try {
             await openMenu(); await capture('menu');
             const actions = menu.locator('[data-home-action]');
             const actionIds = await actions.evaluateAll(elements => elements.map(element => element.dataset.homeAction));
-            assert(actionIds.includes('inventory') && actionIds.includes('album') && actionIds.includes('other-games'));
+            assert(actionIds.includes('inventory') && actionIds.includes('album') && !actionIds.includes('other-games'));
             await actions.first().focus();
             for (let index = 0; index < actionIds.length; index++) {
                 assert.equal(await page.evaluate(() => document.activeElement?.getAttribute('data-home-action')), actionIds[index]);
@@ -106,9 +106,10 @@ try {
             await nav.getByRole('button', { name: 'きろく', exact: true }).click();
             await nav.getByRole('button', { name: 'きろく', exact: true }).click(); await capture('records');
             await nav.getByRole('button', { name: 'しま', exact: true }).click(); await waitMode(page, 'home');
-            await openMenu(); await dock.getByRole('button', { name: 'ほかの あそび', exact: true }).click();
+            await openMenu(); assert.equal(await dock.getByRole('button', { name: 'ほかの あそび', exact: true }).count(), 0);
+            await page.goto(`${base}/#/battle`);
             await page.waitForURL('**/#/battle');
-            scenario.checks.push('house, inventory, settings, records and other games remain reachable');
+            scenario.checks.push('house, inventory, settings and records remain reachable; other games keep a direct URL');
             assert.deepEqual(errors, []);
             scenario.pass = true;
         } finally { await context.close(); }

@@ -273,8 +273,8 @@ async function compatibility(page, row, created) {
     assert.equal(activeRun.activeCheckpoint.state.pendingProblem.problem.id, beforeIdentity.problemId);
     assert.equal(activeRun.activeCheckpoint.revision, beforeIdentity.revision);
     await page.goto(`${base}/#/`); await page.waitForURL('**/#/island'); await waitReady(page);
-    await button(page, 'ほかの あそび').click();
-    await page.getByRole('button', { name: /ポッコの たんけん/ }).click();
+    assert.equal(await page.locator('[data-home-action="other-games"]').count(), 0);
+    await page.goto(`${base}/#/explore`);
     await page.waitForURL('**/#/explore');
     const restoredIdentity = await waitLegacyExploreReady(page, beforeIdentity);
     const restored = await onboardingStores(page);

@@ -38,11 +38,11 @@ describe('home optional action hierarchy', () => {
         expect(html).not.toContain('おためしの いりえ'); expect(html).not.toContain('かざりと きおく'); expect(html).not.toContain('おくりものを えらぶ');
     });
     it('forwards each existing action once and gives a real gift its own arrival row', () => {
-        const callbacks = props({ pendingRewards: 2, onKeepsakes: vi.fn(), onOtherGames: vi.fn() }), tree = contents(callbacks);
+        const callbacks = props({ pendingRewards: 2, onKeepsakes: vi.fn() }), tree = contents(callbacks);
         const actionCallbacks = { play: callbacks.onPlay, guide: callbacks.onGuide, workshop: callbacks.onWorkshop,
             inventory: callbacks.onInventory, customization: callbacks.onCustomization, experience: callbacks.onExperience,
             rewards: callbacks.onRewards, album: callbacks.onAlbum, shared: callbacks.onShared,
-            keepsakes: callbacks.onKeepsakes, 'other-games': callbacks.onOtherGames };
+            keepsakes: callbacks.onKeepsakes };
         for (const button of buttons(tree)) {
             button.props.onClick();
             expect(actionCallbacks[button.props['data-home-action'] as keyof typeof actionCallbacks]).toHaveBeenCalledTimes(1);
@@ -51,13 +51,13 @@ describe('home optional action hierarchy', () => {
         expect(html).toContain('island-home-arrival'); expect(html).toContain('2こ とどいているよ');
         expect(buttons(tree)[0].props['data-home-action']).toBe('rewards');
         expect(buttons(tree).map(button => button.props['data-home-action'])).toEqual([
-            'rewards', 'play', 'guide', 'inventory', 'customization', 'experience', 'keepsakes', 'workshop', 'other-games',
+            'rewards', 'play', 'guide', 'inventory', 'customization', 'experience', 'keepsakes', 'workshop',
         ]);
         expect(html).not.toContain('data-home-action="album"');
         expect(html).not.toContain('data-home-action="shared"');
     });
     it('retains the discovery-read exception while all mutating routes remain busy', () => {
-        const openComparison = buttons(contents(props({ busy: true, comparisonDisabled: false, pendingRewards: 1, onKeepsakes: vi.fn(), onOtherGames: vi.fn() })));
+        const openComparison = buttons(contents(props({ busy: true, comparisonDisabled: false, pendingRewards: 1, onKeepsakes: vi.fn() })));
         expect(openComparison.filter(button => !button.props.disabled).map(button => button.props['data-home-action'])).toEqual(['guide', 'keepsakes']);
         expect(buttons(contents(props({ busy: true, comparisonDisabled: true, pendingRewards: 1 }))).every(button => button.props.disabled)).toBe(true);
     });

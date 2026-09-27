@@ -423,13 +423,13 @@ try {
             const nav = page.locator('.island-shell-nav');
             await nav.getByRole('button', { name: 'しま', exact: true }).click();
             await button(page, 'しまのメニュー').click();
-            await page.locator('[data-home-group="more-play"] > summary').click();
-            await page.locator('[data-home-action="other-games"]').click();
+            assert.equal(await page.locator('[data-home-action="other-games"]').count(), 0);
+            await page.goto(`${base}/#/battle`);
             await page.waitForURL(url => url.hash === '#/battle');
             await page.getByRole('heading', { name: 'ほかの あそび', exact: true }).waitFor();
             await page.waitForTimeout(400);
             await capture('other-games');
-            scenario.checks.push('Island menu opens the shared Other Games page');
+            scenario.checks.push('Island hides old games; direct URL opens the shared Other Games page');
 
             await page.getByRole('button', { name: /ふたりで きょうりょく/ }).click();
             await page.waitForURL(url => url.hash === '#/battle/play?mode=boss_coop');

@@ -52,7 +52,7 @@ async function wallet(page) { return Number(await page.locator('[data-life-drops
 const report = { target: base, startHash: await sourceHash(), revision: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
     flags: `production Island=true, Life=true, Discovery=${discovery}, Life preview=false, BuildPlay=false`, fixture: 'No injected profiles, clocks, credits, answers, or database writes; onboarding and purchases through actual UI in disposable contexts',
     failureInjection: failProjection ? 'Explicit IDBObjectStore.put failure for SansuIslandLifeV1/worlds only after a real offline answer; disabled before UI retry' : 'none', buildVersion: build.version,
-    scope: `Actual service worker offline ownership, earned credit projection, placement/storage and native learning. ${discovery ? '14-item catalog and real sapling purchase' : 'Six-item production capability'}. Not all rule journeys, C3 or two-build update.`, humanN: 0, cases: [], pass: false };
+    scope: `Actual service worker offline ownership, earned credit projection, placement/storage and native learning. ${discovery ? '15-item catalog and real sapling purchase' : 'Ten-item production capability'}. Not all rule journeys, C3 or two-build update.`, humanN: 0, cases: [], pass: false };
 assert.equal(report.startHash, build.sourceHash);
 const browser = await chromium.launch();
 try {

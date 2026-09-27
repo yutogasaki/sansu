@@ -869,14 +869,13 @@ try {
             await page.waitForURL('**/#/settings?section=parent');
             await page.getByRole('heading', { name: 'テスト・保護者', exact: true }).waitFor();
 
-            // Continue from the current Island's own menu into the two-player
-            // game. This is a current route, but a shared utility surface, so
-            // record app-root flags rather than inventing an Island candidate.
+            // The old games have no Island entry, but their direct URLs and
+            // saved data remain available for compatibility.
             await nav.getByRole('button', { name: 'しま', exact: true }).click();
             await waitMode(page, 'home'); await ordinary('#/island');
             await button(page, 'しまのメニュー').click();
-            await page.locator('[data-home-group="more-play"] > summary').click();
-            await page.locator('[data-home-action="other-games"]').click();
+            assert.equal(await page.locator('[data-home-action="other-games"]').count(), 0);
+            await page.goto(`${base}/#/battle`);
             await page.waitForURL('**/#/battle');
             const otherGamesHeading = page.getByRole('heading', { name: 'ほかの あそび', exact: true });
             await otherGamesHeading.waitFor();

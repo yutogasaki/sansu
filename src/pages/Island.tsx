@@ -970,7 +970,6 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                     }} onGuide={openGuide} onWorkshop={openWorkshop} onInventory={() => setScreen('inventory')}
                         onCustomization={openCustomization} onExperience={openExperience} onRewards={() => setScreen('reward')}
                         onKeepsakes={enterHouse}
-                        onOtherGames={() => navigate('/battle')}
                         onShared={() => openShared()} onAlbum={() => { setAlbumComparison('garden'); setScreen('album'); }}>
                         <div className="island-menu-progress">
                             {!homeJourneyEnabled() && <IslandGrowthSummary island={island} plan={plan} disabled={busy} onChoose={() => {
