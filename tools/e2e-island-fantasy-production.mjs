@@ -20,7 +20,8 @@ const readLife=(page,id)=>page.evaluate(async id=>{
 const capture=async(page,label)=>{await page.waitForTimeout(180);const file=`${page.viewportSize().width}-${label}.png`;await page.screenshot({path:`${out}/${file}`});report.captures.push({file,...await runtimeMetadata(page),world:await page.locator('.life-world').count()?await page.locator('.life-world').first().evaluate(e=>({candidate:e.dataset.lifeVisualCandidate,time:e.dataset.gardenTime,render:e.dataset.lifeRender})):null});};
 try{
  for(const viewport of [{width:390,height:844},{width:768,height:1024}]){
-  const context=await browser.newContext({viewport,hasTouch:true,reducedMotion:viewport.width===768?'reduce':'no-preference'});const page=activePage=await context.newPage();page.setDefaultTimeout(30000);const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  const context=await browser.newContext({viewport,hasTouch:true,reducedMotion:viewport.width===768?'reduce':'no-preference'});const page=activePage=await context.newPage();page.setDefaultTimeout(30000);
+  const workerDelay=Number(process.env.SANSU_FANTASY_WORKER_DELAY_MS||0);if(workerDelay)await page.route(/lifeUpdate\.worker-[^/]+\.js/,async route=>{await new Promise(resolve=>setTimeout(resolve,workerDelay));await route.continue();});const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto(base);assert.deepEqual(await (await page.request.get(`${base}/version.json`)).json(),manifest.version);
   await page.locator('.island-welcome').waitFor();await capture(page,'welcome');
   await page.getByRole('button',{name:'まなぶ',exact:true}).first().click();
@@ -45,5 +46,5 @@ try{
   await context.setOffline(false);assert.deepEqual(errors,[]);report.scenarios.push({viewport,source:'Real onboarding, four UI answers, real purchase/placement, real SW offline reload and native IndexedDB; no fixture writes',credits:offline.credits.length,purchases:offline.actions.filter(a=>a.command.type==='buy').length,pass:true});await context.close();
  }
  report.pass=true;
-}catch(error){report.error=String(error.stack||error);process.exitCode=1;if(activePage&&!activePage.isClosed())await activePage.screenshot({path:`${out}/failure.png`}).catch(()=>{});}
+}catch(error){report.error=String(error.stack||error);process.exitCode=1;if(activePage&&!activePage.isClosed()){const native=await readNative(activePage).catch(()=>null);report.failureSave={native,life:native?.plan?await readLife(activePage,native.plan.profileId).catch(()=>null):null};}if(activePage&&!activePage.isClosed())await activePage.screenshot({path:`${out}/failure.png`}).catch(()=>{});}
 finally{await fs.writeFile(`${out}/report.json`,JSON.stringify(report,null,2));await browser.close();console.log(JSON.stringify({pass:report.pass,scenarios:report.scenarios,error:report.error},null,2));}

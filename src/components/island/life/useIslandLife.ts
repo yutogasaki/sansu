@@ -39,9 +39,10 @@ export function useIslandLife(profileId: string, active: boolean) {
             operation = (async () => {
                 const finishRestore = !latest.current ? startLifeTiming('initial-restore') : undefined;
                 try {
+                    const realNow = Date.now();
                     const facts = await terminalFacts(profileId);
                     if (token !== generation.current || request && (!visible.current || screenToken !== screenGeneration.current)) return false;
-                    const updated = await updateLifeResponsive(profileId, facts, request);
+                    const updated = await updateLifeResponsive(profileId, facts, request, realNow);
                     if (token !== generation.current) return false;
                     const previous = latest.current;
                     if (!request) {

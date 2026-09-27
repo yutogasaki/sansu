@@ -13,6 +13,26 @@ class FakeWorker extends EventTarget {
     reply(data: LifeUpdateResponse) { this.onmessage?.({ data } as MessageEvent<LifeUpdateResponse>); }
 }
 afterEach(() => { vi.useRealTimers(); mocks.update.mockReset(); });
+it('keeps enrollment before answers completed while the worker downloads', async () => {
+    vi.useFakeTimers(); vi.setSystemTime(1000);
+    const worker = new FakeWorker(), runner = createLifeUpdateRunner(() => worker as unknown as Worker);
+    const result = runner('owner', []);
+    await vi.advanceTimersByTimeAsync(3500);
+    worker.reply({ ready: true }); await Promise.resolve();
+    const request = worker.postMessage.mock.calls[0][0];
+    expect(request.realNow).toBe(1000);
+    expect(request.realNow).toBeLessThan(2000); // A first completed answer during the download stays eligible.
+    const record = newLife('owner', request.realNow);
+    worker.reply({ id: request.id, record, state: replayLife(record) });
+    expect((await result).createdAt).toBe(1000);
+});
+it('keeps the same enrollment time when a stalled boot falls back to the main thread', async () => {
+    vi.useFakeTimers(); vi.setSystemTime(1000);
+    const worker = new FakeWorker(); mocks.update.mockResolvedValue(newLife('owner', 1000));
+    const result = createLifeUpdateRunner(() => worker as unknown as Worker)('owner', []);
+    await vi.advanceTimersByTimeAsync(5000); await result;
+    expect(mocks.update).toHaveBeenCalledWith('owner', [], undefined, 1000);
+});
 it('dispatches only after readiness and returns the computed record', async () => {
     const worker = new FakeWorker(), runner = createLifeUpdateRunner(() => worker as unknown as Worker);
     const record = newLife('owner', 100), result = runner('owner', []);
