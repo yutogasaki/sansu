@@ -20,9 +20,9 @@ it('keeps enrollment before answers completed while the worker downloads', async
     await vi.advanceTimersByTimeAsync(3500);
     worker.reply({ ready: true }); await Promise.resolve();
     const request = worker.postMessage.mock.calls[0][0];
-    expect(request.realNow).toBe(1000);
-    expect(request.realNow).toBeLessThan(2000); // A first completed answer during the download stays eligible.
-    const record = newLife('owner', request.realNow);
+    expect(request.requestedAt).toBe(1000);
+    expect(request.requestedAt).toBeLessThan(2000); // A first completed answer during the download stays eligible.
+    const record = newLife('owner', request.requestedAt);
     worker.reply({ id: request.id, record, state: replayLife(record) });
     expect((await result).createdAt).toBe(1000);
 });
@@ -31,7 +31,7 @@ it('keeps the same enrollment time when a stalled boot falls back to the main th
     const worker = new FakeWorker(); mocks.update.mockResolvedValue(newLife('owner', 1000));
     const result = createLifeUpdateRunner(() => worker as unknown as Worker)('owner', []);
     await vi.advanceTimersByTimeAsync(5000); await result;
-    expect(mocks.update).toHaveBeenCalledWith('owner', [], undefined, 1000);
+    expect(mocks.update).toHaveBeenCalledWith('owner', [], undefined, undefined, undefined, 1000);
 });
 it('dispatches only after readiness and returns the computed record', async () => {
     const worker = new FakeWorker(), runner = createLifeUpdateRunner(() => worker as unknown as Worker);

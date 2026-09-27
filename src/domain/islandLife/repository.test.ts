@@ -8,6 +8,24 @@ const stores: IslandLifeDatabase[] = [];
 const fresh = () => { const d = new IslandLifeDatabase(`life-test-${crypto.randomUUID()}`); stores.push(d); return d; };
 afterEach(async () => { await Promise.all(stores.splice(0).map(d => d.delete())); });
 describe('independent life persistence', () => {
+    it('credits learning during a delayed first load once, without enrolling past learning', async () => {
+        const db = fresh(), facts = [{ id: 'before-opening', at: 900 }, { id: 'during-download', at: 2000 }];
+        const first = await updateLife('slow-boot', facts, undefined, 5000, db, 1000);
+        expect(first.createdAt).toBe(1000);
+        expect(first.realAt).toBe(5000); expect(first.now).toBe(5000);
+        expect(first.credits.map(c => c.id)).toEqual(['during-download']);
+        expect(replayLife(first).drops).toBe(2);
+        const retry = await updateLife('slow-boot', facts, undefined, 6000, db, 1000);
+        expect(retry.credits).toEqual(first.credits); expect(replayLife(retry).drops).toBe(2);
+    });
+    it('ignores an earlier enrollment request after another tab has already saved the world', async () => {
+        const db = fresh();
+        await updateLife('shared', [], undefined, 2000, db);
+        const later = await updateLife('shared', [], undefined, 5000, db, 1000);
+        expect(later.createdAt).toBe(2000);
+        expect(later.realAt).toBe(5000); expect(later.now).toBe(5000);
+        expect((await updateLife('shared', [], undefined, 6000, db)).now).toBe(6000);
+    });
     it('switches an existing preview once, preserving the old economy and using v2 for its first new command', async () => {
         const db = fresh(); let old = newLife('old', 100); delete old.activitiesV2At;
         old.credits = [{ id: 'one', at: 100, day: learningDay(100) }];

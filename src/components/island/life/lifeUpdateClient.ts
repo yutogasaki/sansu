@@ -2,7 +2,7 @@ import type { LifeRecord, LifeState } from '../../../domain/islandLife/model';
 import { updateLife, type LifeIntent, type TerminalFact } from '../../../domain/islandLife/repository';
 import { cadenceReplayKey, rememberLifeState } from '../../../domain/islandLife/replayCache';
 
-export interface LifeUpdateRequest { id: number; profileId: string; facts: TerminalFact[]; intent?: LifeIntent; realNow: number }
+export interface LifeUpdateRequest { id: number; profileId: string; facts: TerminalFact[]; intent?: LifeIntent; requestedAt: number }
 export type LifeUpdateResponse = { ready: true } | { id: number; record: LifeRecord; state: LifeState } | { id: number; error: string };
 
 /** Never fall back after dispatch: a failed reply may follow a committed write. */
@@ -38,9 +38,9 @@ export function createLifeUpdateRunner(factory: () => Worker) {
             };
         } catch { fail(); }
     });
-    return async (profileId: string, facts: TerminalFact[], intent?: LifeIntent, realNow = Date.now()) => {
+    return async (profileId: string, facts: TerminalFact[], intent?: LifeIntent, requestedAt = Date.now()) => {
         // Enrollment starts when requested, not when a slow worker finishes loading.
-        if (!await start() || !worker) return updateLife(profileId, facts, intent, realNow);
+        if (!await start() || !worker) return updateLife(profileId, facts, intent, undefined, undefined, requestedAt);
         const target = worker, id = ++sequence;
         return new Promise<LifeRecord>((resolve, reject) => {
             const timer = setTimeout(() => {
@@ -48,12 +48,12 @@ export function createLifeUpdateRunner(factory: () => Worker) {
                 target.dispatchEvent(new Event('error'));
             }, 120_000);
             pending.set(id, { resolve, reject, timer });
-            try { target.postMessage({ id, profileId, facts, intent, realNow } satisfies LifeUpdateRequest); }
+            try { target.postMessage({ id, profileId, facts, intent, requestedAt } satisfies LifeUpdateRequest); }
             catch (error) { pending.delete(id); clearTimeout(timer); reject(error); }
         });
     };
 }
 const offThread = createLifeUpdateRunner(() => new Worker(new URL('./lifeUpdate.worker.ts', import.meta.url), { type: 'module' }));
-export function updateLifeResponsive(profileId: string, facts: TerminalFact[], intent?: LifeIntent, realNow = Date.now()) {
-    return typeof Worker === 'undefined' ? updateLife(profileId, facts, intent, realNow) : offThread(profileId, facts, intent, realNow);
+export function updateLifeResponsive(profileId: string, facts: TerminalFact[], intent?: LifeIntent, requestedAt = Date.now()) {
+    return typeof Worker === 'undefined' ? updateLife(profileId, facts, intent, undefined, undefined, requestedAt) : offThread(profileId, facts, intent, requestedAt);
 }

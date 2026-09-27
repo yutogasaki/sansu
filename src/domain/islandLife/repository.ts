@@ -60,10 +60,12 @@ export async function terminalFacts(profileId: string, database: SansuDatabase =
     });
 }
 export async function updateLife(profileId: string, facts: TerminalFact[], intent?: LifeIntent,
-    realNow = Date.now(), database = lifeDb): Promise<LifeRecord> {
+    realNow = Date.now(), database = lifeDb, enrollmentAt = realNow): Promise<LifeRecord> {
     if (intent?.advanceHours && !import.meta.env.DEV) throw new Error('Diagnostic time is unavailable in production');
     return database.transaction('rw', database.worlds, async () => {
-        const previous = await database.worlds.get(profileId) ?? newLife(profileId, realNow);
+        // A worker may download while learning completes. Only initial enrollment uses
+        // the request clock; existing worlds advance using the actual processing clock.
+        const previous = await database.worlds.get(profileId) ?? newLife(profileId, Math.min(realNow, enrollmentAt));
         if (!readableLifeVersion(previous.version)) throw new Error('この島のデータは新しい版で開いてください。');
         if (intent) {
             if (Boolean(intent.command) === Boolean(intent.advanceHours)) throw new Error('Invalid island intent');
