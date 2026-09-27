@@ -14,6 +14,7 @@ import { islandSupportStage } from './learningSupport';
 import { normalizeIslandObservation, islandObservationBinding, islandObservationScope } from './learningObservation';
 import { growIslandAfterCompletedSet } from './growth';
 import { earnIslandCustomizationStars } from './customization';
+import { advanceLearningParty } from './learningParty';
 
 async function keepIndependentCheckDue(database: SansuDatabase, profileId: string, subject: 'math' | 'vocab', itemId: string, now: number) {
     const table = subject === 'math' ? database.memoryMath : database.memoryVocab;
@@ -140,6 +141,13 @@ export async function commitIslandLearning(profileId: string, planId: string, re
         const nextChecks = updateIslandMathChecks(previousChecks, slot, checkOutcome, now);
         const checksChanged = JSON.stringify(nextChecks) !== JSON.stringify(island.pendingMathChecks);
         if (checksChanged) island.pendingMathChecks = nextChecks;
+        const party = advanceLearningParty(island.learningParty, {
+            completed: Boolean(observationScope.wholeCompleted),
+            independent: action.type === 'answer' && event.result === 'correct' && assistanceBefore === 'independent',
+            breakStreak: checkOutcome === 'needs-support',
+        });
+        const partyChanged = party !== island.learningParty;
+        if (partyChanged) island.learningParty = party;
         plan.revision += 1;
         event.observation = { version: 1, problemId: observationBinding.problemId, revisionBefore: observationBinding.revisionBefore,
             ...observationScope, ...normalizedObservation };
@@ -160,7 +168,7 @@ export async function commitIslandLearning(profileId: string, planId: string, re
             await database.islandEvents.add({ id: `${planId}:completed`, profileId, planId, type: 'plan_completed', timestamp: now,
                 ...(plan.growthTarget ? { habitatId: plan.growthTarget } : { rewardId: plan.rewardId }) });
         }
-        if (checksChanged || plan.status === 'completed') {
+        if (checksChanged || partyChanged || plan.status === 'completed') {
             island.revision += 1;
             island.updatedAt = now;
             await database.islands.put(island);

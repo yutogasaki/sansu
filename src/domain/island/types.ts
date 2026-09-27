@@ -78,6 +78,8 @@ export interface IslandMathCheck {
     createdAt: number;
 }
 export interface IslandRecord {
+    /** Earned learning play; optional for existing saves, never a mastery input. */
+    learningParty?: import('./learningParty').IslandLearningParty;
     homeJourney?: HomeJourneyState;
     profileId: string;
     schemaVersion: 1;

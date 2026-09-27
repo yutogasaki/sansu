@@ -43,9 +43,9 @@ try {
             await capture('home');
             await page.getByRole('button', { name: 'まなぶ', exact: true }).click();
             await page.locator('[data-input-ready=true]').waitFor();
-            const actor = page.locator('.pokomoko-learning-actor > img');
+            const actor = page.locator('.pokomoko-sprite');
             await actor.waitFor({ state: 'visible' });
-            await actor.evaluate(img => img.decode());
+            await actor.evaluate(async el => { const img = new Image(); img.src = getComputedStyle(el).backgroundImage.slice(5, -2); await img.decode(); });
             await capture('ready');
             row.runtime = await runtimeMetadata(page);
             row.layout = await page.locator('.park-keypad').evaluate(el => [...el.querySelectorAll('button')].map(button => {
@@ -85,8 +85,8 @@ try {
             saved = await readNative(page, id);
             const section = saved.plan.id;
             while (saved.plan.id === section) { const result = await answerUI(page, saved.plan, { touch: true }); row.answers.push(result.ms); saved = result.state; }
-            await page.locator('[data-burst=section]').waitFor({ state: 'attached' });
-            assert.equal(await page.locator('.pokomoko-confetti').count(), 28);
+            await page.locator('.pokomoko-burst').waitFor({ state: 'attached' });
+            assert(['section', 'jump', 'ride', 'stamp'].includes(await page.locator('.pokomoko-burst').getAttribute('data-burst')));
             await capture('section');
             // Opening help immediately clears success; completing with it still celebrates.
             await page.getByRole('button', { name: 'わからない', exact: true }).click();
@@ -127,6 +127,12 @@ try {
             await page.reload();
             await page.getByRole('button', { name: 'まなぶ', exact: true }).click();
             await page.locator('[data-input-ready=true]').waitFor();
+            // A fraction sum may legitimately be a whole number (e.g. 5/12 + 7/12).
+            // Answer those real questions until the planner offers a two-cell fraction.
+            for (let n = 0; scenario.name === 'fraction' && n < 12 && await page.locator('.park-answer').getAttribute('data-input-type') !== scenario.type; n++) {
+                const preparation = await readNative(page, id);
+                await answerUI(page, preparation.plan, { touch: true });
+            }
             assert.equal(await page.locator('.park-answer').getAttribute('data-input-type'), scenario.type);
             const capture = async label => {
                 const file = `${row.name}-${label}.png`;
@@ -135,12 +141,13 @@ try {
             };
             await capture('ready');
             let saved = await readNative(page, id);
-            const initialCursor = saved.plan.cursor;
+            const initialCursor = saved.plan.cursor, initialParty = saved.island.learningParty;
             let steps = 0;
             do {
                 const result = await answerUI(page, saved.plan, { touch: true }); saved = result.state;
                 if (saved.plan.cursor === initialCursor) {
                     steps++;
+                    assert.deepEqual(saved.island.learningParty, initialParty, 'An intermediate row does not advance play');
                     await page.locator('[data-burst=step]').waitFor({ state: 'attached' });
                     assert.equal(await page.locator('[data-result=step]').innerText(), 'このだんは せいかい');
                     assert.equal(await page.locator('.pokomoko-confetti').count(), 6);
@@ -148,8 +155,10 @@ try {
                 }
             } while (saved.plan.cursor === initialCursor && steps < 10);
             assert.notEqual(saved.plan.cursor, initialCursor);
+            assert.equal(saved.island.learningParty.streak, (initialParty?.streak ?? 0) + 1);
+            assert.equal(saved.island.learningParty.light, Math.min(30, (initialParty?.light ?? 0) + (initialParty?.rideRemaining > 0 ? 2 : 1)));
             if (scenario.intermediateSteps) assert(steps > 0, 'Multi-row arithmetic must exercise intermediate feedback');
-            await page.locator('[data-burst=answer]').waitFor({ state: 'attached' });
+            await page.locator('.pokomoko-burst:not([data-burst=step])').waitFor({ state: 'attached' });
             await page.waitForTimeout(180); await capture('answer');
             const geometry = await page.locator('.park-answer').evaluate(root => [...root.querySelectorAll('.park-keypad button, .park-choices button')].map(el => {
                 const r = el.getBoundingClientRect(); return { w: r.width, h: r.height, bottom: r.bottom, max: innerHeight };

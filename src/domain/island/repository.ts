@@ -20,6 +20,7 @@ import { hasValidIslandSharedMemories } from './sharedMemories';
 import { hasValidIslandFurnitureItems } from './furniture';
 import { hasValidIslandRewardGoal } from './rewardGoal';
 import { hasValidIslandLearningKeepsakes } from './learningKeepsakes';
+import { validLearningParty } from './learningParty';
 import { ISLAND_BASIC_ITEM_KINDS, ISLAND_ITEM_KINDS, type IslandBasicItemKind, type IslandEdit, type IslandPlan, type IslandRecord } from './types';
 
 export class IslandConflict extends ParkConflict {}
@@ -28,7 +29,7 @@ export const islandTables = (database: SansuDatabase) => [
 ];
 
 export function assertIsland(island: IslandRecord) {
-    if (!validHomeJourney(island.homeJourney) || island.schemaVersion !== 1 || !Number.isInteger(island.revision) || island.revision < 0
+    if (!validHomeJourney(island.homeJourney) || !validLearningParty(island.learningParty) || island.schemaVersion !== 1 || !Number.isInteger(island.revision) || island.revision < 0
         || !Number.isInteger(island.completedSets) || island.completedSets < 0
         || !Array.isArray(island.items) || !Array.isArray(island.pendingRewards)
         || !hasValidIslandFurnitureItems(island.items)

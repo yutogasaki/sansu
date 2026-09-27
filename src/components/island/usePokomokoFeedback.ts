@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useSyncExternalStore, type RefObject } from 'react';
 import type { IslandLearningFeedback } from './learningFeedback';
 
-export type PokomokoBurst = { id: string; kind: 'answer' | 'section' | 'step' };
+export type PokomokoBurst = { id: string; kind: 'answer' | 'section' | 'step' | 'jump' | 'ride' | 'stamp'; variant: number; light: number; riding: boolean };
 export type PokomokoInputCue = { id: number; x: number; y: number };
 const visible = () => document.visibilityState === 'visible';
 const subscribe = (listener: () => void) => {
@@ -23,11 +23,13 @@ export function usePokomokoFeedback(feedback: IslandLearningFeedback | undefined
         seen.current = feedback?.id;
         if (!active || !inForeground || !fresh || !feedback) return;
         setInputCue(undefined);
+        const moment = feedback.party;
         const kind = feedback.kind === 'step' ? 'step'
-            : feedback.kind === 'correct' || feedback.kind === 'supported' ? feedback.sectionCompleted ? 'section' : 'answer' : undefined;
+            : feedback.kind === 'correct' || feedback.kind === 'supported'
+                ? moment && moment.kind !== 'catch' ? moment.kind : feedback.sectionCompleted ? 'section' : 'answer' : undefined;
         if (!kind) return;
-        setBurst({ id: feedback.id, kind });
-        const timer = window.setTimeout(() => setBurst(undefined), kind === 'section' ? 1250 : kind === 'step' ? 500 : 950);
+        setBurst({ id: feedback.id, kind, variant: (moment?.streak ?? digit.current) % 3, light: moment?.light ?? 0, riding: moment?.riding ?? false });
+        const timer = window.setTimeout(() => setBurst(undefined), ['ride', 'stamp', 'jump'].includes(kind) ? 1600 : kind === 'section' ? 1250 : kind === 'step' ? 500 : 950);
         return () => window.clearTimeout(timer);
     }, [feedback, active, inForeground]);
 

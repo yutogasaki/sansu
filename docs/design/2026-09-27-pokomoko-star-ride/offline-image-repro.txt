@@ -1,0 +1,10 @@
+output/playwright/pokomoko-party-v2-offline-image-repro
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.evaluate: EncodingError: The source image cannot be decoded.
+    at capture (/Users/yutogasaki/Projects/sansu/tools/e2e-pokomoko-party.mjs:36:60)
+    at async file:///Users/yutogasaki/Projects/sansu/tools/e2e-pokomoko-party.mjs:99:21
+
+Node.js v24.18.0

@@ -2,6 +2,7 @@ import type { IslandEvent, IslandPlan } from '../../domain/island/types';
 
 export type IslandReaction = { id: string; kind: 'correct' | 'retry' | 'support' };
 export interface IslandLearningFeedback {
+    party?: import('../../domain/island/learningParty').IslandPartyMoment;
     id: string;
     kind: 'correct' | 'retry' | 'support' | 'step' | 'supported';
     text: string;

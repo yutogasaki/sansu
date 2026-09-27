@@ -73,9 +73,12 @@ describe('atomic owned learning keepsakes', () => {
         const beforeAnswer = await current(d);
         expect(reserved.cursor).toBe(0); expect(reserved.slots.length).toBeGreaterThan(1); expect(beforeAnswer.pendingMathChecks ?? []).toHaveLength(0);
         const result = await commitIslandLearning('child', reserved.id, reserved.revision, answer(reserved), d);
-        expect(result.plan.cursor).toBe(1); expect(result.plan.status).toBe('active'); expect(result.island).toStrictEqual(beforeAnswer);
+        expect(result.plan.cursor).toBe(1); expect(result.plan.status).toBe('active');
+        expect(result.island.learningParty?.streak).toBe(beforeAnswer.learningParty!.streak + 1);
+        expect(result.island).toStrictEqual({ ...beforeAnswer, learningParty: result.island.learningParty,
+            revision: beforeAnswer.revision + 1, updatedAt: result.island.updatedAt });
         const beforeStore = await snapshot(d), storing = { type: 'display', keepsakeId: 'completed-5', displayed: false } as const;
-        const stored = await put(d, storing); expectOnlyShelfWrite(beforeStore, await snapshot(d), beforeAnswer, stored, storing);
+        const stored = await put(d, storing); expectOnlyShelfWrite(beforeStore, await snapshot(d), result.island, stored, storing);
         expect(stored.learningKeepsakes).toEqual({ version: 1, displayed: ['first-completion'] });
         const beforeBulk = await snapshot(d), restored = await put(d, { type: 'display-earned' });
         expectOnlyShelfWrite(beforeBulk, await snapshot(d), stored, restored, { type: 'display-earned' });

@@ -2,6 +2,12 @@
 
 ## 1. 基本方針
 
+### ぽこもこの連続正解の遊び（2026-09-27）
+
+`IslandRecord.learningParty` はoptionalなv1拡張。`version: 1`、`streak`（0〜99999）、`light`（0〜30）、`rideRemaining`（0〜3）を持つ。未導入の保存は省略を空状態として表示し、過去の学習履歴から加算しない。10/20/30のスタンプはlightから導出する。未知版・範囲外は保存検証で拒否し、既存の値を黙って初期化しない。
+
+正式な回答transaction内で採点済みの一問完了・独力・支援の事実から更新し、island revisionとともに保存する。既存のreceipt IDによる再送抑止、本人照合、保存abortを共有する。途中行、演出タイマー、UI再表示は獲得根拠にしない。採点・SRS・ほし/しずく・既存所有物とは独立し、後続の島writerはoptional fieldを保持する。新tableやIndexedDB schema versionの変更はない。[UI仕様07](07_ui_design_guideline.md#ぽこもこと学ぶ瞬間の演出2026-09-27)を遊びの正本とする。
+
 2026-09-09に[仕様35のカテゴリをまたぐ「ほしいもの」](35_island_customization_spec.md#カテゴリをまたぐほしいもの1件)を採用した。旧 `customization.desiredItemId` と `desire / clear-desire` receiptを保ち、家具・身支度だけをoptional `IslandRecord.rewardGoal` v1へ保存する。省略は追加目標なしで、読み取り時の移行・自動生成は行わない。両fieldの同時目標、未知版/ID、所持済み目標は拒否する。DB v8のstore/index、島schemaVersion、UserProfile、学習予約と評価、写真storeは変更しない。
 
 目標の選択・変更・解除は無料で、専用writerがactive profileとcanonical意図を検査し、`['island-reward-goal-v1',profileId,revision]` の `reward_goal_changed` receiptをCASより先に照合する。結果不明の再送は元revision/意図を保ち、既存receiptなら最新の島を返して後の目標を上書きしない。対象の取得時だけ、所有追加・必要な減算・該当目標の解除を同一transactionに含める。別品取得・資格成立・試用/装備・通常学習では解除せず、全景/成長snapshotにも目標を含めない。旧fieldと新fieldの各操作境界は仕様35を正本とする。

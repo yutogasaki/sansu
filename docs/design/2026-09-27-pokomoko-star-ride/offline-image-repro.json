@@ -1,0 +1,337 @@
+{
+  "target": "http://127.0.0.1:5355",
+  "revision": "620236a5b54534af9658e5788fba85d84a22b302",
+  "sourceStart": "82ae13df35f2144708b0cc26766319e5d25769f98d05816374bb85d6e74b1b71",
+  "qaHash": "41cdddddfe2e8d4e95a35f3f3f585c53d6057c219e1dd79f7d0e0e1f944ac0dd",
+  "evidence": "Disposable profile and memory fixture; actual UI answers, normal plans, no injected party progress. Sound off. Not a child or physical-device evaluation.",
+  "runs": [
+    {
+      "name": "phone-motion",
+      "captures": [
+        {
+          "file": "phone-motion-home.png",
+          "url": "http://127.0.0.1:5355/#/island",
+          "revision": "development-local",
+          "version": "development-local:e878593e-3391-4938-bbee-6d5c9f4aad03",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "mystic-island-learning-v2",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:e878593e-3391-4938-bbee-6d5c9f4aad03",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "partyCandidate": null
+        },
+        {
+          "file": "phone-motion-ready.png",
+          "url": "http://127.0.0.1:5355/#/island?learn=1",
+          "revision": "development-local",
+          "version": "development-local:e878593e-3391-4938-bbee-6d5c9f4aad03",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "mystic-island-learning-v2",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:e878593e-3391-4938-bbee-6d5c9f4aad03",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "partyCandidate": "pokomoko-star-ride-v2"
+        },
+        {
+          "file": "phone-motion-correct-1.png",
+          "url": "http://127.0.0.1:5355/#/island?learn=1",
+          "revision": "development-local",
+          "version": "development-local:e878593e-3391-4938-bbee-6d5c9f4aad03",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "mystic-island-learning-v2",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:e878593e-3391-4938-bbee-6d5c9f4aad03",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "partyCandidate": "pokomoko-star-ride-v2"
+        },
+        {
+          "file": "phone-motion-correct-3.png",
+          "url": "http://127.0.0.1:5355/#/island?learn=1",
+          "revision": "development-local",
+          "version": "development-local:e878593e-3391-4938-bbee-6d5c9f4aad03",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "mystic-island-learning-v2",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:e878593e-3391-4938-bbee-6d5c9f4aad03",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "partyCandidate": "pokomoko-star-ride-v2"
+        },
+        {
+          "file": "phone-motion-correct-5.png",
+          "url": "http://127.0.0.1:5355/#/island?learn=1",
+          "revision": "development-local",
+          "version": "development-local:e878593e-3391-4938-bbee-6d5c9f4aad03",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "mystic-island-learning-v2",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:e878593e-3391-4938-bbee-6d5c9f4aad03",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "partyCandidate": "pokomoko-star-ride-v2"
+        }
+      ],
+      "answers": [
+        {
+          "i": 1,
+          "ms": 189,
+          "game": {
+            "version": 1,
+            "streak": 1,
+            "light": 1,
+            "rideRemaining": 0
+          }
+        },
+        {
+          "i": 2,
+          "ms": 185.90000000596046,
+          "game": {
+            "version": 1,
+            "streak": 2,
+            "light": 2,
+            "rideRemaining": 0
+          }
+        },
+        {
+          "i": 3,
+          "ms": 185.79999999701977,
+          "game": {
+            "version": 1,
+            "streak": 3,
+            "light": 3,
+            "rideRemaining": 0
+          }
+        },
+        {
+          "i": 4,
+          "ms": 185.60000000149012,
+          "game": {
+            "version": 1,
+            "streak": 4,
+            "light": 4,
+            "rideRemaining": 0
+          }
+        },
+        {
+          "i": 5,
+          "ms": 186,
+          "game": {
+            "version": 1,
+            "streak": 5,
+            "light": 5,
+            "rideRemaining": 3
+          }
+        }
+      ],
+      "pass": false,
+      "characterBounds": {
+        "sceneHeight": 121,
+        "actorHeight": 108,
+        "contained": true
+      },
+      "layout": [
+        {
+          "name": "7",
+          "x": 35,
+          "y": 551,
+          "w": 75.5,
+          "h": 47.5,
+          "bottom": 598.5,
+          "right": 110.5
+        },
+        {
+          "name": "8",
+          "x": 116.5,
+          "y": 551,
+          "w": 75.5,
+          "h": 47.5,
+          "bottom": 598.5,
+          "right": 192
+        },
+        {
+          "name": "9",
+          "x": 198,
+          "y": 551,
+          "w": 75.5,
+          "h": 47.5,
+          "bottom": 598.5,
+          "right": 273.5
+        },
+        {
+          "name": "こたえを けす",
+          "x": 279.5,
+          "y": 551,
+          "w": 75.5,
+          "h": 47.5,
+          "bottom": 598.5,
+          "right": 355
+        },
+        {
+          "name": "4",
+          "x": 35,
+          "y": 604.5,
+          "w": 75.5,
+          "h": 47.5,
+          "bottom": 652,
+          "right": 110.5
+        },
+        {
+          "name": "5",
+          "x": 116.5,
+          "y": 604.5,
+          "w": 75.5,
+          "h": 47.5,
+          "bottom": 652,
+          "right": 192
+        },
+        {
+          "name": "6",
+          "x": 198,
+          "y": 604.5,
+          "w": 75.5,
+          "h": 47.5,
+          "bottom": 652,
+          "right": 273.5
+        },
+        {
+          "name": "ひとつ もどす",
+          "x": 279.5,
+          "y": 604.5,
+          "w": 75.5,
+          "h": 47.5,
+          "bottom": 652,
+          "right": 355
+        },
+        {
+          "name": "1",
+          "x": 35,
+          "y": 658,
+          "w": 75.5,
+          "h": 47.5,
+          "bottom": 705.5,
+          "right": 110.5
+        },
+        {
+          "name": "2",
+          "x": 116.5,
+          "y": 658,
+          "w": 75.5,
+          "h": 47.5,
+          "bottom": 705.5,
+          "right": 192
+        },
+        {
+          "name": "3",
+          "x": 198,
+          "y": 658,
+          "w": 75.5,
+          "h": 47.5,
+          "bottom": 705.5,
+          "right": 273.5
+        },
+        {
+          "name": "0",
+          "x": 116.5,
+          "y": 711.5,
+          "w": 75.5,
+          "h": 47.5,
+          "bottom": 759,
+          "right": 192
+        },
+        {
+          "name": "こたえる",
+          "x": 279.5,
+          "y": 711.5,
+          "w": 75.5,
+          "h": 47.5,
+          "bottom": 759,
+          "right": 355
+        }
+      ],
+      "offlineReload": {
+        "controlled": true,
+        "game": {
+          "version": 1,
+          "streak": 5,
+          "light": 5,
+          "rideRemaining": 3
+        }
+      }
+    }
+  ],
+  "pass": false,
+  "error": "locator.evaluate: EncodingError: The source image cannot be decoded.\n    at capture (/Users/yutogasaki/Projects/sansu/tools/e2e-pokomoko-party.mjs:36:60)\n    at async file:///Users/yutogasaki/Projects/sansu/tools/e2e-pokomoko-party.mjs:99:21"
+}

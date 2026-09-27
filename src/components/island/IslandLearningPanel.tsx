@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { Lightbulb, BookOpen } from 'lucide-react';
 import type { IslandLearningAction, IslandPlan } from '../../domain/island/types';
+import { EMPTY_LEARNING_PARTY, type IslandLearningParty } from '../../domain/island/learningParty';
 import { ISLAND_LEARNING_CANDIDATE } from '../../domain/island/feature';
 import { islandSupportStage } from '../../domain/island/learningSupport';
 import { IslandAnswerForm } from './IslandAnswerForm';
@@ -13,7 +14,7 @@ import './IslandLearningPanel.css';
 import './IslandLearningFocus.css';
 import './IslandLearningTheme.css';
 import { usePokomokoFeedback } from './usePokomokoFeedback';
-import { PokomokoInputSpark } from './PokomokoLearningEffects';
+import { PokomokoInputSpark, PokomokoMilestoneFrame } from './PokomokoLearningEffects';
 
 function LightSeed({ filled, current }: { filled: boolean; current: boolean }) {
     return <span className="island-light-seed" data-filled={filled} data-current={current} aria-hidden="true">
@@ -23,13 +24,14 @@ function LightSeed({ filled, current }: { filled: boolean; current: boolean }) {
 }
 
 /** Help preserves the current draft; saved answers and new slots reset it. */
-export function IslandLearningPanel({ plan, active = true, intro = false, busy, hintPending = false, feedback, onAction, observation, englishAutoRead = false, subjectChoice, listeningEntry }: {
+export function IslandLearningPanel({ plan, active = true, intro = false, busy, hintPending = false, feedback, party = EMPTY_LEARNING_PARTY, onAction, observation, englishAutoRead = false, subjectChoice, listeningEntry }: {
     plan: IslandPlan;
     active?: boolean;
     intro?: boolean;
     busy: boolean;
     hintPending?: boolean;
     feedback?: IslandLearningFeedback;
+    party?: IslandLearningParty;
     onAction: (action: IslandLearningAction) => void;
     observation?: IslandLearningObserver;
     englishAutoRead?: boolean;
@@ -56,7 +58,8 @@ export function IslandLearningPanel({ plan, active = true, intro = false, busy, 
         data-learning-candidate={ISLAND_LEARNING_CANDIDATE}
         data-intro={intro}
         data-island-plan-id={plan.id} data-island-plan-revision={plan.revision} data-input-ready={!busy}
-        data-learning-feedback={feedback?.kind ?? 'ready'} data-learning-reaction-id={feedback?.id ?? ''}>
+        data-learning-feedback={feedback?.kind ?? 'ready'} data-learning-reaction-id={feedback?.id ?? ''}
+        data-party-riding={party.rideRemaining > 0} data-party-peak={celebration.burst?.kind ?? ''}>
         <div className="island-learning-progress">
             <div className="island-learning-label">
                 <img className="island-learning-patch" src="/icons/icon-192.png" width="28" height="28" alt="" aria-hidden="true" draggable="false" />
@@ -68,8 +71,9 @@ export function IslandLearningPanel({ plan, active = true, intro = false, busy, 
             </div>
             <span className="island-learning-count">{plan.cursor + 1}<small> / {plan.slots.length}</small></span>
         </div>
-        <IslandAnswerFeedback feedback={feedback?.id === dismissedReceipt ? undefined : feedback} burst={celebration.burst} inputCue={celebration.inputCue} />
+        <IslandAnswerFeedback feedback={feedback?.id === dismissedReceipt ? undefined : feedback} party={party} burst={celebration.burst} inputCue={celebration.inputCue} />
         <PokomokoInputSpark cue={celebration.inputCue} />
+        <PokomokoMilestoneFrame burst={celebration.burst} />
         <IslandAnswerForm key={`${plan.id}:${plan.cursor}`} slot={slot} disabled={busy && !allowHintDraft} deferSubmission={busy && allowHintDraft} answerReceiptId={answerReceiptId}
             retryAnswer={feedback?.kind === 'retry' ? feedback.retryAnswer : undefined}
             englishAutoRead={englishAutoRead} onInteraction={() => setDismissedReceipt(feedback?.id)}

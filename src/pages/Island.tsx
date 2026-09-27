@@ -46,6 +46,7 @@ import { useEnglishListening } from '../hooks/useEnglishListening';
 import { EnglishListening, EnglishListeningEntry } from '../components/domain/EnglishListening';
 import { IslandSoundControl } from '../components/island/IslandSoundControl';
 import { islandFeedbackForReceipt, type IslandLearningFeedback, type IslandReaction } from '../components/island/learningFeedback';
+import { learningPartyMoment } from '../domain/island/learningParty';
 import { getIslandCosmetics } from '../domain/island/customization';
 import type { IslandAppearanceSlotId } from '../domain/island/appearance';
 import { IslandCustomizationPreviewNotice } from '../components/island/IslandCustomizationPreviewNotice';
@@ -420,7 +421,9 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         const response = islandFeedbackForReceipt(plan, receipt.plan, receipt.event);
         const earnedReceipt = islandStarReceipt(plan, receipt.plan, receipt.event, lastStarReceipt.current);
         if (earnedReceipt) { lastStarReceipt.current = earnedReceipt; setStarReceipt({ id: earnedReceipt, stars: islandPlanStars(receipt.plan) }); }
-        setLearningFeedback(response?.feedback);
+        const partyMoment = response && ['correct', 'supported'].includes(response.feedback.kind)
+            ? learningPartyMoment(island?.learningParty, receipt.island.learningParty) : undefined;
+        setLearningFeedback(response ? { ...response.feedback, ...(partyMoment ? { party: partyMoment } : {}) } : undefined);
         if (response?.feedback.kind === 'retry' || response?.feedback.kind === 'support') milestoneNotice.dismiss();
         if (island && receipt.plan.growthTarget && receipt.plan.status === 'completed') {
             const milestone = getIslandGrowthMilestone(island, receipt.island);
@@ -433,7 +436,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         setReaction(response?.reaction ? { ...response.reaction, growthTarget: plan.growthTarget } : undefined);
         if (response?.reaction?.kind === 'correct') {
             setPulse(value => value + 1);
-            if (profile.soundEnabled) playSound(receipt.plan.status === 'completed' ? 'clear' : 'correct');
+            if (profile.soundEnabled) playSound(partyMoment?.kind === 'ride' || partyMoment?.kind === 'stamp' || receipt.plan.status === 'completed' ? 'clear' : 'correct');
         }
         if (response?.feedback.kind === 'retry') playSound('incorrect');
         if (response?.feedback.kind === 'step') playSound('step');
@@ -983,7 +986,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         {plan && slot && <IslandLearningPanel plan={plan} active={active && learning && learningLease === 'ready' && !nextPlanError}
             hintPending={busyKind === 'learning-hint' && active && learning && !preparingLearning}
             intro={isFirstIslandPlan(plan)} observation={active && learning && !listening.isOpen ? observation : undefined}
-            busy={busy || preparingLearning || !active || !learning || listening.isOpen} feedback={learningFeedback} englishAutoRead={profile.englishAutoRead && !listening.isOpen} onAction={action => void answer(action)}
+            busy={busy || preparingLearning || !active || !learning || listening.isOpen} feedback={learningFeedback} party={island.learningParty} englishAutoRead={profile.englishAutoRead && !listening.isOpen} onAction={action => void answer(action)}
             listeningEntry={listening.sentence ? <EnglishListeningEntry disabled={busy || preparingLearning || listening.isOpen} onOpen={listening.open} /> : undefined}
             subjectChoice={profile.subjectMode === 'mix' ? {
                 selected: island.nextSubjectChoice?.afterPlanId === plan.id && island.nextSubjectChoice.subject === plan.subject,
