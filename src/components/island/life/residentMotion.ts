@@ -23,6 +23,17 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
     let visible = state, renderedAt = state.now, renderedReduced = false;
     const actors = [content.hero, content.rabbit.pose, content.otter.pose];
     const bodies = [content.heroBody, content.rabbit.body, content.otter.body];
+    const foodCargos = state.food && state.items.some(item => item.kind === 'planter' && item.cell)
+        && state.items.some(item => item.kind === 'picnic-table' && item.cell) ? bodies.map(body => {
+        const basket = new T.Group(); basket.name = 'life-food-cargo'; basket.position.set(.31, .37, .25);
+        const vessel = new T.Mesh(new T.SphereGeometry(.16, 10, 6), new T.MeshStandardMaterial({ color: '#9d693f' }));
+        vessel.scale.y = .48; basket.add(vessel);
+        for (const x of [-.055, 0, .055]) {
+            const fruit = new T.Mesh(new T.SphereGeometry(.058, 8, 6), new T.MeshStandardMaterial({ color: '#e3a64d' }));
+            fruit.position.set(x * 1.3, .075, 0); basket.add(fruit);
+        }
+        basket.visible = false; body.add(basket); return basket;
+    }) : bodies.map(() => undefined);
     const heads = [makeLifeHeroHead(content.heroBody), content.rabbit.head, content.otter.head];
     const heroArms = content.heroBody.children.filter(part => Math.abs(part.position.x) === .27 && part.position.y === .46);
     const facilityMotion = makeFacilityMotion(content.m, bodies, heads, state.items.some(i => isFacility(i.kind) && i.cell), Boolean(state.readingEncounterVersion));
@@ -33,7 +44,7 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
     const waterGaze = makeWaterGaze(state, heads, point);
     const feet = [content.heroFeet, content.rabbit.feet, content.otter.feet];
     const neutralFeet = feet.map(pair => pair.map(foot => foot.position.clone()));
-    let audit: { facilityUse?: { kind: 'library' | 'garden-hut'; action: 'reading' | 'tool-care' | 'carrying' }; sandWork?: { form: 'mountain' | 'castle'; partnerId?: string; progress: number }; windLook?: ReturnType<typeof windGaze>; picnic?: ReturnType<typeof picnic.finish>; waterLook?: ReturnType<ReturnType<typeof makeWaterGaze>>; id: string; itemId?: string; phase: string; position: number[]; seatGap?: number; reaction?: string; hop: number; headPitch: number; headRoll: number; headYaw?: number; relation?: ReturnType<ReturnType<typeof makeRelationGaze>> }[] = [];
+    let audit: { foodCargo?: boolean; facilityUse?: { kind: 'library' | 'garden-hut'; action: 'reading' | 'tool-care' | 'carrying' }; sandWork?: { form: 'mountain' | 'castle'; partnerId?: string; progress: number }; windLook?: ReturnType<typeof windGaze>; picnic?: ReturnType<typeof picnic.finish>; waterLook?: ReturnType<ReturnType<typeof makeWaterGaze>>; id: string; itemId?: string; phase: string; position: number[]; seatGap?: number; reaction?: string; hop: number; headPitch: number; headRoll: number; headYaw?: number; relation?: ReturnType<ReturnType<typeof makeRelationGaze>> }[] = [];
     return {
         audit: () => audit,
         snapshot: () => ({ ...(state.tourVersion ? visible : state), now: renderedAt,
@@ -53,6 +64,8 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
             for (const { pivot } of seats.values()) if (pivot) pivot.rotation.x = 0;
             audit = visible.residents.map((resident, index) => {
                 const actor = actors[index], body = bodies[index], visit = resident.visit;
+                const carryingFood = resident.foodTrip?.phase === 'carry';
+                if (foodCargos[index]) foodCargos[index].visible = carryingFood;
                 const item = state.items.find(i => i.id === visit?.itemId && i.cell);
                 const phase = activityPhase(state, resident, now);
                 const caring = state.facilityPresentation === 'carry-care-v1' && resident.facilityTrip?.phase === 'carry' && resident.facilityTrip.kind === 'garden-hut';
@@ -147,7 +160,7 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                         actor.rotation.y = Math.atan2(position.x - previous.x, position.z - previous.z);
                     }
                 }
-                if (resident.facilityTrip?.phase === 'carry') (rig?.shoulders ?? heroArms).forEach(arm => { arm.rotation.x = -1; });
+                if (resident.facilityTrip?.phase === 'carry' || carryingFood) (rig?.shoulders ?? heroArms).forEach(arm => { arm.rotation.x = -1; });
                 const reaction = resident.facilityTrip ? undefined : residentReaction(state, resident, now), hop = reduced ? 0 : reaction?.hop ?? 0;
                 position.y += hop;
                 actor.position.copy(position);
@@ -172,7 +185,7 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                 }
                 const scarf = content.hero.getObjectByName('life-scarf');
                 if (index === 0 && scarf) scarf.position.y = .59 + body.position.y;
-                return { id: resident.id, itemId: visit?.itemId, phase, position: actor.position.toArray(), seatGap, reaction: reaction?.symbol, hop,
+                return { id: resident.id, itemId: visit?.itemId, phase, foodCargo: carryingFood, position: actor.position.toArray(), seatGap, reaction: reaction?.symbol, hop,
                     headPitch: rig?.head.rotation.x ?? 0, headRoll: rig?.head.rotation.z ?? 0 };
             });
             content.world.updateMatrixWorld(true);

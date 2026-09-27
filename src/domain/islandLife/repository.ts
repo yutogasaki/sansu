@@ -1,4 +1,6 @@
 import { prepareDiagonalMigration } from './diagonalMigration';
+import { prepareFoodCutover } from './foodLoop';
+import { prepareSoilCutover } from './soilMoisture';
 import { createLifeSnapshot, restoreLifeSnapshot } from './replaySnapshot';
 import { prepareHeroVisitMigration } from './heroVisitMigration';
 import { prepareCadenceMigration } from './cadenceMigration';
@@ -115,6 +117,8 @@ export async function updateLife(profileId: string, facts: TerminalFact[], inten
         next = await Dexie.waitFor(prepareCadenceMigration(next));
         next = await Dexie.waitFor(prepareHeroVisitMigration(next));
         next = await Dexie.waitFor(prepareDiagonalMigration(next));
+        next = await Dexie.waitFor(prepareFoodCutover(next));
+        next = await Dexie.waitFor(prepareSoilCutover(next));
         cacheAppendedCredits(previous, next);
         if (intent?.command) next = commandLife(next, intent.command, intent.id, next.now, intent.undoOf);
         const state = replayLife(next); // Reject invalid transactions before any write.

@@ -17,7 +17,7 @@ export function vacant(s: LifeState, p: Cell, except?: string) {
     return Number.isInteger(p.x) && Number.isInteger(p.z) && !isHouse(p)
         && landCells(s).some(c => sameCell(c, p)) && !s.items.some(i => i.id !== except && occupiesCell(i, p));
 }
-export function blocksWalking(item: Pick<LifeItem, 'kind' | 'cell'>) { return Boolean(item.cell && item.kind !== 'flower-arch'); }
+export function blocksWalking(item: Pick<LifeItem, 'kind' | 'cell'>) { return Boolean(item.cell && item.kind !== 'flower-arch' && item.kind !== 'water-channel'); }
 export function walkable(s: LifeState, p: Cell) {
     if (s.placementVersion === 1) return canStand(s, p);
     return landCells(s).some(c => sameCell(c, p)) && !(p.z === 0 && (p.x === 2 || p.x === 3))

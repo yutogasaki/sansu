@@ -39,6 +39,13 @@ const resolveBuildMetadata = (mode: string) => {
         enabled: env.VITE_ISLAND_ENABLED === 'true',
         delivery: 'mystic-island-v1',
         candidate: 'mystic-island-shore-garden-v18',
+        life: {
+            enabled: env.VITE_ISLAND_LIFE_ENABLED === 'true',
+            discovery: env.VITE_ISLAND_LIFE_DISCOVERY_ENABLED === 'true',
+            fantasy: env.VITE_ISLAND_FANTASY_ENABLED === 'true',
+            candidate: env.VITE_ISLAND_FANTASY_ENABLED === 'true' ? 'living-fantasy-garden-v2' : 'island-life-v1',
+            saveVersion: 20,
+        },
         learningCandidate: 'mystic-island-learning-v2',
         residentCandidate: 'patchwork-otter-v1',
         artDirection: ['festival', 'moon-garden', 'prism'].includes(env.VITE_ISLAND_ART_DIRECTION)

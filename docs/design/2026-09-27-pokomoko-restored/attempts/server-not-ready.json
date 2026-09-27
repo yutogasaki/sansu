@@ -1,0 +1,28 @@
+{
+  "target": "http://127.0.0.1:5330",
+  "manifest": "output/build-source-final.json",
+  "sourceHash": "95408d091680634e6292effbef1513eb112393b3a6063e69a34428df834b85a2",
+  "version": {
+    "version": "development-local:f7f76aca-6a8c-4978-96ae-80c50441103b",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "humanN": 0,
+  "scenarios": [],
+  "captures": [],
+  "pass": false,
+  "error": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5330/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5330/\", waiting until \"load\"\u001b[22m\n\n    at /private/tmp/sansu-pokomoko-restore.7V3VQI/tools/e2e-island-fantasy-production.mjs:24:14"
+}

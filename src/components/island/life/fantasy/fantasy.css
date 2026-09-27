@@ -1,0 +1,54 @@
+/* This skin is scoped to the staged garden; existing islands keep their UI. */
+.island-page[data-life-home="true"]:has([data-life-candidate="living-fantasy-garden-v2"]) {
+    --pokomoko-paper: #f5f0df;
+    --pokomoko-ink: #314b45;
+    --pokomoko-muted: #5b7063;
+    --pokomoko-edge: #d1d8bc;
+    --pokomoko-blue: #426f6c;
+    --pokomoko-blue-deep: #2f5956;
+    --pokomoko-lavender: #e4e7cd;
+}
+.island-page[data-life-home="true"] > .island-life[data-life-candidate="living-fantasy-garden-v2"] { background: #477e7e; }
+.island-page[data-life-home="true"] [data-life-candidate="living-fantasy-garden-v2"] .life-viewport > .life-world {
+    inset: 0; background: #b7cec0;
+}
+.island-page[data-life-home="true"] [data-life-candidate="living-fantasy-garden-v2"] .life-hud {
+    width: calc(100% - 28px); display: flex; flex-flow: row wrap; align-items: start;
+    justify-content: space-between; pointer-events: none;
+}
+[data-life-candidate="living-fantasy-garden-v2"] .life-hud > * { pointer-events: auto; }
+.garden-times { display: flex; gap: 2px; padding: 2px; background: #f5f0dfed; border-radius: 17px; box-shadow: 0 2px 10px #304e4b0e; }
+.garden-times button {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 2px; width: 44px; min-height: 44px; padding: 3px; border: 0; border-radius: 14px;
+    color: #52695e; background: transparent; font: inherit; font-size: 10px; cursor: pointer;
+}
+.garden-times button[aria-pressed="true"] { color: #314b45; background: #dce3c2; }
+.garden-times button:focus-visible { outline: 3px solid #426f6c; outline-offset: 2px; }
+.garden-water-touch {
+    position: absolute; z-index: 2; width: 44px; height: 44px; transform: translate(-50%,-50%);
+    padding: 0; background: transparent; border: 0; border-radius: 50%; cursor: pointer; touch-action: manipulation;
+}
+.garden-water-touch[hidden] { display: none; }
+.garden-water-touch:focus-visible { outline: 3px solid #f5e7a7; outline-offset: 2px; }
+.garden-water-touch:focus-visible::after {
+    content: '水に ふれる'; position: absolute; left: 50%; bottom: calc(100% + 7px); transform: translateX(-50%);
+    background: #f5f0df; color: #314b45; padding: 6px 10px; border-radius: 9px; white-space: nowrap; font: 12px sans-serif;
+}
+.island-page[data-life-home="true"] [data-life-candidate="living-fantasy-garden-v2"] .life-home-tools {
+    grid-template-columns: repeat(4, minmax(0,1fr)); padding: 6px; gap: 3px;
+    max-width: 370px; border-radius: 25px; background: #f5f0dff2;
+    border: 1px solid #ffffff55; box-shadow: 0 7px 25px #193e3930;
+}
+.island-page[data-life-home="true"] [data-life-candidate="living-fantasy-garden-v2"] .life-home-tools .life-home-action {
+    color: #314b45; border-radius: 18px; height: 61px; font-weight: 700; font-size: 12px;
+}
+.island-page[data-life-home="true"] [data-life-candidate="living-fantasy-garden-v2"] .life-home-action:focus-visible { outline-color: #426f6c; }
+[data-life-candidate="living-fantasy-garden-v2"] .garden-memories { gap: 9px!important; }
+@media (max-width: 359px) {
+    .garden-times button { width: 44px; }
+    .island-page[data-life-home="true"] [data-life-candidate="living-fantasy-garden-v2"] .life-hud { left: 8px; width: calc(100% - 16px); max-width: none; gap: 3px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    [data-life-candidate="living-fantasy-garden-v2"] * { scroll-behavior: auto; }
+}

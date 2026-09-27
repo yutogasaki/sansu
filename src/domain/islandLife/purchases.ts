@@ -3,7 +3,7 @@ import { isFacility } from './footprint';
 import { CATALOG, type ItemKind, type LifeAction, type LifeCommand, type LifeItem, type LifePurchaseReceipt } from './model';
 
 /** Historical prices are independent of the shop. Never edit an issued version. */
-export const LEGACY_LIFE_PRICES: Readonly<Record<Exclude<ItemKind, 'sapling' | 'water-bowl' | 'picnic-table' | 'pinwheel' | 'flower-arch' | 'sandbox' | 'garden-hut' | 'library' | 'fence' | 'planter'>, number>> = Object.freeze({
+export const LEGACY_LIFE_PRICES: Readonly<Record<Exclude<ItemKind, 'sapling' | 'water-bowl' | 'picnic-table' | 'pinwheel' | 'flower-arch' | 'sandbox' | 'garden-hut' | 'library' | 'fence' | 'planter' | 'water-channel'>, number>> = Object.freeze({
     flower: 2, bench: 4, swing: 6, lantern: 8,
 });
 
@@ -24,7 +24,7 @@ const PLANTS_WATER_PRICES = Object.freeze({ sapling: 4, 'water-bowl': 4 });
 export function isPlantsWater(kind: ItemKind): kind is 'sapling' | 'water-bowl' { return kind === 'sapling' || kind === 'water-bowl'; }
 export function isWindArch(kind: ItemKind): kind is 'pinwheel' | 'flower-arch' { return kind === 'pinwheel' || kind === 'flower-arch'; }
 function priceTerms(kind: ItemKind) {
-    return isDecoration(kind) ? { version: 'life-v19-decorations-v1' as const, price: kind === 'fence' ? 4 : 6 } : isFacility(kind) ? { version: 'life-v3-facilities-v1' as const, price: kind === 'garden-hut' ? 36 : 72 } : kind === 'sandbox' ? { version: 'life-v3-sandbox-v1' as const, price: 18 } : isWindArch(kind) ? { version: 'life-v3-wind-arch-v1' as const, price: 12 } : kind === 'picnic-table' ? { version: 'life-v3-picnic-v1' as const, price: 8 } : isPlantsWater(kind) ? { version: 'life-v3-plants-water-v1' as const, price: PLANTS_WATER_PRICES[kind] }
+    return kind === 'water-channel' ? { version: 'life-v20-channel-v1' as const, price: 2 } : isDecoration(kind) ? { version: 'life-v19-decorations-v1' as const, price: kind === 'fence' ? 4 : 6 } : isFacility(kind) ? { version: 'life-v3-facilities-v1' as const, price: kind === 'garden-hut' ? 36 : 72 } : kind === 'sandbox' ? { version: 'life-v3-sandbox-v1' as const, price: 18 } : isWindArch(kind) ? { version: 'life-v3-wind-arch-v1' as const, price: 12 } : kind === 'picnic-table' ? { version: 'life-v3-picnic-v1' as const, price: 8 } : isPlantsWater(kind) ? { version: 'life-v3-plants-water-v1' as const, price: PLANTS_WATER_PRICES[kind] }
         : { version: 'life-48-v1' as const, price: LEGACY_LIFE_PRICES[kind] };
 }
 function quoteFingerprint(kind: ItemKind, price: number, version: string) { return JSON.stringify([version, kind, price]); }

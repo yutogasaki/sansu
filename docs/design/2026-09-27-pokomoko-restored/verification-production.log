@@ -1,0 +1,25 @@
+{
+  "pass": true,
+  "scenarios": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "source": "Real onboarding, four UI answers, real purchase/placement, real SW offline reload and native IndexedDB; no fixture writes",
+      "credits": 4,
+      "purchases": 1,
+      "pass": true
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "source": "Real onboarding, four UI answers, real purchase/placement, real SW offline reload and native IndexedDB; no fixture writes",
+      "credits": 4,
+      "purchases": 1,
+      "pass": true
+    }
+  ]
+}

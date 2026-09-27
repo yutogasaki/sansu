@@ -6,7 +6,7 @@ import { DISCOVERY_RULE_VERSION, evaluateDiscovery, type DiscoveryRuleId, type R
 import { type LifeState, type ResidentId } from './model';
 
 export type SceneSource = 'live' | 'current-context-test' | 'replay' | 'simulated';
-export type SceneSnapshot = Pick<LifeState, 'now' | 'activityVersion' | 'items' | 'residents' | 'heroStyle' | 'expanded' | 'extraLand' | 'target' | 'relationTarget' | 'worldStyle' | 'landscapeVersion' | 'relationVersion' | 'waterFocus' | 'poseReducedMotion' | 'diagonalVersion' | 'heroVisitVersion' | 'heroWaitUntil' | 'cadenceVersion' | 'tourVersion' | 'roamRound' | 'scenePose' | 'facilityTripVersion' | 'relationSelectionVersion' | 'placementVersion' | 'waterMagicVersion' | 'waterTouch' | 'shadowMagicVersion' | 'shadowTouch' | 'footstepMagicVersion' | 'footstepTouch' | 'encounterVersion' | 'encounterTouch' | 'readingEncounterVersion' | 'readingObservation'> & { observationResidentId?: ResidentId };
+export type SceneSnapshot = Pick<LifeState, 'now' | 'activityVersion' | 'items' | 'residents' | 'heroStyle' | 'expanded' | 'extraLand' | 'target' | 'relationTarget' | 'worldStyle' | 'gardenTime' | 'landscapeVersion' | 'soilMoisture' | 'relationVersion' | 'waterFocus' | 'poseReducedMotion' | 'diagonalVersion' | 'heroVisitVersion' | 'heroWaitUntil' | 'cadenceVersion' | 'tourVersion' | 'roamRound' | 'scenePose' | 'facilityTripVersion' | 'relationSelectionVersion' | 'placementVersion' | 'waterMagicVersion' | 'waterTouch' | 'shadowMagicVersion' | 'shadowTouch' | 'footstepMagicVersion' | 'footstepTouch' | 'encounterVersion' | 'encounterTouch' | 'readingEncounterVersion' | 'readingObservation'> & { observationResidentId?: ResidentId };
 export interface DiscoveryScene {
     eventId: string; profileId: string; ruleId: DiscoveryRuleId; ruleVersion: typeof DISCOVERY_RULE_VERSION;
     semanticSignature: string; createdAt: number; source: SceneSource; originEventId?: string;
@@ -80,7 +80,9 @@ export async function createDiscoveryScene(profileId: string, state: LifeState, 
         ...(state.waterFocus?.length ? { waterFocus: state.waterFocus } : {}),
         ...(state.relationVersion ? { relationVersion: state.relationVersion } : {}),
         ...(state.landscapeVersion ? { landscapeVersion: state.landscapeVersion } : {}),
+        ...(state.soilMoisture ? { soilMoisture: state.soilMoisture } : {}),
         ...(state.worldStyle ? { worldStyle: state.worldStyle } : {}),
+        ...(state.gardenTime ? { gardenTime: state.gardenTime } : {}),
         items: state.items, residents: state.residents, heroStyle: state.heroStyle, expanded: state.expanded, target: state.target, relationTarget: state.relationTarget });
     const residentState = focal.map(id => {
         const resident = scene.residents.find(candidate => candidate.id === id)!;

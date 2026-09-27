@@ -1,0 +1,210 @@
+{
+  "recordedAt": "2026-09-27T09:27:15.530Z",
+  "candidate": "living-fantasy-garden-v1",
+  "status": "local first playable; not full living-fantasy-v1 or release approval",
+  "humanN": 0,
+  "gitBase": "67406a186e227ef3d66983d2b5dea72739c5d1db",
+  "dirtyWorkingTree": true,
+  "targets": {
+    "dev": "http://127.0.0.1:5230",
+    "production": "http://127.0.0.1:5330"
+  },
+  "sourceFingerprints": {
+    "build": "14d0a55ea4a4e00060943548a6c91d98b66413184deec5d511de56cdc3838aa9",
+    "dev": "593f66e472a3796841d9102dd95dca061900027221493cf789c1302c7d4afa52",
+    "note": "Different fingerprint algorithms; production manifest lists individual files; DEV script hashes its source tree. Do not compare these strings as if they used the same encoding."
+  },
+  "flags": {
+    "dev": {
+      "VITE_ISLAND_ENABLED": true,
+      "VITE_ISLAND_LIFE_PREVIEW": true,
+      "VITE_ISLAND_FANTASY_ENABLED": true
+    },
+    "production": {
+      "VITE_ISLAND_ENABLED": true,
+      "VITE_ISLAND_LIFE_ENABLED": true,
+      "VITE_ISLAND_LIFE_DISCOVERY_ENABLED": true,
+      "VITE_ISLAND_FANTASY_ENABLED": true
+    }
+  },
+  "runtimeVersion": {
+    "version": "development-local:656fecaa-d604-4c70-8cc5-478034eaf5a9",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "renderedWorldCandidate": "living-fantasy-garden-v1",
+  "shellCandidate": "mystic-island-shore-garden-v18",
+  "databases": {
+    "dev": "SansuIslandLifePreviewV1",
+    "production": "SansuIslandLifeV1"
+  },
+  "rules": "Life v20 and existing M4 within reachable distance 4; not future F-D03",
+  "cache": {
+    "dev": "fresh disposable browser contexts; Vite DEV",
+    "production": "fresh contexts; service workers allowed, controlled, offline reload tested; no two-build update test"
+  },
+  "device": "macOS Chromium automated browser; touch emulation; not physical phone or tablet",
+  "viewports": [
+    {
+      "width": 390,
+      "height": 844
+    },
+    {
+      "width": 768,
+      "height": 1024
+    }
+  ],
+  "qa": [
+    {
+      "path": "tools/e2e-island-fantasy.mjs",
+      "sha256": "247596eea5f68669a87f50d77b42af977ec8991073fe3712dc1e99dda435ab88"
+    },
+    {
+      "path": "tools/e2e-island-fantasy-production.mjs",
+      "sha256": "3663688c0ebd9dc43f2cdb7570e8b05ada2ea0a39292fa1d0581fdb974491c3f"
+    },
+    {
+      "path": "tools/island-e2e-helpers.mjs",
+      "sha256": "013b647395a1b0fe63265ec70055519db7b6cf844db4e14171efa99e27854e6b"
+    },
+    {
+      "path": "tools/e2e-island-throughput.mjs",
+      "sha256": "8fc72bafeb8f9c5619cac8435c448c731e951895121701b3021e98f5976a982d"
+    }
+  ],
+  "captures": [
+    {
+      "path": "dev/390-catalog.png",
+      "sha256": "0544b122e5194de6911c6feba6099a233dc0f17f2ac2eeece82400bb48d12c86"
+    },
+    {
+      "path": "dev/390-day-populated.png",
+      "sha256": "32afee6221a98ef25178f9808fb6ed28bf580c5cdeec37dec84202b66fe5d52f"
+    },
+    {
+      "path": "dev/390-dusk-populated.png",
+      "sha256": "0635e7802a4ff95814e1d88db8ee02edbe4c583bf8f764b5c61272a35339fadb"
+    },
+    {
+      "path": "dev/390-earned.png",
+      "sha256": "33266fdbd85350a9588520f124ccd2d13fbf1bb1b104765f5a08637abbf36245"
+    },
+    {
+      "path": "dev/390-initial.png",
+      "sha256": "0bfc0282c4fbf72c22934644019d62d2d6cee75176812de0555fda80bdfcf1a2"
+    },
+    {
+      "path": "dev/390-learning.png",
+      "sha256": "9011893bf248520a1c9fd6b8aaf86add33c97e5d4810185d29ff6cdcb42f30d8"
+    },
+    {
+      "path": "dev/390-memories.png",
+      "sha256": "a16095c5de3bf9ae8057654d3952c8857bcda8313b3f33b51c14878c21b500df"
+    },
+    {
+      "path": "dev/390-memory-replay.png",
+      "sha256": "6ed3419db5bf0ba18f930f4f48bba0212ba212d01b0172316b7e0994150c4408"
+    },
+    {
+      "path": "dev/390-night-populated.png",
+      "sha256": "33c453ecc238ddd8a11414114cec7cddd9133c66a04ae9dafd265195fd8029b7"
+    },
+    {
+      "path": "dev/390-placed.png",
+      "sha256": "ae6e9c8cd54995961f232694e253bce1d159feb802199e8ed8b4923cfdb8dd13"
+    },
+    {
+      "path": "dev/390-placement.png",
+      "sha256": "fd6a41f62306a85618c2e5bc27587123ec9fd2859d3a08e6f848c3d1f5536ab8"
+    },
+    {
+      "path": "dev/390-return.png",
+      "sha256": "9218886585bffeb085e2839c78d36fcd7c85e20dd8f7ed074f063481c235cba4"
+    },
+    {
+      "path": "dev/390-water-stars.png",
+      "sha256": "be975ec06a0ae2ded34d66017fd0b35c7e0444dd9aa399f1a105777d01517fd5"
+    },
+    {
+      "path": "dev/768-day-populated.png",
+      "sha256": "dd89d234746f632745cb960ea6c37c4f13a016f1309b27da72d21b19058bbd30"
+    },
+    {
+      "path": "dev/768-dusk-populated.png",
+      "sha256": "ce2f69b88ba8e97ab23103218148c9ade31ea64084d7117340601cecc6103e16"
+    },
+    {
+      "path": "dev/768-memories.png",
+      "sha256": "ed78fe4202e9bf925b14a5735ceb2403b124c1a2959904251248a78ef1c8dd21"
+    },
+    {
+      "path": "dev/768-memory-replay.png",
+      "sha256": "c40f0be5344ad114b2a0ded84c8fefb43d6344cecfc57dcfdbd6465fbfe88c4d"
+    },
+    {
+      "path": "dev/768-night-populated.png",
+      "sha256": "07bf3750194ff83a3dee7cc8ea6fe20987fde5a78c086344d3e5addbc5fe902b"
+    },
+    {
+      "path": "dev/768-return.png",
+      "sha256": "9dbf6d4d81c82f867dc05700cb2de2dd4f303b41f7040909b023f65ae4f8a730"
+    },
+    {
+      "path": "dev/768-water-stars.png",
+      "sha256": "df1de2fa0f1d965c1d1755a2b074bb1df717b0dd5dcd16157441d6038fd25f79"
+    },
+    {
+      "path": "production/390-earned-garden.png",
+      "sha256": "f77d4b2b1ad9d264289d403a9e53bca7af9b673074077eaa25f58fcff5a41547"
+    },
+    {
+      "path": "production/390-learning.png",
+      "sha256": "529554b193cd75dfdf86623700adfbd353f7d8c5ccd3c2cb6a42d632080d0885"
+    },
+    {
+      "path": "production/390-offline-garden.png",
+      "sha256": "1a48715bd405532e0f3997ffb0d441c7f4d811fab8ed5cd1ad9b91aeb3fe6895"
+    },
+    {
+      "path": "production/390-offline-saved.png",
+      "sha256": "5a3cf12f00ed68e161446aae4c1323e283f0faf8f3f2fe4a4755f10b37268b53"
+    },
+    {
+      "path": "production/768-earned-garden.png",
+      "sha256": "c05b8a0e82faa22471a4e7e5940bf6a09c4c778c39f2212776154fedb36d8e3c"
+    },
+    {
+      "path": "production/768-learning.png",
+      "sha256": "955e0198fbebb06706b516773d94ac6b287422b754ec5267d732c35a2b7da2db"
+    },
+    {
+      "path": "production/768-offline-garden.png",
+      "sha256": "e418103658db4153a1bcd7ec15b9505a22376fb5039c9fb68150376e668e1b1c"
+    },
+    {
+      "path": "production/768-offline-saved.png",
+      "sha256": "2868e550a2dfa5dd5b8a37dd1839b305e1b21bcbfcf550ab07cf4cc0d6a819b4"
+    }
+  ],
+  "throughput": {
+    "report": "throughput.json",
+    "runs": 80,
+    "pass": true,
+    "eligible": true,
+    "sourceStable": true,
+    "scope": "Fixed fixture automated keyboard input; not child speed, causal before-after art comparison, or production planner proof"
+  }
+}

@@ -9,6 +9,7 @@ import { editDiscoveryMemory, recordPresentedScene } from './discoveryRepository
 import { IslandLifeDatabase, updateLife } from './repository';
 import { learningDay, newLife } from './model';
 import { commandLife, replayLife } from './simulation';
+import { beginSoilMoisture } from './soilMoisture';
 
 const databases: IslandLifeDatabase[] = [];
 afterEach(async () => { await Promise.all(databases.splice(0).map(db => db.delete())); });
@@ -68,6 +69,18 @@ describe('display is distinct from eligibility, saving and understanding', () =>
         expect(replayDiscoveryScene(old, 'replay-old', 2000).snapshot).toEqual(old.snapshot);
         expect(await sceneDigest(old.snapshot.scene)).toBe(old.snapshot.immutableHash);
         expect(JSON.stringify(old)).toBe(oldBytes);
+    });
+    it('keeps the soil shown in a saved scene without changing older scene hashes', async () => {
+        const old = await scene(), state = replayLife(owner());
+        beginSoilMoisture(state);
+        state.soilMoisture!['0,2'] = .6;
+        const rule = evaluateDiscovery(state, 'p').find(candidate => candidate.ruleId === 'M2')!;
+        const current = await createDiscoveryScene('p', state, rule, 'live', 'wet-soil', 1000);
+        state.soilMoisture!['0,2'] = .2;
+        expect(current.snapshot.scene.soilMoisture?.['0,2']).toBe(.6);
+        expect(replayDiscoveryScene(current, 'replay-wet', 2000).snapshot).toEqual(current.snapshot);
+        expect(old.snapshot.scene.soilMoisture).toBeUndefined();
+        expect(await sceneDigest(old.snapshot.scene)).toBe(old.snapshot.immutableHash);
     });
     it('freezes placement rules while old memories retain their original absent marker and hash', async () => {
         const old = await scene(), oldBytes = JSON.stringify(old);

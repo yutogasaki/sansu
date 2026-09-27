@@ -22,11 +22,15 @@ import type { PlacementPreview } from './placement';
 import { LifePresentationClock } from './presentationClock';
 import { canReuseLifeScene, type LifeSceneInput } from './sceneReuse';
 import { startLifeTiming, timeLifeWork } from './startupTiming';
+import { applyGardenLight } from './fantasy/lighting';
+import { makeGardenWater, type GardenWaterReplay } from './fantasy/worldWater';
 
 type Content = ReturnType<typeof buildLifeScene>;
-type LifeWorldProps = { onFrame?: (state: LifeState) => void; inspectShadow?: (itemId: string, residentId: ResidentId, worldAt: number) => void; observationOpen?: boolean; footstepInput?: FootstepInput; prepareFootstepReplay?: () => Promise<DiscoveryScene | undefined>; profileId?: string; presented?: (event: DiscoveryScene, evidence: PresentationEvidence) => void; state: LifeState; changeKey?: string; selected?: string; cell?: Cell; placement?: PlacementPreview; onCell: (cell: Cell) => void; controlsVisible: boolean; children: ReactNode };
+type LifeWorldProps = { waterReplay?: GardenWaterReplay; onFrame?: (state: LifeState) => void; inspectShadow?: (itemId: string, residentId: ResidentId, worldAt: number) => void; observationOpen?: boolean; footstepInput?: FootstepInput; prepareFootstepReplay?: () => Promise<DiscoveryScene | undefined>; profileId?: string; presented?: (event: DiscoveryScene, evidence: PresentationEvidence) => void; state: LifeState; changeKey?: string; selected?: string; cell?: Cell; placement?: PlacementPreview; onCell: (cell: Cell) => void; controlsVisible: boolean; children: ReactNode };
 
-export default function LifeWorld({ onFrame, inspectShadow, observationOpen = false, footstepInput, prepareFootstepReplay, profileId, presented, state, changeKey, selected, cell, placement, onCell, controlsVisible, children }: LifeWorldProps) {
+export default function LifeWorld({ waterReplay, onFrame, inspectShadow, observationOpen = false, footstepInput, prepareFootstepReplay, profileId, presented, state, changeKey, selected, cell, placement, onCell, controlsVisible, children }: LifeWorldProps) {
+    const waterReplayRef = useRef(waterReplay);
+    useEffect(() => { waterReplayRef.current = waterReplay; }, [waterReplay]);
     const behindObservation = useRef(observationOpen);
     useEffect(() => { behindObservation.current = observationOpen; }, [observationOpen]);
     const footsteps = useRef({ input: footstepInput, prepareReplay: prepareFootstepReplay });
@@ -68,7 +72,7 @@ export default function LifeWorld({ onFrame, inspectShadow, observationOpen = fa
         const canStartAsset = () => firstRenderedAt !== undefined && performance.now() - firstRenderedAt >= 200
             && performance.now() - interactionAt >= 250 && !currentPlacement;
         const startAssets = () => {
-            if (assetsStarted || !anyRuntimeAssetsEnabled || !canStartAsset()) return;
+            if (assetsStarted || currentState.worldStyle === 'fantasy-garden-v1' || !anyRuntimeAssetsEnabled || !canStartAsset()) return;
             assetsStarted = true;
             node.dataset.runtimeAssets = 'loading';
             void import('./runtimeAssets').then(({ LifeRuntimeAssets }) => {
@@ -89,8 +93,12 @@ export default function LifeWorld({ onFrame, inspectShadow, observationOpen = fa
         const cameraBaseOffset = new T.Vector3(4.5, 7.8, 11);
         const footprint = makeFootstepPresentation(scene, camera, node, { profileId: () => discovery.current.profileId, prepareReplay: () => footsteps.current.prepareReplay?.() ?? Promise.resolve(undefined), presented: (event, evidence) => discovery.current.presented?.(event, evidence) });
         const shadows = makeWorldShadowPresentation(node, scene, camera, {
-            profileId: () => discovery.current.profileId, touched: () => footprint.cancel(),
+            profileId: () => discovery.current.profileId, touched: () => { footprint.cancel(); water.cancel(); },
             inspect: discovery.current.inspectShadow ? (itemId, residentId, worldAt) => discovery.current.inspectShadow?.(itemId, residentId, worldAt) : undefined,
+            presented: (event, evidence) => discovery.current.presented?.(event, evidence),
+        });
+        const water = makeGardenWater(node, camera, {
+            profileId: () => discovery.current.profileId, replay: () => waterReplayRef.current, touched: () => { footprint.cancel(); shadows.cancel(); },
             presented: (event, evidence) => discovery.current.presented?.(event, evidence),
         });
         camera.position.copy(cameraTarget).add(cameraBaseOffset); camera.lookAt(cameraTarget);
@@ -118,9 +126,11 @@ export default function LifeWorld({ onFrame, inspectShadow, observationOpen = fa
             const closeView = !currentPlacement && !overviewRef.current;
             let halfHeight = Math.max(3.8, projectedWidth / aspect / 2) * (closeView ? .66 : 1);
             const canopyView = currentState.worldStyle === 'canopy-dots-c3-v1' && closeView;
+            const fantasy = currentState.worldStyle === 'fantasy-garden-v1';
+            if (fantasy) halfHeight = Math.max(5.4, ((content?.width ?? 6) + 2.4) / aspect / 2) * (closeView ? .88 : 1.05);
             const atmosphere = canopyView && canopyAtmosphereStudy ? canopyAtmospheres[canopyAtmosphereStudy] : undefined;
             if (atmosphere) halfHeight = Math.max(atmosphere.floor, projectedWidth / aspect / 2 * atmosphere.scale);
-            cameraOffset.copy(atmosphere ? new T.Vector3(...atmosphere.offset) : canopyView ? new T.Vector3(4.5, 6.0, 11) : cameraBaseOffset).applyAxisAngle(cameraYAxis, cameraControls.view.azimuth);
+            cameraOffset.copy(fantasy ? new T.Vector3(2.5, 6.5, 12) : atmosphere ? new T.Vector3(...atmosphere.offset) : canopyView ? new T.Vector3(4.5, 6.0, 11) : cameraBaseOffset).applyAxisAngle(cameraYAxis, cameraControls.view.azimuth);
             camera.position.copy(cameraTarget).add(cameraOffset); camera.lookAt(cameraTarget); camera.updateMatrixWorld(true);
             camera.left = -halfHeight * aspect; camera.right = halfHeight * aspect; camera.top = halfHeight; camera.bottom = -halfHeight;
 
@@ -146,7 +156,7 @@ export default function LifeWorld({ onFrame, inspectShadow, observationOpen = fa
                 ground: { origin, x: { x: xBasis.x - origin.x, y: xBasis.y - origin.y }, z: { x: zBasis.x - origin.x, y: zBasis.y - origin.y } },
                 // Bring the doorstep toward the center in the closer view without
                 // changing the full-island frame used for placement and overview.
-                center: closeView ? { x: project(pointFor(2.5, 1)).x * .45 + (atmosphere?.x ?? 0), y: atmosphere?.y ?? (canopyView ? .95 : 0) } : project(pointFor(center, ((content?.depth ?? 5) - 1) / 2)),
+                center: closeView ? { x: project(pointFor(2.5, 1)).x * .45 + (atmosphere?.x ?? 0), y: fantasy ? 1.25 : atmosphere?.y ?? (canopyView ? .95 : 0) } : project(pointFor(center, ((content?.depth ?? 5) - 1) / 2)),
                 height: halfHeight * 2, aspect, bounds, regions: [ground],
             };
             const frame = cameraControls.setFrame(framing);
@@ -157,6 +167,11 @@ export default function LifeWorld({ onFrame, inspectShadow, observationOpen = fa
         reframe.current = () => { cameraControls.reset(false); resize(); };
         update.current = (input) => {
             const { state: next, selected: selection, cell: point, placement: preview } = input;
+            if (next.worldStyle === 'fantasy-garden-v1') {
+                const time = next.gardenTime ?? 'day';
+                applyGardenLight(scene, renderer, hemi, sun, time); content?.setGardenTime(time);
+                node.dataset.gardenTime = time;
+            }
             presentationClock.prepare(next, performance.now());
             if (document.visibilityState !== 'visible' || renderer.getContext().isContextLost()) presentationClock.resume(performance.now(), true);
             if (content && canReuseLifeScene(builtInput, input)) {
@@ -167,6 +182,7 @@ export default function LifeWorld({ onFrame, inspectShadow, observationOpen = fa
             if (Boolean(preview) !== Boolean(currentPlacement)) cameraControls.reset(false);
             currentState = next; currentPlacement = preview;
             runtimeAssets?.detach();
+            water.clear();
             if (content) { scene.remove(content.root); content.dispose(); }
             content = timeLifeWork('scene-build', () => buildLifeScene(next, selection, point, preview)); scene.add(content.root);
             builtInput = input;
@@ -187,6 +203,7 @@ export default function LifeWorld({ onFrame, inspectShadow, observationOpen = fa
             if (!content) return;
             const r = renderer.domElement.getBoundingClientRect();
             ray.setFromCamera(new T.Vector2((clientX - r.left) / r.width * 2 - 1, -(clientY - r.top) / r.height * 2 + 1), camera);
+            if (!currentPlacement && discovery.current.enabled && water.pick(ray)) return;
             if (!currentPlacement && discovery.current.enabled && shadows.pick(ray)) return;
             shadows.cancel();
             const hit = ray.intersectObjects(content.clickables)[0]; if (hit?.object.userData.cell) choose.current(hit.object.userData.cell as Cell);
@@ -232,6 +249,7 @@ export default function LifeWorld({ onFrame, inspectShadow, observationOpen = fa
             // The opaque observation covers this canvas. Keep its clock running,
             // but leave GPU/animation work to the visible scene until it closes.
             if (behindObservation.current) {
+                water.clear();
                 presentationClock.resume(performance.now(), true);
                 raf = requestAnimationFrame(frame); return;
             }
@@ -242,7 +260,9 @@ export default function LifeWorld({ onFrame, inspectShadow, observationOpen = fa
             if (content) node.dataset.lifeSculptStatus = content.root.getObjectByName('life-canopy-c3')?.userData.sculptStatus ?? 'none';
             if (content) node.dataset.lifeGroundMaterialStatus = content.root.getObjectByName('life-landscape')?.userData.groundMaterialStatus ?? 'none';
             if (content) shadows.update(content.snapshot(), content.root, performance.now(), media.matches,
-                discovery.current.enabled && !currentPlacement && !behindObservation.current && !renderer.getContext().isContextLost(), footsteps.current.input?.id);
+                discovery.current.enabled && !waterReplayRef.current && !currentPlacement && !behindObservation.current && !renderer.getContext().isContextLost(), footsteps.current.input?.id);
+            if (content) water.update(content.snapshot(), content.root, performance.now(), media.matches,
+                discovery.current.enabled && !currentPlacement && !renderer.getContext().isContextLost());
             if (content) footprint.update(content, content.snapshot(), footsteps.current.input, performance.now(), discovery.current.enabled && !currentPlacement && !renderer.getContext().isContextLost(), media.matches);
             if (content && document.visibilityState === 'visible' && !renderer.getContext().isContextLost()) { content.faceIsolationSigns(camera);
                 runtimeAssets?.update(camera, node.clientHeight);
@@ -256,12 +276,13 @@ export default function LifeWorld({ onFrame, inspectShadow, observationOpen = fa
                 frameObserver.current?.(content.snapshot()); footprint.sample(content, performance.now());
                 presentationClock.resume(performance.now());
                 shadows.sample(performance.now());
+                water.sample(performance.now());
                 if (discovery.current.profileId !== discoveryOwner) {
                     collector?.cancel(); discoveryOwner = discovery.current.profileId;
                     collector = discoveryOwner ? new GatheringCollector(discoveryOwner, (event, evidence) => discovery.current.presented?.(event, evidence)) : undefined;
                 }
-                if (shadows.active()) collector?.pause();
-                if (collector && !shadows.active() && !footsteps.current.prepareReplay && discovery.current.enabled && !currentPlacement && performance.now() - discoveryAt >= 100) {
+                if (shadows.active() || water.active()) collector?.pause();
+                if (collector && !waterReplayRef.current && !shadows.active() && !water.active() && !footsteps.current.prepareReplay && discovery.current.enabled && !currentPlacement && performance.now() - discoveryAt >= 100) {
                     const stateAtFrame = content.snapshot();
                     const rules = displayedGatherings(stateAtFrame, discoveryOwner!), rect = node.getBoundingClientRect();
                     const onScreen = (ndc: T.Vector3) => {
@@ -299,16 +320,16 @@ export default function LifeWorld({ onFrame, inspectShadow, observationOpen = fa
             if (document.visibilityState !== 'visible' || renderer.getContext().isContextLost()) collector?.pause();
             raf = requestAnimationFrame(frame);
         }; raf = requestAnimationFrame(frame);
-        const hidden = () => { if (document.visibilityState !== 'visible') { shadows.clear(); footprint.cancel(); collector?.pause(); presentationClock.resume(performance.now(), true); } };
+        const hidden = () => { if (document.visibilityState !== 'visible') { water.clear(); shadows.clear(); footprint.cancel(); collector?.pause(); presentationClock.resume(performance.now(), true); } };
         document.addEventListener('visibilitychange', hidden);
-        const lost = (event: Event) => { shadows.clear(); footprint.cancel(); collector?.pause(); presentationClock.resume(performance.now(), true); event.preventDefault(); setFailed(true); delete node.dataset.rendered; };
+        const lost = (event: Event) => { water.clear(); shadows.clear(); footprint.cancel(); collector?.pause(); presentationClock.resume(performance.now(), true); event.preventDefault(); setFailed(true); delete node.dataset.rendered; };
         const restored = () => setFailed(false);
         renderer.domElement.addEventListener('webglcontextlost', lost); renderer.domElement.addEventListener('webglcontextrestored', restored);
         return () => {
             assetsCancelled = true; runtimeAssets?.dispose(); delete node.dataset.runtimeAssets;
             window.removeEventListener('pointerdown', noteInteraction, true); window.removeEventListener('pointermove', noteInteraction, true);
             window.removeEventListener('wheel', noteInteraction, true); window.removeEventListener('keydown', noteInteraction, true);
-            collector?.cancel(); cancelAnimationFrame(raf); observer.disconnect(); update.current = null; controlCamera.current = undefined; reframe.current = undefined; cameraControls.cancel(); shadows.dispose(); footprint.dispose(); studyLighting?.dispose(); content?.dispose();
+            collector?.cancel(); cancelAnimationFrame(raf); observer.disconnect(); update.current = null; controlCamera.current = undefined; reframe.current = undefined; cameraControls.cancel(); water.dispose(); shadows.dispose(); footprint.dispose(); studyLighting?.dispose(); content?.dispose();
             document.removeEventListener('visibilitychange', hidden);
             renderer.domElement.removeEventListener('click', click);
             renderer.domElement.removeEventListener('pointerdown', pointerDown);
@@ -328,7 +349,7 @@ export default function LifeWorld({ onFrame, inspectShadow, observationOpen = fa
             <IslandCameraToolbar view={cameraView} onAction={action => controlCamera.current?.(action)} />
             <p>タップで ばしょ・なぞって 移動・2本指で 拡大と回転</p>
         </div>}
-        {!placement && controlsVisible && !prepareFootstepReplay && <div className="life-home-tools" role="group" aria-label="しまの あそび">
+        {!placement && controlsVisible && !prepareFootstepReplay && !waterReplay && <div className="life-home-tools" role="group" aria-label="しまの あそび">
         {children}
         <details className="life-camera-tools" onKeyDown={event => {
             if (event.key !== 'Escape') return;

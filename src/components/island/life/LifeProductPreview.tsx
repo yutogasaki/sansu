@@ -11,7 +11,7 @@ import { buildHomeJourney } from '../homeJourney/scene';
 const stills = new Map<string, string>();
 
 /** Actual geometry and saved appearance, cached as stills without persistent WebGL contexts. */
-export default function LifeProductPreview({ kind, growth = 0, style = 'original' }: { kind?: ItemKind; growth?: number; style?: Style }) {
+export default function LifeProductPreview({ kind, growth = 0, style = 'original', foodStage, foodStock, waterFlow, waterConnections }: { kind?: ItemKind; growth?: number; style?: Style; foodStage?: 0 | 1 | 2; foodStock?: number; waterFlow?: boolean; waterConnections?: number }) {
     const stage = growthStage({ kind: kind ?? 'bench', growth });
     const image = useRef<HTMLImageElement>(null);
     const fallback = useRef<HTMLSpanElement>(null);
@@ -20,9 +20,10 @@ export default function LifeProductPreview({ kind, growth = 0, style = 'original
         if (!target) return;
         target.hidden = true;
         if (fallback.current) fallback.current.hidden = false;
-        const key = `${kind ?? 'pokomoko'}:${stage}:${style}`;
+        const key = `${kind ?? 'pokomoko'}:${stage}:${style}:${foodStage ?? '-'}:${foodStock ?? '-'}:${waterFlow ?? '-'}:${waterConnections ?? '-'}`;
         // The two default home controls use the exact previously rendered PNGs.
-        const cached = kind === 'fence' ? fenceStill : kind === 'planter' ? planterStill : key === 'flower:2:original' ? flowerBloomOriginal : stills.get(key);
+        const cached = kind === 'fence' ? fenceStill : kind === 'planter' && foodStage === undefined ? planterStill
+            : kind === 'flower' && stage === 2 && style === 'original' ? flowerBloomOriginal : stills.get(key);
         if (cached) { target.src = cached; target.hidden = false; if (fallback.current) fallback.current.hidden = true; return; }
         let home: ReturnType<typeof buildHomeJourney> | undefined;
         let renderer: T.WebGLRenderer | undefined;
@@ -39,7 +40,7 @@ export default function LifeProductPreview({ kind, growth = 0, style = 'original
             renderer.toneMapping = T.ACESFilmicToneMapping;
             renderer.toneMappingExposure = 1.15;
             let root: T.Group;
-            if (kind) root = buildLifeItem({ id: 'preview', kind, growth, style }, materials).root;
+            if (kind) root = buildLifeItem({ id: 'preview', kind, growth, style, foodStage, foodStock, waterFlow, waterConnections }, materials).root;
             else {
                 home = buildHomeJourney(); root = home.hero;
                 const scarf = new T.Mesh(new T.TorusGeometry(.18, .047, 8, 32), materials.surface(tint(style), .85));
@@ -80,7 +81,7 @@ export default function LifeProductPreview({ kind, growth = 0, style = 'original
             renderer?.dispose();
             renderer?.forceContextLoss();
         }
-    }, [kind, growth, stage, style]);
+    }, [kind, growth, stage, style, foodStage, foodStock, waterFlow, waterConnections]);
     return <span className="life-product-preview" aria-hidden="true">
         <img ref={image} width="160" height="104" alt="" hidden onError={() => {
             if (image.current) image.current.hidden = true;

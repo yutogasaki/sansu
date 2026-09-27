@@ -12,12 +12,13 @@ import LifeProductPreview from './LifeProductPreview';
 import LifeSceneReplay from './LifeSceneReplay';
 import './life-observation.css';
 import './life-memories.css';
+import { fantasyEnabled } from './fantasy/presentation';
 
 export default function LifeMemories({ profileId, state, close, walk, observe, observeGathering }: {
     walk?: (itemId: string) => void; profileId: string; state: LifeState; close: () => void; observe: (itemId: string, residentId?: ResidentId) => void; observeGathering?: (group: { ruleId: RuleEligibility['ruleId']; participantIds: string[] }) => void;
 }) {
     const { journal, error: readError, retry } = useDiscoveryJournal(profileId);
-    const [tab, setTab] = useState<'saved' | 'history'>('saved');
+    const [tab, setTab] = useState<'saved' | 'history'>(() => fantasyEnabled() ? 'history' : 'saved');
     const [selected, setSelected] = useState<DiscoveryScene>();
     const [confirmUnpin, setConfirmUnpin] = useState(false), [error, setError] = useState(''), [busy, setBusy] = useState(false);
     const panel = useRef<HTMLDivElement>(null), alive = useRef(true), working = useRef(false), exit = useRef(close);

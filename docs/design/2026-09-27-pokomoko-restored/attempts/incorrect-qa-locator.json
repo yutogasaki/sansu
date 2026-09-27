@@ -1,0 +1,88 @@
+{
+  "target": "http://127.0.0.1:5330",
+  "manifest": "output/playwright/fantasy-first-playable/restore-build-source.json",
+  "sourceHash": "a6f9ea933baeeb997b5f61a9e97f356a661981bf7044c724a317d3b46738bc7e",
+  "version": {
+    "version": "development-local:5ae0d55f-b3f9-4b18-bd31-ce5fb9874529",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "humanN": 0,
+  "scenarios": [],
+  "captures": [
+    {
+      "file": "390-welcome.png",
+      "url": "http://127.0.0.1:5330/#/onboarding",
+      "revision": "development-local",
+      "version": "development-local:5ae0d55f-b3f9-4b18-bd31-ce5fb9874529",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "not-applicable",
+      "islandFeatureEnabled": true,
+      "mode": "welcome",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:5ae0d55f-b3f9-4b18-bd31-ce5fb9874529",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": null
+    },
+    {
+      "file": "390-learning.png",
+      "url": "http://127.0.0.1:5330/#/island?start=learn&profile=b084fed5-3d29-4f00-a036-4f6fa1e93fad",
+      "revision": "development-local",
+      "version": "development-local:5ae0d55f-b3f9-4b18-bd31-ce5fb9874529",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandFeatureEnabled": true,
+      "mode": "learning",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:5ae0d55f-b3f9-4b18-bd31-ce5fb9874529",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": null
+    }
+  ],
+  "pass": false,
+  "error": "locator.getAttribute: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'ようす', exact: true }).locator('img')\u001b[22m\n\n    at /Users/yutogasaki/Projects/sansu/tools/e2e-island-fantasy-production.mjs:35:86"
+}
