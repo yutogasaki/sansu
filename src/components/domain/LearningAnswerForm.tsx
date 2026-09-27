@@ -20,6 +20,8 @@ export interface LearningAnswerFormProps {
     deferSubmission?: boolean;
     onAnswer: (answer: string | string[]) => void;
     onInteraction?: () => void;
+    /** Accepted digit only; presentation must not interpret this as a correct answer. */
+    onDigitInput?: () => void;
     renderPrompt?: (problem: Problem) => ReactNode;
     renderChoiceLabel?: (choice: ChoiceOption, problem: Problem) => ReactNode;
     renderSupportAnswer?: (answer: string, problem: Problem) => ReactNode;
@@ -31,7 +33,7 @@ export interface LearningAnswerFormProps {
 }
 
 // Presentation may change; the frozen slot and its input/submit contract do not.
-export function LearningAnswerForm({ slot, disabled, deferSubmission = false, onAnswer, onInteraction, renderPrompt, renderChoiceLabel, renderSupportAnswer, renderSupport, retryAnswer, className }: LearningAnswerFormProps) {
+export function LearningAnswerForm({ slot, disabled, deferSubmission = false, onAnswer, onInteraction, onDigitInput, renderPrompt, renderChoiceLabel, renderSupportAnswer, renderSupport, retryAnswer, className }: LearningAnswerFormProps) {
     const problem = useMemo(() => integerFractionProblem(slot.problem), [slot.problem]);
     const grid = useMemo(() => parkHissanGrid(problem), [problem]);
     const step = grid?.steps[slot.hissanStep ?? 0];
@@ -99,6 +101,7 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
             const values = current.values.map((value, i) => i === current.active ? (step ? text : (value + text).slice(0, limit)) : value);
             return { replaceOnInput: false, values, active: step ? nextWrittenInput(values, current.active, inputOrder) : current.active, lastEdited: current.active };
         });
+        if (changed) onDigitInput?.();
         if (changed && automatic && (step ? isWrittenStepComplete(pendingInput.current.values) : Boolean(answerShape && isAnswerShapeComplete(pendingInput.current.values, answerShape)))) submit(true);
     };
     const remove = () => {

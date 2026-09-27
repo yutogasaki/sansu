@@ -370,7 +370,7 @@
         height: 38px;
         margin-top: 58px;
     }
-    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench-message:not(:has(.island-answer-result)) {
+    .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench-message:not(:has(.island-answer-result)):not(.pokomoko-learning-feedback) {
         display: none;
     }
     .app-container .island-page[data-layout-version][data-mode=learning] .island-workbench-message .island-answer-result {

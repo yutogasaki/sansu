@@ -12,6 +12,8 @@ import { readIslandLearningDOM, type IslandLearningObserver } from './useIslandL
 import './IslandLearningPanel.css';
 import './IslandLearningFocus.css';
 import './IslandLearningTheme.css';
+import { usePokomokoFeedback } from './usePokomokoFeedback';
+import { PokomokoInputSpark } from './PokomokoLearningEffects';
 
 function LightSeed({ filled, current }: { filled: boolean; current: boolean }) {
     return <span className="island-light-seed" data-filled={filled} data-current={current} aria-hidden="true">
@@ -38,6 +40,7 @@ export function IslandLearningPanel({ plan, active = true, intro = false, busy, 
     const section = useRef<HTMLElement>(null);
     const problemId = slot?.problem.id;
     const [dismissedReceipt, setDismissedReceipt] = useState<string>();
+    const celebration = usePokomokoFeedback(feedback, active, section);
     useLayoutEffect(() => {
         const binding = { profileId: plan.profileId, planId: plan.id, slotIndex: plan.cursor, problemId: problemId ?? '', revisionBefore: 0 };
         return () => observation?.leave(binding);
@@ -65,10 +68,12 @@ export function IslandLearningPanel({ plan, active = true, intro = false, busy, 
             </div>
             <span className="island-learning-count">{plan.cursor + 1}<small> / {plan.slots.length}</small></span>
         </div>
-        <IslandAnswerFeedback feedback={feedback?.id === dismissedReceipt ? undefined : feedback} />
+        <IslandAnswerFeedback feedback={feedback?.id === dismissedReceipt ? undefined : feedback} burst={celebration.burst} inputCue={celebration.inputCue} />
+        <PokomokoInputSpark cue={celebration.inputCue} />
         <IslandAnswerForm key={`${plan.id}:${plan.cursor}`} slot={slot} disabled={busy && !allowHintDraft} deferSubmission={busy && allowHintDraft} answerReceiptId={answerReceiptId}
             retryAnswer={feedback?.kind === 'retry' ? feedback.retryAnswer : undefined}
             englishAutoRead={englishAutoRead} onInteraction={() => setDismissedReceipt(feedback?.id)}
+            onDigitInput={celebration.onDigitInput}
             onAnswer={answer => onAction({ type: 'answer', answer })} />
         <div className="island-learning-actions">
             {listeningEntry}
