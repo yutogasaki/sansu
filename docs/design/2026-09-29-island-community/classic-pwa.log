@@ -1,0 +1,9 @@
+PWA classic target {
+  directory: '/Users/yutogasaki/Projects/sansu/output/integration-20260929/classic-dist',
+  version: 'development-local:571547fa-765f-46ad-92fb-f251fab8cbfd'
+}
+  ➜  Local:   http://127.0.0.1:4273/
+PASS PWA onboarding safe-router handoff
+PASS PWA protected router recovery handoff
+PASS PWA same-route battle checkpoint
+PASS PWA service-worker-controlled version-drift recovery

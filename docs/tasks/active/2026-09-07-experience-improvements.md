@@ -1,9 +1,12 @@
 # 学習と島の楽しさをつなぐ体験改善
 
+**2026-09-29 整理:** この文書は学習・暮らしの横断索引。独立の実装キューには数えず、残件の担当は[共有キュー](../../../.agents/tasks/TASKS.md)の4本に集約する。
+
+
 - Date: 2026-09-07
 - Owner: Codex
 - Status: Cross-cutting outcome; execute through the specific tasks in the shared queue
-- Review By: 2026-09-27
+- Review By: 2026-10-06
 
 ## Goal
 

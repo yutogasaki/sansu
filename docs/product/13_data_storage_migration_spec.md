@@ -288,3 +288,9 @@ Life worldデータ版4は既存の経済checkpointを保持し、`tourCutover` 
 新規に保存する発見の場面には `placementVersion` を含める。旧snapshotの欠落値を埋めたりhashを再生成したりせず、その場面が持つ歩行規則を保持する。写真・学習記録には変更を加えない。
 
 住人が配置予定地にいる時は、版15専用の `clear-placement` 操作で既存地面上の退避経路を保存する。元の品は退避中も元の場所に保持し、退避は非報酬の歩行として再現する。退避と実際の購入/移設は別の意図IDで保存し、後者でも残高・配置・住人位置を再検証する。待機中の取消・退出・中断では購入/移設を自動再開しない。再読込は既に保存した退避のみを再現し、未確定の品を購入したことにしない。
+
+## Life版21の招待切替（2026-09-29）
+
+`residencyCutover` は規則ID、本人profileId、時刻、action数、既存参加者、過去actionの写しとSHA-256を持つ。切替以前の履歴を変えず、既存はうさぎ/カワウソの資格を保持。新規Lifeだけ未参加として開始する。切替と版21を同一world transactionで保存し、版20以下の旧writerが書き戻さない。学習writer・DB schema・旧Nature Town DBは変更しない。
+
+招待資格はcutover以降の実履歴から再現する消去可能なprojectionで、参加の正本は `invite-friend` action。再送は元intent/commandを照合し、別内容・古いrevision・資格なし・未来版を拒否する。abortでは参加もactionも保存しない。版21非対応のbuildへの降格は行わず、復旧buildも版21を読む。新しい保存を既存版20へ戻す変換は実装しない。

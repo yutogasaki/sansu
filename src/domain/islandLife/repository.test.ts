@@ -78,7 +78,7 @@ describe('independent life persistence', () => {
     it('keeps one food cutover and the harvested inventory through a reload', async () => {
         const db = fresh(), start = 100000;
         let record = await updateLife('food-save', [], undefined, start, db);
-        expect(record.version).toBe(20); // Old production writers reject before the first purchase.
+        expect(record.version).toBe(21); // Old production writers reject before the first purchase.
         expect(record.foodCutover?.actionCount).toBe(0);
         const facts = Array.from({ length: 7 }, (_, i) => ({ id: `lesson-${i}`, at: start + 1 }));
         record = await updateLife('food-save', facts, undefined, start + 2, db);
@@ -108,7 +108,7 @@ describe('independent life persistence', () => {
             record = await updateLife(owner, [], { id, revision: record.revision,
                 command: { type: 'buy', kind, cell: { x, z: 3 } } }, start + 3 + x, db);
         }
-        expect(record.version).toBe(20);
+        expect(record.version).toBe(21);
         expect(record.actions.find(a => a.id === 'c1')?.purchaseReceipt).toMatchObject({ priceVersion: 'life-v20-channel-v1', actualPaidDrops: 2 });
         const justConnected = replayLife(record), plot = justConnected.items.find(i => i.id === 'herbs')!;
         expect(justConnected.items.filter(i => i.kind === 'water-channel').every(i => i.waterFlow)).toBe(true);
@@ -128,7 +128,7 @@ describe('independent life persistence', () => {
         expect(foodGrowthConditions(dry, dry.items.find(i => i.id === 'herbs')!).water).toBeLessThan(.2);
         record = await updateLife(owner, [], { id: 'return-c2', revision: record.revision,
             command: { type: 'move', itemId: 'c2', cell: { x: 2, z: 3 } } }, start + 13, db);
-        expect(record.version).toBe(20);
+        expect(record.version).toBe(21);
         expect(replayLife(record).items.find(i => i.id === 'c3')?.waterFlow).toBe(true);
         expect(replayLife(record).food?.harvested).toBe(dry.food?.harvested);
         expect(foodGrowthConditions(replayLife(record), replayLife(record).items.find(i => i.id === 'herbs')!).water).toBeLessThan(.2);
@@ -147,7 +147,8 @@ describe('independent life persistence', () => {
         record = await updateLife(owner, [], { id: 'herbs', revision: record.revision,
             command: { type: 'buy', kind: 'planter', cell: { x: 1, z: 3 } } }, start + 4, db);
         record = await updateLife(owner, [], { id: 'six-hours', revision: record.revision, advanceHours: 6 }, start + 5, db);
-        const legacy = { ...record, soilCutover: undefined, replaySnapshot: undefined };
+        // Explicit pre-soil v20 fixture: later residency rules did not exist yet.
+        const legacy = { ...record, version: 20 as const, residencyCutover: undefined, soilCutover: undefined, replaySnapshot: undefined };
         await db.worlds.put(legacy);
         const before = replayLife(legacy);
         const migrated = await updateLife(owner, [], undefined, legacy.realAt, db);

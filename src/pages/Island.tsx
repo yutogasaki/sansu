@@ -1,3 +1,4 @@
+import { fantasyEnabled } from '../components/island/life/fantasy/presentation';
 import { lazy, Suspense } from 'react';
 import { useIslandLife } from '../components/island/life/useIslandLife';
 import { lifeEnabled } from '../domain/islandLife/model';
@@ -113,6 +114,7 @@ function sharingHint(items: IslandItem[], selectedId: string) {
     return pair?.hint;
 }
 
+const LifeHouseExterior = lazy(() => import('../components/island/life/LifeHouseExterior'));
 const IslandLife = lazy(() => import('../components/island/life/IslandLife'));
 const HomeJourneyPreview = lazy(() => import('../components/island/homeJourney/HomeJourneyPreview'));
 const IslandStage = lazy(() => import('../components/island/IslandStage'));
@@ -659,8 +661,9 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         setFurniturePlacementSearch(undefined); setFurniturePlacementResult(undefined); setPreview(undefined); setScreen('furniture');
     } : home;
     const houseOverview = screen === 'keepsakes' && houseSection === 'home';
+    const lifeHouse = houseOverview && lifeEnabled() && fantasyEnabled();
     return <main className="island-page" data-tutorial-topic={tutorial.current?.id} data-layout-version="display-v1" data-game-id="mystic-island-v1" data-mode={screen} data-life-home={screen === 'home' && lifeEnabled() ? 'true' : undefined} data-home-layout={screen === 'home' ? 'world-first-v2' : undefined} data-complex={Boolean(learning && complex)}
-        data-house-layout={houseOverview ? 'world-first-v1' : undefined} data-house-candidate={houseOverview ? 'house-world-first-v1' : undefined}
+        data-house-layout={houseOverview ? 'world-first-v1' : undefined} data-house-candidate={houseOverview ? lifeHouse ? 'garden-house-continuity-v1' : 'house-world-first-v1' : undefined}
         data-visual-candidate-id={ISLAND_VISUAL_CANDIDATE} data-delivery-id={ISLAND_DELIVERY_ID}
         data-learning-candidate={ISLAND_LEARNING_CANDIDATE}
         data-island-feature-enabled={String(islandEnabled())}
@@ -686,6 +689,12 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         {(error || loadError) && <div className="island-error" role="alert"><p>{error}</p><button className="island-text-button" onClick={() => window.location.reload()}>よみなおす</button></div>}
         {screen === 'placement' && preview && <IslandPlacementActions valid={valid} disabled={busy} onSave={savePlacement} onCancel={cancelPlacement} />}
         {active && screen === 'home' && lifeEnabled() && <Suspense fallback={<p role="status">しまを ひらいているよ…</p>}><IslandLife controls={lifeControls} onHome={enterHouse} disabled={busy || preparingLearning} islandName={island.experience?.islandName ?? 'ふしぎな しま'} /></Suspense>}
+        {active && lifeHouse && (lifeControls.record
+            ? <Suspense fallback={<p role="status">おうちを ひらいているよ…</p>}><LifeHouseExterior record={lifeControls.record} /></Suspense>
+            : <div className="life-house-exterior life-house-loading" role={lifeControls.error ? 'alert' : 'status'}>
+                <p>{lifeControls.error ?? 'おうちを ひらいているよ…'}</p>
+                {lifeControls.error && <button type="button" className="island-secondary" onClick={() => void lifeControls.retry()}>もういちど ひらく</button>}
+            </div>)}
         {active && homeJourneyScene && <Suspense fallback={<p role="status">しまを ひらいているよ…</p>}><HomeJourneyPreview key={profile.id} state={island.homeJourney}
             room={keepsakeRoomActive ? { state: island.learningKeepsakes, completedSets: island.completedSets, selectedId: keepsakeFocus, challengeDisplayed: challengeSummary?.displayed } : undefined}
             onHomeEnter={!busy && screen === 'home' ? enterHouse : undefined}
@@ -698,7 +707,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
             growthAt={homeJourneyGrowthAt} onGrowthShown={() => setHomeJourneyGrowthAt(undefined)} /></Suspense>}
         {/* Life learning hides the world. Do not create a legacy WebGL world
             behind the questions just to destroy it when returning home. */}
-        {active && !(lifeEnabled() && (screen === 'home' || learning)) && !homeJourneyScene && !['help', 'album', 'photos', 'inventory', 'challenge'].includes(screen) && <Suspense fallback={<p role="status">しまを ひらいているよ…</p>}><IslandStage onTutorialReady={setTutorialStageReady} onCameraPractice={() => tutorial.practice('view')} closeHomeView={screen === 'home'} compactCameraControls={screen === 'home' || screen === 'play'} items={stageIsland.items} completedSets={island.completedSets} pulse={pulse} learning={learning}
+        {active && !lifeHouse && !(lifeEnabled() && (screen === 'home' || learning)) && !homeJourneyScene && !['help', 'album', 'photos', 'inventory', 'challenge'].includes(screen) && <Suspense fallback={<p role="status">しまを ひらいているよ…</p>}><IslandStage onTutorialReady={setTutorialStageReady} onCameraPractice={() => tutorial.practice('view')} closeHomeView={screen === 'home'} compactCameraControls={screen === 'home' || screen === 'play'} items={stageIsland.items} completedSets={island.completedSets} pulse={pulse} learning={learning}
             challengeDisplayed={challengeSummary?.displayed}
             directInteractions={screen === 'home' && !busy && !homeMenuOpen && !tutorial.current && !direct?.preview}
             directPlaySelection={direct?.target.kind === 'resident'}
@@ -887,7 +896,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                     onAction={workshopActions.act} error={workshopActions.error} onRetry={workshopActions.retry} onClose={home} onLearn={() => void begin()} />
                 : screen === 'keepsakes' ? <IslandLearningKeepsakes island={island} controls={keepsakes} disabled={busy} comparisonDisabled={comparisonDisabled}
                     active={active}
-                    walkingAvailable={!homeJourneyScene}
+                    walkingAvailable={!homeJourneyScene && !lifeHouse}
                     challenge={<ChallengeHomeCard key={profile.id} profileId={profile.id} disabled={busy} onLearn={() => void begin()} onResult={() => { setChallengeStartIntent(false); setScreen('challenge'); }} onStart={() => { setChallengeStartIntent(true); setScreen('challenge'); }} />}
                     section={houseSection} onSectionChange={section => { setHouseSection(section); setKeepsakeFocus(undefined); }}
                     onSelect={setKeepsakeFocus} onShowRoom={() => setKeepsakeFocus(undefined)}

@@ -21,8 +21,9 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
     point: (cell: Cell) => T.Vector3, seats: Map<string, LifeSeat>, sandboxes = new Map<string, SandScene>()) {
     const project = makeLifeStateProjection(state);
     let visible = state, renderedAt = state.now, renderedReduced = false;
-    const actors = [content.hero, content.rabbit.pose, content.otter.pose];
-    const bodies = [content.heroBody, content.rabbit.body, content.otter.body];
+    const slots = state.residents.map(r => ['pokomoko', 'rabbit', 'otter'].indexOf(r.id));
+    const actors = slots.map(i => [content.hero, content.rabbit.pose, content.otter.pose][i]);
+    const bodies = slots.map(i => [content.heroBody, content.rabbit.body, content.otter.body][i]);
     const foodCargos = state.food && state.items.some(item => item.kind === 'planter' && item.cell)
         && state.items.some(item => item.kind === 'picnic-table' && item.cell) ? bodies.map(body => {
         const basket = new T.Group(); basket.name = 'life-food-cargo'; basket.position.set(.31, .37, .25);
@@ -34,7 +35,8 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
         }
         basket.visible = false; body.add(basket); return basket;
     }) : bodies.map(() => undefined);
-    const heads = [makeLifeHeroHead(content.heroBody), content.rabbit.head, content.otter.head];
+    const allHeads = [makeLifeHeroHead(content.heroBody), content.rabbit.head, content.otter.head];
+    const heads = slots.map(i => allHeads[i]);
     const heroArms = content.heroBody.children.filter(part => Math.abs(part.position.x) === .27 && part.position.y === .46);
     const facilityMotion = makeFacilityMotion(content.m, bodies, heads, state.items.some(i => isFacility(i.kind) && i.cell), Boolean(state.readingEncounterVersion));
     const sandMotion = makeSandboxMotion(sandboxes, heads, point);
@@ -42,7 +44,7 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
     const picnic = makePicnicMotion(state, heads, seats, point);
     const windGaze = makeWindGaze(state, heads, point);
     const waterGaze = makeWaterGaze(state, heads, point);
-    const feet = [content.heroFeet, content.rabbit.feet, content.otter.feet];
+    const feet = slots.map(i => [content.heroFeet, content.rabbit.feet, content.otter.feet][i]);
     const neutralFeet = feet.map(pair => pair.map(foot => foot.position.clone()));
     let audit: { foodCargo?: boolean; facilityUse?: { kind: 'library' | 'garden-hut'; action: 'reading' | 'tool-care' | 'carrying' }; sandWork?: { form: 'mountain' | 'castle'; partnerId?: string; progress: number }; windLook?: ReturnType<typeof windGaze>; picnic?: ReturnType<typeof picnic.finish>; waterLook?: ReturnType<ReturnType<typeof makeWaterGaze>>; id: string; itemId?: string; phase: string; position: number[]; seatGap?: number; reaction?: string; hop: number; headPitch: number; headRoll: number; headYaw?: number; relation?: ReturnType<ReturnType<typeof makeRelationGaze>> }[] = [];
     return {
@@ -72,8 +74,8 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                 const scale = actor.scale.x;
                 body.position.y = 0; body.rotation.set(0, 0, 0); actor.rotation.set(0, 0, 0);
                 feet[index].forEach((foot, n) => { foot.position.copy(neutralFeet[index][n]); foot.rotation.set(0, 0, 0); });
-                const rig = index === 1 ? content.rabbit : index === 2 ? content.otter : undefined;
-                if (rig) { rig.head.rotation.set(0, 0, 0); rig.shoulders.forEach(shoulder => { shoulder.rotation.x = 0; }); poseResidentTail(rig.tail, index === 1 ? 'rabbit' : 'otter', 0); }
+                const rig = resident.id === 'rabbit' ? content.rabbit : resident.id === 'otter' ? content.otter : undefined;
+                if (rig) { rig.head.rotation.set(0, 0, 0); rig.shoulders.forEach(shoulder => { shoulder.rotation.x = 0; }); poseResidentTail(rig.tail, resident.id === 'rabbit' ? 'rabbit' : 'otter', 0); }
                 let position = point(resident.cell), seatGap: number | undefined, flowerLean = 0;
                 if (visit && (item || isRoamVisit(visit))) {
                     const length = routeLength(visit.path);
@@ -138,7 +140,7 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                                 if (furniture.pivot) furniture.pivot.rotation.x = angle;
                                 body.position.y = -.08 * settling;
                                 actor.rotation.x = angle;
-                                if (rig) poseResidentTail(rig.tail, index === 1 ? 'rabbit' : 'otter', settling);
+                                if (rig) poseResidentTail(rig.tail, resident.id === 'rabbit' ? 'rabbit' : 'otter', settling);
                                 feet[index].forEach((foot, f) => {
                                     foot.position.lerp(new T.Vector3(neutralFeet[index][f].x, -.06, .3), settling);
                                     foot.rotation.x = -.6 * settling;
@@ -147,7 +149,7 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                                 const role = item.kind === 'picnic-table' ? picnicRole(item, visit) : 0;
                                 if (item.kind === 'picnic-table') actor.rotation.y = reduced ? picnic.facing(item, visit) : turnToward(heading, picnic.facing(item, visit), (now - walkedAt) / duration);
                                 const top = (furniture.picnic?.seats[role] ?? furniture.seat).localToWorld(new T.Vector3(0, .05, 0));
-                                const contactY = index === 0 ? .05 : residentSeatContactY(index === 1 ? 'rabbit' : 'otter');
+                                const contactY = index === 0 ? .05 : residentSeatContactY(resident.id === 'rabbit' ? 'rabbit' : 'otter');
                                 const offset = new T.Vector3(0, contactY * scale, 0).applyEuler(actor.rotation);
                                 const seated = top.clone().sub(offset);
                                 position.lerp(seated, settling);
@@ -167,7 +169,7 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                 if (rig) {
                     const elapsed = reaction?.symbol === '♪' ? favoriteReactionElapsed(state, resident, now) : undefined;
                     const interest = elapsed === undefined ? undefined
-                        : sampleResidentInterest(index === 1 ? 'rabbit' : 'otter', elapsed / 2400, reduced);
+                        : sampleResidentInterest(resident.id === 'rabbit' ? 'rabbit' : 'otter', elapsed / 2400, reduced);
                     if (interest) {
                         rig.head.rotation.x = interest.headPitch;
                         rig.head.rotation.z = interest.headRoll;

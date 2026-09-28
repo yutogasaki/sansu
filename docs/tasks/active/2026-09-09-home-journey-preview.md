@@ -1,5 +1,8 @@
 # 家から店への接続試作
 
+**2026-09-29 整理:** DEV比較試作として保持し、独立の実行キューから外す。現行Lifeへの採用差分だけ[全体UX](2026-09-20-whole-app-ux-coherence.md)と[幻想の庭](2026-09-27-living-fantasy-first-playable.md)で扱う。試作全体の公開承認・実装完了を意味しない。
+
+
 2026-09-09統合実施：[47](../../product/47_home_island_integration_spec.md)を採用し、公開範囲・成長方式・引継ぎ境界を整理。同じ家の外/室内/実写真/学習をDEVで接続し、成長表示直後の退出を検査した。[v7実画面と検証](../../design/2026-09-09-pokomoko-growth-keyvisual/implementation-v7/README.md)は両幅の実経路、型/build、全3376テスト、smoke31項目が通過。本番移行、全メニューの新景観への統合、21通常＋3レアの全制作は継続課題。
 
 依頼：最小構成を実装し、通常学習からテラスへの配達まで確認する。
@@ -12,7 +15,7 @@
 
 接続試作の検査は完了：[実画面・検証記録](../../design/2026-09-09-pokomoko-growth-keyvisual/implementation-v1/README.md)。本制作は未完了のためactiveを保持。
 
-- Review By: 2026-09-27
+- Review By: 2026-10-06
 
 ## Current status — 2026-09-20
 

@@ -1,9 +1,20 @@
 # Whole-app UX/UI Coherence
 
+## 2026-09-29 一括実装
+
+初回3問の実獲得→花/水ばちの購入→実呼出と招待→庭/家の昼夕夜→offlineの同じ次問をphone/tabletで確認。学習v8の意味・予約・記録・消音/動き抑制を維持。実機と子どもの観察はBLOCKEDへ保持。 [検証・main・公開状態](../../design/2026-09-29-island-community/README.md)。以下の棚卸し/過去記録と区別する。
+
+## 2026-09-29 棚卸し後の担当
+
+次の実作業の入口。学習v8・幻想の庭・家・共通画面を同じ対象版で照合する。まず公開URLのrevision/flag/candidateとmain `42304f3f`の差を確認し、初回/継続/支援/途中再開→庭→家→同じ学習の課題表を作る。画面ごとの別版の合格を混ぜない。
+
+操作と入力・音/ミュート・読み上げをこのタスクが担当。美術は幻想の庭、起動/30品は性能、自然の因果は自然統合へ渡す。実機/利用者待ちは共有BLOCKEDへ。最新演出の実装自体を未着手に戻さず、ユーザーの最終評価は未実施として扱う。
+
+
 - Date: 2026-09-20
 - Owner: Codex
 - Status: Active
-- Review By: 2026-09-27
+- Review By: 2026-10-06
 - Related ADR / Runbooks: `docs/product/design_review_checklist.md`, `docs/ai/verification_matrix.md`
 
 ## Goal
@@ -13,9 +24,9 @@
 ## Canonical UI Target (Fail-Closed)
 
 - 主対象は `VITE_ISLAND_ENABLED=true` のIslandアプリ。標準起動は `npm run dev`（`dev:island`へ委譲）で、`/#/island` を直接開く。ポート競合時は別portへ移らず停止する。
-- Nature Townは別ownerの任意feature route。確認する場合はNature Townタスクから明示起動し、`VITE_NATURE_TOWN_ENABLED` と `/#/nature-town` をIsland shellと区別して記録する。`5233` のpreview URLだけを見て主アプリ/旧ゲームと判断しない。
+- Nature Townの独立画面は再利用・比較用の旧DEV route。確認する場合はNature Townタスクから明示起動し、`VITE_NATURE_TOWN_ENABLED` と `/#/nature-town` をIsland shellと区別して記録する。`5233` のpreview URLだけを見て主アプリ/旧ゲームと判断しない。
 - 実画面の記録ではURL/routeと全ルート共通`.app-container`のIsland/Nature Town flag・build revisionを照合する。Island/Nature Townの画面rootはroute固有のdelivery/candidate identityも確認し、candidateを持たない共有Utility面は該当なしと記録する。必要なidentityが欠ける画面は現行UIの証拠として扱わない。
-- `/explore` はIsland有効時も「ほかの あそび」から選べる任意の旧探索モード。Islandの標準起動・全体UX主対象とは分離し、専用ownerのタスクで明示した場合だけ調査する。`VITE_ISLAND_ENABLED=false` のclassic Exploreも専用ownerの明示時のみ開き、どちらも現行PokoMoko全体のカバレッジや完了判定には算入しない。
+- `/explore` はIsland有効時も直接URLで開く旧探索モード。Islandの標準起動・全体UX主対象とは分離し、専用ownerのタスクで明示した場合だけ調査する。`VITE_ISLAND_ENABLED=false` のclassic Exploreも専用ownerの明示時のみ開き、どちらも現行PokoMoko全体のカバレッジや完了判定には算入しない。
 - 全画面のfeature flagは共通app root、Island画面のdelivery・visual/learning candidateは画面rootのDOM identity markerで照合する。どれか必要な情報を確認できない画面は現行UIの証拠として扱わない。
 - 旧ExploreとIslandは同じリポジトリ・アプリ名を使うため、画面タイトルやリポジトリ位置だけで対象版を推定しない。
 
@@ -26,7 +37,7 @@
 | 系統 | 識別方法 | このタスクでの扱い |
 |---|---|---|
 | 現行ぽこもこ / Mystic Island | `VITE_ISLAND_ENABLED=true`、`npm run dev`、port `5198`、`/#/island`。実画面のfeature flagとcandidate/revision markerも照合する | 全体UX/UIの唯一の主対象 |
-| 旧Explore / classic | Island有効時も残る `/explore` は「ほかの あそび」から選ぶ任意の副モード。flag-off classicは明示起動の `npm run dev:classic`、port `5201`、`/#/explore` | 削除・一律redirectしない。専用ownerの確認に限り、現行Islandの監査証拠とは分離する |
+| 旧Explore / classic | Island有効時も残る `/explore` は直接URLで開く旧モード。flag-off classicは明示起動の `npm run dev:classic`、port `5201`、`/#/explore` | 削除・一律redirectしない。専用ownerの確認に限り、現行Islandの監査証拠とは分離する |
 | Nature Town試作 | `VITE_ISLAND_ENABLED=true` と `VITE_NATURE_TOWN_ENABLED=true`、`npm run dev:nature-town`、port `5233`、`/#/nature-town` | 別ownerの独立preview。旧ExploreでもIsland本体でもない。既存preview/作業ファイルを本タスクでは変更しない |
 
 ### なぜ取り違えたか

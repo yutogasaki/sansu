@@ -1,3 +1,4 @@
+import type { ResidencyCutover, ResidencyState, FriendId } from './residency';
 import type { DiagonalCutover } from './diagonalMigration';
 import type { HeroVisitCutover } from './heroVisitMigration';
 import type { CadenceCutover } from './cadenceMigration';
@@ -38,6 +39,7 @@ export type LifeCommand = { type: 'buy'; kind: ItemKind; cell: Cell }
     | { type: 'clear-placement'; kind: ItemKind; cell: Cell; itemId?: string }
     | { type: 'move'; itemId: string; cell: Cell } | { type: 'store' | 'remove' | 'visit' | 'observe'; itemId: string }
     | { type: 'observe-relation'; itemId: string; residentId: ResidentId; targetId?: string }
+    | { type: 'invite-friend'; friend: FriendId }
     | { type: 'expand'; side: LandSide } | { type: 'style'; style: Style; itemId?: string };
 export interface LifePurchaseReceipt {
     priceVersion: 'life-v20-channel-v1' | 'life-v19-decorations-v1' | 'life-48-v1' | 'life-v3-plants-water-v1' | 'life-v3-picnic-v1' | 'life-v3-wind-arch-v1' | 'life-v3-sandbox-v1' | 'life-v3-facilities-v1'; actualPaidDrops: number; quoteFingerprint: string;
@@ -48,7 +50,7 @@ export interface LifeLandReceipt {
 }
 export interface LifeAction { id: string; at: number; command: LifeCommand; purchaseReceipt?: LifePurchaseReceipt; landReceipt?: LifeLandReceipt; undoOf?: string }
 export interface LifeRecord {
-    profileId: string; version: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20; revision: number; createdAt: number; realAt: number; now: number;
+    profileId: string; version: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21; revision: number; createdAt: number; realAt: number; now: number;
     credits: Credit[]; actions: LifeAction[]; offsets: { at: number; offset: number }[]; clockIntents: string[];
     activitiesV2At?: number;
     activitiesV2After?: number;
@@ -65,6 +67,7 @@ export interface LifeRecord {
     heroVisitCutover?: HeroVisitCutover;
     foodCutover?: FoodCutover;
     soilCutover?: SoilCutover;
+    residencyCutover?: ResidencyCutover;
 }
 export interface Visit { cadence?: true; observationSubjectId?: string; relationTargetId?: string; relationSelectionVersion?: 1; observationTest?: boolean; itemId: string; from: Cell; path: Cell[]; start: number; end: number }
 /** Synthetic visits let the renderer show quiet ground walks without turning
@@ -85,6 +88,7 @@ export interface LifeResident {
 export type LifeWorldStyle = 'moon-garden-v1' | 'canopy-dots-c3-v1' | 'fantasy-garden-v1';
 export type GardenTime = 'day' | 'dusk' | 'night';
 export interface LifeState {
+    residency?: ResidencyState;
     food?: FoodLoopState;
     soilMoisture?: Record<string, number>;
     worldStyle?: LifeWorldStyle;
@@ -145,4 +149,4 @@ export function newLife(profileId: string, now: number): LifeRecord {
     return { profileId, version: 1, revision: 0, createdAt: now, realAt: now, now, credits: [], actions: [], offsets: [{ at: now, offset: 0 }], clockIntents: [], activitiesV2At: now, activitiesV2After: 0 };
 }
 
-export function readableLifeVersion(version: number) { return version >= 1 && version <= 20 && Number.isInteger(version); }
+export function readableLifeVersion(version: number) { return version >= 1 && version <= 21 && Number.isInteger(version); }

@@ -4,8 +4,7 @@ import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { resolve, extname } from 'node:path';
 import { createHash } from 'node:crypto';
 import { chromium } from 'playwright';
-import { readNative } from './island-e2e-helpers.mjs';
-import { attempt } from './island-learning-checks.mjs';
+import { readNative, answerUI } from './island-e2e-helpers.mjs';
 import { putCell, inventory } from './island-life-ui-helpers.mjs';
 const oldDir = process.env.SANSU_LIFE_OLD_DIR, newDir = process.env.SANSU_LIFE_NEW_DIR, out = process.env.SANSU_LIFE_TWO_BUILD_OUTPUT;
 const rollbackDir = process.env.SANSU_LIFE_ROLLBACK_DIR;
@@ -32,9 +31,10 @@ const replayReuse = process.env.SANSU_LIFE_REPLAY_REUSE === '1';
 const discoveryUpgrade = process.env.SANSU_LIFE_DISCOVERY_UPGRADE === '1';
 const cadenceUpgrade = process.env.SANSU_LIFE_CADENCE_UPGRADE === '1';
 const heroVisitUpgrade = process.env.SANSU_LIFE_HERO_VISIT_UPGRADE === '1';
+const residencyUpgrade = process.env.SANSU_LIFE_RESIDENCY_UPGRADE === '1';
 const natureUpgrade = process.env.SANSU_LIFE_NATURE_UPGRADE === '1';
 const diagonalUpgrade = process.env.SANSU_LIFE_DIAGONAL_UPGRADE === '1';
-assert([cadenceUpgrade, heroVisitUpgrade, diagonalUpgrade, natureUpgrade].filter(Boolean).length <= 1, 'Select one version upgrade');
+assert([cadenceUpgrade, heroVisitUpgrade, diagonalUpgrade, natureUpgrade, residencyUpgrade].filter(Boolean).length <= 1, 'Select one version upgrade');
 if (discoveryUpgrade) {
     assert.notEqual(builds[0].flags.VITE_ISLAND_LIFE_DISCOVERY_ENABLED, true);
     assert.equal(builds[1].flags.VITE_ISLAND_LIFE_DISCOVERY_ENABLED, true);
@@ -50,7 +50,7 @@ const server = createServer(async (req, res) => {
 await new Promise(resolveListening => server.listen(0, '127.0.0.1', resolveListening));
 const base = `http://127.0.0.1:${server.address().port}`, browser = await chromium.launch();
 const report = { target: base, builds: builds.map(b => ({ revision: b.revision, sourceHash: b.sourceHash, version: b.version, flags: b.flags })), bundles,
-    scope: 'Real old-to-new SW update during a partially completed learning reservation, retained earned Life ownership and all native stores, one reload, offline restart and same next question. No injected profile, credits, timestamps, update events or worker mocks. Empty photo stores do not prove Blob retention.', interruption, discoveryUpgrade, cadenceUpgrade, heroVisitUpgrade, diagonalUpgrade, natureUpgrade, humanN: 0, cases: [], pass: false };
+    scope: 'Real old-to-new SW update during a partially completed learning reservation, retained earned Life ownership and all native stores, one reload, offline restart and same next question. No injected profile, credits, timestamps, update events or worker mocks. Empty photo stores do not prove Blob retention.', interruption, discoveryUpgrade, cadenceUpgrade, heroVisitUpgrade, diagonalUpgrade, natureUpgrade, residencyUpgrade, humanN: 0, cases: [], pass: false };
 async function snapshot(page) {
     return page.evaluate(async () => {
         const result = {};
@@ -77,7 +77,12 @@ function retained(before, after) {
         assert.equal(next.replaySnapshot?.build, old.replaySnapshot.build,
             'Unchanged replay rules must survive an app-version update');
     }
-    if (natureUpgrade && old.version < 20 && next.version === 20) {
+    if (residencyUpgrade && old.version === 20 && next.version === 21) {
+        assert.equal(next.residencyCutover?.profileId, old.profileId);
+        assert.deepEqual(next.residencyCutover.initialFriends, ['rabbit', 'otter']);
+        assert.deepEqual(next.residencyCutover.priorActions, old.actions);
+        for (const key of ['foodCutover', 'soilCutover', 'diagonalCutover', 'heroVisitCutover', 'cadenceCutover', 'placementCutover']) assert.deepEqual(next[key], old[key]);
+    } else if (natureUpgrade && old.version < 20 && next.version === 20) {
         assert(next.foodCutover); assert(next.soilCutover);
         assert.deepEqual(next.foodCutover.priorActions, old.actions);
         assert.deepEqual(next.soilCutover.priorActions, old.actions);
@@ -110,7 +115,7 @@ try {
             await input(page); await page.getByRole('button', { name: 'とじる', exact: true }).click(); await world(page);
             await page.getByRole('button', { name: 'まなぶ', exact: true }).click();
             let native = await readNative(page); const firstPlan = native.plan.id; let answers = 0;
-            while (native.plan.id === firstPlan) { assert(++answers <= 3); native = (await attempt(page, native, { touch: true })).after; }
+            while (native.plan.id === firstPlan) { assert(++answers <= 3); native = (await answerUI(page, native.plan, { touch: true, dev: false })).state; }
             await page.getByRole('button', { name: 'とじる', exact: true }).click(); await world(page);
             await page.waitForFunction(() => document.querySelector('[data-life-drops]')?.dataset.lifeDrops === '6');
             await page.getByRole('button', { name: 'つくる', exact: true }).click(); await page.getByRole('group', { name: 'しまの ていれ' }).getByRole('button', { name: 'つくる', exact: true }).click();
@@ -128,7 +133,7 @@ try {
                 await page.waitForFunction(() => Boolean(document.querySelector('.life-world[data-rendered="true"]')), null);
             }
             await page.getByRole('button', { name: 'まなぶ', exact: true }).click(); await input(page);
-            const partial = (await attempt(page, await readNative(page), { touch: true })).after;
+            const partial = (await answerUI(page, (await readNative(page)).plan, { touch: true, dev: false })).state;
             assert.equal(partial.plan.cursor, 1);
             await page.getByRole('button', { name: 'とじる', exact: true }).click(); await world(page);
             await page.waitForFunction(() => document.querySelector('[data-life-drops]')?.dataset.lifeDrops === '6');
@@ -137,6 +142,7 @@ try {
             await page.getByRole('button', { name: 'まなぶ', exact: true }).click(); await input(page);
             const cacheBefore = await page.evaluate(() => caches.keys());
             const before = await snapshot(page); if (cadenceUpgrade) assert.equal(before.SansuIslandLifeV1.worlds[0].version, 15); assert.equal(before.SansuIslandLifeV1.worlds[0].credits.length, 4);
+            if (residencyUpgrade) assert.equal(before.SansuIslandLifeV1.worlds[0].version, 20);
             if (heroVisitUpgrade) assert.equal(before.SansuIslandLifeV1.worlds[0].version, 16);
             if (diagonalUpgrade) assert.equal(before.SansuIslandLifeV1.worlds[0].version, 17);
             const allActions = before.SansuIslandLifeV1.worlds[0].actions;
@@ -180,6 +186,7 @@ try {
             await page.getByRole('button', { name: 'とじる', exact: true }).click();
             await page.waitForFunction(expected => document.querySelector('script[type="module"][src]')?.getAttribute('src') === expected, bundles[1]); await world(page);
             await page.waitForTimeout(5000); assert.equal(navigations.length, 1); const after = await snapshot(page); retained(before, after);
+            if (residencyUpgrade) { assert.equal(after.SansuIslandLifeV1.worlds[0].version, 21); assert.equal(await page.locator('.island-life').getAttribute('data-life-residents'), 'pokomoko,rabbit,otter'); }
             if (cadenceUpgrade) assert.equal(after.SansuIslandLifeV1.worlds[0].version, 16);
             if (diagonalUpgrade) assert.equal(after.SansuIslandLifeV1.worlds[0].version, 18);
             if (heroVisitUpgrade) {

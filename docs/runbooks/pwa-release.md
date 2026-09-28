@@ -1,5 +1,7 @@
 # PWA Release Runbook
 
+2026-09-29: 住人の招待を保存版21へ統合。新規所有者はぽこもこ1人から開始し、既存所有者は3人を保持する。切替境界と版21を同じtransactionで保存し、版20以下の旧writerを拒否する。復旧も版21互換reader/writerを残してFantasyのみfalseで再buildする。旧deployment・Life OFF・DB削除は使わない。版20からの実SW更新、途中切断・再接続、同じ学習のoffline再開は[統合検証](../design/2026-09-29-island-community/README.md)を参照。以下の日付付き旧手順は当時の履歴。
+
 2026-09-27: 幻想の庭の家庭内公開はIsland/Life/Discovery/Fantasy=true、Life preview/NatureTown=false。Life版20と食料・土の切替を同時に保存する。以前のdeploymentやLife OFFへの切替は今回のrollback手順に使わない。復旧時は今回の版20互換reader/writerを残してFantasyのみfalseで再buildし、同じDBと所有・学習を保持する。公開先のversion.jsonと実庭candidateを照合する。過去のPark公開flagの例は履歴。
 
 2026-09-11: 家庭内利用のユーザー承認により、main配信は `VITE_ISLAND_ENABLED=true VITE_ISLAND_LIFE_ENABLED=true` を使用する。新しい島は `SansuIslandLifeV1` に空の所有物から開始し、学習記録は保持。時間送りは本番で無効。新島のみ戻す場合は `VITE_ISLAND_LIFE_ENABLED=false` で再配信し、保存DBを削除しない。採用仕様は[48](../product/48_island_life_spec.md)、統合版の検証は[main release](../design/2026-09-10-island-life/main-release/README.md)。
@@ -14,8 +16,8 @@
 
 ## Preflight
 
-- 本番 `https://sansu-seven.vercel.app` はGitHub `yutogasaki/sansu` のmainからVercelへ自動配信する。2026-09-07の最新アプリ公開依頼により `vercel.json` のbuildCommandは `VITE_ISLAND_ENABLED=true VITE_BUILD_PLAY_ENABLED=true VITE_PARK_RENDERER=three npm run build`。島を既定起動にする。2026-09-08以降は保存済み旧探索runがあってもホームは島を開き、旧探索・遊園地は「ほかの あそび」から再開する。`npm run build` もflag未指定ならIslandを既定にし、classic回帰を確認するときだけ `VITE_ISLAND_ENABLED=false VITE_BUILD_PLAY_ENABLED=false npm run build` を明示する。島の公開を戻す場合は `VITE_ISLAND_ENABLED=false` で再配信し、保存データは維持する。
-- 遊園地の表示だけ戻す場合はbuildCommandのrendererを `legacy` にして再配信する。起動先も戻す場合は `VITE_BUILD_PLAY_ENABLED=false` を指定する。IndexedDBや保存済み作品は削除しない。
+- 本番 `https://sansu-seven.vercel.app` はGitHub `yutogasaki/sansu` のmainからVercelへ自動配信する。現行 `vercel.json` のbuildCommandは `VITE_ISLAND_ENABLED=true VITE_ISLAND_LIFE_ENABLED=true VITE_ISLAND_LIFE_DISCOVERY_ENABLED=true VITE_ISLAND_FANTASY_ENABLED=true VITE_ISLAND_LIFE_PREVIEW=false VITE_NATURE_TOWN_ENABLED=false npm run build`。保存版21、実庭 `living-fantasy-garden-v2`、学習 `pokomoko-pop-live-v8` を実画面と照合する。
+- classic回帰用buildは別の出力先でIsland/Life/Discovery/Fantasy/BuildPlay/NatureTownをfalseにし、配布artifactと混同しない。現行の復旧方法は冒頭の版21互換手順を使い、旧Parkを再有効化しない。
 - `npm run lint`
 - `npm run test:run`
 - `npm run build`
@@ -37,7 +39,7 @@
 ## Checklist
 
 - `version.json` is generated in build output
-- `version` はbuildごとに一意、`revision` はsourceのGit SHA。同じrevisionでも再ビルド時のversionが変わり、埋め込み `__APP_VERSION__` とmanifestが一致することを検証する。manifestの `park.enabled=true` / `park.renderer=three` と実stage候補属性で公開設定を確認する。
+- `version` はbuildごとに一意、`revision` はsourceのGit SHA。同じrevisionでも再ビルド時のversionが変わり、埋め込み `__APP_VERSION__` とmanifestが一致することを検証する。Island/Life/Discovery/Fantasy=true、Life preview/NatureTown=false、Life saveVersion=21と実画面のcandidateを確認する。Parkはretiredのまま保持する。
 - `sw.js` is generated in build output
 - `index.html`, `manifest.json`, and `sw.js` are not strongly cached on supported hosts
 - `updateViaCache: 'none'` behavior is still intact

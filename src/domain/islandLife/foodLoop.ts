@@ -1,3 +1,4 @@
+import { noticeSharedMeals } from './residency';
 import { HOUR, type Cell, type LifeAction, type LifeItem, type LifeRecord, type LifeResident, type LifeState } from './model';
 import { pathToActivity } from './space';
 import { routeDuration } from './walkingSpace';
@@ -31,7 +32,7 @@ async function cutoverDigest(cutover: FoodCutover) {
 export async function prepareFoodCutover(record: LifeRecord): Promise<LifeRecord> {
     if (record.foodCutover) {
         if (record.foodCutover.validationHash !== await cutoverDigest(record.foodCutover)) throw new Error('食べものの切替記録を確認できません。');
-        return { ...record, version: 20 };
+        return { ...record, version: record.version === 21 ? 21 : 20 };
     }
     if (!record.diagonalCutover) throw new Error('島の通り道をよみなおしてから始めてね。');
     const cutover: FoodCutover = { rules: 'island-food-v1', at: record.now,
@@ -130,8 +131,10 @@ export function cancelFoodTrip(state: LifeState, resident: LifeResident) {
 export function arrangeFoodTrip(state: LifeState) {
     const food = state.food;
     if (!food || state.residents.some(resident => resident.foodTrip)) return;
-    // The hero remains available for the child's chosen destination.
-    for (const resident of state.residents.filter(r => r.id !== 'pokomoko' && !r.visit && !r.playTour && !r.facilityTrip)) {
+    // On a new solo island, idle Pokomoko can make the first shared meal.
+    // An explicit destination always wins; existing islands keep their carriers.
+    const solo = state.residency?.joined.length === 0 && !state.target;
+    for (const resident of state.residents.filter(r => (r.id !== 'pokomoko' || solo) && !r.visit && !r.playTour && !r.facilityTrip)) {
         for (const source of state.items.filter(i => i.kind === 'planter' && i.cell && (food.plots[i.id]?.stock ?? 0) > 0)) {
             const toSource = pathToActivity(state, resident.cell, source);
             if (!toSource) continue;
@@ -178,6 +181,7 @@ export function eatAtTable(state: LifeState, item: LifeItem | undefined) {
     if (!state.food || item?.kind !== 'picnic-table' || !state.food.tables[item.id]) return false;
     state.food.tables[item.id]--;
     state.food.eaten++;
+    noticeSharedMeals(state, item.id);
     syncFoodItems(state);
     return true;
 }

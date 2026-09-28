@@ -214,3 +214,12 @@ If a task spans more than one change type, use the stricter row.
 `tools/e2e-island-fantasy-load.mjs` は `SANSU_FANTASY_LOAD_URL` と新しい `SANSU_FANTASY_LOAD_OUTPUT` を指定する。30品は合成creditの明示fixture。表示・学習復帰・学習正本の保持とrender指標を記録し、functional PASSを描画予算・実機FPSのPASSに読み替えない。[今回の対象と結果](../design/2026-09-27-fantasy-production/README.md)。
 
 `tools/e2e-island-fantasy-production.mjs` は固定manifestの公開URLで、実初回設定・4問・購入/配置・SW offline/再起動を確認する。`SANSU_FANTASY_WORKER_DELAY_MS=3500` はWorker取得を遅らせる故障診断で、実際に遅延したrequestを記録する。通常取得と別の結果にし、学習前の合成creditや保存の直接書込で初回の競合を隠さない。
+
+
+### 仲間と庭・家の接続（2026-09-29）
+
+`tools/e2e-island-community.mjs` は `SANSU_COMMUNITY_URL`、新しい `SANSU_COMMUNITY_OUTPUT`、対象と一致する `SANSU_COMMUNITY_MANIFEST` を指定する。phone/tabletで実初回3問→花/水ばち購入→ぽこもこへの実呼出→カワウソ招待→同じ庭/家の昼夕夜→offlineの入居保持/同じ学習回答を検査。DB・credit・時刻・招待の注入を行わず、共同食とウサギの成熟花条件は単体検査と分ける。
+
+Life two-buildの `SANSU_LIFE_RESIDENCY_UPGRADE=1` は保存20→21の実SW更新と中断復旧に対応する。旧住人3人、既存切替/所有action、全native store、同じ学習予約を保持し、新cutoverだけを追加する。旧writerの拒否は `tools/check-island-legacy-writer.mjs` に旧revisionと保存版（`SANSU_LEGACY_VERSION`、既定20）を渡して検査。ロールバックも版21を読めるbuildが必要。
+
+幻想30品のloadハーネスは、比較双方を明示的な旧版20の3住人fixtureで始める。新規1人への変更を描画削減へ混ぜず、品種/座標/住人数をreportへ保存する。旧baseline検査だけ `SANSU_FANTASY_LOAD_VERSION=20` を指定する。

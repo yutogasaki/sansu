@@ -1,3 +1,4 @@
+import { prepareResidency } from './residency';
 import { prepareDiagonalMigration } from './diagonalMigration';
 import { prepareFoodCutover } from './foodLoop';
 import { prepareSoilCutover } from './soilMoisture';
@@ -65,7 +66,8 @@ export async function updateLife(profileId: string, facts: TerminalFact[], inten
     return database.transaction('rw', database.worlds, async () => {
         // A worker may download while learning completes. Only initial enrollment uses
         // the request clock; existing worlds advance using the actual processing clock.
-        const previous = await database.worlds.get(profileId) ?? newLife(profileId, Math.min(realNow, enrollmentAt));
+        const existingWorld = await database.worlds.get(profileId);
+        const previous = existingWorld ?? newLife(profileId, Math.min(realNow, enrollmentAt));
         if (!readableLifeVersion(previous.version)) throw new Error('この島のデータは新しい版で開いてください。');
         if (intent) {
             if (Boolean(intent.command) === Boolean(intent.advanceHours)) throw new Error('Invalid island intent');
@@ -121,6 +123,7 @@ export async function updateLife(profileId: string, facts: TerminalFact[], inten
         next = await Dexie.waitFor(prepareDiagonalMigration(next));
         next = await Dexie.waitFor(prepareFoodCutover(next));
         next = await Dexie.waitFor(prepareSoilCutover(next));
+        next = await Dexie.waitFor(prepareResidency(next, !existingWorld));
         cacheAppendedCredits(previous, next);
         if (intent?.command) next = commandLife(next, intent.command, intent.id, next.now, intent.undoOf);
         const state = replayLife(next); // Reject invalid transactions before any write.

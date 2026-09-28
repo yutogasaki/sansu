@@ -144,4 +144,4 @@ Cross-cutting durable risks are tracked in `docs/wiki/risk_register.md`.
 
 ### 2026-09-27 幻想の庭の公開・互換復旧
 
-幻想の庭と自然の一周は同じLifeの家庭内本番へ統合。既存のぽこもこの造形・布・配色・着替えを保持する。食料切替と版20を同一transactionで保存して旧writerを拒否する。見た目を戻す場合も版20 reader/writerを保持してFantasyだけOFFにする。旧deployment、Life OFF、DB削除による代用はしない。旧Nature Town DBは未移行のまま保持する。[公開と検証](../design/2026-09-27-fantasy-production/README.md)。
+幻想の庭と自然の一周は同じLifeの家庭内本番へ統合。既存のぽこもこの造形・布・配色・着替えを保持する。2026-09-29の招待導入では保存版21と本人・既存action prefixを持つresidency切替を同一transactionで保存し、新規はぽこもこ1人、既存は3人を保持する。旧writerを拒否し、見た目を戻す場合も版21 reader/writerを保持してFantasyだけOFFにする。旧deployment、Life OFF、DB削除による代用はしない。旧Nature Town DBは未移行のまま保持する。家overviewも同じ庭・所有物・時間帯を参照する。[現行の統合検証](../design/2026-09-29-island-community/README.md)、[初回公開の履歴](../design/2026-09-27-fantasy-production/README.md)。

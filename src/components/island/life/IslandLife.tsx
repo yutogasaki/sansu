@@ -1,3 +1,4 @@
+import LifeCommunity from './LifeCommunity';
 import { isDecoration } from '../../../domain/islandLife/decorations';
 import { holdPwaUpdateForCriticalPersistence } from '../../../pwa';
 import { lifeCatalogKinds, lifeDiscoveryPresentation } from '../../../domain/islandLife/capabilities';
@@ -292,12 +293,14 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
     const goal = Math.min(LIFE_RULES.dailyGoal, state.days[learningDay(state.now)] ?? 0);
     const notificationTab = grownItems.length || observationCues.length ? 'items' : earnedDrops !== undefined ? 'build' : 'style';
     const foodCarrier = state.residents.find(resident => resident.foodTrip);
+    const carrierName = foodCarrier?.id === 'pokomoko' ? 'ぽこもこ' : foodCarrier?.id === 'rabbit' ? 'うさぎ' : 'カワウソ';
     const foodTableStock = state.food ? Object.values(state.food.tables).reduce((sum, stock) => sum + stock, 0) : 0;
     const foodPlotStock = state.food ? Object.values(state.food.plots).reduce((sum, plot) => sum + plot.stock, 0) : 0;
     const channels = state.items.filter(item => item.kind === 'water-channel' && item.cell);
     const flowingChannels = channels.filter(item => item.waterFlow).length;
+    const visitingFriend = (['rabbit', 'otter'] as const).find(id => state.residency?.invitations[id] && !state.residency.joined.includes(id));
     const placedPlanter = state.items.find(item => item.kind === 'planter' && item.cell);
-    return <section className="island-life" data-life-candidate={fantasy ? FANTASY_CANDIDATE : LIFE_CANDIDATE} data-garden-time={fantasy ? gardenTime : undefined} data-life-food-candidate={state.food ? 'island-food-loop-v1' : undefined} data-life-water-candidate={channels.length ? 'island-water-channel-v1' : undefined} data-life-soil-candidate={state.soilMoisture ? 'island-soil-moisture-v1' : undefined} data-life-water-flow={flowingChannels} data-life-destination={state.target} data-life-revision={record.revision} data-life-drops={state.drops} data-life-light={state.light} data-life-items={state.items.length} data-life-food-delivered={state.food?.delivered} data-life-food-eaten={state.food?.eaten} data-life-districts={places.map(p => p.label).join(',')} data-life-panel-open={menuOpen || dockOpen || observed || memoriesOpen || Boolean(placement) ? 'true' : undefined}>
+    return <section className="island-life" data-life-candidate={fantasy ? FANTASY_CANDIDATE : LIFE_CANDIDATE} data-garden-time={fantasy ? gardenTime : undefined} data-life-food-candidate={state.food ? 'island-food-loop-v1' : undefined} data-life-water-candidate={channels.length ? 'island-water-channel-v1' : undefined} data-life-soil-candidate={state.soilMoisture ? 'island-soil-moisture-v1' : undefined} data-life-water-flow={flowingChannels} data-life-destination={state.target} data-life-residents={state.residents.map(r => r.id).join(',')} data-life-revision={record.revision} data-life-drops={state.drops} data-life-light={state.light} data-life-items={state.items.length} data-life-food-delivered={state.food?.delivered} data-life-food-eaten={state.food?.eaten} data-life-districts={places.map(p => p.label).join(',')} data-life-panel-open={menuOpen || dockOpen || observed || memoriesOpen || Boolean(placement) ? 'true' : undefined}>
         <div className="life-hud" data-life-hud="life-world-first-v1">
         <LifeResources state={state} />
         {fantasy && !menuOpen && !dockOpen && !placement && !observed && !memoriesOpen && <div className="garden-times" role="group" aria-label="庭の じかん">
@@ -308,8 +311,8 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
             })}
         </div>}
         {!menuOpen && !dockOpen && !placement && !observed && !memoriesOpen && state.food && (foodCarrier || foodTableStock || foodPlotStock) ? <p className="life-food-cue" role="status">
-            {foodTableStock ? `食卓に ハーブ ${foodTableStock}こ。${foodCarrier ? `${foodCarrier.id === 'rabbit' ? 'うさぎ' : 'カワウソ'}が 次を ${foodCarrier.foodTrip?.phase === 'carry' ? 'はこんでるよ' : 'とりにいくよ'}` : 'みんなで たべられるよ'}`
-                : foodCarrier ? `${foodCarrier.id === 'rabbit' ? 'うさぎ' : 'カワウソ'}が ハーブを ${foodCarrier.foodTrip?.phase === 'carry' ? 'はこんでるよ' : 'とりにいくよ'}` : 'うえ木ばちの ハーブが そだったよ'}
+            {foodTableStock ? `食卓に ハーブ ${foodTableStock}こ。${foodCarrier ? `${carrierName}が 次を ${foodCarrier.foodTrip?.phase === 'carry' ? 'はこんでるよ' : 'とりにいくよ'}` : 'みんなで たべられるよ'}`
+                : foodCarrier ? `${carrierName}が ハーブを ${foodCarrier.foodTrip?.phase === 'carry' ? 'はこんでるよ' : 'とりにいくよ'}` : 'うえ木ばちの ハーブが そだったよ'}
         </p> : null}
         {!menuOpen && !dockOpen && !placement && !observed && !memoriesOpen && (earnedDrops !== undefined || earnedLight !== undefined || grownItems.length > 0 || observationCues.length > 0) && <button className="life-earned" data-life-earned={earnedDrops} data-life-light-earned={earnedLight}
             data-life-growth-earned={grownItems.map(item => item.id).join(',') || undefined} data-life-observation-earned={observationCues.map(item => item.id).join(',') || undefined} aria-live="polite"
@@ -321,6 +324,9 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
             <span className="life-earned-action">{notificationTab === 'items' ? 'ようすを みる →' : notificationTab === 'style' ? 'いろを えらぶ →' : 'つくる →'}</span>
         </button>}
         </div>
+        {!menuOpen && !dockOpen && !placement && !observed && !memoriesOpen && visitingFriend && <button className="life-friend-arrival" onClick={openLifeControls}>
+            <LifeResidentPortrait resident={visitingFriend} style={state.heroStyle} /><span>{visitingFriend === 'rabbit' ? 'うさぎ' : 'カワウソ'}が あそびに きたよ</span>
+        </button>}
         <div className="life-viewport">
         <Suspense fallback={<p className="life-world-loading" role="status">しまを えがいているよ…</p>}><LifeWorld onFrame={clearance.onFrame} inspectShadow={(itemId, residentId, worldAt) => { if (locked) return; showWorld(); setGathering(undefined); setObservedResident(residentId); setShadowRequest({ id: crypto.randomUUID(), worldAt, monotonicAt: performance.now() }); setObserved(itemId); }} observationOpen={Boolean(observed || memoriesOpen)} footstepInput={footstepInput} profileId={record.profileId} presented={liveDiscovery.presented} state={state} changeKey={JSON.stringify([record.profileId, record.version,
             record.actions.length, record.actions[record.actions.length - 1]?.id,
@@ -332,7 +338,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
                 <LifeProductPreview kind="flower" growth={LIFE_RULES.bloomHours} /><span>つくる</span>
             </button>
             <button ref={informationTrigger} className="life-home-action" type="button" aria-label="しまの ようす" aria-expanded={dockOpen} aria-controls="life-dock-dialog" onClick={openLifeControls}>
-                <LifeResidentPortrait resident="pokomoko" style={state.heroStyle} /><span>ようす</span>
+                <LifeResidentPortrait resident="pokomoko" style={state.heroStyle} /><span>ようす{visitingFriend && <i className="life-friend-dot" aria-hidden="true" />}</span>
             </button>
             {fantasy && <button className="life-home-action garden-memories" type="button" onClick={openMemories}><BookOpen size={27} aria-hidden="true" /><span>おもいで</span></button>}
         </LifeWorld></Suspense>
@@ -408,6 +414,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
             <div className="life-caption-actions"><button className="island-text-button" onClick={onHome} disabled={locked}><Home size={17} />いえへ</button><button className="life-dock-close" type="button" aria-label="しまの ようすを とじる" onClick={() => setDockOpen(false)}><X size={17} /></button></div></div>
         <div className="life-information-body">
             <LifeResidentsSummary state={state} now={state.now + elapsed} />
+            <LifeCommunity state={state} locked={locked} action={doAction} expand={() => openMenuTab('land')} />
             {state.food && <section className="life-food-summary" aria-label="たべものの くらし">
                 <strong>たべものの くらし</strong>
                 <p>うえ木ばちで 育つ → 住人が はこぶ → テーブルで たべる</p>
@@ -416,7 +423,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
                 {placedPlanter && state.soilMoisture && <p>ハーブ: {planterSoilLabel(state, placedPlanter)}</p>}
                 {!state.soilMoisture && <small>水ばちを ちかづけると はやく そだつよ。木かげでは ゆっくり そだつよ。</small>}
                 {state.soilMoisture && <small>水が とおると 土は ゆっくり しめり、切れると ゆっくり かわるよ。</small>}
-                {state.residents.some(r => r.foodTrip) && <small>{state.residents.find(r => r.foodTrip)?.id === 'rabbit' ? 'うさぎ' : 'カワウソ'}が ハーブを {state.residents.find(r => r.foodTrip)?.foodTrip?.phase === 'carry' ? 'はこんでいるよ。' : 'とりに いっているよ。'}</small>}
+                {state.residents.some(r => r.foodTrip) && <small>{carrierName}が ハーブを {state.residents.find(r => r.foodTrip)?.foodTrip?.phase === 'carry' ? 'はこんでいるよ。' : 'とりに いっているよ。'}</small>}
                 {!state.items.some(i => i.kind === 'planter' && i.cell) && <small>うえ木ばちを おくと そだつよ。</small>}
                 {!state.items.some(i => i.kind === 'picnic-table' && i.cell) && <small>テーブルを おくと みんなが はこぶよ。</small>}
             </section>}

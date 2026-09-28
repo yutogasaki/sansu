@@ -1,3 +1,4 @@
+import { batchStaticGardenItems } from './fantasy/staticBatch';
 import { buildHomeProps } from './homeProps';
 import { gardenRuntimeAsset, runtimeAssetSlot } from './runtimeAssetSlots';
 import { isolationMarker } from './isolationMarker';
@@ -71,6 +72,7 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
         tree.position.set(2.5 - center + 1.25, -.01, -3.05);
         tree.scale.setScalar(.63); runtimeAssetSlot(tree, 'tree'); root.add(tree);
     }
+    const staticItems: T.Group[] = [];
     const sandboxes = new Map<string, SandScene>();
     const seats = new Map<string, LifeSeat>(), rotors: T.Group[] = [];
     for (const item of [...state.items, ...(placement?.item.cell ? [placement.item] : [])]) {
@@ -94,6 +96,7 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
                 model.root.add(part);
             });
         }
+        if (fantasy && !preview) staticItems.push(model.root);
         if (fantasy && item.kind === 'water-bowl') model.root.scale.setScalar(1.18);
         if (!fantasy && !preview && item.kind === 'bench' && item.style === 'original') {
             runtimeAssetSlot(model.root, 'bench');
@@ -125,11 +128,18 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
             const ring = new T.Mesh(new T.TorusGeometry(isFacility(item.kind) ? 1.03 : .43, .028, 8, 40), paint('#fff5ac')); ring.rotation.x = Math.PI / 2; ring.position.y = .045; if (isFacility(item.kind)) { ring.position.x = .5; ring.position.z = .5; } g.add(ring);
         }
     }
+    const disposeStaticItems = fantasy ? batchStaticGardenItems(root, staticItems) : undefined;
     const isolated = placement?.item.cell && placement.valid ? placement.isolated : state.placementVersion === 1 ? isolatedItems(state) : [];
     const isolationSigns: T.Object3D[] = [];
     for (const item of isolated) {
         if (!item.cell) continue;
         const marker = isolationMarker(item, paint); marker.position.add(point(item.cell)); root.add(marker);
+        const sign = marker.getObjectByName('life-isolation-sign') as T.Group;
+        if (fantasyPaint) {
+            // The whole sign faces the camera; its paper and ink stay rigid together.
+            batch(sign, fantasyPaint);
+            sign.traverse(o => { if (o instanceof T.Mesh) o.castShadow = o.receiveShadow = false; });
+        }
         marker.traverse(o => { o.userData.cell = item.cell; }); clickables.push(marker);
         isolationSigns.push(marker.getObjectByName('life-isolation-sign')!);
     }
@@ -143,7 +153,7 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
     const scarf = new T.Mesh(new T.TorusGeometry(.18, .047, 8, 32), paint(tint(state.heroStyle)));
     scarf.name = 'life-scarf';
     scarf.rotation.x = Math.PI / 2; scarf.position.y = .59; content.hero.add(scarf);
-    actors.forEach((a, i) => { a.name = `life-resident-${state.residents[i].id}`; a.scale.setScalar(i ? .60 : .76); root.add(a); });
+    actors.forEach((a, i) => { const id = ['pokomoko', 'rabbit', 'otter'][i]; a.visible = state.residents.some(r => r.id === id); a.name = `life-resident-${id}`; a.scale.setScalar(i ? .60 : .76); root.add(a); });
     const lightGround = state.footstepMagicVersion && !placement ? buildLanternLight(state, point) : undefined;
     const disposeBatchedLight = fantasy && lightGround ? batchGardenLanterns(lightGround) : undefined;
     if (lightGround) root.add(lightGround.root);
@@ -162,6 +172,6 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
             // Plane overlays use separate transparent materials; shared paints are owned by content.m.
             clickables.filter(o => o instanceof T.Mesh).forEach(o => ((o as T.Mesh).material as T.Material).dispose());
             previewMaterials.forEach(m => m.dispose());
-            disposeBatchedLight?.(); lightGround?.dispose(); canopy?.dispose(); landscape.dispose(); heritageHouse.dispose(); fantasyPaint?.dispose(); fantasyDecorationPaint?.dispose(); content.dispose();
+            disposeStaticItems?.(); disposeBatchedLight?.(); lightGround?.dispose(); canopy?.dispose(); landscape.dispose(); heritageHouse.dispose(); fantasyPaint?.dispose(); fantasyDecorationPaint?.dispose(); content.dispose();
         } };
 }

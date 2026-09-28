@@ -35,6 +35,8 @@ npm run docs:check
 
 ## Source of truth
 
+2026-09-29の整理では実行キューを4担当へ集約。v3・家のDEV試作・横断索引は参照として保持し、実行件数に含めない。学習v8と性能の残件は機能マップにも表示する。公開照合と実機・利用者確認を実装済みと混同しない。
+
 実行中の一覧は `.agents/tasks/TASKS.md`、詳細はそこから参照する `docs/tasks/active/*.md`。
 保留は `.agents/tasks/BLOCKED.md`、計画は `docs/tasks/backlog.md`、完了履歴の入口は `.agents/tasks/DONE.md`。
 履歴や古い詳細ファイルの存在から現在のタスク状態を推測しない。

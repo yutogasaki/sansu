@@ -26,9 +26,9 @@ import { applyGardenLight } from './fantasy/lighting';
 import { makeGardenWater, type GardenWaterReplay } from './fantasy/worldWater';
 
 type Content = ReturnType<typeof buildLifeScene>;
-type LifeWorldProps = { waterReplay?: GardenWaterReplay; onFrame?: (state: LifeState) => void; inspectShadow?: (itemId: string, residentId: ResidentId, worldAt: number) => void; observationOpen?: boolean; footstepInput?: FootstepInput; prepareFootstepReplay?: () => Promise<DiscoveryScene | undefined>; profileId?: string; presented?: (event: DiscoveryScene, evidence: PresentationEvidence) => void; state: LifeState; changeKey?: string; selected?: string; cell?: Cell; placement?: PlacementPreview; onCell: (cell: Cell) => void; controlsVisible: boolean; children: ReactNode };
+type LifeWorldProps = { focus?: 'house'; waterReplay?: GardenWaterReplay; onFrame?: (state: LifeState) => void; inspectShadow?: (itemId: string, residentId: ResidentId, worldAt: number) => void; observationOpen?: boolean; footstepInput?: FootstepInput; prepareFootstepReplay?: () => Promise<DiscoveryScene | undefined>; profileId?: string; presented?: (event: DiscoveryScene, evidence: PresentationEvidence) => void; state: LifeState; changeKey?: string; selected?: string; cell?: Cell; placement?: PlacementPreview; onCell: (cell: Cell) => void; controlsVisible: boolean; children: ReactNode };
 
-export default function LifeWorld({ waterReplay, onFrame, inspectShadow, observationOpen = false, footstepInput, prepareFootstepReplay, profileId, presented, state, changeKey, selected, cell, placement, onCell, controlsVisible, children }: LifeWorldProps) {
+export default function LifeWorld({ focus, waterReplay, onFrame, inspectShadow, observationOpen = false, footstepInput, prepareFootstepReplay, profileId, presented, state, changeKey, selected, cell, placement, onCell, controlsVisible, children }: LifeWorldProps) {
     const waterReplayRef = useRef(waterReplay);
     useEffect(() => { waterReplayRef.current = waterReplay; }, [waterReplay]);
     const behindObservation = useRef(observationOpen);
@@ -38,6 +38,7 @@ export default function LifeWorld({ waterReplay, onFrame, inspectShadow, observa
     const host = useRef<HTMLDivElement>(null), choose = useRef(onCell);
     const discovery = useRef({ profileId, presented, inspectShadow, enabled: controlsVisible });
     useEffect(() => { discovery.current = { profileId, presented, inspectShadow, enabled: controlsVisible }; }, [profileId, presented, inspectShadow, controlsVisible]);
+    const focusAtMount = useRef(focus);
     const stateAtMount = useRef(state), placementAtMount = useRef(placement);
     const frameObserver = useRef(onFrame);
     useEffect(() => { frameObserver.current = onFrame; }, [onFrame]);
@@ -128,6 +129,7 @@ export default function LifeWorld({ waterReplay, onFrame, inspectShadow, observa
             const canopyView = currentState.worldStyle === 'canopy-dots-c3-v1' && closeView;
             const fantasy = currentState.worldStyle === 'fantasy-garden-v1';
             if (fantasy) halfHeight = Math.max(5.4, ((content?.width ?? 6) + 2.4) / aspect / 2) * (closeView ? .88 : 1.05);
+            if (focusAtMount.current === 'house') halfHeight = Math.max(2.35, 1.75 / aspect);
             const atmosphere = canopyView && canopyAtmosphereStudy ? canopyAtmospheres[canopyAtmosphereStudy] : undefined;
             if (atmosphere) halfHeight = Math.max(atmosphere.floor, projectedWidth / aspect / 2 * atmosphere.scale);
             cameraOffset.copy(fantasy ? new T.Vector3(2.5, 6.5, 12) : atmosphere ? new T.Vector3(...atmosphere.offset) : canopyView ? new T.Vector3(4.5, 6.0, 11) : cameraBaseOffset).applyAxisAngle(cameraYAxis, cameraControls.view.azimuth);
@@ -156,7 +158,7 @@ export default function LifeWorld({ waterReplay, onFrame, inspectShadow, observa
                 ground: { origin, x: { x: xBasis.x - origin.x, y: xBasis.y - origin.y }, z: { x: zBasis.x - origin.x, y: zBasis.y - origin.y } },
                 // Bring the doorstep toward the center in the closer view without
                 // changing the full-island frame used for placement and overview.
-                center: closeView ? { x: project(pointFor(2.5, 1)).x * .45 + (atmosphere?.x ?? 0), y: fantasy ? 1.25 : atmosphere?.y ?? (canopyView ? .95 : 0) } : project(pointFor(center, ((content?.depth ?? 5) - 1) / 2)),
+                center: focusAtMount.current === 'house' ? project(pointFor(2.5, .6).add(new T.Vector3(0, .75, 0))) : closeView ? { x: project(pointFor(2.5, 1)).x * .45 + (atmosphere?.x ?? 0), y: fantasy ? 1.25 : atmosphere?.y ?? (canopyView ? .95 : 0) } : project(pointFor(center, ((content?.depth ?? 5) - 1) / 2)),
                 height: halfHeight * 2, aspect, bounds, regions: [ground],
             };
             const frame = cameraControls.setFrame(framing);
@@ -301,10 +303,10 @@ export default function LifeWorld({ waterReplay, onFrame, inspectShadow, observa
                     discoveryAt = performance.now();
                 } else if (currentPlacement || !discovery.current.enabled) collector?.pause();
                 const poses = content.audit();
-                poses.forEach((pose, i) => {
-                    const badge = emotes[i]; badge.hidden = !pose.reaction;
+                poses.forEach(pose => {
+                    const badge = emotes[['pokomoko', 'rabbit', 'otter'].indexOf(pose.id)]; badge.hidden = !pose.reaction;
                     if (!pose.reaction) return;
-                    const position = new T.Vector3(...pose.position).add(new T.Vector3(0, i === 1 ? 1.05 : .9, 0)).project(camera);
+                    const position = new T.Vector3(...pose.position).add(new T.Vector3(0, pose.id === 'rabbit' ? 1.05 : .9, 0)).project(camera);
                     badge.textContent = pose.reaction;
                     badge.style.left = `${(position.x + 1) / 2 * node.clientWidth}px`;
                     badge.style.top = `${(1 - position.y) / 2 * node.clientHeight}px`;

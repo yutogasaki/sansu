@@ -7,7 +7,7 @@ import { join, resolve } from 'node:path';
 import { build } from 'esbuild';
 
 // Execute the actual previous production writer against the same disposable IDB.
-const baseline = process.env.SANSU_LEGACY_REVISION || '67406a186e227ef3d66983d2b5dea72739c5d1db';
+const baseline = process.env.SANSU_LEGACY_REVISION || execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
 assert.match(baseline, /^[a-f0-9]{40}$/);
 const scratch = await mkdtemp(join(tmpdir(), 'sansu-legacy-writer-'));
 const archive = execFileSync('git', ['archive', baseline, 'src'], { maxBuffer: 32 * 1024 * 1024 });
@@ -30,9 +30,9 @@ try {
     record = await old.updateLife('legacy', [], { id: 'flower', revision: record.revision,
         command: { type: 'buy', kind: 'flower', cell: { x: 0, z: 2 } } }, 1003, database);
     const prior = structuredClone(record), state = old.replayLife(prior);
-    assert.equal(prior.version, 18);
+    assert.equal(prior.version, Number(process.env.SANSU_LEGACY_VERSION || 20));
     const migrated = await next.updateLife('legacy', [], undefined, 1003, database);
-    assert.equal(migrated.version, 20);
+    assert.equal(migrated.version, 21);
     for (const key of ['actions', 'credits', 'createdAt']) assert.deepEqual(migrated[key], prior[key]);
     assert.equal(next.replayLife(migrated).drops, state.drops);
     assert.deepEqual(next.replayLife(migrated).items, state.items);

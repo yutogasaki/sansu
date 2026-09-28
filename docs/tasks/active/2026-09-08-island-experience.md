@@ -1,7 +1,10 @@
 # 分析全体を、学ぶ・育つ・暮らす・試す体験へつなぐ
 
+**2026-09-29 整理:** この文書は採用項目の横断索引。独立の実装キューには数えず、残件の担当は[共有キュー](../../../.agents/tasks/TASKS.md)の4本に集約する。
+
+
 - Date: 2026-09-08
-- Review By: 2026-09-27
+- Review By: 2026-10-06
 - Status: Cross-cutting product goal — implementation continues through the specific queue tasks; Goal-style additional analysis remains stopped by user direction
 
 ## Goal

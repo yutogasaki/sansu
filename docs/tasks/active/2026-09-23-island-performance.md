@@ -1,5 +1,16 @@
 # Island / iPhone PWA performance
 
+## 2026-09-29 一括実装
+
+30品・3住人・同じ座標の比較で、静的家具と通路案内の描画を統合。実機iPhoneの起動/描画/電池負荷は未確認。最終値は223→110 calls（約51%減）、139,536 trianglesは同じ。phone/tabletのrAF P95は42.9/65.3msで、今回のdesktop実測は33.3ms基準未達。機能/描画回数のPASSをFPS達成と呼ばない。[実測](../../design/2026-09-29-island-community/render-comparison.json)。 [検証・main・公開状態](../../design/2026-09-29-island-community/README.md)。以下の棚卸し/過去記録と区別する。
+
+## 2026-09-29 棚卸し後の担当
+
+起動・長期不在・物が増えた島の性能をこのタスクへ集約。再生cache/GLB分散の実装は完了済み。残件は実iPhoneの30秒待ちの原因確認、同じ現行版での30品の描画予算と操作待ち。幻想の庭側で同じ性能作業を起票しない。
+
+最初に初回/保存済み/長期不在/30品を同じbuildで分けて測定し、再生・描画・読込ごとに対処する。端末待ちは共有BLOCKEDへ。以下は各時点の基準と履歴であり、過去のローカル改善を実機問題の解決とは扱わない。
+
+
 ## 2026-09-25 installed-iPhone follow-up (mitigation verified; real-device issue open)
 
 - User reports >30 seconds of white content after opening the home-screen icon, with bottom tabs visible and unresponsive. This is not reproduced on the actual device. `IslandSession` disables tabs during its opening transaction, so nonresponsive tabs alone do not prove a blocked JS thread.

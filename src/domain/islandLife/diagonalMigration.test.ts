@@ -62,7 +62,7 @@ describe('diagonal stroll cutover', () => {
             expect(await db.worlds.get(old.profileId)).toEqual(old); db.worlds.hook('updating').unsubscribe(fail);
             const saved = await updateLife(old.profileId, [], undefined, old.realAt, db);
             const again = await updateLife(old.profileId, [], undefined, old.realAt + 1000, db);
-            expect(saved.version).toBe(20); expect(again.diagonalCutover).toEqual(saved.diagonalCutover);
+            expect(saved.version).toBe(21); expect(again.diagonalCutover).toEqual(saved.diagonalCutover);
         } finally { await db.delete(); }
     });
     it('uses distance timing on open diagonals and skirts furniture and reserved positions', async () => {

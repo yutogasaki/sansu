@@ -1,0 +1,955 @@
+{
+  "before": {
+    "target": "http://127.0.0.1:5400",
+    "source": "Disposable UI-created profile, followed by an explicit pre-residency v20 owner (same three residents before/after), 200 synthetic credits and 30 legal purchases. Desktop Chromium viewport emulation, not real-phone FPS.",
+    "cases": [
+      {
+        "residents": [
+          "pokomoko",
+          "rabbit",
+          "otter"
+        ],
+        "items": [
+          {
+            "kind": "water-bowl",
+            "cell": {
+              "x": -3,
+              "z": 0
+            }
+          },
+          {
+            "kind": "water-channel",
+            "cell": {
+              "x": -2,
+              "z": 0
+            }
+          },
+          {
+            "kind": "planter",
+            "cell": {
+              "x": -1,
+              "z": 0
+            }
+          },
+          {
+            "kind": "flower",
+            "cell": {
+              "x": 0,
+              "z": 0
+            }
+          },
+          {
+            "kind": "sapling",
+            "cell": {
+              "x": 1,
+              "z": 0
+            }
+          },
+          {
+            "kind": "picnic-table",
+            "cell": {
+              "x": 4,
+              "z": 0
+            }
+          },
+          {
+            "kind": "lantern",
+            "cell": {
+              "x": 5,
+              "z": 0
+            }
+          },
+          {
+            "kind": "bench",
+            "cell": {
+              "x": 6,
+              "z": 0
+            }
+          },
+          {
+            "kind": "water-bowl",
+            "cell": {
+              "x": 7,
+              "z": 0
+            }
+          },
+          {
+            "kind": "water-channel",
+            "cell": {
+              "x": 8,
+              "z": 0
+            }
+          },
+          {
+            "kind": "planter",
+            "cell": {
+              "x": -3,
+              "z": 1
+            }
+          },
+          {
+            "kind": "flower",
+            "cell": {
+              "x": -2,
+              "z": 1
+            }
+          },
+          {
+            "kind": "sapling",
+            "cell": {
+              "x": -1,
+              "z": 1
+            }
+          },
+          {
+            "kind": "picnic-table",
+            "cell": {
+              "x": 0,
+              "z": 1
+            }
+          },
+          {
+            "kind": "lantern",
+            "cell": {
+              "x": 1,
+              "z": 1
+            }
+          },
+          {
+            "kind": "bench",
+            "cell": {
+              "x": 4,
+              "z": 1
+            }
+          },
+          {
+            "kind": "water-bowl",
+            "cell": {
+              "x": 5,
+              "z": 1
+            }
+          },
+          {
+            "kind": "water-channel",
+            "cell": {
+              "x": 6,
+              "z": 1
+            }
+          },
+          {
+            "kind": "planter",
+            "cell": {
+              "x": 7,
+              "z": 1
+            }
+          },
+          {
+            "kind": "flower",
+            "cell": {
+              "x": 8,
+              "z": 1
+            }
+          },
+          {
+            "kind": "sapling",
+            "cell": {
+              "x": -3,
+              "z": 2
+            }
+          },
+          {
+            "kind": "picnic-table",
+            "cell": {
+              "x": -2,
+              "z": 2
+            }
+          },
+          {
+            "kind": "lantern",
+            "cell": {
+              "x": -1,
+              "z": 2
+            }
+          },
+          {
+            "kind": "bench",
+            "cell": {
+              "x": 0,
+              "z": 2
+            }
+          },
+          {
+            "kind": "water-bowl",
+            "cell": {
+              "x": 1,
+              "z": 2
+            }
+          },
+          {
+            "kind": "water-channel",
+            "cell": {
+              "x": 2,
+              "z": 2
+            }
+          },
+          {
+            "kind": "planter",
+            "cell": {
+              "x": 3,
+              "z": 2
+            }
+          },
+          {
+            "kind": "flower",
+            "cell": {
+              "x": 5,
+              "z": 2
+            }
+          },
+          {
+            "kind": "sapling",
+            "cell": {
+              "x": 6,
+              "z": 2
+            }
+          },
+          {
+            "kind": "picnic-table",
+            "cell": {
+              "x": 7,
+              "z": 2
+            }
+          }
+        ],
+        "width": 390,
+        "startupMs": 2224.2982919999995,
+        "frames": {
+          "p50": 39.80000001192093,
+          "p95": 48.80000001192093,
+          "render": {
+            "calls": 223,
+            "triangles": 139536,
+            "geometries": 166,
+            "textures": 8
+          }
+        },
+        "itemCount": 30,
+        "learningPreserved": true,
+        "errors": []
+      },
+      {
+        "residents": [
+          "pokomoko",
+          "rabbit",
+          "otter"
+        ],
+        "items": [
+          {
+            "kind": "water-bowl",
+            "cell": {
+              "x": -3,
+              "z": 0
+            }
+          },
+          {
+            "kind": "water-channel",
+            "cell": {
+              "x": -2,
+              "z": 0
+            }
+          },
+          {
+            "kind": "planter",
+            "cell": {
+              "x": -1,
+              "z": 0
+            }
+          },
+          {
+            "kind": "flower",
+            "cell": {
+              "x": 0,
+              "z": 0
+            }
+          },
+          {
+            "kind": "sapling",
+            "cell": {
+              "x": 1,
+              "z": 0
+            }
+          },
+          {
+            "kind": "picnic-table",
+            "cell": {
+              "x": 4,
+              "z": 0
+            }
+          },
+          {
+            "kind": "lantern",
+            "cell": {
+              "x": 5,
+              "z": 0
+            }
+          },
+          {
+            "kind": "bench",
+            "cell": {
+              "x": 6,
+              "z": 0
+            }
+          },
+          {
+            "kind": "water-bowl",
+            "cell": {
+              "x": 7,
+              "z": 0
+            }
+          },
+          {
+            "kind": "water-channel",
+            "cell": {
+              "x": 8,
+              "z": 0
+            }
+          },
+          {
+            "kind": "planter",
+            "cell": {
+              "x": -3,
+              "z": 1
+            }
+          },
+          {
+            "kind": "flower",
+            "cell": {
+              "x": -2,
+              "z": 1
+            }
+          },
+          {
+            "kind": "sapling",
+            "cell": {
+              "x": -1,
+              "z": 1
+            }
+          },
+          {
+            "kind": "picnic-table",
+            "cell": {
+              "x": 0,
+              "z": 1
+            }
+          },
+          {
+            "kind": "lantern",
+            "cell": {
+              "x": 1,
+              "z": 1
+            }
+          },
+          {
+            "kind": "bench",
+            "cell": {
+              "x": 4,
+              "z": 1
+            }
+          },
+          {
+            "kind": "water-bowl",
+            "cell": {
+              "x": 5,
+              "z": 1
+            }
+          },
+          {
+            "kind": "water-channel",
+            "cell": {
+              "x": 6,
+              "z": 1
+            }
+          },
+          {
+            "kind": "planter",
+            "cell": {
+              "x": 7,
+              "z": 1
+            }
+          },
+          {
+            "kind": "flower",
+            "cell": {
+              "x": 8,
+              "z": 1
+            }
+          },
+          {
+            "kind": "sapling",
+            "cell": {
+              "x": -3,
+              "z": 2
+            }
+          },
+          {
+            "kind": "picnic-table",
+            "cell": {
+              "x": -2,
+              "z": 2
+            }
+          },
+          {
+            "kind": "lantern",
+            "cell": {
+              "x": -1,
+              "z": 2
+            }
+          },
+          {
+            "kind": "bench",
+            "cell": {
+              "x": 0,
+              "z": 2
+            }
+          },
+          {
+            "kind": "water-bowl",
+            "cell": {
+              "x": 1,
+              "z": 2
+            }
+          },
+          {
+            "kind": "water-channel",
+            "cell": {
+              "x": 2,
+              "z": 2
+            }
+          },
+          {
+            "kind": "planter",
+            "cell": {
+              "x": 3,
+              "z": 2
+            }
+          },
+          {
+            "kind": "flower",
+            "cell": {
+              "x": 5,
+              "z": 2
+            }
+          },
+          {
+            "kind": "sapling",
+            "cell": {
+              "x": 6,
+              "z": 2
+            }
+          },
+          {
+            "kind": "picnic-table",
+            "cell": {
+              "x": 7,
+              "z": 2
+            }
+          }
+        ],
+        "width": 768,
+        "startupMs": 2392.3316669999986,
+        "frames": {
+          "p50": 68.09999999403954,
+          "p95": 83.09999999403954,
+          "render": {
+            "calls": 223,
+            "triangles": 139536,
+            "geometries": 166,
+            "textures": 8
+          }
+        },
+        "itemCount": 30,
+        "learningPreserved": true,
+        "errors": []
+      }
+    ],
+    "pass": true
+  },
+  "after": {
+    "target": "http://127.0.0.1:5400",
+    "source": "Disposable UI-created profile, followed by an explicit pre-residency v20 owner (same three residents before/after), 200 synthetic credits and 30 legal purchases. Desktop Chromium viewport emulation, not real-phone FPS.",
+    "cases": [
+      {
+        "residents": [
+          "pokomoko",
+          "rabbit",
+          "otter"
+        ],
+        "items": [
+          {
+            "kind": "water-bowl",
+            "cell": {
+              "x": -3,
+              "z": 0
+            }
+          },
+          {
+            "kind": "water-channel",
+            "cell": {
+              "x": -2,
+              "z": 0
+            }
+          },
+          {
+            "kind": "planter",
+            "cell": {
+              "x": -1,
+              "z": 0
+            }
+          },
+          {
+            "kind": "flower",
+            "cell": {
+              "x": 0,
+              "z": 0
+            }
+          },
+          {
+            "kind": "sapling",
+            "cell": {
+              "x": 1,
+              "z": 0
+            }
+          },
+          {
+            "kind": "picnic-table",
+            "cell": {
+              "x": 4,
+              "z": 0
+            }
+          },
+          {
+            "kind": "lantern",
+            "cell": {
+              "x": 5,
+              "z": 0
+            }
+          },
+          {
+            "kind": "bench",
+            "cell": {
+              "x": 6,
+              "z": 0
+            }
+          },
+          {
+            "kind": "water-bowl",
+            "cell": {
+              "x": 7,
+              "z": 0
+            }
+          },
+          {
+            "kind": "water-channel",
+            "cell": {
+              "x": 8,
+              "z": 0
+            }
+          },
+          {
+            "kind": "planter",
+            "cell": {
+              "x": -3,
+              "z": 1
+            }
+          },
+          {
+            "kind": "flower",
+            "cell": {
+              "x": -2,
+              "z": 1
+            }
+          },
+          {
+            "kind": "sapling",
+            "cell": {
+              "x": -1,
+              "z": 1
+            }
+          },
+          {
+            "kind": "picnic-table",
+            "cell": {
+              "x": 0,
+              "z": 1
+            }
+          },
+          {
+            "kind": "lantern",
+            "cell": {
+              "x": 1,
+              "z": 1
+            }
+          },
+          {
+            "kind": "bench",
+            "cell": {
+              "x": 4,
+              "z": 1
+            }
+          },
+          {
+            "kind": "water-bowl",
+            "cell": {
+              "x": 5,
+              "z": 1
+            }
+          },
+          {
+            "kind": "water-channel",
+            "cell": {
+              "x": 6,
+              "z": 1
+            }
+          },
+          {
+            "kind": "planter",
+            "cell": {
+              "x": 7,
+              "z": 1
+            }
+          },
+          {
+            "kind": "flower",
+            "cell": {
+              "x": 8,
+              "z": 1
+            }
+          },
+          {
+            "kind": "sapling",
+            "cell": {
+              "x": -3,
+              "z": 2
+            }
+          },
+          {
+            "kind": "picnic-table",
+            "cell": {
+              "x": -2,
+              "z": 2
+            }
+          },
+          {
+            "kind": "lantern",
+            "cell": {
+              "x": -1,
+              "z": 2
+            }
+          },
+          {
+            "kind": "bench",
+            "cell": {
+              "x": 0,
+              "z": 2
+            }
+          },
+          {
+            "kind": "water-bowl",
+            "cell": {
+              "x": 1,
+              "z": 2
+            }
+          },
+          {
+            "kind": "water-channel",
+            "cell": {
+              "x": 2,
+              "z": 2
+            }
+          },
+          {
+            "kind": "planter",
+            "cell": {
+              "x": 3,
+              "z": 2
+            }
+          },
+          {
+            "kind": "flower",
+            "cell": {
+              "x": 5,
+              "z": 2
+            }
+          },
+          {
+            "kind": "sapling",
+            "cell": {
+              "x": 6,
+              "z": 2
+            }
+          },
+          {
+            "kind": "picnic-table",
+            "cell": {
+              "x": 7,
+              "z": 2
+            }
+          }
+        ],
+        "width": 390,
+        "startupMs": 2212.7797090000004,
+        "frames": {
+          "p50": 32.60000002384186,
+          "p95": 42.900000005960464,
+          "render": {
+            "calls": 110,
+            "triangles": 139536,
+            "geometries": 93,
+            "textures": 8
+          }
+        },
+        "itemCount": 30,
+        "learningPreserved": true,
+        "errors": []
+      },
+      {
+        "residents": [
+          "pokomoko",
+          "rabbit",
+          "otter"
+        ],
+        "items": [
+          {
+            "kind": "water-bowl",
+            "cell": {
+              "x": -3,
+              "z": 0
+            }
+          },
+          {
+            "kind": "water-channel",
+            "cell": {
+              "x": -2,
+              "z": 0
+            }
+          },
+          {
+            "kind": "planter",
+            "cell": {
+              "x": -1,
+              "z": 0
+            }
+          },
+          {
+            "kind": "flower",
+            "cell": {
+              "x": 0,
+              "z": 0
+            }
+          },
+          {
+            "kind": "sapling",
+            "cell": {
+              "x": 1,
+              "z": 0
+            }
+          },
+          {
+            "kind": "picnic-table",
+            "cell": {
+              "x": 4,
+              "z": 0
+            }
+          },
+          {
+            "kind": "lantern",
+            "cell": {
+              "x": 5,
+              "z": 0
+            }
+          },
+          {
+            "kind": "bench",
+            "cell": {
+              "x": 6,
+              "z": 0
+            }
+          },
+          {
+            "kind": "water-bowl",
+            "cell": {
+              "x": 7,
+              "z": 0
+            }
+          },
+          {
+            "kind": "water-channel",
+            "cell": {
+              "x": 8,
+              "z": 0
+            }
+          },
+          {
+            "kind": "planter",
+            "cell": {
+              "x": -3,
+              "z": 1
+            }
+          },
+          {
+            "kind": "flower",
+            "cell": {
+              "x": -2,
+              "z": 1
+            }
+          },
+          {
+            "kind": "sapling",
+            "cell": {
+              "x": -1,
+              "z": 1
+            }
+          },
+          {
+            "kind": "picnic-table",
+            "cell": {
+              "x": 0,
+              "z": 1
+            }
+          },
+          {
+            "kind": "lantern",
+            "cell": {
+              "x": 1,
+              "z": 1
+            }
+          },
+          {
+            "kind": "bench",
+            "cell": {
+              "x": 4,
+              "z": 1
+            }
+          },
+          {
+            "kind": "water-bowl",
+            "cell": {
+              "x": 5,
+              "z": 1
+            }
+          },
+          {
+            "kind": "water-channel",
+            "cell": {
+              "x": 6,
+              "z": 1
+            }
+          },
+          {
+            "kind": "planter",
+            "cell": {
+              "x": 7,
+              "z": 1
+            }
+          },
+          {
+            "kind": "flower",
+            "cell": {
+              "x": 8,
+              "z": 1
+            }
+          },
+          {
+            "kind": "sapling",
+            "cell": {
+              "x": -3,
+              "z": 2
+            }
+          },
+          {
+            "kind": "picnic-table",
+            "cell": {
+              "x": -2,
+              "z": 2
+            }
+          },
+          {
+            "kind": "lantern",
+            "cell": {
+              "x": -1,
+              "z": 2
+            }
+          },
+          {
+            "kind": "bench",
+            "cell": {
+              "x": 0,
+              "z": 2
+            }
+          },
+          {
+            "kind": "water-bowl",
+            "cell": {
+              "x": 1,
+              "z": 2
+            }
+          },
+          {
+            "kind": "water-channel",
+            "cell": {
+              "x": 2,
+              "z": 2
+            }
+          },
+          {
+            "kind": "planter",
+            "cell": {
+              "x": 3,
+              "z": 2
+            }
+          },
+          {
+            "kind": "flower",
+            "cell": {
+              "x": 5,
+              "z": 2
+            }
+          },
+          {
+            "kind": "sapling",
+            "cell": {
+              "x": 6,
+              "z": 2
+            }
+          },
+          {
+            "kind": "picnic-table",
+            "cell": {
+              "x": 7,
+              "z": 2
+            }
+          }
+        ],
+        "width": 768,
+        "startupMs": 2283.7157920000027,
+        "frames": {
+          "p50": 55.099999994039536,
+          "p95": 65.30000001192093,
+          "render": {
+            "calls": 110,
+            "triangles": 139536,
+            "geometries": 93,
+            "textures": 8
+          }
+        },
+        "itemCount": 30,
+        "learningPreserved": true,
+        "errors": []
+      }
+    ],
+    "pass": true
+  },
+  "identicalItemsAndResidents": true,
+  "scope": "Rendering submission counts compare the same 30 purchases and three residents. Baseline timing was collected alongside unit tests; final timing was isolated. Do not attribute timing differences or physical-device FPS to this change.",
+  "pass": true
+}

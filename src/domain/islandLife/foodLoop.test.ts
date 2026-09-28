@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { advanceLifeState, arrangeVisits, replayLife } from './simulation';
 import { arrangeFoodTrip, beginFoodLoop, cancelFoodTrip, foodGrowthConditions, foodInventory, growFood, syncFoodItems } from './foodLoop';
-import { newLife, type LifeItem } from './model';
+import { HOUR, newLife, type LifeItem } from './model';
 
 function fixture() {
     const state = replayLife(newLife('food', 0));
@@ -133,4 +133,16 @@ describe('food on the current island', () => {
         arrangeVisits(state);
         expect(state.residents.some(r => r.visit?.itemId === 'table')).toBe(true);
     });
+});
+
+it('lets a new solo island supply its first invitation while keeping the hero call available', () => {
+    const s = fixture(); s.residency = { joined: [], invitations: {} }; s.residents = s.residents.slice(0, 1);
+    s.residents[0].visit = undefined; s.target = 'table'; growFood(s, 6);
+    arrangeFoodTrip(s); expect(s.residents[0].foodTrip).toBeUndefined();
+    s.target = undefined; arrangeFoodTrip(s); expect(s.residents[0].foodTrip?.sourceId).toBe('herbs');
+    advanceLifeState(s, 7 * HOUR);
+    expect(s.food!.delivered).toBeGreaterThanOrEqual(3); expect(s.food!.eaten).toBeGreaterThanOrEqual(3);
+    expect(s.residency.invitations.rabbit?.reason).toBe('shared-meal');
+    expect(s.residency.invitations.otter?.reason).toBe('shared-meal');
+    expect(foodInventory(s) + s.food!.eaten).toBe(s.food!.harvested);
 });
