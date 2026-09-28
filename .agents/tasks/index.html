@@ -553,7 +553,13 @@ main `4002e67b` から本番へ反映済み。公開URLの390/768幅で初回学
 ### Risks
 
 - 「全体」を広げすぎて島v3、家、Nature Town、ブランド外部確認の既存ownerを複製しない。横断の証拠づくりと未所有の共通操作課題に集中する。
-</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">2・性能</h2><div class="grid"><article class="card" data-search="起動と物が増えた島の軽量化：起動cacheを維持。3住人・同じ30品を223→110 callsへ軽量化。desktop p95は42.9/65.3msで33.3ms未達 次：残るフレーム時間を調べ、実iphoneの起動・描画/電池負荷を同じ端末で確認 docs/tasks/active/2026-09-23-island-performance.md # island / iphone pwa performance
+</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">2・性能</h2><div class="grid"><article class="card" data-search="起動と物が増えた島の軽量化：同じ30品の絵を保持し、raycast cpuを約84〜85%削減。最新desktop p95は37.8/55.3msで33.3ms未達 次：実iphoneの起動・描画/電池負荷と、残るフレーム時間を同じ端末で確認 docs/tasks/active/2026-09-23-island-performance.md # island / iphone pwa performance
+
+## 2026-09-29 遮蔽判定の軽量化
+
+ユーザーの「実装」に対応。cpu profileで重かったraycastを、同じ結合三角形への部品単位の範囲判定で軽量化した。キャラクター・素材・照明・解像度・発見条件・保存21/学習v8を保持する内部改善で、製品仕様は変更しない。[実測と検証](../../design/2026-09-29-island-frame-performance/readme.md)。
+
+同じ所有者/配置を復元したproductionの125フレームでraycast cpuは390幅575→92ms、768幅846→129ms（約84〜85%減）。cpu profileと別の単独短時間計測でraf p95は50.2→37.8ms / 66.9→55.3ms。両版127 calls・149,716 trianglesは同一。以前の110 callsとは別の固定fixture。いずれも33.3ms未達で、実iphoneの起動・描画・電池負荷は未確認。cpu軽量化を実機fpsや30秒起動待ち解消とは扱わない。
 
 ## 2026-09-29 一括実装
 
@@ -664,7 +670,13 @@ this is a performance implementation within the existing product rules, so the p
 - life-enabled `verify:core` passed: 460 files / 4,168 tests, lint (one existing islandmilestone fast-refresh warning), typecheck, build and asset budget. the production decorations journey passed at 390×844 and 768×1024 (tablet reduced motion): six real answers, earned purchase, rotate/move/store/re-place, abort/retry, offline reload and learning return, followed by a separate synthetic 30-item stress fixture. both stress scenes loaded 34 instances from eight glbs, retained 17 textures, switched lod, and had no page errors. phone placement and tablet stress screenshots were inspected for visible props/residents and controls.
 - local browser evidence: `output/playwright/runtime-props-20260924/browser/report.json`; operation-count diagnostic: `output/playwright/runtime-props-20260924/clone-count.json`. target `http://127.0.0.1:5298`, version `development-local:b761cc63-f444-40d7-8107-d092ddce3f07`, app/dist/harness fingerprint `3583321974cb0a09960d6a6867689645af002eb229fdd61c18efa28b46892671` matched at start/end. delivery island/life enabled, life preview/buildplay disabled; runtime assets `island-life-runtime-assets-v3`, home props `island-home-props-v1`.
 - this local renderer change is complete. no deployment, real iphone timing, new art approval, child comprehension/replay assessment or full release-matrix pass is claimed. ongoing per-frame rendering costs and installed-device measurement remain separate follow-ups.
-"><h2><a href="../../docs/tasks/active/2026-09-23-island-performance.md">起動と物が増えた島の軽量化：起動cacheを維持。3住人・同じ30品を223→110 callsへ軽量化。desktop P95は42.9/65.3msで33.3ms未達 次：残るフレーム時間を調べ、実iPhoneの起動・描画/電池負荷を同じ端末で確認</a></h2><p class="path">docs/tasks/active/2026-09-23-island-performance.md</p><p>main `4002e67b` から本番へ反映済み。公開URLの390/768幅で初回学習・購入・招待・庭と家・実SW offline・同じ学習の再開を確認。実機/参加者確認は別。 30品・3住人・同じ座標の比較で、静的家具と通路案内の描画を統合。実機iPhoneの起動/描画/電池負荷は未確認。最終値は223→110 calls（約51%減）、139,536 trianglesは同じ。phone/tabletのrAF</p><details><summary>詳細を読む</summary><pre># Island / iPhone PWA performance
+"><h2><a href="../../docs/tasks/active/2026-09-23-island-performance.md">起動と物が増えた島の軽量化：同じ30品の絵を保持し、raycast CPUを約84〜85%削減。最新desktop P95は37.8/55.3msで33.3ms未達 次：実iPhoneの起動・描画/電池負荷と、残るフレーム時間を同じ端末で確認</a></h2><p class="path">docs/tasks/active/2026-09-23-island-performance.md</p><p>ユーザーの「実装」に対応。CPU profileで重かったraycastを、同じ結合三角形への部品単位の範囲判定で軽量化した。キャラクター・素材・照明・解像度・発見条件・保存21/学習v8を保持する内部改善で、製品仕様は変更しない。[実測と検証](../../design/2026-09-29-island-frame-performance/README.md)。 同じ所有者/配置を復元したproductionの1</p><details><summary>詳細を読む</summary><pre># Island / iPhone PWA performance
+
+## 2026-09-29 遮蔽判定の軽量化
+
+ユーザーの「実装」に対応。CPU profileで重かったraycastを、同じ結合三角形への部品単位の範囲判定で軽量化した。キャラクター・素材・照明・解像度・発見条件・保存21/学習v8を保持する内部改善で、製品仕様は変更しない。[実測と検証](../../design/2026-09-29-island-frame-performance/README.md)。
+
+同じ所有者/配置を復元したproductionの125フレームでraycast CPUは390幅575→92ms、768幅846→129ms（約84〜85%減）。CPU profileと別の単独短時間計測でrAF P95は50.2→37.8ms / 66.9→55.3ms。両版127 calls・149,716 trianglesは同一。以前の110 callsとは別の固定fixture。いずれも33.3ms未達で、実iPhoneの起動・描画・電池負荷は未確認。CPU軽量化を実機FPSや30秒起動待ち解消とは扱わない。
 
 ## 2026-09-29 一括実装
 
@@ -1149,6 +1161,8 @@ main `4002e67b` から本番へ反映済み。公開URLの390/768幅で初回学
 親仕様、現行v8の実装marker・検証記録、mainの履歴、タスクとポータルの生成元を照合しました。新しい本番操作・実機観察・子どもの評価は行っていません。過去の合格を今回の新しい合格として記録しません。
 </pre></details></article><article class="card" data-search="shared done index .agents/tasks/done.md # shared done index
 
+- 2026-09-29: 元の庭とぽこもこを保持し、実形状のraycast cpuを約84〜85%削減。core4,283 testsと同じ保存の比較を確認。33.3ms目標・実iphoneは継続 -&gt; `docs/done/2026-09.md`
+
 - 2026-09-29: 庭と家の連続表示、自然の来訪/入居、保存21、30品223→110 callsを一括実装・本番反映。既存ぽこもこ・住人・所有・学習を保持し、実操作/更新/offlineと固定80 runを確認。フレーム時間と実機/利用者評価は継続 -&gt; `docs/done/2026-09.md`
 
 - 2026-09-29: タスクを4担当へ整理し、実装済み・確認待ち・比較資料とポータルを同期 -&gt; `docs/done/2026-09.md`
@@ -1314,7 +1328,9 @@ durable completion history and verification facts still belong in `docs/done/yyy
 - 2026-09-09 写真の読込/削除中断・家への帰還・空報酬・短い横向き撮影を改善。4サイズ/3440unit通過 -&gt; docs/done/2026-09.md
 
 - 2026-09-27: 手元変更のbackupと最新mainへの整理。公開済み保存/報酬/ぽこもこを維持し、旧試作・入口と資料を整理 -&gt; `docs/done/2026-09.md`
-"><h2><a href="DONE.md">Shared Done Index</a></h2><p class="path">.agents/tasks/DONE.md</p><p>- 2026-09-29: 庭と家の連続表示、自然の来訪/入居、保存21、30品223→110 callsを一括実装・本番反映。既存ぽこもこ・住人・所有・学習を保持し、実操作/更新/offlineと固定80 runを確認。フレーム時間と実機/利用者評価は継続 -&gt; `docs/done/2026-09.md` - 2026-09-29: タスクを4担当へ整理し、実装済み・確認待ち・比較資料とポータルを同期 -&gt; `d</p><details><summary>詳細を読む</summary><pre># Shared Done Index
+"><h2><a href="DONE.md">Shared Done Index</a></h2><p class="path">.agents/tasks/DONE.md</p><p>- 2026-09-29: 元の庭とぽこもこを保持し、実形状のraycast CPUを約84〜85%削減。core4,283 testsと同じ保存の比較を確認。33.3ms目標・実iPhoneは継続 -&gt; `docs/done/2026-09.md` - 2026-09-29: 庭と家の連続表示、自然の来訪/入居、保存21、30品223→110 callsを一括実装・本番反映。既存ぽこもこ・住人・所有・学習を保持し、</p><details><summary>詳細を読む</summary><pre># Shared Done Index
+
+- 2026-09-29: 元の庭とぽこもこを保持し、実形状のraycast CPUを約84〜85%削減。core4,283 testsと同じ保存の比較を確認。33.3ms目標・実iPhoneは継続 -&gt; `docs/done/2026-09.md`
 
 - 2026-09-29: 庭と家の連続表示、自然の来訪/入居、保存21、30品223→110 callsを一括実装・本番反映。既存ぽこもこ・住人・所有・学習を保持し、実操作/更新/offlineと固定80 runを確認。フレーム時間と実機/利用者評価は継続 -&gt; `docs/done/2026-09.md`
 

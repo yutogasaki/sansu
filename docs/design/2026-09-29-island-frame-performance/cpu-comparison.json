@@ -1,0 +1,36 @@
+{
+  "scope": "Production Chromium, same restored native IndexedDB owner and layout; wall anchor rebased, logical history preserved; 125 rAF frames with CPU sampling. Each sample counted once if a raycast ancestor exists. Profiling overhead included, not timing acceptance.",
+  "fixtureSource": "output/frame-perf-20260929/paired-before",
+  "layoutAndRenderCountsEqual": true,
+  "analysis": "Ancestor names match /(^|\\.)raycast$/ or exactly _computeIntersections. Raw .cpuprofile files under output/frame-perf-20260929/quiet-profile-{before,after}.",
+  "cases": [
+    {
+      "width": 390,
+      "phase": "before",
+      "durationMs": 5099.499,
+      "raycastMs": 575.0989999999995,
+      "triangleLoopMs": 563.0819999999997
+    },
+    {
+      "width": 390,
+      "phase": "after",
+      "durationMs": 4611.362,
+      "raycastMs": 91.60699999999999,
+      "triangleLoopMs": 73.90900000000002
+    },
+    {
+      "width": 768,
+      "phase": "before",
+      "durationMs": 7453.61,
+      "raycastMs": 845.7359999999991,
+      "triangleLoopMs": 842.7299999999991
+    },
+    {
+      "width": 768,
+      "phase": "after",
+      "durationMs": 6739.919,
+      "raycastMs": 128.84500000000003,
+      "triangleLoopMs": 109.114
+    }
+  ]
+}

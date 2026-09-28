@@ -1,6 +1,7 @@
 import * as T from 'three';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
+import { partitionStaticRaycast } from './staticRaycast';
 
 export type V3 = [number, number, number];
 /** Deterministic variation: presentation must not consume a simulation random seed. */
@@ -75,6 +76,7 @@ export class GardenGeometry {
             if (!merged) continue;
             meshes.forEach(mesh => { mesh.geometry.dispose(); mesh.removeFromParent(); });
             const combined = this.mesh(merged, material, [0, 0, 0], parent);
+            partitionStaticRaycast(combined, geometries.map(geometry => ({ count: geometry.attributes.position.count })));
             combined.castShadow = meshes.some(mesh => mesh.castShadow);
             combined.receiveShadow = meshes.some(mesh => mesh.receiveShadow);
         }

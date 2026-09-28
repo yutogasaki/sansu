@@ -1,5 +1,6 @@
 import * as T from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
+import { partitionStaticRaycast } from './staticRaycast';
 
 /** Consolidate only direct, unanimated item meshes. Named seats, harvests,
  * anchors and animated descendants remain attached to their original items. */
@@ -31,19 +32,10 @@ export function batchStaticGardenItems(root: T.Group, containers: T.Group[]) {
         // Keep authored item bounds and anchors for framing and discovery. They
         // are excluded from rendering; ray hits come from the actual merged
         // triangles and are attributed back to their source item.
-        const ends: number[] = []; let triangles = 0;
-        for (const part of meshes) {
-            triangles += (part.geometry.index?.count ?? part.geometry.attributes.position.count) / 3;
-            ends.push(triangles); part.layers.set(31);
-        }
-        const raycast = mesh.raycast.bind(mesh);
-        mesh.raycast = (ray, hits) => {
-            const actual: T.Intersection[] = []; raycast(ray, actual);
-            for (const hit of actual) {
-                const index = ends.findIndex(end => (hit.faceIndex ?? -1) < end);
-                if (index >= 0) hits.push({ ...hit, object: meshes[index] });
-            }
-        };
+        partitionStaticRaycast(mesh, meshes.map(part => ({
+            count: part.geometry.index?.count ?? part.geometry.attributes.position.count, object: part,
+        })));
+        for (const part of meshes) part.layers.set(31);
         root.add(mesh); geometries.push(merged);
     }
     return () => geometries.forEach(geometry => geometry.dispose());

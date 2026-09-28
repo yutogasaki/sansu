@@ -213,6 +213,8 @@ If a task spans more than one change type, use the stricter row.
 
 `tools/e2e-island-fantasy-load.mjs` は `SANSU_FANTASY_LOAD_URL` と新しい `SANSU_FANTASY_LOAD_OUTPUT` を指定する。30品は合成creditの明示fixture。表示・学習復帰・学習正本の保持とrender指標を記録し、functional PASSを描画予算・実機FPSのPASSに読み替えない。[今回の対象と結果](../design/2026-09-27-fantasy-production/README.md)。
 
+2026-09-29: 出力した隔離プロフィールのnative IndexedDBを `SANSU_FANTASY_LOAD_REUSE` で別buildへ復元できる。比較の両側へ同じ元出力を指定し、論理時刻・所有者・履歴は保持してLifeの実時刻anchorだけを実行開始へ合わせる。前後のitems/座標/住人とrender countsを必ず照合する。別所有者で置けるマスが変わる比較や他の全体テストと重なった計測は棄却する。`SANSU_FANTASY_LOAD_PROFILE=1` はCPU診断で、通常のフレーム計測とは分ける。DEVは `SANSU_FANTASY_LOAD_DATABASE=SansuIslandLifePreviewV1` を明示し、本番保存と混同しない。[同じ保存での前後比較](../design/2026-09-29-island-frame-performance/README.md)。
+
 `tools/e2e-island-fantasy-production.mjs` は固定manifestの公開URLで、実初回設定・4問・購入/配置・SW offline/再起動を確認する。`SANSU_FANTASY_WORKER_DELAY_MS=3500` はWorker取得を遅らせる故障診断で、実際に遅延したrequestを記録する。通常取得と別の結果にし、学習前の合成creditや保存の直接書込で初回の競合を隠さない。
 
 
