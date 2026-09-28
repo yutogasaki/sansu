@@ -388,3 +388,14 @@ it.each(['BUTTON', 'A'])('leaves Enter on a focused %s to the native action', ta
     h.key('Enter');
     expect(h.props.onAnswer).toHaveBeenCalledWith('12');
 });
+
+describe('opt-in compact keypad', () => {
+    it('passes the layout through while completing and saving a written answer once', () => {
+        const h = harness({}, { keypadLayout: 'compact-three', deferSubmission: false });
+        expect(h.keypad().layout).toBe('compact-three');
+        h.keypad().onInput(9); h.render();
+        h.keypad().onInput(2); h.render();
+        expect(h.props.onAnswer).toHaveBeenCalledOnce();
+        expect(h.props.onAnswer).toHaveBeenCalledWith(['2', '9']);
+    });
+});

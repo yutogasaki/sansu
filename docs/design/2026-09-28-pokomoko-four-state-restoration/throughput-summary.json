@@ -1,0 +1,77 @@
+{
+  "pass": true,
+  "evidence": {
+    "eligible": true,
+    "confidence": "formal repeated UI timing; automated keyboard throughput, not child behavior evidence",
+    "productionPlannerEvidence": false,
+    "userLearningStateTouched": false
+  },
+  "comparisons": [
+    {
+      "layout": "phone",
+      "studyMedianProblemsPerMinute": 126.67230811213544,
+      "islandMedianProblemsPerMinute": 265.6345873579105,
+      "allCorrectIslandToStudyRatio": 2.0970217667681563,
+      "correctOperableP95Ms": 308,
+      "incorrectRetryP95Ms": 269.1000000089407,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 294,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 393,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4736.649999991059,
+      "rawIslandDurationMedianMs": 2258.75
+    },
+    {
+      "layout": "tablet",
+      "studyMedianProblemsPerMinute": 124.39487079815689,
+      "islandMedianProblemsPerMinute": 278.48247818167727,
+      "allCorrectIslandToStudyRatio": 2.238697434989445,
+      "correctOperableP95Ms": 244.70000000298023,
+      "incorrectRetryP95Ms": 204.59999999403954,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 249.79999999701977,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 268.19999998807907,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4823.35000000149,
+      "rawIslandDurationMedianMs": 2154.5500000044703
+    }
+  ],
+  "gates": {
+    "tenAlternatingRepetitions": true,
+    "allCorrectIslandThroughputNotBelowStudy": true,
+    "correctP95AtMost650Ms": true,
+    "incorrectP95AtMost550Ms": true,
+    "sectionBoundaryP95AtMost650Ms": true,
+    "twentySameQuestionIncorrectSamplesPerLayout": true,
+    "noExtraOrdinaryQuestionActions": true,
+    "automaticSectionBoundaryIncluded": true,
+    "emptyInputAfterEveryTransition": true,
+    "initialIslandControlsUsable": true,
+    "exactFixtureAndAtomicReceipts": true,
+    "phoneAndTablet": true,
+    "noBrowserErrors": true,
+    "oneRenderedBuildAndCandidate": true,
+    "sourceFilesUnchangedDuringBenchmark": true
+  },
+  "repetitions": 10,
+  "buildSource": {
+    "path": "/Users/yutogasaki/Projects/sansu/output/playwright/pop-v7-final/dev-source.json",
+    "manifestSHA": "f9729fd009e0853a625bb0a2f7cf3108a1db63eb1294cf34f56ffe22a5d120bb",
+    "sourceHash": "4714e75cabdd10bb2e2b0aabbdb5264406886e31e00b8ac54481e858b2a9d743",
+    "revision": "485dba3-pop-v7-working",
+    "flags": {
+      "VITE_ISLAND_ENABLED": true,
+      "VITE_ISLAND_LIFE_ENABLED": false,
+      "VITE_ISLAND_FANTASY_ENABLED": false
+    }
+  },
+  "raw": "output/playwright/pop-v7-final/throughput.json",
+  "sha256": "b498c40276f4c673f38188d9c968e6c1a291d699a3a7105438c0e09dba863632",
+  "runCount": 80,
+  "sourceStart": "f61b75e128cf777d2f905e3d2d933f005428d42e07b387a7ca3914b05d218c5d",
+  "sourceEnd": "f61b75e128cf777d2f905e3d2d933f005428d42e07b387a7ca3914b05d218c5d"
+}

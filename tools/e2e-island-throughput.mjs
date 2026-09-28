@@ -68,7 +68,7 @@ const report = {
         learningDifference: 'Island records the real atomic writer and reward receipts in its disposable profile. Study uses its existing nonrecording DEV fixture. Neither lane reads or changes a real user profile.',
         islandTail: 'Six slots in each of two newly saved sets, after the declared synthetic existing-island baseline. Only the first four slots of the second new set are answered. Two repeated fixture tail slots remain pending and unsubmitted.',
         missDifference: 'Island retries and corrects Q4/Q8 on the same saved Problem. Study retains its correction panel and explicit next action. Only all-correct throughput is compared for the >=1.0 gate.',
-        rendering: 'Both lanes use reduced-motion and sound off. Before timed input, every initial Island keypad control must fit and preserve a 44px target; active digit/edit keys must receive a center hit, while empty submit must remain disabled. Normal-motion, touch and full-input fidelity are separate Island E2E gates.',
+        rendering: 'Both lanes use reduced-motion and sound off. Before timed input, every initial Island keypad control must fit and preserve a 44px target; active digit/edit keys must receive a center hit, the automatic three-column keypad has no redundant submit key and preserves 789 / 456 / 123 / delete-0-clear ordering. Normal-motion, touch and full-input fidelity are separate Island E2E gates.',
     },
     runs: [], comparisons: [], gates: {}, evidence: {}, pass: false, browserClosed: false,
 };
@@ -124,9 +124,30 @@ async function waitStudy(page, index) {
     }, { fixture: FIXTURE, index });
 }
 
+const compactKeyOrder = ['7', '8', '9', '4', '5', '6', '1', '2', '3', 'ひとつ もどす', '0', 'こたえを けす'];
+function hasCompactKeyGeometry(controls) {
+    if (controls.length !== compactKeyOrder.length || controls.some((control, index) => control.name !== compactKeyOrder[index])) return false;
+    return controls.every(({ box }, index) => {
+        const column = index % 3;
+        const rowStart = Math.floor(index / 3) * 3;
+        return Math.abs(box.y - controls[rowStart].box.y) <= 2
+            && Math.abs(box.x - controls[column].box.x) <= 2
+            && (column === 0 || box.x >= controls[index - 1].box.x + controls[index - 1].box.width - 1)
+            && (index < 3 || box.y >= controls[index - 3].box.y + controls[index - 3].box.height - 1);
+    });
+}
+
 async function assertLayout(page, lane) {
     const controls = [];
-    for (const name of ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0', 'こたえを けす', 'ひとつ もどす', 'こたえる']) {
+    if (lane === 'island') {
+        const keypad = page.locator('.park-answer[data-answer-completion=automatic] [data-keypad-layout=compact-three]');
+        assert.equal(await keypad.count(), 1, 'Island fixed-ten must use the automatic three-column keypad');
+        assert.deepEqual(await keypad.locator('button').evaluateAll(keys => keys.map(key => key.getAttribute('aria-label'))),
+            compactKeyOrder, 'Island DOM and tab order must be 789 / 456 / 123 / delete-0-clear');
+        assert.equal(await keypad.locator('[data-keypad-submit]').count(), 0, 'Automatic compact input must not add a redundant submit key');
+    }
+    const names = lane === 'island' ? compactKeyOrder : ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0', 'こたえを けす', 'ひとつ もどす', 'こたえる'];
+    for (const name of names) {
         const control = button(page, name);
         const box = await control.boundingBox();
         const viewport = page.viewportSize();
@@ -140,11 +161,11 @@ async function assertLayout(page, lane) {
         if (lane === 'island') {
             assert(box.width >= 44 && box.height >= 44,
                 `Island initial control ${name} must preserve the 44px touch target: ${JSON.stringify(box)}`);
-            if (name === 'こたえる') assert(interaction.disabled, 'The empty initial answer cannot be submitted');
-            else assert(interaction.hit && !interaction.disabled, `Island initial control ${name} must receive a real center hit`);
+            assert(interaction.hit && !interaction.disabled, `Island initial control ${name} must receive a real center hit`);
         }
         controls.push({ name, box, ...interaction });
     }
+    if (lane === 'island') assert(hasCompactKeyGeometry(controls), 'Island visual grid must preserve 789 / 456 / 123 / delete-0-clear rows');
     return controls;
 }
 
@@ -202,8 +223,9 @@ async function armAnswer(page, lane, index, wrong, automatic, digitCount) {
 
 async function submit(page, lane, index, wrong = false) {
     const digits = String(answers[index] + (wrong ? 1 : 0));
-    const automatic = await page.locator('[data-keypad-submit]').getAttribute('data-confirmation-mode') === 'automatic'
-        || lane === 'island' && await page.locator('.park-answer').getAttribute('data-answer-completion') === 'automatic';
+    const automatic = lane === 'island'
+        ? await page.locator('.park-answer').getAttribute('data-answer-completion') === 'automatic'
+        : await page.locator('[data-keypad-submit]').getAttribute('data-confirmation-mode') === 'automatic';
     await armAnswer(page, lane, index, wrong, automatic, digits.length);
     await page.keyboard.type(digits);
     if (!automatic) await page.keyboard.press('Enter');
@@ -415,14 +437,14 @@ function summarize() {
             run.samples.filter(sample => sample.boundary && !sample.terminal && sample.nextPlanId === sample.expectedNextPlanId && sample.nextRevision === 0).length === 1),
         emptyInputAfterEveryTransition: report.runs.every(run => run.samples.every(sample => sample.inputEmpty)),
         initialIslandControlsUsable: report.runs.filter(run => run.lane === 'island')
-            .every(run => run.controls.length === 13 && run.controls.every(control => control.box.width >= 44 && control.box.height >= 44
-                && (control.name === 'こたえる' ? control.disabled : control.hit && !control.disabled))),
+            .every(run => hasCompactKeyGeometry(run.controls) && run.controls.every(control => control.box.width >= 44 && control.box.height >= 44
+                && control.hit && !control.disabled)),
         exactFixtureAndAtomicReceipts: report.runs.every(run => run.questions.length === 10 && run.persistence),
         phoneAndTablet: layouts.length === 2,
         noBrowserErrors: report.runs.every(run => run.errors.length === 0),
         oneRenderedBuildAndCandidate: report.runtime.revisions.length === 1 && report.runtime.versions.length === 1
             && report.runtime.candidates.length === 1 && report.runtime.candidates[0] === 'mystic-island-shore-garden-v18'
-            && report.runtime.learningCandidates.length === 1 && report.runtime.learningCandidates[0] === 'pokomoko-pop-live-v5',
+            && report.runtime.learningCandidates.length === 1 && report.runtime.learningCandidates[0] === 'pokomoko-pop-live-v7',
         sourceFilesUnchangedDuringBenchmark: report.sourceSnapshotStart.hash === report.sourceSnapshotEnd.hash,
     };
     report.evidence = { eligible: report.gates.tenAlternatingRepetitions && report.gates.twentySameQuestionIncorrectSamplesPerLayout

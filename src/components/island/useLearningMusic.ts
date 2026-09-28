@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
 import type { IslandLearningFeedback } from './learningFeedback';
 import { createLearningMusic } from './learningMusic';
+import { subscribeLearningMusicGesture } from './learningMusicGesture';
 
 export interface LearningMusicOptions {
     active: boolean;
@@ -15,16 +16,37 @@ export interface LearningMusicOptions {
 export function useLearningMusic({ active, enabled, level, reach, feedback }: LearningMusicOptions) {
     const owner = useRef<ReturnType<typeof createLearningMusic> | undefined>(undefined);
     const allowed = useRef(active && enabled), seen = useRef(feedback?.id), inputRevision = useRef(0);
+    const available = useRef(active);
+    const gestureRevision = useRef(0);
     useLayoutEffect(() => {
         const audio = createLearningMusic(); owner.current = audio;
         audio.setActive(allowed.current && !document.hidden);
         return () => { owner.current = undefined; audio.dispose(); };
     }, []);
     useLayoutEffect(() => {
+        available.current = active;
         allowed.current = active && enabled;
         if (!allowed.current) inputRevision.current++;
         owner.current?.setActive(allowed.current && !document.hidden);
     }, [active, enabled]);
+    useLayoutEffect(() => subscribeLearningMusicGesture(next => {
+        const audio = owner.current;
+        if (!audio || !available.current || document.hidden) return;
+        if (next && navigator.userActivation?.isActive === false) return;
+        if (!next) inputRevision.current++;
+        audio.setActive(next);
+        const revision = ++gestureRevision.current;
+        return {
+            result: next ? audio.unlock() : Promise.resolve(true),
+            cancel: () => {
+                if (owner.current !== audio || revision !== gestureRevision.current) return;
+                gestureRevision.current++;
+                inputRevision.current++;
+                audio.stop();
+                audio.setActive(allowed.current && !document.hidden);
+            },
+        };
+    }), []);
     useLayoutEffect(() => { owner.current?.setIntensity(level, reach); }, [level, reach]);
     useEffect(() => {
         const visibility = () => { inputRevision.current++; owner.current?.setActive(allowed.current && !document.hidden); };

@@ -1,0 +1,77 @@
+{
+  "raw": "output/playwright/pop-v6-final/throughput-verified.json",
+  "sha256": "c16878e7f935bdedd5445e06b81c6a7de9dcc4db86e99c6d09a38aef85c1735b",
+  "pass": true,
+  "evidence": {
+    "eligible": true,
+    "confidence": "formal repeated UI timing; automated keyboard throughput, not child behavior evidence",
+    "productionPlannerEvidence": false,
+    "userLearningStateTouched": false
+  },
+  "comparisons": [
+    {
+      "layout": "phone",
+      "studyMedianProblemsPerMinute": 124.72722536523864,
+      "islandMedianProblemsPerMinute": 274.8126557695563,
+      "allCorrectIslandToStudyRatio": 2.2033093012758247,
+      "correctOperableP95Ms": 250.5,
+      "incorrectRetryP95Ms": 207.90000000596046,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 264,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 317.30000001192093,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4810.5,
+      "rawIslandDurationMedianMs": 2183.3499999940395
+    },
+    {
+      "layout": "tablet",
+      "studyMedianProblemsPerMinute": 124.42977861633327,
+      "islandMedianProblemsPerMinute": 273.21010635272467,
+      "allCorrectIslandToStudyRatio": 2.1956971184135963,
+      "correctOperableP95Ms": 271.40000000596046,
+      "incorrectRetryP95Ms": 240,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 256.40000000596046,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 353,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4822,
+      "rawIslandDurationMedianMs": 2196.2000000029802
+    }
+  ],
+  "gates": {
+    "tenAlternatingRepetitions": true,
+    "allCorrectIslandThroughputNotBelowStudy": true,
+    "correctP95AtMost650Ms": true,
+    "incorrectP95AtMost550Ms": true,
+    "sectionBoundaryP95AtMost650Ms": true,
+    "twentySameQuestionIncorrectSamplesPerLayout": true,
+    "noExtraOrdinaryQuestionActions": true,
+    "automaticSectionBoundaryIncluded": true,
+    "emptyInputAfterEveryTransition": true,
+    "initialIslandControlsUsable": true,
+    "exactFixtureAndAtomicReceipts": true,
+    "phoneAndTablet": true,
+    "noBrowserErrors": true,
+    "oneRenderedBuildAndCandidate": true,
+    "sourceFilesUnchangedDuringBenchmark": true
+  },
+  "runCount": 80,
+  "repetitions": 10,
+  "sourceSnapshotStart": "2f878b4d4266fc1ced83e3c5526842776966d8a0304a9d7e142edc20cd1f8246",
+  "sourceSnapshotEnd": "2f878b4d4266fc1ced83e3c5526842776966d8a0304a9d7e142edc20cd1f8246",
+  "buildSource": {
+    "path": "/Users/yutogasaki/Projects/sansu/output/playwright/pop-v6-final/dev-source.json",
+    "manifestSHA": "7ef25ad7ffb3350f628319609bc208b64c65f8051c8c392ec2d1ab3004859eeb",
+    "sourceHash": "754a32708be5a2cb2e524ac0257c05cb3bb522f582e197ffd31eaf613e44b07f",
+    "revision": "485dba3-pop-v6-working",
+    "flags": {
+      "VITE_ISLAND_ENABLED": true,
+      "VITE_ISLAND_LIFE_ENABLED": false,
+      "VITE_ISLAND_FANTASY_ENABLED": false
+    }
+  }
+}

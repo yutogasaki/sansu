@@ -30,10 +30,11 @@ export interface LearningAnswerFormProps {
     /** The saved incorrect attempt for this exact row; never an unsaved draft. */
     retryAnswer?: readonly string[];
     className?: string;
+    keypadLayout?: 'standard' | 'compact-three';
 }
 
 // Presentation may change; the frozen slot and its input/submit contract do not.
-export function LearningAnswerForm({ slot, disabled, deferSubmission = false, onAnswer, onInteraction, onDigitInput, renderPrompt, renderChoiceLabel, renderSupportAnswer, renderSupport, retryAnswer, className }: LearningAnswerFormProps) {
+export function LearningAnswerForm({ slot, disabled, deferSubmission = false, onAnswer, onInteraction, onDigitInput, renderPrompt, renderChoiceLabel, renderSupportAnswer, renderSupport, retryAnswer, className, keypadLayout }: LearningAnswerFormProps) {
     const problem = useMemo(() => integerFractionProblem(slot.problem), [slot.problem]);
     const grid = useMemo(() => parkHissanGrid(problem), [problem]);
     const step = grid?.steps[slot.hissanStep ?? 0];
@@ -182,7 +183,7 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
                     {answerShape ? <AnswerCells shape={answerShape[i]} value={value} active={active === i && !disabled} /> : <span>{value || '□'}</span>}
                 </button>)}
             </NumberFieldsLayout>}
-            <div className="park-keypad"><TenKey onInput={input} onDelete={remove} onClear={clear} onEnter={() => submit()}
+            <div className="park-keypad"><TenKey layout={keypadLayout} onInput={input} onDelete={remove} onClear={clear} onEnter={() => submit()}
                 disabled={disabled} enterDisabled={!canSubmit || (automatic && !hasSubmitted)} showDecimal={step ? step.correctValues.includes('.') : allowsDecimalEntry(problem)} nextFieldLabel={problem.inputType === 'multi-number' ? 'つぎの欄へ' : undefined} nextFieldDisabled={problem.inputType === 'multi-number' && active === fieldCount - 1} minRowHeight={44}
                 confirmationMode={automatic && !hasSubmitted ? 'automatic' : 'manual'}
                 writtenInput={Boolean(step)}

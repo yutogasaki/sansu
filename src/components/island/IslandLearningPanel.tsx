@@ -12,8 +12,6 @@ import type { IslandLearningFeedback } from './learningFeedback';
 import { islandObservationBinding } from '../../domain/island/learningObservation';
 import { readIslandLearningDOM, type IslandLearningObserver } from './useIslandLearningObservation';
 import './IslandLearningPanel.css';
-import './IslandLearningFocus.css';
-import './IslandLearningTheme.css';
 import './PokomokoLearningFeedback.css';
 import { usePokomokoFeedback } from './usePokomokoFeedback';
 import { PokomokoInputSpark } from './PokomokoLearningEffects';
@@ -48,7 +46,7 @@ export function IslandLearningPanel({ plan, active = true, intro = false, busy, 
     const problemId = slot?.problem.id;
     const [dismissedReceipt, setDismissedReceipt] = useState<string>();
     const celebration = usePokomokoFeedback(feedback, active, section, problemId);
-    const music = useLearningMusic({ active, enabled: soundEnabled && plan.subject === 'math', level: celebration.level / 3, reach: party.streak % 5 === 4 && party.rideRemaining === 0, feedback });
+    const music = useLearningMusic({ active: active && plan.subject === 'math', enabled: soundEnabled && plan.subject === 'math', level: celebration.level / 3, reach: party.streak % 5 === 4 && party.rideRemaining === 0, feedback });
     useLayoutEffect(() => {
         const binding = { profileId: plan.profileId, planId: plan.id, slotIndex: plan.cursor, problemId: problemId ?? '', revisionBefore: 0 };
         return () => observation?.leave(binding);

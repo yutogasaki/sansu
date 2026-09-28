@@ -24,18 +24,18 @@ export function IslandAnswerFeedback({ feedback, party, burst, inputCue, active 
     const Stamp = stampIcons[Math.max(0, stamps - 1)];
     const message = result && ['retry', 'step', 'supported'].includes(result.kind) ? result.text
         : burst?.kind === 'stamp' ? `${feedback?.party?.stamp ?? PARTY_STAMPS[Math.max(0, stamps - 1)]} ゲット！`
-        : riding ? 'ほしのり！' : party.streak % 5 === 4 ? 'あと1つ！' : party.streak ? 'れんぞく！' : '';
+        : riding ? (party.streak ? 'れんぞく！' : 'ほしのり！') : party.streak % 5 === 4 ? 'あと1つ！' : party.streak ? 'れんぞく！' : inputCue ? 'これだ！' : 'がんばろう！';
     return <div className={`island-workbench-message pokomoko-learning-feedback${burst ? ' pokomoko-burst' : ''}`}
-        data-feedback-candidate="pokomoko-pop-live-v5" data-burst={burst?.kind} data-peak={peak}
-        data-pose={pose} data-riding={riding} data-streak={party.streak} data-charge={party.streak % 5} data-stamps={stamps}>
+        data-feedback-candidate="pokomoko-pop-live-v7" data-burst={burst?.kind} data-peak={peak}
+        data-resting={party.streak === 0 && !result && !riding} data-celebration={peak ? (riding ? 'five' : 'three') : undefined} data-pose={pose} data-riding={riding} data-streak={party.streak} data-charge={party.streak % 5} data-stamps={stamps}>
         <div className="pokomoko-play-scene">
             <div className="pokomoko-stage-colors" aria-hidden="true"><i /><i /></div>
             {level > 0 && <svg className="pokomoko-stage-flags" viewBox="0 0 400 36" preserveAspectRatio="none" aria-hidden="true">
                 <path d="M0 4Q200 28 400 4" fill="none" stroke="#191d48" strokeWidth="2" />
                 {Array.from({ length: 11 }, (_, i) => <path key={i} d={`M${i * 38 - 5} ${8 + 7 * Math.sin(i / 10 * Math.PI)}l24 0 -12 18Z`} fill={colors[i % 4]} stroke="#191d48" strokeWidth="1.5" />)}
             </svg>}
-            {level >= 2 && <div className="pokomoko-stage-stars" aria-hidden="true"><Star /><Star /><Star /></div>}
-            {peak && <div key={burst?.id} className="pokomoko-stage-rays" aria-hidden="true" />}
+            {(level >= 2 || peak) && <div className="pokomoko-stage-stars" aria-hidden="true"><Star /><Star /><Star /></div>}
+            {peak && riding && <div key={burst?.id} className="pokomoko-stage-rays" aria-hidden="true" />}
             <div className="pokomoko-charge" role="img" aria-label={`5れんぞくで ほしのり、いま${progress}こ`}>
                 {Array.from({ length: 5 }, (_, i) => <span key={i} data-filled={i < progress}><Star fill={i < progress ? 'currentColor' : 'none'} /></span>)}
             </div>
@@ -46,11 +46,12 @@ export function IslandAnswerFeedback({ feedback, party, burst, inputCue, active 
                 <div className="pokomoko-party-headline" data-result={result?.kind ?? 'ready'}>
                     {result?.kind === 'supported' && <Sprout size={25} />}
                     {party.streak > 0 && !['retry', 'step', 'supported'].includes(result?.kind ?? '') && <strong key={party.streak} className="pokomoko-combo-number" data-long={party.streak >= 100}>{party.streak}</strong>}
-                    <span>{message}</span>
+                    <span className="pokomoko-combo-label">{message}</span>
                 </div>
                 {riding && <span className="pokomoko-ride-lights" aria-label={`ほしのり あと${party.rideRemaining}もん`}>{[0, 1, 2].map(i => <i key={i} data-filled={i < party.rideRemaining} />)}</span>}
             </div>
             {burst?.kind === 'stamp' && <span key={`stamp-${burst.id}`} className="pokomoko-new-stamp" aria-hidden="true"><Stamp /></span>}
+            {peak && <svg className="pokomoko-jump-lines" viewBox="0 0 120 26" aria-hidden="true"><path d="M50 4v15M60 0v25M70 4v15M18 8q-10 -3 -9 -10M24 2q-6 -3 -5 -9" /></svg>}
             {peak && <div key={`confetti-${burst?.id}`} className="pokomoko-stage-confetti" aria-hidden="true">{Array.from({ length: 12 }, (_, i) => <i key={i} style={{ '--i': i, '--color': colors[i % 4] } as CSSProperties} />)}</div>}
             <div className="pokomoko-stamp-shelf" aria-label={`あつめた ひかり ${party.light}こ、スタンプ ${stamps}こ、ぜんぶで3こ`}>
                 {stampIcons.map((StampIcon, i) => stamps > i && <span key={PARTY_STAMPS[i]} data-earned="true" aria-label={`${PARTY_STAMPS[i]} もっている`}><StampIcon size={19} fill="currentColor" /></span>)}

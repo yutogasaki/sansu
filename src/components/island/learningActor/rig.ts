@@ -2,6 +2,7 @@ import * as T from 'three';
 import { buildHomeJourney } from '../homeJourney/scene';
 import { disposeGeometry } from '../three/primitives';
 import type { Style } from '../../../domain/islandLife/model';
+import { makeLearningExpression } from './expression';
 
 // Same saved scarf colors as life/itemGeometry; keep the small actor chunk free
 // of the complete island furniture builder.
@@ -18,6 +19,7 @@ export function makeLearningActorRig() {
     const headParts = model.heroBody.children.filter(part => part.position.y >= .7);
     model.heroBody.add(head);
     for (const part of headParts) { part.position.y -= head.position.y; head.add(part); }
+    const expression = makeLearningExpression(head);
 
     const arms = [-1, 1].map(side => {
         const mesh = model.heroBody.children.find(part => Math.abs(part.position.x - side * .27) < .001 && part.position.y === .46);
@@ -40,7 +42,7 @@ export function makeLearningActorRig() {
     const camera = new T.OrthographicCamera(-.78, .78, .82, -.82, .1, 20);
     camera.position.set(0, .88, 4); camera.lookAt(0, .67, 0); camera.updateMatrixWorld(true);
     return {
-        ...model, head, arms, scarf, scene, camera,
+        ...model, head, arms, scarf, expression, scene, camera,
         dispose: () => {
             // hero was moved out of world so both roots own geometry to free.
             disposeGeometry(model.hero); model.dispose();

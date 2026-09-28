@@ -226,10 +226,12 @@ describe('shared answer input compatibility', () => {
         expect(renderToStaticMarkup(<LearningAnswerForm {...props} />)).not.toContain('island-');
     });
 
-    it('retains all number keys and action labels in their existing order', () => {
+    it('uses three-column reading order and omits redundant automatic confirmation', () => {
         const html = renderToStaticMarkup(<IslandAnswerForm slot={slot()} disabled={false} onAnswer={noop} />);
         const buttons = [...html.matchAll(/<button[^>]*aria-label="([^"]+)"/g)].map(match => match[1]);
-        expect(buttons).toEqual(['こたえ', '7', '8', '9', 'こたえを けす', '4', '5', '6', 'ひとつ もどす', '1', '2', '3', '0', 'こたえる']);
+        expect(buttons).toEqual(['こたえ', '7', '8', '9', '4', '5', '6', '1', '2', '3', 'ひとつ もどす', '0', 'こたえを けす']);
+        expect(html).toContain('data-keypad-layout="compact-three"');
+        expect(html).not.toContain('data-keypad-submit');
         expect(html).toContain('data-input-type="number"');
         expect(html).toContain('data-problem-id="reserved-1"');
     });

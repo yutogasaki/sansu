@@ -247,7 +247,8 @@ export function assertIslandSectionGrowth(before, after, plan = before.plan) {
 export async function assertKeypad(page, requireViewport = true) {
     if (await page.locator('.park-choices').count()) return;
     const names = ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0', 'こたえを けす', 'ひとつ もどす'];
-    if (!await page.locator('[data-written-auto-confirm]').count()) names.push('こたえる');
+    const compactAutomatic = await page.locator('.park-answer[data-answer-completion=automatic] [data-keypad-layout=compact-three]').count();
+    if (!compactAutomatic && !await page.locator('[data-written-auto-confirm]').count()) names.push('こたえる');
     for (const name of names) {
         const key = page.locator('.park-keypad').getByRole('button', { name, exact: true });
         await key.waitFor();

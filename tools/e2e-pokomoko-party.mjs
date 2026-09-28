@@ -7,7 +7,7 @@ import { seedLearningProfile } from './island-learning-fixtures.mjs';
 import { answerUI, assertKeypad, readNative, runtimeMetadata } from './island-e2e-helpers.mjs';
 
 const base = process.env.SANSU_FEEDBACK_URL || 'http://127.0.0.1:5230';
-const candidate = 'pokomoko-pop-live-v5';
+const candidate = 'pokomoko-pop-live-v7';
 const out = process.env.SANSU_PARTY_OUTPUT || `output/playwright/pokomoko-party-${Date.now()}`;
 await fs.mkdir(out, { recursive: true });
 async function hashSource() {
@@ -81,10 +81,11 @@ try {
             row.characterBounds = await page.locator('.pokomoko-play-scene').evaluate(scene => {
                 const root = scene.closest('.island-workbench'), actor = scene.querySelector('.pokomoko-learning-actor');
                 const r = root.getBoundingClientRect(), a = actor.getBoundingClientRect(), keys = root.querySelector('.park-keypad').getBoundingClientRect();
-                return { position: getComputedStyle(scene.parentElement).position, actorWidth: a.width, actorHeight: a.height,
+                const stage = scene.getBoundingClientRect(), card = root.querySelector('.park-question').getBoundingClientRect();
+                return { stageCardGap: card.top - stage.bottom, actorWidth: a.width, actorHeight: a.height,
                     contained: a.top >= r.top && (a.bottom < keys.top || a.right <= keys.left) && a.left >= r.left && a.right <= r.right };
             });
-            assert.equal(row.characterBounds.position, 'absolute', 'The actor shares the problem board instead of occupying a dashboard row');
+            assert(Math.abs(row.characterBounds.stageCardGap) <= 2, 'The stage meets the problem card rim without a separate empty band');
             assert(row.characterBounds.actorWidth >= 110 && row.characterBounds.actorHeight >= 110 && row.characterBounds.contained, 'Full character and feet remain clear of the answer shelf in portrait and side-by-side layouts');
             const labelSizes = await page.locator('.pokomoko-party-headline, .pokomoko-combo-number').evaluateAll(els => els.map(el => parseFloat(getComputedStyle(el).fontSize)));
             assert(labelSizes.every(size => size >= 16), 'Play labels must be readable without tiny explanatory copy');

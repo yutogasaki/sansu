@@ -5,6 +5,7 @@ import type { PokomokoBurst, PokomokoInputCue } from './usePokomokoFeedback';
 import type { Style } from '../../domain/islandLife/model';
 import { makeLearningActorRig, learningScarfColor } from './learningActor/rig';
 import { ACTOR_CATCH_MS, ACTOR_PLACE_MS, ACTOR_JUMP_MS, ACTOR_LAND_MS, sampleInputGesture, sampleBurstGesture } from './learningActor/motion';
+import { poseLearningActor } from './learningActor/pose';
 
 type ActorCue = 'catch' | 'place' | 'jump' | 'land';
 type TimedInput = PokomokoInputCue & { fromX?: number; fromY?: number; startedAt?: number };
@@ -18,7 +19,7 @@ type Props = {
     heroStyle?: Style;
 };
 type Input = { cue: TimedInput; start: number; side: number; caught: boolean; placed: boolean };
-type Burst = { start: number; leap: boolean; jumped: boolean; landed: boolean };
+type Burst = { start: number; leap: boolean; big: boolean; jumped: boolean; landed: boolean };
 
 /** A live, articulated rendering of the existing island model. All state here
  * is disposable presentation: it never submits, advances or locks an answer. */
@@ -113,34 +114,21 @@ export default function PokomokoLearningActor(props: Props) {
                     burst = {
                         start: Math.max(current.burst.startedAt, (origin?.startedAt ?? input?.start ?? now - ACTOR_PLACE_MS) + ACTOR_PLACE_MS),
                         leap: ['jump', 'ride', 'stamp', 'section'].includes(current.burst.kind),
+                        big: ['ride', 'stamp'].includes(current.burst.kind),
                         jumped: false, landed: false,
                     };
                 } else burst = undefined;
             }
             const elapsed = input ? now - input.start : Infinity;
             const gesture = sampleInputGesture(elapsed, reduced.matches);
-            const reaction = sampleBurstGesture(burst ? now - burst.start : Infinity, burst?.leap ?? false, reduced.matches);
+            const reaction = sampleBurstGesture(burst ? now - burst.start : Infinity, burst?.leap ?? false, reduced.matches, burst?.big);
             const beat = reduced.matches ? 0 : T.MathUtils.clamp(current.pulse?.() ?? 0, 0, 1);
             const hasContact = elapsed >= 0 && elapsed <= ACTOR_PLACE_MS;
             // Beat sway is intentionally tiny and stops during a handoff, keeping
             // both the ground contact and the numeral's catching point stable.
             const sway = hasContact ? 0 : beat * (.006 + Math.min(3, current.level) * .004);
             const side = input?.side ?? -1;
-            actor.hero.position.y = reaction.height;
-            actor.hero.rotation.y = .035 + side * gesture.reach * .09;
-            actor.heroBody.rotation.z = -side * gesture.reach * .045 + reaction.tilt + sway;
-            actor.heroBody.scale.set(1 + (1 - reaction.squash) * .35, reaction.squash, 1);
-            actor.heroBody.position.y = 0;
-            actor.arms.forEach((arm, index) => {
-                const armSide = index === 0 ? -1 : 1;
-                const reach = side === armSide ? gesture.reach * 1.15 : gesture.reach * .14;
-                arm.pivot.rotation.z = armSide * (.12 + reach + reaction.arms);
-                arm.pivot.rotation.x = side === armSide ? -gesture.reach * .12 : 0;
-            });
-            actor.heroFeet.forEach((foot, index) => {
-                foot.position.y = .10;
-                foot.rotation.z = (index === 0 ? -1 : 1) * reaction.height * .75;
-            });
+            poseLearningActor(actor, gesture, reaction, side, sway, burst?.big ?? false);
             const paw = projectHand(side);
             actor.head.rotation.set(0, 0, 0, 'YXZ');
             if (input && gesture.look) {

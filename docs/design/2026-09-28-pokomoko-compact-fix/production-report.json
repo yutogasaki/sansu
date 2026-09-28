@@ -1,0 +1,2362 @@
+{
+  "target": "http://127.0.0.1:5298",
+  "revision": "485dba3c37d6d2cb5ec5661e467516856d816460",
+  "sourceStart": "54ce9d29f9596d3c501ee114e2059331c3dd7bc42e5c81e81aee12ff652cce69",
+  "qaHash": "0c21e5939c00adec792f32caa75b5b0253675ce14c83eab92f472273e37ff0c0",
+  "evidence": "Disposable profile and memory fixture; actual UI answers, normal plans, no injected party progress. Sound off. Not a child or physical-device evaluation.",
+  "runs": [
+    {
+      "name": "phone-motion",
+      "captures": [
+        {
+          "file": "phone-motion-home.png",
+          "url": "http://127.0.0.1:5298/#/island",
+          "revision": "485dba3-pop-v6-verified",
+          "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "485dba3-pop-v6-verified",
+            "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "actor": null,
+          "partyCandidate": null
+        },
+        {
+          "file": "phone-motion-ready.png",
+          "url": "http://127.0.0.1:5298/#/island?learn=1",
+          "revision": "485dba3-pop-v6-verified",
+          "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "renderer": "live-original",
+          "artDirection": null,
+          "drawCalls": 0,
+          "expanded": null,
+          "residentAction": null,
+          "residentItemId": null,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "485dba3-pop-v6-verified",
+            "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "actor": {
+            "renderer": "live-original",
+            "reducedMotion": "false",
+            "renderCount": 20,
+            "fallbackUrl": "/assets/pokomoko-learning-poses-B-Jfr41M.webp",
+            "canvas": {
+              "width": 184,
+              "height": 192,
+              "cssWidth": 184,
+              "cssHeight": 192,
+              "visible": true
+            },
+            "hand": {
+              "x": 56.75,
+              "y": 134.65625,
+              "contained": true
+            }
+          },
+          "partyCandidate": "pokomoko-pop-live-v6"
+        },
+        {
+          "file": "phone-motion-correct-1.png",
+          "url": "http://127.0.0.1:5298/#/island?learn=1",
+          "revision": "485dba3-pop-v6-verified",
+          "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "renderer": "live-original",
+          "artDirection": null,
+          "drawCalls": 0,
+          "expanded": null,
+          "residentAction": null,
+          "residentItemId": null,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "485dba3-pop-v6-verified",
+            "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "actor": {
+            "renderer": "live-original",
+            "reducedMotion": "false",
+            "renderCount": 77,
+            "fallbackUrl": "/assets/pokomoko-learning-poses-B-Jfr41M.webp",
+            "canvas": {
+              "width": 184,
+              "height": 192,
+              "cssWidth": 184,
+              "cssHeight": 192,
+              "visible": true
+            },
+            "hand": {
+              "x": 50.921875,
+              "y": 134.3125,
+              "contained": true
+            }
+          },
+          "partyCandidate": "pokomoko-pop-live-v6"
+        },
+        {
+          "file": "phone-motion-correct-3.png",
+          "url": "http://127.0.0.1:5298/#/island?learn=1",
+          "revision": "485dba3-pop-v6-verified",
+          "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "renderer": "live-original",
+          "artDirection": null,
+          "drawCalls": 0,
+          "expanded": null,
+          "residentAction": null,
+          "residentItemId": null,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "485dba3-pop-v6-verified",
+            "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "actor": {
+            "renderer": "live-original",
+            "reducedMotion": "false",
+            "renderCount": 152,
+            "fallbackUrl": "/assets/pokomoko-learning-poses-B-Jfr41M.webp",
+            "canvas": {
+              "width": 184,
+              "height": 192,
+              "cssWidth": 184,
+              "cssHeight": 192,
+              "visible": true
+            },
+            "hand": {
+              "x": 32.828125,
+              "y": 84.21875,
+              "contained": true
+            }
+          },
+          "partyCandidate": "pokomoko-pop-live-v6"
+        },
+        {
+          "file": "phone-motion-correct-5.png",
+          "url": "http://127.0.0.1:5298/#/island?learn=1",
+          "revision": "485dba3-pop-v6-verified",
+          "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "renderer": "live-original",
+          "artDirection": null,
+          "drawCalls": 0,
+          "expanded": null,
+          "residentAction": null,
+          "residentItemId": null,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "485dba3-pop-v6-verified",
+            "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "actor": {
+            "renderer": "live-original",
+            "reducedMotion": "false",
+            "renderCount": 268,
+            "fallbackUrl": "/assets/pokomoko-learning-poses-B-Jfr41M.webp",
+            "canvas": {
+              "width": 184,
+              "height": 192,
+              "cssWidth": 184,
+              "cssHeight": 192,
+              "visible": true
+            },
+            "hand": {
+              "x": 50.34375,
+              "y": 134.953125,
+              "contained": true
+            }
+          },
+          "partyCandidate": "pokomoko-pop-live-v6"
+        },
+        {
+          "file": "phone-motion-ride-resumed.png",
+          "url": "http://127.0.0.1:5298/#/island?learn=1",
+          "revision": "485dba3-pop-v6-verified",
+          "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "renderer": "live-original",
+          "artDirection": null,
+          "drawCalls": 0,
+          "expanded": null,
+          "residentAction": null,
+          "residentItemId": null,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "485dba3-pop-v6-verified",
+            "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "actor": {
+            "renderer": "live-original",
+            "reducedMotion": "false",
+            "renderCount": 17,
+            "fallbackUrl": "/assets/pokomoko-learning-poses-B-Jfr41M.webp",
+            "canvas": {
+              "width": 184,
+              "height": 192,
+              "cssWidth": 184,
+              "cssHeight": 192,
+              "visible": true
+            },
+            "hand": {
+              "x": 56.75,
+              "y": 134.65625,
+              "contained": true
+            }
+          },
+          "partyCandidate": "pokomoko-pop-live-v6"
+        },
+        {
+          "file": "phone-motion-correct-8.png",
+          "url": "http://127.0.0.1:5298/#/island?learn=1",
+          "revision": "485dba3-pop-v6-verified",
+          "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "renderer": "live-original",
+          "artDirection": null,
+          "drawCalls": 0,
+          "expanded": null,
+          "residentAction": null,
+          "residentItemId": null,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "485dba3-pop-v6-verified",
+            "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "actor": {
+            "renderer": "live-original",
+            "reducedMotion": "false",
+            "renderCount": 116,
+            "fallbackUrl": "/assets/pokomoko-learning-poses-B-Jfr41M.webp",
+            "canvas": {
+              "width": 184,
+              "height": 192,
+              "cssWidth": 184,
+              "cssHeight": 192,
+              "visible": true
+            },
+            "hand": {
+              "x": 32.890625,
+              "y": 83.96875,
+              "contained": true
+            }
+          },
+          "partyCandidate": "pokomoko-pop-live-v6"
+        },
+        {
+          "file": "phone-motion-correct-14.png",
+          "url": "http://127.0.0.1:5298/#/island?learn=1",
+          "revision": "485dba3-pop-v6-verified",
+          "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "renderer": "live-original",
+          "artDirection": null,
+          "drawCalls": 0,
+          "expanded": null,
+          "residentAction": null,
+          "residentItemId": null,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "485dba3-pop-v6-verified",
+            "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "actor": {
+            "renderer": "live-original",
+            "reducedMotion": "false",
+            "renderCount": 322,
+            "fallbackUrl": "/assets/pokomoko-learning-poses-B-Jfr41M.webp",
+            "canvas": {
+              "width": 184,
+              "height": 192,
+              "cssWidth": 184,
+              "cssHeight": 192,
+              "visible": true
+            },
+            "hand": {
+              "x": 49.640625,
+              "y": 134.921875,
+              "contained": true
+            }
+          },
+          "partyCandidate": "pokomoko-pop-live-v6"
+        },
+        {
+          "file": "phone-motion-correct-21.png",
+          "url": "http://127.0.0.1:5298/#/island?learn=1",
+          "revision": "485dba3-pop-v6-verified",
+          "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "renderer": "live-original",
+          "artDirection": null,
+          "drawCalls": 0,
+          "expanded": null,
+          "residentAction": null,
+          "residentItemId": null,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "485dba3-pop-v6-verified",
+            "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "actor": {
+            "renderer": "live-original",
+            "reducedMotion": "false",
+            "renderCount": 559,
+            "fallbackUrl": "/assets/pokomoko-learning-poses-B-Jfr41M.webp",
+            "canvas": {
+              "width": 184,
+              "height": 192,
+              "cssWidth": 184,
+              "cssHeight": 192,
+              "visible": true
+            },
+            "hand": {
+              "x": 49.984375,
+              "y": 134.9375,
+              "contained": true
+            }
+          },
+          "partyCandidate": "pokomoko-pop-live-v6"
+        },
+        {
+          "file": "phone-motion-retry-keeps-collection.png",
+          "url": "http://127.0.0.1:5298/#/island?learn=1",
+          "revision": "485dba3-pop-v6-verified",
+          "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "renderer": "live-original",
+          "artDirection": null,
+          "drawCalls": 0,
+          "expanded": null,
+          "residentAction": null,
+          "residentItemId": null,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "485dba3-pop-v6-verified",
+            "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "actor": {
+            "renderer": "live-original",
+            "reducedMotion": "false",
+            "renderCount": 595,
+            "fallbackUrl": "/assets/pokomoko-learning-poses-B-Jfr41M.webp",
+            "canvas": {
+              "width": 184,
+              "height": 192,
+              "cssWidth": 184,
+              "cssHeight": 192,
+              "visible": true
+            },
+            "hand": {
+              "x": 56.75,
+              "y": 134.65625,
+              "contained": true
+            }
+          },
+          "partyCandidate": "pokomoko-pop-live-v6"
+        },
+        {
+          "file": "phone-motion-supported.png",
+          "url": "http://127.0.0.1:5298/#/island?learn=1",
+          "revision": "485dba3-pop-v6-verified",
+          "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "renderer": "live-original",
+          "artDirection": null,
+          "drawCalls": 0,
+          "expanded": null,
+          "residentAction": null,
+          "residentItemId": null,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "485dba3-pop-v6-verified",
+            "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "actor": {
+            "renderer": "live-original",
+            "reducedMotion": "false",
+            "renderCount": 682,
+            "fallbackUrl": "/assets/pokomoko-learning-poses-B-Jfr41M.webp",
+            "canvas": {
+              "width": 184,
+              "height": 192,
+              "cssWidth": 184,
+              "cssHeight": 192,
+              "visible": true
+            },
+            "hand": {
+              "x": 49.546875,
+              "y": 134.09375,
+              "contained": true
+            }
+          },
+          "partyCandidate": "pokomoko-pop-live-v6"
+        },
+        {
+          "file": "phone-motion-return.png",
+          "url": "http://127.0.0.1:5298/#/island",
+          "revision": "485dba3-pop-v6-verified",
+          "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "renderer": "original-fallback",
+          "artDirection": null,
+          "drawCalls": 0,
+          "expanded": null,
+          "residentAction": null,
+          "residentItemId": null,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "485dba3-pop-v6-verified",
+            "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "actor": null,
+          "partyCandidate": "pokomoko-pop-live-v6"
+        }
+      ],
+      "answers": [
+        {
+          "i": 1,
+          "ms": 200.5,
+          "game": {
+            "version": 1,
+            "streak": 1,
+            "light": 1,
+            "rideRemaining": 0
+          },
+          "showLevel": 0
+        },
+        {
+          "i": 2,
+          "ms": 194.79999999701977,
+          "game": {
+            "version": 1,
+            "streak": 2,
+            "light": 2,
+            "rideRemaining": 0
+          },
+          "showLevel": 0
+        },
+        {
+          "i": 3,
+          "ms": 193,
+          "game": {
+            "version": 1,
+            "streak": 3,
+            "light": 3,
+            "rideRemaining": 0
+          },
+          "showLevel": 1
+        },
+        {
+          "i": 4,
+          "ms": 193,
+          "game": {
+            "version": 1,
+            "streak": 4,
+            "light": 4,
+            "rideRemaining": 0
+          },
+          "showLevel": 1
+        },
+        {
+          "i": 5,
+          "ms": 194,
+          "game": {
+            "version": 1,
+            "streak": 5,
+            "light": 5,
+            "rideRemaining": 3
+          },
+          "showLevel": 1
+        },
+        {
+          "i": 6,
+          "ms": 199.6000000089407,
+          "game": {
+            "version": 1,
+            "streak": 6,
+            "light": 7,
+            "rideRemaining": 2
+          },
+          "showLevel": 0
+        },
+        {
+          "i": 7,
+          "ms": 193.79999999701977,
+          "game": {
+            "version": 1,
+            "streak": 7,
+            "light": 9,
+            "rideRemaining": 1
+          },
+          "showLevel": 0
+        },
+        {
+          "i": 8,
+          "ms": 194.70000000298023,
+          "game": {
+            "version": 1,
+            "streak": 8,
+            "light": 11,
+            "rideRemaining": 0
+          },
+          "showLevel": 1
+        },
+        {
+          "i": 9,
+          "ms": 199,
+          "game": {
+            "version": 1,
+            "streak": 9,
+            "light": 12,
+            "rideRemaining": 0
+          },
+          "showLevel": 1
+        },
+        {
+          "i": 10,
+          "ms": 183.70000000298023,
+          "game": {
+            "version": 1,
+            "streak": 10,
+            "light": 13,
+            "rideRemaining": 3
+          },
+          "showLevel": 1
+        },
+        {
+          "i": 11,
+          "ms": 188.5,
+          "game": {
+            "version": 1,
+            "streak": 11,
+            "light": 15,
+            "rideRemaining": 2
+          },
+          "showLevel": 2
+        },
+        {
+          "i": 12,
+          "ms": 194.20000000298023,
+          "game": {
+            "version": 1,
+            "streak": 12,
+            "light": 17,
+            "rideRemaining": 1
+          },
+          "showLevel": 2
+        },
+        {
+          "i": 13,
+          "ms": 188.59999999403954,
+          "game": {
+            "version": 1,
+            "streak": 13,
+            "light": 19,
+            "rideRemaining": 0
+          },
+          "showLevel": 2
+        },
+        {
+          "i": 14,
+          "ms": 194.79999999701977,
+          "game": {
+            "version": 1,
+            "streak": 14,
+            "light": 20,
+            "rideRemaining": 0
+          },
+          "showLevel": 3
+        },
+        {
+          "i": 15,
+          "ms": 194.19999998807907,
+          "game": {
+            "version": 1,
+            "streak": 15,
+            "light": 21,
+            "rideRemaining": 3
+          },
+          "showLevel": 3
+        },
+        {
+          "i": 16,
+          "ms": 190.1000000089407,
+          "game": {
+            "version": 1,
+            "streak": 16,
+            "light": 23,
+            "rideRemaining": 2
+          },
+          "showLevel": 3
+        },
+        {
+          "i": 17,
+          "ms": 191.19999998807907,
+          "game": {
+            "version": 1,
+            "streak": 17,
+            "light": 25,
+            "rideRemaining": 1
+          },
+          "showLevel": 3
+        },
+        {
+          "i": 18,
+          "ms": 195.8999999910593,
+          "game": {
+            "version": 1,
+            "streak": 18,
+            "light": 27,
+            "rideRemaining": 0
+          },
+          "showLevel": 3
+        },
+        {
+          "i": 19,
+          "ms": 194.1000000089407,
+          "game": {
+            "version": 1,
+            "streak": 19,
+            "light": 28,
+            "rideRemaining": 0
+          },
+          "showLevel": 3
+        },
+        {
+          "i": 20,
+          "ms": 197.5,
+          "game": {
+            "version": 1,
+            "streak": 20,
+            "light": 29,
+            "rideRemaining": 3
+          },
+          "showLevel": 3
+        },
+        {
+          "i": 21,
+          "ms": 188.20000000298023,
+          "game": {
+            "version": 1,
+            "streak": 21,
+            "light": 30,
+            "rideRemaining": 2
+          },
+          "showLevel": 3
+        }
+      ],
+      "pass": true,
+      "characterBounds": {
+        "stageCardGap": 0,
+        "actorWidth": 184,
+        "actorHeight": 192,
+        "contained": true
+      },
+      "layout": [
+        {
+          "name": "7",
+          "x": 14,
+          "y": 538.8125,
+          "w": 116,
+          "h": 56.546875,
+          "bottom": 595.359375,
+          "right": 130
+        },
+        {
+          "name": "8",
+          "x": 137,
+          "y": 538.8125,
+          "w": 116,
+          "h": 56.546875,
+          "bottom": 595.359375,
+          "right": 253
+        },
+        {
+          "name": "9",
+          "x": 260,
+          "y": 538.8125,
+          "w": 116,
+          "h": 56.546875,
+          "bottom": 595.359375,
+          "right": 376
+        },
+        {
+          "name": "4",
+          "x": 14,
+          "y": 602.359375,
+          "w": 116,
+          "h": 56.546875,
+          "bottom": 658.90625,
+          "right": 130
+        },
+        {
+          "name": "5",
+          "x": 137,
+          "y": 602.359375,
+          "w": 116,
+          "h": 56.546875,
+          "bottom": 658.90625,
+          "right": 253
+        },
+        {
+          "name": "6",
+          "x": 260,
+          "y": 602.359375,
+          "w": 116,
+          "h": 56.546875,
+          "bottom": 658.90625,
+          "right": 376
+        },
+        {
+          "name": "1",
+          "x": 14,
+          "y": 665.90625,
+          "w": 116,
+          "h": 56.546875,
+          "bottom": 722.453125,
+          "right": 130
+        },
+        {
+          "name": "2",
+          "x": 137,
+          "y": 665.90625,
+          "w": 116,
+          "h": 56.546875,
+          "bottom": 722.453125,
+          "right": 253
+        },
+        {
+          "name": "3",
+          "x": 260,
+          "y": 665.90625,
+          "w": 116,
+          "h": 56.546875,
+          "bottom": 722.453125,
+          "right": 376
+        },
+        {
+          "name": "ひとつ もどす",
+          "x": 14,
+          "y": 729.453125,
+          "w": 116,
+          "h": 56.546875,
+          "bottom": 786,
+          "right": 130
+        },
+        {
+          "name": "0",
+          "x": 137,
+          "y": 729.453125,
+          "w": 116,
+          "h": 56.546875,
+          "bottom": 786,
+          "right": 253
+        },
+        {
+          "name": "こたえを けす",
+          "x": 260,
+          "y": 729.453125,
+          "w": 116,
+          "h": 56.546875,
+          "bottom": 786,
+          "right": 376
+        }
+      ],
+      "inputFlight": [
+        {
+          "present": true,
+          "at": 17653.39999999106,
+          "digit": "2",
+          "problemId": "[\"island-plan-v1\",\"2ad744b3-eb81-49f4-a702-448a8144f4f5\",0]:slot-0"
+        },
+        {
+          "present": false,
+          "at": 17848.29999999702,
+          "digit": null,
+          "problemId": "[\"island-plan-v1\",\"2ad744b3-eb81-49f4-a702-448a8144f4f5\",0]:slot-1"
+        }
+      ],
+      "inputFlightFrames": [
+        {
+          "transform": "matrix(0.999106, -0.0422681, 0.0422681, 0.999106, 197.845, 588.151)",
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "transform": "matrix(0.99013, -0.140153, 0.140153, 0.99013, 206.215, 470.559)",
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "transform": "matrix(0.984809, -0.173639, 0.173639, 0.984809, 215.097, 370.733)",
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "transform": "matrix(0.987633, -0.156782, 0.156782, 0.987633, 222.71, 309.378)",
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "transform": "matrix(0.992877, -0.11914, 0.11914, 0.992877, 230.584, 260.407)",
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "transform": "matrix(0.996818, -0.0797059, 0.0797059, 0.996818, 237.894, 224.299)",
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "transform": "matrix(0.998867, -0.0475806, 0.0475806, 0.998867, 244.224, 197.861)",
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "transform": "matrix(0.999703, -0.0243794, 0.0243794, 0.999703, 249.248, 178.613)",
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "transform": "matrix(0.999939, -0.0110265, 0.0110265, 0.999939, 252.583, 166.526)",
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "transform": "matrix(0.999995, -0.00302321, 0.00302321, 0.999995, 254.933, 158.146)",
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "transform": "matrix(1, -0.000373658, 0.000373658, 1, 255.99, 154.464)",
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "transform": "matrix(1, -2.42601e-07, 2.42601e-07, 1, 256.297, 153.484)",
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "transform": "matrix(0.999993, -0.00386856, 0.00386856, 0.999993, 255.864, 154.887)",
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "transform": "matrix(0.999847, -0.0174729, 0.0174729, 0.999847, 254.34, 159.833)",
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "offlineActorResources": [
+        {
+          "url": "http://127.0.0.1:5298/assets/index-zg8MhTbE.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 843828
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/motion-iLBaTeAD.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 119650
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/react-DcHpdqMy.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 48531
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/icons-BNwr5zv6.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 29669
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/utils-B-dksMZM.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 374
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/data-CYRvWfdS.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 96367
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/audio-DwtSHwBT.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 36126
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/Island-DWZ7F0gg.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 245797
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/repository-D1oMkg2N.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 86746
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/footprint-Ddz7lE8t.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 3320
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/Island-DK7horuD.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 52941
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/islandFurniturePlacement-DSTxW9E8.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 42091
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/homeJourney-BkBsv3V2.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 947
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/random-CfHspBLG.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 297
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/IslandLife-D6THMDV9.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 61998
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/RoundedBoxGeometry-CoAcg94E.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 629364
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/LifeResidentPortrait-gx-DIW9I.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 13090
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/scene-DBsFL2SK.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 6337
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/lifeUpdate.worker-CAhTtB5Q.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 185016
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/LifeWorld-BE-RTcPu.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 28932
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/geometry-BRJCA9yg.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 6631
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/residentInterest-CrzBmh7f.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 40373
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/scene-Ds0CxZaz.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 63081
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/IslandStage-CQNJpCAj.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 6691
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/PokomokoLearningActor-CRp0VJbf.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 8112
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/pokomoko-learning-poses-B-Jfr41M.webp",
+          "kind": "original-fallback",
+          "cached": true,
+          "bytes": 70070
+        }
+      ],
+      "offlineReload": {
+        "controlled": true,
+        "game": {
+          "version": 1,
+          "streak": 5,
+          "light": 5,
+          "rideRemaining": 3
+        }
+      },
+      "offlineAnswer": {
+        "version": 1,
+        "streak": 6,
+        "light": 7,
+        "rideRemaining": 2
+      },
+      "video": "output/playwright/pop-v6-production-verified/phone-motion.webm"
+    },
+    {
+      "name": "phone-reduced",
+      "captures": [
+        {
+          "file": "phone-reduced-home.png",
+          "url": "http://127.0.0.1:5298/#/island",
+          "revision": "485dba3-pop-v6-verified",
+          "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": true,
+          "appRoot": {
+            "revision": "485dba3-pop-v6-verified",
+            "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "actor": null,
+          "partyCandidate": null
+        },
+        {
+          "file": "phone-reduced-ready.png",
+          "url": "http://127.0.0.1:5298/#/island?learn=1",
+          "revision": "485dba3-pop-v6-verified",
+          "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "renderer": "live-original",
+          "artDirection": null,
+          "drawCalls": 0,
+          "expanded": null,
+          "residentAction": null,
+          "residentItemId": null,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": true,
+          "appRoot": {
+            "revision": "485dba3-pop-v6-verified",
+            "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "actor": {
+            "renderer": "live-original",
+            "reducedMotion": "true",
+            "renderCount": 22,
+            "fallbackUrl": "/assets/pokomoko-learning-poses-B-Jfr41M.webp",
+            "canvas": {
+              "width": 184,
+              "height": 192,
+              "cssWidth": 184,
+              "cssHeight": 192,
+              "visible": true
+            },
+            "hand": {
+              "x": 56.75,
+              "y": 134.65625,
+              "contained": true
+            }
+          },
+          "partyCandidate": "pokomoko-pop-live-v6"
+        },
+        {
+          "file": "phone-reduced-correct-1.png",
+          "url": "http://127.0.0.1:5298/#/island?learn=1",
+          "revision": "485dba3-pop-v6-verified",
+          "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "renderer": "live-original",
+          "artDirection": null,
+          "drawCalls": 0,
+          "expanded": null,
+          "residentAction": null,
+          "residentItemId": null,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": true,
+          "appRoot": {
+            "revision": "485dba3-pop-v6-verified",
+            "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "actor": {
+            "renderer": "live-original",
+            "reducedMotion": "true",
+            "renderCount": 73,
+            "fallbackUrl": "/assets/pokomoko-learning-poses-B-Jfr41M.webp",
+            "canvas": {
+              "width": 184,
+              "height": 192,
+              "cssWidth": 184,
+              "cssHeight": 192,
+              "visible": true
+            },
+            "hand": {
+              "x": 56.75,
+              "y": 134.65625,
+              "contained": true
+            }
+          },
+          "partyCandidate": "pokomoko-pop-live-v6"
+        },
+        {
+          "file": "phone-reduced-correct-3.png",
+          "url": "http://127.0.0.1:5298/#/island?learn=1",
+          "revision": "485dba3-pop-v6-verified",
+          "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "renderer": "live-original",
+          "artDirection": null,
+          "drawCalls": 0,
+          "expanded": null,
+          "residentAction": null,
+          "residentItemId": null,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": true,
+          "appRoot": {
+            "revision": "485dba3-pop-v6-verified",
+            "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "actor": {
+            "renderer": "live-original",
+            "reducedMotion": "true",
+            "renderCount": 145,
+            "fallbackUrl": "/assets/pokomoko-learning-poses-B-Jfr41M.webp",
+            "canvas": {
+              "width": 184,
+              "height": 192,
+              "cssWidth": 184,
+              "cssHeight": 192,
+              "visible": true
+            },
+            "hand": {
+              "x": 56.75,
+              "y": 134.65625,
+              "contained": true
+            }
+          },
+          "partyCandidate": "pokomoko-pop-live-v6"
+        },
+        {
+          "file": "phone-reduced-correct-5.png",
+          "url": "http://127.0.0.1:5298/#/island?learn=1",
+          "revision": "485dba3-pop-v6-verified",
+          "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "renderer": "live-original",
+          "artDirection": null,
+          "drawCalls": 0,
+          "expanded": null,
+          "residentAction": null,
+          "residentItemId": null,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": true,
+          "appRoot": {
+            "revision": "485dba3-pop-v6-verified",
+            "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "actor": {
+            "renderer": "live-original",
+            "reducedMotion": "true",
+            "renderCount": 260,
+            "fallbackUrl": "/assets/pokomoko-learning-poses-B-Jfr41M.webp",
+            "canvas": {
+              "width": 184,
+              "height": 192,
+              "cssWidth": 184,
+              "cssHeight": 192,
+              "visible": true
+            },
+            "hand": {
+              "x": 56.75,
+              "y": 134.65625,
+              "contained": true
+            }
+          },
+          "partyCandidate": "pokomoko-pop-live-v6"
+        },
+        {
+          "file": "phone-reduced-ride-resumed.png",
+          "url": "http://127.0.0.1:5298/#/island?learn=1",
+          "revision": "485dba3-pop-v6-verified",
+          "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "renderer": "live-original",
+          "artDirection": null,
+          "drawCalls": 0,
+          "expanded": null,
+          "residentAction": null,
+          "residentItemId": null,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": true,
+          "appRoot": {
+            "revision": "485dba3-pop-v6-verified",
+            "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "actor": {
+            "renderer": "live-original",
+            "reducedMotion": "true",
+            "renderCount": 16,
+            "fallbackUrl": "/assets/pokomoko-learning-poses-B-Jfr41M.webp",
+            "canvas": {
+              "width": 184,
+              "height": 192,
+              "cssWidth": 184,
+              "cssHeight": 192,
+              "visible": true
+            },
+            "hand": {
+              "x": 56.75,
+              "y": 134.65625,
+              "contained": true
+            }
+          },
+          "partyCandidate": "pokomoko-pop-live-v6"
+        },
+        {
+          "file": "phone-reduced-correct-8.png",
+          "url": "http://127.0.0.1:5298/#/island?learn=1",
+          "revision": "485dba3-pop-v6-verified",
+          "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "renderer": "live-original",
+          "artDirection": null,
+          "drawCalls": 0,
+          "expanded": null,
+          "residentAction": null,
+          "residentItemId": null,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": true,
+          "appRoot": {
+            "revision": "485dba3-pop-v6-verified",
+            "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "actor": {
+            "renderer": "live-original",
+            "reducedMotion": "true",
+            "renderCount": 112,
+            "fallbackUrl": "/assets/pokomoko-learning-poses-B-Jfr41M.webp",
+            "canvas": {
+              "width": 184,
+              "height": 192,
+              "cssWidth": 184,
+              "cssHeight": 192,
+              "visible": true
+            },
+            "hand": {
+              "x": 56.75,
+              "y": 134.65625,
+              "contained": true
+            }
+          },
+          "partyCandidate": "pokomoko-pop-live-v6"
+        },
+        {
+          "file": "phone-reduced-correct-14.png",
+          "url": "http://127.0.0.1:5298/#/island?learn=1",
+          "revision": "485dba3-pop-v6-verified",
+          "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "renderer": "live-original",
+          "artDirection": null,
+          "drawCalls": 0,
+          "expanded": null,
+          "residentAction": null,
+          "residentItemId": null,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": true,
+          "appRoot": {
+            "revision": "485dba3-pop-v6-verified",
+            "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "actor": {
+            "renderer": "live-original",
+            "reducedMotion": "true",
+            "renderCount": 319,
+            "fallbackUrl": "/assets/pokomoko-learning-poses-B-Jfr41M.webp",
+            "canvas": {
+              "width": 184,
+              "height": 192,
+              "cssWidth": 184,
+              "cssHeight": 192,
+              "visible": true
+            },
+            "hand": {
+              "x": 56.75,
+              "y": 134.65625,
+              "contained": true
+            }
+          },
+          "partyCandidate": "pokomoko-pop-live-v6"
+        },
+        {
+          "file": "phone-reduced-correct-21.png",
+          "url": "http://127.0.0.1:5298/#/island?learn=1",
+          "revision": "485dba3-pop-v6-verified",
+          "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "renderer": "live-original",
+          "artDirection": null,
+          "drawCalls": 0,
+          "expanded": null,
+          "residentAction": null,
+          "residentItemId": null,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": true,
+          "appRoot": {
+            "revision": "485dba3-pop-v6-verified",
+            "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "actor": {
+            "renderer": "live-original",
+            "reducedMotion": "true",
+            "renderCount": 547,
+            "fallbackUrl": "/assets/pokomoko-learning-poses-B-Jfr41M.webp",
+            "canvas": {
+              "width": 184,
+              "height": 192,
+              "cssWidth": 184,
+              "cssHeight": 192,
+              "visible": true
+            },
+            "hand": {
+              "x": 56.75,
+              "y": 134.65625,
+              "contained": true
+            }
+          },
+          "partyCandidate": "pokomoko-pop-live-v6"
+        },
+        {
+          "file": "phone-reduced-retry-keeps-collection.png",
+          "url": "http://127.0.0.1:5298/#/island?learn=1",
+          "revision": "485dba3-pop-v6-verified",
+          "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "renderer": "live-original",
+          "artDirection": null,
+          "drawCalls": 0,
+          "expanded": null,
+          "residentAction": null,
+          "residentItemId": null,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": true,
+          "appRoot": {
+            "revision": "485dba3-pop-v6-verified",
+            "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "actor": {
+            "renderer": "live-original",
+            "reducedMotion": "true",
+            "renderCount": 579,
+            "fallbackUrl": "/assets/pokomoko-learning-poses-B-Jfr41M.webp",
+            "canvas": {
+              "width": 184,
+              "height": 192,
+              "cssWidth": 184,
+              "cssHeight": 192,
+              "visible": true
+            },
+            "hand": {
+              "x": 56.75,
+              "y": 134.65625,
+              "contained": true
+            }
+          },
+          "partyCandidate": "pokomoko-pop-live-v6"
+        },
+        {
+          "file": "phone-reduced-supported.png",
+          "url": "http://127.0.0.1:5298/#/island?learn=1",
+          "revision": "485dba3-pop-v6-verified",
+          "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "renderer": "live-original",
+          "artDirection": null,
+          "drawCalls": 0,
+          "expanded": null,
+          "residentAction": null,
+          "residentItemId": null,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": true,
+          "appRoot": {
+            "revision": "485dba3-pop-v6-verified",
+            "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "actor": {
+            "renderer": "live-original",
+            "reducedMotion": "true",
+            "renderCount": 662,
+            "fallbackUrl": "/assets/pokomoko-learning-poses-B-Jfr41M.webp",
+            "canvas": {
+              "width": 184,
+              "height": 192,
+              "cssWidth": 184,
+              "cssHeight": 192,
+              "visible": true
+            },
+            "hand": {
+              "x": 56.75,
+              "y": 134.65625,
+              "contained": true
+            }
+          },
+          "partyCandidate": "pokomoko-pop-live-v6"
+        },
+        {
+          "file": "phone-reduced-return.png",
+          "url": "http://127.0.0.1:5298/#/island",
+          "revision": "485dba3-pop-v6-verified",
+          "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "renderer": "original-fallback",
+          "artDirection": null,
+          "drawCalls": 0,
+          "expanded": null,
+          "residentAction": null,
+          "residentItemId": null,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": true,
+          "appRoot": {
+            "revision": "485dba3-pop-v6-verified",
+            "version": "485dba3-pop-v6-verified:e1006b48-6ef7-44d6-a152-93b7af7fbd46",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "actor": null,
+          "partyCandidate": "pokomoko-pop-live-v6"
+        }
+      ],
+      "answers": [
+        {
+          "i": 1,
+          "ms": 202.6000000089407,
+          "game": {
+            "version": 1,
+            "streak": 1,
+            "light": 1,
+            "rideRemaining": 0
+          },
+          "showLevel": 0
+        },
+        {
+          "i": 2,
+          "ms": 182.69999998807907,
+          "game": {
+            "version": 1,
+            "streak": 2,
+            "light": 2,
+            "rideRemaining": 0
+          },
+          "showLevel": 0
+        },
+        {
+          "i": 3,
+          "ms": 194.09999999403954,
+          "game": {
+            "version": 1,
+            "streak": 3,
+            "light": 3,
+            "rideRemaining": 0
+          },
+          "showLevel": 1
+        },
+        {
+          "i": 4,
+          "ms": 186.1000000089407,
+          "game": {
+            "version": 1,
+            "streak": 4,
+            "light": 4,
+            "rideRemaining": 0
+          },
+          "showLevel": 1
+        },
+        {
+          "i": 5,
+          "ms": 193.3999999910593,
+          "game": {
+            "version": 1,
+            "streak": 5,
+            "light": 5,
+            "rideRemaining": 3
+          },
+          "showLevel": 1
+        },
+        {
+          "i": 6,
+          "ms": 197.09999999403954,
+          "game": {
+            "version": 1,
+            "streak": 6,
+            "light": 7,
+            "rideRemaining": 2
+          },
+          "showLevel": 0
+        },
+        {
+          "i": 7,
+          "ms": 184.40000000596046,
+          "game": {
+            "version": 1,
+            "streak": 7,
+            "light": 9,
+            "rideRemaining": 1
+          },
+          "showLevel": 0
+        },
+        {
+          "i": 8,
+          "ms": 188.09999999403954,
+          "game": {
+            "version": 1,
+            "streak": 8,
+            "light": 11,
+            "rideRemaining": 0
+          },
+          "showLevel": 1
+        },
+        {
+          "i": 9,
+          "ms": 184.09999999403954,
+          "game": {
+            "version": 1,
+            "streak": 9,
+            "light": 12,
+            "rideRemaining": 0
+          },
+          "showLevel": 1
+        },
+        {
+          "i": 10,
+          "ms": 183.69999998807907,
+          "game": {
+            "version": 1,
+            "streak": 10,
+            "light": 13,
+            "rideRemaining": 3
+          },
+          "showLevel": 1
+        },
+        {
+          "i": 11,
+          "ms": 187.6000000089407,
+          "game": {
+            "version": 1,
+            "streak": 11,
+            "light": 15,
+            "rideRemaining": 2
+          },
+          "showLevel": 2
+        },
+        {
+          "i": 12,
+          "ms": 186.80000001192093,
+          "game": {
+            "version": 1,
+            "streak": 12,
+            "light": 17,
+            "rideRemaining": 1
+          },
+          "showLevel": 2
+        },
+        {
+          "i": 13,
+          "ms": 183.79999999701977,
+          "game": {
+            "version": 1,
+            "streak": 13,
+            "light": 19,
+            "rideRemaining": 0
+          },
+          "showLevel": 2
+        },
+        {
+          "i": 14,
+          "ms": 195,
+          "game": {
+            "version": 1,
+            "streak": 14,
+            "light": 20,
+            "rideRemaining": 0
+          },
+          "showLevel": 3
+        },
+        {
+          "i": 15,
+          "ms": 183.69999998807907,
+          "game": {
+            "version": 1,
+            "streak": 15,
+            "light": 21,
+            "rideRemaining": 3
+          },
+          "showLevel": 3
+        },
+        {
+          "i": 16,
+          "ms": 184,
+          "game": {
+            "version": 1,
+            "streak": 16,
+            "light": 23,
+            "rideRemaining": 2
+          },
+          "showLevel": 3
+        },
+        {
+          "i": 17,
+          "ms": 195,
+          "game": {
+            "version": 1,
+            "streak": 17,
+            "light": 25,
+            "rideRemaining": 1
+          },
+          "showLevel": 3
+        },
+        {
+          "i": 18,
+          "ms": 191.3999999910593,
+          "game": {
+            "version": 1,
+            "streak": 18,
+            "light": 27,
+            "rideRemaining": 0
+          },
+          "showLevel": 3
+        },
+        {
+          "i": 19,
+          "ms": 189.09999999403954,
+          "game": {
+            "version": 1,
+            "streak": 19,
+            "light": 28,
+            "rideRemaining": 0
+          },
+          "showLevel": 3
+        },
+        {
+          "i": 20,
+          "ms": 194.40000000596046,
+          "game": {
+            "version": 1,
+            "streak": 20,
+            "light": 29,
+            "rideRemaining": 3
+          },
+          "showLevel": 3
+        },
+        {
+          "i": 21,
+          "ms": 200.59999999403954,
+          "game": {
+            "version": 1,
+            "streak": 21,
+            "light": 30,
+            "rideRemaining": 2
+          },
+          "showLevel": 3
+        }
+      ],
+      "pass": true,
+      "characterBounds": {
+        "stageCardGap": 0,
+        "actorWidth": 184,
+        "actorHeight": 192,
+        "contained": true
+      },
+      "layout": [
+        {
+          "name": "7",
+          "x": 14,
+          "y": 538.8125,
+          "w": 116,
+          "h": 56.546875,
+          "bottom": 595.359375,
+          "right": 130
+        },
+        {
+          "name": "8",
+          "x": 137,
+          "y": 538.8125,
+          "w": 116,
+          "h": 56.546875,
+          "bottom": 595.359375,
+          "right": 253
+        },
+        {
+          "name": "9",
+          "x": 260,
+          "y": 538.8125,
+          "w": 116,
+          "h": 56.546875,
+          "bottom": 595.359375,
+          "right": 376
+        },
+        {
+          "name": "4",
+          "x": 14,
+          "y": 602.359375,
+          "w": 116,
+          "h": 56.546875,
+          "bottom": 658.90625,
+          "right": 130
+        },
+        {
+          "name": "5",
+          "x": 137,
+          "y": 602.359375,
+          "w": 116,
+          "h": 56.546875,
+          "bottom": 658.90625,
+          "right": 253
+        },
+        {
+          "name": "6",
+          "x": 260,
+          "y": 602.359375,
+          "w": 116,
+          "h": 56.546875,
+          "bottom": 658.90625,
+          "right": 376
+        },
+        {
+          "name": "1",
+          "x": 14,
+          "y": 665.90625,
+          "w": 116,
+          "h": 56.546875,
+          "bottom": 722.453125,
+          "right": 130
+        },
+        {
+          "name": "2",
+          "x": 137,
+          "y": 665.90625,
+          "w": 116,
+          "h": 56.546875,
+          "bottom": 722.453125,
+          "right": 253
+        },
+        {
+          "name": "3",
+          "x": 260,
+          "y": 665.90625,
+          "w": 116,
+          "h": 56.546875,
+          "bottom": 722.453125,
+          "right": 376
+        },
+        {
+          "name": "ひとつ もどす",
+          "x": 14,
+          "y": 729.453125,
+          "w": 116,
+          "h": 56.546875,
+          "bottom": 786,
+          "right": 130
+        },
+        {
+          "name": "0",
+          "x": 137,
+          "y": 729.453125,
+          "w": 116,
+          "h": 56.546875,
+          "bottom": 786,
+          "right": 253
+        },
+        {
+          "name": "こたえを けす",
+          "x": 260,
+          "y": 729.453125,
+          "w": 116,
+          "h": 56.546875,
+          "bottom": 786,
+          "right": 376
+        }
+      ],
+      "inputFlight": [
+        {
+          "present": true,
+          "at": 16782.90000000596,
+          "digit": "2",
+          "problemId": "[\"island-plan-v1\",\"3ca5c732-10e9-4782-bffa-47439cf7dffd\",0]:slot-0"
+        },
+        {
+          "present": false,
+          "at": 16979.90000000596,
+          "digit": null,
+          "problemId": "[\"island-plan-v1\",\"3ca5c732-10e9-4782-bffa-47439cf7dffd\",0]:slot-1"
+        }
+      ],
+      "inputFlightFrames": [
+        {
+          "transform": "none",
+          "opacity": 0,
+          "visible": false
+        },
+        {
+          "transform": "none",
+          "opacity": 0,
+          "visible": false
+        },
+        {
+          "transform": "none",
+          "opacity": 0,
+          "visible": false
+        },
+        {
+          "transform": "none",
+          "opacity": 0,
+          "visible": false
+        },
+        {
+          "transform": "none",
+          "opacity": 0,
+          "visible": false
+        },
+        {
+          "transform": "none",
+          "opacity": 0,
+          "visible": false
+        },
+        {
+          "transform": "none",
+          "opacity": 0,
+          "visible": false
+        },
+        {
+          "transform": "none",
+          "opacity": 0,
+          "visible": false
+        },
+        {
+          "transform": "none",
+          "opacity": 0,
+          "visible": false
+        },
+        {
+          "transform": "none",
+          "opacity": 0,
+          "visible": false
+        },
+        {
+          "transform": "none",
+          "opacity": 0,
+          "visible": false
+        },
+        {
+          "transform": "none",
+          "opacity": 0,
+          "visible": false
+        },
+        {
+          "transform": "none",
+          "opacity": 0,
+          "visible": false
+        },
+        {
+          "transform": "none",
+          "opacity": 0,
+          "visible": false
+        }
+      ],
+      "offlineActorResources": [
+        {
+          "url": "http://127.0.0.1:5298/assets/index-zg8MhTbE.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 843828
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/react-DcHpdqMy.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 48531
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/motion-iLBaTeAD.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 119650
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/icons-BNwr5zv6.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 29669
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/data-CYRvWfdS.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 96367
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/utils-B-dksMZM.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 374
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/audio-DwtSHwBT.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 36126
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/Island-DWZ7F0gg.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 245797
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/repository-D1oMkg2N.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 86746
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/footprint-Ddz7lE8t.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 3320
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/Island-DK7horuD.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 52941
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/homeJourney-BkBsv3V2.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 947
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/random-CfHspBLG.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 297
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/islandFurniturePlacement-DSTxW9E8.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 42091
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/IslandLife-D6THMDV9.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 61998
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/LifeResidentPortrait-gx-DIW9I.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 13090
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/scene-DBsFL2SK.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 6337
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/RoundedBoxGeometry-CoAcg94E.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 629364
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/lifeUpdate.worker-CAhTtB5Q.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 185016
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/LifeWorld-BE-RTcPu.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 28932
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/scene-Ds0CxZaz.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 63081
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/geometry-BRJCA9yg.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 6631
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/residentInterest-CrzBmh7f.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 40373
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/IslandStage-CQNJpCAj.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 6691
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/PokomokoLearningActor-CRp0VJbf.js",
+          "kind": "script",
+          "cached": true,
+          "bytes": 8112
+        },
+        {
+          "url": "http://127.0.0.1:5298/assets/pokomoko-learning-poses-B-Jfr41M.webp",
+          "kind": "original-fallback",
+          "cached": true,
+          "bytes": 70070
+        }
+      ],
+      "offlineReload": {
+        "controlled": true,
+        "game": {
+          "version": 1,
+          "streak": 5,
+          "light": 5,
+          "rideRemaining": 3
+        }
+      },
+      "offlineAnswer": {
+        "version": 1,
+        "streak": 6,
+        "light": 7,
+        "rideRemaining": 2
+      }
+    }
+  ],
+  "pass": true,
+  "sourceEnd": "54ce9d29f9596d3c501ee114e2059331c3dd7bc42e5c81e81aee12ff652cce69"
+}

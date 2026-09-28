@@ -34,3 +34,26 @@ button[data-keypad-submit][data-confirmation-cue="intro"]::after {
 @media (prefers-reduced-motion: reduce) {
     button[data-keypad-submit][data-confirmation-cue="intro"]::after { animation: none; display: none; }
 }
+
+/* Opt-in Island layout: the twelve everyday keys keep their reading order. */
+.ten-key-compact-three {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: minmax(44px, auto);
+    gap: 6px;
+    width: 100%;
+    min-width: 0;
+}
+.ten-key-compact-three > button { min-height: 44px; }
+.ten-key-compact-three .ten-key-extra-controls {
+    display: grid;
+    grid-column: 1 / -1;
+    gap: 6px;
+    min-height: 44px;
+}
+.ten-key-compact-three .ten-key-extra-controls > button { min-width: 44px; min-height: 44px; padding-inline: 4px; }
+.ten-key-compact-three .ten-key-confirm-control > button[data-keypad-submit] {
+    flex-direction: row;
+    gap: 8px;
+}
+.ten-key-compact-three .ten-key-confirm-control > button[data-keypad-submit] > span { font-size: 14px; }

@@ -23,6 +23,7 @@ export function IslandAnswerForm({ slot, disabled, deferSubmission, onAnswer, an
     const model = stage === 'model';
     return <div className="island-answer-stage" data-support-stage={stage ?? 'none'}>
         <LearningAnswerForm key={lastAnswerReceipt.id ?? 'initial'} slot={slot} disabled={disabled || model}
+        keypadLayout="compact-three"
         deferSubmission={deferSubmission}
         retryAnswer={lastAnswerReceipt.retryAnswer}
         onInteraction={() => { if (slot.problem.subject === 'vocab') playSound('tap'); onInteraction?.(); }}

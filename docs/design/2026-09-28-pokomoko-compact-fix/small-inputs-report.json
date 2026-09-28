@@ -1,0 +1,437 @@
+{
+  "target": "http://127.0.0.1:5198",
+  "revision": "485dba3c37d6d2cb5ec5661e467516856d816460",
+  "sourceStart": "4f5381147e49fbb05b38acecc73123adadaebe6041e58392e36aa101aa97712f",
+  "qaHash": "c16b0175871448736276e2fe980704184d91938831350701e9221a99d883588d",
+  "evidence": "Disposable profile/memory fixture; normal planner and actual UI answers. Live animation screenshots. No physical device, speaker, or child evaluation.",
+  "runs": [
+    {
+      "name": "320-fraction",
+      "captures": [
+        {
+          "file": "320-fraction-ready.png",
+          "url": "http://127.0.0.1:5198/#/island?learn=1",
+          "revision": "development-local",
+          "version": "development-local:4279b0b2-f2ec-4493-a937-04f7ddf26bad",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "renderer": "three",
+          "artDirection": "moon-garden",
+          "drawCalls": 88,
+          "expanded": "false",
+          "residentAction": "idle",
+          "residentItemId": "",
+          "viewport": {
+            "width": 320,
+            "height": 568
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:4279b0b2-f2ec-4493-a937-04f7ddf26bad",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "320-fraction-answer.png",
+          "url": "http://127.0.0.1:5198/#/island?learn=1",
+          "revision": "development-local",
+          "version": "development-local:4279b0b2-f2ec-4493-a937-04f7ddf26bad",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "renderer": "three",
+          "artDirection": "moon-garden",
+          "drawCalls": 88,
+          "expanded": "false",
+          "residentAction": "idle",
+          "residentItemId": "",
+          "viewport": {
+            "width": 320,
+            "height": 568
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:4279b0b2-f2ec-4493-a937-04f7ddf26bad",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "320-fraction-model.png",
+          "url": "http://127.0.0.1:5198/#/island?learn=1",
+          "revision": "development-local",
+          "version": "development-local:4279b0b2-f2ec-4493-a937-04f7ddf26bad",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "renderer": "three",
+          "artDirection": "moon-garden",
+          "drawCalls": 88,
+          "expanded": "false",
+          "residentAction": "idle",
+          "residentItemId": "",
+          "viewport": {
+            "width": 320,
+            "height": 568
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:4279b0b2-f2ec-4493-a937-04f7ddf26bad",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        }
+      ],
+      "pass": true,
+      "actor": {
+        "renderer": "original-fallback"
+      },
+      "inputHitTargets": [
+        {
+          "name": "分子",
+          "width": 82.40625,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "分母",
+          "width": 82.40625,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "7",
+          "width": 94,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "8",
+          "width": 94,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "9",
+          "width": 94,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "4",
+          "width": 94,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "5",
+          "width": 94,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "6",
+          "width": 94,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "1",
+          "width": 94,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "2",
+          "width": 94,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "3",
+          "width": 94,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "ひとつ もどす",
+          "width": 94,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "0",
+          "width": 94,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "こたえを けす",
+          "width": 94,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "カーソルを ひだりへ",
+          "width": 143,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "つぎの欄へ",
+          "width": 143,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "ヒントを みる",
+          "width": 118.8125,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "わからない",
+          "width": 79.609375,
+          "height": 44,
+          "reachable": true
+        }
+      ],
+      "steps": 0
+    },
+    {
+      "name": "844-fraction",
+      "captures": [
+        {
+          "file": "844-fraction-ready.png",
+          "url": "http://127.0.0.1:5198/#/island?learn=1",
+          "revision": "development-local",
+          "version": "development-local:4279b0b2-f2ec-4493-a937-04f7ddf26bad",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "renderer": "three",
+          "artDirection": "moon-garden",
+          "drawCalls": 88,
+          "expanded": "false",
+          "residentAction": "idle",
+          "residentItemId": "",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:4279b0b2-f2ec-4493-a937-04f7ddf26bad",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "844-fraction-answer.png",
+          "url": "http://127.0.0.1:5198/#/island?learn=1",
+          "revision": "development-local",
+          "version": "development-local:4279b0b2-f2ec-4493-a937-04f7ddf26bad",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "renderer": "three",
+          "artDirection": "moon-garden",
+          "drawCalls": 88,
+          "expanded": "false",
+          "residentAction": "idle",
+          "residentItemId": "",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:4279b0b2-f2ec-4493-a937-04f7ddf26bad",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "844-fraction-model.png",
+          "url": "http://127.0.0.1:5198/#/island?learn=1",
+          "revision": "development-local",
+          "version": "development-local:4279b0b2-f2ec-4493-a937-04f7ddf26bad",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v6",
+          "islandFeatureEnabled": true,
+          "mode": "learning",
+          "renderer": "three",
+          "artDirection": "moon-garden",
+          "drawCalls": 88,
+          "expanded": "false",
+          "residentAction": "idle",
+          "residentItemId": "",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:4279b0b2-f2ec-4493-a937-04f7ddf26bad",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        }
+      ],
+      "pass": true,
+      "actor": {
+        "renderer": "live-original"
+      },
+      "inputHitTargets": [
+        {
+          "name": "分子",
+          "width": 64,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "分母",
+          "width": 64,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "7",
+          "width": 129.65625,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "8",
+          "width": 129.671875,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "9",
+          "width": 129.671875,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "4",
+          "width": 129.65625,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "5",
+          "width": 129.671875,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "6",
+          "width": 129.671875,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "1",
+          "width": 129.65625,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "2",
+          "width": 129.671875,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "3",
+          "width": 129.671875,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "ひとつ もどす",
+          "width": 129.65625,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "0",
+          "width": 129.671875,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "こたえを けす",
+          "width": 129.671875,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "カーソルを ひだりへ",
+          "width": 196.5,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "つぎの欄へ",
+          "width": 196.5,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "ヒントを みる",
+          "width": 118.8125,
+          "height": 44,
+          "reachable": true
+        },
+        {
+          "name": "わからない",
+          "width": 79.609375,
+          "height": 44,
+          "reachable": true
+        }
+      ],
+      "steps": 0
+    }
+  ],
+  "pass": true,
+  "sourceEnd": "4f5381147e49fbb05b38acecc73123adadaebe6041e58392e36aa101aa97712f"
+}

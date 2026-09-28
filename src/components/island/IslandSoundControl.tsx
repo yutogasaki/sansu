@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
 import { enableSoundFromGesture, getSoundPlaybackStatus, setSoundEnabled, subscribeSoundPlayback } from '../../utils/audio';
+import { beginLearningMusicGesture } from './learningMusicGesture';
 import './IslandSoundControl.css';
 
 export function IslandSoundControl({ enabled, disabled, onChange }: {
@@ -11,44 +12,54 @@ export function IslandSoundControl({ enabled, disabled, onChange }: {
     const playback = useSyncExternalStore(subscribeSoundPlayback, getSoundPlaybackStatus, () => 'off');
     const [working, setWorking] = useState(false);
     const [message, setMessage] = useState('');
+    const [musicBlocked, setMusicBlocked] = useState(false);
     const locked = useRef(false);
     const intent = useRef<boolean | undefined>(undefined);
     const mounted = useRef(false);
     const latestEnabled = useRef(enabled);
     latestEnabled.current = enabled;
     const cue = useRef<ReturnType<typeof enableSoundFromGesture> | undefined>(undefined);
+    const learningCue = useRef<ReturnType<typeof beginLearningMusicGesture> | undefined>(undefined);
     useEffect(() => {
         mounted.current = true;
-        const hide = () => { if (document.hidden) cue.current?.cancel(); };
+        const hide = () => { if (document.hidden) { cue.current?.cancel(); learningCue.current?.cancel(); } };
         document.addEventListener('visibilitychange', hide);
         return () => {
             mounted.current = false;
             cue.current?.cancel();
+            learningCue.current?.cancel();
             document.removeEventListener('visibilitychange', hide);
         };
     }, []);
-    const ready = enabled && playback === 'ready';
+    const ready = enabled && playback === 'ready' && !musicBlocked;
     const visibleMessage = ready && message === 'もういちど おしてね' ? '' : message;
     const toggle = async () => {
         if (locked.current || disabled) return;
         locked.current = true;
-        setWorking(true); setMessage('');
+        setWorking(true); setMessage(''); setMusicBlocked(false);
         // Howler may auto-resume between pointerdown and click. Honor the action
         // the button offered when the gesture began, even if readiness changed.
         const next = intent.current ?? !ready;
         intent.current = undefined;
         cue.current?.cancel();
+        learningCue.current?.cancel();
         // Begin audio while the click is active; saving may outlive user activation.
         cue.current = next ? enableSoundFromGesture() : undefined;
+        learningCue.current = beginLearningMusicGesture(next);
         if (!next) setSoundEnabled(false);
         try {
             if (next !== enabled && !await onChange(next)) throw new Error('Sound setting was not saved');
             if (next && cue.current) {
-                const playing = await cue.current.result;
-                if (mounted.current && !document.hidden && !playing) setMessage('もういちど おしてね');
+                const [cuePlaying, musicPlaying] = await Promise.all([cue.current.result, learningCue.current.result]);
+                const playing = cuePlaying && musicPlaying;
+                if (mounted.current && !document.hidden) {
+                    setMusicBlocked(!musicPlaying);
+                    if (!playing) setMessage('もういちど おしてね');
+                }
             }
         } catch {
             cue.current?.cancel();
+            learningCue.current?.cancel();
             if (mounted.current) {
                 setSoundEnabled(latestEnabled.current);
                 setMessage('せっていを のこせなかったよ。もういちど おしてね');

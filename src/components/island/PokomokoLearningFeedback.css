@@ -1,17 +1,5 @@
 @font-face { font-family: PokomokoDisplay; src: url('../../assets/fonts/dela-gothic-one.woff2') format('woff2'); font-display: swap; }
 @font-face { font-family: PokomokoRound; src: url('../../assets/fonts/zen-maru-gothic-black.woff2') format('woff2'); font-weight: 900; font-display: swap; }
-/* One graphic language for the sheet, numeral tiles and compact character stage. */
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] > .island-workbench {
-    --pop-ink: #191d48; --pop-blue: #386bff; --pop-pink: #ff7ab6; --pop-yellow: #ffda46; --pop-mint: #4dd9bb;
-    background: #fffcf5; border: 2px solid var(--pop-ink); border-top: 2px solid var(--pop-ink);
-    box-shadow: 0 4px 0 var(--pop-ink); border-radius: 22px; color: var(--pop-ink);
-}
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] .island-workbench .island-learning-progress { background: none; box-shadow: none; padding: 0 4px; font-size: 16px; }
-.island-workbench .island-learning-progress::after { display: none; }
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] .island-workbench > .pokomoko-learning-feedback {
-    position: absolute; grid-area: auto; left: 12px; top: 46px; z-index: 5; flex: none; width: calc(100% - 24px); height: 144px; margin: 0; padding: 0;
-    display: block; background: none; border: 0; box-shadow: none; overflow: visible; pointer-events: none;
-}
 .pokomoko-play-scene { position: relative; width: 100%; height: 100%; max-width: 540px; margin-inline: auto; border-bottom: 2px solid var(--pop-ink); }
 .pokomoko-stage-colors { position: absolute; inset: 0; overflow: hidden; }
 .pokomoko-stage-colors i { position: absolute; width: 165px; height: 190px; left: -66px; top: -30px; border-radius: 50%; background: #ffe3ee; transform: rotate(-25deg); }
@@ -46,71 +34,260 @@
 .pokomoko-input-sparks { position: absolute; z-index: 12; inset: 0; pointer-events: none; overflow: hidden; border-radius: inherit; }
 .pokomoko-input-spark { position: absolute; width: 38px; height: 38px; margin: -19px; border: 3px solid var(--pop-blue); border-radius: 12px; animation: pop-ring 350ms ease-out both; }
 .pokomoko-input-flight { position: absolute; top: 0; left: 0; opacity: 0; display: grid; place-items: center; width: 36px; height: 40px; margin: -20px -18px; font: 900 25px/1 PokomokoRound,sans-serif; color: var(--pop-ink); background: white; border: 2px solid var(--pop-ink); border-radius: 10px; box-shadow: 2px 3px var(--pop-pink); will-change: transform; }
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] .island-workbench .island-answer .park-question {
-    padding: 152px 8px 4px; background: white; border: 2px solid var(--pop-ink); border-bottom: 0; border-radius: 18px 18px 0 0; box-shadow: none;
-}
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] .island-workbench .island-problem-prompt[data-problem-visual=symbolic]:not([data-problem-prose=true]) { background: none; box-shadow: none; border-radius: 0; padding: 8px 2px; }
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] .island-workbench .island-answer .park-inputs { background: white; border: 2px solid var(--pop-ink); border-top: 0; padding-bottom: 8px; border-radius: 0 0 18px 18px; box-shadow: 0 3px var(--pop-ink); }
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] .island-workbench .island-answer .park-input { background: #eef2ff; border-color: var(--pop-blue); border-radius: 10px; box-shadow: none; }
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] .island-workbench .island-answer .park-keypad > div { border: 0; background: none; border-radius: 0; box-shadow: none; padding: 5px 1px; gap: 7px; }
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] .island-workbench .island-answer .park-keypad > div::after { display: none; }
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] .island-workbench .park-keypad button { border: 2px solid var(--pop-ink); background: white; color: var(--pop-ink); border-radius: 13px; box-shadow: 0 4px var(--pop-ink); font: 900 27px/1 PokomokoRound,sans-serif; transition: transform 60ms,box-shadow 60ms; }
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] .island-workbench .park-keypad button:active { transform: translateY(3px); box-shadow: 0 1px var(--pop-ink); }
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] .island-workbench .park-keypad button[aria-label='こたえを けす'],
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] .island-workbench .park-keypad button[aria-label='ひとつ もどす'] { background: #ffe1ee; }
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] .island-workbench .park-keypad button[data-keypad-submit] { background: var(--pop-blue); color: white; font-size: 18px; }
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] .island-workbench[data-party-riding=true] .park-keypad button:not([data-keypad-submit]):nth-child(3n+1) { background: #ffe1ee; }
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] .island-workbench[data-party-riding=true] .park-keypad button:not([data-keypad-submit]):nth-child(3n+2) { background: #fff0b2; }
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] .island-workbench[data-party-riding=true] .park-keypad button:not([data-keypad-submit]):nth-child(3n) { background: #dcf8ef; }
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] .island-workbench .island-learning-actions .island-text-button { font-size: 14px; }
 @keyframes pop-number { 0% { transform: scale(.35) rotate(-10deg); opacity: 0; } 45% { transform: scale(1.13) rotate(4deg); opacity: 1; } 100% { transform: none; } }
 @keyframes pop-ring { from { transform: scale(.7); opacity: .8; } to { transform: scale(1.3); opacity: 0; } }
 @keyframes pop-rays { 0% { opacity: 0; } 15%,65% { opacity: .85; } 100% { opacity: 0; } }
 @keyframes pop-paper { 0% { transform: translateY(-20px) rotate(0); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(90px) rotate(160deg); opacity: 0; } }
-@media (max-height: 700px) and (orientation: portrait) {
-    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] .island-workbench > .pokomoko-learning-feedback { height: 88px; }
-    .pokomoko-learning-actor { width: 94px; height: 98px; left: 33%; }
-    .pokomoko-learning-caption { top: 10px; height: 75px; }
-    .pokomoko-combo-number { font-size: 32px; }
-    [data-peak=true] .pokomoko-combo-number { font-size: 42px; }
-    .pokomoko-charge { top: 33px; }
-    .pokomoko-stage-flags { height: 20px; }
+
+/* One composition, like the approved four-state study. The stage is a real
+   flow row; the card no longer contains a large empty padding reservation. */
+.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7'] {
+    --pop-ink: #191d48; --pop-blue: #386bff; --pop-pink: #ff7ab6; --pop-yellow: #ffda46; --pop-mint: #4dd9bb;
+    display: flex; flex-direction: column; align-items: center; min-height: 0; padding-bottom: 0; overflow: hidden;
+    color: var(--pop-ink); background: #f4f5fa;
+    > .island-stage { display: none; }
+    > .island-header { flex: none; width: min(100%, 480px); max-width: none; min-height: 48px; margin: 0; padding: 4px 12px; background: #fffcf5; border: 0; }
+    .island-brand h1 { font: 900 17px/1.2 PokomokoRound, sans-serif; }
+    .island-brand > svg { display: none; }
+    .island-header-actions { gap: 6px; }
+    .island-sound-button { border: 2px solid var(--pop-ink); border-radius: 14px; background: white; color: var(--pop-ink); box-shadow: 0 2px var(--pop-ink); }
+    > .island-workbench {
+        --stage-height: clamp(126px, 21dvh, 180px);
+        flex: 0 1 840px; display: flex; flex-direction: column; width: min(100%, 480px); max-width: 480px; min-height: 0;
+        margin: 0; padding: 0 14px 4px; border: 0; border-radius: 0; box-shadow: none; overflow: hidden;
+        background: linear-gradient(#191d4807 1px, transparent 1px), linear-gradient(90deg,#191d4807 1px,transparent 1px), #fffcf5;
+        background-size: 24px 24px; color: var(--pop-ink);
+    }
+    .island-learning-progress { position: relative; z-index: 4; display: flex; flex: 0 0 36px; align-items: center; justify-content: space-between; min-height: 36px; padding: 0 2px; gap: 6px; font-size: 16px; }
+    .island-learning-label { display: flex; align-items: center; }
+    .island-learning-patch { display: none; }
+    .island-learning-subject { font: 900 16px/1 PokomokoRound, sans-serif; color: var(--pop-blue); }
+    .island-learning-count { font-size: 16px; color: var(--pop-ink); }
+    .island-learning-count small { font-size: 14px; }
+    .island-light-trail { gap: 4px; }
+    .island-light-seed { width: 15px; height: 15px; border: 1.5px solid var(--pop-ink); border-radius: 50%; background: white; }
+    .island-light-seed svg { display: none; }
+    .island-light-seed[data-filled=true] { background: var(--pop-yellow); }
+    .island-light-seed[data-current=true] { border-color: var(--pop-blue); border-width: 2px; }
+    .island-workbench > .pokomoko-learning-feedback { position: relative; flex: 0 0 var(--stage-height); width: 100%; height: var(--stage-height); min-height: 0; margin: 0; padding: 0; border: 0; background: none; box-shadow: none; pointer-events: none; z-index: 3; }
+    .pokomoko-play-scene { max-width: none; border: 0; }
+    .pokomoko-stage-colors { inset: -36px -14px 0; }
+    .pokomoko-stage-colors i { width: 205px; height: 240px; left: -102px; top: 0; background: #ffe3ee; }
+    .pokomoko-stage-colors i + i { left: auto; right: -95px; width: 200px; height: 175px; background: #e6edff; }
+    .pokomoko-learning-actor { width: 184px; height: 192px; left: calc(50% - 92px); bottom: -18px; transition: left 200ms ease-out; }
+    .pokomoko-learning-feedback[data-peak=true] .pokomoko-learning-actor,
+    .pokomoko-learning-feedback[data-riding=true] .pokomoko-learning-actor { left: calc(35% - 92px); }
+    .pokomoko-charge { top: 0; left: 0; gap: 5px; }
+    .pokomoko-charge span { width: 16px; height: 16px; }
+    .pokomoko-stage-flags { top: 15px; }
+    .pokomoko-learning-caption { right: 0; top: 29%; width: 31%; height: 110px; }
+    .pokomoko-party-headline { font: 900 18px/1.25 PokomokoRound, sans-serif; gap: 4px; }
+    .pokomoko-combo-number { font-size: 50px; }
+    [data-peak=true] .pokomoko-combo-number { font-size: 78px; -webkit-text-stroke: 4px var(--pop-ink); text-shadow: 3px 4px white; }
+    .pokomoko-combo-number[data-long=true] { font-size: 40px; }
+    [data-resting=true] .pokomoko-learning-caption { right: auto; left: 0; top: 27%; width: 33%; height: auto; transform: rotate(-8deg); }
+    [data-resting=true] .pokomoko-party-headline { background: white; border: 2px solid var(--pop-ink); border-radius: 50%; padding: 12px 8px; font-size: 16px; box-shadow: 0 2px var(--pop-ink); }
+    .pokomoko-stamp-shelf { bottom: 8px; left: 8px; }
+    .island-answer-stage { flex: 1 1 auto; display: flex; flex-direction: column; min-height: 0; width: 100%; }
+    .island-answer { display: flex; flex-direction: column; flex: 1; width: 100%; max-width: none; height: 100%; min-height: 0; margin: 0; gap: 0; color: var(--pop-ink); }
+    .island-answer .park-question {
+        flex: 1 1 auto; display: flex; align-items: safe center; justify-content: center; min-height: 0; margin: 0; padding: 14px 10px 8px;
+        background: white; border: 2px solid var(--pop-ink); border-bottom: 0; border-radius: 18px 18px 0 0; box-shadow: none; overflow: auto; overscroll-behavior: contain;
+    }
+    .island-answer[data-input-type=hissan] .park-question,
+    .island-answer[data-input-type=choice] .park-question { border-bottom: 2px solid var(--pop-ink); border-radius: 18px; box-shadow: 0 3px var(--pop-ink); margin-bottom: 10px; }
+    .island-problem-prompt { color: var(--pop-ink); background: none; box-shadow: none; }
+    .island-problem-prompt[data-problem-visual=symbolic]:not([data-problem-prose=true]) .island-prompt-content { font: 900 40px/1.3 PokomokoRound, sans-serif; }
+    .island-prose-prompt { font-size: 23px; line-height: 1.65; text-wrap: balance; }
+    .island-prose-chunk { display: inline-block; max-width: 100%; }
+    .island-answer .park-inputs { flex: none; min-height: 62px; margin: 0 0 10px; padding: 3px 8px 12px; gap: 8px; background: white; border: 2px solid var(--pop-ink); border-top: 0; border-radius: 0 0 18px 18px; box-shadow: 0 3px var(--pop-ink); }
+    .island-answer .park-input { background: #eef2ff; border: 0; border-radius: 10px; box-shadow: none; min-height: 48px; color: var(--pop-ink); }
+    .island-answer .park-input[aria-pressed=true] { outline: 2px solid var(--pop-blue); outline-offset: 1px; background: #eef2ff; }
+    .island-answer .park-input span { font-family: PokomokoRound, sans-serif; }
+    .island-answer .park-keypad { flex: none; width: 100%; height: auto; min-height: 0; max-height: none; max-width: none; margin: 0; padding: 0 0 4px; }
+    .island-answer .park-keypad > div { padding: 0; gap: 7px; border: 0; border-radius: 0; background: none; box-shadow: none; }
+    .island-answer .park-keypad > div[data-keypad-layout=compact-three] { grid-template-columns: repeat(3,minmax(0,1fr)); }
+    .island-answer .park-keypad button { min-height: clamp(44px,6.7dvh,58px); border: 2px solid var(--pop-ink); border-radius: 12px; background: white; color: var(--pop-ink); box-shadow: 0 3px var(--pop-ink); font: 900 27px/1 PokomokoRound,sans-serif; transition: transform 60ms,box-shadow 60ms; }
+    .island-answer .park-keypad button:active:not(:disabled) { transform: translateY(2px); background: var(--pop-pink); box-shadow: 0 1px var(--pop-ink); }
+    .island-answer .park-keypad button[aria-label='こたえを けす'], .island-answer .park-keypad button[aria-label='ひとつ もどす'] { background: #ffe1ee; color: var(--pop-ink); }
+    .island-answer .park-keypad button[data-keypad-submit] { flex-direction: row; gap: 8px; background: var(--pop-blue); color: white; }
+    .island-answer .park-keypad button[data-keypad-submit] svg { width: 23px; height: 23px; }
+    .island-answer .park-keypad button[data-keypad-submit] span { font-size: 16px; }
+    .island-answer .park-keypad .ten-key-extra-controls button { min-height: 44px; font-size: 20px; }
+    .island-answer .park-support { flex: 0 1 auto; min-height: 0; max-height: 120px; margin: 4px 0 8px; padding: 8px 12px; overflow: auto; font-size: 16px; line-height: 1.5; background: #e9f8f4; }
+    .island-answer-stage[data-support-stage=model] .park-support { flex: 1; max-height: none; }
+    .island-answer-stage[data-support-stage=model] .island-answer > :not(.park-support) { display: none; }
+    .island-answer .park-choices { flex: none; width: 100%; margin: 0; gap: 10px; }
+    .island-answer .park-choices button { min-height: 58px; border: 2px solid var(--pop-ink); border-radius: 13px; background: white; color: var(--pop-ink); box-shadow: 0 3px var(--pop-ink); font-size: 22px; }
+    .island-learning-actions { flex: none; display: flex; justify-content: space-between; align-items: center; min-height: 44px; margin: 6px 0 0; padding: 0; gap: 4px; border: 0; }
+    .island-learning-actions .island-text-button { min-height: 44px; padding: 4px; font-size: 14px; color: var(--pop-ink); }
+    [data-party-riding=true] .park-keypad > div > button:nth-child(3n+1) { background: #ffe1ee; }
+    [data-party-riding=true] .park-keypad > div > button:nth-child(3n+2) { background: #fff0b2; }
+    [data-party-riding=true] .park-keypad > div > button:nth-child(3n) { background: #dcf8ef; }
+    [data-show-level='2'] .pokomoko-stage-colors i { background: #dbf8ef; }
+    [data-show-level='3'] .pokomoko-stage-colors i { background: #ffe79b; }
 }
-@media (min-width: 900px) and (orientation: landscape), (min-width: 480px) and (max-height: 600px) and (orientation: landscape) {
-    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] .island-workbench > .island-workbench-message.pokomoko-learning-feedback { position: absolute; grid-area: auto; display: block; height: 118px; width: calc((100% - 24px) / 2.35); left: 8px; right: auto; top: 48px; margin: 0; padding: 0; }
-    .pokomoko-learning-actor { width: 119px; height: 124px; left: 27%; }
-    .pokomoko-learning-caption { top: 14px; height: 100px; }
-    .pokomoko-combo-number { font-size: 34px; }
-    [data-peak=true] .pokomoko-combo-number { font-size: 49px; }
-    .pokomoko-charge { top: 37px; gap: 2px; }
-    .pokomoko-charge span { width: 13px; height: 13px; }
-    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] .island-workbench.island-workbench .island-answer .park-question { padding-top: 126px; border-bottom: 2px solid var(--pop-ink); border-radius: 18px; }
-    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] .island-workbench .island-answer .park-inputs { background: none; border: 0; box-shadow: none; padding: 0; }
+
+@media (max-height: 740px) {
+    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7'] {
+        > .island-workbench { --stage-height: 116px; }
+        .pokomoko-learning-actor { width: 138px; height: 144px; left: calc(50% - 69px); bottom: -14px; }
+        .pokomoko-learning-feedback[data-peak=true] .pokomoko-learning-actor, .pokomoko-learning-feedback[data-riding=true] .pokomoko-learning-actor { left: calc(35% - 69px); }
+        .pokomoko-learning-caption { top: 10%; height: 95px; }
+        [data-peak=true] .pokomoko-combo-number { font-size: 58px; }
+        .island-answer .park-keypad button { min-height: 44px; }
+    }
 }
-@media (min-width: 900px) and (orientation: landscape) {
-    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] > .island-workbench { max-width: 1000px; }
-    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] .island-workbench > .island-workbench-message.pokomoko-learning-feedback { width: calc(100% - 408px); }
-}
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] { background: #e8efff; }
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] > .island-header { background: #fffcf5; border-bottom: 2px solid #191d48; }
-.pokomoko-combo-number[data-long=true] { font-size: 32px; }
-@media (max-height: 700px) and (orientation: portrait) {
-    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] .island-workbench .island-answer .park-question { padding-top: 96px; }
+/* A short landscape viewport needs a neighboring input column, not smaller keys. */
+@media (orientation: landscape) and (max-height: 540px) {
+    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7'] {
+        > .island-header { width: 100%; max-width: 850px; height: 44px; min-height: 44px; }
+        > .island-workbench { --stage-height: 105px; flex: 1; max-width: 850px; width: 100%; display: grid; grid-template-columns: minmax(0,1fr) minmax(270px,1fr); grid-template-rows: 28px 105px minmax(0,1fr) 44px; gap: 0 18px; padding: 0 14px 4px; }
+        .island-learning-progress { grid-area: 1 / 1; min-height: 28px; }
+        .island-workbench > .pokomoko-learning-feedback { grid-area: 2 / 1; }
+        .island-answer-stage { display: contents; }
+        .island-answer { display: contents; }
+        .island-answer .park-question { grid-area: 3 / 1; min-height: 0; padding: 4px; border-bottom: 2px solid var(--pop-ink); border-radius: 16px; margin-bottom: 0; }
+        .island-answer .park-inputs { grid-area: 1 / 2 / 3 / 3; align-self: start; min-height: 48px; padding: 3px; margin: 0; border: 0; border-radius: 10px; box-shadow: none; background: transparent; }
+        .island-answer .park-keypad { grid-area: 2 / 2 / 5 / 3; align-self: end; }
+        .island-answer .park-keypad > div { gap: 5px; }
+        .island-answer .park-keypad button { min-height: 44px; }
+        .island-answer .park-choices { grid-area: 1 / 2 / 5 / 3; align-self: center; }
+        .island-learning-actions { grid-area: 4 / 1; margin: 0; }
+        .island-answer .park-support { grid-area: 3 / 1; z-index: 4; max-height: 100%; align-self: end; margin: 0; }
+        .island-answer-stage[data-support-stage=model] .park-support { grid-area: 1 / 2 / 5 / 3; align-self: stretch; }
+        .pokomoko-learning-actor { width: 116px; height: 121px; left: calc(50% - 58px); bottom: -11px; }
+        .pokomoko-learning-feedback[data-peak=true] .pokomoko-learning-actor, .pokomoko-learning-feedback[data-riding=true] .pokomoko-learning-actor { left: calc(35% - 58px); }
+    }
 }
 @media (prefers-reduced-motion: reduce) {
     .pokomoko-learning-feedback *, .pokomoko-input-sparks * { animation: none !important; transition: none !important; }
     .pokomoko-input-sparks, .pokomoko-stage-confetti, .pokomoko-stage-rays { display: none; }
 }
 
-/* Choice questions use the same joined board without reserving an empty answer tray. */
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] .island-workbench .island-answer[data-input-type=choice] .park-question {
-    flex: 1; margin: 0 0 12px; padding-bottom: 16px; border-bottom: 2px solid var(--pop-ink); border-radius: 18px;
-}
-@media (min-width: 900px) and (orientation: landscape) {
-    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] .island-workbench:has(.island-answer[data-input-type=choice]) > .pokomoko-learning-feedback { width: calc(100% - 24px); }
+/* The diagrams keep their meaning colors; their old beige outer trays do not
+   belong to this white, blue and pink learning surface. */
+.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7'] {
+    .island-problem-prompt [data-visual-surface] { background: #f4f6ff; border-color: #d9def4; box-shadow: none; }
+    .island-problem-prompt [data-visual-surface] [data-visual-surface], .island-problem-prompt [data-visual-surface=guide], .island-problem-prompt [data-visual-surface=question] { background: transparent; border: 0; box-shadow: none; }
+    .island-problem-prompt [data-visual-caption] { color: var(--pop-ink); font-size: 16px; line-height: 1.4; }
+    .island-learning-actions .island-text-button { display: inline-flex; align-items: center; justify-content: center; gap: 5px; }
+    .answer-cell { border: 0; background: #eef2ff; min-width: 1em; }
+    .answer-cell[data-active=true] { outline-color: var(--pop-blue); }
+    .island-answer[data-input-type=hissan] .park-question .font-mono { background: transparent; color: var(--pop-ink); box-shadow: none; }
+    .island-answer[data-input-type=hissan] .park-question .font-mono[class*='bg-white/76'] { background: #eef2ff; border-color: transparent; }
+    .island-answer[data-input-type=hissan] .park-question .font-mono[class*='border-cyan-400'] { background: #eef2ff; border-color: var(--pop-blue); --tw-ring-color: #c7d4ff; }
 }
 
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] .island-workbench .park-choices button {
-    border: 2px solid var(--pop-ink); background: white; color: var(--pop-ink); border-radius: 14px; box-shadow: 0 4px var(--pop-ink); font-size: 22px;
+.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7'] {
+    .written-arithmetic { --written-ink: var(--pop-ink); --written-accent: var(--pop-blue); --written-paper: white; }
+    .written-paper { border: 0; background: white; padding-block: 0; }
+    .written-place-value .written-cell { height: 43px; font: 900 36px/1 PokomokoRound,sans-serif; border-right: 0; }
+    .written-place-value button.written-cell { height: 48px; background: #eef2ff; border: 0; border-radius: 8px; }
+    .written-place-value button.written-cell[data-active=true] { outline: 2px solid var(--pop-blue); outline-offset: -2px; color: var(--pop-ink); }
+    .written-place-value .written-row[data-current=true] { background: transparent; }
+    .written-place-value .written-row-label[data-operator=true] { font-size: 32px; color: var(--pop-blue); }
+    .written-input-guide { font-size: 14px; padding-top: 8px; justify-content: center; }
+    .written-place-value .written-placeholder { color: transparent; }
+    .written-place-value .written-row-label:not([data-operator=true]) { font-size: 12px; }
+    .written-place-value .written-rule { margin-block: 5px; }
+    .written-guidance { font-size: 14px; }
 }
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v5'] .island-workbench .park-choices button:active { transform: translateY(3px); box-shadow: 0 1px var(--pop-ink); }
+
+@media (orientation: landscape) and (max-height: 540px) {
+    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7'] {
+        .island-answer .park-inputs[data-number-layout] { gap: 4px; padding: 2px 30px; }
+        .island-answer .park-inputs .park-input { min-height: 44px; }
+        .island-answer .park-inputs[data-number-layout] > :last-child::before { top: -3px; }
+    }
+}
+/* With an extra control row on a small phone, let the companion sit beside
+   the question. All number, edit and help controls retain 44 px targets. */
+@media (orientation: portrait) and (max-height: 660px) {
+    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7']:has(.ten-key-extra-controls) {
+        > .island-header { min-height: 44px; height: 44px; }
+        > .island-workbench { --stage-height: 0px; }
+        .island-learning-progress { min-height: 28px; flex-basis: 28px; }
+        .pokomoko-learning-actor, .pokomoko-learning-feedback[data-peak=true] .pokomoko-learning-actor, .pokomoko-learning-feedback[data-riding=true] .pokomoko-learning-actor { width: 90px; height: 94px; left: auto; right: 4px; top: 8px; bottom: auto; }
+        .pokomoko-charge, .pokomoko-learning-caption, .pokomoko-stage-flags, .pokomoko-stage-stars, .pokomoko-stamp-shelf, .pokomoko-stage-rays, .pokomoko-stage-confetti, .pokomoko-new-stamp { display: none; }
+        .island-answer .park-question { padding: 6px 98px 4px 4px; min-height: 100px; }
+        .island-answer .park-inputs { padding-block: 2px 5px; margin-bottom: 6px; gap: 5px; }
+        .island-answer .park-inputs .park-input { min-height: 44px; padding-block: 2px; }
+        .island-answer .park-keypad > div { gap: 5px; }
+        .island-learning-actions { margin-top: 0; }
+    }
+}
+@media (orientation: portrait) and (max-height: 660px) {
+    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7']:has(.ten-key-extra-controls) {
+        .pokomoko-learning-feedback:not([data-resting=true]) .pokomoko-learning-actor { visibility: hidden; }
+        .pokomoko-learning-feedback:not([data-resting=true]) .pokomoko-learning-caption { display: flex; top: 8px; left: auto; right: 4px; width: 90px; height: 94px; }
+        .pokomoko-learning-caption .pokomoko-party-headline { font-size: 16px; }
+        .pokomoko-learning-caption .pokomoko-combo-number { font-size: 36px; }
+    }
+}
+.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7'] .park-inputs[data-number-layout] > :last-child::before {
+    content: ''; display: block; height: 2px; border: 0; background: var(--pop-ink); z-index: 1;
+}
+/* Fit the whole number-line instruction without shrinking its numerals/copy. */
+.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7'] {
+    .island-answer .park-question:has(:is([data-problem-visual=number-line],[data-problem-visual=number-sequence])) { padding-block: 6px 4px; }
+    :is([data-problem-visual=number-line],[data-problem-visual=number-sequence]) [data-visual-surface=number-line] { padding-block: 3px; }
+}
+
+/* Authored four-state composition: outlined lettering belongs beside the
+   actor, with the ground and effects behind it, never across the face. */
+.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7'] {
+    --pop-ink: #080e43; --pop-blue: #1265ff; --pop-pink: #ff77bd;
+    .pokomoko-play-scene::after { content: ''; position: absolute; bottom: 3px; left: 4%; right: 4%; border-bottom: 2px solid var(--pop-ink); border-radius: 50%; z-index: 1; }
+    .pokomoko-learning-caption { right: 1%; width: 37%; top: 23%; }
+    .pokomoko-party-headline { gap: 0; }
+    .pokomoko-combo-number { font-family: PokomokoRound,sans-serif; font-weight: 900; font-size: 68px; line-height: .95; -webkit-text-stroke: 6px white; paint-order: stroke fill; text-shadow: none; filter: drop-shadow(2px 0 0 var(--pop-ink)) drop-shadow(-2px 0 0 var(--pop-ink)) drop-shadow(0 -2px 0 var(--pop-ink)) drop-shadow(0 3px 0 var(--pop-ink)); }
+    [data-peak=true] .pokomoko-combo-number { font-size: 98px; -webkit-text-stroke: 7px white; text-shadow: none; }
+    .pokomoko-combo-label { font-family: PokomokoRound,sans-serif; }
+    [data-peak=true] .pokomoko-combo-label { font-family: PokomokoRound,sans-serif; color: var(--pop-pink); font-size: 27px; line-height: 1.2; white-space: nowrap; -webkit-text-stroke: 7px var(--pop-ink); paint-order: stroke fill; filter: drop-shadow(0 3px 0 var(--pop-ink)); transform: rotate(-5deg); }
+    [data-peak=true] .pokomoko-party-headline[data-result=supported] .pokomoko-combo-label { font-size: 19px; white-space: normal; }
+    [data-resting=true] .pokomoko-learning-caption { width: 39%; top: 20%; left: 0; }
+    [data-resting=true] .pokomoko-party-headline { position: relative; padding: 15px 12px; transform: rotate(-3deg); border-width: 3px; box-shadow: none; font-size: 17px; }
+    [data-resting=true] .pokomoko-party-headline::after { content: ''; position: absolute; right: 13px; bottom: -9px; width: 15px; height: 17px; background: white; border-right: 3px solid var(--pop-ink); border-bottom: 3px solid var(--pop-ink); transform: skew(18deg) rotate(20deg); }
+    [data-pose=input][data-resting=true] .pokomoko-learning-caption { left: auto; right: 0; top: 10%; }
+    [data-pose=input][data-resting=true] .pokomoko-party-headline { transform: rotate(6deg); }
+    .pokomoko-stage-stars { inset: 15% 2% 12% 4%; display: block; z-index: 2; }
+    .pokomoko-stage-stars svg { position: absolute; width: 22px; height: 22px; left: 3%; top: 38%; transform: rotate(-12deg); }
+    .pokomoko-stage-stars svg:nth-child(2) { left: 1%; top: 74%; width: 31px; height: 31px; fill: var(--pop-yellow); transform: rotate(12deg); }
+    .pokomoko-stage-stars svg:nth-child(3) { left: 58%; top: 23%; width: 17px; height: 17px; }
+    .pokomoko-stage-confetti { z-index: 2; }
+    .pokomoko-stage-confetti i { left: calc(2% + var(--i) * 8.6%); width: 8px; height: 16px; border: 0; }
+    .pokomoko-stage-confetti i:nth-child(n+4):nth-child(-n+7) { visibility: hidden; }
+    .pokomoko-stage-rays { inset: -8px -14px 0; background: repeating-conic-gradient(from -12deg at 35% 88%, #ffdf54 0deg 12deg,transparent 12deg 25deg,#6ee5c9 25deg 35deg,transparent 35deg 48deg); }
+    .pokomoko-jump-lines { position: absolute; left: calc(35% - 55px); bottom: 3px; width: 110px; height: 24px; fill: none; stroke: var(--pop-ink); stroke-width: 3; stroke-linecap: round; z-index: 2; animation: pop-jump-lines 880ms both; }
+    [data-party-riding=true] .park-keypad > div > button:nth-child(n) { background: white; }
+    [data-party-riding=true] .park-keypad > div > button:is([aria-label='こたえを けす'],[aria-label='ひとつ もどす']) { background: #ffe1ee; }
+}
+@keyframes pop-jump-lines { 0%,15% { opacity: 0; transform: scaleY(.4); } 30%,70% { opacity: 1; transform: scaleY(1); } 100% { opacity: 0; } }
+@media (max-height:740px) {
+    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7'] {
+        [data-peak=true] .pokomoko-combo-number { font-size: 72px; }
+        [data-peak=true] .pokomoko-combo-label { font-size: 22px; }
+        .pokomoko-learning-caption { top: 10%; }
+        [data-resting=true] .pokomoko-party-headline { font-size: 16px; padding: 10px 8px; }
+    }
+}
+@media (orientation:portrait) and (max-height:660px) {
+    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7']:has(.ten-key-extra-controls) {
+        .pokomoko-jump-lines { display: none; }
+        [data-peak=true] .pokomoko-combo-number { font-size: 40px; }
+        [data-peak=true] .pokomoko-combo-label { font-size: 16px; -webkit-text-stroke-width: 4px; }
+    }
+}
+@media (prefers-reduced-motion: reduce) { .pokomoko-jump-lines { display: none; } }
+@media (min-height:741px) {
+    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7'] {
+        .written-place-value .written-cell { height: 49px; font-size: 44px; }
+        .written-place-value button.written-cell { height: 54px; }
+        .written-place-value .written-row-label:not([data-operator=true]) { font-size: 14px; }
+    }
+}
+.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7'] {
+    .pokomoko-combo-number[data-long=true] { font-size: 40px; }
+    [data-burst=stamp] .pokomoko-combo-label { font-size: 19px; white-space: normal; -webkit-text-stroke-width: 5px; }
+}

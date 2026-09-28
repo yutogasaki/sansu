@@ -1,0 +1,12 @@
+/* Thin ink links the pressed key, projected paw and answer without a panel wash. */
+.pokomoko-input-sparks.pokomoko-handoff { opacity: 0; }
+.pokomoko-handoff-ink { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.pokomoko-handoff-ink path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.pokomoko-handoff-underlay { stroke: white; stroke-width: 7px; opacity: 0; }
+.pokomoko-handoff-trail { stroke: #ff7ab6; stroke-width: 4px; opacity: 0; }
+.pokomoko-handoff-marks { opacity: 0; stroke: #ff7ab6; stroke-width: 3px; }
+.pokomoko-handoff-landing { stroke: #ffca37; }
+.pokomoko-handoff .pokomoko-input-flight { background: white; color: #191d48; border: 2px solid #191d48; box-shadow: 2px 3px 0 #ff7ab6; }
+@media (prefers-reduced-motion: reduce) {
+    .pokomoko-input-sparks.pokomoko-handoff { display: none; }
+}

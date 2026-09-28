@@ -7,7 +7,7 @@ import { seedLearningProfile } from './island-learning-fixtures.mjs';
 import { answerUI, assertKeypad, readNative, runtimeMetadata } from './island-e2e-helpers.mjs';
 
 const base = process.env.SANSU_FEEDBACK_URL || 'http://127.0.0.1:5230';
-const candidate = 'pokomoko-pop-live-v5';
+const candidate = 'pokomoko-pop-live-v7';
 const out = process.env.SANSU_POKOMOKO_OUTPUT || `output/playwright/pokomoko-feedback-${Date.now()}`;
 await fs.mkdir(out, { recursive: true });
 async function sourceHash() {
@@ -108,7 +108,7 @@ try {
             await page.evaluate(() => {
                 window.__digitCues = [];
                 const observer = new MutationObserver(() => {
-                    const cue = document.querySelector('.pokomoko-input-spark');
+                    const cue = document.querySelector('.pokomoko-input-flight');
                     if (cue) window.__digitCues.push({ x: cue.style.left, y: cue.style.top });
                 });
                 observer.observe(document.querySelector('.island-workbench'), { childList: true, subtree: true });
@@ -177,7 +177,7 @@ try {
             row.pass = true; await context.close(); console.log(`${name}: PASS`);
         }
     }
-    for (const viewport of [{ width: 390, height: 844 }, { width: 768, height: 1024 }]) {
+    for (const viewport of (process.env.SANSU_POKOMOKO_SMALL_INPUTS ? [{ width: 320, height: 568 }, { width: 844, height: 390 }] : [{ width: 390, height: 844 }, { width: 768, height: 1024 }])) {
         for (const scenario of [{ name: 'hissan', skill: 'add_2d1d_hissan_c', type: 'hissan' },
             { name: 'hissan-multi', skill: 'mul_2d2d', type: 'hissan', intermediateSteps: true },
             { name: 'fraction', skill: 'frac_add_same', type: 'multi-number' }, { name: 'english', subject: 'vocab', type: 'choice' }]
@@ -205,8 +205,14 @@ try {
                 row.captures.push({ file, ...await runtimeMetadata(page) });
             };
             assert.equal(await page.locator('.island-workbench').getAttribute('data-learning-candidate'), candidate);
-            row.actor = await assertLiveActor(page, false);
+            row.actor = process.env.SANSU_POKOMOKO_SMALL_INPUTS ? { renderer: await page.locator('.pokomoko-learning-actor-live').getAttribute('data-renderer') } : await assertLiveActor(page, false);
             await assertKeypad(page);
+            row.inputHitTargets = await page.locator('.park-keypad button, .park-input, .island-learning-actions button').evaluateAll(buttons => buttons.map(button => {
+                const r = button.getBoundingClientRect(), hit = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2);
+                return { name: button.getAttribute('aria-label') || button.textContent, width: r.width, height: r.height,
+                    reachable: r.top >= 0 && r.bottom <= innerHeight && (hit === button || button.contains(hit)) };
+            }));
+            for (const target of row.inputHitTargets) assert(target.width >= 44 && target.height >= 44 && target.reachable, JSON.stringify(target));
             await capture('ready');
             let saved = await readNative(page, id);
             const initialCursor = saved.plan.cursor, initialParty = saved.island.learningParty;
@@ -216,9 +222,13 @@ try {
                 if (saved.plan.cursor === initialCursor) {
                     steps++;
                     assert.deepEqual(saved.island.learningParty, initialParty, 'An intermediate row does not advance play');
-                    await page.locator('[data-burst=step]').waitFor({ state: 'attached' });
-                    assert.equal(await page.locator('[data-result=step]').innerText(), 'このだんは せいかい');
-                    assert.equal(await page.locator('.pokomoko-learning-feedback').getAttribute('data-pose'), 'step');
+                    // Read the short-lived pose and its message in one browser turn.
+                    // Separate protocol round trips can outlive this 500 ms cue.
+                    const stepCue = await page.locator('[data-burst=step]').evaluate(el => ({
+                        pose: el.dataset.pose, text: el.querySelector('[data-result=step]')?.textContent,
+                    }));
+                    assert.equal(stepCue.text, 'このだんは せいかい');
+                    assert.equal(stepCue.pose, 'step');
                     if (steps === 1) await capture('step');
                 }
             } while (saved.plan.cursor === initialCursor && steps < 10);
@@ -238,7 +248,7 @@ try {
             const model = await readNative(page, id);
             await page.keyboard.type('2');
             assert.equal((await readNative(page, id)).plan.revision, model.plan.revision, 'Model keeps physical answer input disabled');
-            assert.equal(await page.locator('.pokomoko-input-spark').count(), 0);
+            assert.equal(await page.locator('.pokomoko-input-flight').count(), 0);
             await capture('model');
             assert.deepEqual(errors, []);
             row.steps = steps; row.pass = true; console.log(`${row.name}: PASS`); await context.close();

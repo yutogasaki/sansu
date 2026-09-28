@@ -15,6 +15,7 @@ interface TenKeyProps {
     nextFieldDisabled?: boolean;
     onCursorMove?: (direction: "left" | "right") => void;
     compact?: boolean;
+    layout?: 'standard' | 'compact-three';
     disabled?: boolean;
     enterDisabled?: boolean;
     className?: string;
@@ -34,6 +35,7 @@ export const TenKey: React.FC<TenKeyProps> = ({
     nextFieldDisabled = false,
     onCursorMove,
     compact = false,
+    layout = 'standard',
     disabled = false,
     enterDisabled = false,
     className,
@@ -54,6 +56,58 @@ export const TenKey: React.FC<TenKeyProps> = ({
     );
     const iconClass = compact ? "w-5 h-5 mobile:w-4 mobile:h-4" : "w-6 h-6 mobile:w-5 mobile:h-5";
     const enterIconClass = compact ? "w-8 h-8 mobile:w-6 mobile:h-6 drop-shadow-md" : "w-10 h-10 mobile:w-8 mobile:h-8 drop-shadow-md";
+
+    const showCursor = Boolean(onCursorMove) && !writtenInput;
+    const extraKeys = Number(showDecimal) + (showCursor ? 2 : 0);
+    const needsConfirmation = confirmationMode !== 'automatic';
+    const sharedConfirmationRow = layout === 'compact-three' && extraKeys > 0;
+    const auxiliaryKeys = extraKeys + Number(needsConfirmation);
+    const enterButton = <Button
+                disabled={disabled || enterDisabled}
+                aria-label={enterLabel ?? 'こたえる'}
+                data-keypad-submit
+                data-confirmation-mode={confirmationMode}
+                data-confirmation-state={confirmationMode ? confirmReady ? 'ready' : 'idle' : undefined}
+                data-confirmation-cue={confirmReady && !confirmationDemonstrated ? 'intro' : undefined}
+                onClick={() => {
+                    if (confirmationMode === 'manual') acknowledgeAnswerConfirmation();
+                    onEnter();
+                }}
+                className={cn(
+                    "answer-confirm-key",
+                    "flex h-full w-full flex-col items-center justify-center border border-cyan-200/80 bg-[linear-gradient(135deg,#2BBAA0,#5DC4D2)] text-white shadow-[0_18px_34px_-22px_rgba(34,197,214,0.62)] transition-all active:scale-95 hover:brightness-[1.03] mobile:text-base",
+                    compact ? "rounded-xl" : "rounded-2xl"
+                )}
+                variant="ghost"
+            >
+                <Icons.Check className={enterIconClass} strokeWidth={3} />
+                {!sharedConfirmationRow && <span className={cn("text-[10px] leading-none", enterLabel === 'こたえる' && "whitespace-nowrap")}>{enterLabel ?? 'こたえる'}</span>}
+            </Button>;
+    if (layout === 'compact-three') {
+        return <div role="group" aria-label="すうじ キーパッド" aria-disabled={disabled}
+            data-keypad-layout="compact-three"
+            className={cn('ten-key-compact-three', className)}
+            style={{ gridTemplateRows: `repeat(4, minmax(${Math.max(44, minRowHeight ?? 44)}px, 1fr))` }}>
+            {[7, 8, 9, 4, 5, 6, 1, 2, 3].map(value => <Button key={value}
+                disabled={disabled} aria-label={String(value)} onClick={() => onInput(value)} className={baseBtnClass} variant="ghost">{value}</Button>)}
+            <Button disabled={disabled} aria-label="ひとつ もどす" onClick={onDelete} className={actionBtnClass} variant="ghost">
+                <Icons.Backspace className={iconClass} />
+            </Button>
+            <Button disabled={disabled} aria-label="0" onClick={() => onInput(0)} className={baseBtnClass} variant="ghost">0</Button>
+            <Button disabled={disabled} aria-label="こたえを けす" onClick={onClear} className={actionBtnClass} variant="ghost">C</Button>
+            {auxiliaryKeys > 0 && <div className={cn("ten-key-extra-controls", needsConfirmation && "ten-key-confirm-control")}
+                style={{ gridTemplateColumns: `repeat(${auxiliaryKeys}, minmax(44px, 1fr))` }}>
+                {showCursor && <Button disabled={disabled} aria-label="カーソルを ひだりへ" onClick={() => onCursorMove?.('left')} className={actionBtnClass} variant="ghost">
+                    <Icons.ArrowLeft className={iconClass} />
+                </Button>}
+                {showDecimal && <Button disabled={disabled} aria-label="しょうすうてん" onClick={() => onInput('.')} className={baseBtnClass} variant="ghost">.</Button>}
+                {showCursor && <Button disabled={disabled || nextFieldDisabled} aria-label={nextFieldLabel ?? 'カーソルを みぎへ'} onClick={() => onCursorMove?.('right')} className={actionBtnClass} variant="ghost">
+                    {nextFieldLabel ? <span>つぎ</span> : <Icons.ArrowRight className={iconClass} />}
+                </Button>}
+                {needsConfirmation && enterButton}
+            </div>}
+        </div>;
+    }
 
     return (
         <div
@@ -137,27 +191,7 @@ export const TenKey: React.FC<TenKeyProps> = ({
             )}
 
             {/* Enter Key */}
-            {writtenInput && confirmationMode === 'automatic' ? <div aria-hidden="true" data-written-auto-confirm /> : <Button
-                disabled={disabled || enterDisabled}
-                aria-label={enterLabel ?? 'こたえる'}
-                data-keypad-submit
-                data-confirmation-mode={confirmationMode}
-                data-confirmation-state={confirmationMode ? confirmReady ? 'ready' : 'idle' : undefined}
-                data-confirmation-cue={confirmReady && !confirmationDemonstrated ? 'intro' : undefined}
-                onClick={() => {
-                    if (confirmationMode === 'manual') acknowledgeAnswerConfirmation();
-                    onEnter();
-                }}
-                className={cn(
-                    "answer-confirm-key",
-                    "flex h-full w-full flex-col items-center justify-center border border-cyan-200/80 bg-[linear-gradient(135deg,#2BBAA0,#5DC4D2)] text-white shadow-[0_18px_34px_-22px_rgba(34,197,214,0.62)] transition-all active:scale-95 hover:brightness-[1.03] mobile:text-base",
-                    compact ? "rounded-xl" : "rounded-2xl"
-                )}
-                variant="ghost"
-            >
-                <Icons.Check className={enterIconClass} strokeWidth={3} />
-                <span className={cn("text-[10px] leading-none", enterLabel === 'こたえる' && "whitespace-nowrap")}>{enterLabel ?? 'こたえる'}</span>
-            </Button>}
+            {writtenInput && confirmationMode === 'automatic' ? <div aria-hidden="true" data-written-auto-confirm /> : enterButton}
         </div>
     );
 };

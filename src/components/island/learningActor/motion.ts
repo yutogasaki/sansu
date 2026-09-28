@@ -19,26 +19,35 @@ export function sampleInputGesture(elapsed: number, reduced: boolean) {
 }
 
 /** Squash belongs to the body; the feet remain planted until an earned leap. */
-export function sampleBurstGesture(elapsed: number, leap: boolean, reduced: boolean) {
-    const rest = { height: 0, squash: 1, arms: 0, tilt: 0 };
-    if (reduced || elapsed < 0 || elapsed >= 880) return rest;
+export function sampleBurstGesture(elapsed: number, leap: boolean, reduced: boolean, big = false) {
+    const rest = { height: 0, squash: 1, arms: 0, tilt: 0, turn: 0, kick: 0, spread: 0, smile: 0 };
+    if (reduced || elapsed < 0 || elapsed >= (big ? 1520 : 880)) return rest;
     if (!leap) {
         const nod = Math.sin(clamp(elapsed / 420) * Math.PI);
-        return { ...rest, squash: 1 - nod * .045, arms: nod * .26 };
+        return { ...rest, squash: 1 - nod * .06, arms: nod * .38 };
     }
     if (elapsed < ACTOR_JUMP_MS) {
         const anticipation = ease(elapsed / ACTOR_JUMP_MS);
-        return { height: 0, squash: 1 - anticipation * .11, arms: anticipation * .28, tilt: 0 };
+        return { ...rest, squash: 1 - anticipation * (big ? .17 : .13), arms: anticipation * .25 };
     }
     if (elapsed < ACTOR_LAND_MS) {
         const flight = (elapsed - ACTOR_JUMP_MS) / (ACTOR_LAND_MS - ACTOR_JUMP_MS);
+        const arc = Math.sin(flight * Math.PI);
+        const open = ease(flight * 5);
         return {
-            height: Math.sin(flight * Math.PI) * .16,
-            squash: 1 - .11 * (1 - ease(flight * 5)) + .035 * Math.sin(flight * Math.PI),
-            arms: .28 + 1.78 * Math.sin(flight * Math.PI),
-            tilt: Math.sin(flight * Math.PI * 2) * .055,
+            height: arc * (big ? .18 : .145),
+            squash: 1 - (big ? .17 : .13) * (1 - open) + .014 * arc,
+            arms: .25 + (big ? 1.36 * open : 1.55 * arc),
+            tilt: big ? Math.sin(flight * Math.PI * 2) * .055 : -arc * .10,
+            turn: big ? Math.sin(flight * Math.PI * 2) * .12 : arc * .18,
+            kick: big ? 0 : arc * .075,
+            spread: big ? arc * .055 : 0,
+            smile: open,
         };
     }
     const landing = Math.sin(clamp((elapsed - ACTOR_LAND_MS) / 320) * Math.PI);
-    return { height: 0, squash: 1 - landing * .075, arms: landing * .30, tilt: 0 };
+    // Five streak ends in a readable arms-wide portrait after the landing.
+    // Hold the smile without another bounce while the large 5 remains on stage.
+    const hold = big ? 1 - ease((elapsed - 1160) / 360) : 1 - ease((elapsed - ACTOR_LAND_MS) / 320);
+    return { ...rest, squash: 1 - landing * .085, arms: big ? 1.61 * hold : landing * .38, smile: big ? hold : hold * .60 };
 }

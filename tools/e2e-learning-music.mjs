@@ -9,7 +9,7 @@ import { answerUI, readNative, runtimeMetadata } from './island-e2e-helpers.mjs'
 const base = process.env.SANSU_LEARNING_MUSIC_URL || 'http://127.0.0.1:5198';
 const out = process.env.SANSU_LEARNING_MUSIC_OUTPUT || `output/playwright/pokomoko-live-audio/${Date.now()}`;
 await mkdir(out, { recursive: true });
-const sourceFiles = ['learningMusic.ts', 'learningMusicScore.ts', 'useLearningMusic.ts', 'IslandLearningPanel.tsx', 'IslandAnswerForm.tsx', 'usePokomokoFeedback.ts', 'learningShow.ts'];
+const sourceFiles = ['learningMusic.ts', 'learningMusicScore.ts', 'learningMusicGesture.ts', 'useLearningMusic.ts', 'IslandSoundControl.tsx', 'IslandLearningPanel.tsx', 'IslandAnswerForm.tsx', 'usePokomokoFeedback.ts', 'learningShow.ts'];
 const sourceHash = async () => {
     const hash = createHash('sha256');
     for (const file of sourceFiles) hash.update(file).update(await readFile(`src/components/island/${file}`));
@@ -149,14 +149,43 @@ try {
                 row.snapshots.push(await snapshot(page, 'answer-while-muted', true));
                 await page.getByRole('button', { name: 'おとを だす', exact: true }).click();
                 await page.getByRole('button', { name: 'おとを けす', exact: true }).waitFor();
-                await answerUI(page, (await readNative(page, id)).plan, { touch: true });
-                const resumed = await snapshot(page, 'fresh-gesture-after-unmute'); row.snapshots.push(resumed);
+                // The header is outside the learning panel. Its click itself must
+                // start the backing, without a subsequent answer/key interaction.
+                const resumed = await snapshot(page, 'immediately-after-header-unmute'); row.snapshots.push(resumed);
                 assert.equal(resumed.stems.filter(stem => !stem.stopped).length, 4);
+                const musicId = resumed.stems.find(stem => !stem.stopped).context;
+                assert(resumed.meters.some(meter => meter.context === musicId && meter.peak > .003), 'Sound-on must start audible backing before the next answer');
                 await page.getByRole('button', { name: 'とじる', exact: true }).click();
                 await page.getByRole('button', { name: /まなぶ|つづきから とく/, exact: true }).waitFor();
                 const left = await snapshot(page, 'after-leaving-learning', true); row.snapshots.push(left);
                 assert(left.stems.every(stem => stem.stopped));
                 assert(left.contexts.filter(item => left.stems.some(stem => stem.context === item.id)).every(item => item.state === 'closed'));
+            } else {
+                // Reject only this attempted sound preference write. A context
+                // unlocked on the click must not survive a failed profile save.
+                await page.evaluate(profileId => {
+                    const put = IDBObjectStore.prototype.put;
+                    window.__restoreLearningSoundWrite = () => { IDBObjectStore.prototype.put = put; };
+                    IDBObjectStore.prototype.put = function (value, ...args) {
+                        if (this.name === 'appData' && value?.profiles?.[profileId]?.soundEnabled) {
+                            throw new DOMException('Injected sound preference write failure', 'QuotaExceededError');
+                        }
+                        return put.call(this, value, ...args);
+                    };
+                }, id);
+                try {
+                    await page.getByRole('button', { name: 'おとを だす', exact: true }).click();
+                    await page.getByText('せっていを のこせなかったよ。もういちど おしてね', { exact: true }).waitFor();
+                    const failed = await snapshot(page, 'failed-sound-preference-save', true); row.snapshots.push(failed);
+                    assert(failed.stems.every(stem => stem.stopped), 'Failed sound save must cancel its newly unlocked learning graph');
+                    assert(failed.contexts.filter(item => failed.stems.some(stem => stem.context === item.id)).every(item => item.state === 'closed'));
+                } finally { await page.evaluate(() => window.__restoreLearningSoundWrite()); }
+                await page.getByRole('button', { name: 'おとを だす', exact: true }).click();
+                await page.getByRole('button', { name: 'おとを けす', exact: true }).waitFor();
+                const enabled = await snapshot(page, 'silent-profile-header-enable'); row.snapshots.push(enabled);
+                assert.equal(enabled.stems.filter(stem => !stem.stopped).length, 4);
+                const musicId = enabled.stems.find(stem => !stem.stopped).context;
+                assert(enabled.meters.some(meter => meter.context === musicId && meter.peak > .003), 'A previously silent profile starts backing on the sound button itself');
             }
             await page.screenshot({ path: `${out}/${row.mode}.png` });
             assert.deepEqual(errors, []); row.errors = errors; row.pass = true; console.log(`PASS ${row.mode}`);
