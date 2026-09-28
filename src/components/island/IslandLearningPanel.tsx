@@ -16,6 +16,8 @@ import './PokomokoLearningFeedback.css';
 import { usePokomokoFeedback } from './usePokomokoFeedback';
 import { PokomokoFullscreenCelebration } from './PokomokoFullscreenCelebration';
 import { PokomokoInputSpark } from './PokomokoLearningEffects';
+import type { UserProfile } from '../../domain/types';
+import { LearningProgressCue } from '../progress/LearningProgressCue';
 import { useLearningMusic } from './useLearningMusic';
 
 function LightSeed({ filled, current }: { filled: boolean; current: boolean }) {
@@ -26,8 +28,9 @@ function LightSeed({ filled, current }: { filled: boolean; current: boolean }) {
 }
 
 /** Help preserves the current draft; saved answers and new slots reset it. */
-export function IslandLearningPanel({ plan, active = true, intro = false, busy, hintPending = false, feedback, party = EMPTY_LEARNING_PARTY, onAction, observation, englishAutoRead = false, soundEnabled = false, subjectChoice, listeningEntry, heroStyle }: {
+export function IslandLearningPanel({ plan, profile, active = true, intro = false, busy, hintPending = false, feedback, party = EMPTY_LEARNING_PARTY, onAction, observation, englishAutoRead = false, soundEnabled = false, subjectChoice, listeningEntry, heroStyle }: {
     plan: IslandPlan;
+    profile?: UserProfile;
     active?: boolean;
     intro?: boolean;
     busy: boolean;
@@ -78,6 +81,7 @@ export function IslandLearningPanel({ plan, active = true, intro = false, busy, 
             </div>
             <span className="island-learning-count">{plan.cursor + 1}<small> / {plan.slots.length}</small></span>
         </div>
+        {profile && <LearningProgressCue profile={profile} plan={plan} active={active} />}
         <IslandAnswerFeedback feedback={feedback?.id === dismissedReceipt ? undefined : feedback} party={party} burst={celebration.burst} inputCue={celebration.inputCue} active={active} level={celebration.level} pulse={music.pulse} onCue={music.cue} heroStyle={heroStyle} />
         <PokomokoFullscreenCelebration burst={celebration.burst} root={section} level={celebration.level} />
         <PokomokoInputSpark cue={celebration.inputCue} root={section} />

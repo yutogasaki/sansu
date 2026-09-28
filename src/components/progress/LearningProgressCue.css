@@ -1,0 +1,21 @@
+.island-workbench > .learning-progress-cue {
+    flex: none;
+    grid-column: 1 / -1;
+    position: relative;
+    min-height: 20px;
+    margin-block: 2px;
+    color: var(--pokomoko-muted);
+    font-size: 12px;
+    line-height: 20px;
+}
+.learning-progress-cue-label { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.learning-progress-cue-notice:not(:empty) {
+    position: absolute;
+    inset: 0;
+    background: var(--island-workbench-paper, #fff9e8);
+    color: var(--pokomoko-ink, #263145);
+    font-weight: 700;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

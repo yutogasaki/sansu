@@ -4,7 +4,7 @@ import { addDays } from "date-fns";
 import { Button } from "../components/ui/Button";
 import { Badge } from "../components/ui/Badge";
 import { Spinner } from "../components/ui/Spinner";
-import { ProgressBar } from "../components/ui/ProgressBar";
+import { LearningProgressCards } from "../components/progress/LearningProgressCards";
 import {
     InsetPanel,
     PanelDivider,
@@ -26,7 +26,6 @@ import {
 } from "../domain/stats/repository";
 import { getReviewItems } from "../domain/learningRepository";
 import { MATH_SKILL_LABELS } from "../domain/math/labels";
-import { MATH_CURRICULUM } from "../domain/math/curriculum";
 import { getWord } from "../domain/english/words";
 import { getLearningDayEnd, getLearningDayStart, toLocaleDateKey } from "../utils/learningDay";
 import { db, AttemptLog } from "../db";
@@ -178,7 +177,6 @@ export const Stats: React.FC = () => {
     const [weakPoints, setWeakPoints] = useState<WeakPoint[]>([]);
     const [reviewItems, setReviewItems] = useState<ReviewItem[]>([]);
     const [reviewCount, setReviewCount] = useState(0);
-    const [eventCheckPending, setEventCheckPending] = useState(false);
     const [weeklyDays, setWeeklyDays] = useState<WeeklyDay[]>([]);
     const [todayMinutes, setTodayMinutes] = useState(0);
     const [growthMessage, setGrowthMessage] = useState("");
@@ -312,11 +310,7 @@ export const Stats: React.FC = () => {
                 setStableSkills(stableCombined);
                 setRadarData(buildRadarData(mathMemory, active.mathMaxUnlocked ?? active.mathMainLevel ?? 1));
                 setTrendData(buildWeeklyTrend(logsForCalendar, todayStart, addDays));
-                setEventCheckPending(
-                    (active.periodicTestState?.math?.isPending ?? false) ||
-                    (active.periodicTestState?.vocab?.isPending ?? false) ||
-                    localStorage.getItem("sansu_event_check_pending") === "1"
-                );
+
             } catch (error) {
                 logInDev("Stats: failed to load stats", error);
             } finally {
@@ -345,16 +339,8 @@ export const Stats: React.FC = () => {
             .slice(0, 10);
     }, [profile?.testHistory]);
 
-    const maxMathLevel = Object.keys(MATH_CURRICULUM).length;
-    const maxVocabLevel = 20;
     const isEasy = profile?.uiTextMode === "easy";
     const t = (easy: string, standard: string) => (isEasy ? easy : standard);
-    const mathLevelState = profile?.mathLevels?.find(l => l.level === profile.mathMainLevel);
-    const vocabLevelState = profile?.vocabLevels?.find(l => l.level === profile.vocabMainLevel);
-    const mathRecent = mathLevelState?.recentAnswersNonReview || [];
-    const vocabRecent = vocabLevelState?.recentAnswersNonReview || [];
-    const mathRecentCorrect = mathRecent.filter(Boolean).length;
-    const vocabRecentCorrect = vocabRecent.filter(Boolean).length;
     const closeAction = navigation ? undefined : (
         <StatsCloseAction label={t("とじる", "閉じる")} onClose={() => navigate("/")} />
     );
@@ -385,6 +371,9 @@ export const Stats: React.FC = () => {
             contentClassName={navigation ? "utility-layout-scroll" : "px-6 pt-2"}
         >
             <div className={navigation ? "utility-layout-content stats-layout" : "island-utility-content mx-auto w-full max-w-[22rem] space-y-8 pb-2"}>
+                <LearningProgressCards profile={profile} refreshKey={learningOverlay}
+                    onLearn={() => { warmUpTTS(); if (navigation) navigation.startLearning(); else navigate('/study'); }}
+                    onTest={subject => { warmUpTTS(); const path = `/study?session=periodic-test&focus_subject=${subject}`; if (navigation) navigation.open(path); else navigate(path); }} />
                 <div className={navigation ? "stats-overview" : "space-y-8"}>
                 {totalStats.count === 0 ? (
                     <SurfacePanel className="stats-first-record space-y-4 p-5">
@@ -432,28 +421,6 @@ export const Stats: React.FC = () => {
                     </SurfacePanel>
 
                 </div>
-
-                {eventCheckPending && (
-                    <SurfacePanel className="space-y-4 rounded-[28px] p-5">
-                        <SurfacePanelHeader
-                            title={t("ていき テスト (20もん)", "定期テスト (20問)")}
-                            description={t("がっこう テスト まえ の かくにん", "学校テスト前の確認")}
-                        />
-                        <Button
-                            size="sm"
-                            variant="primary"
-                            className="h-11 w-full text-sm"
-                            onClick={() => {
-                                localStorage.removeItem("sansu_event_check_pending");
-                                setEventCheckPending(false);
-                                warmUpTTS();
-                                navigate("/study?session=periodic-test");
-                            }}
-                        >
-                            {t("ちょうせん", "挑戦")}
-                        </Button>
-                    </SurfacePanel>
-                )}
 
                 <div id="stats-learning-details" className={navigation ? "stats-details-grid" : "space-y-8"}>
                     <SurfacePanel className="space-y-5 rounded-[28px] p-5">
@@ -595,39 +562,7 @@ export const Stats: React.FC = () => {
                             </InsetPanel>
                         )}
 
-                        <PanelDivider />
-                        <SectionLabel className="px-0">{t("レベル しんちょく", "レベル進捗")}</SectionLabel>
-                        <div className="space-y-3">
-                            <InsetPanel className="px-4 py-4">
-                                <div className="text-sm font-bold text-slate-700">
-                                    さんすう Lv{profile.mathMainLevel} / かいほう Lv{profile.mathMaxUnlocked}
-                                </div>
-                                <ProgressBar
-                                    className="mt-2 h-2.5"
-                                    value={mathRecent.length}
-                                    max={20}
-                                    tone="success"
-                                />
-                                <div className="mt-1 text-[11px] text-pokomoko-muted">
-                                    さいきん: {mathRecentCorrect}/{mathRecent.length || 0}せいかい ・ つぎ Lv{Math.min(profile.mathMainLevel + 1, maxMathLevel)}
-                                </div>
-                            </InsetPanel>
 
-                            <InsetPanel className="px-4 py-4">
-                                <div className="text-sm font-bold text-slate-700">
-                                    {t("えいたんご", "英単語")} Lv{profile.vocabMainLevel} / {t("かいほう", "解放")} Lv{profile.vocabMaxUnlocked}
-                                </div>
-                                <ProgressBar
-                                    className="mt-2 h-2.5"
-                                    value={vocabRecent.length}
-                                    max={20}
-                                    tone="primary"
-                                />
-                                <div className="mt-1 text-[11px] text-pokomoko-muted">
-                                    さいきん: {vocabRecentCorrect}/{vocabRecent.length || 0}せいかい ・ つぎ Lv{Math.min(profile.vocabMainLevel + 1, maxVocabLevel)}
-                                </div>
-                            </InsetPanel>
-                        </div>
                     </SurfacePanel>
 
                     <SurfacePanel className="space-y-4 rounded-[28px] p-5">

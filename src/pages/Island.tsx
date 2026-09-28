@@ -993,7 +993,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                         </div>
                     </IslandHomeActions>
                 </section>}</Suspense>
-        {plan && slot && <IslandLearningPanel plan={plan} active={active && learning && learningLease === 'ready' && !nextPlanError}
+        {plan && slot && <IslandLearningPanel profile={profile} plan={plan} active={active && learning && learningLease === 'ready' && !nextPlanError}
             heroStyle={learningHeroStyle}
             hintPending={busyKind === 'learning-hint' && active && learning && !preparingLearning}
             soundEnabled={profile.soundEnabled} intro={isFirstIslandPlan(plan)} observation={active && learning && !listening.isOpen ? observation : undefined}

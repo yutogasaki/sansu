@@ -1,0 +1,74 @@
+{
+  "target": "http://127.0.0.1:5267",
+  "fixtureId": "cold-open-fixed-ten-v1",
+  "buildSource": {
+    "path": "/private/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-progress-nn02rh6g/build-source.json",
+    "manifestSHA": "a2d1e98551ba1e40b84c7a5cd5699899c27e1f6f4de498dee6770ca3f5149521",
+    "sourceHash": "93a9fd17de715b709dc85da9d1479633fc585fc3fd3a63466faa4cca3b2e0e4d",
+    "revision": "44d5c4eb390a4ee642b31f8c14d9f521832e2db9",
+    "flags": {
+      "VITE_ISLAND_ENABLED": "true",
+      "VITE_ISLAND_LIFE_ENABLED": "true"
+    }
+  },
+  "repetitions": 10,
+  "comparisons": [
+    {
+      "layout": "phone",
+      "studyMedianProblemsPerMinute": 122.60912293802724,
+      "islandMedianProblemsPerMinute": 287.8388341140377,
+      "allCorrectIslandToStudyRatio": 2.3476135153460462,
+      "correctOperableP95Ms": 202.30000001192093,
+      "incorrectRetryP95Ms": 201.5,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 192.45000000298023,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 202.19999998807907,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4893.5999999940395,
+      "rawIslandDurationMedianMs": 2084.5
+    },
+    {
+      "layout": "tablet",
+      "studyMedianProblemsPerMinute": 122.7295083322665,
+      "islandMedianProblemsPerMinute": 287.5215667587217,
+      "allCorrectIslandToStudyRatio": 2.342725646552029,
+      "correctOperableP95Ms": 202.2999999821186,
+      "incorrectRetryP95Ms": 201.89999997615814,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 199.59999999403954,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 202.39999997615814,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4888.79999999702,
+      "rawIslandDurationMedianMs": 2086.7999999970198
+    }
+  ],
+  "gates": {
+    "tenAlternatingRepetitions": true,
+    "allCorrectIslandThroughputNotBelowStudy": true,
+    "correctP95AtMost650Ms": true,
+    "incorrectP95AtMost550Ms": true,
+    "sectionBoundaryP95AtMost650Ms": true,
+    "twentySameQuestionIncorrectSamplesPerLayout": true,
+    "noExtraOrdinaryQuestionActions": true,
+    "automaticSectionBoundaryIncluded": true,
+    "emptyInputAfterEveryTransition": true,
+    "initialIslandControlsUsable": true,
+    "exactFixtureAndAtomicReceipts": true,
+    "phoneAndTablet": true,
+    "noBrowserErrors": true,
+    "oneRenderedBuildAndCandidate": true,
+    "sourceFilesUnchangedDuringBenchmark": true
+  },
+  "evidence": {
+    "eligible": true,
+    "confidence": "formal repeated UI timing; automated keyboard throughput, not child behavior evidence",
+    "productionPlannerEvidence": false,
+    "userLearningStateTouched": false
+  },
+  "pass": true,
+  "runs": 80
+}

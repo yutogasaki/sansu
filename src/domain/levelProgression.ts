@@ -20,12 +20,18 @@ export function getNextPromotionLevel(profile: UserProfile, subject: SubjectKey)
 }
 
 /** Exposure alone cannot advance a learner; skips still count in recent accuracy. */
-export function hasMathPromotionEvidence(logs: readonly AttemptLog[]): boolean {
+export function mathPromotionEvidence(logs: readonly AttemptLog[]) {
     const normal = logs.filter(log => !log.isReview && hasKnownWholeAttempt(log));
-    if (normal.filter(log => log.result !== 'skipped' && !log.skipped).length < 30) return false;
+    const answered = normal.filter(log => log.result !== 'skipped' && !log.skipped).length;
     const recent = [...normal].sort((a, b) => a.timestamp.localeCompare(b.timestamp)
         || (a.id ?? 0) - (b.id ?? 0)).slice(-20);
-    return recent.length === 20 && recent.filter(isIndependentCorrect).length >= 17;
+    const correct = recent.filter(isIndependentCorrect).length;
+    return { answered, recentCount: recent.length, correct,
+        ready: answered >= 30 && recent.length === 20 && correct >= 17 };
+}
+
+export function hasMathPromotionEvidence(logs: readonly AttemptLog[]): boolean {
+    return mathPromotionEvidence(logs).ready;
 }
 
 /** Historical comparison only. Runtime advancement must use verified evidence. */

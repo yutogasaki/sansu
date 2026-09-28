@@ -1,0 +1,77 @@
+{
+  "base": "http://127.0.0.1:5366",
+  "scope": "Isolated explicit near-unlock profile fixture, actual planner/answer/save and routes. No child/device efficacy claim.",
+  "source": [
+    {
+      "path": "src/pages/Stats.tsx",
+      "sha256": "b3c74b26ddfbef5972fc9c21be364079c1beb9423c620a82c29880b1030dcbe9"
+    },
+    {
+      "path": "src/pages/Island.tsx",
+      "sha256": "6dae426a7456e3e2bd57c161f31c98fd255058293e88b48b0b3f1d3d8ebcb46e"
+    },
+    {
+      "path": "src/components/island/IslandLearningPanel.tsx",
+      "sha256": "381b0a7269d7cf8abef49653ac05f9c02cfa0da0c482fc5c7562c60e29fb12a4"
+    },
+    {
+      "path": "src/components/progress/LearningProgressCards.tsx",
+      "sha256": "80fbf9f7fee60d21437da1a452752b0b6a971da7295fc8f55e82b892a0406733"
+    },
+    {
+      "path": "src/components/progress/LearningProgressCue.tsx",
+      "sha256": "58340fd5839f0bf4c5148fe1529e4c8ff5ac558a9b980b5f1f3e73c8ecb75501"
+    },
+    {
+      "path": "src/components/progress/LearningProgressCue.css",
+      "sha256": "9576cc18ec8d6f34cf596acabf9e733bae7479233a09b4ec4343f812f376c654"
+    },
+    {
+      "path": "src/domain/learning/progressView.ts",
+      "sha256": "0f9bed298c9943b6a1759eebd4f1b45b210fbd694c22e6c9e721c36af041dbc5"
+    },
+    {
+      "path": "src/domain/learning/progressRepository.ts",
+      "sha256": "e199d9059a8f0cba5a0084d39fe7580ab72a712cb622e1d7603a7b38a538b81d"
+    },
+    {
+      "path": "src/domain/levelProgression.ts",
+      "sha256": "bcb891d0a22e2545738613f623c29b36242777e4a560c11ee865547473666740"
+    }
+  ],
+  "journeys": [
+    {
+      "width": 390,
+      "app": {
+        "revision": "development-local",
+        "version": "development-local:4e85b715-3f26-4d22-96ae-81e6671da0d4",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "errors": [],
+      "before": "つぎへの 道\n\nいまの ばしょと、つぎに できること\n\nさんすう · Lv8\n\nはじめの たしざん\n\nつぎ：くり上がりの たしざん · Lv9\n\nひとりで 解けることを ふやして、つぎの はんいへ。\n\nいまの はんいを たしかめる\n\n19 / 20問\n\nひとりで 解けるか たしかめる\n\n確認のきろくを あつめているよ（19 / 20問）\n\n数だけでなく、ひとりで 解けるかも たしかめるよ。\n\nしあげチャレンジ · 20もん\n\nはじめの たしざん · Lv8の かくにん。いつでも えらべるよ。\n\nレベルを すすめるための テストではないよ。\n\nさんすうの しあげに ちょうせん\nまなぶ",
+      "candidate": "pokomoko-pop-live-v8",
+      "after": "つぎへの 道\n\nいまの ばしょと、つぎに できること\n\nさんすう · Lv8\n\nはじめの たしざん\n\nつぎ：くり上がりの たしざん · Lv9\n\nつぎの はんいが ひらいたよ。少しずつ れんしゅう中。\n\nつぎの はんいに 取り組む\n\n0 / 30問\n\nひとりで 解けるか たしかめる\n\n確認のきろくを あつめているよ（0 / 20問）\n\n数だけでなく、ひとりで 解けるかも たしかめるよ。\n\nひとりで できた きろく\n\n1桁+1桁(はじめ)\n\n2026/9/29 にできた · つぎの ふくしゅう 2026/9/30\n\n日をあけて また解くと、覚えているか たしかめられるよ。\n\nしあげチャレンジ · 20もん\n\nはじめの たしざん · Lv8の かくにん。いつでも えらべるよ。\n\nレベルを すすめるための テストではないよ。\n\nさんすうの しあげに ちょうせん\nまなぶ",
+      "testUrl": "http://127.0.0.1:5366/#/study?session=periodic-test&focus_subject=math"
+    },
+    {
+      "width": 768,
+      "app": {
+        "revision": "development-local",
+        "version": "development-local:4e85b715-3f26-4d22-96ae-81e6671da0d4",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "errors": [],
+      "before": "つぎへの 道\n\nいまの ばしょと、つぎに できること\n\nさんすう · Lv8\n\nはじめの たしざん\n\nつぎ：くり上がりの たしざん · Lv9\n\nひとりで 解けることを ふやして、つぎの はんいへ。\n\nいまの はんいを たしかめる\n\n19 / 20問\n\nひとりで 解けるか たしかめる\n\n確認のきろくを あつめているよ（19 / 20問）\n\n数だけでなく、ひとりで 解けるかも たしかめるよ。\n\nしあげチャレンジ · 20もん\n\nはじめの たしざん · Lv8の かくにん。いつでも えらべるよ。\n\nレベルを すすめるための テストではないよ。\n\nさんすうの しあげに ちょうせん\nまなぶ",
+      "candidate": "pokomoko-pop-live-v8",
+      "after": "つぎへの 道\n\nいまの ばしょと、つぎに できること\n\nさんすう · Lv8\n\nはじめの たしざん\n\nつぎ：くり上がりの たしざん · Lv9\n\nつぎの はんいが ひらいたよ。少しずつ れんしゅう中。\n\nつぎの はんいに 取り組む\n\n0 / 30問\n\nひとりで 解けるか たしかめる\n\n確認のきろくを あつめているよ（0 / 20問）\n\n数だけでなく、ひとりで 解けるかも たしかめるよ。\n\nひとりで できた きろく\n\n1桁+1桁(えとしき)\n\n2026/9/29 にできた · つぎの ふくしゅう 2026/9/30\n\n日をあけて また解くと、覚えているか たしかめられるよ。\n\nしあげチャレンジ · 20もん\n\nはじめの たしざん · Lv8の かくにん。いつでも えらべるよ。\n\nレベルを すすめるための テストではないよ。\n\nさんすうの しあげに ちょうせん\nまなぶ",
+      "testUrl": "http://127.0.0.1:5366/#/study?session=periodic-test&focus_subject=math"
+    }
+  ],
+  "pass": true
+}
