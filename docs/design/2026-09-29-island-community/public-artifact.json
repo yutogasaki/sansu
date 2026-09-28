@@ -1,0 +1,74 @@
+{
+  "base": "https://sansu-seven.vercel.app",
+  "checkedAt": "2026-09-28T18:14:23.372Z",
+  "revision": "4002e67b45d7c0a3efe61c1b2e1c60e73337d773",
+  "version": {
+    "version": "4002e67b45d7c0a3efe61c1b2e1c60e73337d773:cdf1cdf5-fa23-47b0-bf90-a92f20b8bba4",
+    "revision": "4002e67b45d7c0a3efe61c1b2e1c60e73337d773",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": true,
+        "fantasy": true,
+        "candidate": "living-fantasy-garden-v2",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "artifactChecks": [
+    {
+      "path": "/assets/index-DDhHDybm.js",
+      "bytes": 843916,
+      "sha256": "200ed1e22ff7214fc061c081ef6424bf439d7055bb0a11dd7a6dc6b52655cf65"
+    },
+    {
+      "path": "/assets/react-DcHpdqMy.js",
+      "bytes": 48531,
+      "sha256": "dd48938f099158343f1f43ca5363f3b5ec5be3d5ae4fd20186dbaed3c5782ab3"
+    },
+    {
+      "path": "/assets/motion-iLBaTeAD.js",
+      "bytes": 119650,
+      "sha256": "2eafa186a77ed80ef3a1646d9c0b533cc4c1e3a35bd1d9f572ad4fadeb9c8861"
+    },
+    {
+      "path": "/assets/icons-BNwr5zv6.js",
+      "bytes": 29669,
+      "sha256": "625a81307d7d9716dd1420587b972b0bfa692ffdbb03839d81404c51cfeb0b09"
+    },
+    {
+      "path": "/assets/utils-B-dksMZM.js",
+      "bytes": 374,
+      "sha256": "c7b843bc2bba461110e5ddf916d9c40180a383804ce73658730ec46e5196d2fd"
+    },
+    {
+      "path": "/assets/data-CYRvWfdS.js",
+      "bytes": 96367,
+      "sha256": "bb98c417b94bf024baa98d140812d6c9f146dc15dbf086192faeda0b57299bcf"
+    },
+    {
+      "path": "/assets/audio-DwtSHwBT.js",
+      "bytes": 36126,
+      "sha256": "e5eca991f0dda6f43a7688985f25d4603863804c42ab5ab449b3366a49269f15"
+    },
+    {
+      "path": "/assets/index-B0XwzV_L.css",
+      "bytes": 250728,
+      "sha256": "1266224d6ee233b84b05e3db6bc0459740edb6f7beebc161714dbb36ccbbfa56"
+    }
+  ],
+  "sourceHash": "8077a3909579acd5594a9811a1887eff20522c69713437817e687c143f3e3f74",
+  "scope": "Public deployment identity by Vercel Git revision, live version and fetched entry assets; application source hashes match the tested candidate. No assertion of equality between separately generated local and hosted build bytes."
+}

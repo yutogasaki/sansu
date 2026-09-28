@@ -4,6 +4,14 @@
 
 [実画面の一覧](index.html) / [現在の残作業](../../../.agents/tasks/TASKS.md) / [現行仕様48](../../product/48_island_life_spec.md) / [保存仕様13](../../product/13_data_storage_migration_spec.md)
 
+## 本番への反映
+
+実装コミット `4002e67b45d7c0a3efe61c1b2e1c60e73337d773` をmainへpushし、[本番の島](https://sansu-seven.vercel.app/#/island)へ配信。[VercelのREADYと対象SHA](deployment.json)、[公開version/entry assetsのhash](public-artifact.json)を照合した。以下のローカル証拠と公開buildのUUIDは別に記録する。
+
+公開版でも空DBからの実初回3問、花/水ばちの購入、明示訪問、カワウソの招待/入居、庭と家の昼夕夜、家のreload、実SW offline、同じ学習の次問を390/768幅で完走。両幅ともpage error 0。[本番report](production/report.json)、[本番26枚の一覧](index.html)。本番の所有者は隔離したテストプロフィールで、既存利用者のデータへ操作していない。
+
+公開versionは `4002e67b45d7c0a3efe61c1b2e1c60e73337d773:cdf1cdf5-fa23-47b0-bf90-a92f20b8bba4`。全26 captureで公開SHAとrootのIsland=true / NatureTown=falseを一致確認。公開Git/build identityと取得したentry assetを根拠にし、ローカルと別ビルドの配信bytes全体が同一という検証には読み替えない。公開確認後の追記は文書・画像だけで、app入力は下記候補と同じ。
+
 ## 今回の変更
 
 - 家のoverviewは庭と同じThree.jsの家、住人、所有物、昼夕夜を表示する。家の再読込中に旧stageを表示しない。棚や写真の既存画面は保持する。
@@ -26,7 +34,7 @@
 | 実candidate | 庭 `living-fantasy-garden-v2` / 家 `garden-house-continuity-v1` / 学習 `pokomoko-pop-live-v8` |
 | 幅と操作 | 390×844・通常motion、768×1024・reduced motion、sound off |
 | build manifest | [version.json](build-version.json)、[全入力・配信物のhash](candidate-manifest.json) |
-| 公開 | ローカル候補の検査完了後にmainへ統合し、公開revisionと実画面を照合する。公開確認前の画像を本番画像とは呼ばない |
+| 公開との関係 | 上の本番確認を実施済み。この表は制作時の固定ローカル候補。[ローカル画像一覧](local.html)と本番を区別する |
 
 [実操作のreport](runtime/report.json)と26枚の画像は、空DBの入口→実初回3問→花/水ばちの実購入→ぽこもこを呼ぶ→カワウソの招待→入居→庭と家の昼夕夜→家の再読込→実SW offline→同じ学習の続きまでを記録する。プロフィール・通貨・住人・時刻の注入はしない。昼夕夜は本人が選べる既存の見た目設定を操作する。
 
@@ -53,7 +61,7 @@
 | 学習テンポ | 固定10問×10反復×2幅×2結果条件×2レーン=80 run。`pass=true`、`evidence.eligible=true`、15 gates PASS。[集計](throughput-summary.json) |
 | classic smoke | 31 scenarios PASS。[ログ](classic-smoke.log)。旧画面の回帰であり、現行庭の実旅程とは別 |
 | 現行学習旅程 | 390/768/844横幅×通常/reducedの6条件PASS。[report](learning-production.json)、[ログ](learning-production.log)。実入力21問、誤答/支援、live originalモデル、同じ学習の再開、実SW offlineを確認。初期プロフィール/学習状態は明示fixture |
-| 文書・ポータル | docs:check / agent:index:check PASS。旧ExploreのReview By切れ2件は既存warning。レビュー済みindexの外部exportも公開前に確認する |
+| 文書・ポータル | docs:check / agent:index:check PASS。旧ExploreのReview By切れ2件は既存warning。レビュー済みindexの外部export、app入力1,357ファイル一致、検査中のindex不変もPASS。[コミット照合](staged-verification.json) |
 
 実2ビルドは現行v8の実入力へ合わせた専用harnessを使った。古い学習v2を固定した旧Island recovery/PWA旅程の全項目を通過したとの主張はしない。今回の変更点は現行community、2ビルド、学習旅程で確認し、旧モードの回帰はclassic smoke/PWAで分ける。
 

@@ -9,9 +9,11 @@
 .asset-group>summary .group-name{white-space:normal;min-width:0}.group-name strong,.group-name small{display:block;line-height:1.5}.group-name small{font:11px/1.5 ui-monospace,monospace;color:var(--muted);overflow-wrap:anywhere}.asset-group>summary .group-name strong{font-size:15px}
 .asset-size{text-align:right}.asset-size small{display:block;color:var(--muted);font-size:11px;line-height:1.45}@media(max-width:640px){.asset-size{text-align:left}}
 .evidence-gallery{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px}.evidence-gallery .asset-item{display:block!important;padding:10px!important;border:1px solid var(--line);border-radius:9px;background:#f7f9f4}.evidence-gallery .asset-thumb{width:100%;height:250px;margin-bottom:8px}.evidence-gallery .asset-name{display:block;font-weight:700}.evidence-gallery .asset-size{display:block;text-align:left;font-size:12px}@media(max-width:640px){.evidence-gallery{grid-template-columns:1fr}.evidence-gallery .asset-thumb{height:260px}}
-</style></head><body><header><nav aria-label="メインナビゲーション"><strong>SANSU</strong><a href="../index.html">概要</a><a href="index.html" aria-current="page">タスク</a><a href="../../docs/index.html">ドキュメント</a><a href="../map.html">仕様と実装</a></nav></header><main><h1>タスク</h1><p class="subtitle">Sansu repository · Markdownから生成した閲覧用ポータル</p><label for="search">このページを検索</label><input id="search" type="search" placeholder="タイトル・ファイル名・キーワード"><p id="result" role="status" hidden></p><p>実行キューに登録された 4 件。「何の話か／現在地／次の一手」で分類しています。登録は実装済み・公開済みを意味しません。</p><section class="doc-group"><h2 class="section-title">1・体験の確認</h2><div class="grid"><article class="card" data-search="学習・庭・家の一続きの体験：学習v8を維持し、実初回学習→購入→招待→庭/家の昼夕夜→offline同じ学習を両幅で確認 次：最終公開版を照合し、実機の音・読み上げと利用者の往復操作を確認 docs/tasks/active/2026-09-20-whole-app-ux-coherence.md # whole-app ux/ui coherence
+</style></head><body><header><nav aria-label="メインナビゲーション"><strong>SANSU</strong><a href="../index.html">概要</a><a href="index.html" aria-current="page">タスク</a><a href="../../docs/index.html">ドキュメント</a><a href="../map.html">仕様と実装</a></nav></header><main><h1>タスク</h1><p class="subtitle">Sansu repository · Markdownから生成した閲覧用ポータル</p><label for="search">このページを検索</label><input id="search" type="search" placeholder="タイトル・ファイル名・キーワード"><p id="result" role="status" hidden></p><p>実行キューに登録された 4 件。「何の話か／現在地／次の一手」で分類しています。登録は実装済み・公開済みを意味しません。</p><section class="doc-group"><h2 class="section-title">1・体験の確認</h2><div class="grid"><article class="card" data-search="学習・庭・家の一続きの体験：学習v8を維持し、本番の実初回学習→購入→招待→庭/家の昼夕夜→offline同じ学習を両幅で確認 次：実機の音・読み上げと利用者の往復操作を確認 docs/tasks/active/2026-09-20-whole-app-ux-coherence.md # whole-app ux/ui coherence
 
 ## 2026-09-29 一括実装
+
+main `4002e67b` から本番へ反映済み。公開urlの390/768幅で初回学習・購入・招待・庭と家・実sw offline・同じ学習の再開を確認。実機/参加者確認は別。
 
 初回3問の実獲得→花/水ばちの購入→実呼出と招待→庭/家の昼夕夜→offlineの同じ次問をphone/tabletで確認。学習v8の意味・予約・記録・消音/動き抑制を維持。実機と子どもの観察はblockedへ保持。 [検証・main・公開状態](../../design/2026-09-29-island-community/readme.md)。以下の棚卸し/過去記録と区別する。
 
@@ -279,9 +281,11 @@
 ### risks
 
 - 「全体」を広げすぎて島v3、家、nature town、ブランド外部確認の既存ownerを複製しない。横断の証拠づくりと未所有の共通操作課題に集中する。
-"><h2><a href="../../docs/tasks/active/2026-09-20-whole-app-ux-coherence.md">学習・庭・家の一続きの体験：学習v8を維持し、実初回学習→購入→招待→庭/家の昼夕夜→offline同じ学習を両幅で確認 次：最終公開版を照合し、実機の音・読み上げと利用者の往復操作を確認</a></h2><p class="path">docs/tasks/active/2026-09-20-whole-app-ux-coherence.md</p><p>初回3問の実獲得→花/水ばちの購入→実呼出と招待→庭/家の昼夕夜→offlineの同じ次問をphone/tabletで確認。学習v8の意味・予約・記録・消音/動き抑制を維持。実機と子どもの観察はBLOCKEDへ保持。 [検証・main・公開状態](../../design/2026-09-29-island-community/README.md)。以下の棚卸し/過去記録と区別する。 次の実作業の入口。学習v8・幻想</p><details><summary>詳細を読む</summary><pre># Whole-app UX/UI Coherence
+"><h2><a href="../../docs/tasks/active/2026-09-20-whole-app-ux-coherence.md">学習・庭・家の一続きの体験：学習v8を維持し、本番の実初回学習→購入→招待→庭/家の昼夕夜→offline同じ学習を両幅で確認 次：実機の音・読み上げと利用者の往復操作を確認</a></h2><p class="path">docs/tasks/active/2026-09-20-whole-app-ux-coherence.md</p><p>main `4002e67b` から本番へ反映済み。公開URLの390/768幅で初回学習・購入・招待・庭と家・実SW offline・同じ学習の再開を確認。実機/参加者確認は別。 初回3問の実獲得→花/水ばちの購入→実呼出と招待→庭/家の昼夕夜→offlineの同じ次問をphone/tabletで確認。学習v8の意味・予約・記録・消音/動き抑制を維持。実機と子どもの観察はBLOCKEDへ保持。 [検証・main・公</p><details><summary>詳細を読む</summary><pre># Whole-app UX/UI Coherence
 
 ## 2026-09-29 一括実装
+
+main `4002e67b` から本番へ反映済み。公開URLの390/768幅で初回学習・購入・招待・庭と家・実SW offline・同じ学習の再開を確認。実機/参加者確認は別。
 
 初回3問の実獲得→花/水ばちの購入→実呼出と招待→庭/家の昼夕夜→offlineの同じ次問をphone/tabletで確認。学習v8の意味・予約・記録・消音/動き抑制を維持。実機と子どもの観察はBLOCKEDへ保持。 [検証・main・公開状態](../../design/2026-09-29-island-community/README.md)。以下の棚卸し/過去記録と区別する。
 
@@ -553,6 +557,8 @@
 
 ## 2026-09-29 一括実装
 
+main `4002e67b` から本番へ反映済み。公開urlの390/768幅で初回学習・購入・招待・庭と家・実sw offline・同じ学習の再開を確認。実機/参加者確認は別。
+
 30品・3住人・同じ座標の比較で、静的家具と通路案内の描画を統合。実機iphoneの起動/描画/電池負荷は未確認。最終値は223→110 calls（約51%減）、139,536 trianglesは同じ。phone/tabletのraf p95は42.9/65.3msで、今回のdesktop実測は33.3ms基準未達。機能/描画回数のpassをfps達成と呼ばない。[実測](../../design/2026-09-29-island-community/render-comparison.json)。 [検証・main・公開状態](../../design/2026-09-29-island-community/readme.md)。以下の棚卸し/過去記録と区別する。
 
 ## 2026-09-29 棚卸し後の担当
@@ -658,9 +664,11 @@ this is a performance implementation within the existing product rules, so the p
 - life-enabled `verify:core` passed: 460 files / 4,168 tests, lint (one existing islandmilestone fast-refresh warning), typecheck, build and asset budget. the production decorations journey passed at 390×844 and 768×1024 (tablet reduced motion): six real answers, earned purchase, rotate/move/store/re-place, abort/retry, offline reload and learning return, followed by a separate synthetic 30-item stress fixture. both stress scenes loaded 34 instances from eight glbs, retained 17 textures, switched lod, and had no page errors. phone placement and tablet stress screenshots were inspected for visible props/residents and controls.
 - local browser evidence: `output/playwright/runtime-props-20260924/browser/report.json`; operation-count diagnostic: `output/playwright/runtime-props-20260924/clone-count.json`. target `http://127.0.0.1:5298`, version `development-local:b761cc63-f444-40d7-8107-d092ddce3f07`, app/dist/harness fingerprint `3583321974cb0a09960d6a6867689645af002eb229fdd61c18efa28b46892671` matched at start/end. delivery island/life enabled, life preview/buildplay disabled; runtime assets `island-life-runtime-assets-v3`, home props `island-home-props-v1`.
 - this local renderer change is complete. no deployment, real iphone timing, new art approval, child comprehension/replay assessment or full release-matrix pass is claimed. ongoing per-frame rendering costs and installed-device measurement remain separate follow-ups.
-"><h2><a href="../../docs/tasks/active/2026-09-23-island-performance.md">起動と物が増えた島の軽量化：起動cacheを維持。3住人・同じ30品を223→110 callsへ軽量化。desktop P95は42.9/65.3msで33.3ms未達 次：残るフレーム時間を調べ、実iPhoneの起動・描画/電池負荷を同じ端末で確認</a></h2><p class="path">docs/tasks/active/2026-09-23-island-performance.md</p><p>30品・3住人・同じ座標の比較で、静的家具と通路案内の描画を統合。実機iPhoneの起動/描画/電池負荷は未確認。最終値は223→110 calls（約51%減）、139,536 trianglesは同じ。phone/tabletのrAF P95は42.9/65.3msで、今回のdesktop実測は33.3ms基準未達。機能/描画回数のPASSをFPS達成と呼ばない。[実測](../../design/2026-09</p><details><summary>詳細を読む</summary><pre># Island / iPhone PWA performance
+"><h2><a href="../../docs/tasks/active/2026-09-23-island-performance.md">起動と物が増えた島の軽量化：起動cacheを維持。3住人・同じ30品を223→110 callsへ軽量化。desktop P95は42.9/65.3msで33.3ms未達 次：残るフレーム時間を調べ、実iPhoneの起動・描画/電池負荷を同じ端末で確認</a></h2><p class="path">docs/tasks/active/2026-09-23-island-performance.md</p><p>main `4002e67b` から本番へ反映済み。公開URLの390/768幅で初回学習・購入・招待・庭と家・実SW offline・同じ学習の再開を確認。実機/参加者確認は別。 30品・3住人・同じ座標の比較で、静的家具と通路案内の描画を統合。実機iPhoneの起動/描画/電池負荷は未確認。最終値は223→110 calls（約51%減）、139,536 trianglesは同じ。phone/tabletのrAF</p><details><summary>詳細を読む</summary><pre># Island / iPhone PWA performance
 
 ## 2026-09-29 一括実装
+
+main `4002e67b` から本番へ反映済み。公開URLの390/768幅で初回学習・購入・招待・庭と家・実SW offline・同じ学習の再開を確認。実機/参加者確認は別。
 
 30品・3住人・同じ座標の比較で、静的家具と通路案内の描画を統合。実機iPhoneの起動/描画/電池負荷は未確認。最終値は223→110 calls（約51%減）、139,536 trianglesは同じ。phone/tabletのrAF P95は42.9/65.3msで、今回のdesktop実測は33.3ms基準未達。機能/描画回数のPASSをFPS達成と呼ばない。[実測](../../design/2026-09-29-island-community/render-comparison.json)。 [検証・main・公開状態](../../design/2026-09-29-island-community/README.md)。以下の棚卸し/過去記録と区別する。
 
@@ -771,6 +779,8 @@ This is a performance implementation within the existing product rules, so the p
 
 ## 2026-09-29 一括実装
 
+main `4002e67b` から本番へ反映済み。公開urlの390/768幅で初回学習・購入・招待・庭と家・実sw offline・同じ学習の再開を確認。実機/参加者確認は別。
+
 家overviewをlifeの同じ家・所有物・住人・昼夕夜へ接続。庭から家を近くで見て帰島できる。キャラクターの形・顔・布・色は変更していない。写真/棚等の従来詳細と仕様51全体は後続。 [検証・main・公開状態](../../design/2026-09-29-island-community/readme.md)。以下の棚卸し/過去記録と区別する。
 
 ## 2026-09-29 棚卸し後の担当
@@ -827,9 +837,11 @@ b方向の実3d地形・家・曲がった枝葉・相棒・昼夕夜、通常�
 ## 2026-09-27 本番統合
 
 元のぽこもこを保つv2を、自然の育成・運搬・食事・水路・土とともに家庭内本番へ統合。[公開記録](../../design/2026-09-27-fantasy-production/readme.md)に固定build・旧→新/中断/互換復旧・実購入/offline・三ゲートを保存した。全v1の完成とは区別し、入口・家の美術統一、30品時の軽量化、実機・子どもの観察は継続する。
-"><h2><a href="../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md">幻想の庭と既存画面を揃える：元のぽこもこを維持。家overviewを同じ庭・家・所有物・時間帯へ接続 次：実画面の利用者評価と、棚/写真等を含む後続の美術調整。仕様51全体は継続</a></h2><p class="path">docs/tasks/active/2026-09-27-living-fantasy-first-playable.md</p><p>家overviewをLifeの同じ家・所有物・住人・昼夕夜へ接続。庭から家を近くで見て帰島できる。キャラクターの形・顔・布・色は変更していない。写真/棚等の従来詳細と仕様51全体は後続。 [検証・main・公開状態](../../design/2026-09-29-island-community/README.md)。以下の棚卸し/過去記録と区別する。 庭・入口・家の美術統一をここに集約。v3の植物/陰/地形の残件</p><details><summary>詳細を読む</summary><pre># 幻想の庭 — 最初の遊べる一周
+"><h2><a href="../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md">幻想の庭と既存画面を揃える：元のぽこもこを維持。家overviewを同じ庭・家・所有物・時間帯へ接続 次：実画面の利用者評価と、棚/写真等を含む後続の美術調整。仕様51全体は継続</a></h2><p class="path">docs/tasks/active/2026-09-27-living-fantasy-first-playable.md</p><p>main `4002e67b` から本番へ反映済み。公開URLの390/768幅で初回学習・購入・招待・庭と家・実SW offline・同じ学習の再開を確認。実機/参加者確認は別。 家overviewをLifeの同じ家・所有物・住人・昼夕夜へ接続。庭から家を近くで見て帰島できる。キャラクターの形・顔・布・色は変更していない。写真/棚等の従来詳細と仕様51全体は後続。 [検証・main・公開状態](../../desi</p><details><summary>詳細を読む</summary><pre># 幻想の庭 — 最初の遊べる一周
 
 ## 2026-09-29 一括実装
+
+main `4002e67b` から本番へ反映済み。公開URLの390/768幅で初回学習・購入・招待・庭と家・実SW offline・同じ学習の再開を確認。実機/参加者確認は別。
 
 家overviewをLifeの同じ家・所有物・住人・昼夕夜へ接続。庭から家を近くで見て帰島できる。キャラクターの形・顔・布・色は変更していない。写真/棚等の従来詳細と仕様51全体は後続。 [検証・main・公開状態](../../design/2026-09-29-island-community/README.md)。以下の棚卸し/過去記録と区別する。
 
@@ -891,6 +903,8 @@ B方向の実3D地形・家・曲がった枝葉・相棒・昼夕夜、通常�
 
 ## 2026-09-29 一括実装
 
+main `4002e67b` から本番へ反映済み。公開urlの390/768幅で初回学習・購入・招待・庭と家・実sw offline・同じ学習の再開を確認。実機/参加者確認は別。
+
 新しい島はぽこもこ1人から、花のそばのベンチ/植物のそばの水ばちへの実呼出、または実配達と食事3回で招待資格を得る。本人の操作でうさぎ/カワウソと暮らす。1人の間はぽこもこが運ぶ。既存3住人は無条件保持。土地は入居や食料でロックせず既存12/24/48へ接続。保存21と旧writer拒否を実装。 [検証・main・公開状態](../../design/2026-09-29-island-community/readme.md)。以下の棚卸し/過去記録と区別する。
 
 - 更新日: 2026-09-29
@@ -949,9 +963,11 @@ B方向の実3D地形・家・曲がった枝葉・相棒・昼夕夜、通常�
 ## docs to touch
 
 更新する文書：親仕様、統合方針、仕様書の地図、タスク一覧、バックログ、nature town資料の入口。島の見た目は48/50、保存方式を変える際は保存仕様13と移行手順も更新する。
-"><h2><a href="../../docs/tasks/active/2026-09-22-island-nature-integration.md">供給から来訪・入居・土地へ：好きな場所/共同食→来訪案内→明示入居を実装。既存住人・土地を保持し、同じ土地拡張へ接続 次：新しい経路の利用者確認。固定地形水源と仕様51の二つの時計は後続設計</a></h2><p class="path">docs/tasks/active/2026-09-22-island-nature-integration.md</p><p>新しい島はぽこもこ1人から、花のそばのベンチ/植物のそばの水ばちへの実呼出、または実配達と食事3回で招待資格を得る。本人の操作でうさぎ/カワウソと暮らす。1人の間はぽこもこが運ぶ。既存3住人は無条件保持。土地は入居や食料でロックせず既存12/24/48へ接続。保存21と旧writer拒否を実装。 [検証・main・公開状態](../../design/2026-09-29-island-community/READM</p><details><summary>詳細を読む</summary><pre># 今の島に自然と町の仕組みを取り込む
+"><h2><a href="../../docs/tasks/active/2026-09-22-island-nature-integration.md">供給から来訪・入居・土地へ：好きな場所/共同食→来訪案内→明示入居を実装。既存住人・土地を保持し、同じ土地拡張へ接続 次：新しい経路の利用者確認。固定地形水源と仕様51の二つの時計は後続設計</a></h2><p class="path">docs/tasks/active/2026-09-22-island-nature-integration.md</p><p>main `4002e67b` から本番へ反映済み。公開URLの390/768幅で初回学習・購入・招待・庭と家・実SW offline・同じ学習の再開を確認。実機/参加者確認は別。 新しい島はぽこもこ1人から、花のそばのベンチ/植物のそばの水ばちへの実呼出、または実配達と食事3回で招待資格を得る。本人の操作でうさぎ/カワウソと暮らす。1人の間はぽこもこが運ぶ。既存3住人は無条件保持。土地は入居や食料でロックせず既存1</p><details><summary>詳細を読む</summary><pre># 今の島に自然と町の仕組みを取り込む
 
 ## 2026-09-29 一括実装
+
+main `4002e67b` から本番へ反映済み。公開URLの390/768幅で初回学習・購入・招待・庭と家・実SW offline・同じ学習の再開を確認。実機/参加者確認は別。
 
 新しい島はぽこもこ1人から、花のそばのベンチ/植物のそばの水ばちへの実呼出、または実配達と食事3回で招待資格を得る。本人の操作でうさぎ/カワウソと暮らす。1人の間はぽこもこが運ぶ。既存3住人は無条件保持。土地は入居や食料でロックせず既存12/24/48へ接続。保存21と旧writer拒否を実装。 [検証・main・公開状態](../../design/2026-09-29-island-community/README.md)。以下の棚卸し/過去記録と区別する。
 
@@ -1020,7 +1036,7 @@ B方向の実3D地形・家・曲がった枝葉・相棒・昼夕夜、通常�
 | 起動 | [iphoneホーム画面版の30秒待ち](../../docs/tasks/active/2026-09-23-island-performance.md) | 再生cacheと起動処理は改善済み。報告された実端末での解決は未確認 | 同じ端末の版・起動/通信/フレーム記録を取り、初回移行と毎回の遅延を分ける |
 | 写真 | [safariの撮影・保存](../../docs/tasks/archive/2026-09-20-house-webkit-photo-save.md) | 一時webkitでは失敗、保存付きブラウザでは成功 | 実safari/ios pwaで撮影・保存・再読込し、再現すれば全体ux担当で修正 |
 | 学習演出・操作 | [音・動き・読み上げの実機確認](../../docs/tasks/active/2026-09-20-whole-app-ux-coherence.md) | v8は画面・入力・pcm・offlineの自動確認あり。実機スピーカーの聴感とgpu負荷は未確認 | 同じ版で実機の音量、ミュート、動き抑制、入力と読み上げを確認 |
-| 理解・継続意欲 | [統合した島を子どもが使えるか](../../docs/tasks/active/2026-09-22-island-nature-integration.md) | 庭と育成→運搬→食事は本番統合済み。独立した子どもの理解評価は未実施 | 現行画面で配置の効果・学習往復・もう一度遊びたいかを観察。旧町の評価は転用しない |
+| 理解・継続意欲 | [統合した島を子どもが使えるか](../../docs/tasks/active/2026-09-22-island-nature-integration.md) | 庭と育成→運搬→食事→来訪/入居は本番統合済み。独立した子どもの理解評価は未実施 | 現行画面で配置の効果・学習往復・もう一度遊びたいかを観察。旧町の評価は転用しない |
 
 ## 旧モードの確認待ち
 
@@ -1036,7 +1052,7 @@ B方向の実3D地形・家・曲がった枝葉・相棒・昼夕夜、通常�
 | 起動 | [iPhoneホーム画面版の30秒待ち](../../docs/tasks/active/2026-09-23-island-performance.md) | 再生cacheと起動処理は改善済み。報告された実端末での解決は未確認 | 同じ端末の版・起動/通信/フレーム記録を取り、初回移行と毎回の遅延を分ける |
 | 写真 | [Safariの撮影・保存](../../docs/tasks/archive/2026-09-20-house-webkit-photo-save.md) | 一時WebKitでは失敗、保存付きブラウザでは成功 | 実Safari/iOS PWAで撮影・保存・再読込し、再現すれば全体UX担当で修正 |
 | 学習演出・操作 | [音・動き・読み上げの実機確認](../../docs/tasks/active/2026-09-20-whole-app-ux-coherence.md) | v8は画面・入力・PCM・offlineの自動確認あり。実機スピーカーの聴感とGPU負荷は未確認 | 同じ版で実機の音量、ミュート、動き抑制、入力と読み上げを確認 |
-| 理解・継続意欲 | [統合した島を子どもが使えるか](../../docs/tasks/active/2026-09-22-island-nature-integration.md) | 庭と育成→運搬→食事は本番統合済み。独立した子どもの理解評価は未実施 | 現行画面で配置の効果・学習往復・もう一度遊びたいかを観察。旧町の評価は転用しない |
+| 理解・継続意欲 | [統合した島を子どもが使えるか](../../docs/tasks/active/2026-09-22-island-nature-integration.md) | 庭と育成→運搬→食事→来訪/入居は本番統合済み。独立した子どもの理解評価は未実施 | 現行画面で配置の効果・学習往復・もう一度遊びたいかを観察。旧町の評価は転用しない |
 
 ## 旧モードの確認待ち
 
@@ -1133,7 +1149,7 @@ B方向の実3D地形・家・曲がった枝葉・相棒・昼夕夜、通常�
 親仕様、現行v8の実装marker・検証記録、mainの履歴、タスクとポータルの生成元を照合しました。新しい本番操作・実機観察・子どもの評価は行っていません。過去の合格を今回の新しい合格として記録しません。
 </pre></details></article><article class="card" data-search="shared done index .agents/tasks/done.md # shared done index
 
-- 2026-09-29: 庭と家の連続表示、自然の来訪/入居、保存21、30品223→110 callsを一括実装。既存ぽこもこ・住人・所有・学習を保持し、実操作/更新/offlineと固定80 runを確認。フレーム時間と実機/利用者評価は継続 -&gt; `docs/done/2026-09.md`
+- 2026-09-29: 庭と家の連続表示、自然の来訪/入居、保存21、30品223→110 callsを一括実装・本番反映。既存ぽこもこ・住人・所有・学習を保持し、実操作/更新/offlineと固定80 runを確認。フレーム時間と実機/利用者評価は継続 -&gt; `docs/done/2026-09.md`
 
 - 2026-09-29: タスクを4担当へ整理し、実装済み・確認待ち・比較資料とポータルを同期 -&gt; `docs/done/2026-09.md`
 
@@ -1298,9 +1314,9 @@ durable completion history and verification facts still belong in `docs/done/yyy
 - 2026-09-09 写真の読込/削除中断・家への帰還・空報酬・短い横向き撮影を改善。4サイズ/3440unit通過 -&gt; docs/done/2026-09.md
 
 - 2026-09-27: 手元変更のbackupと最新mainへの整理。公開済み保存/報酬/ぽこもこを維持し、旧試作・入口と資料を整理 -&gt; `docs/done/2026-09.md`
-"><h2><a href="DONE.md">Shared Done Index</a></h2><p class="path">.agents/tasks/DONE.md</p><p>- 2026-09-29: 庭と家の連続表示、自然の来訪/入居、保存21、30品223→110 callsを一括実装。既存ぽこもこ・住人・所有・学習を保持し、実操作/更新/offlineと固定80 runを確認。フレーム時間と実機/利用者評価は継続 -&gt; `docs/done/2026-09.md` - 2026-09-29: タスクを4担当へ整理し、実装済み・確認待ち・比較資料とポータルを同期 -&gt; `docs/d</p><details><summary>詳細を読む</summary><pre># Shared Done Index
+"><h2><a href="DONE.md">Shared Done Index</a></h2><p class="path">.agents/tasks/DONE.md</p><p>- 2026-09-29: 庭と家の連続表示、自然の来訪/入居、保存21、30品223→110 callsを一括実装・本番反映。既存ぽこもこ・住人・所有・学習を保持し、実操作/更新/offlineと固定80 runを確認。フレーム時間と実機/利用者評価は継続 -&gt; `docs/done/2026-09.md` - 2026-09-29: タスクを4担当へ整理し、実装済み・確認待ち・比較資料とポータルを同期 -&gt; `d</p><details><summary>詳細を読む</summary><pre># Shared Done Index
 
-- 2026-09-29: 庭と家の連続表示、自然の来訪/入居、保存21、30品223→110 callsを一括実装。既存ぽこもこ・住人・所有・学習を保持し、実操作/更新/offlineと固定80 runを確認。フレーム時間と実機/利用者評価は継続 -&gt; `docs/done/2026-09.md`
+- 2026-09-29: 庭と家の連続表示、自然の来訪/入居、保存21、30品223→110 callsを一括実装・本番反映。既存ぽこもこ・住人・所有・学習を保持し、実操作/更新/offlineと固定80 runを確認。フレーム時間と実機/利用者評価は継続 -&gt; `docs/done/2026-09.md`
 
 - 2026-09-29: タスクを4担当へ整理し、実装済み・確認待ち・比較資料とポータルを同期 -&gt; `docs/done/2026-09.md`
 

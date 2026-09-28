@@ -2,6 +2,8 @@
 
 ## 2026-09-29 一括実装
 
+main `4002e67b` から本番へ反映済み。公開URLの390/768幅で初回学習・購入・招待・庭と家・実SW offline・同じ学習の再開を確認。実機/参加者確認は別。
+
 30品・3住人・同じ座標の比較で、静的家具と通路案内の描画を統合。実機iPhoneの起動/描画/電池負荷は未確認。最終値は223→110 calls（約51%減）、139,536 trianglesは同じ。phone/tabletのrAF P95は42.9/65.3msで、今回のdesktop実測は33.3ms基準未達。機能/描画回数のPASSをFPS達成と呼ばない。[実測](../../design/2026-09-29-island-community/render-comparison.json)。 [検証・main・公開状態](../../design/2026-09-29-island-community/README.md)。以下の棚卸し/過去記録と区別する。
 
 ## 2026-09-29 棚卸し後の担当
