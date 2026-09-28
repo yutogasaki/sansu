@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { createLearningMusic, LEARNING_MAX_CUE_VOICES } from './learningMusic';
 import { createLearningCue, createLearningStems, LEARNING_BEAT_SECONDS, LEARNING_CUES, LEARNING_LOOP_SECONDS,
-    learningChordAt, learningInputPitch, learningStemLevels } from './learningMusicScore';
+    learningChordAt, learningInputPitch, learningStemLevels, learningStereo } from './learningMusicScore';
 
 const peak = (samples: Float32Array) => samples.reduce((max, value) => Math.max(max, Math.abs(value)), 0);
 const energy = (samples: Float32Array) => samples.reduce((sum, value) => sum + value * value, 0) / samples.length;
@@ -19,7 +19,7 @@ function fixture() {
         createBiquadFilter: vi.fn(() => filter),
         createGain: vi.fn(() => { const gain = { gain: param(), connect: vi.fn(), disconnect: vi.fn() }; gains.push(gain); return gain; }),
         createBuffer: vi.fn((_channels: number, length: number, sampleRate: number) => {
-            const data = new Float32Array(length); return { length, duration: length / sampleRate, getChannelData: () => data };
+            const data = Array.from({ length: _channels }, () => new Float32Array(length)); return { length, duration: length / sampleRate, numberOfChannels: _channels, getChannelData: (channel: number) => data[channel] };
         }),
         createBufferSource: vi.fn(() => {
             const source: Source = { buffer: null, loop: false, onended: null, connect: vi.fn(), disconnect: vi.fn(), start: vi.fn(), stop: vi.fn() };
@@ -71,6 +71,19 @@ describe('the score and input share a chord and pulse clock', () => {
         expect((Math.max(...peaks) * LEARNING_MAX_CUE_VOICES + stems.reduce((sum, stem) => sum + peak(stem), 0) * .36) * .68).toBeLessThan(1);
     });
 
+    it('varies the second phrase and preserves a bounded, audible mono-compatible stereo mix', () => {
+        const rate = 8000, stems = createLearningStems(rate);
+        expect(stems[0].slice(0, rate * 8)).not.toEqual(stems[0].slice(rate * 8));
+        for (const data of [...stems, ...LEARNING_CUES.map(kind => createLearningCue(kind, rate, 76))]) {
+            const [left, right] = learningStereo(data, rate, data.length === rate * LEARNING_LOOP_SECONDS);
+            expect(left).not.toEqual(right);
+            expect(peak(left)).toBeLessThanOrEqual(peak(data) + 1e-7);
+            expect(peak(right)).toBeLessThanOrEqual(peak(data) + 1e-7);
+            const mono = left.map((value, i) => (value + right[i]) / 2);
+            expect(energy(mono)).toBeGreaterThan(energy(data) * .4);
+        }
+    });
+
     it('does not alias catch/place/retry as one sound and rejects invalid formats', () => {
         const signatures = LEARNING_CUES.map(kind => {
             const data = createLearningCue(kind, 8000, 76); return `${data.length}:${energy(data)}:${data[250]}`;
@@ -113,6 +126,7 @@ describe('learning music owns its lifecycle and bounded graph', () => {
         const first = audio.unlock(); expect(audio.unlock()).toBe(first); expect(await first).toBe(true);
         expect(await audio.unlock()).toBe(true); expect(f.factory).toHaveBeenCalledTimes(1);
         expect(f.sources).toHaveLength(4); expect(f.sources.every(source => source.loop)).toBe(true);
+        expect(f.sources.every(source => source.buffer?.numberOfChannels === 2)).toBe(true);
         expect(f.sources.every(source => source.start.mock.calls[0][0] === 3.015)).toBe(true);
         expect(audio.pulse()).toBe(0);
         f.context.currentTime = 3.015; expect(audio.pulse()).toBe(1);

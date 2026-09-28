@@ -61,7 +61,7 @@ async function instrument(page) {
             const row = { context: id(this.context), duration: this.buffer?.duration ?? 0, loop: this.loop, decoded: Boolean(this.buffer && decoded.has(this.buffer)),
                 at: performance.now(), activation: navigator.userActivation?.isActive, stopped: false };
             qa.starts.push(row); this.__qaRow = row;
-            if (this.loop && Math.abs(row.duration - 8) < .01) {
+            if (this.loop && Math.abs(row.duration - 16) < .01) {
                 const gain = connections.get(this); qa.loopGains.push({ context: row.context, gain, row });
                 const filter = connections.get(gain); if (filter instanceof BiquadFilterNode && !qa.filters.includes(filter)) qa.filters.push(filter);
             }
@@ -117,7 +117,7 @@ try {
             await page.getByRole('button', { name: 'まなぶ', exact: true }).click();
             await page.locator('[data-input-ready=true]').waitFor(); row.runtime = await runtimeMetadata(page);
             const ready = await snapshot(page, 'before-first-learning-gesture', true); row.snapshots.push(ready);
-            assert.equal(ready.starts.filter(source => source.loop && source.duration === 8).length, 0, 'Entering learning alone cannot start its music');
+            assert.equal(ready.starts.filter(source => source.loop && source.duration === 16).length, 0, 'Entering learning alone cannot start its music');
             for (let answered = 1; answered <= (muted ? 2 : 6); answered++) {
                 const before = await readNative(page, id);
                 const result = await answerUI(page, before.plan, { touch: true }); row.answers.push({ count: answered, ms: result.ms });

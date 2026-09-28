@@ -1,0 +1,3955 @@
+{
+  "target": "http://127.0.0.1:5198",
+  "revision": "91f1eb3b0cbf224645fd98a6279fa3a8cdd98454",
+  "sourceStart": "0bf828ee8efb23ec4c16c4345dd22388ef14a64e88ae606afd9ff827a1f8a160",
+  "qaHash": "f5a785a8284784e6c471f79a5f3cb839be908a11005d412dc51a5f6c527199d1",
+  "evidence": "Disposable browser/profile fixture. Real UI answers and sound control; digital output measured by parallel silent analyser branches. No physical speaker, listening-quality, child, or PWA-release claim.",
+  "runs": [
+    {
+      "mode": "enabled",
+      "snapshots": [
+        {
+          "label": "before-first-learning-gesture",
+          "completed": 0,
+          "level": 0,
+          "contexts": [
+            {
+              "id": 0,
+              "state": "closed",
+              "at": 51.5
+            },
+            {
+              "id": 1,
+              "state": "running",
+              "at": 82.39999997615814
+            }
+          ],
+          "starts": [
+            {
+              "context": 1,
+              "duration": 0.000045351473922902495,
+              "loop": false,
+              "decoded": false,
+              "at": 148.09999999403954,
+              "activation": true,
+              "stopped": false
+            }
+          ],
+          "stems": [],
+          "filters": [],
+          "meters": [
+            {
+              "context": 0,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 1,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 1,
+              "peak": 0,
+              "rms": 0
+            }
+          ],
+          "gestures": [
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 146.59999999403954
+            }
+          ]
+        },
+        {
+          "label": "after-1",
+          "completed": 1,
+          "level": 0,
+          "contexts": [
+            {
+              "id": 0,
+              "state": "closed",
+              "at": 51.5
+            },
+            {
+              "id": 1,
+              "state": "running",
+              "at": 82.39999997615814
+            },
+            {
+              "id": 2,
+              "state": "running",
+              "at": 3030.699999988079
+            }
+          ],
+          "starts": [
+            {
+              "context": 1,
+              "duration": 0.000045351473922902495,
+              "loop": false,
+              "decoded": false,
+              "at": 148.09999999403954,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.199999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.2999999821186,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.2999999821186,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.399999976158,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 3210.699999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 3372.0999999940395,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 3492,
+              "activation": true,
+              "stopped": false
+            }
+          ],
+          "stems": [
+            {
+              "context": 2,
+              "gain": 1,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "gain": 0,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "gain": 0,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "gain": 0,
+              "stopped": false
+            }
+          ],
+          "filters": [
+            {
+              "context": 2,
+              "cutoff": 9000
+            }
+          ],
+          "meters": [
+            {
+              "context": 0,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 1,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 1,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 2,
+              "peak": 0.00964471884071827,
+              "rms": 0.002506403349856312
+            }
+          ],
+          "gestures": [
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 146.59999999403954
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 3030.399999976158
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 3204.0999999940395
+            }
+          ]
+        },
+        {
+          "label": "after-3",
+          "completed": 3,
+          "level": 1,
+          "contexts": [
+            {
+              "id": 0,
+              "state": "closed",
+              "at": 51.5
+            },
+            {
+              "id": 1,
+              "state": "running",
+              "at": 82.39999997615814
+            },
+            {
+              "id": 2,
+              "state": "running",
+              "at": 3030.699999988079
+            }
+          ],
+          "starts": [
+            {
+              "context": 1,
+              "duration": 0.000045351473922902495,
+              "loop": false,
+              "decoded": false,
+              "at": 148.09999999403954,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.199999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.2999999821186,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.2999999821186,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.399999976158,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 3210.699999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 3372.0999999940395,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 3492,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5125.699999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5280,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 5312.899999976158,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5460.299999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5614.5,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.7,
+              "loop": false,
+              "decoded": false,
+              "at": 5660.199999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.27,
+              "loop": false,
+              "decoded": false,
+              "at": 5881.199999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 6321.5,
+              "activation": true,
+              "stopped": false
+            }
+          ],
+          "stems": [
+            {
+              "context": 2,
+              "gain": 1,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "gain": 1,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "gain": 0.1666666716337204,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "gain": 0,
+              "stopped": false
+            }
+          ],
+          "filters": [
+            {
+              "context": 2,
+              "cutoff": 9000
+            }
+          ],
+          "meters": [
+            {
+              "context": 0,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 1,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 1,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 2,
+              "peak": 0.023639362305402756,
+              "rms": 0.005438805249332933
+            }
+          ],
+          "gestures": [
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 146.59999999403954
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 3030.399999976158
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 3204.0999999940395
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5070.299999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5123.899999976158
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5403.799999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5458.799999982119
+            }
+          ]
+        },
+        {
+          "label": "after-4",
+          "completed": 4,
+          "level": 1,
+          "contexts": [
+            {
+              "id": 0,
+              "state": "closed",
+              "at": 51.5
+            },
+            {
+              "id": 1,
+              "state": "running",
+              "at": 82.39999997615814
+            },
+            {
+              "id": 2,
+              "state": "running",
+              "at": 3030.699999988079
+            }
+          ],
+          "starts": [
+            {
+              "context": 1,
+              "duration": 0.000045351473922902495,
+              "loop": false,
+              "decoded": false,
+              "at": 148.09999999403954,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.199999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.2999999821186,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.2999999821186,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.399999976158,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 3210.699999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 3372.0999999940395,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 3492,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5125.699999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5280,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 5312.899999976158,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5460.299999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5614.5,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.7,
+              "loop": false,
+              "decoded": false,
+              "at": 5660.199999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.27,
+              "loop": false,
+              "decoded": false,
+              "at": 5881.199999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 6321.5,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 7287.299999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.38,
+              "loop": false,
+              "decoded": false,
+              "at": 7325.399999976158,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 7442,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 7482.799999982119,
+              "activation": true,
+              "stopped": false
+            }
+          ],
+          "stems": [
+            {
+              "context": 2,
+              "gain": 1,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "gain": 1,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "gain": 0.1666666716337204,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "gain": 0,
+              "stopped": false
+            }
+          ],
+          "filters": [
+            {
+              "context": 2,
+              "cutoff": 620.8602905273438
+            }
+          ],
+          "meters": [
+            {
+              "context": 0,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 1,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 1,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 2,
+              "peak": 0.010896513238549232,
+              "rms": 0.0030987117103537186
+            }
+          ],
+          "gestures": [
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 146.59999999403954
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 3030.399999976158
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 3204.0999999940395
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5070.299999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5123.899999976158
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5403.799999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5458.799999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 7231.799999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 7285.699999988079
+            }
+          ]
+        },
+        {
+          "label": "after-5",
+          "completed": 5,
+          "level": 1,
+          "contexts": [
+            {
+              "id": 0,
+              "state": "closed",
+              "at": 51.5
+            },
+            {
+              "id": 1,
+              "state": "running",
+              "at": 82.39999997615814
+            },
+            {
+              "id": 2,
+              "state": "running",
+              "at": 3030.699999988079
+            }
+          ],
+          "starts": [
+            {
+              "context": 1,
+              "duration": 0.000045351473922902495,
+              "loop": false,
+              "decoded": false,
+              "at": 148.09999999403954,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.199999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.2999999821186,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.2999999821186,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.399999976158,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 3210.699999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 3372.0999999940395,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 3492,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5125.699999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5280,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 5312.899999976158,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5460.299999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5614.5,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.7,
+              "loop": false,
+              "decoded": false,
+              "at": 5660.199999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.27,
+              "loop": false,
+              "decoded": false,
+              "at": 5881.199999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 6321.5,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 7287.299999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.38,
+              "loop": false,
+              "decoded": false,
+              "at": 7325.399999976158,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 7442,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 7482.799999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 9101.59999999404,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 9255.199999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.7,
+              "loop": false,
+              "decoded": false,
+              "at": 9300.5,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.27,
+              "loop": false,
+              "decoded": false,
+              "at": 9527.899999976158,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 9986.5,
+              "activation": true,
+              "stopped": false
+            }
+          ],
+          "stems": [
+            {
+              "context": 2,
+              "gain": 1,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "gain": 1,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "gain": 0.1666666716337204,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "gain": 0,
+              "stopped": false
+            }
+          ],
+          "filters": [
+            {
+              "context": 2,
+              "cutoff": 9000
+            }
+          ],
+          "meters": [
+            {
+              "context": 0,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 1,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 1,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 2,
+              "peak": 0.02335868775844574,
+              "rms": 0.006275356728637052
+            }
+          ],
+          "gestures": [
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 146.59999999403954
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 3030.399999976158
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 3204.0999999940395
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5070.299999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5123.899999976158
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5403.799999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5458.799999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 7231.799999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 7285.699999988079
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 9044.59999999404
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 9099.199999988079
+            }
+          ]
+        },
+        {
+          "label": "after-6",
+          "completed": 6,
+          "level": 2,
+          "contexts": [
+            {
+              "id": 0,
+              "state": "closed",
+              "at": 51.5
+            },
+            {
+              "id": 1,
+              "state": "running",
+              "at": 82.39999997615814
+            },
+            {
+              "id": 2,
+              "state": "running",
+              "at": 3030.699999988079
+            }
+          ],
+          "starts": [
+            {
+              "context": 1,
+              "duration": 0.000045351473922902495,
+              "loop": false,
+              "decoded": false,
+              "at": 148.09999999403954,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.199999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.2999999821186,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.2999999821186,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.399999976158,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 3210.699999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 3372.0999999940395,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 3492,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5125.699999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5280,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 5312.899999976158,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5460.299999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5614.5,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.7,
+              "loop": false,
+              "decoded": false,
+              "at": 5660.199999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.27,
+              "loop": false,
+              "decoded": false,
+              "at": 5881.199999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 6321.5,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 7287.299999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.38,
+              "loop": false,
+              "decoded": false,
+              "at": 7325.399999976158,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 7442,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 7482.799999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 9101.59999999404,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 9255.199999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.7,
+              "loop": false,
+              "decoded": false,
+              "at": 9300.5,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.27,
+              "loop": false,
+              "decoded": false,
+              "at": 9527.899999976158,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 9986.5,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 10943.299999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 11097.799999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 11138.299999982119,
+              "activation": true,
+              "stopped": false
+            }
+          ],
+          "stems": [
+            {
+              "context": 2,
+              "gain": 1,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "gain": 1,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "gain": 1,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "gain": 0.3333333432674408,
+              "stopped": false
+            }
+          ],
+          "filters": [
+            {
+              "context": 2,
+              "cutoff": 9000
+            }
+          ],
+          "meters": [
+            {
+              "context": 0,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 1,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 1,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 2,
+              "peak": 0.031208142638206482,
+              "rms": 0.005711590096167789
+            }
+          ],
+          "gestures": [
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 146.59999999403954
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 3030.399999976158
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 3204.0999999940395
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5070.299999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5123.899999976158
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5403.799999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5458.799999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 7231.799999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 7285.699999988079
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 9044.59999999404
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 9099.199999988079
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 10873.09999999404
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 10941.699999988079
+            }
+          ]
+        },
+        {
+          "label": "after-user-mute",
+          "completed": 6,
+          "level": 2,
+          "contexts": [
+            {
+              "id": 0,
+              "state": "closed",
+              "at": 51.5
+            },
+            {
+              "id": 1,
+              "state": "running",
+              "at": 82.39999997615814
+            },
+            {
+              "id": 2,
+              "state": "closed",
+              "at": 3030.699999988079
+            }
+          ],
+          "starts": [
+            {
+              "context": 1,
+              "duration": 0.000045351473922902495,
+              "loop": false,
+              "decoded": false,
+              "at": 148.09999999403954,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.199999988079,
+              "activation": true,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.2999999821186,
+              "activation": true,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.2999999821186,
+              "activation": true,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.399999976158,
+              "activation": true,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 3210.699999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 3372.0999999940395,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 3492,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5125.699999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5280,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 5312.899999976158,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5460.299999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5614.5,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.7,
+              "loop": false,
+              "decoded": false,
+              "at": 5660.199999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.27,
+              "loop": false,
+              "decoded": false,
+              "at": 5881.199999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 6321.5,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 7287.299999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.38,
+              "loop": false,
+              "decoded": false,
+              "at": 7325.399999976158,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 7442,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 7482.799999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 9101.59999999404,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 9255.199999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.7,
+              "loop": false,
+              "decoded": false,
+              "at": 9300.5,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.27,
+              "loop": false,
+              "decoded": false,
+              "at": 9527.899999976158,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 9986.5,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 10943.299999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 11097.799999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 11138.299999982119,
+              "activation": true,
+              "stopped": false
+            }
+          ],
+          "stems": [
+            {
+              "context": 2,
+              "gain": 1,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "gain": 1,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "gain": 1,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "gain": 0.3333333432674408,
+              "stopped": true
+            }
+          ],
+          "filters": [
+            {
+              "context": 2,
+              "cutoff": 9000
+            }
+          ],
+          "meters": [
+            {
+              "context": 0,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 1,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 1,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 2,
+              "peak": 0,
+              "rms": 0
+            }
+          ],
+          "gestures": [
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 146.59999999403954
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 3030.399999976158
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 3204.0999999940395
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5070.299999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5123.899999976158
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5403.799999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5458.799999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 7231.799999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 7285.699999988079
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 9044.59999999404
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 9099.199999988079
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 10873.09999999404
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 10941.699999988079
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 12661.899999976158
+            }
+          ]
+        },
+        {
+          "label": "answer-while-muted",
+          "completed": 7,
+          "level": 2,
+          "contexts": [
+            {
+              "id": 0,
+              "state": "closed",
+              "at": 51.5
+            },
+            {
+              "id": 1,
+              "state": "running",
+              "at": 82.39999997615814
+            },
+            {
+              "id": 2,
+              "state": "closed",
+              "at": 3030.699999988079
+            }
+          ],
+          "starts": [
+            {
+              "context": 1,
+              "duration": 0.000045351473922902495,
+              "loop": false,
+              "decoded": false,
+              "at": 148.09999999403954,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.199999988079,
+              "activation": true,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.2999999821186,
+              "activation": true,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.2999999821186,
+              "activation": true,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.399999976158,
+              "activation": true,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 3210.699999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 3372.0999999940395,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 3492,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5125.699999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5280,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 5312.899999976158,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5460.299999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5614.5,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.7,
+              "loop": false,
+              "decoded": false,
+              "at": 5660.199999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.27,
+              "loop": false,
+              "decoded": false,
+              "at": 5881.199999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 6321.5,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 7287.299999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.38,
+              "loop": false,
+              "decoded": false,
+              "at": 7325.399999976158,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 7442,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 7482.799999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 9101.59999999404,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 9255.199999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.7,
+              "loop": false,
+              "decoded": false,
+              "at": 9300.5,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.27,
+              "loop": false,
+              "decoded": false,
+              "at": 9527.899999976158,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 9986.5,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 10943.299999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 11097.799999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 11138.299999982119,
+              "activation": true,
+              "stopped": false
+            }
+          ],
+          "stems": [
+            {
+              "context": 2,
+              "gain": 1,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "gain": 1,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "gain": 1,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "gain": 0.3333333432674408,
+              "stopped": true
+            }
+          ],
+          "filters": [
+            {
+              "context": 2,
+              "cutoff": 9000
+            }
+          ],
+          "meters": [
+            {
+              "context": 0,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 1,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 1,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 2,
+              "peak": 0,
+              "rms": 0
+            }
+          ],
+          "gestures": [
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 146.59999999403954
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 3030.399999976158
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 3204.0999999940395
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5070.299999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5123.899999976158
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5403.799999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5458.799999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 7231.799999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 7285.699999988079
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 9044.59999999404
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 9099.199999988079
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 10873.09999999404
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 10941.699999988079
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 12661.899999976158
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 14246.899999976158
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 14299.199999988079
+            }
+          ]
+        },
+        {
+          "label": "immediately-after-header-unmute",
+          "completed": 7,
+          "level": 2,
+          "contexts": [
+            {
+              "id": 0,
+              "state": "closed",
+              "at": 51.5
+            },
+            {
+              "id": 1,
+              "state": "running",
+              "at": 82.39999997615814
+            },
+            {
+              "id": 2,
+              "state": "closed",
+              "at": 3030.699999988079
+            },
+            {
+              "id": 3,
+              "state": "running",
+              "at": 16012.899999976158
+            }
+          ],
+          "starts": [
+            {
+              "context": 1,
+              "duration": 0.000045351473922902495,
+              "loop": false,
+              "decoded": false,
+              "at": 148.09999999403954,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.199999988079,
+              "activation": true,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.2999999821186,
+              "activation": true,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.2999999821186,
+              "activation": true,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.399999976158,
+              "activation": true,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 3210.699999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 3372.0999999940395,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 3492,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5125.699999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5280,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 5312.899999976158,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5460.299999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5614.5,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.7,
+              "loop": false,
+              "decoded": false,
+              "at": 5660.199999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.27,
+              "loop": false,
+              "decoded": false,
+              "at": 5881.199999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 6321.5,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 7287.299999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.38,
+              "loop": false,
+              "decoded": false,
+              "at": 7325.399999976158,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 7442,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 7482.799999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 9101.59999999404,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 9255.199999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.7,
+              "loop": false,
+              "decoded": false,
+              "at": 9300.5,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.27,
+              "loop": false,
+              "decoded": false,
+              "at": 9527.899999976158,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 9986.5,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 10943.299999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 11097.799999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 11138.299999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 1,
+              "duration": 0.38,
+              "loop": false,
+              "decoded": true,
+              "at": 16010.399999976158,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 3,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 16121.699999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 3,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 16121.799999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 3,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 16121.799999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 3,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 16121.799999982119,
+              "activation": true,
+              "stopped": false
+            }
+          ],
+          "stems": [
+            {
+              "context": 2,
+              "gain": 1,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "gain": 1,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "gain": 1,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "gain": 0.3333333432674408,
+              "stopped": true
+            },
+            {
+              "context": 3,
+              "gain": 1,
+              "stopped": false
+            },
+            {
+              "context": 3,
+              "gain": 1,
+              "stopped": false
+            },
+            {
+              "context": 3,
+              "gain": 1,
+              "stopped": false
+            },
+            {
+              "context": 3,
+              "gain": 0.3333333432674408,
+              "stopped": false
+            }
+          ],
+          "filters": [
+            {
+              "context": 2,
+              "cutoff": 9000
+            },
+            {
+              "context": 3,
+              "cutoff": 9000
+            }
+          ],
+          "meters": [
+            {
+              "context": 0,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 1,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 1,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 2,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 3,
+              "peak": 0.03379499912261963,
+              "rms": 0.006030142196890181
+            }
+          ],
+          "gestures": [
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 146.59999999403954
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 3030.399999976158
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 3204.0999999940395
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5070.299999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5123.899999976158
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5403.799999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5458.799999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 7231.799999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 7285.699999988079
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 9044.59999999404
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 9099.199999988079
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 10873.09999999404
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 10941.699999988079
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 12661.899999976158
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 14246.899999976158
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 14299.199999988079
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 16008.09999999404
+            }
+          ]
+        },
+        {
+          "label": "after-leaving-learning",
+          "completed": 0,
+          "level": 0,
+          "contexts": [
+            {
+              "id": 0,
+              "state": "closed",
+              "at": 51.5
+            },
+            {
+              "id": 1,
+              "state": "running",
+              "at": 82.39999997615814
+            },
+            {
+              "id": 2,
+              "state": "closed",
+              "at": 3030.699999988079
+            },
+            {
+              "id": 3,
+              "state": "closed",
+              "at": 16012.899999976158
+            }
+          ],
+          "starts": [
+            {
+              "context": 1,
+              "duration": 0.000045351473922902495,
+              "loop": false,
+              "decoded": false,
+              "at": 148.09999999403954,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.199999988079,
+              "activation": true,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.2999999821186,
+              "activation": true,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.2999999821186,
+              "activation": true,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 3128.399999976158,
+              "activation": true,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 3210.699999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 3372.0999999940395,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 3492,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5125.699999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5280,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 5312.899999976158,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5460.299999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 5614.5,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.7,
+              "loop": false,
+              "decoded": false,
+              "at": 5660.199999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.27,
+              "loop": false,
+              "decoded": false,
+              "at": 5881.199999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 6321.5,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 7287.299999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.38,
+              "loop": false,
+              "decoded": false,
+              "at": 7325.399999976158,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 7442,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 7482.799999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 9101.59999999404,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 9255.199999988079,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.7,
+              "loop": false,
+              "decoded": false,
+              "at": 9300.5,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.27,
+              "loop": false,
+              "decoded": false,
+              "at": 9527.899999976158,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 9986.5,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 10943.299999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.18,
+              "loop": false,
+              "decoded": false,
+              "at": 11097.799999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 2,
+              "duration": 0.5500208333333333,
+              "loop": false,
+              "decoded": false,
+              "at": 11138.299999982119,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 1,
+              "duration": 0.38,
+              "loop": false,
+              "decoded": true,
+              "at": 16010.399999976158,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 3,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 16121.699999988079,
+              "activation": true,
+              "stopped": true
+            },
+            {
+              "context": 3,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 16121.799999982119,
+              "activation": true,
+              "stopped": true
+            },
+            {
+              "context": 3,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 16121.799999982119,
+              "activation": true,
+              "stopped": true
+            },
+            {
+              "context": 3,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 16121.799999982119,
+              "activation": true,
+              "stopped": true
+            }
+          ],
+          "stems": [
+            {
+              "context": 2,
+              "gain": 1,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "gain": 1,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "gain": 1,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "gain": 0.3333333432674408,
+              "stopped": true
+            },
+            {
+              "context": 3,
+              "gain": 1,
+              "stopped": true
+            },
+            {
+              "context": 3,
+              "gain": 1,
+              "stopped": true
+            },
+            {
+              "context": 3,
+              "gain": 1,
+              "stopped": true
+            },
+            {
+              "context": 3,
+              "gain": 0.3333333432674408,
+              "stopped": true
+            }
+          ],
+          "filters": [
+            {
+              "context": 2,
+              "cutoff": 9000
+            },
+            {
+              "context": 3,
+              "cutoff": 9000
+            }
+          ],
+          "meters": [
+            {
+              "context": 0,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 1,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 1,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 2,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 3,
+              "peak": 0,
+              "rms": 0
+            }
+          ],
+          "gestures": [
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 146.59999999403954
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 3030.399999976158
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 3204.0999999940395
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5070.299999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5123.899999976158
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5403.799999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5458.799999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 7231.799999982119
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 7285.699999988079
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 9044.59999999404
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 9099.199999988079
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 10873.09999999404
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 10941.699999988079
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 12661.899999976158
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 14246.899999976158
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 14299.199999988079
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 16008.09999999404
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 17689.5
+            }
+          ]
+        }
+      ],
+      "answers": [
+        {
+          "count": 1,
+          "ms": 298.69999998807907
+        },
+        {
+          "count": 2,
+          "ms": 198.60000002384186
+        },
+        {
+          "count": 3,
+          "ms": 216.30000001192093
+        },
+        {
+          "count": 4,
+          "ms": 210.5
+        },
+        {
+          "count": 5,
+          "ms": 222.90000000596046
+        },
+        {
+          "count": 6,
+          "ms": 206.80000001192093
+        }
+      ],
+      "pass": true,
+      "runtime": {
+        "url": "http://127.0.0.1:5198/#/island?learn=1",
+        "revision": "development-local",
+        "version": "development-local:99ae8971-8122-4eec-ac0e-327a094583e8",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "learning",
+        "renderer": "loading",
+        "artDirection": null,
+        "drawCalls": 0,
+        "expanded": null,
+        "residentAction": null,
+        "residentItemId": null,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "development-local",
+          "version": "development-local:99ae8971-8122-4eec-ac0e-327a094583e8",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "errors": []
+    },
+    {
+      "mode": "silent-profile",
+      "snapshots": [
+        {
+          "label": "before-first-learning-gesture",
+          "completed": 0,
+          "level": 0,
+          "contexts": [
+            {
+              "id": 0,
+              "state": "closed",
+              "at": 53.80000001192093
+            },
+            {
+              "id": 1,
+              "state": "running",
+              "at": 84.30000001192093
+            }
+          ],
+          "starts": [
+            {
+              "context": 1,
+              "duration": 0.000045351473922902495,
+              "loop": false,
+              "decoded": false,
+              "at": 136.90000000596046,
+              "activation": true,
+              "stopped": false
+            }
+          ],
+          "stems": [],
+          "filters": [],
+          "meters": [
+            {
+              "context": 0,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 1,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 1,
+              "peak": 0,
+              "rms": 0
+            }
+          ],
+          "gestures": [
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 136.40000000596046
+            }
+          ]
+        },
+        {
+          "label": "after-1",
+          "completed": 1,
+          "level": 0,
+          "contexts": [
+            {
+              "id": 0,
+              "state": "closed",
+              "at": 53.80000001192093
+            },
+            {
+              "id": 1,
+              "state": "running",
+              "at": 84.30000001192093
+            }
+          ],
+          "starts": [
+            {
+              "context": 1,
+              "duration": 0.000045351473922902495,
+              "loop": false,
+              "decoded": false,
+              "at": 136.90000000596046,
+              "activation": true,
+              "stopped": false
+            }
+          ],
+          "stems": [],
+          "filters": [],
+          "meters": [
+            {
+              "context": 0,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 1,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 1,
+              "peak": 0,
+              "rms": 0
+            }
+          ],
+          "gestures": [
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 136.40000000596046
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 3058.5999999940395
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 3111.5999999940395
+            }
+          ]
+        },
+        {
+          "label": "failed-sound-preference-save",
+          "completed": 2,
+          "level": 0,
+          "contexts": [
+            {
+              "id": 0,
+              "state": "closed",
+              "at": 53.80000001192093
+            },
+            {
+              "id": 1,
+              "state": "running",
+              "at": 84.30000001192093
+            },
+            {
+              "id": 2,
+              "state": "closed",
+              "at": 5168
+            }
+          ],
+          "starts": [
+            {
+              "context": 1,
+              "duration": 0.000045351473922902495,
+              "loop": false,
+              "decoded": false,
+              "at": 136.90000000596046,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 1,
+              "duration": 0.38,
+              "loop": false,
+              "decoded": true,
+              "at": 5166.0999999940395,
+              "activation": true,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 5265.700000017881,
+              "activation": true,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 5265.700000017881,
+              "activation": true,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 5265.9000000059605,
+              "activation": true,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 5265.9000000059605,
+              "activation": true,
+              "stopped": true
+            }
+          ],
+          "stems": [
+            {
+              "context": 2,
+              "gain": 0.16272619366645813,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "gain": 0,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "gain": 0,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "gain": 0,
+              "stopped": true
+            }
+          ],
+          "filters": [
+            {
+              "context": 2,
+              "cutoff": 3613.216796875
+            }
+          ],
+          "meters": [
+            {
+              "context": 0,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 1,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 1,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 2,
+              "peak": 0,
+              "rms": 0
+            }
+          ],
+          "gestures": [
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 136.40000000596046
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 3058.5999999940395
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 3111.5999999940395
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 4872.300000011921
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 4925.5999999940395
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5165.5999999940395
+            }
+          ]
+        },
+        {
+          "label": "silent-profile-header-enable",
+          "completed": 2,
+          "level": 0,
+          "contexts": [
+            {
+              "id": 0,
+              "state": "closed",
+              "at": 53.80000001192093
+            },
+            {
+              "id": 1,
+              "state": "running",
+              "at": 84.30000001192093
+            },
+            {
+              "id": 2,
+              "state": "closed",
+              "at": 5168
+            },
+            {
+              "id": 3,
+              "state": "running",
+              "at": 6808.200000017881
+            }
+          ],
+          "starts": [
+            {
+              "context": 1,
+              "duration": 0.000045351473922902495,
+              "loop": false,
+              "decoded": false,
+              "at": 136.90000000596046,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 1,
+              "duration": 0.38,
+              "loop": false,
+              "decoded": true,
+              "at": 5166.0999999940395,
+              "activation": true,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 5265.700000017881,
+              "activation": true,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 5265.700000017881,
+              "activation": true,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 5265.9000000059605,
+              "activation": true,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 5265.9000000059605,
+              "activation": true,
+              "stopped": true
+            },
+            {
+              "context": 1,
+              "duration": 0.38,
+              "loop": false,
+              "decoded": true,
+              "at": 6808.0999999940395,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 3,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 6926,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 3,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 6926,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 3,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 6926.0999999940395,
+              "activation": true,
+              "stopped": false
+            },
+            {
+              "context": 3,
+              "duration": 16,
+              "loop": true,
+              "decoded": false,
+              "at": 6926.4000000059605,
+              "activation": true,
+              "stopped": false
+            }
+          ],
+          "stems": [
+            {
+              "context": 2,
+              "gain": 0.16272619366645813,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "gain": 0,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "gain": 0,
+              "stopped": true
+            },
+            {
+              "context": 2,
+              "gain": 0,
+              "stopped": true
+            },
+            {
+              "context": 3,
+              "gain": 1,
+              "stopped": false
+            },
+            {
+              "context": 3,
+              "gain": 0,
+              "stopped": false
+            },
+            {
+              "context": 3,
+              "gain": 0,
+              "stopped": false
+            },
+            {
+              "context": 3,
+              "gain": 0,
+              "stopped": false
+            }
+          ],
+          "filters": [
+            {
+              "context": 2,
+              "cutoff": 3613.216796875
+            },
+            {
+              "context": 3,
+              "cutoff": 9000
+            }
+          ],
+          "meters": [
+            {
+              "context": 0,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 1,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 1,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 2,
+              "peak": 0,
+              "rms": 0
+            },
+            {
+              "context": 3,
+              "peak": 0.014838695526123047,
+              "rms": 0.003637586793720022
+            }
+          ],
+          "gestures": [
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 136.40000000596046
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 3058.5999999940395
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 3111.5999999940395
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 4872.300000011921
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 4925.5999999940395
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 5165.5999999940395
+            },
+            {
+              "type": "pointerdown",
+              "trusted": true,
+              "at": 6807.5999999940395
+            }
+          ]
+        }
+      ],
+      "answers": [
+        {
+          "count": 1,
+          "ms": 219
+        },
+        {
+          "count": 2,
+          "ms": 202.5
+        }
+      ],
+      "pass": true,
+      "runtime": {
+        "url": "http://127.0.0.1:5198/#/island?learn=1",
+        "revision": "development-local",
+        "version": "development-local:99ae8971-8122-4eec-ac0e-327a094583e8",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "learning",
+        "drawCalls": 0,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "development-local",
+          "version": "development-local:99ae8971-8122-4eec-ac0e-327a094583e8",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "errors": []
+    }
+  ],
+  "pass": true,
+  "sourceEnd": "0bf828ee8efb23ec4c16c4345dd22388ef14a64e88ae606afd9ff827a1f8a160"
+}

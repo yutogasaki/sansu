@@ -1,7 +1,7 @@
-/** Original four-bar score. Notes, timbres and envelopes are generated locally;
+/** Original eight-bar score. Notes, timbres and envelopes are generated locally;
  * no recording, sample, melody or character asset is taken from the reference. */
 export const LEARNING_BEAT_SECONDS = .5;
-export const LEARNING_LOOP_SECONDS = 8;
+export const LEARNING_LOOP_SECONDS = 16;
 export const LEARNING_STEM_COUNT = 4;
 export const LEARNING_CUES = ['tap', 'catch', 'place', 'correct', 'step', 'retry', 'jump', 'land', 'peak', 'section', 'rise'] as const;
 export type LearningMusicCue = typeof LEARNING_CUES[number];
@@ -30,16 +30,50 @@ export function learningStemLevels(level: number): readonly number[] {
     return [1, rise(.08, .32), rise(.28, .6), rise(.55, .9)];
 }
 
-function note(samples: Float32Array, sampleRate: number, at: number, duration: number, midi: number, amplitude: number, soft = false) {
+type Timbre = 'mallet' | 'bass' | 'bell' | 'pad';
+function note(samples: Float32Array, sampleRate: number, at: number, duration: number, midi: number, amplitude: number, timbre: Timbre = 'mallet') {
     const start = Math.round(at * sampleRate), end = Math.min(samples.length, Math.ceil((at + duration) * sampleRate));
     const frequency = midiHz(midi);
+    const partials: readonly (readonly [number, number, number])[] = timbre === 'bell'
+        ? [[1, 1, 6], [2.76, .22, 16], [4, .08, 22]]
+        : timbre === 'bass' ? [[1, 1, 5], [2, .24, 10], [3, .07, 16]]
+        : timbre === 'pad' ? [[1, 1, 2], [2, .14, 3], [3, .04, 4]]
+        : [[1, 1, 12], [3, .24, 26], [6, .07, 45]];
+    const audible = partials.filter(([ratio]) => frequency * ratio < sampleRate * .45);
+    const steps = audible.map(([ratio]) => tau * frequency * ratio / sampleRate);
+    const gains = audible.map(([, gain]) => gain);
+    const decays = audible.map(([, , decay]) => Math.exp(-decay / sampleRate));
     for (let i = start; i < end; i++) {
-        const t = (i - start) / sampleRate;
-        const envelope = Math.min(1, t / .005) * Math.min(1, (end - 1 - i) / (sampleRate * .025)) * Math.exp(-t * (soft ? 4 : 11));
-        const wave = Math.sin(tau * frequency * t) + Math.sin(tau * frequency * 2 * t) * (soft ? .1 : .26)
-            + Math.sin(tau * frequency * 3 * t) * (soft ? .025 : .07);
+        const position = i - start, t = position / sampleRate;
+        const envelope = Math.min(1, t / (timbre === 'pad' ? .035 : .004))
+            * Math.min(1, (end - 1 - i) / (sampleRate * .025));
+        let wave = 0;
+        for (let partial = 0; partial < audible.length; partial++) {
+            wave += Math.sin(steps[partial] * position) * gains[partial];
+            gains[partial] *= decays[partial];
+        }
         samples[i] += wave * envelope * amplitude;
     }
+}
+
+/** A tiny baked room: no live delay nodes or tails surviving mute/exit.
+ * Dry sound dominates both channels, including when summed to mono. */
+export function learningStereo(samples: Float32Array, sampleRate: number, loop = false): [Float32Array, Float32Array] {
+    return [0, 1].map(channel => {
+        const result = new Float32Array(samples.length);
+        const delays = (channel === 0 ? [.029, .071] : [.041, .089]).map(seconds => Math.round(seconds * sampleRate));
+        for (let i = 0; i < samples.length; i++) {
+            let value = samples[i];
+            for (let reflection = 0; reflection < delays.length; reflection++) {
+                const source = i - delays[reflection];
+                if (source >= 0) value += samples[source] * (reflection === 0 ? .12 : .065);
+                else if (loop) value += samples[(source + samples.length) % samples.length] * (reflection === 0 ? .12 : .065);
+            }
+            const fade = loop ? 1 : Math.min(1, (samples.length - 1 - i) / (sampleRate * .025));
+            result[i] = value * fade / 1.185;
+        }
+        return result;
+    }) as [Float32Array, Float32Array];
 }
 
 function drum(samples: Float32Array, sampleRate: number, at: number, kind: 'kick' | 'clap' | 'shaker', amplitude: number) {
@@ -60,20 +94,24 @@ function drum(samples: Float32Array, sampleRate: number, at: number, kind: 'kick
 export function createLearningStems(sampleRate: number): Float32Array[] {
     format(sampleRate);
     const stems = Array.from({ length: LEARNING_STEM_COUNT }, () => new Float32Array(Math.round(LEARNING_LOOP_SECONDS * sampleRate)));
-    const melody = [0, 2, 1, 3, 2, 1, 3, 2];
-    for (let bar = 0; bar < 4; bar++) {
-        const chord = chords[bar], start = bar * 2;
+    // A question-and-answer phrase, with breathing space between the motifs.
+    const phrases = [[0, 2, 1, -1, 3, 2, -1, 1], [2, -1, 3, 2, 1, -1, 2, 0]];
+    for (let bar = 0; bar < 8; bar++) {
+        const chord = chords[bar % 4], start = bar * 2, phrase = phrases[Math.floor(bar / 4)];
         for (let step = 0; step < 8; step++) {
-            note(stems[0], sampleRate, start + step * .25, .21, chord[melody[step]] + 12, step % 2 === 0 ? .08 : .05);
-            drum(stems[2], sampleRate, start + step * .25, 'shaker', step % 2 === 0 ? .028 : .048);
+            const at = start + step * .25 + (step % 2 ? .018 : 0);
+            if (phrase[step] >= 0) note(stems[0], sampleRate, at, .23, chord[phrase[step]] + 12, step % 2 === 0 ? .079 : .052);
+            drum(stems[2], sampleRate, at, 'shaker', step % 2 === 0 ? .019 : .032);
         }
         for (let beat = 0; beat < 4; beat++) {
-            note(stems[1], sampleRate, start + beat * .5, .32, chord[beat % 2 === 0 ? 0 : 2] - 12, .075, true);
-            drum(stems[1], sampleRate, start + beat * .5, 'kick', .055);
-            if (beat % 2 === 1) drum(stems[2], sampleRate, start + beat * .5, 'clap', .055);
+            note(stems[1], sampleRate, start + beat * .5, .35, chord[beat % 2 === 0 ? 0 : 2] - 12, .075, 'bass');
+            drum(stems[1], sampleRate, start + beat * .5, 'kick', .045);
+            if (beat % 2 === 1) drum(stems[2], sampleRate, start + beat * .5, 'clap', .046);
         }
-        for (const beat of [0, 1.5]) for (const pitch of chord) note(stems[3], sampleRate, start + beat, .42, pitch, .019, true);
-        note(stems[3], sampleRate, start + 1.25, .24, chord[2] + 24, .036);
+        if (bar % 4 === 3) for (const at of [1.625, 1.75]) drum(stems[2], sampleRate, start + at, 'clap', .026);
+        for (const beat of [.25, 1.25]) for (const pitch of chord) note(stems[3], sampleRate, start + beat, .5, pitch, .017, 'pad');
+        note(stems[3], sampleRate, start + .75, .38, chord[2] + 24, .032, 'bell');
+        if (bar >= 4) note(stems[3], sampleRate, start + 1.5, .4, chord[1] + 24, .026, 'bell');
     }
     return stems;
 }
@@ -85,22 +123,26 @@ export function createLearningCue(kind: LearningMusicCue, sampleRate: number, pi
     const seconds = kind === 'peak' || kind === 'section' ? .7 : kind === 'correct' ? .55 : kind === 'rise' ? .38 : kind === 'jump' ? .27 : .18;
     const samples = new Float32Array(Math.ceil(seconds * sampleRate));
     if (kind === 'land') drum(samples, sampleRate, 0, 'kick', .12);
-    else if (kind === 'retry') note(samples, sampleRate, 0, .16, pitch - 12, .055, true);
+    else if (kind === 'retry') note(samples, sampleRate, 0, .16, pitch - 12, .055, 'pad');
     else if (kind === 'rise') {
         // A short upward pickup announces anticipation without a looping alarm.
-        for (let i = 0; i < 3; i++) note(samples, sampleRate, i * .07, .18, chord[i] + 12, .036);
+        for (let i = 0; i < 3; i++) note(samples, sampleRate, i * .07, .18, chord[i] + 12, .036, 'bell');
     } else if (kind === 'peak' || kind === 'section' || kind === 'correct') {
         // Every note belongs to the playing bar. Progress adds orchestration,
         // rather than escalating volume or restarting the music after a miss.
         const count = kind === 'section' ? 6 : kind === 'peak' ? 5 : 3 + Math.round(progress * 2);
         for (let i = 0; i < count; i++) note(samples, sampleRate, i * .055,
-            kind === 'correct' ? .24 : .36, chord[i % chord.length] + 12 + (i >= chord.length ? 12 : 0), .065);
+            kind === 'correct' ? .24 : .36, chord[i % chord.length] + 12 + (i >= chord.length ? 12 : 0), .055, i % 2 === 0 ? 'mallet' : 'bell');
         if (kind !== 'correct' || progress >= .6) drum(samples, sampleRate, 0, 'kick', .065);
-        if (kind === 'peak') drum(samples, sampleRate, .025, 'clap', .045);
-        if (kind === 'section') for (const tone of chord.slice(0, 3)) note(samples, sampleRate, .32, .34, tone, .022, true);
+        if (kind === 'peak') {
+            drum(samples, sampleRate, .025, 'clap', .04);
+            for (const tone of chord.slice(0, 3)) note(samples, sampleRate, .22, .44, tone, .019, 'pad');
+            note(samples, sampleRate, .36, .32, chord[0] + 24, .035, 'bell');
+        }
+        if (kind === 'section') for (const tone of chord.slice(0, 3)) note(samples, sampleRate, .32, .34, tone, .022, 'pad');
     } else {
         const offset = kind === 'catch' ? -12 : kind === 'place' ? 0 : kind === 'jump' ? 7 : kind === 'step' ? 12 : 0;
-        note(samples, sampleRate, 0, seconds, Math.min(108, pitch + offset), kind === 'tap' ? .095 : .075);
+        note(samples, sampleRate, 0, seconds, Math.min(108, pitch + offset), kind === 'tap' ? .088 : .068, kind === 'place' || kind === 'step' ? 'bell' : 'mallet');
     }
     return samples;
 }

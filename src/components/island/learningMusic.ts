@@ -1,5 +1,5 @@
 import { createLearningCue, createLearningStems, LEARNING_BEAT_SECONDS, LEARNING_CUES, learningChordAt, learningInputPitch,
-    learningStemLevels, type LearningMusicCue } from './learningMusicScore';
+    learningStemLevels, learningStereo, type LearningMusicCue } from './learningMusicScore';
 
 export const LEARNING_MAX_CUE_VOICES = 6;
 interface Voice { source: AudioBufferSourceNode; gain?: GainNode }
@@ -72,7 +72,8 @@ export function createLearningMusic(createContext: () => AudioContext = browserA
                 const samples = createLearningStems(target.sampleRate);
                 // Buffer creation happens before establishing the common start time.
                 const buffers = samples.map(data => {
-                    const buffer = target.createBuffer(1, data.length, target.sampleRate); buffer.getChannelData(0).set(data); return buffer;
+                    const buffer = target.createBuffer(2, data.length, target.sampleRate);
+                    learningStereo(data, target.sampleRate, true).forEach((channel, index) => buffer.getChannelData(index).set(channel)); return buffer;
                 });
                 epoch = target.currentTime + .015;
                 buffers.forEach(buffer => {
@@ -96,7 +97,8 @@ export function createLearningMusic(createContext: () => AudioContext = browserA
         try {
             if (kind === 'peak') { reach = false; applyMix(); }
             const data = createLearningCue(kind, context.sampleRate, lastPitch, learningChordAt(elapsed()), level);
-            const buffer = context.createBuffer(1, data.length, context.sampleRate); buffer.getChannelData(0).set(data);
+            const buffer = context.createBuffer(2, data.length, context.sampleRate);
+            learningStereo(data, context.sampleRate).forEach((channel, index) => buffer.getChannelData(index).set(channel));
             if (cues.size >= LEARNING_MAX_CUE_VOICES) releaseCue(cues.values().next().value!, true);
             const source = context.createBufferSource(); voice = { source }; cues.add(voice);
             const owner = voice; source.buffer = buffer; source.loop = false;
