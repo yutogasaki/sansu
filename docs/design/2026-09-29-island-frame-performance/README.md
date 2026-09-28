@@ -41,4 +41,10 @@
 | 理解・安心・魅力 | 独立した利用者N=0。無文字理解・楽しさ・実機の音は未認定 |
 | runtime | 上記の範囲でPASS。30品の33.3ms目標・実iPhoneの30秒起動・GPU/電池は未確認または未達。全release matrix合格とはしない |
 
-本番公開の確認は配信後に追記する。
+## 本番への反映
+
+実装コミット `b2a391925cd4f0822659413254e95ca98dadace5` をmainへpushし、[本番](https://sansu-seven.vercel.app/#/island)へ配信。[Vercel READY](deployment.json)と[公開version・entry assets](public-artifact.json)を照合した。GitHub Docs Check / Verify Coreも成功。
+
+[公開版の操作記録](production/report.json): 390/768幅で実初回4問、花の購入/配置、夜の庭、実SW offline起動・追加回答・再読込保持を完走。fixture注入なし。公開buildは `b2a391925cd4f0822659413254e95ca98dadace5:f34cfa79-7335-42e5-b21a-62de8901b498`。ローカルと公開のbuild UUIDは別であり、公開Git SHAとruntime identityで今回の実装を特定する。
+
+公開確認後の追記は文書・証拠・ポータルのみ。アプリ入力は上のcore検証候補と同じ。

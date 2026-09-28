@@ -553,9 +553,11 @@ main `4002e67b` から本番へ反映済み。公開URLの390/768幅で初回学
 ### Risks
 
 - 「全体」を広げすぎて島v3、家、Nature Town、ブランド外部確認の既存ownerを複製しない。横断の証拠づくりと未所有の共通操作課題に集中する。
-</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">2・性能</h2><div class="grid"><article class="card" data-search="起動と物が増えた島の軽量化：同じ30品の絵を保持し、raycast cpuを約84〜85%削減。最新desktop p95は37.8/55.3msで33.3ms未達 次：実iphoneの起動・描画/電池負荷と、残るフレーム時間を同じ端末で確認 docs/tasks/active/2026-09-23-island-performance.md # island / iphone pwa performance
+</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">2・性能</h2><div class="grid"><article class="card" data-search="起動と物が増えた島の軽量化：本番反映済み。同じ30品の絵を保持し、raycast cpuを約84〜85%削減。最新desktop p95は37.8/55.3msで33.3ms未達 次：実iphoneの起動・描画/電池負荷と、残るフレーム時間を同じ端末で確認 docs/tasks/active/2026-09-23-island-performance.md # island / iphone pwa performance
 
 ## 2026-09-29 遮蔽判定の軽量化
+
+`b2a39192` をmainへpushし本番readyを確認。公開版の両幅で実初回・購入・保存・実sw offlineの追加回答/再読込を確認。
 
 ユーザーの「実装」に対応。cpu profileで重かったraycastを、同じ結合三角形への部品単位の範囲判定で軽量化した。キャラクター・素材・照明・解像度・発見条件・保存21/学習v8を保持する内部改善で、製品仕様は変更しない。[実測と検証](../../design/2026-09-29-island-frame-performance/readme.md)。
 
@@ -670,9 +672,11 @@ this is a performance implementation within the existing product rules, so the p
 - life-enabled `verify:core` passed: 460 files / 4,168 tests, lint (one existing islandmilestone fast-refresh warning), typecheck, build and asset budget. the production decorations journey passed at 390×844 and 768×1024 (tablet reduced motion): six real answers, earned purchase, rotate/move/store/re-place, abort/retry, offline reload and learning return, followed by a separate synthetic 30-item stress fixture. both stress scenes loaded 34 instances from eight glbs, retained 17 textures, switched lod, and had no page errors. phone placement and tablet stress screenshots were inspected for visible props/residents and controls.
 - local browser evidence: `output/playwright/runtime-props-20260924/browser/report.json`; operation-count diagnostic: `output/playwright/runtime-props-20260924/clone-count.json`. target `http://127.0.0.1:5298`, version `development-local:b761cc63-f444-40d7-8107-d092ddce3f07`, app/dist/harness fingerprint `3583321974cb0a09960d6a6867689645af002eb229fdd61c18efa28b46892671` matched at start/end. delivery island/life enabled, life preview/buildplay disabled; runtime assets `island-life-runtime-assets-v3`, home props `island-home-props-v1`.
 - this local renderer change is complete. no deployment, real iphone timing, new art approval, child comprehension/replay assessment or full release-matrix pass is claimed. ongoing per-frame rendering costs and installed-device measurement remain separate follow-ups.
-"><h2><a href="../../docs/tasks/active/2026-09-23-island-performance.md">起動と物が増えた島の軽量化：同じ30品の絵を保持し、raycast CPUを約84〜85%削減。最新desktop P95は37.8/55.3msで33.3ms未達 次：実iPhoneの起動・描画/電池負荷と、残るフレーム時間を同じ端末で確認</a></h2><p class="path">docs/tasks/active/2026-09-23-island-performance.md</p><p>ユーザーの「実装」に対応。CPU profileで重かったraycastを、同じ結合三角形への部品単位の範囲判定で軽量化した。キャラクター・素材・照明・解像度・発見条件・保存21/学習v8を保持する内部改善で、製品仕様は変更しない。[実測と検証](../../design/2026-09-29-island-frame-performance/README.md)。 同じ所有者/配置を復元したproductionの1</p><details><summary>詳細を読む</summary><pre># Island / iPhone PWA performance
+"><h2><a href="../../docs/tasks/active/2026-09-23-island-performance.md">起動と物が増えた島の軽量化：本番反映済み。同じ30品の絵を保持し、raycast CPUを約84〜85%削減。最新desktop P95は37.8/55.3msで33.3ms未達 次：実iPhoneの起動・描画/電池負荷と、残るフレーム時間を同じ端末で確認</a></h2><p class="path">docs/tasks/active/2026-09-23-island-performance.md</p><p>`b2a39192` をmainへpushし本番READYを確認。公開版の両幅で実初回・購入・保存・実SW offlineの追加回答/再読込を確認。 ユーザーの「実装」に対応。CPU profileで重かったraycastを、同じ結合三角形への部品単位の範囲判定で軽量化した。キャラクター・素材・照明・解像度・発見条件・保存21/学習v8を保持する内部改善で、製品仕様は変更しない。[実測と検証](../../desig</p><details><summary>詳細を読む</summary><pre># Island / iPhone PWA performance
 
 ## 2026-09-29 遮蔽判定の軽量化
+
+`b2a39192` をmainへpushし本番READYを確認。公開版の両幅で実初回・購入・保存・実SW offlineの追加回答/再読込を確認。
 
 ユーザーの「実装」に対応。CPU profileで重かったraycastを、同じ結合三角形への部品単位の範囲判定で軽量化した。キャラクター・素材・照明・解像度・発見条件・保存21/学習v8を保持する内部改善で、製品仕様は変更しない。[実測と検証](../../design/2026-09-29-island-frame-performance/README.md)。
 
