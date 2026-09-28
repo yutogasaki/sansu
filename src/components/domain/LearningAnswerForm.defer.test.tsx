@@ -399,3 +399,34 @@ describe('opt-in compact keypad', () => {
         expect(h.props.onAnswer).toHaveBeenCalledWith(['2', '9']);
     });
 });
+
+
+describe('confirmation row during automatic submission', () => {
+    it.each(['number', 'hissan'] as const)('keeps the %s keypad compact before and during saving, exposing retry only after failure', inputType => {
+        const h = harness({ categoryId: 'add_1d_1', questionText: '1 + 1 =', correctAnswer: '2', inputType, hissanVersion: undefined },
+            { keypadLayout: 'compact-three', deferSubmission: false });
+        expect(h.keypad().confirmationMode).toBe('automatic');
+        h.key('2');
+        expect(h.props.onAnswer).toHaveBeenCalledOnce();
+        // Includes the render before the parent propagates its busy state.
+        expect(h.keypad().confirmationMode).toBe('automatic');
+        h.render({ disabled: true });
+        expect(h.keypad().confirmationMode).toBe('automatic');
+        h.render({ disabled: false });
+        expect(h.keypad().confirmationMode).toBe('manual');
+        h.keypad().onEnter(); h.render();
+        expect(h.props.onAnswer).toHaveBeenCalledTimes(2);
+        expect(h.keypad().confirmationMode).toBe('automatic');
+        h.render({ disabled: true });
+        expect(h.keypad().confirmationMode).toBe('automatic');
+    });
+    it('retains the confirmation control for manual answers', () => {
+        const h = harness({ subject: 'vocab', inputType: 'number', correctAnswer: '12', hissanVersion: undefined },
+            { keypadLayout: 'compact-three', deferSubmission: false });
+        h.key('1'); h.key('2');
+        expect(h.props.onAnswer).not.toHaveBeenCalled();
+        expect(h.keypad().confirmationMode).toBe('manual');
+        h.keypad().onEnter(); h.render();
+        expect(h.props.onAnswer).toHaveBeenCalledWith('12');
+    });
+});

@@ -52,6 +52,14 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
     const queuedSubmit = useRef<boolean | undefined>(undefined);
     const [submissionCount, setSubmissionCount] = useState(0);
     const hasSubmitted = submissionCount > 0;
+    const wasDisabled = useRef(disabled);
+    const [retrySubmission, setRetrySubmission] = useState(false);
+    // Successful receipts remount the form. Only a failed save re-enables
+    // this submitted draft; do not show a retry row while saving it.
+    useLayoutEffect(() => {
+        if (wasDisabled.current && !disabled && hasSubmitted) setRetrySubmission(true);
+        wasDisabled.current = disabled;
+    }, [disabled, hasSubmitted]);
     // A failed save re-enables this same draft; successful receipts remount it.
     useLayoutEffect(() => { submitting.current = disabled; }, [disabled, submissionCount]);
     const { values, active } = inputState;
@@ -76,6 +84,7 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
         if (!(step ? isWrittenStepComplete(current) : answerShape ? isAnswerShapeComplete(current, answerShape) : canConfirmNumberFields(current))) return;
         if (deferSubmission) { queuedSubmit.current = auto; return; }
         submitting.current = true;
+        setRetrySubmission(false);
         setSubmissionCount(count => count + 1);
         if (!auto) acknowledgeAnswerConfirmation();
         onInteraction?.();
@@ -185,7 +194,7 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
             </NumberFieldsLayout>}
             <div className="park-keypad"><TenKey layout={keypadLayout} onInput={input} onDelete={remove} onClear={clear} onEnter={() => submit()}
                 disabled={disabled} enterDisabled={!canSubmit || (automatic && !hasSubmitted)} showDecimal={step ? step.correctValues.includes('.') : allowsDecimalEntry(problem)} nextFieldLabel={problem.inputType === 'multi-number' ? 'つぎの欄へ' : undefined} nextFieldDisabled={problem.inputType === 'multi-number' && active === fieldCount - 1} minRowHeight={44}
-                confirmationMode={automatic && !hasSubmitted ? 'automatic' : 'manual'}
+                confirmationMode={automatic && (!retrySubmission || disabled) ? 'automatic' : 'manual'}
                 writtenInput={Boolean(step)}
                 enterLabel={grid?.writtenLayout && (slot.hissanStep ?? 0) < grid.steps.length - 1 ? 'このだんを たしかめる' : undefined}
                 onCursorMove={fieldCount > 1 ? moveCursor : undefined} /></div>
