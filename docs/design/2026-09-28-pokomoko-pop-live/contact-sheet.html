@@ -1,0 +1,13 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Pokomoko Pop Live v5 — 実画面比較</title><style>body{font-family:system-ui,sans-serif;background:#edf1fa;color:#191d48;margin:0;padding:32px}h1{font-size:25px;margin:0 0 8px}p{max-width:900px;line-height:1.7}main{display:flex;flex-wrap:wrap;gap:18px;align-items:start}figure{margin:0;width:260px;background:#fff;border:1px solid #ccd3e4;padding:12px;border-radius:12px}figure img{width:100%;display:block}figcaption{font-weight:700;margin:0 0 10px}small{display:block;line-height:1.5;margin-top:8px}a{color:#245ad5}.reference{width:min(1100px,100%)}.reference img{width:100%;display:block}</style><h1>ぽこもこの学習舞台 v5</h1><p>実際の学習画面。問題・テンキーの位置を保ち、上端の舞台で連続演技と節目の変化を起こす。DEVの使い捨てプロフィールで実回答した記録。<a href="README.md">検証条件と未確認範囲</a>。</p><main>
+<figure><figcaption>通常</figcaption><img src="phone-motion-ready.png"><small>390×844 / live-original / 音OFF</small></figure>
+<figure><figcaption>3連続・旗が増える</figcaption><img src="phone-motion-correct-3.png"><small>3問の完了と3連続がこの行程で一致。カウンターは別。</small></figure>
+<figure><figcaption>5連続・ほしのり</figcaption><img src="phone-motion-correct-5.png"><small>節目に大きな数字と色面。問題入力は待たせない。</small></figure>
+<figure><figcaption>誤答しても舞台と収集を保つ</figcaption><img src="phone-motion-retry-keeps-collection.png"><small>連続は0。得た光・スタンプと舞台の段階は残る。</small></figure>
+<figure><figcaption>タブレット</figcaption><img src="tablet-motion-correct-5.png"><small>768×1024 / live-original / 音OFF</small></figure>
+</main><h2>本番形式での実際の行程</h2><p>52ec984f-pop-v5-working / Island + Life + Fantasy flags ON。実設定から本人の回答で進み、実SWのofflineへ移った記録。初回3問と購入・配置を実操作。報酬の注入はしていない。</p><main>
+<figure><figcaption>起動</figcaption><img src="production-390-welcome.png"></figure>
+<figure><figcaption>3問を解いた学習画面</figcaption><img src="production-390-learning.png"></figure>
+<figure><figcaption>島に戻って購入・配置</figcaption><img src="production-390-earned-garden.png"></figure>
+<figure><figcaption>通信を切り、追加回答後に再起動</figcaption><img src="production-390-offline-saved.png"></figure>
+</main><h2>先行する比較試作</h2><p>画像生成から制作した独立Canvas試作。実装のruntime証拠とは区別する。試作のスプライトから、本体では元の3Dモデルを直接動かす構造へ移した。<a href="../2026-09-28-pokomoko-pop-study/index.html">比較試作を開く</a>。</p><div class="reference"><img src="../2026-09-28-pokomoko-pop-study/four-states.png" alt="独立試作の通常、3連続、リーチ、5連続"></div>
+</html>

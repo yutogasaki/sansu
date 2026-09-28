@@ -21,7 +21,7 @@ export interface LearningAnswerFormProps {
     onAnswer: (answer: string | string[]) => void;
     onInteraction?: () => void;
     /** Accepted digit only; presentation must not interpret this as a correct answer. */
-    onDigitInput?: () => void;
+    onDigitInput?: (digit: string) => void;
     renderPrompt?: (problem: Problem) => ReactNode;
     renderChoiceLabel?: (choice: ChoiceOption, problem: Problem) => ReactNode;
     renderSupportAnswer?: (answer: string, problem: Problem) => ReactNode;
@@ -101,7 +101,7 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
             const values = current.values.map((value, i) => i === current.active ? (step ? text : (value + text).slice(0, limit)) : value);
             return { replaceOnInput: false, values, active: step ? nextWrittenInput(values, current.active, inputOrder) : current.active, lastEdited: current.active };
         });
-        if (changed) onDigitInput?.();
+        if (changed) onDigitInput?.(text);
         if (changed && automatic && (step ? isWrittenStepComplete(pendingInput.current.values) : Boolean(answerShape && isAnswerShapeComplete(pendingInput.current.values, answerShape)))) submit(true);
     };
     const remove = () => {

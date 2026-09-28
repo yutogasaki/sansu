@@ -1,6 +1,6 @@
 export const ISLAND_DELIVERY_ID = 'mystic-island-v1';
 export const ISLAND_VISUAL_CANDIDATE = 'mystic-island-shore-garden-v18';
-export const ISLAND_LEARNING_CANDIDATE = 'mystic-island-learning-v2';
+export const ISLAND_LEARNING_CANDIDATE = 'pokomoko-pop-live-v5';
 
 export function islandEnabled(): boolean {
     return import.meta.env.VITE_ISLAND_ENABLED === 'true';

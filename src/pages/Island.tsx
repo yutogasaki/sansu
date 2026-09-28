@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { useIslandLife } from '../components/island/life/useIslandLife';
 import { lifeEnabled } from '../domain/islandLife/model';
+import { replayLife } from '../domain/islandLife/simulation';
 import { IslandDirectActions } from '../components/island/IslandDirectActions';
 import type { IslandDirectTarget } from '../components/island/islandDirectTargets';
 import { IslandHelp, IslandTutorial, TUTORIAL_TOPICS } from '../components/island/tutorial/IslandTutorial';
@@ -11,7 +12,7 @@ import { ChallengePanel } from '../components/challenge/ChallengePanel';
 import { ChallengeHomeCard } from '../components/challenge/ChallengeHomeCard';
 import { homeJourneyEnabled } from '../domain/island/homeJourney';
 import { crossedHomeJourneyStep } from '../components/island/homeJourney/growthReveal';
-import { useEffect, useEffectEvent, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useEffectEvent, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ArrowRight, Camera, Gift, Leaf, PackageOpen, Settings2, X } from 'lucide-react';
@@ -157,6 +158,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     const learningScreen = plan?.status === 'completed' && isFirstIslandPlan(plan) && !plan.growthTarget ? 'reward' : 'learning';
     const screen = navigation ? navigation.learning ? learningScreen : navigation.view : localScreen;
     const lifeControls = useIslandLife(profile.id, active && screen === 'home');
+    const learningHeroStyle = useMemo(() => lifeControls.record ? replayLife(lifeControls.record).heroStyle : 'original', [lifeControls.record]);
     const setScreen = navigation?.setView ?? setLocalScreen;
     const [directSelection, setDirectSelection] = useState<{ target: IslandDirectTarget; entry: string; preview: boolean }>();
     useEffect(() => { if (screen !== 'home' || !active) setDirectSelection(undefined); }, [screen, active]);
@@ -436,10 +438,10 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         setReaction(response?.reaction ? { ...response.reaction, growthTarget: plan.growthTarget } : undefined);
         if (response?.reaction?.kind === 'correct') {
             setPulse(value => value + 1);
-            if (profile.soundEnabled) playSound(partyMoment?.kind === 'ride' || partyMoment?.kind === 'stamp' || receipt.plan.status === 'completed' ? 'clear' : 'correct');
+            if (profile.soundEnabled && plan.subject === 'vocab') playSound(partyMoment?.kind === 'ride' || partyMoment?.kind === 'stamp' || receipt.plan.status === 'completed' ? 'clear' : 'correct');
         }
-        if (response?.feedback.kind === 'retry') playSound('incorrect');
-        if (response?.feedback.kind === 'step') playSound('step');
+        if (plan.subject === 'vocab' && response?.feedback.kind === 'retry') playSound('incorrect');
+        if (plan.subject === 'vocab' && response?.feedback.kind === 'step') playSound('step');
         if (receipt.plan.status === 'completed' && !nextPlan) {
             if (isFirstIslandPlan(receipt.plan) && !receipt.plan.growthTarget) { if (!navigation) setScreen('reward'); }
             else setNextPlanError(true);
@@ -983,8 +985,9 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                     </IslandHomeActions>
                 </section>}</Suspense>
         {plan && slot && <IslandLearningPanel plan={plan} active={active && learning && learningLease === 'ready' && !nextPlanError}
+            heroStyle={learningHeroStyle}
             hintPending={busyKind === 'learning-hint' && active && learning && !preparingLearning}
-            intro={isFirstIslandPlan(plan)} observation={active && learning && !listening.isOpen ? observation : undefined}
+            soundEnabled={profile.soundEnabled} intro={isFirstIslandPlan(plan)} observation={active && learning && !listening.isOpen ? observation : undefined}
             busy={busy || preparingLearning || !active || !learning || listening.isOpen} feedback={learningFeedback} party={island.learningParty} englishAutoRead={profile.englishAutoRead && !listening.isOpen} onAction={action => void answer(action)}
             listeningEntry={listening.sentence ? <EnglishListeningEntry disabled={busy || preparingLearning || listening.isOpen} onOpen={listening.open} /> : undefined}
             subjectChoice={profile.subjectMode === 'mix' ? {

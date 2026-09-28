@@ -1,34 +1,40 @@
-import type { CSSProperties } from 'react';
-import { Star } from 'lucide-react';
-import type { PokomokoBurst, PokomokoInputCue } from './usePokomokoFeedback';
+import { useEffect, useRef, type RefObject } from 'react';
+import type { PokomokoInputCue } from './usePokomokoFeedback';
 
-export function PokomokoInputSpark({ cue }: { cue?: PokomokoInputCue }) {
-    return cue ? <span className="pokomoko-input-sparks" aria-hidden="true">
+const ease = (n: number) => 1 - (1 - n) ** 3;
+const mix = (a: number, b: number, k: number) => a + (b - a) * k;
+
+/** Only the accepted digit travels; this overlay never owns input or grading. */
+export function PokomokoInputSpark({ cue, root }: { cue?: PokomokoInputCue; root: RefObject<HTMLElement | null> }) {
+    const tile = useRef<HTMLSpanElement>(null);
+    useEffect(() => {
+        if (!cue || !tile.current || !root.current) return;
+        const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+        if (reduced.matches) return;
+        let frame = 0;
+        const animate = () => {
+            if (!tile.current || !root.current || document.hidden) return;
+            if (root.current.querySelector('.island-answer')?.getAttribute('data-problem-id') !== cue.problemId) {
+                tile.current.style.opacity = '0'; return;
+            }
+            const age = performance.now() - cue.startedAt;
+            const panel = root.current.getBoundingClientRect();
+            const hand = root.current.querySelector('.pokomoko-hand-anchor')?.getBoundingClientRect();
+            const px = hand ? hand.left + hand.width / 2 - panel.left : cue.destinationX;
+            const py = hand ? hand.top + hand.height / 2 - panel.top : cue.destinationY;
+            const k = age < 150 ? ease(Math.min(1, age / 150)) : Math.min(1, (age - 150) / 150) ** 2;
+            const x = age < 150 ? mix(cue.fromX, px, k) : mix(px, cue.x, k);
+            const y = age < 150 ? mix(cue.fromY, py, k) - Math.sin(k * Math.PI) * 30 : mix(py, cue.y, k) - Math.sin(k * Math.PI) * 24;
+            tile.current.style.transform = `translate(${x}px,${y}px) rotate(${Math.sin(k * Math.PI) * -10}deg)`;
+            tile.current.style.opacity = age > 300 ? String(Math.max(0, 1 - (age - 300) / 65)) : '1';
+            if (age < 365) frame = requestAnimationFrame(animate);
+        };
+        frame = requestAnimationFrame(animate);
+        return () => cancelAnimationFrame(frame);
+    }, [cue, root]);
+    if (!cue) return null;
+    return <span className="pokomoko-input-sparks" aria-hidden="true">
         <i key={`ring-${cue.id}`} className="pokomoko-input-spark" style={{ left: cue.x, top: cue.y }} />
-        <i key={`flight-${cue.id}`} className="pokomoko-input-flight" style={{ left: cue.x, top: cue.y,
-            '--flight-x': `${cue.destinationX - cue.x}px`, '--flight-y': `${cue.destinationY - cue.y}px`,
-        } as CSSProperties} />
-    </span> : null;
-}
-
-/** The earned peak reaches the edges of the worksheet, leaving its reading area clear. */
-export function PokomokoMilestoneFrame({ burst }: { burst?: PokomokoBurst }) {
-    if (!burst || !['ride', 'stamp'].includes(burst.kind)) return null;
-    return <span key={burst.id} className="pokomoko-milestone-frame" aria-hidden="true">
-        <span className="pokomoko-milestone-halo" />
-        {[0, 1].map(side => <span key={side} className="pokomoko-edge-cascade" data-side={side}>
-            {Array.from({ length: 10 }, (_, i) => <i key={i} style={{ '--fall': `${i * 9}%`, '--delay': `${i * 45}ms`,
-                '--color': ['#ffd360', '#ef91b0', '#83dbd0', '#b5a1ec'][i % 4], '--angle': `${i * 37}deg` } as CSSProperties} />)}
-        </span>)}
+        <span key={cue.id} ref={tile} className="pokomoko-input-flight">{cue.digit}</span>
     </span>;
-}
-
-/** Awarded stars follow the last accepted answer to the catching paw. */
-export function PokomokoAnswerFlight({ burst }: { burst?: PokomokoBurst }) {
-    const point = burst?.origin;
-    if (!burst || !point || burst.kind === 'step') return null;
-    return <span key={burst.id} className="pokomoko-answer-flight-layer" aria-hidden="true"><span className="pokomoko-answer-flight"
-        style={{ left: point.x, top: point.y, '--flight-x': `${point.destinationX - point.x}px`, '--flight-y': `${point.destinationY - point.y}px` } as CSSProperties}>
-        <Star fill="currentColor" />
-    </span></span>;
 }

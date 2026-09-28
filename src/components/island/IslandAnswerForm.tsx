@@ -25,7 +25,7 @@ export function IslandAnswerForm({ slot, disabled, deferSubmission, onAnswer, an
         <LearningAnswerForm key={lastAnswerReceipt.id ?? 'initial'} slot={slot} disabled={disabled || model}
         deferSubmission={deferSubmission}
         retryAnswer={lastAnswerReceipt.retryAnswer}
-        onInteraction={() => { playSound('tap'); onInteraction?.(); }}
+        onInteraction={() => { if (slot.problem.subject === 'vocab') playSound('tap'); onInteraction?.(); }}
         onDigitInput={onDigitInput}
         onAnswer={answer => { if (!disabled && !model) onAnswer(answer); }} className="island-answer" resetCursorOnClear
         renderPrompt={problem => <IslandProblemPrompt problem={problem}

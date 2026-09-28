@@ -4,9 +4,10 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { chromium } from 'playwright';
 import { seedLearningProfile } from './island-learning-fixtures.mjs';
-import { answerUI, readNative, runtimeMetadata } from './island-e2e-helpers.mjs';
+import { answerUI, assertKeypad, readNative, runtimeMetadata } from './island-e2e-helpers.mjs';
 
 const base = process.env.SANSU_FEEDBACK_URL || 'http://127.0.0.1:5230';
+const candidate = 'pokomoko-pop-live-v5';
 const out = process.env.SANSU_POKOMOKO_OUTPUT || `output/playwright/pokomoko-feedback-${Date.now()}`;
 await fs.mkdir(out, { recursive: true });
 async function sourceHash() {
@@ -16,6 +17,35 @@ async function sourceHash() {
     } }
     await walk('src'); hash.update(await fs.readFile('package-lock.json')); return hash.digest('hex');
 }
+
+// Scope these readings to the learning actor: the hidden island world may also
+// own a THREE canvas and renderer metadata.
+async function assertLiveActor(page, reduced) {
+    const actor = page.locator('.pokomoko-learning-actor-live');
+    await actor.waitFor({ state: 'visible' });
+    await page.waitForFunction(() => document.querySelector('.pokomoko-learning-actor-live')?.dataset.renderer === 'live-original');
+    const state = await actor.evaluate(async element => {
+        await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        const surface = element.querySelector('canvas'), hand = element.querySelector('.pokomoko-hand-anchor');
+        const a = element.getBoundingClientRect(), c = surface?.getBoundingClientRect(), h = hand?.getBoundingClientRect();
+        return {
+            renderer: element.dataset.renderer, reducedMotion: element.dataset.reducedMotion,
+            renderCount: Number(element.dataset.renderCount), fallbackUrl: element.dataset.fallbackUrl,
+            canvas: surface && { width: surface.width, height: surface.height, cssWidth: c.width, cssHeight: c.height,
+                visible: getComputedStyle(surface).visibility !== 'hidden' },
+            hand: h && { x: h.left - a.left, y: h.top - a.top,
+                contained: h.left >= a.left && h.top >= a.top && h.right <= a.right && h.bottom <= a.bottom },
+        };
+    });
+    assert.equal(state.renderer, 'live-original', 'Normal journeys must render the original live model; fallback is separate evidence');
+    assert.equal(state.reducedMotion, String(reduced));
+    assert(state.renderCount > 0, 'The actor must have rendered a real frame');
+    assert(state.canvas?.visible && state.canvas.width > 0 && state.canvas.height > 0
+        && state.canvas.cssWidth >= 100 && state.canvas.cssHeight >= 100, JSON.stringify(state));
+    assert(state.hand?.contained, `The projected paw contact must remain on the actor: ${JSON.stringify(state.hand)}`);
+    return state;
+}
+
 const report = { target: base, revision: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
     sourceStart: await sourceHash(), qaHash: createHash('sha256').update(await fs.readFile(new URL(import.meta.url))).digest('hex'),
     evidence: 'Disposable profile/memory fixture; normal planner and actual UI answers. Live animation screenshots. No physical device, speaker, or child evaluation.', runs: [], pass: false };
@@ -43,9 +73,17 @@ try {
             await capture('home');
             await page.getByRole('button', { name: 'まなぶ', exact: true }).click();
             await page.locator('[data-input-ready=true]').waitFor();
-            const actor = page.locator('.pokomoko-sprite');
-            await actor.waitFor({ state: 'visible' });
-            await actor.evaluate(async el => { const img = new Image(); img.src = getComputedStyle(el).backgroundImage.slice(5, -2); await img.decode(); });
+            assert.equal(await page.locator('.island-workbench').getAttribute('data-learning-candidate'), candidate);
+            row.actor = await assertLiveActor(page, reduced);
+            await assertKeypad(page);
+            if (reduced) {
+                const surface = page.locator('.pokomoko-learning-actor-live canvas');
+                const before = await surface.screenshot({ animations: 'allow' });
+                await page.waitForTimeout(120);
+                const after = await surface.screenshot({ animations: 'allow' });
+                assert.equal(createHash('sha256').update(before).digest('hex'), createHash('sha256').update(after).digest('hex'), 'Reduced motion keeps the rendered actor stable');
+                row.reducedActorStable = true;
+            }
             await capture('ready');
             row.runtime = await runtimeMetadata(page);
             row.layout = await page.locator('.park-keypad').evaluate(el => [...el.querySelectorAll('button')].map(button => {
@@ -62,8 +100,7 @@ try {
             row.answers.push((await answerUI(page, saved.plan, { touch: true })).ms);
             await page.locator('[data-burst=answer]').waitFor({ state: 'attached' });
             assert.equal(await page.locator('[data-input-ready=true]').count(), 1, 'Input is ready during the burst');
-            const animation = await actor.evaluate(el => getComputedStyle(el).animationName);
-            assert.equal(animation === 'none', reduced);
+            row.answerActor = await assertLiveActor(page, reduced);
             await capture('answer');
             // Physical input is accepted while the previous answer still celebrates.
             const beforeInput = await readNative(page, id);
@@ -108,6 +145,34 @@ try {
             const reloaded = await readNative(page, id);
             assert.equal(reloaded.plan.id, resume.plan.id); assert.equal(reloaded.plan.cursor, resume.plan.cursor);
             assert.equal(await page.locator('.pokomoko-burst').count(), 0);
+            // A separate rendering-fault diagnostic: the learning transaction
+            // remains usable while the original model's fallback is visible.
+            if (layout.name === 'phone' && !reduced) {
+                const actor = page.locator('.pokomoko-learning-actor-live');
+                await assertLiveActor(page, false);
+                const canLose = await actor.locator('canvas').evaluate(surface => {
+                    const extension = surface.getContext('webgl2')?.getExtension('WEBGL_lose_context');
+                    if (!extension) return false;
+                    window.__learningContextLoss = extension;
+                    extension.loseContext(); return true;
+                });
+                assert(canLose, 'This WebGL diagnostic requires WEBGL_lose_context');
+                await page.waitForFunction(() => document.querySelector('.pokomoko-learning-actor-live')?.dataset.renderer === 'original-fallback');
+                row.contextLoss = await actor.evaluate(async element => {
+                    const fallback = [...element.children].find(child => getComputedStyle(child).backgroundImage !== 'none');
+                    const image = new Image(); image.src = element.dataset.fallbackUrl; await image.decode();
+                    return { renderer: element.dataset.renderer, fallbackUrl: image.src, width: image.naturalWidth,
+                        fallbackVisible: Boolean(fallback && getComputedStyle(fallback).visibility === 'visible'),
+                        canvasHidden: getComputedStyle(element.querySelector('canvas')).visibility === 'hidden' };
+                });
+                assert(row.contextLoss.fallbackVisible && row.contextLoss.canvasHidden && row.contextLoss.width > 0);
+                await capture('context-lost');
+                const pending = await readNative(page, id);
+                row.contextLoss.answerMs = (await answerUI(page, pending.plan, { touch: true })).ms;
+                assert.equal(await page.locator('[data-input-ready=true]').count(), 1);
+                await page.evaluate(() => window.__learningContextLoss.restoreContext());
+                row.contextRestored = await assertLiveActor(page, false);
+            }
             assert.deepEqual(errors, []);
             row.pass = true; await context.close(); console.log(`${name}: PASS`);
         }
@@ -139,6 +204,9 @@ try {
                 await page.screenshot({ path: `${out}/${file}`, animations: 'allow' });
                 row.captures.push({ file, ...await runtimeMetadata(page) });
             };
+            assert.equal(await page.locator('.island-workbench').getAttribute('data-learning-candidate'), candidate);
+            row.actor = await assertLiveActor(page, false);
+            await assertKeypad(page);
             await capture('ready');
             let saved = await readNative(page, id);
             const initialCursor = saved.plan.cursor, initialParty = saved.island.learningParty;

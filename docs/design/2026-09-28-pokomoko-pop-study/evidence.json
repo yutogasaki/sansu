@@ -1,0 +1,32 @@
+{
+  "candidate": "pokomoko-pop-study-01",
+  "base_revision": "52ec984f2a65613f89d015ac8b0a4048826ad5b6",
+  "target": "http://127.0.0.1:5484/2026-09-28-pokomoko-pop-study/index.html",
+  "production_delivery": false,
+  "logical_viewport": [
+    430,
+    860
+  ],
+  "evidence_date": "2026-09-28",
+  "checks": {
+    "docs": "pass",
+    "js_syntax": "pass",
+    "browser": "render, exports, keyboard wrong/backspace/right/next, reference audio selection and playback, off selection and scene seek",
+    "candidate_mp4": "12s, H264 430x860 30fps, AAC stereo 48kHz; full decode completed",
+    "audio_listening": "not performed: audio input unavailable",
+    "child_observers": 0,
+    "app_runtime": "not changed or re-tested"
+  },
+  "recording_note": "Browser WebM -> ffmpeg emitted one Opus packet header warning. Delivered MP4 was fully decoded without errors; its audio RMS -27.8 dBFS / peak -2.5 dBFS matches the intended mix. Raw WebM is diagnostic only.",
+  "sha256": {
+    "index.html": "debf6b14e52eb12fac3810dab465143bdc9877069ddb20ac1adfaa7cef95da65",
+    "study.js": "b11eeaefec36be974864ee9b9d06e9ff490cb6b5b64a1f75eebe891d4a622f26",
+    "audio.js": "ed20f8e628c942bf0ba0359284da74d2632522f64a09b789a7ac1cd3ae2b1d95",
+    "assets/pokomoko-original.webp": "899524cf5319161fb77913a771216c7ad99e271ca00c463892d6cf22af66f78c",
+    "storyboard.png": "bcabf367184629b2fb41059ea97115d5458f7d51d11f33640c2651c2539cfd0a",
+    "four-states.png": "a7e2cb19662aa57fa1dfc55c73b86c4d063dd009a30fcffa4adc5d4db8836e0c",
+    "candidate.wav": "09fd9d7f7a7274335c8cafbd32e74554cbafe91ca002f0ddfb384674a41db4e8",
+    "candidate.mp4": "57117e2353d6503c3301f98efc422f3e57d120a7b0df99f93acdb49a12f704af",
+    "comparison.mp4": "ec244df2fa4a0cd44aba00914328ce8d57a2688a417efd5c1258b1f4e3a6c217"
+  }
+}

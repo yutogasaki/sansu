@@ -1,0 +1,53 @@
+{
+  "checkedAt": "2026-09-28",
+  "scope": "One user-specified X video, author follow-up posts, public source; no audience research",
+  "post": {
+    "url": "https://x.com/grmchn4ai/status/2103807453406388538",
+    "publishedAt": "2026-09-26T11:22:38Z"
+  },
+  "video": {
+    "url": "https://video.twimg.com/amplify_video/2103801953084112896/vid/avc1/430x860/i9kdowggA6p-UynZ.mp4",
+    "visualDurationSeconds": 53.366,
+    "containerDurationSeconds": 53.418667,
+    "width": 430,
+    "height": 860,
+    "audio": "AAC stereo 48000 Hz",
+    "observation": "Frame extraction and visual inspection; audio track obtained but not directly auditioned by the model"
+  },
+  "publicSource": {
+    "url": "https://github.com/grmchn/dopa-drill",
+    "revision": "0720ddfe37334628bab61ba5b3a9282bd6bfb31c",
+    "note": "Later public release, not proven to be the exact video build"
+  },
+  "sansu": {
+    "revision": "52ec984f2a65613f89d015ac8b0a4048826ad5b6",
+    "candidate": "pokomoko-star-arcade-v4",
+    "screenEvidence": "Prior production captures at 390x844; not newly recaptured this turn"
+  },
+  "frames": [
+    {
+      "file": "input.jpg",
+      "atSeconds": 3.0
+    },
+    {
+      "file": "cutin.jpg",
+      "atSeconds": 10.5
+    },
+    {
+      "file": "crowd.jpg",
+      "atSeconds": 17.5
+    },
+    {
+      "file": "finale.jpg",
+      "atSeconds": 22.5
+    },
+    {
+      "file": "extra.jpg",
+      "atSeconds": 30.5
+    },
+    {
+      "file": "result.jpg",
+      "atSeconds": 52
+    }
+  ]
+}

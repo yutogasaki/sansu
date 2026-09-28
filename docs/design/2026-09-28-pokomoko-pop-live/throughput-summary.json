@@ -1,0 +1,138 @@
+{
+  "fixtureId": "cold-open-fixed-ten-v1",
+  "fixtureHash": "959267b8827be99953db083012013bbbb47101ce88950d4829930220f1acaee3",
+  "islandSetup": {
+    "id": "normal-existing-island-v1",
+    "initialCompletedSets": 1,
+    "synthetic": true,
+    "scope": "A disposable existing-island fixture, not a real first-time child or an observed completed introduction. No fabricated answer logs or completed-plan receipts."
+  },
+  "buildSource": {
+    "path": "/Users/yutogasaki/Projects/sansu/output/playwright/pokomoko-live-v5-final/dev-source.json",
+    "manifestSHA": "0788738364a5676deea114a6b02767803f852b161534091053e806d4f8f5d0f9",
+    "sourceHash": "78886f29d28f1fef5ad41187605df4f1765c07da961f24b74c95bb074669ad5e",
+    "revision": "52ec984f2a65613f89d015ac8b0a4048826ad5b6+working-pop-v5",
+    "flags": {
+      "VITE_ISLAND_ENABLED": true,
+      "VITE_ISLAND_LIFE_ENABLED": false,
+      "VITE_ISLAND_FANTASY_ENABLED": false
+    }
+  },
+  "method": {
+    "setup": "Wait for the empty-profile Island welcome to commit before inserting each disposable profile; retain the same document for fixture hooks and navigate only after that lookup has resolved.",
+    "input": "physical-keyboard digits and Enter, identical answers and ordinary actions in both lanes",
+    "order": "Study/Island alternates by repetition and scenario within each viewport",
+    "timing": "Browser performance.now; answer delay begins at the final digit keydown for automatic completion, or Enter for explicit completion. Total includes typing and automated observation overhead. Q6 ends only when the exact next plan is operable; no continuation action is performed.",
+    "fixtureScope": "Isolated disposable browser profiles only. Before timing, one explicitly synthetic existing-island completion bypasses the introduction. Island creates real six-slot plans, with a test-only Dexie creating hook replacing newly created slots before display; existing reservations are never changed.",
+    "plannerTruth": "Not production planner evidence. All fixed slots are explicit test-fixture main assignments with no review or maintenance flags.",
+    "learningDifference": "Island records the real atomic writer and reward receipts in its disposable profile. Study uses its existing nonrecording DEV fixture. Neither lane reads or changes a real user profile.",
+    "islandTail": "Six slots in each of two newly saved sets, after the declared synthetic existing-island baseline. Only the first four slots of the second new set are answered. Two repeated fixture tail slots remain pending and unsubmitted.",
+    "missDifference": "Island retries and corrects Q4/Q8 on the same saved Problem. Study retains its correction panel and explicit next action. Only all-correct throughput is compared for the >=1.0 gate.",
+    "rendering": "Both lanes use reduced-motion and sound off. Before timed input, every initial Island keypad control must fit and preserve a 44px target; active digit/edit keys must receive a center hit, while empty submit must remain disabled. Normal-motion, touch and full-input fidelity are separate Island E2E gates."
+  },
+  "runtime": {
+    "revisions": [
+      "development-local"
+    ],
+    "versions": [
+      "development-local:30764ddf-b06b-49d8-ae73-9c8964dcaf31"
+    ],
+    "candidates": [
+      "mystic-island-shore-garden-v18"
+    ],
+    "learningCandidates": [
+      "pokomoko-pop-live-v5"
+    ],
+    "deliveryIds": [
+      "mystic-island-v1"
+    ],
+    "flag": "VITE_ISLAND_ENABLED=true",
+    "evidenceSource": "Actual rendered Island data attributes on the shared Vite target; Study fixture runs against the same server."
+  },
+  "repetitions": 10,
+  "layouts": [
+    {
+      "name": "phone",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "tablet",
+      "width": 768,
+      "height": 1024
+    }
+  ],
+  "comparisons": [
+    {
+      "layout": "phone",
+      "studyMedianProblemsPerMinute": 124.21719763442181,
+      "islandMedianProblemsPerMinute": 276.50420799463143,
+      "allCorrectIslandToStudyRatio": 2.2259736434273685,
+      "correctOperableP95Ms": 244.29999999701977,
+      "incorrectRetryP95Ms": 205.5,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 255.35000000149012,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 274.20000000298023,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4830.250000007451,
+      "rawIslandDurationMedianMs": 2169.9499999955297
+    },
+    {
+      "layout": "tablet",
+      "studyMedianProblemsPerMinute": 124.06434889067407,
+      "islandMedianProblemsPerMinute": 277.2858588400468,
+      "allCorrectIslandToStudyRatio": 2.2350164355788626,
+      "correctOperableP95Ms": 233.40000000596046,
+      "incorrectRetryP95Ms": 205,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 256.5,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 271.79999999701977,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4836.19999999553,
+      "rawIslandDurationMedianMs": 2163.85000000149
+    }
+  ],
+  "gates": {
+    "tenAlternatingRepetitions": true,
+    "allCorrectIslandThroughputNotBelowStudy": true,
+    "correctP95AtMost650Ms": true,
+    "incorrectP95AtMost550Ms": true,
+    "sectionBoundaryP95AtMost650Ms": true,
+    "twentySameQuestionIncorrectSamplesPerLayout": true,
+    "noExtraOrdinaryQuestionActions": true,
+    "automaticSectionBoundaryIncluded": true,
+    "emptyInputAfterEveryTransition": true,
+    "initialIslandControlsUsable": true,
+    "exactFixtureAndAtomicReceipts": true,
+    "phoneAndTablet": true,
+    "noBrowserErrors": true,
+    "oneRenderedBuildAndCandidate": true,
+    "sourceFilesUnchangedDuringBenchmark": true
+  },
+  "evidence": {
+    "eligible": true,
+    "confidence": "formal repeated UI timing; automated keyboard throughput, not child behavior evidence",
+    "productionPlannerEvidence": false,
+    "userLearningStateTouched": false
+  },
+  "pass": true,
+  "reanalysis": {
+    "reason": "The harness still required retired mystic-island-learning-v2. All80 stored measurements, rendered identity and source snapshots were valid. Re-evaluated only the identity gate against the implemented v5; no new timing and no edited samples.",
+    "originalReport": "output/playwright/pokomoko-live-v5-final/throughput.json",
+    "originalSHA256": "41de3435ee49e89a2e3702dbc0e02d9abfb2d8e1cb20b72477678ff175de9cb0",
+    "originalPass": false,
+    "originalExpectedCandidate": "mystic-island-learning-v2",
+    "correctExpectedCandidate": "pokomoko-pop-live-v5",
+    "correctedHarnessSHA256": "09f6c0351a24a4b336e7b8ecd9010be61b1807dcba794fba76422f9599e50232"
+  },
+  "rawRows": 80,
+  "rawOriginalSHA256": "41de3435ee49e89a2e3702dbc0e02d9abfb2d8e1cb20b72477678ff175de9cb0",
+  "reviewedReportSHA256": "9404668edb43e7e71ba6bf58a9323499fdd4f8b6442d9243659ae794749c3b28",
+  "sourceSnapshotHash": "7b09150dd262ea440d703b4631203bae5995bcbb9701828a569541d5c96da680",
+  "sourceUnchanged": true,
+  "storage": "Full unchanged raw rows and reanalysis are retained under output/playwright/pokomoko-live-v5-final; this durable file records aggregates and hashes."
+}

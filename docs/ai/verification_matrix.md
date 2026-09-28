@@ -102,6 +102,12 @@ Islandの画面captureは `tools/island-e2e-helpers.mjs` の `runtimeMetadata` �
 
 `node tools/e2e-island-legacy-entry.mjs` は `SANSU_ISLAND_BASE_URL` と未使用の `SANSU_LEGACY_ENTRY_OUTPUT` を指定し、Life無効の旧Island面で390/768幅のメニュー整理、実回答後の旧 `/battle`・`/explore` 直接URL、同じ学習への復帰と保存保持を検査する。プロフィールだけのfixtureを使い、報酬は注入しない。現行Lifeの美術・自然獲得・PWAの証明とは区別する。
 
+## ぽこもこの学習舞台 v5
+
+`tools/e2e-pokomoko-feedback.mjs` と `tools/e2e-pokomoko-party.mjs` は `SANSU_FEEDBACK_URL`、新しい `SANSU_POKOMOKO_OUTPUT` / `SANSU_PARTY_OUTPUT` を指定する。実モデル描画、足と全TenKey、入力数字の実移動・次問時の打切り、誤答/支援/筆算、3/6/9問の舞台進行と5連続の既存報酬、reduced motion、退出・再開を検査する。feedbackは既存筆算ヘルパーがDEV専用。partyはproductionで `SANSU_PARTY_OFFLINE=1` を加えると実SWとactorコード/画像cache、offline再読込を確認できる。通常描画と明示的なWebGL context loss診断を分ける。固定10問の速度、聴感・実機・子どもの評価の代わりにはしない。
+
+`tools/e2e-learning-music.mjs` は `SANSU_FEEDBACK_URL` と任意の新しい `SANSU_LEARNING_MUSIC_OUTPUT` を指定し、実UI6問の伴奏出力・3/6問の層・リーチ/達成・旧SE重複なし・音OFF/退出・再ON後の操作開始を検査する。analyserの終了済みcontextに残る波形を出力と誤認しない。デジタル出力と停止の確認であり、聴感の合格とは別。
+
 ## Matrix
 
 次期 `living-fantasy-v1`（初期候補を実装、全体は継続）の追加受入は[仕様51の検証章](../product/living-fantasy/08-delivery-and-acceptance.md)に定義する。現行の検査やclassic smokeを次期候補の合格へ流用せず、このmatrixの共通checksと次期の対象ケースを両方満たす。仕様策定だけの作業はdocs-onlyとして検証し、次期の美術・理解・runtimeのPASSとは区別する。

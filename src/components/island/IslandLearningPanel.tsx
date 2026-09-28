@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { Lightbulb, BookOpen } from 'lucide-react';
 import type { IslandLearningAction, IslandPlan } from '../../domain/island/types';
+import type { Style } from '../../domain/islandLife/model';
 import { EMPTY_LEARNING_PARTY, type IslandLearningParty } from '../../domain/island/learningParty';
 import { ISLAND_LEARNING_CANDIDATE } from '../../domain/island/feature';
 import { islandSupportStage } from '../../domain/island/learningSupport';
@@ -13,8 +14,10 @@ import { readIslandLearningDOM, type IslandLearningObserver } from './useIslandL
 import './IslandLearningPanel.css';
 import './IslandLearningFocus.css';
 import './IslandLearningTheme.css';
+import './PokomokoLearningFeedback.css';
 import { usePokomokoFeedback } from './usePokomokoFeedback';
-import { PokomokoInputSpark, PokomokoMilestoneFrame, PokomokoAnswerFlight } from './PokomokoLearningEffects';
+import { PokomokoInputSpark } from './PokomokoLearningEffects';
+import { useLearningMusic } from './useLearningMusic';
 
 function LightSeed({ filled, current }: { filled: boolean; current: boolean }) {
     return <span className="island-light-seed" data-filled={filled} data-current={current} aria-hidden="true">
@@ -24,7 +27,7 @@ function LightSeed({ filled, current }: { filled: boolean; current: boolean }) {
 }
 
 /** Help preserves the current draft; saved answers and new slots reset it. */
-export function IslandLearningPanel({ plan, active = true, intro = false, busy, hintPending = false, feedback, party = EMPTY_LEARNING_PARTY, onAction, observation, englishAutoRead = false, subjectChoice, listeningEntry }: {
+export function IslandLearningPanel({ plan, active = true, intro = false, busy, hintPending = false, feedback, party = EMPTY_LEARNING_PARTY, onAction, observation, englishAutoRead = false, soundEnabled = false, subjectChoice, listeningEntry, heroStyle }: {
     plan: IslandPlan;
     active?: boolean;
     intro?: boolean;
@@ -35,6 +38,8 @@ export function IslandLearningPanel({ plan, active = true, intro = false, busy, 
     onAction: (action: IslandLearningAction) => void;
     observation?: IslandLearningObserver;
     englishAutoRead?: boolean;
+    soundEnabled?: boolean;
+    heroStyle?: Style;
     listeningEntry?: ReactNode;
     subjectChoice?: { selected: boolean; onChange: (selected: boolean) => void };
 }) {
@@ -42,7 +47,8 @@ export function IslandLearningPanel({ plan, active = true, intro = false, busy, 
     const section = useRef<HTMLElement>(null);
     const problemId = slot?.problem.id;
     const [dismissedReceipt, setDismissedReceipt] = useState<string>();
-    const celebration = usePokomokoFeedback(feedback, active, section);
+    const celebration = usePokomokoFeedback(feedback, active, section, problemId);
+    const music = useLearningMusic({ active, enabled: soundEnabled && plan.subject === 'math', level: celebration.level / 3, reach: party.streak % 5 === 4 && party.rideRemaining === 0, feedback });
     useLayoutEffect(() => {
         const binding = { profileId: plan.profileId, planId: plan.id, slotIndex: plan.cursor, problemId: problemId ?? '', revisionBefore: 0 };
         return () => observation?.leave(binding);
@@ -55,6 +61,8 @@ export function IslandLearningPanel({ plan, active = true, intro = false, busy, 
     const allowHintDraft = hintPending && slot.problem.inputType === 'hissan';
     const answerReceiptId = feedback && ['correct', 'retry', 'step'].includes(feedback.kind) ? feedback.id : undefined;
     return <section ref={section} hidden={!active} inert={!active || undefined} className="island-learning island-workbench" aria-label="しまへ ひかりを とどけよう"
+        onPointerDownCapture={music.unlock} onKeyDownCapture={music.unlock}
+        data-show-level={celebration.level} data-show-completed={celebration.completed}
         data-learning-candidate={ISLAND_LEARNING_CANDIDATE}
         data-intro={intro}
         data-island-plan-id={plan.id} data-island-plan-revision={plan.revision} data-input-ready={!busy}
@@ -71,14 +79,12 @@ export function IslandLearningPanel({ plan, active = true, intro = false, busy, 
             </div>
             <span className="island-learning-count">{plan.cursor + 1}<small> / {plan.slots.length}</small></span>
         </div>
-        <IslandAnswerFeedback feedback={feedback?.id === dismissedReceipt ? undefined : feedback} party={party} burst={celebration.burst} inputCue={celebration.inputCue} />
-        <PokomokoInputSpark cue={celebration.inputCue} />
-        <PokomokoMilestoneFrame burst={celebration.burst} />
-        <PokomokoAnswerFlight burst={celebration.burst} />
+        <IslandAnswerFeedback feedback={feedback?.id === dismissedReceipt ? undefined : feedback} party={party} burst={celebration.burst} inputCue={celebration.inputCue} active={active} level={celebration.level} pulse={music.pulse} onCue={music.cue} heroStyle={heroStyle} />
+        <PokomokoInputSpark cue={celebration.inputCue} root={section} />
         <IslandAnswerForm key={`${plan.id}:${plan.cursor}`} slot={slot} disabled={busy && !allowHintDraft} deferSubmission={busy && allowHintDraft} answerReceiptId={answerReceiptId}
             retryAnswer={feedback?.kind === 'retry' ? feedback.retryAnswer : undefined}
             englishAutoRead={englishAutoRead} onInteraction={() => setDismissedReceipt(feedback?.id)}
-            onDigitInput={celebration.onDigitInput}
+            onDigitInput={value => { celebration.onDigitInput(value); music.onInput(value); }}
             onAnswer={answer => onAction({ type: 'answer', answer })} />
         <div className="island-learning-actions">
             {listeningEntry}
