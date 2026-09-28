@@ -1,0 +1,107 @@
+{
+  "target": "http://127.0.0.1:5198",
+  "buildSource": {
+    "path": "/Users/yutogasaki/Projects/sansu/output/playwright/pop-v8-final/dev-source.json",
+    "manifestSHA": "2518a1f71428243df124f52e56b4648bacae3c86ee1838c1925ccea56022c649",
+    "sourceHash": "7b0624bca9a2b3e321cee67789e4225538e4462b33fb260ab79b0ddd844b4b31",
+    "revision": "bed374c4dee693c998d2b177f01e6e8d051179ab-v8-working",
+    "flags": {
+      "VITE_ISLAND_ENABLED": true,
+      "VITE_ISLAND_LIFE_ENABLED": false,
+      "VITE_ISLAND_FANTASY_ENABLED": false
+    }
+  },
+  "runtime": {
+    "revisions": [
+      "development-local"
+    ],
+    "versions": [
+      "development-local:626dc8ad-dddb-4f46-8ee9-81c94e39e08f"
+    ],
+    "candidates": [
+      "mystic-island-shore-garden-v18"
+    ],
+    "learningCandidates": [
+      "pokomoko-pop-live-v8"
+    ],
+    "deliveryIds": [
+      "mystic-island-v1"
+    ],
+    "flag": "VITE_ISLAND_ENABLED=true",
+    "evidenceSource": "Actual rendered Island data attributes on the shared Vite target; Study fixture runs against the same server."
+  },
+  "method": {
+    "setup": "Wait for the empty-profile Island welcome to commit before inserting each disposable profile; retain the same document for fixture hooks and navigate only after that lookup has resolved.",
+    "input": "physical-keyboard digits and Enter, identical answers and ordinary actions in both lanes",
+    "order": "Study/Island alternates by repetition and scenario within each viewport",
+    "timing": "Browser performance.now; answer delay begins at the final digit keydown for automatic completion, or Enter for explicit completion. Total includes typing and automated observation overhead. Q6 ends only when the exact next plan is operable; no continuation action is performed.",
+    "fixtureScope": "Isolated disposable browser profiles only. Before timing, one explicitly synthetic existing-island completion bypasses the introduction. Island creates real six-slot plans, with a test-only Dexie creating hook replacing newly created slots before display; existing reservations are never changed.",
+    "plannerTruth": "Not production planner evidence. All fixed slots are explicit test-fixture main assignments with no review or maintenance flags.",
+    "learningDifference": "Island records the real atomic writer and reward receipts in its disposable profile. Study uses its existing nonrecording DEV fixture. Neither lane reads or changes a real user profile.",
+    "islandTail": "Six slots in each of two newly saved sets, after the declared synthetic existing-island baseline. Only the first four slots of the second new set are answered. Two repeated fixture tail slots remain pending and unsubmitted.",
+    "missDifference": "Island retries and corrects Q4/Q8 on the same saved Problem. Study retains its correction panel and explicit next action. Only all-correct throughput is compared for the >=1.0 gate.",
+    "rendering": "Both lanes use reduced-motion and sound off. Before timed input, every initial Island keypad control must fit and preserve a 44px target; active digit/edit keys must receive a center hit, the automatic three-column keypad has no redundant submit key and preserves 789 / 456 / 123 / delete-0-clear ordering. Normal-motion, touch and full-input fidelity are separate Island E2E gates."
+  },
+  "repetitions": 10,
+  "runs": 80,
+  "comparisons": [
+    {
+      "layout": "phone",
+      "studyMedianProblemsPerMinute": 122.5965991769146,
+      "islandMedianProblemsPerMinute": 276.797453611843,
+      "allCorrectIslandToStudyRatio": 2.2577906358756894,
+      "correctOperableP95Ms": 247.40000000596046,
+      "incorrectRetryP95Ms": 202.70000000298023,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 259.3999999985099,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 271.40000000596046,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4894.10000000149,
+      "rawIslandDurationMedianMs": 2167.6499999910593
+    },
+    {
+      "layout": "tablet",
+      "studyMedianProblemsPerMinute": 122.73830063898117,
+      "islandMedianProblemsPerMinute": 276.2499289101637,
+      "allCorrectIslandToStudyRatio": 2.2507231033181494,
+      "correctOperableP95Ms": 232.80000001192093,
+      "incorrectRetryP95Ms": 202.80000001192093,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 258,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 265.59999999403954,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4888.45000000298,
+      "rawIslandDurationMedianMs": 2171.950000010431
+    }
+  ],
+  "gates": {
+    "tenAlternatingRepetitions": true,
+    "allCorrectIslandThroughputNotBelowStudy": true,
+    "correctP95AtMost650Ms": true,
+    "incorrectP95AtMost550Ms": true,
+    "sectionBoundaryP95AtMost650Ms": true,
+    "twentySameQuestionIncorrectSamplesPerLayout": true,
+    "noExtraOrdinaryQuestionActions": true,
+    "automaticSectionBoundaryIncluded": true,
+    "emptyInputAfterEveryTransition": true,
+    "initialIslandControlsUsable": true,
+    "exactFixtureAndAtomicReceipts": true,
+    "phoneAndTablet": true,
+    "noBrowserErrors": true,
+    "oneRenderedBuildAndCandidate": true,
+    "sourceFilesUnchangedDuringBenchmark": true
+  },
+  "evidence": {
+    "eligible": true,
+    "confidence": "formal repeated UI timing; automated keyboard throughput, not child behavior evidence",
+    "productionPlannerEvidence": false,
+    "userLearningStateTouched": false
+  },
+  "pass": true,
+  "sourceStart": "001ffaf4785c2846465339eb90bf511a1bdd761efe29e1c766015d495adc83d0",
+  "sourceEnd": "001ffaf4785c2846465339eb90bf511a1bdd761efe29e1c766015d495adc83d0"
+}

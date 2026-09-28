@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
 import { enableSoundFromGesture, getSoundPlaybackStatus, setSoundEnabled, subscribeSoundPlayback } from '../../utils/audio';
-import { beginLearningMusicGesture } from './learningMusicGesture';
+import { beginLearningMusicGesture, getLearningMusicReady, subscribeLearningMusicPlayback } from './learningMusicGesture';
 import './IslandSoundControl.css';
 
 export function IslandSoundControl({ enabled, disabled, onChange }: {
@@ -10,6 +10,7 @@ export function IslandSoundControl({ enabled, disabled, onChange }: {
     onChange: (enabled: boolean) => Promise<boolean>;
 }) {
     const playback = useSyncExternalStore(subscribeSoundPlayback, getSoundPlaybackStatus, () => 'off');
+    const musicReady = useSyncExternalStore(subscribeLearningMusicPlayback, getLearningMusicReady, () => true);
     const [working, setWorking] = useState(false);
     const [message, setMessage] = useState('');
     const [musicBlocked, setMusicBlocked] = useState(false);
@@ -31,7 +32,7 @@ export function IslandSoundControl({ enabled, disabled, onChange }: {
             document.removeEventListener('visibilitychange', hide);
         };
     }, []);
-    const ready = enabled && playback === 'ready' && !musicBlocked;
+    const ready = enabled && playback === 'ready' && musicReady && !musicBlocked;
     const visibleMessage = ready && message === 'もういちど おしてね' ? '' : message;
     const toggle = async () => {
         if (locked.current || disabled) return;

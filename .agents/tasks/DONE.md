@@ -1,5 +1,7 @@
 # Shared Done Index
 
+- 2026-09-28: 参考Gitを踏まえた全画面のぽこもこ学習演出v8をローカル実装・検証。実画面と速度、音、offlineを記録 -> `docs/done/2026-09.md`
+
 - 2026-09-28: 星の玩具盤面v4を最新mainへ統合。統合core4,233 tests・build/assets PASS。ユーザーのcommit/main push依頼に対応 -> `docs/done/2026-09.md`
 
 - 2026-09-27: 画像3案からぽこもこの星の玩具盤面をローカル実装。最終UI6条件・固定80 runを確認、視覚採用/子どもの観察/公開は別状態 -> `docs/done/2026-09.md`

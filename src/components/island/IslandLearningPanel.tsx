@@ -14,6 +14,7 @@ import { readIslandLearningDOM, type IslandLearningObserver } from './useIslandL
 import './IslandLearningPanel.css';
 import './PokomokoLearningFeedback.css';
 import { usePokomokoFeedback } from './usePokomokoFeedback';
+import { PokomokoFullscreenCelebration } from './PokomokoFullscreenCelebration';
 import { PokomokoInputSpark } from './PokomokoLearningEffects';
 import { useLearningMusic } from './useLearningMusic';
 
@@ -78,6 +79,7 @@ export function IslandLearningPanel({ plan, active = true, intro = false, busy, 
             <span className="island-learning-count">{plan.cursor + 1}<small> / {plan.slots.length}</small></span>
         </div>
         <IslandAnswerFeedback feedback={feedback?.id === dismissedReceipt ? undefined : feedback} party={party} burst={celebration.burst} inputCue={celebration.inputCue} active={active} level={celebration.level} pulse={music.pulse} onCue={music.cue} heroStyle={heroStyle} />
+        <PokomokoFullscreenCelebration burst={celebration.burst} root={section} level={celebration.level} />
         <PokomokoInputSpark cue={celebration.inputCue} root={section} />
         <IslandAnswerForm key={`${plan.id}:${plan.cursor}`} slot={slot} disabled={busy && !allowHintDraft} deferSubmission={busy && allowHintDraft} answerReceiptId={answerReceiptId}
             retryAnswer={feedback?.kind === 'retry' ? feedback.retryAnswer : undefined}

@@ -46,7 +46,7 @@ const resolveBuildMetadata = (mode: string) => {
             candidate: env.VITE_ISLAND_FANTASY_ENABLED === 'true' ? 'living-fantasy-garden-v2' : 'island-life-v1',
             saveVersion: 20,
         },
-        learningCandidate: 'pokomoko-pop-live-v7',
+        learningCandidate: 'pokomoko-pop-live-v8',
         residentCandidate: 'patchwork-otter-v1',
         artDirection: ['festival', 'moon-garden', 'prism'].includes(env.VITE_ISLAND_ART_DIRECTION)
             ? env.VITE_ISLAND_ART_DIRECTION : 'moon-garden',

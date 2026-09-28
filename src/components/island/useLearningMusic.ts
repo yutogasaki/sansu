@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
 import type { IslandLearningFeedback } from './learningFeedback';
 import { createLearningMusic } from './learningMusic';
-import { subscribeLearningMusicGesture } from './learningMusicGesture';
+import { registerLearningMusicPlayback, subscribeLearningMusicGesture } from './learningMusicGesture';
 
 export interface LearningMusicOptions {
     active: boolean;
@@ -18,16 +18,20 @@ export function useLearningMusic({ active, enabled, level, reach, feedback }: Le
     const allowed = useRef(active && enabled), seen = useRef(feedback?.id), inputRevision = useRef(0);
     const available = useRef(active);
     const gestureRevision = useRef(0);
+    const publishPlayback = useRef<() => void>(() => undefined);
     useLayoutEffect(() => {
-        const audio = createLearningMusic(); owner.current = audio;
-        audio.setActive(allowed.current && !document.hidden);
-        return () => { owner.current = undefined; audio.dispose(); };
+        const status = registerLearningMusicPlayback();
+        const audio = createLearningMusic(undefined, () => publishPlayback.current()); owner.current = audio;
+        publishPlayback.current = () => status.set(!available.current ? 'inactive' : audio.isReady() ? 'ready' : 'locked');
+        audio.setActive(allowed.current && !document.hidden); publishPlayback.current();
+        return () => { owner.current = undefined; publishPlayback.current = () => undefined; audio.dispose(); status.remove(); };
     }, []);
     useLayoutEffect(() => {
         available.current = active;
         allowed.current = active && enabled;
         if (!allowed.current) inputRevision.current++;
         owner.current?.setActive(allowed.current && !document.hidden);
+        publishPlayback.current();
     }, [active, enabled]);
     useLayoutEffect(() => subscribeLearningMusicGesture(next => {
         const audio = owner.current;
@@ -58,7 +62,8 @@ export function useLearningMusic({ active, enabled, level, reach, feedback }: Le
         seen.current = feedback.id;
         if (!allowed.current || document.hidden) return;
         const peak = feedback.party?.kind === 'ride' || feedback.party?.kind === 'stamp';
-        if (feedback.kind === 'correct') owner.current?.cue(peak ? 'peak' : 'correct');
+        if ((feedback.kind === 'correct' || feedback.kind === 'supported') && feedback.sectionCompleted) owner.current?.cue('section');
+        else if (feedback.kind === 'correct') owner.current?.cue(peak ? 'peak' : 'correct');
         else if (feedback.kind === 'step') owner.current?.cue('step');
         else if (feedback.kind === 'retry') owner.current?.cue('retry');
         else if (feedback.kind === 'supported') owner.current?.cue('place');

@@ -7,7 +7,7 @@ import { seedLearningProfile } from './island-learning-fixtures.mjs';
 import { answerUI, assertKeypad, readNative, runtimeMetadata } from './island-e2e-helpers.mjs';
 
 const base = process.env.SANSU_FEEDBACK_URL || 'http://127.0.0.1:5230';
-const candidate = 'pokomoko-pop-live-v7';
+const candidate = 'pokomoko-pop-live-v8';
 const out = process.env.SANSU_POKOMOKO_OUTPUT || `output/playwright/pokomoko-feedback-${Date.now()}`;
 await fs.mkdir(out, { recursive: true });
 async function sourceHash() {

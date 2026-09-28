@@ -6,6 +6,7 @@ import type { Style } from '../../domain/islandLife/model';
 import { makeLearningActorRig, learningScarfColor } from './learningActor/rig';
 import { ACTOR_CATCH_MS, ACTOR_PLACE_MS, ACTOR_JUMP_MS, ACTOR_LAND_MS, sampleInputGesture, sampleBurstGesture } from './learningActor/motion';
 import { poseLearningActor } from './learningActor/pose';
+import { learningActorFrames } from './learningActor/frame';
 
 type ActorCue = 'catch' | 'place' | 'jump' | 'land';
 type TimedInput = PokomokoInputCue & { fromX?: number; fromY?: number; startedAt?: number };
@@ -148,6 +149,16 @@ export default function PokomokoLearningActor(props: Props) {
                 shadow.current.style.opacity = String(.18 - reaction.height * .35);
             }
             view.render(actor.scene, actor.camera);
+            if (!reduced.matches && current.burst && ['ride', 'stamp'].includes(current.burst.kind)) {
+                let copy = learningActorFrames.get(element);
+                if (!copy) { copy = document.createElement('canvas'); learningActorFrames.set(element, copy); }
+                if (copy.width !== surface.width || copy.height !== surface.height) {
+                    copy.width = surface.width; copy.height = surface.height;
+                }
+                const ink = copy.getContext('2d');
+                ink?.clearRect(0, 0, copy.width, copy.height);
+                ink?.drawImage(surface, 0, 0);
+            } else learningActorFrames.delete(element);
             element.dataset.renderCount = String(++renderCount);
             if (!rendered) { rendered = true; setReady(true); }
             if (input && elapsed >= 0 && elapsed < 620) {
@@ -185,6 +196,7 @@ export default function PokomokoLearningActor(props: Props) {
         surface.addEventListener('webglcontextrestored', contextRestored);
         resize(); draw(performance.now());
         return () => {
+            learningActorFrames.delete(element);
             disposed = true; stop(); observer.disconnect();
             document.removeEventListener('visibilitychange', visibility);
             reduced.removeEventListener('change', motionPreference);

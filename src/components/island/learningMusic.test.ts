@@ -14,7 +14,7 @@ function fixture() {
     const sources: Source[] = [], gains: { gain: ReturnType<typeof param>; connect: ReturnType<typeof vi.fn>; disconnect: ReturnType<typeof vi.fn> }[] = [];
     const filter = { type: '', Q: param(), frequency: param(), connect: vi.fn(), disconnect: vi.fn() };
     const context = {
-        state: 'suspended', sampleRate: 8000, currentTime: 3, destination: {},
+        state: 'suspended', onstatechange: null as (() => void) | null, sampleRate: 8000, currentTime: 3, destination: {},
         resume: vi.fn(async () => { context.state = 'running'; }), close: vi.fn(async () => { context.state = 'closed'; }),
         createBiquadFilter: vi.fn(() => filter),
         createGain: vi.fn(() => { const gain = { gain: param(), connect: vi.fn(), disconnect: vi.fn() }; gains.push(gain); return gain; }),
@@ -60,7 +60,7 @@ describe('the score and input share a chord and pulse clock', () => {
             expect(energy(stem)).toBeGreaterThan(.00001); expect(peak(stem)).toBeLessThan(.18);
         }
         const peaks = LEARNING_CUES.map(kind => {
-            const data = createLearningCue(kind, sampleRate, 76, learningChordAt(4));
+            const data = createLearningCue(kind, sampleRate, 76, learningChordAt(4), 1);
             expect(data.length / sampleRate).toBeLessThanOrEqual(.7);
             expect(data.every(Number.isFinite)).toBe(true);
             expect(data[0]).toBe(0); expect(Math.abs(data.at(-1)!)).toBe(0);
@@ -82,6 +82,30 @@ describe('the score and input share a chord and pulse clock', () => {
 });
 
 describe('learning music owns its lifecycle and bounded graph', () => {
+    it('reports a browser interruption and stays locked after background until another gesture', async () => {
+        const f = fixture(), changes: boolean[] = [];
+        const audio = createLearningMusic(f.factory, () => changes.push(audio.isReady()));
+        expect(audio.isReady()).toBe(false);
+        await audio.unlock(); expect(changes.at(-1)).toBe(true);
+        f.context.state = 'suspended'; f.context.onstatechange?.();
+        expect(changes.at(-1)).toBe(false); expect(audio.isReady()).toBe(false);
+        audio.setActive(false); audio.setActive(true);
+        expect(audio.isReady()).toBe(false); expect(f.context.onstatechange).toBe(null);
+        audio.dispose();
+    });
+
+    it('adds progress orchestration without restarting stems or dropping it after retry', async () => {
+        const f = fixture(), audio = createLearningMusic(f.factory); await audio.unlock();
+        audio.setIntensity(0, false); audio.cue('correct');
+        const initial = f.sources.at(-1)!.buffer!.getChannelData(0).slice();
+        audio.setIntensity(1, false); audio.cue('retry'); audio.cue('correct');
+        const later = f.sources.at(-1)!.buffer!.getChannelData(0);
+        expect(later).not.toEqual(initial);
+        expect(energy(later.slice(3000))).toBeGreaterThan(energy(initial.slice(3000)));
+        expect(f.sources.filter(source => source.loop)).toHaveLength(4);
+        audio.dispose();
+    });
+
     it('starts only on unlock, synchronizes every stem and reads pulse from the audio clock', async () => {
         const f = fixture(), audio = createLearningMusic(f.factory);
         audio.setIntensity(.7, false); expect(audio.input('2')).toBe(false); expect(audio.cue('place')).toBe(false);
@@ -98,13 +122,15 @@ describe('learning music owns its lifecycle and bounded graph', () => {
         audio.dispose();
     });
 
-    it('changes gains/filter without scheduling nodes, then opens anticipation on peak', async () => {
+    it('adds one finite anticipation pickup per reach and opens the filter on peak', async () => {
         const f = fixture(), audio = createLearningMusic(f.factory); await audio.unlock();
         audio.setIntensity(1, true);
         expect(f.filter.frequency.setTargetAtTime).toHaveBeenLastCalledWith(620, 3, .18);
         expect(f.gains[1].gain.setTargetAtTime).toHaveBeenLastCalledWith(.2, 3, .16);
         for (const gain of f.gains.slice(2)) expect(gain.gain.setTargetAtTime).toHaveBeenLastCalledWith(1, 3, .12);
-        expect(f.sources).toHaveLength(4);
+        expect(f.sources).toHaveLength(5);
+        expect(f.sources.at(-1)?.loop).toBe(false);
+        audio.setIntensity(.9, true); expect(f.sources).toHaveLength(5);
         audio.cue('peak'); expect(f.filter.frequency.setTargetAtTime).toHaveBeenLastCalledWith(9000, 3, .045);
         expect(f.sources.at(-1)?.loop).toBe(false); audio.dispose();
     });

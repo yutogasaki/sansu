@@ -11,7 +11,7 @@ function browserAudioContext(): AudioContext {
 
 /** Four finite looping stems share one clock. There is no beat timer or future
  * node queue to wake up after departure. Only a fresh gesture can start audio. */
-export function createLearningMusic(createContext: () => AudioContext = browserAudioContext) {
+export function createLearningMusic(createContext: () => AudioContext = browserAudioContext, onPlaybackChange: () => void = () => undefined) {
     let context: AudioContext | undefined, master: GainNode | undefined, music: GainNode | undefined, filter: BiquadFilterNode | undefined;
     let pending: Promise<boolean> | undefined, epoch = 0, generation = 0, active = true, disposed = false, unlocked = false;
     let level = 0, reach = false, lastPitch = 72;
@@ -30,6 +30,8 @@ export function createLearningMusic(createContext: () => AudioContext = browserA
         try { filter?.disconnect(); music?.disconnect(); master?.disconnect(); } catch { /* Already closed. */ }
         filter = undefined; music = undefined; master = undefined;
         const previous = context; context = undefined;
+        if (previous) previous.onstatechange = null;
+        onPlaybackChange();
         if (previous && previous.state !== 'closed') {
             try { void previous.close().catch(() => undefined); } catch { /* Learning remains usable without sound. */ }
         }
@@ -42,7 +44,11 @@ export function createLearningMusic(createContext: () => AudioContext = browserA
         filter.frequency.setTargetAtTime(reach ? 620 : 9000, at, reach ? .18 : .045);
         music.gain.setTargetAtTime(reach ? .2 : .36, at, reach ? .16 : .045);
     };
-    const setIntensity = (nextLevel: number, nextReach: boolean) => { level = nextLevel; reach = nextReach; applyMix(); };
+    const setIntensity = (nextLevel: number, nextReach: boolean) => {
+        const enteringReach = nextReach && !reach;
+        level = nextLevel; reach = nextReach; applyMix();
+        if (enteringReach) cue('rise');
+    };
     const setActive = (next: boolean) => { active = next; if (!active) stop(); };
     const unlock = (): Promise<boolean> => {
         if (!active || disposed) return Promise.resolve(false);
@@ -52,7 +58,7 @@ export function createLearningMusic(createContext: () => AudioContext = browserA
         if (context) stop();
         const current = ++generation;
         let target: AudioContext;
-        try { target = context = createContext(); } catch { return Promise.resolve(false); }
+        try { target = context = createContext(); target.onstatechange = () => { if (context === target) onPlaybackChange(); }; } catch { return Promise.resolve(false); }
         const attempt = (async () => {
             let timeout: ReturnType<typeof setTimeout> | undefined;
             try {
@@ -75,7 +81,7 @@ export function createLearningMusic(createContext: () => AudioContext = browserA
                     source.buffer = buffer; source.loop = true; source.connect(gain); gain.connect(filter!);
                     gain.gain.setValueAtTime(0, target.currentTime); source.start(epoch);
                 });
-                unlocked = true; applyMix(); return true;
+                unlocked = true; applyMix(); onPlaybackChange(); return true;
             } catch { if (current === generation) stop(); return false; }
             finally { if (timeout !== undefined) clearTimeout(timeout); }
         })();
@@ -89,7 +95,7 @@ export function createLearningMusic(createContext: () => AudioContext = browserA
         let voice: Voice | undefined;
         try {
             if (kind === 'peak') { reach = false; applyMix(); }
-            const data = createLearningCue(kind, context.sampleRate, lastPitch, learningChordAt(elapsed()));
+            const data = createLearningCue(kind, context.sampleRate, lastPitch, learningChordAt(elapsed()), level);
             const buffer = context.createBuffer(1, data.length, context.sampleRate); buffer.getChannelData(0).set(data);
             if (cues.size >= LEARNING_MAX_CUE_VOICES) releaseCue(cues.values().next().value!, true);
             const source = context.createBufferSource(); voice = { source }; cues.add(voice);
@@ -104,5 +110,6 @@ export function createLearningMusic(createContext: () => AudioContext = browserA
         return Math.exp(-phase * 7);
     };
     const dispose = () => { disposed = true; stop(); };
-    return { unlock, input, cue, pulse, setIntensity, setActive, stop, dispose };
+    const isReady = () => active && !disposed && unlocked && context?.state === 'running';
+    return { isReady, unlock, input, cue, pulse, setIntensity, setActive, stop, dispose };
 }

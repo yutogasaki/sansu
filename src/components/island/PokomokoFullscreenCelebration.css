@@ -1,0 +1,46 @@
+.pokomoko-screen-celebration { position: fixed; inset: 0; z-index: 80; pointer-events: none; overflow: hidden; contain: strict; }
+.pokomoko-screen-celebration canvas { display: block; width: 100%; height: 100%; pointer-events: none; }
+.pokomoko-last-banner { position: absolute; top: 17%; left: -3%; width: 106%; padding: 15px 12px; color: white; background: repeating-linear-gradient(125deg,#111746 0 35px,#293b83 35px 70px); border-block: 3px solid #111746; font: 900 clamp(28px,6vw,58px)/1.2 PokomokoRound,sans-serif; text-align: center; transform: rotate(-6deg); animation: pokomoko-banner 1150ms both; text-shadow: 2px 4px #080e43; }
+@keyframes pokomoko-banner { 0% { translate: -110% 0; } 20%,65% { translate: 0 0; } 100% { translate: 110% 0; } }
+@keyframes pokomoko-card-party { 0%,100% { box-shadow: 0 3px #080e43; } 20%,70% { box-shadow: 0 3px #080e43,0 0 0 5px #ffda43,0 0 0 9px #ffb5d9; } }
+@keyframes pokomoko-key-party { 0%,100% { background: white; } 25%,65% { background: var(--party-key-color,#ffe2f0); } }
+.app-container .island-page[data-mode=learning][data-learning-candidate='pokomoko-pop-live-v8'] {
+    [data-party-peak=ride] .park-question, [data-party-peak=stamp] .park-question { animation: pokomoko-card-party 1450ms both; }
+    :is([data-party-peak=ride],[data-party-peak=stamp]) .park-keypad button { animation: pokomoko-key-party 1450ms both; }
+    .park-keypad button:nth-child(3n+1) { --party-key-color: #ffe2f0; }
+    .park-keypad button:nth-child(3n+2) { --party-key-color: #fff0b2; }
+    .park-keypad button:nth-child(3n) { --party-key-color: #d8f6ec; }
+}
+@media(prefers-reduced-motion:reduce) {
+    .pokomoko-screen-celebration { display: none; }
+    .app-container .island-page[data-mode=learning] :is(.park-question,.park-keypad button) { animation: none !important; }
+}
+
+/* The backdrop belongs to the viewport, not the little character row.
+   Progress stays visible between answers; only the payoff moves. */
+.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v8'] {
+    isolation: isolate;
+    background: #fffcf5;
+    &::before, &::after { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: -1; }
+    &::before { background: radial-gradient(ellipse at 0% 17%, #ffd7e975 0 16%, transparent 16.2%), radial-gradient(ellipse at 100% 74%, #dce7ff 0 18%,transparent 18.2%), linear-gradient(#191d4807 1px,transparent 1px),linear-gradient(90deg,#191d4807 1px,transparent 1px); background-size: auto,auto,28px 28px,28px 28px; }
+    &::after { opacity: 0; background: repeating-conic-gradient(from -12deg at 50% 24%,#ffe899 0deg 12deg,#fffcf5 12deg 25deg,#bcf3e5 25deg 37deg,#fffcf5 37deg 50deg,#ffd5e9 50deg 62deg,#fffcf5 62deg 75deg); transition: opacity 350ms; }
+    &:has([data-show-level='1'])::after { opacity: .23; }
+    &:has([data-show-level='2'])::after { opacity: .48; }
+    &:has([data-show-level='3'])::after { opacity: .65; }
+    &:has([data-party-peak=jump])::after { opacity: .85; }
+    &:has(:is([data-party-peak=ride],[data-party-peak=stamp],[data-party-peak=section]))::after { opacity: 1; animation: pokomoko-backdrop-payoff 1450ms both; }
+    > .island-header, > .island-workbench { background: transparent; }
+    .pokomoko-stage-colors, .pokomoko-stage-rays, .pokomoko-stage-confetti, .pokomoko-stage-stars { display: none; }
+    .island-learning-progress, .island-learning-actions { border-radius: 12px; background: #fffcf5e8; }
+    [data-show-level]:not([data-show-level='0']) .park-keypad button:not([data-keypad-submit]) { background: var(--party-key-color,#eef1ff); transition: background 300ms,transform 60ms,box-shadow 60ms; }
+    .park-keypad button[aria-label='7'], .park-keypad button[aria-label='3'] { --party-key-color: #ffe2ef; }
+    .park-keypad button[aria-label='8'], .park-keypad button[aria-label='4'] { --party-key-color: #fff1bd; }
+    .park-keypad button[aria-label='9'], .park-keypad button[aria-label='5'], .park-keypad button[aria-label='1'] { --party-key-color: #e7ecff; }
+    .park-keypad button[aria-label='6'], .park-keypad button[aria-label='2'], .park-keypad button[aria-label='0'] { --party-key-color: #dcf8ee; }
+    .park-keypad button[aria-label='ひとつ もどす'], .park-keypad button[aria-label='こたえを けす'] { --party-key-color: #ffd2e7; }
+    [data-show-level='3'] .park-question { border-color: #28215a; box-shadow: 0 3px #111746,0 0 0 3px #ffb4d8; }
+}
+@keyframes pokomoko-backdrop-payoff { 0% { opacity: .4; } 18%,55% { opacity: 1; } 100% { opacity: .55; } }
+@media(prefers-reduced-motion:reduce) {
+    .app-container .island-page[data-mode=learning]::after { animation: none !important; transition: none !important; }
+}

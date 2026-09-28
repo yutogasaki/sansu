@@ -3,7 +3,7 @@
 export const LEARNING_BEAT_SECONDS = .5;
 export const LEARNING_LOOP_SECONDS = 8;
 export const LEARNING_STEM_COUNT = 4;
-export const LEARNING_CUES = ['tap', 'catch', 'place', 'correct', 'step', 'retry', 'jump', 'land', 'peak'] as const;
+export const LEARNING_CUES = ['tap', 'catch', 'place', 'correct', 'step', 'retry', 'jump', 'land', 'peak', 'section', 'rise'] as const;
 export type LearningMusicCue = typeof LEARNING_CUES[number];
 const chords = [[60, 64, 67, 69], [57, 60, 64, 67], [53, 57, 60, 64], [55, 59, 62, 64]] as const;
 const tau = Math.PI * 2;
@@ -78,17 +78,26 @@ export function createLearningStems(sampleRate: number): Float32Array[] {
     return stems;
 }
 
-export function createLearningCue(kind: LearningMusicCue, sampleRate: number, pitch: number, chord: readonly number[] = chords[0]): Float32Array {
+export function createLearningCue(kind: LearningMusicCue, sampleRate: number, pitch: number, chord: readonly number[] = chords[0], level = 0): Float32Array {
     format(sampleRate);
     if (!LEARNING_CUES.includes(kind) || !Number.isFinite(pitch) || pitch < 24 || pitch > 108) throw new Error('Invalid learning cue');
-    const seconds = kind === 'peak' ? .7 : kind === 'correct' ? .39 : kind === 'jump' ? .27 : .18;
+    const progress = Number.isFinite(level) ? Math.min(1, Math.max(0, level)) : 0;
+    const seconds = kind === 'peak' || kind === 'section' ? .7 : kind === 'correct' ? .55 : kind === 'rise' ? .38 : kind === 'jump' ? .27 : .18;
     const samples = new Float32Array(Math.ceil(seconds * sampleRate));
     if (kind === 'land') drum(samples, sampleRate, 0, 'kick', .12);
     else if (kind === 'retry') note(samples, sampleRate, 0, .16, pitch - 12, .055, true);
-    else if (kind === 'peak' || kind === 'correct') {
-        // Interval order comes from the current chord rather than a competing jingle key.
-        for (let i = 0; i < (kind === 'peak' ? 4 : 3); i++) note(samples, sampleRate, i * .055, kind === 'peak' ? .42 : .22, chord[i] + 12, .085);
-        if (kind === 'peak') drum(samples, sampleRate, 0, 'clap', .08);
+    else if (kind === 'rise') {
+        // A short upward pickup announces anticipation without a looping alarm.
+        for (let i = 0; i < 3; i++) note(samples, sampleRate, i * .07, .18, chord[i] + 12, .036);
+    } else if (kind === 'peak' || kind === 'section' || kind === 'correct') {
+        // Every note belongs to the playing bar. Progress adds orchestration,
+        // rather than escalating volume or restarting the music after a miss.
+        const count = kind === 'section' ? 6 : kind === 'peak' ? 5 : 3 + Math.round(progress * 2);
+        for (let i = 0; i < count; i++) note(samples, sampleRate, i * .055,
+            kind === 'correct' ? .24 : .36, chord[i % chord.length] + 12 + (i >= chord.length ? 12 : 0), .065);
+        if (kind !== 'correct' || progress >= .6) drum(samples, sampleRate, 0, 'kick', .065);
+        if (kind === 'peak') drum(samples, sampleRate, .025, 'clap', .045);
+        if (kind === 'section') for (const tone of chord.slice(0, 3)) note(samples, sampleRate, .32, .34, tone, .022, true);
     } else {
         const offset = kind === 'catch' ? -12 : kind === 'place' ? 0 : kind === 'jump' ? 7 : kind === 'step' ? 12 : 0;
         note(samples, sampleRate, 0, seconds, Math.min(108, pitch + offset), kind === 'tap' ? .095 : .075);

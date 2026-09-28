@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { beginLearningMusicGesture, subscribeLearningMusicGesture } from './learningMusicGesture';
+import { beginLearningMusicGesture, subscribeLearningMusicGesture, getLearningMusicReady, registerLearningMusicPlayback, subscribeLearningMusicPlayback } from './learningMusicGesture';
 
 describe('the sound button forwards its activation to the mounted learning owner', () => {
     it('unlocks synchronously and cancels a pending attempt when saving or navigation fails', async () => {
@@ -29,5 +29,21 @@ describe('the sound button forwards its activation to the mounted learning owner
         const blocked = subscribeLearningMusicGesture(() => ({ result: Promise.resolve(false), cancel: () => undefined }));
         try { expect(await beginLearningMusicGesture(true).result).toBe(false); }
         finally { good(); blocked(); }
+    });
+});
+
+
+describe('learning playback readiness is independent from the UI sound context', () => {
+    it('requires every active music owner, ignores vocabulary, and clears on unmount', () => {
+        const changed = vi.fn(), unsubscribe = subscribeLearningMusicPlayback(changed);
+        const math = registerLearningMusicPlayback(), vocabulary = registerLearningMusicPlayback();
+        try {
+            vocabulary.set('inactive'); expect(getLearningMusicReady()).toBe(true);
+            math.set('locked'); expect(getLearningMusicReady()).toBe(false);
+            math.set('ready'); expect(getLearningMusicReady()).toBe(true);
+            math.set('ready'); expect(changed).toHaveBeenCalledTimes(2);
+            math.set('locked'); expect(getLearningMusicReady()).toBe(false);
+            math.remove(); expect(getLearningMusicReady()).toBe(true);
+        } finally { math.remove(); vocabulary.remove(); unsubscribe(); }
     });
 });

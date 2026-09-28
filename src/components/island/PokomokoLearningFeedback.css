@@ -41,7 +41,7 @@
 
 /* One composition, like the approved four-state study. The stage is a real
    flow row; the card no longer contains a large empty padding reservation. */
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7'] {
+.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v8'] {
     --pop-ink: #191d48; --pop-blue: #386bff; --pop-pink: #ff7ab6; --pop-yellow: #ffda46; --pop-mint: #4dd9bb;
     display: flex; flex-direction: column; align-items: center; min-height: 0; padding-bottom: 0; overflow: hidden;
     color: var(--pop-ink); background: #f4f5fa;
@@ -76,7 +76,7 @@
     .pokomoko-stage-colors i + i { left: auto; right: -95px; width: 200px; height: 175px; background: #e6edff; }
     .pokomoko-learning-actor { width: 184px; height: 192px; left: calc(50% - 92px); bottom: -18px; transition: left 200ms ease-out; }
     .pokomoko-learning-feedback[data-peak=true] .pokomoko-learning-actor,
-    .pokomoko-learning-feedback[data-riding=true] .pokomoko-learning-actor { left: calc(35% - 92px); }
+    .pokomoko-learning-feedback[data-peak=true] .pokomoko-learning-actor { left: calc(35% - 92px); }
     .pokomoko-charge { top: 0; left: 0; gap: 5px; }
     .pokomoko-charge span { width: 16px; height: 16px; }
     .pokomoko-stage-flags { top: 15px; }
@@ -129,10 +129,10 @@
 }
 
 @media (max-height: 740px) {
-    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7'] {
+    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v8'] {
         > .island-workbench { --stage-height: 116px; }
         .pokomoko-learning-actor { width: 138px; height: 144px; left: calc(50% - 69px); bottom: -14px; }
-        .pokomoko-learning-feedback[data-peak=true] .pokomoko-learning-actor, .pokomoko-learning-feedback[data-riding=true] .pokomoko-learning-actor { left: calc(35% - 69px); }
+        .pokomoko-learning-feedback[data-peak=true] .pokomoko-learning-actor, .pokomoko-learning-feedback[data-peak=true] .pokomoko-learning-actor { left: calc(35% - 69px); }
         .pokomoko-learning-caption { top: 10%; height: 95px; }
         [data-peak=true] .pokomoko-combo-number { font-size: 58px; }
         .island-answer .park-keypad button { min-height: 44px; }
@@ -140,7 +140,7 @@
 }
 /* A short landscape viewport needs a neighboring input column, not smaller keys. */
 @media (orientation: landscape) and (max-height: 540px) {
-    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7'] {
+    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v8'] {
         > .island-header { width: 100%; max-width: 850px; height: 44px; min-height: 44px; }
         > .island-workbench { --stage-height: 105px; flex: 1; max-width: 850px; width: 100%; display: grid; grid-template-columns: minmax(0,1fr) minmax(270px,1fr); grid-template-rows: 28px 105px minmax(0,1fr) 44px; gap: 0 18px; padding: 0 14px 4px; }
         .island-learning-progress { grid-area: 1 / 1; min-height: 28px; }
@@ -157,7 +157,7 @@
         .island-answer .park-support { grid-area: 3 / 1; z-index: 4; max-height: 100%; align-self: end; margin: 0; }
         .island-answer-stage[data-support-stage=model] .park-support { grid-area: 1 / 2 / 5 / 3; align-self: stretch; }
         .pokomoko-learning-actor { width: 116px; height: 121px; left: calc(50% - 58px); bottom: -11px; }
-        .pokomoko-learning-feedback[data-peak=true] .pokomoko-learning-actor, .pokomoko-learning-feedback[data-riding=true] .pokomoko-learning-actor { left: calc(35% - 58px); }
+        .pokomoko-learning-feedback[data-peak=true] .pokomoko-learning-actor, .pokomoko-learning-feedback[data-peak=true] .pokomoko-learning-actor { left: calc(35% - 58px); }
     }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -167,7 +167,7 @@
 
 /* The diagrams keep their meaning colors; their old beige outer trays do not
    belong to this white, blue and pink learning surface. */
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7'] {
+.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v8'] {
     .island-problem-prompt [data-visual-surface] { background: #f4f6ff; border-color: #d9def4; box-shadow: none; }
     .island-problem-prompt [data-visual-surface] [data-visual-surface], .island-problem-prompt [data-visual-surface=guide], .island-problem-prompt [data-visual-surface=question] { background: transparent; border: 0; box-shadow: none; }
     .island-problem-prompt [data-visual-caption] { color: var(--pop-ink); font-size: 16px; line-height: 1.4; }
@@ -179,7 +179,7 @@
     .island-answer[data-input-type=hissan] .park-question .font-mono[class*='border-cyan-400'] { background: #eef2ff; border-color: var(--pop-blue); --tw-ring-color: #c7d4ff; }
 }
 
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7'] {
+.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v8'] {
     .written-arithmetic { --written-ink: var(--pop-ink); --written-accent: var(--pop-blue); --written-paper: white; }
     .written-paper { border: 0; background: white; padding-block: 0; }
     .written-place-value .written-cell { height: 43px; font: 900 36px/1 PokomokoRound,sans-serif; border-right: 0; }
@@ -195,7 +195,7 @@
 }
 
 @media (orientation: landscape) and (max-height: 540px) {
-    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7'] {
+    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v8'] {
         .island-answer .park-inputs[data-number-layout] { gap: 4px; padding: 2px 30px; }
         .island-answer .park-inputs .park-input { min-height: 44px; }
         .island-answer .park-inputs[data-number-layout] > :last-child::before { top: -3px; }
@@ -204,11 +204,11 @@
 /* With an extra control row on a small phone, let the companion sit beside
    the question. All number, edit and help controls retain 44 px targets. */
 @media (orientation: portrait) and (max-height: 660px) {
-    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7']:has(.ten-key-extra-controls) {
+    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v8']:has(.ten-key-extra-controls) {
         > .island-header { min-height: 44px; height: 44px; }
         > .island-workbench { --stage-height: 0px; }
         .island-learning-progress { min-height: 28px; flex-basis: 28px; }
-        .pokomoko-learning-actor, .pokomoko-learning-feedback[data-peak=true] .pokomoko-learning-actor, .pokomoko-learning-feedback[data-riding=true] .pokomoko-learning-actor { width: 90px; height: 94px; left: auto; right: 4px; top: 8px; bottom: auto; }
+        .pokomoko-learning-actor, .pokomoko-learning-feedback[data-peak=true] .pokomoko-learning-actor, .pokomoko-learning-feedback[data-peak=true] .pokomoko-learning-actor { width: 90px; height: 94px; left: auto; right: 4px; top: 8px; bottom: auto; }
         .pokomoko-charge, .pokomoko-learning-caption, .pokomoko-stage-flags, .pokomoko-stage-stars, .pokomoko-stamp-shelf, .pokomoko-stage-rays, .pokomoko-stage-confetti, .pokomoko-new-stamp { display: none; }
         .island-answer .park-question { padding: 6px 98px 4px 4px; min-height: 100px; }
         .island-answer .park-inputs { padding-block: 2px 5px; margin-bottom: 6px; gap: 5px; }
@@ -218,25 +218,25 @@
     }
 }
 @media (orientation: portrait) and (max-height: 660px) {
-    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7']:has(.ten-key-extra-controls) {
+    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v8']:has(.ten-key-extra-controls) {
         .pokomoko-learning-feedback:not([data-resting=true]) .pokomoko-learning-actor { visibility: hidden; }
         .pokomoko-learning-feedback:not([data-resting=true]) .pokomoko-learning-caption { display: flex; top: 8px; left: auto; right: 4px; width: 90px; height: 94px; }
         .pokomoko-learning-caption .pokomoko-party-headline { font-size: 16px; }
         .pokomoko-learning-caption .pokomoko-combo-number { font-size: 36px; }
     }
 }
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7'] .park-inputs[data-number-layout] > :last-child::before {
+.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v8'] .park-inputs[data-number-layout] > :last-child::before {
     content: ''; display: block; height: 2px; border: 0; background: var(--pop-ink); z-index: 1;
 }
 /* Fit the whole number-line instruction without shrinking its numerals/copy. */
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7'] {
+.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v8'] {
     .island-answer .park-question:has(:is([data-problem-visual=number-line],[data-problem-visual=number-sequence])) { padding-block: 6px 4px; }
     :is([data-problem-visual=number-line],[data-problem-visual=number-sequence]) [data-visual-surface=number-line] { padding-block: 3px; }
 }
 
 /* Authored four-state composition: outlined lettering belongs beside the
    actor, with the ground and effects behind it, never across the face. */
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7'] {
+.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v8'] {
     --pop-ink: #080e43; --pop-blue: #1265ff; --pop-pink: #ff77bd;
     .pokomoko-play-scene::after { content: ''; position: absolute; bottom: 3px; left: 4%; right: 4%; border-bottom: 2px solid var(--pop-ink); border-radius: 50%; z-index: 1; }
     .pokomoko-learning-caption { right: 1%; width: 37%; top: 23%; }
@@ -265,7 +265,7 @@
 }
 @keyframes pop-jump-lines { 0%,15% { opacity: 0; transform: scaleY(.4); } 30%,70% { opacity: 1; transform: scaleY(1); } 100% { opacity: 0; } }
 @media (max-height:740px) {
-    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7'] {
+    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v8'] {
         [data-peak=true] .pokomoko-combo-number { font-size: 72px; }
         [data-peak=true] .pokomoko-combo-label { font-size: 22px; }
         .pokomoko-learning-caption { top: 10%; }
@@ -273,7 +273,7 @@
     }
 }
 @media (orientation:portrait) and (max-height:660px) {
-    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7']:has(.ten-key-extra-controls) {
+    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v8']:has(.ten-key-extra-controls) {
         .pokomoko-jump-lines { display: none; }
         [data-peak=true] .pokomoko-combo-number { font-size: 40px; }
         [data-peak=true] .pokomoko-combo-label { font-size: 16px; -webkit-text-stroke-width: 4px; }
@@ -281,13 +281,26 @@
 }
 @media (prefers-reduced-motion: reduce) { .pokomoko-jump-lines { display: none; } }
 @media (min-height:741px) {
-    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7'] {
+    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v8'] {
         .written-place-value .written-cell { height: 49px; font-size: 44px; }
         .written-place-value button.written-cell { height: 54px; }
         .written-place-value .written-row-label:not([data-operator=true]) { font-size: 14px; }
     }
 }
-.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v7'] {
+.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v8'] {
     .pokomoko-combo-number[data-long=true] { font-size: 40px; }
     [data-burst=stamp] .pokomoko-combo-label { font-size: 19px; white-space: normal; -webkit-text-stroke-width: 5px; }
+}
+
+/* One progress indicator; saved awards do not compete with the next problem. */
+.app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v8'] {
+    .island-light-trail, .pokomoko-stamp-shelf { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+    .island-problem-prompt [data-visual-surface=number-line] { background: transparent; border: 0; padding-inline: 8px; }
+    [data-visual-surface=number-line] > div:first-child > div > div:first-child:not([data-visual-value]) { display: none; }
+    [data-visual-surface=number-line] [data-visual-value] { font: 900 26px/1 PokomokoRound,sans-serif; border-radius: 8px; }
+}
+/* Spoken on each ordinary correct answer; a short static cue when motion is off. */
+.pokomoko-answer-receipt { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) {
+    .pokomoko-answer-receipt { left: 3%; top: 40%; width: auto; height: auto; clip-path: none; overflow: visible; border: 2px solid #191d48; border-radius: 18px; background: white; color: #191d48; padding: 6px 12px; font: 900 16px/1.3 PokomokoRound,sans-serif; }
 }
