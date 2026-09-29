@@ -25,3 +25,9 @@
 理解/安全: コピー・操作・学習条件の変更なし。子どもの無説明利用・意欲は未検証。
 
 Runtime: 親変形、instance単位の更新、通常/interleaved頂点buffer編集と属性差替、可視性・raycastの回帰を検査する。実機・全release matrixは別範囲。
+
+## main / 公開
+
+実装 `8d57fc1192f59bcbca1be0f1585085cc9b328185` をmainへpush。[公開version](public-version.json)の同revisionと[公開実操作](production.json)を確認。390/768幅で実初回4問・購入/配置・夜の庭・実SW offline再読込・追加回答と保存保持がPASS。fixture注入なし、pageerror 0。[意図したcommitのexport照合](index-verification.json)でdocs検査と全app入力の一致を確認。
+
+公開後の追記は記録とタスク/ポータルのみ。局所的な計算削減を全体FPSや実iPhoneの合格に置き換えない。

@@ -553,13 +553,13 @@ main `4002e67b` から本番へ反映済み。公開URLの390/768幅で初回学
 ### Risks
 
 - 「全体」を広げすぎて島v3、家、Nature Town、ブランド外部確認の既存ownerを複製しない。横断の証拠づくりと未所有の共通操作課題に集中する。
-</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">2・性能</h2><div class="grid"><article class="card" data-search="起動と物が増えた島の軽量化：raycast cpuを約84〜85%削減済み。頂点共有も本番反映し、同じ30品の形状bufferを20.5%削減。影の同じ姿勢の再利用を追加検証中。前回desktop p95は38.2/55.6msで33.3ms未達 次：実iphoneの起動・描画/電池負荷と、残るフレーム時間を同じ端末で確認 docs/tasks/active/2026-09-23-island-performance.md # island / iphone pwa performance
+</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">2・性能</h2><div class="grid"><article class="card" data-search="起動と物が増えた島の軽量化：raycast cpuを約84〜85%削減済み。頂点共有も本番反映し、同じ30品の形状bufferを20.5%削減。影の同じ姿勢の再利用も本番反映・両幅の操作確認済み。前回desktop p95は38.2/55.6msで33.3ms未達 次：実iphoneの起動・描画/電池負荷と、残るフレーム時間を同じ端末で確認 docs/tasks/active/2026-09-23-island-performance.md # island / iphone pwa performance
 
 ## 2026-09-29 影の同じ姿勢の再利用
 
 次の実装依頼に対応。影の投影行列・元の頂点buffer/更新版が同じ部品は頂点書込と境界再計算を省く。姿勢・親の変形・instance行列・頂点更新時は従来式で更新する。影の形・手振り・当たり判定・発見条件・保存は変更しない内部改善のため製品仕様変更なし。実iphoneや全体33.3ms達成は別に検証する。
 
-[監査と実画面](../../design/2026-09-29-shadow-projection-reuse/readme.md)。3住人×通常/reduced×240 frameで全頂点・表示・境界が旧版と完全一致。core4,300 testsと両幅の影タップ/保存/再演/収納/学習復帰を通過。本番形式の実初回→購入/入居→庭/室内→offline→追加回答も両幅pass。main反映・公開確認を進める。
+[監査と実画面](../../design/2026-09-29-shadow-projection-reuse/readme.md)。3住人×通常/reduced×240 frameで全頂点・表示・境界が旧版と完全一致。core4,300 testsと両幅の影タップ/保存/再演/収納/学習復帰を通過。本番形式の実初回→購入/入居→庭/室内→offline→追加回答も両幅pass。main `8d57fc11` を本番へ反映し、公開両幅で実4問/購入/実sw offline/追加回答と保存保持を確認。
 
 ## 2026-09-29 描画頂点の共有
 
@@ -684,13 +684,13 @@ this is a performance implementation within the existing product rules, so the p
 - life-enabled `verify:core` passed: 460 files / 4,168 tests, lint (one existing islandmilestone fast-refresh warning), typecheck, build and asset budget. the production decorations journey passed at 390×844 and 768×1024 (tablet reduced motion): six real answers, earned purchase, rotate/move/store/re-place, abort/retry, offline reload and learning return, followed by a separate synthetic 30-item stress fixture. both stress scenes loaded 34 instances from eight glbs, retained 17 textures, switched lod, and had no page errors. phone placement and tablet stress screenshots were inspected for visible props/residents and controls.
 - local browser evidence: `output/playwright/runtime-props-20260924/browser/report.json`; operation-count diagnostic: `output/playwright/runtime-props-20260924/clone-count.json`. target `http://127.0.0.1:5298`, version `development-local:b761cc63-f444-40d7-8107-d092ddce3f07`, app/dist/harness fingerprint `3583321974cb0a09960d6a6867689645af002eb229fdd61c18efa28b46892671` matched at start/end. delivery island/life enabled, life preview/buildplay disabled; runtime assets `island-life-runtime-assets-v3`, home props `island-home-props-v1`.
 - this local renderer change is complete. no deployment, real iphone timing, new art approval, child comprehension/replay assessment or full release-matrix pass is claimed. ongoing per-frame rendering costs and installed-device measurement remain separate follow-ups.
-"><h2><a href="../../docs/tasks/active/2026-09-23-island-performance.md">起動と物が増えた島の軽量化：raycast CPUを約84〜85%削減済み。頂点共有も本番反映し、同じ30品の形状bufferを20.5%削減。影の同じ姿勢の再利用を追加検証中。前回desktop P95は38.2/55.6msで33.3ms未達 次：実iPhoneの起動・描画/電池負荷と、残るフレーム時間を同じ端末で確認</a></h2><p class="path">docs/tasks/active/2026-09-23-island-performance.md</p><p>次の実装依頼に対応。影の投影行列・元の頂点buffer/更新版が同じ部品は頂点書込と境界再計算を省く。姿勢・親の変形・instance行列・頂点更新時は従来式で更新する。影の形・手振り・当たり判定・発見条件・保存は変更しない内部改善のため製品仕様変更なし。実iPhoneや全体33.3ms達成は別に検証する。 [監査と実画面](../../design/2026-09-29-shadow-projection-reus</p><details><summary>詳細を読む</summary><pre># Island / iPhone PWA performance
+"><h2><a href="../../docs/tasks/active/2026-09-23-island-performance.md">起動と物が増えた島の軽量化：raycast CPUを約84〜85%削減済み。頂点共有も本番反映し、同じ30品の形状bufferを20.5%削減。影の同じ姿勢の再利用も本番反映・両幅の操作確認済み。前回desktop P95は38.2/55.6msで33.3ms未達 次：実iPhoneの起動・描画/電池負荷と、残るフレーム時間を同じ端末で確認</a></h2><p class="path">docs/tasks/active/2026-09-23-island-performance.md</p><p>次の実装依頼に対応。影の投影行列・元の頂点buffer/更新版が同じ部品は頂点書込と境界再計算を省く。姿勢・親の変形・instance行列・頂点更新時は従来式で更新する。影の形・手振り・当たり判定・発見条件・保存は変更しない内部改善のため製品仕様変更なし。実iPhoneや全体33.3ms達成は別に検証する。 [監査と実画面](../../design/2026-09-29-shadow-projection-reus</p><details><summary>詳細を読む</summary><pre># Island / iPhone PWA performance
 
 ## 2026-09-29 影の同じ姿勢の再利用
 
 次の実装依頼に対応。影の投影行列・元の頂点buffer/更新版が同じ部品は頂点書込と境界再計算を省く。姿勢・親の変形・instance行列・頂点更新時は従来式で更新する。影の形・手振り・当たり判定・発見条件・保存は変更しない内部改善のため製品仕様変更なし。実iPhoneや全体33.3ms達成は別に検証する。
 
-[監査と実画面](../../design/2026-09-29-shadow-projection-reuse/README.md)。3住人×通常/reduced×240 frameで全頂点・表示・境界が旧版と完全一致。core4,300 testsと両幅の影タップ/保存/再演/収納/学習復帰を通過。本番形式の実初回→購入/入居→庭/室内→offline→追加回答も両幅PASS。main反映・公開確認を進める。
+[監査と実画面](../../design/2026-09-29-shadow-projection-reuse/README.md)。3住人×通常/reduced×240 frameで全頂点・表示・境界が旧版と完全一致。core4,300 testsと両幅の影タップ/保存/再演/収納/学習復帰を通過。本番形式の実初回→購入/入居→庭/室内→offline→追加回答も両幅PASS。main `8d57fc11` を本番へ反映し、公開両幅で実4問/購入/実SW offline/追加回答と保存保持を確認。
 
 ## 2026-09-29 描画頂点の共有
 
@@ -1197,7 +1197,7 @@ main `4002e67b` から本番へ反映済み。公開URLの390/768幅で初回学
 親仕様、現行v8の実装marker・検証記録、mainの履歴、タスクとポータルの生成元を照合しました。新しい本番操作・実機観察・子どもの評価は行っていません。過去の合格を今回の新しい合格として記録しません。
 </pre></details></article><article class="card" data-search="shared done index .agents/tasks/done.md # shared done index
 
-- 2026-09-29: 住人の影の同じ姿勢を再利用。出力同一性、core4,300 tests、両幅の影タップ/保存/再演を確認。公開確認は進行中 -&gt; `docs/done/2026-09.md`
+- 2026-09-29: 住人の影の同じ姿勢を再利用。出力同一性、core4,300 tests、両幅の影タップ/保存/再演を確認。main 8d57fc11を公開し、両幅の実学習/購入/offlineも確認 -&gt; `docs/done/2026-09.md`
 
 - 2026-09-29: 記録を島と同じ布配色・toyアイコンへ統一。ぽこもこは足まである既存全身素材へ修正。両幅/固定build/core確認、ローカル実装 -&gt; `docs/done/2026-09.md`
 
@@ -1378,9 +1378,9 @@ durable completion history and verification facts still belong in `docs/done/yyy
 - 2026-09-09 写真の読込/削除中断・家への帰還・空報酬・短い横向き撮影を改善。4サイズ/3440unit通過 -&gt; docs/done/2026-09.md
 
 - 2026-09-27: 手元変更のbackupと最新mainへの整理。公開済み保存/報酬/ぽこもこを維持し、旧試作・入口と資料を整理 -&gt; `docs/done/2026-09.md`
-"><h2><a href="DONE.md">Shared Done Index</a></h2><p class="path">.agents/tasks/DONE.md</p><p>- 2026-09-29: 住人の影の同じ姿勢を再利用。出力同一性、core4,300 tests、両幅の影タップ/保存/再演を確認。公開確認は進行中 -&gt; `docs/done/2026-09.md` - 2026-09-29: 記録を島と同じ布配色・toyアイコンへ統一。ぽこもこは足まである既存全身素材へ修正。両幅/固定build/core確認、ローカル実装 -&gt; `docs/done/2026-09.md`</p><details><summary>詳細を読む</summary><pre># Shared Done Index
+"><h2><a href="DONE.md">Shared Done Index</a></h2><p class="path">.agents/tasks/DONE.md</p><p>- 2026-09-29: 住人の影の同じ姿勢を再利用。出力同一性、core4,300 tests、両幅の影タップ/保存/再演を確認。main 8d57fc11を公開し、両幅の実学習/購入/offlineも確認 -&gt; `docs/done/2026-09.md` - 2026-09-29: 記録を島と同じ布配色・toyアイコンへ統一。ぽこもこは足まである既存全身素材へ修正。両幅/固定build/core確認、ローカル</p><details><summary>詳細を読む</summary><pre># Shared Done Index
 
-- 2026-09-29: 住人の影の同じ姿勢を再利用。出力同一性、core4,300 tests、両幅の影タップ/保存/再演を確認。公開確認は進行中 -&gt; `docs/done/2026-09.md`
+- 2026-09-29: 住人の影の同じ姿勢を再利用。出力同一性、core4,300 tests、両幅の影タップ/保存/再演を確認。main 8d57fc11を公開し、両幅の実学習/購入/offlineも確認 -&gt; `docs/done/2026-09.md`
 
 - 2026-09-29: 記録を島と同じ布配色・toyアイコンへ統一。ぽこもこは足まである既存全身素材へ修正。両幅/固定build/core確認、ローカル実装 -&gt; `docs/done/2026-09.md`
 
