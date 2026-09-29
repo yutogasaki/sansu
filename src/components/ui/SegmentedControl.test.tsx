@@ -18,9 +18,12 @@ describe("SegmentedControl accessibility", () => {
 
         expect(markup).toContain('role="group" aria-label="表示形式"');
         expect(markup).toContain("min-h-11");
-        expect(markup).toMatch(/<button[^>]*aria-pressed="true"[^>]*>標準<\/button>/);
-        expect(markup).toMatch(/<button[^>]*aria-pressed="false"[^>]*>やさしい<\/button>/);
+        const selectedOption = markup.match(/<button[^>]*aria-pressed="true"[^>]*>[\s\S]*?<\/button>/)?.[0];
+        expect(selectedOption).toContain("標準");
+        expect(selectedOption).toContain("border-[color:var(--pokomoko-blue)]");
+        expect(selectedOption).toContain('aria-hidden="true"');
         const unselectedOption = markup.match(/<button[^>]*aria-pressed="false"[^>]*>/)?.[0];
         expect(unselectedOption).toContain("text-pokomoko-muted");
+        expect(unselectedOption).not.toContain("border-[color:var(--pokomoko-blue)]");
     });
 });

@@ -1,4 +1,5 @@
 import React from "react";
+import { Check } from "lucide-react";
 import { cn } from "../../utils/cn";
 import { Card } from "./Card";
 
@@ -162,14 +163,15 @@ export function SegmentedControl<T extends string>({
                         aria-pressed={isActive}
                         onClick={() => onChange(option.value)}
                         className={cn(
-                            "flex min-h-11 min-w-0 items-center justify-center rounded-[12px] px-3 py-2.5 text-center text-sm font-bold leading-4 transition-all",
+                            "flex min-h-11 min-w-0 items-center justify-center gap-1 rounded-[12px] border-2 px-2 py-2.5 text-center text-sm font-bold leading-4 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--pokomoko-blue-deep)]",
                             isLastMobileWideOption && "col-span-2 land:col-span-1 sm:col-span-1",
                             isActive
-                                ? "bg-white text-slate-800 shadow-[0_10px_22px_-16px_rgba(15,23,42,0.32)]"
-                                : "text-pokomoko-muted hover:text-slate-700"
+                                ? "border-[color:var(--pokomoko-blue)] bg-[#e8f0ff] text-[color:var(--pokomoko-blue-deep)]"
+                                : "border-transparent bg-white/65 text-pokomoko-muted hover:bg-white hover:text-slate-700"
                         )}
                     >
-                        {option.label}
+                        {isActive && <Check size={16} strokeWidth={3} aria-hidden="true" className="shrink-0" />}
+                        <span>{option.label}</span>
                     </button>
                 );
             })}

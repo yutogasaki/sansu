@@ -1,4 +1,4 @@
-import { BookOpen, ShieldCheck, UserRound, Volume2 } from "lucide-react";
+import { BookOpen, Check, ShieldCheck, UserRound, Volume2 } from "lucide-react";
 import { islandEnabled } from "../domain/island/feature";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -573,7 +573,7 @@ export const Settings: React.FC = () => {
                                         ].map((item) => (
                                             <InsetPanel key={item.label} className="flex items-center justify-between px-4 py-3">
                                                 <div className="font-bold text-slate-600">{item.label} <span className="text-lg font-black text-slate-800">Lv.{item.level}</span></div>
-                                                <Button variant="secondary" size="sm" onClick={() => navigation ? navigation.open("/settings/curriculum") : navigate("/settings/curriculum")}>{t("かえる", "変更")}</Button>
+                                                <Button variant="secondary" size="sm" aria-label={`${item.label}のレベルを変更`} onClick={() => navigation ? navigation.open("/settings/curriculum") : navigate("/settings/curriculum")}>{t("かえる", "変更")}</Button>
                                             </InsetPanel>
                                         ))}
                                     </div>
@@ -622,7 +622,8 @@ export const Settings: React.FC = () => {
                                                 const selectedMinutes = profile?.periodicTestTimeLimitSeconds ? Math.floor(profile.periodicTestTimeLimitSeconds / 60) : 0;
                                                 const isSelected = selectedMinutes === minutes;
                                                 return (
-                                                    <button key={minutes} type="button" aria-pressed={isSelected} onClick={() => handleTestTimerChange(minutes)} className={`app-pill min-h-11 min-w-11 rounded-full px-3 py-1 text-xs font-black tracking-[0.08em] transition-colors ${isSelected ? "border-slate-200/90 bg-slate-100/88 text-slate-700" : "border-white/80 bg-white/68 text-pokomoko-muted"}`}>
+                                                    <button key={minutes} type="button" aria-pressed={isSelected} onClick={() => handleTestTimerChange(minutes)} className={`inline-flex min-h-11 min-w-11 items-center justify-center gap-1 rounded-full border-2 px-3 py-1 text-xs font-black tracking-[0.08em] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--pokomoko-blue-deep)] ${isSelected ? "border-[color:var(--pokomoko-blue)] bg-[#e8f0ff] text-[color:var(--pokomoko-blue-deep)]" : "border-[color:var(--pokomoko-edge)] bg-white text-pokomoko-muted"}`}>
+                                                        {isSelected && <Check size={14} strokeWidth={3} aria-hidden="true" />}
                                                         {minutes === 0 ? t("なし", "なし") : t(`${minutes}ふん`, `${minutes}分`)}
                                                     </button>
                                                 );
