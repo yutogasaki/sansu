@@ -29,3 +29,9 @@
 理解/安全: 子どもの無説明利用・意欲の確認は未実施。既存のルール・コピー・UI・学習条件の変更なし。
 
 Runtime: 上記の範囲で確認。全release matrix、実iPhoneの30秒待ち解消、実機GPU/電池の合格ではない。
+
+## main / 公開
+
+実装dbcf85decbeaba8298f109cf69acc1035b54c47cをmainへpush。Vercel READYと[公開version](public-version.json)の同revisionを確認。[公開版の実操作](production.json)は390/768幅で実初回4問・花の購入/配置・夜の庭・実SW offline再読込・追加回答と保存保持を通過。fixture注入なし、pageerror 0。公開前のexportで、意図したcommit treeと全app入力が隔離core/build候補に一致することを検査。別作業の未commit変更は含めていない。
+
+公開後の追記は証拠・タスク/ポータルのみ。実iPhoneの起動/電池と33.3ms目標は継続。

@@ -553,9 +553,11 @@ main `4002e67b` から本番へ反映済み。公開URLの390/768幅で初回学
 ### Risks
 
 - 「全体」を広げすぎて島v3、家、Nature Town、ブランド外部確認の既存ownerを複製しない。横断の証拠づくりと未所有の共通操作課題に集中する。
-</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">2・性能</h2><div class="grid"><article class="card" data-search="起動と物が増えた島の軽量化：raycast cpuを約84〜85%削減済み。追加の頂点共有で同じ30品の形状bufferを20.5%削減。最新desktop p95は38.2/55.6msで33.3ms未達 次：実iphoneの起動・描画/電池負荷と、残るフレーム時間を同じ端末で確認 docs/tasks/active/2026-09-23-island-performance.md # island / iphone pwa performance
+</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">2・性能</h2><div class="grid"><article class="card" data-search="起動と物が増えた島の軽量化：raycast cpuを約84〜85%削減済み。頂点共有も本番反映し、同じ30品の形状bufferを20.5%削減。最新desktop p95は38.2/55.6msで33.3ms未達 次：実iphoneの起動・描画/電池負荷と、残るフレーム時間を同じ端末で確認 docs/tasks/active/2026-09-23-island-performance.md # island / iphone pwa performance
 
 ## 2026-09-29 描画頂点の共有
+
+main dbcf85deから本番へ反映。公開版の390/768幅で実初回・購入・夜の庭・offline追加回答/再読込を確認。
 
 次の実装依頼に対応。庭の静的結合で捨てていた頂点indexを保持し、同じ頂点を三角形ごとに複製する負荷を減らす。三角形の順序・位置・法線・uv・頂点色・部品へのhit対応を維持する。画風・キャラクター・動き・解像度・影・保存と学習の仕様は変えない内部改善のため、製品仕様の変更は不要。[同じ30品の比較](../../design/2026-09-29-garden-indexed-geometry/readme.md)で頂点244,096→191,864、形状buffer 8,920,004→7,090,624 bytes、三角形属性は完全一致。core4,297 tests、実初回→購入/招待→庭/家→offline同じ学習、水/保存/再演の両幅検証pass。短時間のdesktop p95は41.8→38.2ms / 62.4→55.6msで33.3ms未達。実iphoneの起動/電池/描画と利用者評価は別。
 
@@ -676,9 +678,11 @@ this is a performance implementation within the existing product rules, so the p
 - life-enabled `verify:core` passed: 460 files / 4,168 tests, lint (one existing islandmilestone fast-refresh warning), typecheck, build and asset budget. the production decorations journey passed at 390×844 and 768×1024 (tablet reduced motion): six real answers, earned purchase, rotate/move/store/re-place, abort/retry, offline reload and learning return, followed by a separate synthetic 30-item stress fixture. both stress scenes loaded 34 instances from eight glbs, retained 17 textures, switched lod, and had no page errors. phone placement and tablet stress screenshots were inspected for visible props/residents and controls.
 - local browser evidence: `output/playwright/runtime-props-20260924/browser/report.json`; operation-count diagnostic: `output/playwright/runtime-props-20260924/clone-count.json`. target `http://127.0.0.1:5298`, version `development-local:b761cc63-f444-40d7-8107-d092ddce3f07`, app/dist/harness fingerprint `3583321974cb0a09960d6a6867689645af002eb229fdd61c18efa28b46892671` matched at start/end. delivery island/life enabled, life preview/buildplay disabled; runtime assets `island-life-runtime-assets-v3`, home props `island-home-props-v1`.
 - this local renderer change is complete. no deployment, real iphone timing, new art approval, child comprehension/replay assessment or full release-matrix pass is claimed. ongoing per-frame rendering costs and installed-device measurement remain separate follow-ups.
-"><h2><a href="../../docs/tasks/active/2026-09-23-island-performance.md">起動と物が増えた島の軽量化：raycast CPUを約84〜85%削減済み。追加の頂点共有で同じ30品の形状bufferを20.5%削減。最新desktop P95は38.2/55.6msで33.3ms未達 次：実iPhoneの起動・描画/電池負荷と、残るフレーム時間を同じ端末で確認</a></h2><p class="path">docs/tasks/active/2026-09-23-island-performance.md</p><p>次の実装依頼に対応。庭の静的結合で捨てていた頂点indexを保持し、同じ頂点を三角形ごとに複製する負荷を減らす。三角形の順序・位置・法線・UV・頂点色・部品へのhit対応を維持する。画風・キャラクター・動き・解像度・影・保存と学習の仕様は変えない内部改善のため、製品仕様の変更は不要。[同じ30品の比較](../../design/2026-09-29-garden-indexed-geometry/README.md</p><details><summary>詳細を読む</summary><pre># Island / iPhone PWA performance
+"><h2><a href="../../docs/tasks/active/2026-09-23-island-performance.md">起動と物が増えた島の軽量化：raycast CPUを約84〜85%削減済み。頂点共有も本番反映し、同じ30品の形状bufferを20.5%削減。最新desktop P95は38.2/55.6msで33.3ms未達 次：実iPhoneの起動・描画/電池負荷と、残るフレーム時間を同じ端末で確認</a></h2><p class="path">docs/tasks/active/2026-09-23-island-performance.md</p><p>main dbcf85deから本番へ反映。公開版の390/768幅で実初回・購入・夜の庭・offline追加回答/再読込を確認。 次の実装依頼に対応。庭の静的結合で捨てていた頂点indexを保持し、同じ頂点を三角形ごとに複製する負荷を減らす。三角形の順序・位置・法線・UV・頂点色・部品へのhit対応を維持する。画風・キャラクター・動き・解像度・影・保存と学習の仕様は変えない内部改善のため、製品仕様の変更は不要。[同じ</p><details><summary>詳細を読む</summary><pre># Island / iPhone PWA performance
 
 ## 2026-09-29 描画頂点の共有
+
+main dbcf85deから本番へ反映。公開版の390/768幅で実初回・購入・夜の庭・offline追加回答/再読込を確認。
 
 次の実装依頼に対応。庭の静的結合で捨てていた頂点indexを保持し、同じ頂点を三角形ごとに複製する負荷を減らす。三角形の順序・位置・法線・UV・頂点色・部品へのhit対応を維持する。画風・キャラクター・動き・解像度・影・保存と学習の仕様は変えない内部改善のため、製品仕様の変更は不要。[同じ30品の比較](../../design/2026-09-29-garden-indexed-geometry/README.md)で頂点244,096→191,864、形状buffer 8,920,004→7,090,624 bytes、三角形属性は完全一致。core4,297 tests、実初回→購入/招待→庭/家→offline同じ学習、水/保存/再演の両幅検証PASS。短時間のdesktop P95は41.8→38.2ms / 62.4→55.6msで33.3ms未達。実iPhoneの起動/電池/描画と利用者評価は別。
 

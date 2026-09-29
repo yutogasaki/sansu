@@ -1,0 +1,25 @@
+{
+  "version": "dbcf85decbeaba8298f109cf69acc1035b54c47c:5a8fada7-d904-42a7-bb63-037d79b953eb",
+  "revision": "dbcf85decbeaba8298f109cf69acc1035b54c47c",
+  "delivery": "snap-root-v1",
+  "visualLineage": "pokko-field-v1",
+  "park": {
+    "enabled": false,
+    "renderer": "retired"
+  },
+  "island": {
+    "enabled": true,
+    "delivery": "mystic-island-v1",
+    "candidate": "mystic-island-shore-garden-v18",
+    "life": {
+      "enabled": true,
+      "discovery": true,
+      "fantasy": true,
+      "candidate": "living-fantasy-garden-v2",
+      "saveVersion": 21
+    },
+    "learningCandidate": "pokomoko-pop-live-v8",
+    "residentCandidate": "patchwork-otter-v1",
+    "artDirection": "moon-garden"
+  }
+}
