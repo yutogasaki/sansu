@@ -1,148 +1,154 @@
-# Sansu / ポッコのふしぎずかん Constitution
+# ぽこもこと不思議な島 — Constitution
 
-2026-09-27 — production integration: The user explicitly requested integrating the existing fantasy candidate and Nature Town loop into household production. Keep Pokomoko’s original face, silhouette, proportions, ears, patchwork, colors and appearance choices. This authorizes the scoped release after technical verification; it does not turn unperformed independent art/child/device observations into PASS or declare specification 51 complete. Preserve learning, ownership and both databases; use a version-compatible rollback.
+2026-09-29改訂。北極星を旧Explore（地底探検）から「育つ島」へ改めた。経緯・比較した案・置き換えた旧原文は[ADR](docs/adr/2026-09-29-north-star-growing-island.md)に残す。この文書には日付付きの変更記録を積まない。変更はADRへ書き、本文を書き換える。
 
-2026-09-27 — character identity: The user explicitly requires keeping Pokomoko's existing design. Preserve its face, silhouette, proportions, ears, patchwork fabric, palette and existing appearance choices. Reconsidering the world, design or mechanics does not authorize changing Pokomoko. Any proposed character redesign needs a separate explicit request or approval; a concept board is not that approval. The temporary fantasy-companion replacement is withdrawn.
+## 0. 目的
 
-2026-09-27 — next-design scope: The user authorized reconsidering already specified world design and mechanics and requested a comprehensive specification. [51 Living Fantasy Island](docs/product/51_living_fantasy_island_spec.md) and its eight chapters define the next `living-fantasy-v1` design, using direction B for the environment. Environment art constraints may change within that target; Pokomoko's existing character identity remains binding. Learning integrity, non-shaming, ownership, and save protection remain binding. The generated concept board is not approved final art. Current-runtime contracts continue until a verified cutover; specification work alone is not implementation, save conversion, or deployment.
+`sansu` ワークスペースの最上位の原則を定める。文書・実装・タスク・過去ログ・会話の判断が食い違うときは、この文書が優先する。
 
-2026-09-27: `ぴったり連鎖` is retired. It was never part of the current app menu; remove its standalone development entry and implementation. Keep its specification and verification as historical records under `docs/product/archive/` and `docs/design/`. Do not treat the 2026-09-06 priority below as current work or delete a child's saved learning data while retiring the prototype.
+「ぽこもこと不思議な島」は、学習の道具であるだけでなく、**子どもが自分から戻ってきたくなる島のゲーム**である。算数・英語の練習は、島を育てたい気持ちとともに続く。
 
-2026-09-22: Nature Town is no longer a separate product direction. Integrate its nature, transport, population and land systems into the current Island, retaining the existing art, characters, home and learning flow. Follow `docs/product/island-nature-integration.md`; preserve both existing saves and distinguish adopted integration from implemented migration. Do not continue a separate town art direction or infer permission to overwrite saves or deploy.
+## 1. 北極星
 
-2026-09-10: The user authorized the next island prototype in `docs/product/48_island_life_spec.md`: learning earns creative choices; placement, time and autonomous residents produce different lives. Pokomoko alone receives destination choices. Learning participation, daily achievement and independent mastery remain distinct. The initial DEV prototype uses a separate game database. On 2026-09-11 the user authorized household production use with fresh ownership and no ownership migration; learning records remain intact. Existing modes retain their own progression and saved rights.
+> **ぽこもこと、自分の島を育てる。**
+> 置き方を変えると、水・食べ物・人の流れが変わる。住人が増え、島が広がり、ときどきその場所だけの不思議が起きる。
+> 学習は、島に新しい材料と道具をもたらす、短く気持ちのよい練習。
 
-## 0. Purpose
+### 1.1 面白さの源
 
-This file defines the highest-priority principles for the `sansu` workspace.
-If documents, implementation, task notes, past logs, or conversational decisions conflict, this file wins.
+| 柱 | 子どもの感覚 | 守ること |
+|---|---|---|
+| **くふう** | これを変えたらどうなる？ | 配置・水・木陰・運搬・食卓が一貫した規則で反応し、途中経過が見え、無料で試し直せる |
+| **にぎわい** | 自分の島がこんなに大きくなった | 住人・使われる場所・往来・土地・地区が実際に増える。**小さな固定上限で止めない。** 人口は地区が広がるほど増やせる |
+| **ふしぎ** | 今日はこの子が来た | 訪問や出会いは条件で起きやすさが変わり、毎回同じにはならない。見逃しても失わない |
+| 土台：**愛着** | 前に育てた場所が続いている | ぽこもこ、育てた場所、迎えた住人、見た出来事が残る |
 
-Sansu / ポッコのふしぎずかん is not only a learning utility. It is a **math game children choose to replay**, where repeated arithmetic practice and retention grow as a consequence of engaging gameplay.
+仕様は、どの柱に効くかを示す。柱を弱める・削る変更は§6の手続きを経る。
 
-## 1. Product North Star
+### 1.2 学習と島の関係
 
-The current development priority (2026-09-07) is the user-adopted Mystic Island learning game in `docs/product/28_mystic_island_spec.md`: preserve normal problem inputs and rapid consecutive learning while correct answers restore light and short sections grow a freely arranged island. The prior gameplay-first candidate below remains an independent mode, not a constraint on the new island.
+- 学習の完了は、島の**材料**（しずく）と、**まちの時間**をもたらす。学ぶと島の時間が進み、しこんだ物が育ち、住人が来る。単元を独力で身に付けると、島に記念品が届く。具体の規則は[52](docs/product/52_growing_island_game_spec.md)。
+- 学習を抽選券にしない。学習の量で、運を引く回数を増やさない。
+- これは外からの報酬である。名前を変えて内発的な動機だと説明しない。学習画面そのものの手触り・速さ・演出で、練習自体を気持ちよくする。
+- 学習は本人が「まなぶ」を選んで始める。島の不足・困り顔・締切で学習を迫らない。
+- 島の都合で、出題・採点・支援・独力判定・復習期限を変えない。
 
-The previous development priority (2026-09-06) was gameplay-first within an explicit learning scope. Its first candidate `ぴったり連鎖` is now retired; see the [historical specification](docs/product/archive/27_gameplay_first_pittari_spec.md). Exploration and build-and-play contracts below govern their existing modes, not the current Island.
+### 1.3 唯一の合格基準
 
-The user-authorized `build-play-v1` MVP also follows `docs/product/22_shared_subject_build_and_play_spec.md`. A fixed companion, exploration, random discovery, eight-question runs, and math as an immediate world action are rules for the existing exploration mode, not universal requirements. The shared game connects reserved learning segments to chosen functional parts; free placement and replay determine the outcome. Assisted completion and independent mastery remain separate. All data-safety, non-shaming, and verification rules apply to both modes.
+**子どもが自分から「まなぶ」を選び、次の日も島へ戻ってくるか。** 自動テスト、数値ゲート、作者の感想は、これの代わりにならない。
 
-> ポッコのふしぎずかんは、子どもが相棒ポッコと明るい地底世界を探検し、算数で掘り進み、発見・判断・失敗・再挑戦をくり返すことで、自然に計算練習を続けたくなるPWAである。
+## 2. 優先順位
 
-## 2. Priority Order
+1. 子どもが自分の選択で戻ってくる
+2. 子どもを恥じさせない回復可能な失敗と、保護者の信頼
+3. 学習の正しさ、機能の正しさ、データの安全
+4. 小さく検証できる実装の段階
+5. 保守性と、仕様と実装の一致
+6. 普段の場面の落ち着きと、視覚の抑制
+7. 開発の速さ
 
-1. Children want to replay by their own choice
-2. Recoverable failure that does not shame children, plus parent trust
-3. Learning integrity, functional correctness, and data safety
-4. Small, verifiable implementation steps
-5. Maintainability and consistency between specs and implementation
-6. Calmness and visual restraint during ordinary moments
-7. Delivery speed
+面白さは最初の判断基準だが、子どもの自己効力感を傷つけること、学習進行を危うくすること、データを壊すことを許す理由にはならない。
 
-Fun is the first product test, but it never authorizes harm to a child's self-efficacy, unsafe learning progression, or destructive data handling.
+## 3. 設計の芯
 
-## 3. Core Design Thesis
+### 3.1 学びは責めない。島は止めない
 
-### 3.1 Math is a game action, not a toll
-
-Problems should power actions such as:
-
-- breaking open a rock
-- connecting a bridge
-- activating a terrain switch
-- escaping a risky route
-- opening a chance at a rare discovery
-
-The actions children feel they are performing are **dig, choose, move, return, build, discover, and bring things home**.
-
-### 3.2 Learning does not shame; the game may fail
-
-The product distinguishes ability judgment from recoverable game consequences.
-
-| Area | Rule |
+| 領域 | 規則 |
 |---|---|
-| Deny or belittle a child's ability | Never |
-| Lower learning progress as punishment | Never |
-| Remove a discovery already registered in a collection | Never |
-| Miss a temporary bonus in the current run | Allowed |
-| Take a detour or retry a bridge | Allowed |
-| Lose part of unconfirmed run materials | Allowed when clearly communicated |
-| End a run and offer a quick retry | Allowed |
-| Use a brief, playful failure animation | Encouraged when it invites retry |
+| 能力を否定・軽視する | しない |
+| 罰として学習進行を下げる | しない |
+| 取得済みの物・土地・住人・見た記録を取り上げる | しない |
+| 飢え・枯死・住人の退去・維持費 | 設けない。不足は「まだ育たない・まだ来ない」として示す |
+| 配置が通れない、届かない、育ちが遅い | 起きてよい。理由と直す手段を見せる |
+| 確率の訪問が今回は来ない | 起きてよい。通常の遊びと繁栄を運任せにしない |
 
-### 3.3 Remove meaningless choices, add meaningful choices
+### 3.2 意味のない選択を減らし、意味のある選択を増やす
 
-Reduce:
+減らすもの：遊ぶ前の設定、説明を読まないと分からない選択、子どもの画面に混ざった設定や保護者向けの情報。
 
-- setup choices before play
-- settings mixed into the child surface
-- choices that require instructions to understand
-- parent information inside the play flow
+増やすもの：どこに置くか、水をどう引くか、どの道で運ぶか、どちらへ土地を広げるか、誰を迎えるか、どの道具を先に開くか。
 
-Add:
+### 3.3 規則は一貫、出会いは条件付き
 
-- safe path or discovery path
-- continue or return
-- spend or save a bridge resource
-- nearby known find or distant unknown light
-- challenge or detour
+水の届き方・通れる道・在庫の受け渡し・成長は、一貫した規則で決める。訪問・入居の候補・珍しい見た目は、条件で起きやすさが変わる確率にする。学習の進捗、取得済みの権利、保存は確率にしない。画面を開き直すだけで結果が変わらないよう、乱数は決定的に扱う。
 
-## 4. Non-Negotiables
+### 3.4 本物の繁栄だけを見せる
 
-1. **Fun First**: Ask first whether the change makes children want another run.
-2. **Recoverable Failure**: Failure is short, understandable, and easy to retry.
-3. **No Shame**: Incorrect answers, skips, and low scores never become ability or character judgments.
-4. **Meaningful Choice**: A run contains several choices with visible game consequences.
-5. **Surprise by Design**: Discovery is predictable enough to form expectations, but not fully knowable.
-6. **Peaks and Valleys**: Ordinary play remains readable; discovery peaks may use stronger sound, color, and motion briefly.
-7. **Player-Generated Stories**: A completed run should produce a small story worth retelling.
-8. **Learning Integrity**: Math generators, SRS, Due, weak handling, unlock rules, and lesson bundles remain authoritative unless a spec explicitly changes them.
-9. **Local First**: Login and cloud sync are out of scope; local data remains the default.
-10. **Spec First**: Update the parent and relevant child specs before behavior changes.
-11. **One Primary Purpose**: Keep each implementation step focused and reviewable.
-12. **Small Verifiable Steps**: Verification is required before work closes.
-13. **No Dark Core**: Horror, death, blood, and defeating enemies are not the center of the world.
-14. **Data Safety**: Routing, storage, tests, and PWA update flows remain high-risk areas.
+人口が増えていないのに群衆を足す、物流がないのに荷車を流す、といった見せかけの繁栄はしない。見た目は実際の状態を表す。
 
-## 5. Source-of-Truth Order
+## 4. 変えない条件
+
+1. **Fun First**: 変更のたびに、子どもがまた戻りたくなるかを最初に問う。
+2. **Recoverable Failure**: 失敗は短く、理由が分かり、すぐ直せる。
+3. **No Shame**: 誤答・スキップ・低い結果を、能力や人格の判断にしない。
+4. **Meaningful Choice**: 島での選択は、目に見える結果を持つ。
+5. **Growth Without Punishment**: 島は育ち続けられる。不在や学習しない日を罰しない。
+6. **Surprise by Design**: 傾向は予想できるが、全部は読み切れない。
+7. **Peaks and Valleys**: 普段は読みやすく、発見や迎え入れの山場だけ短く強く演出する。
+8. **Learning Integrity**: 教材、生成器、SRS、Due、苦手の扱い、解放、支援と独力の区別は、学習の仕様が明示して変えない限り正本のまま。
+9. **Pokomoko Identity**: ぽこもこの顔・頭身・耳・パッチワークの布・配色・既存の着替えを維持する。変更には個別の明示承認が要る。他の住人の追加・改善はこの制約に含まない。
+10. **Save Protection**: 学習記録、所有、住人、土地、写真、履歴を保持する。保存形式の切替は検証済みの境界と復旧手段を伴う。別DBを自動合算しない。
+11. **Local First**: ログインとクラウド同期は範囲外。端末内の保存を既定とする。
+12. **Spec First**: 挙動を変える前に、親仕様と該当する子仕様を更新する。
+13. **Small Verifiable Steps**: 作業を閉じる前に検証する。
+14. **No Dark Core**: ホラー、死、血、敵の撃破を世界の中心にしない。
+15. **Data Safety**: ルーティング、保存、テスト、PWA更新は高リスク領域として扱う。
+
+## 5. 正本の順序
 
 1. `CONSTITUTION.md`
 2. `docs/product/01_app_spec.md`
-3. `docs/product/10_exploration_game_spec.md`
-4. `docs/product/11_learning_integration_spec.md`
-5. Other child specs under `docs/product/`
-6. `docs/ai/verification_matrix.md` and runbooks
-7. Current implementation
-8. Active task documents
-9. Done logs and conversation history
+3. 島の現行仕様：`docs/product/island-nature-integration.md`、`docs/product/48_island_life_spec.md`、`docs/product/43_island_navigation_spec.md`、`docs/product/44_display_layout_spec.md`
+4. 学習の仕様：`02` / `03` / `29` / `31` / `34`（学習の挙動については3より優先）
+5. 次期の設計：遊びの規則は`docs/product/52_growing_island_game_spec.md`、表現（美術・光・音・カメラ）と保存移行の考え方は`docs/product/51_living_fantasy_island_spec.md`と8章。食い違うときは52を正とする
+6. その他の子仕様
+7. 旧モードの仕様（`10` / `11` / `09` / `22` など）。そのモードの挙動だけに適用する
+8. `docs/ai/verification_matrix.md` と runbooks
+9. 現在の実装
+10. 進行中のタスク文書
+11. 完了ログと会話の履歴
 
-Done logs are historical facts, not a source of truth for current behavior.
+完了ログは過去の事実であり、現在の挙動の正本ではない。
 
-## 6. Product and Operations Boundaries
+## 6. 北極星を守る手続き
 
-- `docs/` stores product, process, runbook, and durable project truth.
-- `.agents/` stores shared operations, reusable workflows, task queues, and operational memory.
-- `.claude/` stores Claude-specific adapters.
-- `.codex/` stores only repository-committed Codex adapters when needed.
-- `memory` stores durable decisions only.
-- `task` stores active work only.
-- `ADR` stores non-obvious decisions that are costly to rediscover.
-- Status notes never replace the governing spec.
+- 新しい仕様・大きな改訂は、冒頭で「どの柱に効くか」「何を弱める・削るか」を示す。
+- 柱（くふう・にぎわい・ふしぎ・愛着）を弱める・削る変更、上限で成長を止める変更、北極星そのものの変更は、ユーザーの明示承認を得てADRに記録してから仕様へ入れる。
+- 参考作品の調査（例：Little Habitats）は、表現と操作の借用元であり、北極星を置き換えない。
+- この文書に日付付きの上書きを積まない。決定はADRへ書き、本文を直す。
 
-## 7. Size and Split Rules
+## 7. 製品と運用の境界
 
-- Review React pages and hooks when they cross roughly 300 lines.
-- Keep exploration domain state in pure modules rather than one large page component.
-- Split documents when they mix rules, implementation status, and history.
-- Do not mix backlog with active execution notes.
-- Do not add large exploration state directly to `UserProfile`; use a dedicated persistence boundary when storage is introduced.
+- `docs/` は製品・手順・runbook・長く残るプロジェクトの事実を持つ。
+- `.agents/` は共有の運用、再利用する手順、タスクの列、運用メモを持つ。
+- `.claude/` は Claude 用の adapter を持つ。
+- `.codex/` は必要なときだけ、リポジトリに含める Codex の adapter を持つ。
+- memory は長く残る判断だけ、task は進行中の仕事だけを持つ。
+- ADR は再発見に費用がかかる判断を持つ。
+- 状態メモを仕様の代わりにしない。
 
-## 8. Baseline Definition of Done
+## 8. 大きさと分割
 
-- Relevant specs are updated first, or a no-change decision is recorded.
-- Required lint, typecheck, tests, and build checks run successfully, or the gap is recorded.
-- Exploration domain changes have focused reducer or generator tests.
-- Routing, IndexedDB, PWA, and learning-log changes receive their additional required verification.
-- Child-facing copy contains no unnecessary ability judgment or punishment.
-- The fun hypothesis and any unverified experience risk are stated in the handoff.
-- User-visible risks and follow-ups are called out.
+- React のページと hook は、おおむね300行を超えたら見直す。
+- 島の自然・物流・住人・人口の状態は、大きなページcomponentではなく純粋なモジュールに置く。
+- 規則・実装状態・経緯が混ざった文書は分割する。
+- バックログと進行中の作業メモを混ぜない。
+- 大きなゲーム状態を `UserProfile` へ直接足さない。専用の保存境界を使う。
+
+## 9. 完了の基準
+
+- 関係する仕様を先に更新したか、変更不要の判断を記録した。
+- 必要な lint、typecheck、テスト、build が通った。通らない場合はその差を記録した。
+- 島の純粋ロジックの変更には、対象を絞ったテストがある。
+- ルーティング、IndexedDB、PWA、学習ログの変更は、追加の必須検証を受けた。
+- 子ども向けの言葉に、不要な能力判断や罰がない。
+- どの柱に効く変更か、面白さの仮説と未検証の体験リスクを引継ぎに書いた。
+- 利用者に見えるリスクと後続作業を明記した。
+
+## 10. 旧モードと過去の決定
+
+- **旧Explore**（`/explore`）：「算数が世界での行動になる」「ラン中の選択とランの物語」など、旧北極星の設計論はこのモードにだけ適用する。原文は[ADR付録](docs/adr/2026-09-29-north-star-growing-island.md)。
+- **2人遊び・旧遊園地**：既存の入口整理・転送・保存契約を維持する。島のメニューへ再追加しない。
+- **ぴったり連鎖**：終了。仕様と検証は `docs/product/archive/` と `docs/design/` に保管し、子どもの学習データは削除しない。
+- **Nature Town**：別作品としては進めない。自然・運搬・食事・入居・土地・人口の仕組みを今の島へ統合する。旧DBは保持し、自動合算しない。
+- **家庭内の本番利用**：学習記録を保持したまま、島は家庭内の本番で使われている。既存モードはそれぞれの進行と取得済みの権利を保つ。

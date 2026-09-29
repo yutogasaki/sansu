@@ -25,7 +25,16 @@ For UI work, also read:
 2. `docs/product/design_review_checklist.md`
 3. `design-system/MASTER.md`
 
-For exploration work, also read:
+For island work (the current product direction), also read:
+
+1. `docs/adr/2026-09-29-north-star-growing-island.md`
+2. `docs/product/island-nature-integration.md`
+3. `docs/product/48_island_life_spec.md`
+4. `docs/product/52_growing_island_game_spec.md` (the play rules for the next design)
+5. `docs/product/51_living_fantasy_island_spec.md` (art, light, sound, camera; start with its north-star alignment table)
+6. `docs/product/nature-town/01_PRODUCT_AND_DECISIONS.md` and `03_GROWTH_AND_RANDOMNESS.md`
+
+For legacy exploration-mode (`/explore`) work only, also read:
 
 1. `docs/product/10_exploration_game_spec.md`
 2. `docs/product/11_learning_integration_spec.md`
