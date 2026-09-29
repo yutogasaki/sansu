@@ -1,0 +1,39 @@
+{
+  "base": "c2725496",
+  "source": "Reviewed index export; other unstaged Island edits excluded",
+  "version": {
+    "version": "development-local:6f410bd3-e80c-40c0-897f-8192dd7158d8",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": true,
+        "fantasy": true,
+        "candidate": "living-fantasy-garden-v2",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "files": [
+    {
+      "path": "src/components/progress/LearningProgressCards.tsx",
+      "sha256": "11653f3aa0b8c8844f6e163cf66209b3a16f341b49e5db63ffc7aa6233be7f4f"
+    },
+    {
+      "path": "tools/e2e-progress-visibility.mjs",
+      "sha256": "f24ab7d3469b7c32f2846b02569fb1e2eec207fba2ee71eb67a1326bfe69e480"
+    }
+  ]
+}

@@ -8,7 +8,7 @@ const base = process.env.SANSU_PROGRESS_URL || 'http://127.0.0.1:5266';
 const out = process.env.SANSU_PROGRESS_OUTPUT || 'output/playwright/progress-visibility';
 await fs.mkdir(out, { recursive: true });
 const paths = ['src/pages/Stats.tsx', 'src/pages/Island.tsx', 'src/components/island/IslandLearningPanel.tsx',
-    'src/components/progress/LearningProgressCards.tsx', 'src/components/progress/LearningProgressCue.tsx',
+    'src/components/progress/LearningProgressCards.tsx', 'src/components/progress/LearningProgressCards.css', 'src/components/progress/LearningProgressCue.tsx',
     'src/components/progress/LearningProgressCue.css', 'src/domain/learning/progressView.ts', 'src/domain/learning/progressRepository.ts', 'src/domain/levelProgression.ts'];
 const hashes = () => Promise.all(paths.map(async path => ({ path, sha256: createHash('sha256').update(await fs.readFile(path)).digest('hex') })));
 const bundled = await build({ stdin: { contents: "export { createInitialProfile } from './src/domain/user/profile.ts';", resolveDir: process.cwd() }, bundle: true, platform: 'node', format: 'esm', write: false });
@@ -50,7 +50,7 @@ try {
         }, profile);
         await page.goto(`${base}/#/stats`); await page.reload();
         const road = page.getByLabel('つぎへの道', { exact: true });
-        await road.getByText('19 / 20問', { exact: true }).waitFor();
+        await road.getByText('19 / 20問', { exact: true }).first().waitFor();
         const row = { width, app: await appRootMetadata(page), errors, before: await road.innerText() };
         await page.screenshot({ path: `${out}/${width}-record.png`, fullPage: true });
         await road.getByRole('button', { name: 'まなぶ', exact: true }).click();
@@ -68,8 +68,12 @@ try {
             assert(bounds && bounds.y >= 0 && bounds.y + bounds.height <= (width === 390 ? 844 : 1024), 'keypad fits viewport');
         }
         await page.getByRole('button', { name: 'とじる', exact: true }).click();
-        await road.getByText('つぎの はんいが ひらいたよ。少しずつ れんしゅう中。', { exact: true }).waitFor();
+        await road.locator('[data-progress-stage=practice]').waitFor();
         row.after = await road.innerText();
+        assert.equal(await road.locator('details[open]').count(), 0);
+        await road.locator('summary').click();
+        await road.getByText('ひとりで できた きろく', { exact: true }).waitFor();
+        await road.locator('summary').click();
         await page.screenshot({ path: `${out}/${width}-after.png`, fullPage: true });
         await road.getByRole('button', { name: 'さんすうの しあげに ちょうせん', exact: true }).click();
         await page.waitForURL(/session=periodic-test.*focus_subject=math/);
@@ -78,7 +82,7 @@ try {
         row.testUrl = page.url();
         // Explicit native read fault in this disposable context, then the real retry button.
         await page.evaluate(() => { location.hash = '/stats'; });
-        await road.getByText('つぎの はんいが ひらいたよ。少しずつ れんしゅう中。', { exact: true }).waitFor();
+        await road.locator('[data-progress-stage=practice]').waitFor();
         await road.getByRole('button', { name: 'まなぶ', exact: true }).click();
         await page.locator('[data-input-ready=true]').waitFor();
         await page.evaluate(() => sessionStorage.setItem('progress-read-fault', '1'));
@@ -93,10 +97,36 @@ try {
         await page.screenshot({ path: `${out}/${width}-read-error.png`, fullPage: true });
         await page.evaluate(() => sessionStorage.removeItem('progress-read-fault'));
         await road.getByRole('button', { name: 'もういちど 読みこむ', exact: true }).click();
-        await road.getByText('つぎの はんいが ひらいたよ。少しずつ れんしゅう中。', { exact: true }).waitFor();
+        await road.locator('[data-progress-stage=practice]').waitFor();
         assert.equal(await road.getByRole('alert').count(), 0);
         row.readRetry = true;
         await page.screenshot({ path: `${out}/${width}-read-recovered.png`, fullPage: true });
+        // Explicit paused-level fixture matching the reported screen; no real user data.
+        await page.evaluate(async id => {
+            const request = indexedDB.open('SansuDatabase');
+            const database = await new Promise((resolve, reject) => { request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error); });
+            const tx = database.transaction(['profiles', 'appData'], 'readwrite');
+            const get = tx.objectStore('profiles').get(id);
+            get.onsuccess = () => {
+                const paused = get.result;
+                paused.mathMainLevel = 16; paused.mathMaxUnlocked = 17;
+                paused.mathLevels = paused.mathLevels.map(level => level.level === 17 ? { ...level, unlocked: true, enabled: false } : level);
+                tx.objectStore('profiles').put(paused);
+                tx.objectStore('appData').put({ id: 'app', schemaVersion: 1, activeProfileId: id, profiles: { [id]: paused } });
+            };
+            await new Promise((resolve, reject) => { tx.oncomplete = resolve; tx.onerror = () => reject(tx.error); }); database.close();
+        }, profile.id);
+        await page.reload();
+        await road.locator('[data-progress-stage=paused]').waitFor();
+        assert.equal(await road.locator('details[open]').count(), 0);
+        assert.equal(await road.getByRole('progressbar').count(), 0);
+        const compactBounds = await road.boundingBox();
+        assert(compactBounds.height < 500, 'Paused progress fits a compact card');
+        row.pausedCardHeight = compactBounds.height;
+        await page.screenshot({ path: `${out}/${width}-paused.png`, fullPage: true });
+        await road.locator('summary').click();
+        await road.getByText('ひとりで できた きろく', { exact: true }).waitFor();
+        await page.screenshot({ path: `${out}/${width}-details.png`, fullPage: true });
         assert.equal(errors.length, 0);
         report.journeys.push(row);
         await context.close();

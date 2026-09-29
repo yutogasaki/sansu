@@ -1,0 +1,51 @@
+{
+  "base": "a9b661b5",
+  "source": "Reviewed index export excluding other tasks unstaged changes",
+  "version": {
+    "version": "development-local:11488c7c-fb7e-4ae8-84bf-5f05f001699e",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": true,
+        "fantasy": true,
+        "candidate": "living-fantasy-garden-v2",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "files": [
+    {
+      "path": "src/components/progress/LearningProgressCards.tsx",
+      "sha256": "9e621e77ccaebe4fab4a6543dd138212add45cbda3b504f4163f13cd4c6ca4e9"
+    },
+    {
+      "path": "src/components/progress/LearningProgressCards.css",
+      "sha256": "0ca52afca9f26f1d681e0b4c78b35be4c8bcd79c6ee6c92182603743b424866c"
+    },
+    {
+      "path": "src/assets/pokomoko-learning-poses.webp",
+      "sha256": "899524cf5319161fb77913a771216c7ad99e271ca00c463892d6cf22af66f78c"
+    },
+    {
+      "path": "src/components/island/IslandToyIcon.tsx",
+      "sha256": "bd6ca31a774bce02f8a0cd27b348173903fc753b719a39d2c25bc332191913c8"
+    },
+    {
+      "path": "tools/e2e-progress-visibility.mjs",
+      "sha256": "b45efd1ed5af00a76d8467214f3fd98ca9562a219acf42929732835dc3f0ff32"
+    }
+  ]
+}

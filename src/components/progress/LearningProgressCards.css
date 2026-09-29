@@ -1,0 +1,66 @@
+/* The same cloth palette and toy icons as the Island shell, kept around the data. */
+.learning-progress-card .progress-subject {
+    width: fit-content;
+    border-radius: 8px 8px 4px 4px;
+    padding: 3px 10px;
+    color: var(--pokomoko-ink);
+    background: var(--pokomoko-lavender);
+    font-size: 12px;
+    font-weight: 700;
+}
+.learning-progress-card .progress-path {
+    position: relative;
+    border: 1px solid var(--pokomoko-edge);
+    border-radius: 24px 20px 26px 18px;
+    background:
+        radial-gradient(circle at 95% 14%, var(--pokomoko-paper) 0 4px, transparent 4.5px),
+        radial-gradient(circle at 91% 8%, var(--pokomoko-paper) 0 2px, transparent 2.5px),
+        linear-gradient(110deg, var(--pokomoko-mint), var(--pokomoko-paper) 52%, var(--pokomoko-rose));
+}
+.learning-progress-card .progress-patch {
+    position: relative;
+    isolation: isolate;
+    border-radius: 45% 48% 42% 46%;
+}
+.learning-progress-card .progress-patch::after {
+    content: '';
+    position: absolute;
+    inset: 5px;
+    border: 1px dashed currentColor;
+    border-radius: inherit;
+    opacity: .6;
+    pointer-events: none;
+}
+.learning-progress-card .progress-patch-current {
+    background: var(--pokomoko-blue);
+    box-shadow: 0 3px 0 var(--pokomoko-blue-deep);
+}
+.learning-progress-card .progress-patch-next {
+    background: var(--pokomoko-paper);
+    border: 1px solid var(--pokomoko-stitch);
+    box-shadow: 0 3px 0 var(--pokomoko-edge);
+}
+.learning-progress-card [data-progress-stage=practice] .progress-patch-next {
+    background: var(--pokomoko-mint);
+    color: var(--pokomoko-ink);
+}
+.learning-progress-card .progress-companion {
+    position: absolute;
+    left: -34px;
+    bottom: -1px;
+    width: 56px;
+    height: 63px;
+    /* First complete 192×216 frame of the existing eight-pose atlas, feet included. */
+    background-size: 800% 100%;
+    background-position: left top;
+    background-repeat: no-repeat;
+    z-index: 1;
+    pointer-events: none;
+}
+.learning-progress-card .progress-level-title { text-wrap: balance; }
+.learning-progress-card .progress-path-arrow { stroke-dasharray: 2 4; }
+.learning-progress-card .progress-challenge {
+    border-color: var(--pokomoko-edge);
+    background: var(--pokomoko-paper);
+    box-shadow: 0 2px 0 var(--pokomoko-edge);
+}
