@@ -18,6 +18,14 @@ const browser = await chromium.launch();
 const report = { target: base, version: manifest.version, sourceHash: manifest.sourceHash, humanN: 0,
     scope: 'Real onboarding, three earned answers, two purchases, explicit visit, invitation, house and same learning reservation. Production SW offline restart. No profile, credits, clocks or membership injected.', cases: [], captures: [], pass: false };
 const world = page => page.locator('.life-world[data-rendered="true"]').waitFor();
+async function room(page) {
+    await page.waitForFunction(() => {
+        const el = document.querySelector('[data-renderer="three"]');
+        return el && JSON.parse(el.dataset.keepsakeRoom || 'null')?.visible && Number(el.dataset.drawCalls) > 10;
+    });
+    assert.equal(await page.locator('.island-page').getAttribute('data-house-candidate'), 'house-world-first-v1');
+    assert.equal(await page.locator('.life-world').count(), 0);
+}
 async function owner(page) {
     return page.evaluate(async () => {
         const open = indexedDB.open('SansuIslandLifeV1');
@@ -80,11 +88,9 @@ try {
         for (const [button, time] of [['ひる', 'day'], ['夕ぐれ', 'dusk'], ['よる', 'night']]) {
             await page.getByRole('button', { name: button, exact: true }).click(); await capture(page, `garden-${time}`);
             await page.getByRole('button', { name: 'しまの ようす', exact: true }).click();
-            await page.getByRole('button', { name: 'いえへ', exact: true }).click(); await world(page);
-            assert.equal(await page.locator('.island-page').getAttribute('data-house-candidate'), 'garden-house-continuity-v1');
-            assert.equal(await page.locator('.life-world').getAttribute('data-garden-time'), time);
+            await page.getByRole('button', { name: 'いえへ', exact: true }).click(); await room(page);
             await capture(page, `house-${time}`);
-            if (time === 'night') { await page.reload(); await world(page); assert.equal(await page.locator('.island-page').getAttribute('data-house-candidate'), 'garden-house-continuity-v1'); await capture(page, 'house-reload'); }
+            if (time === 'night') { await page.reload(); await room(page); await capture(page, 'house-reload'); }
             assert.deepEqual(await readNative(page), learning); assert.deepEqual((await owner(page)).actions, joined.actions);
             await page.getByRole('button', { name: 'しま', exact: true }).click(); await world(page);
         }
@@ -93,6 +99,8 @@ try {
         await context.setOffline(true); await page.reload(); await world(page);
         assert.equal(await page.locator('.island-life').getAttribute('data-life-residents'), 'pokomoko,otter');
         assert.deepEqual((await owner(page)).actions, joined.actions); await capture(page, 'offline-joined');
+        await page.locator('.island-shell-nav').getByRole('button', { name: 'いえ', exact: true }).click();
+        await room(page); await capture(page, 'offline-interior');
         await page.getByRole('button', { name: 'まなぶ', exact: true }).click(); await page.locator('[data-input-ready="true"]').waitFor();
         assert.deepEqual(await readNative(page), learning); await capture(page, 'same-learning');
         native = (await answerUI(page, learning.plan, { touch: true, dev: false })).state;

@@ -13,9 +13,10 @@ const report = { target: base, engine, fixture: 'Native profile only; real room 
 try {
  for (const viewport of [{width:390,height:844},{width:768,height:1024}]) {
   const page = await browser.newPage({viewport, hasTouch:true, reducedMotion:viewport.width===390?'no-preference':'reduce'});
+  page.setDefaultTimeout(30000);
   const errors=[]; page.on('pageerror',error=>errors.push(error.message));
   const capture=async name=>{const file=`${viewport.width}-${name}.png`;await page.screenshot({path:`${out}/${file}`});report.captures.push({file,...await runtimeMetadata(page),houseCandidate:await page.locator('.island-page').getAttribute('data-house-candidate'),cameraCandidate:await page.locator('[data-home-camera-candidate]').first().getAttribute('data-home-camera-candidate').catch(()=>null)});};
-  await page.goto(base); await page.waitForURL('**/#/onboarding'); const id=await seedNative(page,randomUUID());
+  await page.goto(base); await page.locator('.island-welcome').waitFor(); const id=await seedNative(page,randomUUID());
   await page.goto(base); await page.locator('.life-world[data-rendered=true]').waitFor(); await capture('launch');
   await page.locator('.island-shell-nav').getByRole('button',{name:'いえ',exact:true}).tap(); await waitReady(page); await capture('house');
   const walker=page.locator('[data-home-resident]');
@@ -47,9 +48,15 @@ try {
   await page.touchscreen.tap(bounds.x+target.x,bounds.y+target.y);await page.locator('.island-page[data-mode=album]').waitFor();await capture('album');
   assert.deepEqual(await readNative(page,id),before);
   await page.locator('.island-shell-nav').getByRole('button',{name:'いえ',exact:true}).tap();await waitReady(page);
+  await page.locator('[data-keepsake-action=photos]').click();
+  await page.locator('.island-page[data-mode=photos]').waitFor();await capture('photos');
+  await page.locator('.island-shell-nav').getByRole('button',{name:'いえ',exact:true}).tap();await waitReady(page);
   const trigger=page.getByRole('button',{name:'いえの メニュー',exact:true});
   await trigger.tap();await page.getByRole('dialog',{name:'いえの メニュー',exact:true}).waitFor();await capture('menu');await page.getByRole('button',{name:'いえの メニューを とじる',exact:true}).tap();
   await page.waitForFunction(()=>document.activeElement?.hasAttribute('data-house-menu-trigger'));
+  await trigger.tap();await page.locator('[data-keepsake-action=open-keepsakes]').click();
+  await page.locator('[data-keepsake-section=keepsakes]').waitFor();await capture('shelf');
+  await page.locator('.island-shell-nav').getByRole('button',{name:'いえ',exact:true}).tap();await waitReady(page);
   await trigger.tap();await page.locator('[data-keepsake-action=learn]').click();
   await page.locator('.island-page[data-mode=learning]').waitFor();await waitReady(page);await capture('learning-from-house-menu');
   const reserved=await readNative(page,id);assert(reserved.plan);
