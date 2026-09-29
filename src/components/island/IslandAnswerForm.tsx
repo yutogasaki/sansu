@@ -21,7 +21,9 @@ export function IslandAnswerForm({ slot, disabled, deferSubmission, onAnswer, an
     const [lastAnswerReceipt, setLastAnswerReceipt] = useState({ id: answerReceiptId, retryAnswer });
     if (answerReceiptId && answerReceiptId !== lastAnswerReceipt.id) setLastAnswerReceipt({ id: answerReceiptId, retryAnswer });
     const model = stage === 'model';
-    return <div className="island-answer-stage" data-support-stage={stage ?? 'none'}>
+    const symbolComparison = ['compare_1d', 'compare_2d', 'dec_compare', 'frac_compare'].includes(slot.problem.categoryId);
+    return <div className="island-answer-stage" data-support-stage={stage ?? 'none'}
+        data-comparison-symbol={symbolComparison || undefined}>
         <LearningAnswerForm key={lastAnswerReceipt.id ?? 'initial'} slot={slot} disabled={disabled || model}
         keypadLayout="compact-three"
         deferSubmission={deferSubmission}

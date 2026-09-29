@@ -119,6 +119,11 @@
     .island-answer-stage[data-support-stage=model] .island-answer > :not(.park-support) { display: none; }
     .island-answer .park-choices { flex: none; width: 100%; margin: 0; gap: 10px; }
     .island-answer .park-choices button { min-height: 58px; border: 2px solid var(--pop-ink); border-radius: 13px; background: white; color: var(--pop-ink); box-shadow: 0 3px var(--pop-ink); font-size: 22px; }
+    .island-answer-stage[data-comparison-symbol=true] .island-answer .park-choices button {
+        min-height: 72px;
+        font-size: clamp(32px, 8vw, 42px);
+        line-height: 1;
+    }
     .island-learning-actions { flex: none; display: flex; justify-content: space-between; align-items: center; min-height: 44px; margin: 6px 0 0; padding: 0; gap: 4px; border: 0; }
     .island-learning-actions .island-text-button { min-height: 44px; padding: 4px; font-size: 14px; color: var(--pop-ink); }
     [data-party-riding=true] .park-keypad > div > button:nth-child(3n+1) { background: #ffe1ee; }
@@ -187,11 +192,11 @@
     .written-place-value button.written-cell[data-active=true] { outline: 2px solid var(--pop-blue); outline-offset: -2px; color: var(--pop-ink); }
     .written-place-value .written-row[data-current=true] { background: transparent; }
     .written-place-value .written-row-label[data-operator=true] { font-size: 32px; color: var(--pop-blue); }
-    .written-input-guide { font-size: 14px; padding-top: 8px; justify-content: center; }
+    .written-input-guide { font-size: 16px; padding-top: 8px; justify-content: center; }
     .written-place-value .written-placeholder { color: transparent; }
-    .written-place-value .written-row-label:not([data-operator=true]) { font-size: 12px; }
+    .written-place-value .written-row-label:not([data-operator=true]) { font-size: 16px; }
     .written-place-value .written-rule { margin-block: 5px; }
-    .written-guidance { font-size: 14px; }
+    .written-guidance { font-size: 16px; }
 }
 
 @media (orientation: landscape) and (max-height: 540px) {
@@ -284,7 +289,6 @@
     .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v8'] {
         .written-place-value .written-cell { height: 49px; font-size: 44px; }
         .written-place-value button.written-cell { height: 54px; }
-        .written-place-value .written-row-label:not([data-operator=true]) { font-size: 14px; }
     }
 }
 .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v8'] {
