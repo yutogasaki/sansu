@@ -68,15 +68,17 @@ export class GardenGeometry {
                     for(let i=0;i<colors.length;i+=3){colors[i]=color.r;colors[i+1]=color.g;colors[i+2]=color.b;}
                     geometry.setAttribute('color',new T.BufferAttribute(colors,3));
                 }
-                if (!geometry.index) return geometry;
-                const nonIndexed = geometry.toNonIndexed(); geometry.dispose(); return nonIndexed;
+                // Retain authored vertices, seams and normals. Only non-indexed
+                // parts need sequential indices so every part can share one draw.
+                if (!geometry.index) geometry.setIndex(Array.from({ length: geometry.attributes.position.count }, (_, i) => i));
+                return geometry;
             });
             const merged = mergeGeometries(geometries, false);
             geometries.forEach(g => g.dispose());
             if (!merged) continue;
             meshes.forEach(mesh => { mesh.geometry.dispose(); mesh.removeFromParent(); });
             const combined = this.mesh(merged, material, [0, 0, 0], parent);
-            partitionStaticRaycast(combined, geometries.map(geometry => ({ count: geometry.attributes.position.count })));
+            partitionStaticRaycast(combined, geometries.map(geometry => ({ count: geometry.index!.count })));
             combined.castShadow = meshes.some(mesh => mesh.castShadow);
             combined.receiveShadow = meshes.some(mesh => mesh.receiveShadow);
         }

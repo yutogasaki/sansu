@@ -1,0 +1,17 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+ ✓ src/components/island/life/fantasy/staticBatch.test.ts (2 tests) 5ms
+ ✓ src/components/island/life/fantasy/indexedBatch.test.ts (3 tests) 64ms
+ ✓ src/components/island/life/fantasy/staticRaycast.test.ts (3 tests) 735ms
+   ✓ matches every triangle hit after transforms and near/far clipping (indexed=false) 396ms
+   ✓ matches every triangle hit after transforms and near/far clipping (indexed=true) 329ms
+ ✓ src/components/island/life/fantasy/garden.test.ts (4 tests) 678ms
+   ✓ keeps gaze joints, cell picking and the same simulation when changing the time of day 323ms
+   ✓ preserves the original Pokomoko geometry, fabric panels, scarf and scale across garden styles 338ms
+
+ Test Files  4 passed (4)
+      Tests  12 passed (12)
+   Start at  17:09:48
+   Duration  2.33s (transform 862ms, setup 0ms, collect 1.43s, tests 1.48s, environment 0ms, prepare 159ms)
+

@@ -553,7 +553,11 @@ main `4002e67b` から本番へ反映済み。公開URLの390/768幅で初回学
 ### Risks
 
 - 「全体」を広げすぎて島v3、家、Nature Town、ブランド外部確認の既存ownerを複製しない。横断の証拠づくりと未所有の共通操作課題に集中する。
-</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">2・性能</h2><div class="grid"><article class="card" data-search="起動と物が増えた島の軽量化：本番反映済み。同じ30品の絵を保持し、raycast cpuを約84〜85%削減。最新desktop p95は37.8/55.3msで33.3ms未達 次：実iphoneの起動・描画/電池負荷と、残るフレーム時間を同じ端末で確認 docs/tasks/active/2026-09-23-island-performance.md # island / iphone pwa performance
+</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">2・性能</h2><div class="grid"><article class="card" data-search="起動と物が増えた島の軽量化：raycast cpuを約84〜85%削減済み。追加の頂点共有で同じ30品の形状bufferを20.5%削減。最新desktop p95は38.2/55.6msで33.3ms未達 次：実iphoneの起動・描画/電池負荷と、残るフレーム時間を同じ端末で確認 docs/tasks/active/2026-09-23-island-performance.md # island / iphone pwa performance
+
+## 2026-09-29 描画頂点の共有
+
+次の実装依頼に対応。庭の静的結合で捨てていた頂点indexを保持し、同じ頂点を三角形ごとに複製する負荷を減らす。三角形の順序・位置・法線・uv・頂点色・部品へのhit対応を維持する。画風・キャラクター・動き・解像度・影・保存と学習の仕様は変えない内部改善のため、製品仕様の変更は不要。[同じ30品の比較](../../design/2026-09-29-garden-indexed-geometry/readme.md)で頂点244,096→191,864、形状buffer 8,920,004→7,090,624 bytes、三角形属性は完全一致。core4,297 tests、実初回→購入/招待→庭/家→offline同じ学習、水/保存/再演の両幅検証pass。短時間のdesktop p95は41.8→38.2ms / 62.4→55.6msで33.3ms未達。実iphoneの起動/電池/描画と利用者評価は別。
 
 ## 2026-09-29 遮蔽判定の軽量化
 
@@ -672,7 +676,11 @@ this is a performance implementation within the existing product rules, so the p
 - life-enabled `verify:core` passed: 460 files / 4,168 tests, lint (one existing islandmilestone fast-refresh warning), typecheck, build and asset budget. the production decorations journey passed at 390×844 and 768×1024 (tablet reduced motion): six real answers, earned purchase, rotate/move/store/re-place, abort/retry, offline reload and learning return, followed by a separate synthetic 30-item stress fixture. both stress scenes loaded 34 instances from eight glbs, retained 17 textures, switched lod, and had no page errors. phone placement and tablet stress screenshots were inspected for visible props/residents and controls.
 - local browser evidence: `output/playwright/runtime-props-20260924/browser/report.json`; operation-count diagnostic: `output/playwright/runtime-props-20260924/clone-count.json`. target `http://127.0.0.1:5298`, version `development-local:b761cc63-f444-40d7-8107-d092ddce3f07`, app/dist/harness fingerprint `3583321974cb0a09960d6a6867689645af002eb229fdd61c18efa28b46892671` matched at start/end. delivery island/life enabled, life preview/buildplay disabled; runtime assets `island-life-runtime-assets-v3`, home props `island-home-props-v1`.
 - this local renderer change is complete. no deployment, real iphone timing, new art approval, child comprehension/replay assessment or full release-matrix pass is claimed. ongoing per-frame rendering costs and installed-device measurement remain separate follow-ups.
-"><h2><a href="../../docs/tasks/active/2026-09-23-island-performance.md">起動と物が増えた島の軽量化：本番反映済み。同じ30品の絵を保持し、raycast CPUを約84〜85%削減。最新desktop P95は37.8/55.3msで33.3ms未達 次：実iPhoneの起動・描画/電池負荷と、残るフレーム時間を同じ端末で確認</a></h2><p class="path">docs/tasks/active/2026-09-23-island-performance.md</p><p>`b2a39192` をmainへpushし本番READYを確認。公開版の両幅で実初回・購入・保存・実SW offlineの追加回答/再読込を確認。 ユーザーの「実装」に対応。CPU profileで重かったraycastを、同じ結合三角形への部品単位の範囲判定で軽量化した。キャラクター・素材・照明・解像度・発見条件・保存21/学習v8を保持する内部改善で、製品仕様は変更しない。[実測と検証](../../desig</p><details><summary>詳細を読む</summary><pre># Island / iPhone PWA performance
+"><h2><a href="../../docs/tasks/active/2026-09-23-island-performance.md">起動と物が増えた島の軽量化：raycast CPUを約84〜85%削減済み。追加の頂点共有で同じ30品の形状bufferを20.5%削減。最新desktop P95は38.2/55.6msで33.3ms未達 次：実iPhoneの起動・描画/電池負荷と、残るフレーム時間を同じ端末で確認</a></h2><p class="path">docs/tasks/active/2026-09-23-island-performance.md</p><p>次の実装依頼に対応。庭の静的結合で捨てていた頂点indexを保持し、同じ頂点を三角形ごとに複製する負荷を減らす。三角形の順序・位置・法線・UV・頂点色・部品へのhit対応を維持する。画風・キャラクター・動き・解像度・影・保存と学習の仕様は変えない内部改善のため、製品仕様の変更は不要。[同じ30品の比較](../../design/2026-09-29-garden-indexed-geometry/README.md</p><details><summary>詳細を読む</summary><pre># Island / iPhone PWA performance
+
+## 2026-09-29 描画頂点の共有
+
+次の実装依頼に対応。庭の静的結合で捨てていた頂点indexを保持し、同じ頂点を三角形ごとに複製する負荷を減らす。三角形の順序・位置・法線・UV・頂点色・部品へのhit対応を維持する。画風・キャラクター・動き・解像度・影・保存と学習の仕様は変えない内部改善のため、製品仕様の変更は不要。[同じ30品の比較](../../design/2026-09-29-garden-indexed-geometry/README.md)で頂点244,096→191,864、形状buffer 8,920,004→7,090,624 bytes、三角形属性は完全一致。core4,297 tests、実初回→購入/招待→庭/家→offline同じ学習、水/保存/再演の両幅検証PASS。短時間のdesktop P95は41.8→38.2ms / 62.4→55.6msで33.3ms未達。実iPhoneの起動/電池/描画と利用者評価は別。
 
 ## 2026-09-29 遮蔽判定の軽量化
 
@@ -1173,6 +1181,8 @@ main `4002e67b` から本番へ反映済み。公開URLの390/768幅で初回学
 親仕様、現行v8の実装marker・検証記録、mainの履歴、タスクとポータルの生成元を照合しました。新しい本番操作・実機観察・子どもの評価は行っていません。過去の合格を今回の新しい合格として記録しません。
 </pre></details></article><article class="card" data-search="shared done index .agents/tasks/done.md # shared done index
 
+- 2026-09-29: 記録を島と同じ布配色・toyアイコンへ統一。ぽこもこは足まである既存全身素材へ修正。両幅/固定build/core確認、ローカル実装 -&gt; `docs/done/2026-09.md`
+
 - 2026-09-29: 記録の文字量を削減。レベルの2地点表示と詳細折りたたみ、両幅/固定build/coreを確認。ローカル実装 -&gt; `docs/done/2026-09.md`
 
 - 2026-09-29: 学習進捗の公開確認、読込再試行、旧島pwaと実2ビルドの更新/切断復旧を両幅で追加検証。実機・子ども観察は未実施 -&gt; `docs/done/2026-09.md`
@@ -1350,7 +1360,9 @@ durable completion history and verification facts still belong in `docs/done/yyy
 - 2026-09-09 写真の読込/削除中断・家への帰還・空報酬・短い横向き撮影を改善。4サイズ/3440unit通過 -&gt; docs/done/2026-09.md
 
 - 2026-09-27: 手元変更のbackupと最新mainへの整理。公開済み保存/報酬/ぽこもこを維持し、旧試作・入口と資料を整理 -&gt; `docs/done/2026-09.md`
-"><h2><a href="DONE.md">Shared Done Index</a></h2><p class="path">.agents/tasks/DONE.md</p><p>- 2026-09-29: 記録の文字量を削減。レベルの2地点表示と詳細折りたたみ、両幅/固定build/coreを確認。ローカル実装 -&gt; `docs/done/2026-09.md` - 2026-09-29: 学習進捗の公開確認、読込再試行、旧島PWAと実2ビルドの更新/切断復旧を両幅で追加検証。実機・子ども観察は未実施 -&gt; `docs/done/2026-09.md`</p><details><summary>詳細を読む</summary><pre># Shared Done Index
+"><h2><a href="DONE.md">Shared Done Index</a></h2><p class="path">.agents/tasks/DONE.md</p><p>- 2026-09-29: 記録を島と同じ布配色・toyアイコンへ統一。ぽこもこは足まである既存全身素材へ修正。両幅/固定build/core確認、ローカル実装 -&gt; `docs/done/2026-09.md` - 2026-09-29: 記録の文字量を削減。レベルの2地点表示と詳細折りたたみ、両幅/固定build/coreを確認。ローカル実装 -&gt; `docs/done/2026-09.md`</p><details><summary>詳細を読む</summary><pre># Shared Done Index
+
+- 2026-09-29: 記録を島と同じ布配色・toyアイコンへ統一。ぽこもこは足まである既存全身素材へ修正。両幅/固定build/core確認、ローカル実装 -&gt; `docs/done/2026-09.md`
 
 - 2026-09-29: 記録の文字量を削減。レベルの2地点表示と詳細折りたたみ、両幅/固定build/coreを確認。ローカル実装 -&gt; `docs/done/2026-09.md`
 

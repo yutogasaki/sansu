@@ -19,8 +19,8 @@ export function batchStaticGardenItems(root: T.Group, containers: T.Group[]) {
         if (meshes.length < 2) continue;
         const copies = meshes.map(mesh => {
             const copy = mesh.geometry.clone().applyMatrix4(inverse.clone().multiply(mesh.matrixWorld));
-            if (!copy.index) return copy;
-            const flat = copy.toNonIndexed(); copy.dispose(); return flat;
+            if (!copy.index) copy.setIndex(Array.from({ length: copy.attributes.position.count }, (_, i) => i));
+            return copy;
         });
         const merged = mergeGeometries(copies, false);
         copies.forEach(geometry => geometry.dispose());

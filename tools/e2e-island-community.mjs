@@ -51,7 +51,17 @@ async function purchase(page, kind, cell) {
     for (let i = 0; !await selectedCell.isVisible() && i < 12; i++) await page.getByRole('button', { name: 'つぎの マス', exact: true }).click();
     await selectedCell.click();
     await page.getByRole('button', { name: 'ここに おく', exact: true }).click();
-    await page.waitForFunction(kind => document.querySelector('.life-menu [data-life-item]') || !document.querySelector('.life-placement'), kind);
+    for (let attempt = 0; attempt < 4; attempt++) {
+        await page.waitForFunction(() => !document.querySelector('.life-placement')
+            || document.querySelector('.life-placement .life-error button:not(:disabled)'));
+        if (!await page.locator('.life-placement').count()) break;
+        const message = await page.locator('.life-placement .life-error p').innerText();
+        assert.equal(message, 'そこを あるいているよ。すこし まって もういちど おこう。');
+        assert(attempt < 3, 'Resident clearance did not recover after three real UI retries');
+        (report.placementRetries ??= []).push({ width: page.viewportSize().width, kind, attempt: attempt + 1, message });
+        await page.waitForTimeout(2000);
+        await page.locator('.life-placement').getByRole('button', { name: 'もういちど', exact: true }).click();
+    }
     await closeMenu(page);
 }
 let active;

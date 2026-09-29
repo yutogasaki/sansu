@@ -1,0 +1,822 @@
+{
+  "target": "http://127.0.0.1:5462",
+  "candidate": "living-fantasy-garden-v2",
+  "baseRevision": "a9b661b576c6dc72947a298b9a820f877a4773a4",
+  "workingSourceHash": "0536aa4f73e9eb82e043904ede53189d65fa78a3beb2fe5239469866692764f9",
+  "qaHash": "023d5cca53aa99a79baa6a8b8a0f8e8b365dbd1ddffda84f1de39fcf5315cd6f",
+  "flags": {
+    "VITE_ISLAND_ENABLED": true,
+    "VITE_ISLAND_LIFE_PREVIEW": true,
+    "VITE_ISLAND_FANTASY_ENABLED": true
+  },
+  "runtime": "DEV Vite; disposable browser contexts; no deployment",
+  "scenarios": [
+    {
+      "name": "actual-learning-purchase-place-reload-resume",
+      "source": "Profile fixture only; three answers and purchase/placement through actual UI",
+      "answers": [
+        {
+          "input": "number",
+          "ms": 217.10000002384186
+        },
+        {
+          "input": "number",
+          "ms": 202.59999999403954
+        },
+        {
+          "input": "number",
+          "ms": 204.5
+        }
+      ],
+      "dropsBefore": 6,
+      "dropsAfter": 4,
+      "continuation": {
+        "id": "[\"island-plan-v1\",\"f4761233-a76f-4c22-9f24-400ce4244ed6\",1]",
+        "cursor": 0
+      },
+      "pass": true
+    },
+    {
+      "name": "hidden-overlay-context-loss-menu",
+      "source": "Explicit fault injection during the first second of a real water response",
+      "pass": true
+    },
+    {
+      "name": "390-world-water-memory",
+      "setup": {
+        "source": "Diagnostic credits, purchases and 24-hour clock advance through the real writer; not actual learning or elapsed growth",
+        "db": "SansuIslandLifePreviewV1",
+        "profileId": "34c2869a-308c-4010-a0a2-fbd2be92d88a"
+      },
+      "render": {
+        "calls": 67,
+        "triangles": 126116,
+        "geometries": 37,
+        "textures": 8
+      },
+      "event": {
+        "source": "live",
+        "rule": "M4",
+        "visibleDurationMs": 1001,
+        "viewingTime": "night"
+      },
+      "pass": true
+    },
+    {
+      "name": "768-world-water-memory",
+      "setup": {
+        "source": "Diagnostic credits, purchases and 24-hour clock advance through the real writer; not actual learning or elapsed growth",
+        "db": "SansuIslandLifePreviewV1",
+        "profileId": "116f2e6d-ad98-406a-81f6-22c94b5abe60"
+      },
+      "render": {
+        "calls": 67,
+        "triangles": 126116,
+        "geometries": 37,
+        "textures": 8
+      },
+      "event": {
+        "source": "live",
+        "rule": "M4",
+        "visibleDurationMs": 1010.3000000119209,
+        "viewingTime": "night"
+      },
+      "pass": true
+    }
+  ],
+  "captures": [
+    {
+      "file": "390-initial.png",
+      "url": "http://127.0.0.1:5462/#/island",
+      "revision": "development-local",
+      "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "candidate": "living-fantasy-garden-v2",
+        "time": "day",
+        "render": {
+          "calls": 50,
+          "triangles": 69070,
+          "geometries": 27,
+          "textures": 8
+        }
+      }
+    },
+    {
+      "file": "390-learning.png",
+      "url": "http://127.0.0.1:5462/#/island?learn=1",
+      "revision": "development-local",
+      "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "learning",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": null
+    },
+    {
+      "file": "390-earned.png",
+      "url": "http://127.0.0.1:5462/#/island",
+      "revision": "development-local",
+      "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "renderer": "original-fallback",
+      "artDirection": null,
+      "drawCalls": 0,
+      "expanded": null,
+      "residentAction": null,
+      "residentItemId": null,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "candidate": "living-fantasy-garden-v2",
+        "time": "day",
+        "render": {
+          "calls": 50,
+          "triangles": 69070,
+          "geometries": 28,
+          "textures": 8
+        }
+      }
+    },
+    {
+      "file": "390-catalog.png",
+      "url": "http://127.0.0.1:5462/#/island",
+      "revision": "development-local",
+      "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "renderer": "original-fallback",
+      "artDirection": null,
+      "drawCalls": 0,
+      "expanded": null,
+      "residentAction": null,
+      "residentItemId": null,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "candidate": "living-fantasy-garden-v2",
+        "time": "day",
+        "render": {
+          "calls": 50,
+          "triangles": 69070,
+          "geometries": 28,
+          "textures": 8
+        }
+      }
+    },
+    {
+      "file": "390-placement.png",
+      "url": "http://127.0.0.1:5462/#/island",
+      "revision": "development-local",
+      "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "renderer": "original-fallback",
+      "artDirection": null,
+      "drawCalls": 0,
+      "expanded": null,
+      "residentAction": null,
+      "residentItemId": null,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "candidate": "living-fantasy-garden-v2",
+        "time": "day",
+        "render": {
+          "calls": 90,
+          "triangles": 72644,
+          "geometries": 70,
+          "textures": 8
+        }
+      }
+    },
+    {
+      "file": "390-placed.png",
+      "url": "http://127.0.0.1:5462/#/island",
+      "revision": "development-local",
+      "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "renderer": "original-fallback",
+      "artDirection": null,
+      "drawCalls": 0,
+      "expanded": null,
+      "residentAction": null,
+      "residentItemId": null,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "candidate": "living-fantasy-garden-v2",
+        "time": "day",
+        "render": {
+          "calls": 65,
+          "triangles": 75296,
+          "geometries": 45,
+          "textures": 8
+        }
+      }
+    },
+    {
+      "file": "390-day-populated.png",
+      "url": "http://127.0.0.1:5462/#/island",
+      "revision": "development-local",
+      "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "candidate": "living-fantasy-garden-v2",
+        "time": "day",
+        "render": {
+          "calls": 67,
+          "triangles": 126116,
+          "geometries": 37,
+          "textures": 8
+        }
+      }
+    },
+    {
+      "file": "390-dusk-populated.png",
+      "url": "http://127.0.0.1:5462/#/island",
+      "revision": "development-local",
+      "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "candidate": "living-fantasy-garden-v2",
+        "time": "dusk",
+        "render": {
+          "calls": 67,
+          "triangles": 126116,
+          "geometries": 37,
+          "textures": 8
+        }
+      }
+    },
+    {
+      "file": "390-night-populated.png",
+      "url": "http://127.0.0.1:5462/#/island",
+      "revision": "development-local",
+      "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "candidate": "living-fantasy-garden-v2",
+        "time": "night",
+        "render": {
+          "calls": 67,
+          "triangles": 126116,
+          "geometries": 37,
+          "textures": 8
+        }
+      }
+    },
+    {
+      "file": "390-water-stars.png",
+      "url": "http://127.0.0.1:5462/#/island",
+      "revision": "development-local",
+      "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "candidate": "living-fantasy-garden-v2",
+        "time": "night",
+        "render": {
+          "calls": 68,
+          "triangles": 126180,
+          "geometries": 38,
+          "textures": 8
+        }
+      }
+    },
+    {
+      "file": "390-memories.png",
+      "url": "http://127.0.0.1:5462/#/island",
+      "revision": "development-local",
+      "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "candidate": "living-fantasy-garden-v2",
+        "time": "night",
+        "render": {
+          "calls": 68,
+          "triangles": 126180,
+          "geometries": 38,
+          "textures": 8
+        }
+      }
+    },
+    {
+      "file": "390-memory-replay.png",
+      "url": "http://127.0.0.1:5462/#/island",
+      "revision": "development-local",
+      "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "candidate": "living-fantasy-garden-v2",
+        "time": "night",
+        "render": {
+          "calls": 68,
+          "triangles": 126180,
+          "geometries": 38,
+          "textures": 8
+        }
+      }
+    },
+    {
+      "file": "390-return.png",
+      "url": "http://127.0.0.1:5462/#/island",
+      "revision": "development-local",
+      "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "candidate": "living-fantasy-garden-v2",
+        "time": "night",
+        "render": {
+          "calls": 67,
+          "triangles": 126116,
+          "geometries": 37,
+          "textures": 8
+        }
+      }
+    },
+    {
+      "file": "768-day-populated.png",
+      "url": "http://127.0.0.1:5462/#/island",
+      "revision": "development-local",
+      "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "candidate": "living-fantasy-garden-v2",
+        "time": "day",
+        "render": {
+          "calls": 67,
+          "triangles": 126116,
+          "geometries": 37,
+          "textures": 8
+        }
+      }
+    },
+    {
+      "file": "768-dusk-populated.png",
+      "url": "http://127.0.0.1:5462/#/island",
+      "revision": "development-local",
+      "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "candidate": "living-fantasy-garden-v2",
+        "time": "dusk",
+        "render": {
+          "calls": 67,
+          "triangles": 126116,
+          "geometries": 37,
+          "textures": 8
+        }
+      }
+    },
+    {
+      "file": "768-night-populated.png",
+      "url": "http://127.0.0.1:5462/#/island",
+      "revision": "development-local",
+      "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "candidate": "living-fantasy-garden-v2",
+        "time": "night",
+        "render": {
+          "calls": 67,
+          "triangles": 126116,
+          "geometries": 37,
+          "textures": 8
+        }
+      }
+    },
+    {
+      "file": "768-water-stars.png",
+      "url": "http://127.0.0.1:5462/#/island",
+      "revision": "development-local",
+      "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "candidate": "living-fantasy-garden-v2",
+        "time": "night",
+        "render": {
+          "calls": 68,
+          "triangles": 126180,
+          "geometries": 38,
+          "textures": 8
+        }
+      }
+    },
+    {
+      "file": "768-memories.png",
+      "url": "http://127.0.0.1:5462/#/island",
+      "revision": "development-local",
+      "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "candidate": "living-fantasy-garden-v2",
+        "time": "night",
+        "render": {
+          "calls": 68,
+          "triangles": 126180,
+          "geometries": 38,
+          "textures": 8
+        }
+      }
+    },
+    {
+      "file": "768-memory-replay.png",
+      "url": "http://127.0.0.1:5462/#/island",
+      "revision": "development-local",
+      "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "candidate": "living-fantasy-garden-v2",
+        "time": "night",
+        "render": {
+          "calls": 68,
+          "triangles": 126180,
+          "geometries": 38,
+          "textures": 8
+        }
+      }
+    },
+    {
+      "file": "768-return.png",
+      "url": "http://127.0.0.1:5462/#/island",
+      "revision": "development-local",
+      "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:c2aeb9e5-fd48-4e74-b8e1-4206e344483c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "candidate": "living-fantasy-garden-v2",
+        "time": "night",
+        "render": {
+          "calls": 67,
+          "triangles": 126116,
+          "geometries": 37,
+          "textures": 8
+        }
+      }
+    }
+  ],
+  "pass": true,
+  "finishedAt": "2026-09-29T08:16:08.514Z"
+}

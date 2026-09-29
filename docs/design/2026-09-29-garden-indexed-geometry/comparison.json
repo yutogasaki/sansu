@@ -1,0 +1,51 @@
+{
+  "scope": "Same restored 30-item owner/layout; wall anchor rebased. Each build/width 120 samples after 5 warmup frames, desktop Chromium. Not device FPS acceptance. Baseline is previous house build with unrelated uncommitted progress-card UI; candidate is isolated main plus indexed geometry. Exact triangle-attribute audit holds all other sources constant.",
+  "cases": [
+    {
+      "width": 390,
+      "before": {
+        "p50": 38.20000001788139,
+        "p95": 41.80000001192093,
+        "render": {
+          "calls": 127,
+          "triangles": 149716,
+          "geometries": 96,
+          "textures": 8
+        }
+      },
+      "after": {
+        "p50": 35,
+        "p95": 38.19999998807907,
+        "render": {
+          "calls": 127,
+          "triangles": 149716,
+          "geometries": 96,
+          "textures": 8
+        }
+      }
+    },
+    {
+      "width": 768,
+      "before": {
+        "p50": 58.29999998211861,
+        "p95": 62.400000005960464,
+        "render": {
+          "calls": 127,
+          "triangles": 149716,
+          "geometries": 96,
+          "textures": 8
+        }
+      },
+      "after": {
+        "p50": 52.29999998211861,
+        "p95": 55.599999994039536,
+        "render": {
+          "calls": 127,
+          "triangles": 149716,
+          "geometries": 96,
+          "textures": 8
+        }
+      }
+    }
+  ]
+}

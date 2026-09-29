@@ -3,18 +3,20 @@ import * as T from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { partitionStaticRaycast } from './staticRaycast';
 
-function fixture() {
-    const parts = Array.from({ length: 30 }, (_, i) => new T.SphereGeometry(.4, 12, 8)
-        .translate((i % 10) - 4.5, Math.floor(i / 10) - 1, i % 2).toNonIndexed());
+function fixture(indexed = false) {
+    const parts = Array.from({ length: 30 }, (_, i) => (() => {
+        const geometry = new T.SphereGeometry(.4, 12, 8).translate((i % 10) - 4.5, Math.floor(i / 10) - 1, i % 2);
+        return indexed ? geometry : geometry.toNonIndexed();
+    })());
     const geometry = mergeGeometries(parts, false)!;
     const mesh = new T.Mesh(geometry, new T.MeshStandardMaterial({ side: T.DoubleSide }));
-    partitionStaticRaycast(mesh, parts.map(part => ({ count: part.attributes.position.count })));
+    partitionStaticRaycast(mesh, parts.map(part => ({ count: part.index?.count ?? part.attributes.position.count })));
     parts.forEach(part => part.dispose());
     return mesh;
 }
 
-it('matches every merged triangle hit, UV, face, normal and distance after parent transforms and near/far clipping', () => {
-    const mesh = fixture(), parent = new T.Group(); parent.add(mesh);
+it.each([false, true])('matches every triangle hit after transforms and near/far clipping (indexed=%s)', indexed => {
+    const mesh = fixture(indexed), parent = new T.Group(); parent.add(mesh);
     parent.position.set(1, 2, -3); parent.rotation.set(.3, -.2, .1); parent.scale.set(1.3, .8, 1.1);
     parent.updateMatrixWorld(true);
     let hits = 0, misses = 0;
