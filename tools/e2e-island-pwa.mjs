@@ -152,7 +152,7 @@ try {
         const manifest = await page.evaluate(async () => (await fetch('/version.json', { cache: 'no-store' })).json());
         assert.equal(manifest.island.enabled, true);
         assert.equal(manifest.island.candidate, report.runtime.candidate);
-        assert.equal(report.runtime.learningCandidate, 'mystic-island-learning-v2');
+        assert.equal(report.runtime.learningCandidate, 'pokomoko-pop-live-v8');
         assert.equal(manifest.island.learningCandidate, report.runtime.learningCandidate);
         assert.equal(manifest.version, report.runtime.version);
         assert.equal(manifest.revision, report.runtime.revision);
@@ -196,6 +196,9 @@ try {
         await waitMode(page, 'home');
         await page.locator('.island-start').click();
         await waitMode(page, 'learning');
+        // Router mode changes before the async reservation/checkpoint finishes.
+        // Inject an active-session update only once the answer input is ready.
+        await waitReady(page);
         const freshMarker = 'island-fresh-checkpoint-session';
         await noReloadWhile(page, freshMarker, () => dispatch(page, 'sansu:pwa-e2e-reload', { version: freshMarker }));
         before = await readNative(page, id);

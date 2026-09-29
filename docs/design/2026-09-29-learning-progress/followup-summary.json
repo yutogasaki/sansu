@@ -1,0 +1,425 @@
+{
+  "date": "2026-09-29",
+  "productCodeChanged": false,
+  "legacyPwa": {
+    "target": "http://127.0.0.1:5378",
+    "runtime": {
+      "url": "http://127.0.0.1:5378/#/island",
+      "revision": "development-local",
+      "version": "development-local:a947352a-89e1-4180-8471-f1d0bc6939b1",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:a947352a-89e1-4180-8471-f1d0bc6939b1",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    "manifest": {
+      "version": "development-local:a947352a-89e1-4180-8471-f1d0bc6939b1",
+      "revision": "development-local",
+      "delivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "park": {
+        "enabled": false,
+        "renderer": "retired"
+      },
+      "island": {
+        "enabled": true,
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "life": {
+          "enabled": false,
+          "discovery": false,
+          "fantasy": false,
+          "candidate": "island-life-v1",
+          "saveVersion": 21
+        },
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "residentCandidate": "patchwork-otter-v1",
+        "artDirection": "moon-garden"
+      }
+    },
+    "hookChecks": [
+      "active learning defers update; user home checkpoint reloads with reserved plan preserved",
+      "critical persistence hold spans navigation and releases deferred update afterwards",
+      "continue pointer protects fresh session; answer receipt survives next user checkpoint",
+      "first automatic growth defers update; growth, auto placement and next reservation survive user checkpoint",
+      "ordinary second section keeps update deferred; minor growth, unchanged land and album, and next reservation survive the voluntary checkpoint",
+      "first maturity defers update; east expansion, combined album record, stable items and next reservation survive the voluntary checkpoint",
+      "Island home keeps the legacy Explore run for explicit resume and preserves Island data",
+      "legacy Island reservation and reward screen defer update; new reservation migrates once and keeps the unclaimed old gift"
+    ],
+    "offline": {
+      "url": "http://127.0.0.1:5378/#/island?learn=1",
+      "revision": "development-local",
+      "version": "development-local:a947352a-89e1-4180-8471-f1d0bc6939b1",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 152,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:a947352a-89e1-4180-8471-f1d0bc6939b1",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "serviceWorker": "real",
+      "offlineReload": true,
+      "answerPersisted": true,
+      "automaticGrowthPersisted": true,
+      "resumedSamePlan": true,
+      "soundEnabled": false
+    },
+    "pass": true
+  },
+  "twoBuild": [
+    {
+      "builds": [
+        {
+          "revision": "44d5c4eb",
+          "sourceHash": "6ca6a7de3f0de32fb3b202822f0a129735b26e3ad9853dfd77195b652c90bf20",
+          "version": {
+            "version": "old-progress-verification:d0eab329-84f1-4194-b9ba-b0e49b046f42",
+            "revision": "old-progress-verification",
+            "delivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "park": {
+              "enabled": false,
+              "renderer": "retired"
+            },
+            "island": {
+              "enabled": true,
+              "delivery": "mystic-island-v1",
+              "candidate": "mystic-island-shore-garden-v18",
+              "life": {
+                "enabled": true,
+                "discovery": true,
+                "fantasy": true,
+                "candidate": "living-fantasy-garden-v2",
+                "saveVersion": 21
+              },
+              "learningCandidate": "pokomoko-pop-live-v8",
+              "residentCandidate": "patchwork-otter-v1",
+              "artDirection": "moon-garden"
+            }
+          },
+          "flags": {
+            "VITE_ISLAND_ENABLED": true,
+            "VITE_ISLAND_LIFE_ENABLED": true,
+            "VITE_ISLAND_LIFE_DISCOVERY_ENABLED": true,
+            "VITE_ISLAND_FANTASY_ENABLED": true
+          }
+        },
+        {
+          "revision": "ede295fe",
+          "sourceHash": "59e7c714f26fb44fd48b0c3e7af57b11533de27b8bb8ba7664e33e4321458c90",
+          "version": {
+            "version": "new-progress-verification:92d38943-0deb-49bc-bd4e-e87d00bb0759",
+            "revision": "new-progress-verification",
+            "delivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "park": {
+              "enabled": false,
+              "renderer": "retired"
+            },
+            "island": {
+              "enabled": true,
+              "delivery": "mystic-island-v1",
+              "candidate": "mystic-island-shore-garden-v18",
+              "life": {
+                "enabled": true,
+                "discovery": true,
+                "fantasy": true,
+                "candidate": "living-fantasy-garden-v2",
+                "saveVersion": 21
+              },
+              "learningCandidate": "pokomoko-pop-live-v8",
+              "residentCandidate": "patchwork-otter-v1",
+              "artDirection": "moon-garden"
+            }
+          },
+          "flags": {
+            "VITE_ISLAND_ENABLED": true,
+            "VITE_ISLAND_LIFE_ENABLED": true,
+            "VITE_ISLAND_LIFE_DISCOVERY_ENABLED": true,
+            "VITE_ISLAND_FANTASY_ENABLED": true
+          }
+        }
+      ],
+      "bundles": [
+        "/assets/index-DJzxMWHx.js",
+        "/assets/index-DKIbyH-o.js"
+      ],
+      "scope": "Real old-to-new SW update during a partially completed learning reservation, retained earned Life ownership and all native stores, one reload, offline restart and same next question. No injected profile, credits, timestamps, update events or worker mocks. Empty photo stores do not prove Blob retention.",
+      "interruption": false,
+      "humanN": 0,
+      "pass": true,
+      "rawReportSha256": "d92c38fb551095fa87c74182a9d9fd6d7be0f80c84a5b4cd66adf2d3d9931d86",
+      "cases": [
+        {
+          "device": "phone",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "navigations": [
+            "http://127.0.0.1:51515/?__app-update=1790652372444"
+          ],
+          "errors": [],
+          "pass": true
+        },
+        {
+          "device": "tablet",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "navigations": [
+            "http://127.0.0.1:51515/?__app-update=1790652411226"
+          ],
+          "errors": [],
+          "pass": true
+        }
+      ]
+    },
+    {
+      "builds": [
+        {
+          "revision": "44d5c4eb",
+          "sourceHash": "6ca6a7de3f0de32fb3b202822f0a129735b26e3ad9853dfd77195b652c90bf20",
+          "version": {
+            "version": "old-progress-verification:d0eab329-84f1-4194-b9ba-b0e49b046f42",
+            "revision": "old-progress-verification",
+            "delivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "park": {
+              "enabled": false,
+              "renderer": "retired"
+            },
+            "island": {
+              "enabled": true,
+              "delivery": "mystic-island-v1",
+              "candidate": "mystic-island-shore-garden-v18",
+              "life": {
+                "enabled": true,
+                "discovery": true,
+                "fantasy": true,
+                "candidate": "living-fantasy-garden-v2",
+                "saveVersion": 21
+              },
+              "learningCandidate": "pokomoko-pop-live-v8",
+              "residentCandidate": "patchwork-otter-v1",
+              "artDirection": "moon-garden"
+            }
+          },
+          "flags": {
+            "VITE_ISLAND_ENABLED": true,
+            "VITE_ISLAND_LIFE_ENABLED": true,
+            "VITE_ISLAND_LIFE_DISCOVERY_ENABLED": true,
+            "VITE_ISLAND_FANTASY_ENABLED": true
+          }
+        },
+        {
+          "revision": "ede295fe",
+          "sourceHash": "59e7c714f26fb44fd48b0c3e7af57b11533de27b8bb8ba7664e33e4321458c90",
+          "version": {
+            "version": "new-progress-verification:92d38943-0deb-49bc-bd4e-e87d00bb0759",
+            "revision": "new-progress-verification",
+            "delivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "park": {
+              "enabled": false,
+              "renderer": "retired"
+            },
+            "island": {
+              "enabled": true,
+              "delivery": "mystic-island-v1",
+              "candidate": "mystic-island-shore-garden-v18",
+              "life": {
+                "enabled": true,
+                "discovery": true,
+                "fantasy": true,
+                "candidate": "living-fantasy-garden-v2",
+                "saveVersion": 21
+              },
+              "learningCandidate": "pokomoko-pop-live-v8",
+              "residentCandidate": "patchwork-otter-v1",
+              "artDirection": "moon-garden"
+            }
+          },
+          "flags": {
+            "VITE_ISLAND_ENABLED": true,
+            "VITE_ISLAND_LIFE_ENABLED": true,
+            "VITE_ISLAND_LIFE_DISCOVERY_ENABLED": true,
+            "VITE_ISLAND_FANTASY_ENABLED": true
+          }
+        }
+      ],
+      "bundles": [
+        "/assets/index-DJzxMWHx.js",
+        "/assets/index-DKIbyH-o.js"
+      ],
+      "scope": "Real old-to-new SW update during a partially completed learning reservation, retained earned Life ownership and all native stores, one reload, offline restart and same next question. No injected profile, credits, timestamps, update events or worker mocks. Empty photo stores do not prove Blob retention.",
+      "interruption": true,
+      "humanN": 0,
+      "pass": true,
+      "rawReportSha256": "5c503e7de2e52ba9c019f7b4c67ee33e378a634499ed6db8d2dd7928bcfc24f7",
+      "cases": [
+        {
+          "device": "phone",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "navigations": [
+            "http://127.0.0.1:51783/?__app-update=1790652469961"
+          ],
+          "errors": [],
+          "pass": true
+        },
+        {
+          "device": "tablet",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "navigations": [
+            "http://127.0.0.1:51783/?__app-update=1790652513876"
+          ],
+          "errors": [],
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Desktop Chromium viewport emulation, not physical iOS/Android.",
+    "No child participant or motivation outcome.",
+    "Read-fault diagnostic targets progress refresh after a loaded profile, not all storage failures."
+  ],
+  "live": {
+    "base": "https://sansu-seven.vercel.app",
+    "scope": "Isolated explicit near-unlock profile fixture, actual planner/answer/save and routes. No child/device efficacy claim.",
+    "source": [
+      {
+        "path": "src/pages/Stats.tsx",
+        "sha256": "b3c74b26ddfbef5972fc9c21be364079c1beb9423c620a82c29880b1030dcbe9"
+      },
+      {
+        "path": "src/pages/Island.tsx",
+        "sha256": "6dae426a7456e3e2bd57c161f31c98fd255058293e88b48b0b3f1d3d8ebcb46e"
+      },
+      {
+        "path": "src/components/island/IslandLearningPanel.tsx",
+        "sha256": "381b0a7269d7cf8abef49653ac05f9c02cfa0da0c482fc5c7562c60e29fb12a4"
+      },
+      {
+        "path": "src/components/progress/LearningProgressCards.tsx",
+        "sha256": "80fbf9f7fee60d21437da1a452752b0b6a971da7295fc8f55e82b892a0406733"
+      },
+      {
+        "path": "src/components/progress/LearningProgressCue.tsx",
+        "sha256": "58340fd5839f0bf4c5148fe1529e4c8ff5ac558a9b980b5f1f3e73c8ecb75501"
+      },
+      {
+        "path": "src/components/progress/LearningProgressCue.css",
+        "sha256": "9576cc18ec8d6f34cf596acabf9e733bae7479233a09b4ec4343f812f376c654"
+      },
+      {
+        "path": "src/domain/learning/progressView.ts",
+        "sha256": "0f9bed298c9943b6a1759eebd4f1b45b210fbd694c22e6c9e721c36af041dbc5"
+      },
+      {
+        "path": "src/domain/learning/progressRepository.ts",
+        "sha256": "e199d9059a8f0cba5a0084d39fe7580ab72a712cb622e1d7603a7b38a538b81d"
+      },
+      {
+        "path": "src/domain/levelProgression.ts",
+        "sha256": "bcb891d0a22e2545738613f623c29b36242777e4a560c11ee865547473666740"
+      }
+    ],
+    "journeys": [
+      {
+        "width": 390,
+        "app": {
+          "revision": "159b77f426067e270c3a175dd1fc22a09ccb4f87",
+          "version": "159b77f426067e270c3a175dd1fc22a09ccb4f87:b4426dae-f23e-44a7-9fa9-a3554fce675a",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        },
+        "errors": [],
+        "before": "つぎへの 道\n\nいまの ばしょと、つぎに できること\n\nさんすう · Lv8\n\nはじめの たしざん\n\nつぎ：くり上がりの たしざん · Lv9\n\nひとりで 解けることを ふやして、つぎの はんいへ。\n\nいまの はんいを たしかめる\n\n19 / 20問\n\nひとりで 解けるか たしかめる\n\n確認のきろくを あつめているよ（19 / 20問）\n\n数だけでなく、ひとりで 解けるかも たしかめるよ。\n\nしあげチャレンジ · 20もん\n\nはじめの たしざん · Lv8の かくにん。いつでも えらべるよ。\n\nレベルを すすめるための テストではないよ。\n\nさんすうの しあげに ちょうせん\nまなぶ",
+        "candidate": "pokomoko-pop-live-v8",
+        "after": "つぎへの 道\n\nいまの ばしょと、つぎに できること\n\nさんすう · Lv8\n\nはじめの たしざん\n\nつぎ：くり上がりの たしざん · Lv9\n\nつぎの はんいが ひらいたよ。少しずつ れんしゅう中。\n\nつぎの はんいに 取り組む\n\n0 / 30問\n\nひとりで 解けるか たしかめる\n\n確認のきろくを あつめているよ（0 / 20問）\n\n数だけでなく、ひとりで 解けるかも たしかめるよ。\n\nひとりで できた きろく\n\n1桁+1桁(はじめ)\n\n2026/9/29 にできた · つぎの ふくしゅう 2026/9/30\n\n日をあけて また解くと、覚えているか たしかめられるよ。\n\nしあげチャレンジ · 20もん\n\nはじめの たしざん · Lv8の かくにん。いつでも えらべるよ。\n\nレベルを すすめるための テストではないよ。\n\nさんすうの しあげに ちょうせん\nまなぶ",
+        "testUrl": "https://sansu-seven.vercel.app/#/study?session=periodic-test&focus_subject=math",
+        "readFaultCount": 2,
+        "readRetry": true
+      },
+      {
+        "width": 768,
+        "app": {
+          "revision": "159b77f426067e270c3a175dd1fc22a09ccb4f87",
+          "version": "159b77f426067e270c3a175dd1fc22a09ccb4f87:b4426dae-f23e-44a7-9fa9-a3554fce675a",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        },
+        "errors": [],
+        "before": "つぎへの 道\n\nいまの ばしょと、つぎに できること\n\nさんすう · Lv8\n\nはじめの たしざん\n\nつぎ：くり上がりの たしざん · Lv9\n\nひとりで 解けることを ふやして、つぎの はんいへ。\n\nいまの はんいを たしかめる\n\n19 / 20問\n\nひとりで 解けるか たしかめる\n\n確認のきろくを あつめているよ（19 / 20問）\n\n数だけでなく、ひとりで 解けるかも たしかめるよ。\n\nしあげチャレンジ · 20もん\n\nはじめの たしざん · Lv8の かくにん。いつでも えらべるよ。\n\nレベルを すすめるための テストではないよ。\n\nさんすうの しあげに ちょうせん\nまなぶ",
+        "candidate": "pokomoko-pop-live-v8",
+        "after": "つぎへの 道\n\nいまの ばしょと、つぎに できること\n\nさんすう · Lv8\n\nはじめの たしざん\n\nつぎ：くり上がりの たしざん · Lv9\n\nつぎの はんいが ひらいたよ。少しずつ れんしゅう中。\n\nつぎの はんいに 取り組む\n\n0 / 30問\n\nひとりで 解けるか たしかめる\n\n確認のきろくを あつめているよ（0 / 20問）\n\n数だけでなく、ひとりで 解けるかも たしかめるよ。\n\nひとりで できた きろく\n\n1桁+1桁(えとしき)\n\n2026/9/29 にできた · つぎの ふくしゅう 2026/9/30\n\n日をあけて また解くと、覚えているか たしかめられるよ。\n\nしあげチャレンジ · 20もん\n\nはじめの たしざん · Lv8の かくにん。いつでも えらべるよ。\n\nレベルを すすめるための テストではないよ。\n\nさんすうの しあげに ちょうせん\nまなぶ",
+        "testUrl": "https://sansu-seven.vercel.app/#/study?session=periodic-test&focus_subject=math",
+        "readFaultCount": 2,
+        "readRetry": true
+      }
+    ],
+    "pass": true
+  },
+  "harnesses": [
+    {
+      "path": "tools/e2e-progress-visibility.mjs",
+      "sha256": "0119fb64004aee572b9b1feb906ef8580c049d1631b129cf4cb463c1154523b6"
+    },
+    {
+      "path": "tools/e2e-island-pwa.mjs",
+      "sha256": "ba94b041a37f7fb06e360a8f563c543c595ebd8d35e168a5d091883c3957c2c5"
+    }
+  ]
+}

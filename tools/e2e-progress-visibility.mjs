@@ -19,6 +19,20 @@ try {
     for (const width of [390, 768]) {
         const context = await browser.newContext({ viewport: { width, height: width === 390 ? 844 : 1024 }, reducedMotion: width === 768 ? 'reduce' : 'no-preference' });
         const page = await context.newPage();
+        await page.addInitScript(() => {
+            const original = IDBDatabase.prototype.transaction;
+            window.__progressReadFaultCount = 0;
+            IDBDatabase.prototype.transaction = function (stores, ...args) {
+                const names = typeof stores === 'string' ? [stores] : Array.from(stores);
+                if (sessionStorage.getItem('progress-read-fault') === '1'
+                    && names.length === 1 && names[0] === 'memoryVocab' && args[0] === 'readonly') {
+                    window.__progressReadFaultCount++;
+                    throw new DOMException('Explicit progress read diagnostic', 'UnknownError');
+                }
+                return original.call(this, stores, ...args);
+            };
+        });
+
         const errors = []; page.on('pageerror', error => errors.push(error.message));
         await page.goto(`${base}/#/onboarding`);
         await page.waitForFunction(() => document.querySelector('.app-container'));
@@ -62,6 +76,27 @@ try {
         await page.locator('[data-study-question-id]').waitFor();
         await page.screenshot({ path: `${out}/${width}-test.png` });
         row.testUrl = page.url();
+        // Explicit native read fault in this disposable context, then the real retry button.
+        await page.evaluate(() => { location.hash = '/stats'; });
+        await road.getByText('つぎの はんいが ひらいたよ。少しずつ れんしゅう中。', { exact: true }).waitFor();
+        await road.getByRole('button', { name: 'まなぶ', exact: true }).click();
+        await page.locator('[data-input-ready=true]').waitFor();
+        await page.evaluate(() => sessionStorage.setItem('progress-read-fault', '1'));
+        await page.getByRole('button', { name: 'とじる', exact: true }).click();
+        try { await road.getByRole('alert').waitFor(); } catch (error) {
+            await page.screenshot({ path: `${out}/${width}-read-failure.png`, fullPage: true });
+            console.log(await page.evaluate(() => ({ fault: sessionStorage.getItem('progress-read-fault'), count: window.__progressReadFaultCount, text: document.body.innerText }))); throw error;
+        }
+        row.readFaultCount = await page.evaluate(() => window.__progressReadFaultCount);
+        assert(row.readFaultCount > 0);
+        await road.getByRole('alert').scrollIntoViewIfNeeded();
+        await page.screenshot({ path: `${out}/${width}-read-error.png`, fullPage: true });
+        await page.evaluate(() => sessionStorage.removeItem('progress-read-fault'));
+        await road.getByRole('button', { name: 'もういちど 読みこむ', exact: true }).click();
+        await road.getByText('つぎの はんいが ひらいたよ。少しずつ れんしゅう中。', { exact: true }).waitFor();
+        assert.equal(await road.getByRole('alert').count(), 0);
+        row.readRetry = true;
+        await page.screenshot({ path: `${out}/${width}-read-recovered.png`, fullPage: true });
         assert.equal(errors.length, 0);
         report.journeys.push(row);
         await context.close();
