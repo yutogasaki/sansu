@@ -1,0 +1,521 @@
+{
+  "target": "https://sansu-seven.vercel.app",
+  "version": {
+    "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+    "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": true,
+        "fantasy": true,
+        "candidate": "living-fantasy-garden-v2",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "sourceHash": "9e7bfede29b3a6aef208e853c4ef0a24e6ffab51db2dd31463b04a7ae46ccce2",
+  "humanN": 0,
+  "scope": "Real onboarding/answers, module delay and module failure diagnostics, real WebGL context loss/retry, navigation and SW offline reload. No profile/save fixture injection.",
+  "captures": [
+    {
+      "file": "390-boot-loading.png",
+      "url": "https://sansu-seven.vercel.app/",
+      "stage": "static HTML before module",
+      "appRoot": null
+    },
+    {
+      "file": "390-boot-slow.png",
+      "url": "https://sansu-seven.vercel.app/",
+      "stage": "static HTML before module",
+      "appRoot": null
+    },
+    {
+      "file": "390-garden-loading.png",
+      "url": "https://sansu-seven.vercel.app/#/island",
+      "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+      "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "renderer": "original-fallback",
+      "artDirection": null,
+      "drawCalls": 0,
+      "expanded": null,
+      "residentAction": null,
+      "residentItemId": null,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+        "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "390-garden-ready.png",
+      "url": "https://sansu-seven.vercel.app/#/island",
+      "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+      "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "renderer": "original-fallback",
+      "artDirection": null,
+      "drawCalls": 0,
+      "expanded": null,
+      "residentAction": null,
+      "residentItemId": null,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+        "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "390-house-loading.png",
+      "url": "https://sansu-seven.vercel.app/#/island?view=keepsakes",
+      "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+      "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "keepsakes",
+      "renderer": "loading",
+      "artDirection": null,
+      "drawCalls": 0,
+      "expanded": null,
+      "residentAction": null,
+      "residentItemId": null,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+        "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "390-house-ready.png",
+      "url": "https://sansu-seven.vercel.app/#/island?view=keepsakes",
+      "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+      "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 83,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+        "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "390-renderer-error.png",
+      "url": "https://sansu-seven.vercel.app/#/island",
+      "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+      "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "renderer": "original-fallback",
+      "artDirection": null,
+      "drawCalls": 0,
+      "expanded": null,
+      "residentAction": null,
+      "residentItemId": null,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+        "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "390-offline-ready.png",
+      "url": "https://sansu-seven.vercel.app/#/island",
+      "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+      "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "renderer": "original-fallback",
+      "artDirection": null,
+      "drawCalls": 0,
+      "expanded": null,
+      "residentAction": null,
+      "residentItemId": null,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+        "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "390-same-learning.png",
+      "url": "https://sansu-seven.vercel.app/#/island?learn=1",
+      "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+      "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "learning",
+      "renderer": "live-original",
+      "artDirection": null,
+      "drawCalls": 0,
+      "expanded": null,
+      "residentAction": null,
+      "residentItemId": null,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+        "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "768-boot-loading.png",
+      "url": "https://sansu-seven.vercel.app/",
+      "stage": "static HTML before module",
+      "appRoot": null
+    },
+    {
+      "file": "768-garden-loading.png",
+      "url": "https://sansu-seven.vercel.app/#/island",
+      "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+      "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "renderer": "original-fallback",
+      "artDirection": null,
+      "drawCalls": 0,
+      "expanded": null,
+      "residentAction": null,
+      "residentItemId": null,
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+        "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "768-garden-ready.png",
+      "url": "https://sansu-seven.vercel.app/#/island",
+      "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+      "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "renderer": "original-fallback",
+      "artDirection": null,
+      "drawCalls": 0,
+      "expanded": null,
+      "residentAction": null,
+      "residentItemId": null,
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+        "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "768-house-loading.png",
+      "url": "https://sansu-seven.vercel.app/#/island?view=keepsakes",
+      "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+      "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "keepsakes",
+      "renderer": "loading",
+      "artDirection": null,
+      "drawCalls": 0,
+      "expanded": null,
+      "residentAction": null,
+      "residentItemId": null,
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+        "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "768-house-ready.png",
+      "url": "https://sansu-seven.vercel.app/#/island?view=keepsakes",
+      "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+      "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 84,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+        "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "768-renderer-error.png",
+      "url": "https://sansu-seven.vercel.app/#/island",
+      "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+      "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "renderer": "original-fallback",
+      "artDirection": null,
+      "drawCalls": 0,
+      "expanded": null,
+      "residentAction": null,
+      "residentItemId": null,
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+        "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "768-offline-ready.png",
+      "url": "https://sansu-seven.vercel.app/#/island",
+      "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+      "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "renderer": "original-fallback",
+      "artDirection": null,
+      "drawCalls": 0,
+      "expanded": null,
+      "residentAction": null,
+      "residentItemId": null,
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+        "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "768-same-learning.png",
+      "url": "https://sansu-seven.vercel.app/#/island?learn=1",
+      "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+      "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "learning",
+      "renderer": "live-original",
+      "artDirection": null,
+      "drawCalls": 0,
+      "expanded": null,
+      "residentAction": null,
+      "residentItemId": null,
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34",
+        "version": "c1e3bebfae32098569a1cbfda0f74f8beeb61b34:9aa4c255-34d3-44ba-9e18-9f1e9576cbc5",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "file": "390-module-error.png",
+      "url": "https://sansu-seven.vercel.app/",
+      "stage": "static HTML before module",
+      "appRoot": null
+    }
+  ],
+  "cases": [
+    {
+      "width": 390,
+      "pass": true,
+      "errors": [],
+      "sameLearning": true,
+      "retryPreservesOwner": true,
+      "offlineAnswer": true,
+      "delayedModules": {
+        "boot": 1,
+        "garden": 1,
+        "house": 2
+      }
+    },
+    {
+      "width": 768,
+      "pass": true,
+      "errors": [],
+      "sameLearning": true,
+      "retryPreservesOwner": true,
+      "offlineAnswer": true,
+      "delayedModules": {
+        "boot": 1,
+        "garden": 1,
+        "house": 2
+      }
+    }
+  ],
+  "pass": true,
+  "moduleRetry": true
+}

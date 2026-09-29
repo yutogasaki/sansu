@@ -34,4 +34,10 @@ Classicの`e2e:smoke`31シナリオPASS（[結果](smoke.txt)）。現行の島�
 
 理解/安全: 読み込み・失敗・再試行を文字で区別。子どもの無説明理解・意欲の実測は未実施。
 
-Runtime: 遅延/障害は明示診断。実iPhoneの30秒待ち解消、電池・音・実Safari写真保存は自動検査から合格にしない。公開版の検査は下記へ追記する。
+Runtime: 遅延/障害は明示診断。実iPhoneの30秒待ち解消、電池・音・実Safari写真保存は自動検査から合格にしない。公開版は下記の2サイズで追加検査済み。
+
+## mainと本番
+
+main `c1e3bebfae32098569a1cbfda0f74f8beeb61b34` をpushし、Vercel READYと公開`version.json`の同SHAを確認。[公開版](https://sansu-seven.vercel.app/#/island)の390×844通常/768×1024 reducedで、起動HTML/庭/室内の遅延、WebGL喪失/再試行、同じ所有と学習、記録/設定との往復、実SW offline追加回答、entry module失敗からの再試行をすべてPASS。pageerror 0。[公開検査](public/report.json)・[配信版](public/version.json)。実機や実速度の測定ではない。
+
+[index検査](index-verification.json)でコミット予定の全1,371 app入力が最終検証候補と一致し、リポジトリ外へexportした同一indexのdocs checkを通過。公開確認後は証拠とポータルだけを更新し、app入力を維持する。
