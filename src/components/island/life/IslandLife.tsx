@@ -1,3 +1,4 @@
+import { Spinner } from '../../ui/Spinner';
 import LifeCommunity from './LifeCommunity';
 import { isDecoration } from '../../../domain/islandLife/decorations';
 import { holdPwaUpdateForCriticalPersistence } from '../../../pwa';
@@ -216,8 +217,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
         const id = window.setTimeout(() => { setEarnedDrops(undefined); setEarnedLight(undefined); setGrownItems([]); setObservationCues([]); }, 7000);
         return () => window.clearTimeout(id);
     }, [earnedDrops, earnedLight, grownItems, observationCues]);
-    if (!state || !record) return <section className="life-controls"><p role="status">{error ?? 'しまを ひらいているよ…'}</p>
-        <button className="island-secondary" onClick={() => void refresh()}>もういちど</button></section>;
+    if (!state || !record) return <section className="life-controls">{error ? <><p role="alert">{error}</p><button className="island-secondary" onClick={() => void refresh()}>もういちど</button></> : <Spinner message="しまを ひらいているよ…" />}</section>;
     const locked = disabled || busy;
     const isolatedIds = new Set(menuOpen && tab === 'items' && !placement && state.placementVersion === 1
         ? isolatedItems(state).map(i => i.id) : []);
@@ -328,7 +328,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
             <LifeResidentPortrait resident={visitingFriend} style={state.heroStyle} /><span>{visitingFriend === 'rabbit' ? 'うさぎ' : 'カワウソ'}が あそびに きたよ</span>
         </button>}
         <div className="life-viewport">
-        <Suspense fallback={<p className="life-world-loading" role="status">しまを えがいているよ…</p>}><LifeWorld onFrame={clearance.onFrame} inspectShadow={(itemId, residentId, worldAt) => { if (locked) return; showWorld(); setGathering(undefined); setObservedResident(residentId); setShadowRequest({ id: crypto.randomUUID(), worldAt, monotonicAt: performance.now() }); setObserved(itemId); }} observationOpen={Boolean(observed || memoriesOpen)} footstepInput={footstepInput} profileId={record.profileId} presented={liveDiscovery.presented} state={state} changeKey={JSON.stringify([record.profileId, record.version,
+        <Suspense fallback={<Spinner fullScreen message="しまを えがいているよ…" />}><LifeWorld onFrame={clearance.onFrame} inspectShadow={(itemId, residentId, worldAt) => { if (locked) return; showWorld(); setGathering(undefined); setObservedResident(residentId); setShadowRequest({ id: crypto.randomUUID(), worldAt, monotonicAt: performance.now() }); setObserved(itemId); }} observationOpen={Boolean(observed || memoriesOpen)} footstepInput={footstepInput} profileId={record.profileId} presented={liveDiscovery.presented} state={state} changeKey={JSON.stringify([record.profileId, record.version,
             record.actions.length, record.actions[record.actions.length - 1]?.id,
             record.credits.length, record.credits[record.credits.length - 1]?.id,
             record.clockIntents.length, record.clockIntents[record.clockIntents.length - 1],
@@ -344,11 +344,11 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
         </LifeWorld></Suspense>
         {observed && !placement && !menuOpen && !dockOpen && (() => {
             const target = state.items.find(i => i.id === observed && i.cell && (gathering || ['flower', 'sapling', 'water-bowl', 'bench', 'picnic-table', 'library', 'garden-hut'].includes(i.kind)));
-            return target ? <Suspense fallback={<p role="status">しまの ようすを ひらいているよ…</p>}><LifeObservation key={`${record.profileId}:${target.id}:${target.cell!.x}:${target.cell!.z}:${target.style}`}
+            return target ? <Suspense fallback={<Spinner overlay message="しまの ようすを ひらいているよ…" />}><LifeObservation key={`${record.profileId}:${target.id}:${target.cell!.x}:${target.cell!.z}:${target.style}`}
                 record={record} state={state} item={target} initialResidentId={observedResident} initialShadowRequest={shadowRequest} gathering={gathering} close={() => setObserved(undefined)} memories={openMemories} tryVisit={() => tryObservation(target.id)} selectionFailure={error}
                 tryRelation={(targetId, residentId) => locked ? Promise.resolve(false) : refresh({ id: crypto.randomUUID(), revision: record.revision, command: { type: 'observe-relation', itemId: target.id, residentId, ...(targetId ? { targetId } : {}) } })} /></Suspense> : null;
         })()}
-        {memoriesOpen && <Suspense fallback={<p role="status">しまの おもいでを ひらいているよ…</p>}><LifeMemories key={record.profileId} profileId={record.profileId} state={state} walk={id => { setMemoriesOpen(false); void doAction({ type: 'visit', itemId: id }, 'いきさきを きめたよ', undefined, 'current-context-test'); }} close={() => setMemoriesOpen(false)}
+        {memoriesOpen && <Suspense fallback={<Spinner overlay destination="records" message="おもいでを ひらいているよ…" />}><LifeMemories key={record.profileId} profileId={record.profileId} state={state} walk={id => { setMemoriesOpen(false); void doAction({ type: 'visit', itemId: id }, 'いきさきを きめたよ', undefined, 'current-context-test'); }} close={() => setMemoriesOpen(false)}
             observe={(id, residentId) => { setGathering(undefined); setMemoriesOpen(false); setObservedResident(residentId); setObserved(id); if (!residentId) tryObservation(id); }}
             observeGathering={group => { setGathering(group); setMemoriesOpen(false); setObserved(group.participantIds[0]); }} /></Suspense>}
         {placement && <div className="life-placement life-controls" data-life-placement-valid={placement.valid} data-life-placement-cell={cell && cellKey(cell)}>

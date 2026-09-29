@@ -252,7 +252,7 @@ function App() {
                         } />
                         <Route path="/stats" element={
                             <PrivateRoute>
-                                <Suspense fallback={<Spinner fullScreen message="きろくを よみこみちゅう…" />}><Stats /></Suspense>
+                                <Suspense fallback={<Spinner fullScreen destination="records" message="きろくを よみこみちゅう…" />}><Stats /></Suspense>
                             </PrivateRoute>
                         } />
                         <Route path="/settings" element={

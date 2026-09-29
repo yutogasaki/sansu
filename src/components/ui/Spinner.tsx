@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { cn } from "../../utils/cn";
+import { IslandToyIcon } from '../island/IslandToyIcon';
+import './Spinner.css';
 
 interface SpinnerProps {
     /** Message below the spinner */
@@ -7,30 +9,33 @@ interface SpinnerProps {
     /** Fill the parent container and center */
     fullScreen?: boolean;
     className?: string;
+    overlay?: boolean;
+    destination?: 'island' | 'house' | 'learning' | 'records';
 }
 
 export const Spinner: React.FC<SpinnerProps> = ({
     message = "じゅんびちゅう...",
     fullScreen = false,
     className,
+    overlay = false,
+    destination = 'island',
 }) => {
+    const [slow, setSlow] = useState(false);
+    useEffect(() => {
+        const timer = window.setTimeout(() => setSlow(true), 8000);
+        return () => window.clearTimeout(timer);
+    }, []);
     return (
         <div
-            className={cn(
-                "flex flex-col items-center justify-center gap-4",
-                fullScreen && "h-full",
-                className
-            )}
-            aria-live="polite"
+            className={cn('app-loading', fullScreen && 'app-loading--full', overlay && 'app-loading--overlay', className)}
+            role="status" aria-live="polite" data-loading-state="pending" data-loading-candidate="poko-loading-v1"
         >
-            <div className="relative flex h-14 w-14 items-center justify-center rounded-full app-glass shadow-[0_18px_32px_-22px_rgba(15,23,42,0.34)]">
-                <div className="absolute inset-[5px] rounded-full border-[3px] border-white/60" />
-                <div className="absolute inset-[5px] rounded-full border-[3px] border-transparent border-r-cyan-300/40 border-t-cyan-600 animate-spin" />
-                <div className="h-2.5 w-2.5 rounded-full bg-cyan-500 shadow-[0_0_20px_rgba(6,182,212,0.35)]" />
+            <div className="app-loading__badge" aria-hidden="true">
+                <IslandToyIcon kind={destination === 'house' ? 'house' : destination === 'records' ? 'album' : destination === 'learning' ? 'find' : 'island'} size={54} />
+                <span className="app-loading__orbit" />
             </div>
-            {message && (
-                <p className="app-pill px-3 py-1 text-sm font-bold text-slate-500">{message}</p>
-            )}
+            {message && <p className="app-loading__message">{message}</p>}
+            {slow && <p className="app-loading__slow">すこし じかんが かかっているよ</p>}
         </div>
     );
 };

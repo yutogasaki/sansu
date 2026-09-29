@@ -1,3 +1,4 @@
+import { Spinner } from '../ui/Spinner';
 import { Flower2, House, PawPrint } from 'lucide-react';
 import { visibleDirectMarkers, type IslandDirectMarker } from './islandDirectTargets';
 import './IslandDirectActions.css';
@@ -178,7 +179,8 @@ export function IslandStage(props: IslandStageProps & { onTutorialReady?: (ready
         data-keepsake-room={props.learningKeepsakes && !props.learning ? 'true' : undefined}
         data-flag-focus={props.expressionFlagFocus && !props.learning ? 'true' : undefined}
         data-workshop-candidate={props.workshop?.active ? 'island-workshop-v1' : undefined}>
-        <div className="island-stage__viewport">
+        <div className="island-stage__viewport" aria-busy={!ready && !failed}>
+            {!ready && !failed && <Spinner overlay destination={props.learningKeepsakes ? 'house' : 'island'} message={props.learningKeepsakes ? 'いえを ひらいているよ…' : 'しまを えがいているよ…'} />}
             <div className="island-stage__canvas" ref={host} role="img" aria-label={sceneLabel}
                 tabIndex={props.learningKeepsakes && !props.learning ? 0 : undefined}
                 onKeyDown={event => {

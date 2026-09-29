@@ -72,7 +72,7 @@ export async function waitReady(page) {
         const root = document.querySelector('.island-page');
         // Learning deliberately hides its mounted world; wait for the actual input surface.
         if (root?.getAttribute('data-mode') === 'learning') return Boolean(root.querySelector('[data-input-ready="true"] .park-answer'));
-        const canvas = root?.querySelector('[data-renderer="three"] canvas');
+        const canvas = root?.querySelector('.life-world[data-rendered="true"] canvas, [data-renderer="three"] canvas');
         return Boolean(canvas && canvas.getBoundingClientRect().width > 0 && canvas.getBoundingClientRect().height > 0);
     });
 }

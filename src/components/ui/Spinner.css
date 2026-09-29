@@ -1,0 +1,18 @@
+.app-loading {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 16px; min-height: 180px; width: 100%; padding: 24px 16px;
+    color: var(--pokomoko-ink); background: var(--pokomoko-canvas); text-align: center;
+}
+.app-loading--full { height: 100%; min-height: min(360px, 65dvh); }
+.app-loading--overlay { position: absolute; inset: 0; z-index: 4; height: 100%; min-height: 0; }
+.app-loading__badge {
+    position: relative; display: grid; place-items: center; width: 88px; height: 88px;
+    flex-shrink: 0; border-radius: 50%; background: var(--pokomoko-paper);
+    border: 1px dashed var(--pokomoko-edge);
+}
+.app-loading__orbit { position: absolute; inset: -6px; border: 3px solid transparent;
+    border-top-color: var(--pokomoko-blue); border-radius: 50%; animation: app-loading-turn 2s linear infinite; }
+.app-loading__message { margin: 0; font-size: 16px; font-weight: 700; line-height: 1.6; }
+.app-loading__slow { margin: 0; font-size: 13px; line-height: 1.6; color: var(--pokomoko-muted); }
+@keyframes app-loading-turn { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .app-loading__orbit { animation: none; } }

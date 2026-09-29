@@ -1,3 +1,4 @@
+import { Spinner } from '../../ui/Spinner';
 import { anyRuntimeAssetsEnabled } from './runtimeAssetSlots';
 import type { LifeRuntimeAssets } from './runtimeAssets';
 import { canopyClearanceCandidate } from './canopyClearanceStudy';
@@ -29,6 +30,7 @@ type Content = ReturnType<typeof buildLifeScene>;
 type LifeWorldProps = { focus?: 'house'; waterReplay?: GardenWaterReplay; onFrame?: (state: LifeState) => void; inspectShadow?: (itemId: string, residentId: ResidentId, worldAt: number) => void; observationOpen?: boolean; footstepInput?: FootstepInput; prepareFootstepReplay?: () => Promise<DiscoveryScene | undefined>; profileId?: string; presented?: (event: DiscoveryScene, evidence: PresentationEvidence) => void; state: LifeState; changeKey?: string; selected?: string; cell?: Cell; placement?: PlacementPreview; onCell: (cell: Cell) => void; controlsVisible: boolean; children: ReactNode };
 
 export default function LifeWorld({ focus, waterReplay, onFrame, inspectShadow, observationOpen = false, footstepInput, prepareFootstepReplay, profileId, presented, state, changeKey, selected, cell, placement, onCell, controlsVisible, children }: LifeWorldProps) {
+    const [ready, setReady] = useState(false);
     const waterReplayRef = useRef(waterReplay);
     useEffect(() => { waterReplayRef.current = waterReplay; }, [waterReplay]);
     const behindObservation = useRef(observationOpen);
@@ -36,8 +38,8 @@ export default function LifeWorld({ focus, waterReplay, onFrame, inspectShadow, 
     const footsteps = useRef({ input: footstepInput, prepareReplay: prepareFootstepReplay });
     useEffect(() => { footsteps.current = { input: footstepInput, prepareReplay: prepareFootstepReplay }; }, [footstepInput, prepareFootstepReplay]);
     const host = useRef<HTMLDivElement>(null), choose = useRef(onCell);
-    const discovery = useRef({ profileId, presented, inspectShadow, enabled: controlsVisible });
-    useEffect(() => { discovery.current = { profileId, presented, inspectShadow, enabled: controlsVisible }; }, [profileId, presented, inspectShadow, controlsVisible]);
+    const discovery = useRef({ profileId, presented, inspectShadow, enabled: controlsVisible && ready });
+    useEffect(() => { discovery.current = { profileId, presented, inspectShadow, enabled: controlsVisible && ready }; }, [profileId, presented, inspectShadow, controlsVisible, ready]);
     const focusAtMount = useRef(focus);
     const stateAtMount = useRef(state), placementAtMount = useRef(placement);
     const frameObserver = useRef(onFrame);
@@ -49,9 +51,12 @@ export default function LifeWorld({ focus, waterReplay, onFrame, inspectShadow, 
     const [overview, setOverview] = useState(false);
     const [cameraView, setCameraView] = useState<IslandCameraView>(initialIslandCameraView);
     const [failed, setFailed] = useState(false);
+    const [attempt, setAttempt] = useState(0);
+    useEffect(() => { stateAtMount.current = state; placementAtMount.current = placement; }, [state, placement]);
     useEffect(() => { choose.current = onCell; }, [onCell]);
     useEffect(() => {
         const node = host.current; if (!node) return;
+        setReady(false);
         const finishFirstFrame = startLifeTiming('world-first-frame');
         let firstRenderedAt: number | undefined, interactionAt = -Infinity;
         const noteInteraction = () => { interactionAt = performance.now(); };
@@ -273,6 +278,7 @@ export default function LifeWorld({ focus, waterReplay, onFrame, inspectShadow, 
                     timeLifeWork('first-render-submit', () => renderer.render(scene, camera));
                     firstRenderedAt = performance.now(); finishFirstFrame();
                 } else renderer.render(scene, camera);
+                if (node.dataset.rendered !== 'true') setReady(true);
                 node.dataset.rendered = 'true'; startAssets();
                 runtimeAssets?.advanceLoading(performance.now(), canStartAsset());
                 frameObserver.current?.(content.snapshot()); footprint.sample(content, performance.now());
@@ -324,7 +330,7 @@ export default function LifeWorld({ focus, waterReplay, onFrame, inspectShadow, 
         }; raf = requestAnimationFrame(frame);
         const hidden = () => { if (document.visibilityState !== 'visible') { water.clear(); shadows.clear(); footprint.cancel(); collector?.pause(); presentationClock.resume(performance.now(), true); } };
         document.addEventListener('visibilitychange', hidden);
-        const lost = (event: Event) => { water.clear(); shadows.clear(); footprint.cancel(); collector?.pause(); presentationClock.resume(performance.now(), true); event.preventDefault(); setFailed(true); delete node.dataset.rendered; };
+        const lost = (event: Event) => { water.clear(); shadows.clear(); footprint.cancel(); collector?.pause(); presentationClock.resume(performance.now(), true); event.preventDefault(); setFailed(true); setReady(false); delete node.dataset.rendered; };
         const restored = () => setFailed(false);
         renderer.domElement.addEventListener('webglcontextlost', lost); renderer.domElement.addEventListener('webglcontextrestored', restored);
         return () => {
@@ -344,9 +350,11 @@ export default function LifeWorld({ focus, waterReplay, onFrame, inspectShadow, 
             sun.shadow.dispose(); renderer.dispose(); renderer.forceContextLoss(); renderer.domElement.remove(); delete node.dataset.rendered;
             emotes.forEach(badge => badge.remove()); delete node.dataset.lifePoses; delete node.dataset.lifeRender; delete node.dataset.lifeCamera;
         };
-    }, []);
-    useEffect(() => { update.current?.({ state, changeKey, selected, cell, placement }); }, [state, changeKey, selected, cell, placement]);
-    return <><div ref={host} className="life-world" data-placing={Boolean(placement)} />
+    }, [attempt]);
+    useEffect(() => { update.current?.({ state, changeKey, selected, cell, placement }); }, [state, changeKey, selected, cell, placement, attempt]);
+    return <><div ref={host} className="life-world" data-placing={Boolean(placement)} aria-busy={!ready && !failed}>
+        {!ready && !failed && <Spinner overlay message="しまを えがいているよ…" />}
+    </div>
         {placement && <div className="life-placement-camera">
             <IslandCameraToolbar view={cameraView} onAction={action => controlCamera.current?.(action)} />
             <p>タップで ばしょ・なぞって 移動・2本指で 拡大と回転</p>
@@ -369,5 +377,7 @@ export default function LifeWorld({ focus, waterReplay, onFrame, inspectShadow, 
         </details>
         {hasChangedIslandCameraView(cameraView) && <button type="button" className="island-stage__quick-reset" onClick={() => controlCamera.current?.('reset')}>もとの ながめ</button>}
         </div>}
-        {failed && <p className="life-world-error" role="status">景色をひらけなかったよ。「つくる」からも選べるよ。</p>}</>;
+        {failed && <div className="life-world-error" role="alert"><p>景色を ひらけなかったよ</p>
+            <button type="button" className="island-secondary" onClick={() => { setFailed(false); setReady(false); setAttempt(value => value + 1); }}>もういちど みる</button>
+        </div>}</>;
 }

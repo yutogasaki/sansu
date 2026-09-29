@@ -225,3 +225,6 @@ If a task spans more than one change type, use the stricter row.
 Life two-buildの `SANSU_LIFE_RESIDENCY_UPGRADE=1` は保存20→21の実SW更新と中断復旧に対応する。旧住人3人、既存切替/所有action、全native store、同じ学習予約を保持し、新cutoverだけを追加する。旧writerの拒否は `tools/check-island-legacy-writer.mjs` に旧revisionと保存版（`SANSU_LEGACY_VERSION`、既定20）を渡して検査。ロールバックも版21を読めるbuildが必要。
 
 幻想30品のloadハーネスは、比較双方を明示的な旧版20の3住人fixtureで始める。新規1人への変更を描画削減へ混ぜず、品種/座標/住人数をreportへ保存する。旧baseline検査だけ `SANSU_FANTASY_LOAD_VERSION=20` を指定する。
+
+
+2026-09-29: `node tools/e2e-island-loading.mjs` は本番形式の `SANSU_LOADING_URL`、新しい `SANSU_LOADING_OUTPUT`、HTMLを含むapp/dist SHAの `SANSU_LOADING_MANIFEST` を指定。390通常/768 reducedでentry・庭・家のmoduleを明示保留し、起動前HTML/長い待機/完了後の消去を確認。実初回3問、実WebGL context loss/retry、所有と学習の保持、記録/設定への移動、実SW offline再開と同予約への追加回答、entry module失敗からHTML retryを検査する。boot撮影では保留したmoduleに依存するfonts.readyを待たずsystem fontの実表示を撮影する。実通信速度・実iPhone・子どもの理解の測定とは区別する。

@@ -1,4 +1,5 @@
 import { lazy, Suspense } from 'react';
+import { Spinner } from '../components/ui/Spinner';
 import { useIslandLife } from '../components/island/life/useIslandLife';
 import { lifeEnabled } from '../domain/islandLife/model';
 import { replayLife } from '../domain/islandLife/simulation';
@@ -632,7 +633,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     const complex = Boolean(plan?.slots.some(candidate => candidate.problem.inputType === 'multi-number'
         || candidate.problem.questionVisual?.kind === 'operation-base10' || parkHissanGrid(candidate.problem)));
     if (loadError) return <IslandLoadingError />;
-    if (opening || !island) return <div className="island-loading" role="status">しまを ひらいているよ…</div>;
+    if (opening || !island) return <Spinner fullScreen message="しまを ひらいているよ…" />;
     const valid = Boolean(preview?.position && isValidIslandPlacement(island, preview.id, preview.position, preview.rotation));
     const growthLook = direct?.preview ? islandGrowthPreview(island, 'garden') : screen === 'growth' && growthPreviewHabitat ? islandGrowthPreview(island, growthPreviewHabitat) : undefined;
     const stageIsland = growthLook?.island ?? (screen === 'experience' ? experience.previewIsland : undefined) ?? island;
@@ -685,8 +686,8 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         </header>}
         {(error || loadError) && <div className="island-error" role="alert"><p>{error}</p><button className="island-text-button" onClick={() => window.location.reload()}>よみなおす</button></div>}
         {screen === 'placement' && preview && <IslandPlacementActions valid={valid} disabled={busy} onSave={savePlacement} onCancel={cancelPlacement} />}
-        {active && screen === 'home' && lifeEnabled() && <Suspense fallback={<p role="status">しまを ひらいているよ…</p>}><IslandLife controls={lifeControls} onHome={enterHouse} disabled={busy || preparingLearning} islandName={island.experience?.islandName ?? 'ふしぎな しま'} /></Suspense>}
-        {active && homeJourneyScene && <Suspense fallback={<p role="status">しまを ひらいているよ…</p>}><HomeJourneyPreview key={profile.id} state={island.homeJourney}
+        {active && screen === 'home' && lifeEnabled() && <Suspense fallback={<Spinner fullScreen message="しまを ひらいているよ…" />}><IslandLife controls={lifeControls} onHome={enterHouse} disabled={busy || preparingLearning} islandName={island.experience?.islandName ?? 'ふしぎな しま'} /></Suspense>}
+        {active && homeJourneyScene && <Suspense fallback={<Spinner fullScreen message="しまを ひらいているよ…" />}><HomeJourneyPreview key={profile.id} state={island.homeJourney}
             room={keepsakeRoomActive ? { state: island.learningKeepsakes, completedSets: island.completedSets, selectedId: keepsakeFocus, challengeDisplayed: challengeSummary?.displayed } : undefined}
             onHomeEnter={!busy && screen === 'home' ? enterHouse : undefined}
             onHomeAction={!busy && screen === 'keepsakes' ? action => {
@@ -698,7 +699,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
             growthAt={homeJourneyGrowthAt} onGrowthShown={() => setHomeJourneyGrowthAt(undefined)} /></Suspense>}
         {/* Life learning hides the world. Do not create a legacy WebGL world
             behind the questions just to destroy it when returning home. */}
-        {active && !(lifeEnabled() && (screen === 'home' || learning)) && !homeJourneyScene && !['help', 'album', 'photos', 'inventory', 'challenge'].includes(screen) && <Suspense fallback={<p role="status">しまを ひらいているよ…</p>}><IslandStage onTutorialReady={setTutorialStageReady} onCameraPractice={() => tutorial.practice('view')} closeHomeView={screen === 'home'} compactCameraControls={screen === 'home' || screen === 'play'} items={stageIsland.items} completedSets={island.completedSets} pulse={pulse} learning={learning}
+        {active && !(lifeEnabled() && (screen === 'home' || learning)) && !homeJourneyScene && !['help', 'album', 'photos', 'inventory', 'challenge'].includes(screen) && <Suspense fallback={<Spinner fullScreen destination={screen === 'keepsakes' ? 'house' : 'island'} message={screen === 'keepsakes' ? 'いえを ひらいているよ…' : 'しまを ひらいているよ…'} />}><IslandStage onTutorialReady={setTutorialStageReady} onCameraPractice={() => tutorial.practice('view')} closeHomeView={screen === 'home'} compactCameraControls={screen === 'home' || screen === 'play'} items={stageIsland.items} completedSets={island.completedSets} pulse={pulse} learning={learning}
             challengeDisplayed={challengeSummary?.displayed}
             directInteractions={screen === 'home' && !busy && !homeMenuOpen && !tutorial.current && !direct?.preview}
             directPlaySelection={direct?.target.kind === 'resident'}
@@ -819,7 +820,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
             action={tutorial.current.id === 'growth' && screen === 'home' ? 'みにいく' : undefined}
             onAction={() => { tutorial.practice('growth'); setAlbumComparison(latestMilestone?.habitats[0] ?? island.growth?.focus ?? 'garden'); setScreen('album'); }} />}
         {screen === 'placement' && <IslandDistricts island={island} value={district} disabled={busy} onChange={setDistrict} />}
-        <Suspense fallback={<section className="island-sheet" role="status"><p>じゅんびしているよ…</p></section>}>{learning && learningLease !== 'ready' ? <section className="island-sheet" role="status"><p>{learningLease === 'loading' ? 'じゅんびしているよ' : 'ほかの がめんの まなびを とじてから、もういちど ひらこう。'}</p></section>
+        <Suspense fallback={<Spinner message="じゅんびしているよ…" />}>{learning && learningLease !== 'ready' ? <section className="island-sheet" role="status">{learningLease === 'loading' ? <Spinner destination="learning" message="まなぶ じゅんびを しているよ…" /> : 'ほかの がめんの まなびを とじてから、もういちど ひらこう。'}</section>
             : learning && nextPlanError ? <section className="island-sheet island-learning-retry">
             <p role="status">{plan?.status === 'completed' ? 'ここまで といたぶんは のこっているよ。' : 'まだ もんだいを ひらけなかったよ。'}</p>
             <button className="island-primary" disabled={busy} onClick={() => void begin()}>つづきの もんだいを ひらく</button>
@@ -942,7 +943,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                         const look = islandGrowthPreview(island, habitat);
                         setGrowthViewHabitat(look ? habitat : 'garden'); setGrowthPreviewHabitat(look ? habitat : undefined); setScreen('growth');
                     }} />
-                : screen === 'album' ? <Suspense fallback={<section className="island-sheet" role="status"><p>アルバムを ひらいているよ…</p></section>}><IslandAlbum island={island} initialComparison={albumComparison} disabled={busy} closeDisabled={comparisonDisabled} onClose={home}
+                : screen === 'album' ? <Suspense fallback={<Spinner destination="records" message="アルバムを ひらいているよ…" />}><IslandAlbum island={island} initialComparison={albumComparison} disabled={busy} closeDisabled={comparisonDisabled} onClose={home}
                     onPhotos={openPhotos}
                     onShared={() => openShared()}
                     onWorkshop={id => { openWorkshop(); setWorkshopView(view => ({ ...view, mode: id ? 'observe' : 'build', selectedSpecimenId: id ?? view.selectedSpecimenId })); }}
@@ -984,6 +985,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                         </div>
                     </IslandHomeActions>
                 </section>}</Suspense>
+        {learning && preparingLearning && learningLease === 'ready' && !nextPlanError && <Spinner overlay destination="learning" message="まなぶ じゅんびを しているよ…" />}
         {plan && slot && <IslandLearningPanel profile={profile} plan={plan} active={active && learning && learningLease === 'ready' && !nextPlanError}
             heroStyle={learningHeroStyle}
             hintPending={busyKind === 'learning-hint' && active && learning && !preparingLearning}
@@ -1025,5 +1027,5 @@ export default function Island() {
         if (app && !profile) navigate('/onboarding', { replace: true });
     }, [app, profile, navigate]);
     if (error) return <IslandLoadingError />;
-    return profile ? <IslandSession key={profile.id} profile={profile} /> : <div className="island-loading" role="status">しまを ひらいているよ…</div>;
+    return profile ? <IslandSession key={profile.id} profile={profile} /> : <Spinner fullScreen message="しまを ひらいているよ…" />;
 }

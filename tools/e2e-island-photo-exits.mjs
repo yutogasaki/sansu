@@ -56,6 +56,7 @@ try {
             await page.goto(base); await waitReady(page); await capture('island');
             const unchanged = await readNative(page,id);
             await page.locator('.island-shell-nav').getByRole('button',{name:'いえ',exact:true}).click(); await house();
+            await button(page,'いえの メニュー').click();
             const camera = button(page,'しゃしんに のこす'); await exposed(camera); await camera.click(); await waitMode(page,'camera'); await waitReady(page);
             await exposed(page.locator('[data-photo-action=capture]')); await capture('camera-ready');
             await page.locator('[data-photo-action=capture]').click(); await page.locator('[data-photo-saved=true]').waitFor();
