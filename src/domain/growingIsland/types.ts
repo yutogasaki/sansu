@@ -96,6 +96,8 @@ export interface GrowingState {
     arrivals: string[];
     tutorial: 'first-home' | 'done';
     learned: string[];
+    /** Completions at or before this time were counted and their ids pruned (§18.1). */
+    learnedFloor?: number;
     enrolledAt: number;
     /** Old light is kept untouched until spec 51 chapter 06 decides its conversion. */
     legacyLight?: number;

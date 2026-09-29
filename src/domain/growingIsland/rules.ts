@@ -41,6 +41,8 @@ export const RULES = {
     bigTreeHours: 24 * 7,
     lordTreeHours: 24 * 30,
     appliedMemory: 500,
+    /** Completion ids kept for de-duplication; older ones collapse into a time floor. */
+    learnedMemory: 3000,
 } as const;
 
 export const SEED_PRICE: Record<SeedKind, number> = { home: 4, farm: 4, play: 6, wild: 1, market: 8, festival: 10 };

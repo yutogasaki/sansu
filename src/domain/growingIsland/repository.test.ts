@@ -1,7 +1,9 @@
 import 'fake-indexeddb/auto';
 import { afterEach, describe, expect, it } from 'vitest';
-import { IslandLifeDatabase } from '../islandLife/repository';
-import { commandLife } from '../islandLife/simulation';
+import { IslandLifeDatabase, updateLife } from '../islandLife/repository';
+import type { LifeCommand } from '../islandLife/model';
+import { commandLife, replayLife } from '../islandLife/simulation';
+
 import { learningDay, newLife } from '../islandLife/model';
 import { GrowingIslandDatabase, MOMENT_LIMIT, addMoment, commandGrowingIsland, deleteGrowingOwner, flowerSentToday, listMoments,
     readGrowingIsland, sendFlower, syncGrowingIsland } from './repository';
@@ -98,5 +100,26 @@ describe('growing island persistence', () => {
         expect(kept.at(-1)!.at).toBe(at(MOMENT_LIMIT + 4));
         await deleteGrowingOwner('kid', db);
         expect(await listMoments('kid', db)).toEqual([]);
+    });
+
+    it('copies a well-used current island: every item, the land, the drops and the friends', async () => {
+        const db = growing(), old = life();
+        const facts = Array.from({ length: 30 }, (_, i) => ({ id: `past-${i}`, at: T0 - 29 * HOUR + i }));
+        let record = await updateLife('rich', facts, undefined, T0 - 29 * HOUR, old, T0 - 30 * HOUR);
+        const steps: LifeCommand[] = [
+            { type: 'buy', kind: 'water-bowl', cell: { x: 4, z: 3 } }, { type: 'buy', kind: 'flower', cell: { x: 1, z: 3 } },
+            { type: 'buy', kind: 'bench', cell: { x: 0, z: 4 } }, { type: 'expand', side: 'east' },
+        ];
+        for (const [i, command] of steps.entries())
+            record = await updateLife('rich', facts, { id: `step-${i}`, revision: record.revision, command }, T0 - 20 * HOUR + i * HOUR, old);
+        expect(record.actions.length).toBeGreaterThanOrEqual(4);
+        const before = structuredClone(await old.worlds.get('rich'));
+        const current = replayLife(before!, T0);
+        const copied = (await syncGrowingIsland('rich', [], T0, db, old)).record.state;
+        expect(copied.drops).toBe(current.drops);
+        expect(copied.land.expanded).toBe(current.expanded);
+        expect(copied.landmarks.map(l => [l.id, l.kind, l.cell])).toEqual(current.items.map(i => [i.id, i.kind, i.cell]));
+        expect(copied.villagers.map(v => v.legacyId).sort()).toEqual(current.residents.filter(r => r.id !== 'pokomoko').map(r => r.id).sort());
+        expect(await old.worlds.get('rich')).toEqual(before);
     });
 });

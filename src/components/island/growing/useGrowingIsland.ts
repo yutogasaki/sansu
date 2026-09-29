@@ -7,6 +7,10 @@ import type { Command, NatureEvent, TownEvent } from '../../../domain/growingIsl
 
 export interface Reveal { id: number; town: TownEvent[]; nature: NatureEvent[] }
 
+/** Another tab saved this island: reload the saved state instead of showing a stale one. */
+const channelName = 'sansu-growing-island';
+const announce = (profileId: string) => { try { const c = new BroadcastChannel(channelName); c.postMessage(profileId); c.close(); } catch { /* Old browsers refresh on focus. */ } };
+
 const message = (error: unknown) => error instanceof Error && /[ぁ-ん]/.test(error.message)
     ? error.message : 'しまを ほぞん できなかったよ。もういちど ためしてね。';
 
@@ -30,6 +34,8 @@ export function useGrowingIsland(profileId: string, active: boolean) {
                 const levels = profile ? { math: profile.mathMainLevel, vocab: profile.vocabMainLevel } : undefined;
                 const result = await syncGrowingIsland(profileId, await terminalFacts(profileId), Date.now(), growingDb, lifeDb, levels);
                 setRecord(result.record); setError(undefined);
+                // Only meaningful changes are announced, so two open tabs never ping-pong refreshes.
+                if (result.learned > 0 || result.town.length) announce(profileId);
                 const shown = result.town.some(e => e.type !== 'quiet') || result.nature.some(e => e.type === 'big-tree' || e.type === 'lord-tree' || e.type === 'spread');
                 if (result.town.length || shown) setReveal({ id: ++revealId.current, town: result.town, nature: result.nature });
             } catch (e) { setError(message(e)); }
@@ -44,7 +50,7 @@ export function useGrowingIsland(profileId: string, active: boolean) {
         const release = holdPwaUpdateForCriticalPersistence();
         try {
             const result = await commandGrowingIsland(profileId, { id: crypto.randomUUID(), command });
-            setRecord(result.record); setError(undefined);
+            setRecord(result.record); setError(undefined); announce(profileId);
             if (result.town.length) setReveal({ id: ++revealId.current, town: result.town, nature: [] });
             return true;
         } catch (e) { setError(message(e)); return false; }
@@ -52,6 +58,12 @@ export function useGrowingIsland(profileId: string, active: boolean) {
     }, [profileId]);
 
     useEffect(() => { setRecord(undefined); setReveal(undefined); }, [profileId]);
+    useEffect(() => {
+        if (!active || typeof BroadcastChannel === 'undefined') return;
+        const channel = new BroadcastChannel(channelName);
+        channel.onmessage = event => { if (event.data === profileId) void sync(); };
+        return () => channel.close();
+    }, [active, profileId, sync]);
     useEffect(() => {
         if (!active) return;
         void sync();

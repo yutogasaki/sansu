@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { applyIntent } from './commands';
 import { deliverKeepsakes, keepsakeKind, receiveGifts } from './gifts';
-import { newIsland } from './island';
+import { ingestCompletions, newIsland } from './island';
+import { RULES } from './rules';
 import { dayMoment, friendOf, momentCandidates } from './moments';
 import { arrivalName, NAME_CANDIDATES } from './names';
 import { rollVisitor } from './pier';
@@ -129,5 +130,17 @@ describe('island styles opened by level', () => {
         expect(dressed.villagers[0].outfit).toEqual({ color: 2, hat: 3 });
         expect(act(dressed, { type: 'flag', pattern: 4 }).state.flagPattern).toBe(4);
         expect(() => act(dressed, { type: 'dress', id, color: 9 })).toThrow();
+    });
+});
+
+describe('learning memory', () => {
+    it('stays bounded over years without counting any completion twice', () => {
+        let state = newIsland('kid-m', T0);
+        const facts = Array.from({ length: RULES.learnedMemory + 500 }, (_, i) => ({ id: `c${i}`, at: T0 + 1 + i }));
+        for (let i = 0; i < facts.length; i += 250) state = ingestCompletions(state, facts.slice(0, i + 250)).state;
+        expect(state.learned.length).toBeLessThanOrEqual(RULES.learnedMemory + 1);
+        expect(state.drops).toBe(facts.length * RULES.dropsPerCompletion);
+        expect(ingestCompletions(state, facts).added).toBe(0);
+        expect(ingestCompletions(state, [...facts, { id: 'late-new', at: facts.at(-1)!.at + 5 }]).added).toBe(1);
     });
 });

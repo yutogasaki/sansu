@@ -67,15 +67,26 @@ export function fromLife(life: LifeState, profileId: string, now: number): Growi
     return state;
 }
 
-/** Each valid completion after enrollment adds drops and town time once (§10). */
+/**
+ * Each valid completion after enrollment adds drops and town time once (§10). Old ids are
+ * pruned past a memory limit: their latest time becomes a floor below which nothing counts.
+ */
 export function ingestCompletions(previous: GrowingState, facts: readonly { id: string; at: number }[]) {
-    const known = new Set(previous.learned);
-    const fresh = facts.filter(f => f.at >= previous.enrolledAt && !known.has(f.id));
+    const known = new Set(previous.learned), floor = previous.learnedFloor ?? -Infinity;
+    const fresh = facts.filter(f => f.at >= previous.enrolledAt && f.at > floor && !known.has(f.id));
     if (!fresh.length) return { state: previous, added: 0 };
     const state = structuredClone(previous);
     for (const fact of fresh) { state.learned.push(fact.id); known.add(fact.id); }
     state.drops += fresh.length * RULES.dropsPerCompletion;
     state.town.bank += fresh.length * RULES.townHoursPerCompletion;
+    if (state.learned.length > RULES.learnedMemory) {
+        const at = new Map(facts.map(f => [f.id, f.at]));
+        const ordered = [...state.learned].sort((a, b) => (at.get(a) ?? 0) - (at.get(b) ?? 0));
+        const dropped = ordered.slice(0, ordered.length - RULES.learnedMemory);
+        state.learnedFloor = Math.max(state.learnedFloor ?? -Infinity, ...dropped.map(id => at.get(id) ?? 0));
+        // Keep every id later than the floor, so a completion at the floor time is never counted twice.
+        state.learned = ordered.filter(id => (at.get(id) ?? 0) >= state.learnedFloor!);
+    }
     return { state, added: fresh.length };
 }
 

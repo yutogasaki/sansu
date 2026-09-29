@@ -92,7 +92,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         return () => clearTimeout(id);
     }, [own, profileId, visit]);
 
-    const bubble = state ? visit ? `${visit.name}の しまに きたよ。みんなに あいさつしよう` : line ?? idleLine(state) : '';
+    const bubble = state ? line ?? (visit ? `${visit.name}の しまに きたよ。みんなに あいさつしよう` : idleLine(state)) : '';
     const waiting = own ? waitingSeeds(own) : 0;
     useEffect(() => { publishWaitingSeeds(waiting); }, [waiting]);
     useEffect(() => { if (sound && bubble && !show) speak(bubble); }, [sound, bubble, show]);
@@ -175,7 +175,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         setPanel(undefined);
         const record = await readGrowingIsland(id), sibling = siblings.find(s => s.id === id);
         if (!record || !sibling) { setLine('まだ その しまは ひらかれていないみたい'); return; }
-        setVisit({ id, name: sibling.name, state: record.state, sent: await flowerSentToday(profileId, id) });
+        setVisit({ id, name: sibling.name, state: record.state, sent: await flowerSentToday(profileId, id) }); setLine(undefined);
         setSelected(undefined); setPlacing(undefined);
     };
 
