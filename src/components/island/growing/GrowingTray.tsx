@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { LANDMARK_PRICE, SEED_PRICE } from '../../../domain/growingIsland';
 import type { GrowingState, LandmarkKind, SeedKind } from '../../../domain/growingIsland';
-import { HOME_STAGE, LANDMARK_LABEL, SEED_LABEL } from './growingCopy';
+import { keepsakeKind } from '../../../domain/growingIsland';
+import { HOME_STAGE, KEEPSAKE_NAME, LANDMARK_LABEL, SEED_LABEL } from './growingCopy';
 
-export type Pick = { mode: 'seed'; kind: SeedKind } | { mode: 'landmark'; kind: LandmarkKind } | { mode: 'unstore'; id: string; kind: SeedKind | LandmarkKind; seed: boolean };
+export type Pick = { mode: 'seed'; kind: SeedKind } | { mode: 'landmark'; kind: LandmarkKind }
+    | { mode: 'unstore'; id: string; kind: SeedKind | LandmarkKind; seed: boolean; keepsake?: string };
 
 const SEEDS: SeedKind[] = ['home', 'farm', 'play', 'wild', 'market', 'festival'];
 const LANDMARKS: LandmarkKind[] = ['flower', 'bench', 'water-bowl', 'sapling', 'water-channel', 'picnic-table', 'planter', 'swing', 'lantern', 'fence', 'lighthouse'];
@@ -18,6 +20,8 @@ export function GrowingTray({ state, onPick, onClose }: { state: GrowingState; o
         ...state.landmarks.filter(l => !l.cell).map(l => ({ id: l.id, kind: l.kind as SeedKind | LandmarkKind, seed: false, label: LANDMARK_LABEL[l.kind] })),
         ...state.plots.filter(p => !p.cell).map(p => ({ id: p.id, kind: p.kind as SeedKind | LandmarkKind, seed: true,
             label: { name: p.kind === 'home' ? HOME_STAGE[p.stage] : SEED_LABEL[p.kind].name, icon: SEED_LABEL[p.kind].icon } })),
+        ...state.keepsakes.filter(k => !k.cell).map(k => ({ id: k.id, kind: 'flower' as SeedKind | LandmarkKind, seed: false, keepsake: k.unitId,
+            label: { name: KEEPSAKE_NAME[keepsakeKind(k.unitId)], icon: '🏅' } })),
     ];
     const price = (value: number) => <span className="growing-price" aria-label={`しずく ${value}`}>💧{value}</span>;
     return <section className="growing-tray" aria-label="たねと めじるし">
@@ -46,7 +50,7 @@ export function GrowingTray({ state, onPick, onClose }: { state: GrowingState; o
             </button>)}
         </div>}
         {tab === 'stored' && <div className="growing-grid">
-            {stored.map(item => <button key={item.id} className="growing-card" onClick={() => onPick({ mode: 'unstore', id: item.id, kind: item.kind, seed: item.seed })}>
+            {stored.map(item => <button key={item.id} className="growing-card" onClick={() => onPick({ mode: 'unstore', id: item.id, kind: item.kind, seed: item.seed, keepsake: 'keepsake' in item ? item.keepsake as string : undefined })}>
                 <span className="growing-card-icon" aria-hidden="true">{item.label?.icon}</span><strong>{item.label?.name}</strong>
             </button>)}
         </div>}

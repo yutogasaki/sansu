@@ -7,7 +7,11 @@ export type SeedKind = 'home' | 'farm' | 'play' | 'wild' | 'market' | 'festival'
 /** Instant landmarks: the current catalog plus the late-game lighthouse (§4, §8). */
 export type LandmarkKind = ItemKind | 'lighthouse';
 export type PlotStyle = 'water' | 'tree' | 'flower' | 'light' | 'plain';
-export type Species = 'rabbit' | 'otter' | 'fox' | 'duck' | 'squirrel' | 'hedgehog' | 'bird';
+/**
+ * Animal friends, and the island's two children: the girl is always えま and the boy always
+ * えいた, one of each per island (spec 52 §7.1). Pokomoko is not a species.
+ */
+export type Species = 'rabbit' | 'otter' | 'fox' | 'duck' | 'squirrel' | 'hedgehog' | 'bird' | 'girl' | 'boy';
 export type Like = 'flower' | 'water' | 'tree' | 'light' | 'food' | 'play' | 'farm' | 'quiet';
 export type Trait = 'lively' | 'mellow' | 'shy' | 'hungry';
 export type Character = 'water' | 'tree' | 'flower' | 'farm' | 'light' | 'mixed';
@@ -41,6 +45,8 @@ export interface Landmark {
     maturedAt?: number;
     rotation?: 0 | 1 | 2 | 3;
     legacy?: Pick<LifeItem, 'style' | 'foodStage' | 'foodStock' | 'access'>;
+    /** The sibling who left this flower during a visit (§13). */
+    from?: string;
 }
 
 export interface Keepsake { id: string; unitId: string; cell?: Cell }
@@ -60,6 +66,8 @@ export interface Villager {
     arrivedAt: number;
     away?: boolean;
     legacyId?: 'rabbit' | 'otter';
+    /** Island Lv8 lets children choose clothes colours and Lv9 hats (§8). */
+    outfit?: { color?: number; hat?: number };
 }
 
 export interface GrowingState {
@@ -67,6 +75,8 @@ export interface GrowingState {
     seed: string;
     islandName?: string;
     flagColor?: number;
+    /** Island Lv7 lets children draw a pattern on the island flag (§8). */
+    flagPattern?: number;
     drops: number;
     land: { expanded?: 'east' | 'west'; extra: Side[]; capes: ('east' | 'west')[] };
     plots: Plot[];
@@ -89,6 +99,10 @@ export interface GrowingState {
     enrolledAt: number;
     /** Old light is kept untouched until spec 51 chapter 06 decides its conversion. */
     legacyLight?: number;
+    /** Learning levels already rewarded with keepsakes; the first sync sets the baseline (§10). */
+    mastery?: { math: number; vocab: number };
+    /** Flower gifts from siblings' visits that were already received (§13). */
+    gifts?: string[];
     applied: string[];
     nextId: number;
 }
@@ -106,7 +120,9 @@ export type Command =
     | { type: 'open'; id: string }
     | { type: 'open-all' }
     | { type: 'disembark'; id: string }
-    | { type: 'away'; id: string; away: boolean };
+    | { type: 'away'; id: string; away: boolean }
+    | { type: 'dress'; id: string; color?: number; hat?: number }
+    | { type: 'flag'; color?: number; pattern?: number };
 
 export type TownEvent =
     | { type: 'built'; plotId: string }
@@ -117,7 +133,13 @@ export type TownEvent =
     | { type: 'unlocked'; keys: string[] }
     | { type: 'blocked'; reason: 'full' | 'food' | 'unreachable'; plotId?: string }
     | { type: 'boat'; hoursLeft: number }
+    | { type: 'keepsake'; unitId: string }
+    | { type: 'gift'; from: string; landmarkId?: string }
+    | { type: 'moment'; moment: Moment; cell?: Cell }
     | { type: 'quiet' };
+
+/** Small surprises of the day (§11.2). Presentation only: none of them changes the island. */
+export type Moment = 'rainbow' | 'friends' | 'butterflies' | 'guest-water' | 'guest-grove';
 
 export type NatureEvent =
     | { type: 'bloomed'; id: string }

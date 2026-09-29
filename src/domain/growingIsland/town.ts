@@ -1,9 +1,11 @@
 import { comfort, foodSupport, genki, housing, islandLevel, levelFor, occupantsOf, refreshUnlocks } from './community';
 import { features, islandCharacter, styleAt } from './environment';
+import { dayMoment } from './moments';
+import { arrivalName } from './names';
 import { advancePier, docked } from './pier';
 import { RULES } from './rules';
 import { isReachable, reachableFromHome } from './space';
-import type { GrowingState, Plot, TownEvent, Villager } from './types';
+import type { Cell, GrowingState, Moment, Plot, TownEvent, Villager } from './types';
 
 const isDawn = (hour: number) => hour % 24 === RULES.dawnHour;
 
@@ -61,7 +63,7 @@ function chooseHome(state: GrowingState, villager: Villager) {
 export function welcome(state: GrowingState, hour: number, home: Plot): Villager {
     const visitor = advancePier(state, hour);
     const villager: Villager = { id: `v${state.nextId++}`, species: visitor.species, variant: visitor.variant,
-        trait: visitor.trait, home: home.id, arrivedAt: hour };
+        trait: visitor.trait, home: home.id, arrivedAt: hour, name: arrivalName(state, visitor) };
     state.villagers.push(villager);
     state.arrivals.push(villager.id);
     return villager;
@@ -83,13 +85,15 @@ function moveIn(state: GrowingState, hour: number, events: TownEvent[]): 'full' 
  */
 export function openTown(state: GrowingState): TownEvent[] {
     const events: TownEvent[] = [], end = state.town.clock + state.town.bank;
-    let blocked: 'full' | 'food' | undefined;
+    let blocked: 'full' | 'food' | undefined, moment: { moment: Moment; cell?: Cell } | undefined;
     for (let hour = state.town.clock + 1; hour <= end; hour++) {
         build(state, hour, events);
         if (!isDawn(hour)) continue;
         growHomes(state, hour, events);
         refreshCommunity(state, events);
         blocked = moveIn(state, hour, events);
+        // One small surprise at most per opening: the latest dawn's (§11.2).
+        moment = dayMoment(state, Math.floor(hour / 24));
     }
     state.town.clock = end; state.town.bank = 0;
     const reached = reachableFromHome(state);
@@ -97,6 +101,7 @@ export function openTown(state: GrowingState): TownEvent[] {
         && !isReachable(plot.cell, reached)) events.push({ type: 'blocked', reason: 'unreachable', plotId: plot.id });
     if (blocked && !events.some(e => e.type === 'arrived')) events.push({ type: 'blocked', reason: blocked });
     if (!docked(state)) events.push({ type: 'boat', hoursLeft: state.pier.dockAt - state.town.clock });
+    if (moment) events.push({ type: 'moment', ...moment });
     if (!events.length) events.push({ type: 'quiet' });
     return events;
 }

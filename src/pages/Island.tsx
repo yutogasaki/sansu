@@ -690,7 +690,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         {(error || loadError) && <div className="island-error" role="alert"><p>{error}</p><button className="island-text-button" onClick={() => window.location.reload()}>よみなおす</button></div>}
         {screen === 'placement' && preview && <IslandPlacementActions valid={valid} disabled={busy} onSave={savePlacement} onCancel={cancelPlacement} />}
         {active && screen === 'home' && lifeEnabled() && <Suspense fallback={<Spinner fullScreen message="しまを ひらいているよ…" />}>{growingIslandEnabled()
-            ? <GrowingIsland profileId={profile.id} active={active && screen === 'home'} sound={Boolean(profile.soundEnabled)} onHome={enterHouse} />
+            ? <GrowingIsland profileId={profile.id} profileName={profile.name} active={active && screen === 'home'} sound={Boolean(profile.soundEnabled)} onHome={enterHouse} />
             : <IslandLife controls={lifeControls} onHome={enterHouse} disabled={busy || preparingLearning} islandName={island.experience?.islandName ?? 'ふしぎな しま'} />}</Suspense>}
         {active && homeJourneyScene && <Suspense fallback={<Spinner fullScreen message="しまを ひらいているよ…" />}><HomeJourneyPreview key={profile.id} state={island.homeJourney}
             room={keepsakeRoomActive ? { state: island.learningKeepsakes, completedSets: island.completedSets, selectedId: keepsakeFocus, challengeDisplayed: challengeSummary?.displayed } : undefined}

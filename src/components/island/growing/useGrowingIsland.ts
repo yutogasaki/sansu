@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { holdPwaUpdateForCriticalPersistence } from '../../../pwa';
-import { terminalFacts } from '../../../domain/islandLife/repository';
-import { commandGrowingIsland, syncGrowingIsland, type GrowingRecord } from '../../../domain/growingIsland/repository';
+import { lifeDb, terminalFacts } from '../../../domain/islandLife/repository';
+import { getProfile } from '../../../domain/user/repository';
+import { commandGrowingIsland, growingDb, syncGrowingIsland, type GrowingRecord } from '../../../domain/growingIsland/repository';
 import type { Command, NatureEvent, TownEvent } from '../../../domain/growingIsland';
 
 export interface Reveal { id: number; town: TownEvent[]; nature: NatureEvent[] }
@@ -25,9 +26,11 @@ export function useGrowingIsland(profileId: string, active: boolean) {
         const release = holdPwaUpdateForCriticalPersistence();
         running.current = (async () => {
             try {
-                const result = await syncGrowingIsland(profileId, await terminalFacts(profileId));
+                const profile = await getProfile(profileId);
+                const levels = profile ? { math: profile.mathMainLevel, vocab: profile.vocabMainLevel } : undefined;
+                const result = await syncGrowingIsland(profileId, await terminalFacts(profileId), Date.now(), growingDb, lifeDb, levels);
                 setRecord(result.record); setError(undefined);
-                const shown = result.town.some(e => e.type !== 'quiet') || result.nature.some(e => e.type === 'big-tree' || e.type === 'lord-tree');
+                const shown = result.town.some(e => e.type !== 'quiet') || result.nature.some(e => e.type === 'big-tree' || e.type === 'lord-tree' || e.type === 'spread');
                 if (result.town.length || shown) setReveal({ id: ++revealId.current, town: result.town, nature: result.nature });
             } catch (e) { setError(message(e)); }
             finally { release(); running.current = undefined; }

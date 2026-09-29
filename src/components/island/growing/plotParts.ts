@@ -3,6 +3,9 @@ import type { PlotStyle } from '../../../domain/growingIsland';
 
 /** Roof colours children can paint (spec 52 §1). Index 0 follows the plot's own style. */
 export const ROOF_COLORS = ['#a2644e', '#d77a86', '#e0b454', '#5f9ec4', '#78a86a', '#9a7cc4', '#e59a58', '#6f6a8e'] as const;
+/** Two "ふしぎな やね" after the plain colours: red polka dots and bold colour blocks. */
+export const WONDER_ROOFS = ['dots-red', 'blocks'] as const;
+export const ROOF_CHOICES = ROOF_COLORS.length + WONDER_ROOFS.length;
 export const STYLE_ROOF: Record<PlotStyle, string> = { water: '#5f9ec4', tree: '#6f9a5b', flower: '#d77a86', light: '#e0b454', plain: '#a2644e' };
 export const WALL = '#f0e4c6', WOOD = '#9b7250', SOIL = '#8a6a48';
 

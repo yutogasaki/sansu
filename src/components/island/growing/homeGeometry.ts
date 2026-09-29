@@ -1,6 +1,7 @@
 import * as T from 'three';
 import type { PlotStyle } from '../../../domain/growingIsland';
-import { ball, box, mesh, ROOF_COLORS, STYLE_ROOF, WALL, WOOD, type Paint } from './plotParts';
+import { ball, box, mesh, ROOF_COLORS, STYLE_ROOF, WALL, WONDER_ROOFS, WOOD, type Paint } from './plotParts';
+import { wonder } from './wonderPaint';
 
 function roof(parent: T.Object3D, paint: Paint, color: string, style: PlotStyle, width: number, y: number) {
     if (style === 'plain') {
@@ -30,7 +31,11 @@ function windows(parent: T.Object3D, paint: Paint, style: PlotStyle, width: numb
 
 /** Homes grow upward: 1 tent, 2 hut, 3 house, 4 two storeys. Seeds show stakes and a flag. */
 export function buildHome(paint: Paint, stage: number, style: PlotStyle, roofColor?: number) {
-    const root = new T.Group(), color = roofColor ? ROOF_COLORS[roofColor] : STYLE_ROOF[style];
+    const special = roofColor !== undefined && roofColor >= ROOF_COLORS.length ? WONDER_ROOFS[roofColor - ROOF_COLORS.length] : undefined;
+    const color = roofColor && !special ? ROOF_COLORS[roofColor] : STYLE_ROOF[style];
+    // A wonder roof keeps the house's shape and swaps only the roof paint.
+    const roofPaint: Paint = special ? (c, r) => c === color ? wonder(special) : paint(c, r) : paint;
+    const root = new T.Group();
     const body = new T.Group(); root.add(body);
     if (style === 'water' && stage > 0) {
         // Stilts lift the home above the damp ground by the water.
@@ -46,7 +51,7 @@ export function buildHome(paint: Paint, stage: number, style: PlotStyle, roofCol
         return root;
     }
     if (stage === 1) {
-        const tent = mesh(body, new T.ConeGeometry(.38, .6, 6), paint(color), [0, .3, 0]);
+        const tent = mesh(body, new T.ConeGeometry(.38, .6, 6), roofPaint(color), [0, .3, 0]);
         tent.rotation.y = Math.PI / 6;
         mesh(body, new T.PlaneGeometry(.16, .26), paint('#4a3a2e'), [0, .13, .31]).rotation.x = -.45;
         return root;
@@ -58,8 +63,8 @@ export function buildHome(paint: Paint, stage: number, style: PlotStyle, roofCol
     if (stage === 4) {
         box(body, paint, WALL, [0, height + height * .42, 0], [width * .84, height * .84, width * .84]);
         windows(body, paint, style, width * .84, height * 1.45, 2);
-        roof(body, paint, color, style, width * .84, height * 1.84);
-    } else roof(body, paint, color, style, width, height);
+        roof(body, roofPaint, color, style, width * .84, height * 1.84);
+    } else roof(body, roofPaint, color, style, width, height);
     if (stage >= 3) box(body, paint, '#b6a68b', [width * .26, height + .3, -width * .18], [.1, .26, .1]);
     return root;
 }

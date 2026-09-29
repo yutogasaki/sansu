@@ -113,6 +113,8 @@ export class GrowingLife {
         [...this.walkers.values()].forEach((w, i) => { w.hopAt = now + i * 180; });
     }
 
+    positionOf(id: string) { const w = this.walkers.get(id); return w?.actor.root.visible ? w.actor.root.position.clone() : undefined; }
+
     positions() { return [...this.walkers.values()].filter(w => w.actor.root.visible).map(w => w.actor.root.position.clone()); }
 
     pick(id: string) {
@@ -137,6 +139,15 @@ export class GrowingLife {
 
     tick(now: number, delta: number, reduced: boolean, night: boolean) {
         const layout = this.layout, layer = this.layer; if (!layout || !layer) return;
+        if (import.meta.env.DEV && typeof location !== 'undefined' && location.hash.includes('lineup')) {
+            // Development only: everyone stands in a row facing the camera, to compare silhouettes.
+            [...this.walkers.values()].forEach((w, i) => {
+                w.actor.root.visible = true;
+                w.actor.root.position.copy(layout.point({ x: i % 6, z: 3 + Math.floor(i / 6) }));
+                w.actor.root.rotation.set(0, .35, 0);
+            });
+            return;
+        }
         for (const [id, w] of this.walkers) {
             const { actor } = w;
             actor.root.visible = true;

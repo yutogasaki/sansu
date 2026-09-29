@@ -1,5 +1,5 @@
 export * from './types';
-export { RULES, SEED_PRICE, LANDMARK_PRICE, LAND_PRICE, LIKES } from './rules';
+export { RULES, SEED_PRICE, LANDMARK_PRICE, LAND_PRICE, LIKES, likesOf, STYLE_LEVEL, FLAG_PATTERNS, HATS } from './rules';
 export { applyIntent, canPlace, landQuote, type Intent } from './commands';
 export { openTown } from './town';
 export { advanceNature, treeAge } from './nature';
@@ -7,3 +7,6 @@ export { newIsland, fromLife, ingestCompletions, waitingSeeds } from './island';
 export { comfort, foodSupport, genki, housing, islandLevel, playSupport, unlockedKeys } from './community';
 export { islandCharacter, styleAt } from './environment';
 export { boatProgress, docked, rareChance } from './pier';
+export { deliverKeepsakes, keepsakeKind, receiveGifts, type FlowerGift, type KeepsakeKind, type LearningLevels } from './gifts';
+export { dayMoment, friendOf, momentCandidates } from './moments';
+export { arrivalName, NAME_CANDIDATES } from './names';

@@ -1,6 +1,6 @@
 import { islandLevel, occupantsOf, refreshUnlocks } from './community';
 import { styleAt, syncSoil } from './environment';
-import { CAPE_LEVEL, LAND_PRICE, LANDMARK_PRICE, RULES, SEED_PRICE } from './rules';
+import { CAPE_LEVEL, isKid, FLAG_PATTERNS, HATS, LAND_PRICE, LANDMARK_PRICE, RULES, SEED_PRICE, STYLE_LEVEL } from './rules';
 import { isVacant, occupant, onLand } from './space';
 import { welcome } from './town';
 import type { Cell, Command, GrowingState, Side, TownEvent } from './types';
@@ -120,11 +120,16 @@ function apply(state: GrowingState, command: Command): TownEvent[] {
             const name = command.name.trim();
             if (!name || [...name].length > 12) fail('なまえは 1〜12もじで つけてね。');
             if (command.target === 'island') state.islandName = name;
-            else (state.villagers.find(v => v.id === command.target) ?? fail('みつからないよ。')).name = name;
+            else {
+                const villager = state.villagers.find(v => v.id === command.target) ?? fail('みつからないよ。');
+                if (isKid(villager.species)) fail('えまと えいたの なまえは そのままだよ。');
+                villager.name = name;
+            }
             break;
         }
         case 'paint': {
-            if (!Number.isInteger(command.color) || command.color < 0 || command.color > 7) fail('いろを えらびなおしてね。');
+            // Eight colours and two wonder patterns (polka dots, colour blocks).
+            if (!Number.isInteger(command.color) || command.color < 0 || command.color > 9) fail('いろを えらびなおしてね。');
             if (command.target === 'flag') state.flagColor = command.color;
             else (state.plots.find(p => p.id === command.target && p.kind === 'home') ?? fail('みつからないよ。')).roof = command.color;
             break;
@@ -133,6 +138,35 @@ function apply(state: GrowingState, command: Command): TownEvent[] {
         case 'open-all': state.unopened = []; state.arrivals = []; break;
         case 'disembark': state.arrivals = state.arrivals.filter(id => id !== command.id); break;
         case 'away': (state.villagers.find(v => v.id === command.id) ?? fail('みつからないよ。')).away = command.away || undefined; break;
+        case 'dress': {
+            // Clothes colours open at Lv8 and hats at Lv9; both are free and can change any time.
+            const villager = state.villagers.find(v => v.id === command.id) ?? fail('みつからないよ。');
+            const level = islandLevel(state), outfit = { ...villager.outfit };
+            if (command.color !== undefined) {
+                if (level < STYLE_LEVEL.clothes) fail('まだ えらべないよ。');
+                if (!Number.isInteger(command.color) || command.color < 0 || command.color > 5) fail('いろを えらびなおしてね。');
+                outfit.color = command.color;
+            }
+            if (command.hat !== undefined) {
+                if (level < STYLE_LEVEL.hats) fail('まだ えらべないよ。');
+                if (!Number.isInteger(command.hat) || command.hat < 0 || command.hat > HATS) fail('ぼうしを えらびなおしてね。');
+                outfit.hat = command.hat || undefined;
+            }
+            villager.outfit = outfit.color === undefined && outfit.hat === undefined ? undefined : outfit;
+            break;
+        }
+        case 'flag': {
+            if (command.color !== undefined) {
+                if (!Number.isInteger(command.color) || command.color < 0 || command.color > 7) fail('いろを えらびなおしてね。');
+                state.flagColor = command.color;
+            }
+            if (command.pattern !== undefined) {
+                if (islandLevel(state) < STYLE_LEVEL.flagPattern) fail('まだ えらべないよ。');
+                if (!Number.isInteger(command.pattern) || command.pattern < 0 || command.pattern >= FLAG_PATTERNS) fail('もようを えらびなおしてね。');
+                state.flagPattern = command.pattern;
+            }
+            break;
+        }
     }
     return events;
 }

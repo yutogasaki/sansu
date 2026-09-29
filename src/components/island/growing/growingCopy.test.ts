@@ -26,4 +26,16 @@ describe('Pokomoko lines', () => {
         const state = started();
         for (const line of [idleLine(state), actorLine(state, 'pokomoko'), actorLine(state, 'visitor')]) expect(line).not.toMatch(/あと\s*\d|もんだい/);
     });
+
+    it('announces keepsakes, sibling flowers and small surprises', () => {
+        const state = { ...started(), unopened: [], arrivals: [] };
+        expect(revealLine(state, [{ type: 'keepsake', unitId: 'math:6' }])).toContain('きねんひん');
+        expect(revealLine(state, [{ type: 'gift', from: 'はるか' }])).toBe('はるかが おはなを くれたよ');
+        expect(revealLine(state, [{ type: 'moment', moment: 'rainbow' }])).toBe('にじが でたよ！');
+    });
+
+    it('calls えま and えいた by name on the pier', () => {
+        const state = started();
+        expect(['えま', 'えいた'].some(name => idleLine({ ...state, unopened: [], arrivals: [] }).includes(name) || actorLine(state, 'visitor').startsWith(name))).toBe(true);
+    });
 });

@@ -1,6 +1,6 @@
 import { islandCharacter, richness } from './environment';
 import { pick, roll } from './random';
-import { AVAILABLE_SPECIES, FAVORED, RULES } from './rules';
+import { AVAILABLE_SPECIES, FAVORED, isKid, KID, KIDS, RULES } from './rules';
 import type { GrowingState, Species, Trait, Visitor } from './types';
 
 const TRAITS: readonly Trait[] = ['lively', 'mellow', 'shy', 'hungry'];
@@ -14,9 +14,19 @@ export function rareChance(state: GrowingState) {
  * appears; the sparkle chance follows only the island's richness, never learning volume.
  */
 export function rollVisitor(state: GrowingState, ordinal: number, only?: readonly Species[]): Visitor {
+    // えま and えいた come once each: on the second and third boats, or soon after on older islands.
+    const present = new Set<Species>([...state.villagers.map(v => v.species), state.pier.visitor.species, state.pier.next.species]);
+    const missing = KIDS.filter(kid => !present.has(kid));
+    if (!only && missing.length && (ordinal === 1 || ordinal === 2)) {
+        const first = roll(state.seed, 'kid-order', 'island', 0) < .5 ? 'girl' : 'boy';
+        const kid = missing.includes(first) ? first : missing[0];
+        return { ordinal, species: kid, variant: { ...KID[kid].variant }, trait: KID[kid].trait };
+    }
     const character = islandCharacter(state), favored = character === 'mixed' ? [] : FAVORED[character];
-    const pool = only ?? AVAILABLE_SPECIES;
-    const species = pick(pool, pool.map(s => favored.includes(s) ? RULES.favoredWeight : 1), roll(state.seed, 'pier-species', 'boat', ordinal));
+    const pool = (only ?? AVAILABLE_SPECIES).filter(s => !isKid(s) || (ordinal > 0 && missing.includes(s)));
+    const weight = (s: Species) => isKid(s) || favored.includes(s) ? RULES.favoredWeight : 1;
+    const species = pick(pool, pool.map(weight), roll(state.seed, 'pier-species', 'boat', ordinal));
+    if (isKid(species)) return { ordinal, species, variant: { ...KID[species].variant }, trait: KID[species].trait };
     return {
         ordinal, species,
         variant: {

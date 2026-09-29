@@ -1,4 +1,4 @@
-import type { Character, Like, SeedKind, Species, LandmarkKind } from './types';
+import type { Character, Like, SeedKind, Species, LandmarkKind, Trait, Variant } from './types';
 
 /** Starting values from spec 52. Tune them in play, not by editing the experience rules. */
 export const RULES = {
@@ -57,19 +57,30 @@ export const CAPE_LEVEL = [5, 6] as const;
 export const LIKES: Record<Species, readonly [Like, Like]> = {
     rabbit: ['flower', 'play'], otter: ['water', 'food'], fox: ['tree', 'light'], duck: ['water', 'play'],
     squirrel: ['tree', 'food'], hedgehog: ['farm', 'quiet'], bird: ['flower', 'light'],
+    girl: ['water', 'play'], boy: ['tree', 'food'],
 };
+
+export const likesOf = (friend: { species: Species }) => LIKES[friend.species];
+
+/**
+ * The island's two children. Each island meets them once, on the second and third boats,
+ * in an order that differs between islands (§7.2); their names and looks never change.
+ */
+export const KIDS = ['girl', 'boy'] as const;
+export const KID: Record<(typeof KIDS)[number], { name: string; trait: Trait; variant: Variant }> = {
+    girl: { name: 'えま', trait: 'lively', variant: { color: 0, accessory: 0, sparkle: false } },
+    boy: { name: 'えいた', trait: 'lively', variant: { color: 1, accessory: 1, sparkle: false } },
+};
+export const isKid = (species: Species): species is (typeof KIDS)[number] => species === 'girl' || species === 'boy';
 
 export const FAVORED: Record<Exclude<Character, 'mixed'>, readonly Species[]> = {
     water: ['otter', 'duck'], tree: ['fox', 'squirrel'], flower: ['rabbit', 'bird'],
     farm: ['hedgehog', 'rabbit'], light: ['bird', 'fox'],
 };
 
-export const SPECIES: readonly Species[] = ['rabbit', 'otter', 'fox', 'duck', 'squirrel', 'hedgehog', 'bird'];
-/**
- * Species that can sail in today. The duck, squirrel, hedgehog and bird join once their
- * art exists (spec 52 §7.1); a boat never shows a friend the island cannot draw.
- */
-export const AVAILABLE_SPECIES: readonly Species[] = ['rabbit', 'otter', 'fox'];
+export const SPECIES: readonly Species[] = ['rabbit', 'otter', 'fox', 'duck', 'squirrel', 'hedgehog', 'bird', 'girl', 'boy'];
+/** Everyone who can sail in. A boat never shows a friend the island cannot draw. */
+export const AVAILABLE_SPECIES: readonly Species[] = SPECIES;
 
 /** Unlock keys are `seed:<kind>` and `landmark:<kind>`. Owned items are always placeable. */
 export const UNLOCKS: readonly { key: string; villagers?: number; level?: number }[] = [
@@ -81,6 +92,11 @@ export const UNLOCKS: readonly { key: string; villagers?: number; level?: number
     { key: 'landmark:lantern', level: 3 }, { key: 'landmark:fence', level: 3 },
     { key: 'seed:market', level: 4 }, { key: 'seed:festival', level: 5 }, { key: 'landmark:lighthouse', level: 6 },
 ];
+
+/** Island levels that open the cosmetic choices of §8. */
+export const STYLE_LEVEL = { flagPattern: 7, clothes: 8, hats: 9, cardFrame: 10 } as const;
+export const FLAG_PATTERNS = 5;
+export const HATS = 5;
 
 export const FOOD_SUPPORT: Partial<Record<SeedKind, number>> = { farm: 2, market: 4 };
 export const PLAY_SUPPORT: Partial<Record<SeedKind | LandmarkKind, number>> = {

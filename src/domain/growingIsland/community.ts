@@ -1,7 +1,7 @@
 import { growthStage } from '../islandLife/model';
 import { connectedWaterChannels } from '../islandLife/waterChannels';
 import { TREE_MATURE_HOURS, waterAt, waterLayout } from './environment';
-import { FOOD_SUPPORT, LIKES, PLAY_SUPPORT, RULES, UNLOCKS } from './rules';
+import { FOOD_SUPPORT, likesOf, PLAY_SUPPORT, RULES, UNLOCKS } from './rules';
 import { HOME_CELL, distance, isReachable, key, reachableFromHome } from './space';
 import type { Cell, GrowingState, Like, Villager } from './types';
 
@@ -73,7 +73,7 @@ const within = (cells: Cell[], home: Cell, radius: number) => cells.some(c => di
 
 /** Comfort stars 0-3 (§7.4). Shown to children only through faces and one-line remarks. */
 export function comfort(state: GrowingState, villager: Villager, fed = foodSupport(state) >= state.villagers.length) {
-    const home = homeCellOf(state, villager), likes = LIKES[villager.species];
+    const home = homeCellOf(state, villager), likes = likesOf(villager);
     const quiet = !within(playPlotCells(state), home, RULES.quietRadius);
     const liked = likes.some(like => like === 'food' ? fed : like === 'quiet' ? quiet : within(likeCells(state, like), home, RULES.likeRadius));
     const played = likes.includes('quiet') ? quiet : within(playCells(state), home, RULES.likeRadius);

@@ -3,7 +3,8 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { IslandLifeDatabase } from '../islandLife/repository';
 import { commandLife } from '../islandLife/simulation';
 import { learningDay, newLife } from '../islandLife/model';
-import { GrowingIslandDatabase, commandGrowingIsland, syncGrowingIsland } from './repository';
+import { GrowingIslandDatabase, MOMENT_LIMIT, addMoment, commandGrowingIsland, deleteGrowingOwner, flowerSentToday, listMoments,
+    readGrowingIsland, sendFlower, syncGrowingIsland } from './repository';
 
 const stores: (GrowingIslandDatabase | IslandLifeDatabase)[] = [];
 const growing = () => { const d = new GrowingIslandDatabase(`growing-test-${crypto.randomUUID()}`); stores.push(d); return d; };
@@ -58,5 +59,44 @@ describe('growing island persistence', () => {
         expect(planted.record.state.villagers).toHaveLength(1);
         const repeated = await commandGrowingIsland('kid', intent, T0 + 8, db);
         expect(repeated.record.revision).toBe(planted.record.revision);
+    });
+
+    it('delivers a sibling\'s flower once, and only one per day from the same visitor', async () => {
+        const db = growing(), old = life();
+        await syncGrowingIsland('kid', [], T0, db, old);
+        await syncGrowingIsland('sis', [], T0, db, old);
+        const before = structuredClone(await readGrowingIsland('kid', db));
+        expect(await sendFlower('sis', 'はるか', 'kid', T0 + HOUR, db)).toBe(true);
+        expect(await sendFlower('sis', 'はるか', 'kid', T0 + 2 * HOUR, db)).toBe(false);
+        expect(await flowerSentToday('sis', 'kid', T0 + 3 * HOUR, db)).toBe(true);
+        // Visiting never writes the other child's island itself.
+        expect(await readGrowingIsland('kid', db)).toEqual(before);
+        const opened = await syncGrowingIsland('kid', [], T0 + 4 * HOUR, db, old);
+        expect(opened.town).toEqual(expect.arrayContaining([expect.objectContaining({ type: 'gift', from: 'はるか' })]));
+        expect(opened.record.state.landmarks.filter(l => l.from === 'はるか')).toHaveLength(1);
+        expect(await db.gifts.count()).toBe(0);
+        const again = await syncGrowingIsland('kid', [], T0 + 5 * HOUR, db, old);
+        expect(again.record.state.landmarks.filter(l => l.from === 'はるか')).toHaveLength(1);
+    });
+
+    it('brings a keepsake when a learning level rises after the island started', async () => {
+        const db = growing(), old = life();
+        await syncGrowingIsland('kid', [], T0, db, old, { math: 5, vocab: 1 });
+        const next = await syncGrowingIsland('kid', [], T0 + HOUR, db, old, { math: 6, vocab: 1 });
+        expect(next.town).toEqual([expect.objectContaining({ type: 'keepsake', unitId: 'math:6' })]);
+        expect(next.record.state.keepsakes).toHaveLength(1);
+    });
+
+    it('keeps sixty pictures of the island\'s story, from the first day to today', async () => {
+        const db = growing();
+        const blob = new Blob(['x'], { type: 'image/png' });
+        const at = (i: number) => T0 + i * i * HOUR;
+        for (let i = 0; i < MOMENT_LIMIT + 5; i++) await addMoment('kid', blob, 4, 3, at(i), db);
+        const kept = await listMoments('kid', db);
+        expect(kept).toHaveLength(MOMENT_LIMIT);
+        expect(kept[0].at).toBe(T0);
+        expect(kept.at(-1)!.at).toBe(at(MOMENT_LIMIT + 4));
+        await deleteGrowingOwner('kid', db);
+        expect(await listMoments('kid', db)).toEqual([]);
     });
 });

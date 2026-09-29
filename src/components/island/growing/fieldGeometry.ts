@@ -1,6 +1,7 @@
 import * as T from 'three';
 import type { PlotStyle } from '../../../domain/growingIsland';
 import { ball, box, mesh, SOIL, WOOD, type Paint } from './plotParts';
+import { wonder } from './wonderPaint';
 
 const CROP: Record<PlotStyle, { color: string; shape: 'pad' | 'cap' | 'berry' | 'pumpkin' | 'root' }> = {
     water: { color: '#6fa87a', shape: 'pad' }, tree: { color: '#c98c5a', shape: 'cap' }, flower: { color: '#d6455a', shape: 'berry' },
@@ -18,9 +19,9 @@ export function buildFarm(paint: Paint, stage: number, style: PlotStyle, market 
         const x = (i % 3 - 1) * .26, z = (Math.floor(i / 3) - 1) * .26;
         ball(root, paint, '#6f9a52', [x, .12, z], .07, .6);
         if (crop.shape === 'pad') mesh(root, new T.CylinderGeometry(.1, .1, .015, 10), paint(crop.color), [x + .04, .1, z]);
-        else if (crop.shape === 'cap') { mesh(root, new T.CylinderGeometry(.02, .02, .08, 6), paint('#efe1c4'), [x, .12, z]); ball(root, paint, crop.color, [x, .17, z], .06, .55); }
+        else if (crop.shape === 'cap') { mesh(root, new T.CylinderGeometry(.02, .02, .08, 6), paint('#efe1c4'), [x, .12, z]); mesh(root, new T.SphereGeometry(.06, 12, 8), wonder('dots-red'), [x, .17, z]).scale.y = .55; }
         else if (crop.shape === 'berry') ball(root, paint, crop.color, [x + .05, .12, z + .03], .035);
-        else if (crop.shape === 'pumpkin') ball(root, paint, crop.color, [x, .12, z], .07, .75);
+        else if (crop.shape === 'pumpkin') mesh(root, new T.SphereGeometry(.07, 12, 8), i % 3 === 1 ? wonder('dots-yellow') : paint(crop.color), [x, .12, z]).scale.y = .75;
         else mesh(root, new T.ConeGeometry(.03, .1, 6), paint(crop.color), [x, .1, z]).rotation.x = Math.PI;
     }
     if (market) {
@@ -36,8 +37,9 @@ export function buildPlay(paint: Paint, stage: number, style: PlotStyle, festiva
         for (const [x, z] of [[-.35, -.35], [.35, -.35], [-.35, .35], [.35, .35]]) box(root, paint, WOOD, [x, .09, z], [.04, .18, .04]);
         return root;
     }
-    mesh(root, new T.CylinderGeometry(.44, .46, .04, 20), paint('#d8c8a2'), [0, .02, 0]);
+    mesh(root, new T.CylinderGeometry(.44, .46, .04, 20), festival ? wonder('blocks') : paint('#d8c8a2'), [0, .02, 0]);
     if (festival) {
+        mesh(root, new T.SphereGeometry(.12, 14, 10), wonder('dots-red'), [0, .92, 0]);
         mesh(root, new T.CylinderGeometry(.025, .025, .9, 6), paint(WOOD), [0, .45, 0]);
         for (let i = 0; i < 6; i++) {
             const a = i * Math.PI / 3;

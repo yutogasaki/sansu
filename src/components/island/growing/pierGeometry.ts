@@ -1,6 +1,7 @@
 import * as T from 'three';
 import type { IslandMaterials } from '../three/primitives';
 import { box, mesh, WOOD, type Paint } from './plotParts';
+import { wonder } from './wonderPaint';
 
 /** A short wooden pier from the south shore; the waiting friend stands at its end (§7.2). */
 export function buildPier(m: IslandMaterials) {
@@ -25,7 +26,7 @@ export function buildBoat(m: IslandMaterials, silhouette = false) {
     const rim = mesh(root, new T.TorusGeometry(.5, .035, 6, 28), paint('#b58b5e'), [0, .15, 0]);
     rim.rotation.x = Math.PI / 2; rim.scale.set(1.25, .62, 1);
     mesh(root, new T.CylinderGeometry(.018, .018, .9, 6), paint(WOOD), [-.42, .6, 0]);
-    const sail = mesh(root, new T.ConeGeometry(.26, .62, 3), paint(silhouette ? '#2d5561' : '#f3ecdc'), [-.3, .68, 0]);
+    const sail = mesh(root, new T.ConeGeometry(.26, .62, 3), silhouette ? paint('#2d5561') : wonder('blocks'), [-.3, .68, 0]);
     sail.rotation.z = -.08;
     root.traverse(o => { if (o instanceof T.Mesh) o.castShadow = false; });
     return root;
