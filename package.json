@@ -51,6 +51,7 @@
         "e2e:island-food-loop": "node tools/e2e-island-food-loop.mjs",
         "e2e:island-water-channel": "node tools/e2e-island-water-channel.mjs",
         "dev:island-fantasy": "VITE_ISLAND_ENABLED=true VITE_ISLAND_LIFE_PREVIEW=true VITE_ISLAND_FANTASY_ENABLED=true vite --host 127.0.0.1 --port 5230 --strictPort",
+        "dev:growing-island": "VITE_ISLAND_ENABLED=true VITE_ISLAND_LIFE_PREVIEW=true VITE_ISLAND_FANTASY_ENABLED=true VITE_GROWING_ISLAND_ENABLED=true vite --host 127.0.0.1 --port 5260 --strictPort",
         "e2e:island-fantasy": "node tools/e2e-island-fantasy.mjs"
     },
     "dependencies": {

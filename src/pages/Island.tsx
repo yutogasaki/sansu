@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { Spinner } from '../components/ui/Spinner';
 import { useIslandLife } from '../components/island/life/useIslandLife';
+import { growingIslandEnabled } from '../components/island/growing/feature';
 import { lifeEnabled } from '../domain/islandLife/model';
 import { replayLife } from '../domain/islandLife/simulation';
 import { IslandDirectActions } from '../components/island/IslandDirectActions';
@@ -115,6 +116,7 @@ function sharingHint(items: IslandItem[], selectedId: string) {
 }
 
 const IslandLife = lazy(() => import('../components/island/life/IslandLife'));
+const GrowingIsland = lazy(() => import('../components/island/growing/GrowingIsland'));
 const HomeJourneyPreview = lazy(() => import('../components/island/homeJourney/HomeJourneyPreview'));
 const IslandStage = lazy(() => import('../components/island/IslandStage'));
 const IslandAlbum = lazy(() => import('../components/island/IslandAlbum').then(module => ({ default: module.IslandAlbum })));
@@ -158,7 +160,8 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     // the route here would incorrectly allow a deferred PWA reload mid-receipt.
     const learningScreen = plan?.status === 'completed' && isFirstIslandPlan(plan) && !plan.growthTarget ? 'reward' : 'learning';
     const screen = navigation ? navigation.learning ? learningScreen : navigation.view : localScreen;
-    const lifeControls = useIslandLife(profile.id, active && screen === 'home');
+    // The growing island keeps its own save; the current island's record is left untouched.
+    const lifeControls = useIslandLife(profile.id, active && screen === 'home' && !growingIslandEnabled());
     const learningHeroStyle = useMemo(() => lifeControls.record ? replayLife(lifeControls.record).heroStyle : 'original', [lifeControls.record]);
     const setScreen = navigation?.setView ?? setLocalScreen;
     const [directSelection, setDirectSelection] = useState<{ target: IslandDirectTarget; entry: string; preview: boolean }>();
@@ -686,7 +689,9 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         </header>}
         {(error || loadError) && <div className="island-error" role="alert"><p>{error}</p><button className="island-text-button" onClick={() => window.location.reload()}>よみなおす</button></div>}
         {screen === 'placement' && preview && <IslandPlacementActions valid={valid} disabled={busy} onSave={savePlacement} onCancel={cancelPlacement} />}
-        {active && screen === 'home' && lifeEnabled() && <Suspense fallback={<Spinner fullScreen message="しまを ひらいているよ…" />}><IslandLife controls={lifeControls} onHome={enterHouse} disabled={busy || preparingLearning} islandName={island.experience?.islandName ?? 'ふしぎな しま'} /></Suspense>}
+        {active && screen === 'home' && lifeEnabled() && <Suspense fallback={<Spinner fullScreen message="しまを ひらいているよ…" />}>{growingIslandEnabled()
+            ? <GrowingIsland profileId={profile.id} active={active && screen === 'home'} sound={Boolean(profile.soundEnabled)} onHome={enterHouse} />
+            : <IslandLife controls={lifeControls} onHome={enterHouse} disabled={busy || preparingLearning} islandName={island.experience?.islandName ?? 'ふしぎな しま'} />}</Suspense>}
         {active && homeJourneyScene && <Suspense fallback={<Spinner fullScreen message="しまを ひらいているよ…" />}><HomeJourneyPreview key={profile.id} state={island.homeJourney}
             room={keepsakeRoomActive ? { state: island.learningKeepsakes, completedSets: island.completedSets, selectedId: keepsakeFocus, challengeDisplayed: challengeSummary?.displayed } : undefined}
             onHomeEnter={!busy && screen === 'home' ? enterHouse : undefined}

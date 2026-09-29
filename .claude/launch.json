@@ -6,6 +6,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 5173
+    },
+    {
+      "name": "growing-island",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:growing-island"],
+      "port": 5260
     }
   ]
 }

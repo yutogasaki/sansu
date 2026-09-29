@@ -5,6 +5,8 @@ import { warmUpTTS } from "../utils/tts";
 import { islandEnabled } from "../domain/island/feature";
 import { IslandToyHouse, IslandToyLand } from "./island/IslandToyIcon";
 import { islandTabUrl, type IslandTab, useIslandNavigation } from './island/useIslandNavigation';
+import { growingIslandEnabled } from './island/growing/feature';
+import { useWaitingSeeds } from './island/growing/seedBadge';
 
 type TabItem = {
     to: string;
@@ -20,6 +22,7 @@ export const Footer: React.FC = () => {
     const currentPath = location.pathname;
     const islandHome = islandEnabled();
     const navigation = useIslandNavigation();
+    const seeds = useWaitingSeeds();
 
     if (islandHome) {
         const tabs: TabItem[] = [
@@ -35,12 +38,13 @@ export const Footer: React.FC = () => {
                 {tabs.map(item => {
                     const active = navigation ? item.tab === navigation.tab : currentPath === item.to;
                     const primary = item.to === "/study";
+                    const waiting = primary && growingIslandEnabled() && seeds > 0 ? seeds : 0;
                     return (
                         <button
                             key={item.to}
                             type="button"
                             className={`island-shell-tab${primary ? " island-shell-tab--learn island-start" : ""}`}
-                            aria-label={item.label}
+                            aria-label={waiting ? `${item.label}（たねが ${waiting}こ まってるよ）` : item.label}
                             aria-current={active ? "page" : undefined}
                             disabled={navigation?.blocked || (primary && navigation?.learningBlocked)}
                             onClick={() => {
@@ -51,7 +55,7 @@ export const Footer: React.FC = () => {
                             }}
                         >
                             <item.icon width={24} height={24} strokeWidth={active ? 2.5 : 2} aria-hidden="true" />
-                            <span>{item.label}</span>
+                            <span>{item.label}{waiting > 0 && <span aria-hidden="true"> 🌱{waiting}</span>}</span>
                         </button>
                     );
                 })}

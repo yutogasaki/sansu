@@ -1,4 +1,7 @@
-import { growthStage, type Cell, type LifeState } from './model';
+import { growthStage, type Cell, type LifeItem, type LifeState } from './model';
+
+/** Water and shade read only the placed items, so other island engines can share them. */
+export interface WaterLayout { items: readonly Pick<LifeItem, 'kind' | 'cell' | 'growth'>[] }
 import { cellKey, landCells } from './space';
 
 const clamp = (value: number) => Math.max(0, Math.min(1, value));
@@ -6,7 +9,7 @@ const distance = (a: Cell, b: Cell) => Math.abs(a.x - b.x) + Math.abs(a.z - b.z)
 const MAX_CHANNEL_STEPS = 8;
 
 /** N/E/S/W bits describe the physical trench ends, including a neighboring bowl. */
-export function waterChannelConnections(state: LifeState, cell: Cell) {
+export function waterChannelConnections(state: WaterLayout, cell: Cell) {
     return [{ x: 0, z: -1, bit: 1 }, { x: 1, z: 0, bit: 2 },
         { x: 0, z: 1, bit: 4 }, { x: -1, z: 0, bit: 8 }].reduce((mask, { x, z, bit }) =>
         state.items.some(item => item.cell?.x === cell.x + x && item.cell?.z === cell.z + z
@@ -14,7 +17,7 @@ export function waterChannelConnections(state: LifeState, cell: Cell) {
 }
 
 /** Water bowls feed only adjacent channel pieces. A disconnected ditch remains dry. */
-export function connectedWaterChannels(state: LifeState): Set<string> {
+export function connectedWaterChannels(state: WaterLayout): Set<string> {
     const channels = new Map(state.items.filter(item => item.kind === 'water-channel' && item.cell)
         .map(item => [cellKey(item.cell!), item]));
     const bowls = state.items.filter(item => item.kind === 'water-bowl' && item.cell);
@@ -37,13 +40,13 @@ export function connectedWaterChannels(state: LifeState): Set<string> {
     return reached;
 }
 
-export function waterInfluence(state: LifeState, cell: Cell, reached = connectedWaterChannels(state)) {
+export function waterInfluence(state: WaterLayout, cell: Cell, reached = connectedWaterChannels(state)) {
     const sources = state.items.filter(item => item.cell && (item.kind === 'water-bowl'
         || item.kind === 'water-channel' && reached.has(cellKey(item.cell))));
     return Math.max(0, ...sources.map(item => clamp(1 - Math.max(0, distance(item.cell!, cell) - 1) / 3)));
 }
 
-export function shadeInfluence(state: LifeState, cell: Cell, elapsedGrowthHours = 0) {
+export function shadeInfluence(state: WaterLayout, cell: Cell, elapsedGrowthHours = 0) {
     return Math.max(0, ...state.items.filter(item => item.kind === 'sapling' && item.cell
         && growthStage({ ...item, growth: item.growth + elapsedGrowthHours }) === 2)
         .map(item => clamp(1 - distance(item.cell!, cell) / 3)));

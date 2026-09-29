@@ -18,11 +18,18 @@ export function gardenOutline(width: number, depth: number) {
     return new T.Shape(curve.getPoints(80).map(p => new T.Vector2(p.x,-p.z)));
 }
 
+/** What the garden ground needs to know: the owned rectangle and each cell's soil. */
+export interface GardenGround { bounds: { minX: number; maxX: number; depth: number }; moisture: (cell: Cell) => number }
+
 export function buildFantasyGarden(state: LifeState, point: (cell: Cell) => T.Vector3) {
+    return buildGardenGround({ bounds: landBounds(state), moisture: cell => soilMoistureAt(state, cell) }, point);
+}
+
+export function buildGardenGround(ground: GardenGround, point: (cell: Cell) => T.Vector3) {
     const g = new GardenGeometry(), root=g.root; root.name='life-landscape';
     const glow=gardenGlow();
     root.userData.visualCandidate=FANTASY_CANDIDATE;
-    const bounds=landBounds(state), width=bounds.maxX-bounds.minX+1, depth=bounds.depth;
+    const bounds=ground.bounds, width=bounds.maxX-bounds.minX+1, depth=bounds.depth;
     const centerZ=(depth-5)/2, west=-width/2-.65, north=-3.05;
     for(const [color,w,d,y,h] of [
         ['#84785c',width+1.40,depth+1.46,-.61,.29],
@@ -38,7 +45,7 @@ export function buildFantasyGarden(state: LifeState, point: (cell: Cell) => T.Ve
     const soilPixels=new Uint8Array(width*depth*4);
     for(let z=0;z<depth;z++)for(let x=0;x<width;x++){
         const index=(z*width+x)*4;
-        soilPixels[index]=Math.round(255*soilWetness(soilMoistureAt(state,{x:x+bounds.minX,z})));soilPixels[index+3]=255;
+        soilPixels[index]=Math.round(255*soilWetness(ground.moisture({x:x+bounds.minX,z})));soilPixels[index+3]=255;
     }
     const soil=new T.DataTexture(soilPixels,width,depth,T.RGBAFormat);soil.magFilter=soil.minFilter=T.LinearFilter;soil.needsUpdate=true;
     root.userData.groundMaterialStatus='fantasy-soil-v1';

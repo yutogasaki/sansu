@@ -7,6 +7,7 @@ import { completeOnboardingProfile, OnboardingAlreadyCompleted, ONBOARDING_ENGLI
 import { profileStorage } from '../../utils/storage';
 import { holdPwaUpdateForCriticalPersistence } from '../../pwa';
 import IslandWelcome, { ISLAND_ONBOARDING_CANDIDATE } from './IslandWelcome';
+import { growingIslandEnabled } from './growing/feature';
 import './IslandOnboarding.css';
 
 type Step = 'welcome' | 'grade' | 'subject' | 'math' | 'english';
@@ -29,7 +30,9 @@ export default function IslandOnboarding() {
         try {
             const receipt = await completeOnboardingProfile(chosen, completionId, 'first');
             profileStorage.setActiveId(receipt.activeProfileId);
-            if (mounted.current) navigate(`/island?start=learn&profile=${encodeURIComponent(receipt.activeProfileId)}`, { replace: true });
+            // The growing island opens on the island itself: the first friend arrives before any learning (spec 52 §14).
+            if (mounted.current) navigate(growingIslandEnabled() ? '/island'
+                : `/island?start=learn&profile=${encodeURIComponent(receipt.activeProfileId)}`, { replace: true });
         } catch (failure) {
             if (!mounted.current) return;
             if (failure instanceof OnboardingAlreadyCompleted) navigate('/', { replace: true });

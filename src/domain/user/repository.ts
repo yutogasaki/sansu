@@ -200,6 +200,8 @@ export const deleteProfile = async (id: string) => {
     await deleteLifeOwner(id);
     const { deleteTownOwner } = await import('../natureTown/repository');
     await deleteTownOwner(id);
+    const { deleteGrowingOwner } = await import('../growingIsland/repository');
+    await deleteGrowingOwner(id);
     let nextActive: string | null = null;
 
     await db.transaction(
