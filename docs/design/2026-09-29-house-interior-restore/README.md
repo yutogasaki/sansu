@@ -6,7 +6,7 @@
 
 ## 対象と検証
 
-ローカルproduction preview http://127.0.0.1:5450/#/island。Island / Life / Discovery / Fantasy有効、Nature Town / Life Preview無効。build.jsonのversionとsourceHashで固定対象を識別する。家candidateは house-world-first-v1、室内cameraは island-home-interior-v5。共有checkoutの検証であり、公開結果は後段に別記する。
+ローカルproduction preview http://127.0.0.1:5450/#/island。Island / Life / Discovery / Fantasy有効、Nature Town / Life Preview無効。build.jsonのversionとsourceHashで固定対象を識別する。家candidateは house-world-first-v1、室内cameraは island-home-interior-v5。共有checkoutの検証であり、別作業の未commit LearningProgressCards.tsx も含んだ。今回のcommitにはその変更を含めていない。公開結果は後段に別記し、共有buildの全入力が独立commitと一致したとは扱わない。
 
 - [verify:core](core.txt): lint/typecheck、484 files / 4,293 tests、build/assets/docs PASS。
 - [classic smoke](smoke.txt): 31ケース PASS。
@@ -15,6 +15,10 @@
 
 ## 判定の範囲
 
-- 美術: 元の室内の家具・色・カワウソの描画を復元。庭の美術を室内へ新たに描き直した変更ではない。
+- 美術: 元の室内の家具・色・カワウソの描画を復元。[以前の室内](../audits/2026-09-09-house-edges/390-house-empty.png)とも照合し、同じ棚・ソファ・テーブル・鉢とキャラクターを確認（周囲のUIは当時より更新されている）。庭の美術を室内へ新たに描き直した変更ではない。
 - 理解/安全: 入室・退出・メニュー・学習復帰を実操作で確認。子どもの無説明理解と実機評価は未実施。
 - Runtime: 上記の固定buildで通過。旧島の全成熟・全機能PWA・fixed-tenを再実行した証拠ではなく、入室と影響経路の回帰確認。保存schema/PWA更新実装に変更なし。
+
+## main / 公開
+
+実装修正は main ea08a6ca73a3e2efe308e55e5201d808777e24c9 としてpush済み。公開 version.json が同revisionを返すことを確認。[公開版の検証](public-room.json)は390×844 / 768×1024ともPASS。床タップ・キーボード移動・実物アルバム・写真・棚・メニューfocus・同じ予約の学習/室内復帰、pageerror 0を確認。各captureのroot revisionが修正commitと一致。GitHub Docs Checkは成功、Verify Coreは記録時点で実行中。ローカルcoreとは区別する。
