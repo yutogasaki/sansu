@@ -1,0 +1,126 @@
+{
+  "scope": "Same three actual rigs, 240 projected frames each, normal/reduced motion, ordinary then waving shadow. Same source except residentShadow. Every output position byte, visibility and bounds hashed every frame. CPU timing is a synthetic diagnostic; not browser FPS or device power.",
+  "exactOutput": true,
+  "cases": [
+    {
+      "phase": "before",
+      "who": "pokomoko",
+      "reduced": false,
+      "frames": 240,
+      "updateMs": 46.11667100000008,
+      "rewrittenVertices": 1241760,
+      "uploads": 3840,
+      "digest": "481db19c55b72e2bda33fab62e3f0b92ec07c4e0a7a9d59227ea8619024e95cc"
+    },
+    {
+      "phase": "before",
+      "who": "pokomoko",
+      "reduced": true,
+      "frames": 240,
+      "updateMs": 38.48019800000003,
+      "rewrittenVertices": 1241760,
+      "uploads": 3840,
+      "digest": "ec32b98a39baab0d51521b3f4741c39e1d629157cef6833c5bc7e1c69de778af"
+    },
+    {
+      "phase": "before",
+      "who": "rabbit",
+      "reduced": false,
+      "frames": 240,
+      "updateMs": 118.10045999999966,
+      "rewrittenVertices": 3963120,
+      "uploads": 3120,
+      "digest": "69d1ac95020a5893391c29f44eb5758cb214ebf5da6d15aebf85aabfc04bf006"
+    },
+    {
+      "phase": "before",
+      "who": "rabbit",
+      "reduced": true,
+      "frames": 240,
+      "updateMs": 119.13654299999962,
+      "rewrittenVertices": 3963120,
+      "uploads": 3120,
+      "digest": "22d12a052fad7db7ba64fe7dc3969076997d00cb2bd1a2f7652ec773b1e194eb"
+    },
+    {
+      "phase": "before",
+      "who": "otter",
+      "reduced": false,
+      "frames": 240,
+      "updateMs": 111.6810529999999,
+      "rewrittenVertices": 3629040,
+      "uploads": 3120,
+      "digest": "00688c731f3dff2d94bbcc70a3c33dc683088d403f3dfc708ad0c7631b4ad458"
+    },
+    {
+      "phase": "before",
+      "who": "otter",
+      "reduced": true,
+      "frames": 240,
+      "updateMs": 73.66741400000183,
+      "rewrittenVertices": 3629040,
+      "uploads": 3120,
+      "digest": "ccf428a4bfeff08ad14fd706e4bcabc089f09ae31a1810db37ef82573d681788"
+    },
+    {
+      "phase": "after",
+      "who": "pokomoko",
+      "reduced": false,
+      "frames": 240,
+      "updateMs": 7.28362099999822,
+      "rewrittenVertices": 56225,
+      "uploads": 135,
+      "digest": "481db19c55b72e2bda33fab62e3f0b92ec07c4e0a7a9d59227ea8619024e95cc"
+    },
+    {
+      "phase": "after",
+      "who": "pokomoko",
+      "reduced": true,
+      "frames": 240,
+      "updateMs": 1.548910000001797,
+      "rewrittenVertices": 5603,
+      "uploads": 17,
+      "digest": "ec32b98a39baab0d51521b3f4741c39e1d629157cef6833c5bc7e1c69de778af"
+    },
+    {
+      "phase": "after",
+      "who": "rabbit",
+      "reduced": false,
+      "frames": 240,
+      "updateMs": 73.8724159999997,
+      "rewrittenVertices": 2715788,
+      "uploads": 1327,
+      "digest": "69d1ac95020a5893391c29f44eb5758cb214ebf5da6d15aebf85aabfc04bf006"
+    },
+    {
+      "phase": "after",
+      "who": "rabbit",
+      "reduced": true,
+      "frames": 240,
+      "updateMs": 1.4032489999999598,
+      "rewrittenVertices": 16734,
+      "uploads": 14,
+      "digest": "22d12a052fad7db7ba64fe7dc3969076997d00cb2bd1a2f7652ec773b1e194eb"
+    },
+    {
+      "phase": "after",
+      "who": "otter",
+      "reduced": false,
+      "frames": 240,
+      "updateMs": 88.19879199999991,
+      "rewrittenVertices": 2886476,
+      "uploads": 1566,
+      "digest": "00688c731f3dff2d94bbcc70a3c33dc683088d403f3dfc708ad0c7631b4ad458"
+    },
+    {
+      "phase": "after",
+      "who": "otter",
+      "reduced": true,
+      "frames": 240,
+      "updateMs": 1.2780769999999393,
+      "rewrittenVertices": 15342,
+      "uploads": 14,
+      "digest": "ccf428a4bfeff08ad14fd706e4bcabc089f09ae31a1810db37ef82573d681788"
+    }
+  ]
+}

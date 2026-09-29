@@ -19,7 +19,7 @@ export async function putCell(page, cell) {
         const { projection, view } = JSON.parse(n.dataset.lifeCamera), r = n.getBoundingClientRect(); const mul = (m, v) => [0,1,2,3].map(r => m[r]*v[0]+m[4+r]*v[1]+m[8+r]*v[2]+m[12+r]*v[3]);
         const p = mul(projection, mul(view, [c.x-2.5,.045,c.z-2,1])); return { x:r.left+(p[0]/p[3]+1)*r.width/2,y:r.top+(1-p[1]/p[3])*r.height/2 };
     }, cell);
-    await page.touchscreen.tap(at.x, at.y); await page.locator(`[data-life-placement-cell="${cell.x},${cell.z}"][data-life-placement-valid="true"]`).waitFor(); await page.getByRole('button', { name: 'ここに おく', exact: true }).click(); await closeMenu(page);
+    await page.touchscreen.tap(at.x, at.y); await page.locator(`[data-life-placement-cell="${cell.x},${cell.z}"][data-life-placement-valid="true"]`).waitFor(); await page.getByRole('button', { name: 'ここに おく', exact: true }).click(); await page.getByRole('button', { name: 'メニューを とじる', exact: true }).waitFor({ state: 'hidden' });
 }
 export async function buy(page,kind,cell,id) {
     const count=(await saved(page,id)).record.actions.length;
@@ -32,7 +32,7 @@ export async function buy(page,kind,cell,id) {
 
 export async function callResident(page, itemId, profileId) {
     const count=(await saved(page,profileId)).record.actions.length;
-    await inventory(page,itemId);await page.getByRole('button',{name:'ぽこもこを よぶ',exact:true}).click();await closeMenu(page);
+    await inventory(page,itemId);await page.getByRole('button',{name:'ぽこもこを よぶ',exact:true}).click();await page.getByRole('button',{name:'メニューを とじる',exact:true}).waitFor({state:'hidden'});
     await waitForAsync(page,async({profileId,itemId,count})=>{const{lifeDb}=await import('/src/domain/islandLife/repository.ts');const r=await lifeDb.worlds.get(profileId);return r.actions.slice(count).some(a=>a.command.type==='visit'&&a.command.itemId===itemId);},{profileId,itemId,count});
 }
 export async function moveItem(page,itemId,cell,profileId){

@@ -9,14 +9,15 @@ export function buildResidentShadow(actor: T.Object3D, lightDirection = new T.Ve
     actor.traverse(o => sources.push(o)); clone.traverse(o => copies.push(o));
     const material = new T.MeshBasicMaterial({ color: '#365f63', side: T.DoubleSide, depthWrite: true });
     const cast = new Map<T.Mesh, boolean>();
-    const meshes: { source: T.Mesh; copy: T.Mesh; output: T.Mesh; instance?: number }[] = [];
+    const meshes: { source: T.Mesh; copy: T.Mesh; output: T.Mesh; instance?: number;
+        lastMatrix: T.Matrix4; positions?: T.BufferAttribute | T.InterleavedBufferAttribute; positionVersion: number }[] = [];
     for (let i = 0; i < sources.length; i++) {
         const source = sources[i]; if (!(source instanceof T.Mesh)) continue;
         cast.set(source, source.castShadow); source.castShadow = false;
         const count = source instanceof T.InstancedMesh ? source.count : 1;
         for (let instance = 0; instance < count; instance++) {
             const output = new T.Mesh(source.geometry.clone(), material); output.name = `shadow-${source.name || i}-${instance}`;
-            root.add(output); meshes.push({ source, copy: copies[i] as T.Mesh, output, ...(source instanceof T.InstancedMesh ? { instance } : {}) });
+            root.add(output); meshes.push({ source, copy: copies[i] as T.Mesh, output, lastMatrix: new T.Matrix4(), positionVersion: -1, ...(source instanceof T.InstancedMesh ? { instance } : {}) });
         }
     }
     let shoulder = clone.getObjectByName('shoulder-right');
@@ -48,7 +49,8 @@ export function buildResidentShadow(actor: T.Object3D, lightDirection = new T.Ve
             shoulder.rotation.z += gain * (1.9 + (reduced ? 0 : Math.sin(elapsed/145)*.18));
         }
         clone.updateMatrixWorld(true);
-        for (const { source, copy, output, instance } of meshes) {
+        for (const entry of meshes) {
+            const { source, copy, output, instance } = entry;
             let visible = true;
             for (let o: T.Object3D | null = copy; o; o = o.parent) if (!o.visible) visible = false;
             const mats = Array.isArray(source.material) ? source.material : [source.material];
@@ -57,6 +59,11 @@ export function buildResidentShadow(actor: T.Object3D, lightDirection = new T.Ve
             if (instance !== undefined) { (source as T.InstancedMesh).getMatrixAt(instance, instanceMatrix); matrix.multiply(instanceMatrix); }
             matrix.premultiply(projection);
             const from = source.geometry.getAttribute('position'), to = output.geometry.getAttribute('position');
+            const version = from instanceof T.InterleavedBufferAttribute ? from.data.version : from.version;
+            // Visibility can change independently. Reuse only the same projected
+            // vertices; moving joints and real buffer edits still use the original math.
+            if (entry.positions === from && entry.positionVersion === version && entry.lastMatrix.equals(matrix)) continue;
+            entry.positions = from; entry.positionVersion = version; entry.lastMatrix.copy(matrix);
             for (let i = 0; i < from.count; i++) { vertex.fromBufferAttribute(from,i).applyMatrix4(matrix); to.setXYZ(i,vertex.x,vertex.y,vertex.z); }
             to.needsUpdate = true; output.geometry.computeBoundingBox(); output.geometry.computeBoundingSphere();
         }
