@@ -3,6 +3,7 @@ import { styleAt, syncSoil } from './environment';
 import { CAPE_LEVEL, isKid, FLAG_PATTERNS, HATS, LAND_PRICE, LANDMARK_PRICE, RULES, SEED_PRICE, STYLE_LEVEL } from './rules';
 import { isVacant, occupant, onLand } from './space';
 import { DEFAULT_DECOR, patternOpen, RUG_COLORS, WORD_GROUPS } from './room';
+import { noteColor, PLANTED_COLORS } from './flowers';
 import { welcome } from './town';
 import type { Cell, Command, GrowingState, Side, TownEvent } from './types';
 
@@ -81,9 +82,16 @@ function apply(state: GrowingState, command: Command): TownEvent[] {
         case 'place': {
             if (!state.unlocked.includes(`landmark:${command.kind}`)) fail('まだ えらべないよ。');
             const price = LANDMARK_PRICE[command.kind] ?? fail('まだ えらべないよ。');
+            let color = command.color;
+            if (color !== undefined) {
+                // Children plant the base colours; mixed colours only grow on the island.
+                const planted = PLANTED_COLORS.find(entry => entry.color === color);
+                if (command.kind !== 'flower' || !planted || islandLevel(state) < planted.level) fail('まだ えらべないよ。');
+            } else if (command.kind === 'flower') color = 'red';
             claim(state, command.cell);
             pay(state, price);
-            state.landmarks.push({ id: `l${state.nextId++}`, kind: command.kind, cell: { ...command.cell }, growth: 0 });
+            state.landmarks.push({ id: `l${state.nextId++}`, kind: command.kind, cell: { ...command.cell }, growth: 0, ...(color ? { color } : {}) });
+            if (color) noteColor(state, color);
             break;
         }
         case 'move': {

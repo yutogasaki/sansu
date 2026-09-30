@@ -5,6 +5,8 @@ import { growingIslandEnabled } from '../components/island/growing/feature';
 import { GrowingLoading } from '../components/island/growing/GrowingLoading';
 import { RoomDecorPanel } from '../components/island/growing/RoomDecorPanel';
 import { readWordAloud, useGrowingRoom } from '../components/island/growing/useGrowingRoom';
+import { LettersPanel } from '../components/island/growing/LettersPanel';
+import { islandLetters } from '../components/island/growing/letters';
 import { lifeEnabled } from '../domain/islandLife/model';
 import { replayLife } from '../domain/islandLife/simulation';
 import { IslandDirectActions } from '../components/island/IslandDirectActions';
@@ -904,8 +906,10 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                     active={active}
                     walkingAvailable={!homeJourneyScene}
                     challenge={<ChallengeHomeCard key={profile.id} profileId={profile.id} disabled={busy} onLearn={() => void begin()} onResult={() => { setChallengeStartIntent(false); setScreen('challenge'); }} onStart={() => { setChallengeStartIntent(true); setScreen('challenge'); }} />}
-                    decor={growingIslandEnabled() ? <RoomDecorPanel room={growingRoom.room} words={growingRoom.words} mathLevel={growingRoom.mathLevel}
-                        error={growingRoom.error} onDecorate={command => void growingRoom.decorate(command)} /> : undefined}
+                    decor={growingIslandEnabled() ? <>
+                        <LettersPanel profileId={profile.id} letters={growingRoom.island ? islandLetters(growingRoom.island) : []} />
+                        <RoomDecorPanel room={growingRoom.room} words={growingRoom.words} mathLevel={growingRoom.mathLevel}
+                            error={growingRoom.error} onDecorate={command => void growingRoom.decorate(command)} /></> : undefined}
                     section={houseSection} onSectionChange={section => { setHouseSection(section); setKeepsakeFocus(undefined); }}
                     onSelect={setKeepsakeFocus} onShowRoom={() => setKeepsakeFocus(undefined)}
                     onClose={home} onLearn={() => void begin()} onPhoto={photograph} onPhotos={openPhotos}

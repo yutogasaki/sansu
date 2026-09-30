@@ -11,3 +11,4 @@ export { deliverKeepsakes, keepsakeKind, receiveGifts, type FlowerGift, type Kee
 export { dayMoment, friendOf, momentCandidates } from './moments';
 export { arrivalName, NAME_CANDIDATES } from './names';
 export { WORD_GROUPS, WALL_PATTERNS, RUG_COLORS, DEFAULT_DECOR, learnedWords, wordGroupOf, isLearnedWord, patternOpen, type RoomDecor, type WallPatternId, type WordGroupId, type LearnedWord } from './room';
+export { FLOWER_COLORS, PLANTED_COLORS, mixOf, recipeFor, flowerColor, type FlowerColor } from './flowers';

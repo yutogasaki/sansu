@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { LANDMARK_PRICE, SEED_PRICE } from '../../../domain/growingIsland';
 import type { GrowingState, LandmarkKind, SeedKind } from '../../../domain/growingIsland';
-import { keepsakeKind } from '../../../domain/growingIsland';
+import { islandLevel, keepsakeKind, PLANTED_COLORS, type FlowerColor } from '../../../domain/growingIsland';
+import { FLOWER_NAME, FLOWER_PAINT } from './flowerGeometry';
 import { HOME_STAGE, KEEPSAKE_NAME, LANDMARK_LABEL, SEED_LABEL } from './growingCopy';
 
-export type Pick = { mode: 'seed'; kind: SeedKind } | { mode: 'landmark'; kind: LandmarkKind }
+export type Pick = { mode: 'seed'; kind: SeedKind } | { mode: 'landmark'; kind: LandmarkKind; color?: FlowerColor }
     | { mode: 'unstore'; id: string; kind: SeedKind | LandmarkKind; seed: boolean; keepsake?: string };
 
 const SEEDS: SeedKind[] = ['home', 'farm', 'play', 'wild', 'market', 'festival'];
@@ -44,7 +45,12 @@ export function GrowingTray({ state, onPick, onClose }: { state: GrowingState; o
             })}
         </div>}
         {tab === 'landmarks' && <div className="growing-grid">
-            {landmarks.map(kind => <button key={kind} className="growing-card" data-growing-landmark={kind} onClick={() => onPick({ mode: 'landmark', kind })}>
+            {landmarks.includes('flower') && PLANTED_COLORS.filter(p => islandLevel(state) >= p.level).map(({ color }) =>
+                <button key={color} className="growing-card" data-growing-flower={color} onClick={() => onPick({ mode: 'landmark', kind: 'flower', color })}>
+                    <span className="growing-card-icon growing-flower-dot" aria-hidden="true" style={{ background: FLOWER_PAINT[color] }} />
+                    <strong>{FLOWER_NAME[color]}の はな</strong>{price(LANDMARK_PRICE.flower ?? 0)}
+                </button>)}
+            {landmarks.filter(kind => kind !== 'flower').map(kind => <button key={kind} className="growing-card" data-growing-landmark={kind} onClick={() => onPick({ mode: 'landmark', kind })}>
                 <span className="growing-card-icon" aria-hidden="true">{LANDMARK_LABEL[kind]?.icon}</span>
                 <strong>{LANDMARK_LABEL[kind]?.name}</strong>{price(LANDMARK_PRICE[kind] ?? 0)}
             </button>)}

@@ -5,21 +5,23 @@ import type { ItemKind, LifeItem } from '../../../domain/islandLife/model';
 import { connectedWaterChannels, waterChannelConnections } from '../../../domain/islandLife/waterChannels';
 import { waterLayout } from '../../../domain/growingIsland/environment';
 import { key } from '../../../domain/growingIsland/space';
-import type { Cell, GrowingState, Landmark, LandmarkKind, PlotStyle, SeedKind } from '../../../domain/growingIsland';
+import type { Cell, FlowerColor, GrowingState, Landmark, LandmarkKind, PlotStyle, SeedKind } from '../../../domain/growingIsland';
 import { keepsakeKind, treeAge } from '../../../domain/growingIsland';
 import { buildBud, buildLighthouse, buildPlot } from './plotGeometry';
 import { buildFlag, buildKeepsake } from './keepsakeGeometry';
 import { wonder } from './wonderPaint';
+import { buildColorFlower } from './flowerGeometry';
 import { buildBoat, buildPier } from './pierGeometry';
 import type { SceneLayout } from './sceneLayout';
 
-export interface Ghost { kind: SeedKind | LandmarkKind; seed: boolean; cell?: Cell; valid: boolean; style: PlotStyle; allowed: Cell[]; keepsake?: string }
+export interface Ghost { kind: SeedKind | LandmarkKind; seed: boolean; cell?: Cell; valid: boolean; style: PlotStyle; allowed: Cell[]; keepsake?: string; color?: FlowerColor }
 
 export type Seat = 'sit' | 'swing' | 'eat';
 const SEATS: Partial<Record<LandmarkKind, Seat>> = { bench: 'sit', swing: 'swing', 'picnic-table': 'eat' };
 
 function landmarkModel(m: IslandMaterials, state: GrowingState, landmark: Landmark, reached: Set<string>) {
     if (landmark.kind === 'lighthouse') return buildLighthouse(m);
+    if (landmark.kind === 'flower' && landmark.color) return buildColorFlower(m, landmark.color, landmark.growth);
     const layout = waterLayout(state);
     const item: LifeItem = {
         id: landmark.id, kind: landmark.kind as ItemKind, cell: landmark.cell, growth: landmark.growth,
@@ -35,6 +37,7 @@ function ghostModel(m: IslandMaterials, ghost: Ghost) {
     const model = ghost.keepsake ? buildKeepsake(m, keepsakeKind(ghost.keepsake))
         : ghost.seed ? buildPlot(m, ghost.kind as SeedKind, 1, ghost.style, 6)
         : ghost.kind === 'lighthouse' ? buildLighthouse(m)
+            : ghost.kind === 'flower' && ghost.color ? buildColorFlower(m, ghost.color, 6)
             : buildLifeItem({ id: 'ghost', kind: ghost.kind as ItemKind, growth: 18, style: 'original' }, m).root;
     model.traverse(o => {
         if (!(o instanceof T.Mesh)) return;

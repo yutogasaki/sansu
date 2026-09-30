@@ -1,5 +1,6 @@
 import type { Cell, ItemKind, LifeItem } from '../islandLife/model';
 import type { RoomDecor, WallPatternId, WordGroupId } from './room';
+import type { FlowerColor } from './flowers';
 
 export type { Cell, ItemKind };
 
@@ -48,6 +49,8 @@ export interface Landmark {
     legacy?: Pick<LifeItem, 'style' | 'foodStage' | 'foodStock' | 'access'>;
     /** The sibling who left this flower during a visit (§13). */
     from?: string;
+    /** A flower's colour (§5.1); older flowers without one are pink. */
+    color?: FlowerColor;
 }
 
 export interface Keepsake { id: string; unitId: string; cell?: Cell }
@@ -87,7 +90,7 @@ export interface GrowingState {
     /** The visitor sails in and waits on the pier from `dockAt` (a town hour). */
     pier: { visitor: Visitor; next: Visitor; rolled: number; dockAt: number };
     town: { clock: number; bank: number };
-    nature: { hours: number; realAt: number; lastSpread: number };
+    nature: { hours: number; realAt: number; lastSpread: number; lastMix?: number };
     soil: Record<string, number>;
     genki: { current: number; best: number };
     character: Character;
@@ -106,6 +109,8 @@ export interface GrowingState {
     mastery?: { math: number; vocab: number };
     /** Flower gifts from siblings' visits that were already received (§13). */
     gifts?: string[];
+    /** Flower colours the island has grown, for the flower book (§5.1). */
+    flowerBook?: FlowerColor[];
     /** Pokomoko's room: wallpaper drawn with learned words, chosen shapes and rug (§13.1). */
     room?: RoomDecor;
     applied: string[];
@@ -114,7 +119,7 @@ export interface GrowingState {
 
 export type Command =
     | { type: 'plant'; kind: SeedKind; cell: Cell }
-    | { type: 'place'; kind: LandmarkKind; cell: Cell }
+    | { type: 'place'; kind: LandmarkKind; cell: Cell; color?: FlowerColor }
     | { type: 'move'; id: string; cell: Cell }
     | { type: 'store'; id: string }
     | { type: 'unstore'; id: string; cell: Cell }
@@ -152,4 +157,6 @@ export type NatureEvent =
     | { type: 'matured'; id: string }
     | { type: 'big-tree'; id: string }
     | { type: 'lord-tree'; id: string }
-    | { type: 'spread'; plotId: string };
+    | { type: 'spread'; plotId: string }
+    | { type: 'mixed'; id: string; color: FlowerColor }
+    | { type: 'new-color'; color: FlowerColor };

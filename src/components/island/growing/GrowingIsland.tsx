@@ -1,7 +1,7 @@
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { canPlace, landQuote, styleAt, waitingSeeds } from '../../../domain/growingIsland';
 import { HOME_CELL, landBounds, landCells } from '../../../domain/growingIsland/space';
-import type { Cell, Command, GrowingState, LandmarkKind, SeedKind, TownEvent } from '../../../domain/growingIsland';
+import type { Cell, Command, FlowerColor, GrowingState, LandmarkKind, SeedKind, TownEvent } from '../../../domain/growingIsland';
 import { addMoment, flowerSentToday, listMoments, readGrowingIsland, sendFlower, type MomentRecord } from '../../../domain/growingIsland/repository';
 import { getAllProfiles } from '../../../domain/user/repository';
 import { useGardenTime } from '../life/fantasy/useGardenTime';
@@ -13,6 +13,8 @@ import { GrowingSheet, type SheetAction } from './GrowingSheet';
 import { GrowingTray, type Pick } from './GrowingTray';
 import { CardView, FriendsPanel, ShowPanel, StoryView, VisitPicker, type ShowChoice } from './GrowingPanels';
 import { canvasBlob, drawIslandCard, saveImage } from './islandCard';
+import { FLOWER_NAME } from './flowerGeometry';
+import { FlowerBook } from './FlowerBook';
 import type { Ghost } from './objectLayer';
 import type { ShownMoment, WorldCamera } from './GrowingWorld';
 import { useGrowingIsland } from './useGrowingIsland';
@@ -20,8 +22,8 @@ import { publishWaitingSeeds } from './seedBadge';
 import './growing.css';
 
 const GrowingWorld = lazy(() => import('./GrowingWorld'));
-type Placing = { kind: SeedKind | LandmarkKind; seed: boolean; id?: string; mode: 'new' | 'move' | 'unstore'; cell?: Cell; keepsake?: string };
-type Panel = 'tray' | 'friends' | 'show' | 'visit' | undefined;
+type Placing = { kind: SeedKind | LandmarkKind; seed: boolean; id?: string; mode: 'new' | 'move' | 'unstore'; cell?: Cell; keepsake?: string; color?: FlowerColor };
+type Panel = 'tray' | 'friends' | 'show' | 'visit' | 'flowers' | undefined;
 type Visit = { id: string; name: string; state: GrowingState; sent: boolean };
 
 function speak(text: string) {
@@ -75,7 +77,12 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         const shown = reveal.town.find(e => e.type === 'moment');
         if (shown?.type === 'moment') window.setTimeout(() => setMoment({ id: reveal.id, moment: shown.moment, cell: shown.cell }), 2200);
         setHints(hintCells(own, reveal.town));
-        setLine(revealLine(own, reveal.town));
+        const fresh = reveal.nature.filter(e => e.type === 'new-color');
+        const town = revealLine(own, reveal.town);
+        setLine(fresh.length && (town === 'のんびりした じかんだったね' || town === 'ふねが ちかづいてきたよ')
+            ? `あたらしい いろの はなが さいたよ！ ${fresh.map(e => e.type === 'new-color' ? FLOWER_NAME[e.color] : '').join('と ')}`
+            : town);
+        if (fresh.length) audio.play('discovery');
         // The reveal is shown once per sync result.
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [island.reveal?.id]);
@@ -102,7 +109,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         if (!own || !placing) return undefined;
         const allowed = landCells(own).filter(cell => canPlace(own, cell, placing.id));
         const valid = Boolean(placing.cell && allowed.some(c => c.x === placing.cell!.x && c.z === placing.cell!.z));
-        return { kind: placing.kind, seed: placing.seed, cell: placing.cell, valid, allowed, keepsake: placing.keepsake,
+        return { kind: placing.kind, seed: placing.seed, cell: placing.cell, valid, allowed, keepsake: placing.keepsake, color: placing.color,
             style: placing.cell && placing.seed ? styleAt(own, placing.cell) : 'plain' };
     }, [own, placing]);
 
@@ -122,14 +129,14 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     const pick = (choice: Pick) => {
         setPanel(undefined); setSelected(undefined); setLine('おく ばしょを えらんでね');
         if (choice.mode === 'unstore') setPlacing({ kind: choice.kind, seed: choice.seed, id: choice.id, mode: 'unstore', keepsake: choice.keepsake });
-        else setPlacing({ kind: choice.kind, seed: choice.mode === 'seed', mode: 'new' });
+        else setPlacing({ kind: choice.kind, seed: choice.mode === 'seed', mode: 'new', color: choice.mode === 'landmark' ? choice.color : undefined });
     };
     const confirm = () => {
         if (!placing?.cell || !ghost?.valid) return;
         const cell = placing.cell;
         const command: Command = placing.mode === 'move' ? { type: 'move', id: placing.id!, cell }
             : placing.mode === 'unstore' ? { type: 'unstore', id: placing.id!, cell }
-                : placing.seed ? { type: 'plant', kind: placing.kind as SeedKind, cell } : { type: 'place', kind: placing.kind as LandmarkKind, cell };
+                : placing.seed ? { type: 'plant', kind: placing.kind as SeedKind, cell } : { type: 'place', kind: placing.kind as LandmarkKind, cell, ...(placing.color ? { color: placing.color } : {}) };
         void run(command, () => {
             audio.play(placing.kind === 'water-bowl' || placing.kind === 'water-channel' ? 'water' : placing.seed ? 'sand' : 'wood');
             setPlacing(undefined);
@@ -220,6 +227,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
                 <button onClick={() => { setMenu(false); setSelected(undefined); onHome(); }}>いえ</button>
                 <button onClick={() => { setMenu(false); loadFaces(); setPanel('friends'); }}>なかま</button>
                 <button onClick={() => { setMenu(false); setPanel('show'); }}>みせる</button>
+                <button onClick={() => { setMenu(false); setPanel('flowers'); }}>はなずかん</button>
             </div>
             <div className="growing-row"><button onClick={() => setTurn(turn - 1)}>⟲ まわす</button><button onClick={() => setTurn(turn + 1)}>まわす ⟳</button></div>
             {quote && <div className="growing-row">{quote.sides.map(side => <button key={side} disabled={own.drops < quote.price}
@@ -247,6 +255,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         {!visit && panel === 'friends' && <FriendsPanel state={own} faces={faces} onClose={() => setPanel(undefined)}
             onFocus={id => { setPanel(undefined); setFocus({ id, n: Date.now() }); setLine(actorLine(own, id)); }} />}
         {!visit && panel === 'show' && <ShowPanel onPick={choice => void showChoice(choice)} onClose={() => setPanel(undefined)} />}
+        {!visit && panel === 'flowers' && <FlowerBook state={own} onClose={() => setPanel(undefined)} />}
         {panel === 'visit' && <VisitPicker profiles={siblings} onVisit={id => void startVisit(id)} onClose={() => setPanel(undefined)} />}
         {!visit && selected && !placing && <GrowingSheet state={own} target={selected} onAction={sheetAction} onClose={() => setSelected(undefined)} />}
         {card && <CardView url={card.url} busy={!card.blob} onSave={() => { if (card.blob) saveImage(card.blob, `${own.islandName ?? 'しま'}-card.png`); }}

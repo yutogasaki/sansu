@@ -1,6 +1,7 @@
 import { BLOOM_HOURS, soilAt, soilTargetAt, styleAt, syncSoil, TREE_MATURE_HOURS, waterLayout } from './environment';
 import { connectedWaterChannels } from '../islandLife/waterChannels';
 import { roll } from './random';
+import { MIX_EVERY, mixFlowers } from './flowers';
 import { RULES } from './rules';
 import { HOUSE_CELLS, isVacant, key, landCells, neighbors, same } from './space';
 import type { Cell, GrowingState, NatureEvent } from './types';
@@ -95,6 +96,11 @@ export function advanceNature(state: GrowingState, now: number): NatureEvent[] {
         while (Math.floor(state.nature.hours / RULES.spreadEvery) > state.nature.lastSpread) {
             state.nature.lastSpread += 1;
             spread(state, state.nature.lastSpread, events);
+        }
+        state.nature.lastMix ??= Math.floor(from / MIX_EVERY);
+        while (Math.floor(state.nature.hours / MIX_EVERY) > state.nature.lastMix) {
+            state.nature.lastMix += 1;
+            mixFlowers(state, state.nature.lastMix, events);
         }
         remaining -= step;
     }
