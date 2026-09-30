@@ -4,7 +4,7 @@ import { HOME_CELL, landBounds, landCells } from '../../../domain/growingIsland/
 import type { Cell, Command, GrowingState, LandmarkKind, SeedKind, TownEvent } from '../../../domain/growingIsland';
 import { addMoment, flowerSentToday, listMoments, readGrowingIsland, sendFlower, type MomentRecord } from '../../../domain/growingIsland/repository';
 import { getAllProfiles } from '../../../domain/user/repository';
-import { gardenTimes, readGardenTime, saveGardenTime, type GardenTime } from '../life/fantasy/presentation';
+import { useGardenTime } from '../life/fantasy/useGardenTime';
 import { GrowingLoading, type LoadingStep } from './GrowingLoading';
 import { useIslandWorkshopAudio } from '../useIslandWorkshopAudio';
 import { useIslandAmbience } from '../useIslandAmbience';
@@ -50,7 +50,7 @@ function hintCells(state: GrowingState, events: TownEvent[]): Cell[] {
 export default function GrowingIsland({ profileId, profileName = '', active, sound, onHome }: { profileId: string; profileName?: string; active: boolean; sound: boolean; onHome: () => void }) {
     const island = useGrowingIsland(profileId, active);
     const own = island.record?.state;
-    const [time, setTime] = useState<GardenTime>(() => readGardenTime(profileId));
+    const time = useGardenTime(active);
     const [panel, setPanel] = useState<Panel>(), [menu, setMenu] = useState(false), [turn, setTurn] = useState(0);
     const [placing, setPlacing] = useState<Placing>(), [selected, setSelected] = useState<string>();
     const [line, setLine] = useState<string>(), [dawn, setDawn] = useState(0);
@@ -195,12 +195,12 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
             setLine(actorLine(own, id)); if (own.villagers.some(v => v.id === id)) setSelected(`villager:${id}`);
         }} />;
 
-    if (show) return <div className="island-life growing-island" data-growing-island="show">
+    if (show) return <div className="island-life growing-island" data-growing-island="show" data-garden-time={time}>
         <Suspense fallback={null}>{world}</Suspense>{worldStep !== 'ready' && <GrowingLoading step={worldStep} overlay />}
         <button className="growing-chip growing-show-exit" onClick={() => setShow(false)}>おわる</button>
     </div>;
 
-    return <div className="island-life growing-island" data-growing-island={visit ? 'visit' : 'ready'} data-dawn={dawn ? 'true' : undefined}>
+    return <div className="island-life growing-island" data-growing-island={visit ? 'visit' : 'ready'} data-garden-time={time} data-dawn={dawn ? 'true' : undefined}>
         <Suspense fallback={null}>{world}</Suspense>{worldStep !== 'ready' && <GrowingLoading step={worldStep} overlay />}
         {dawn > 0 && <div className="growing-dawn" aria-hidden="true"><span>☀</span></div>}
         <div className="growing-hud-top">
@@ -221,8 +221,6 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
                 <button onClick={() => { setMenu(false); loadFaces(); setPanel('friends'); }}>なかま</button>
                 <button onClick={() => { setMenu(false); setPanel('show'); }}>みせる</button>
             </div>
-            <div className="growing-row">{gardenTimes.map(t => <button key={t.id} aria-pressed={time === t.id}
-                onClick={() => { setTime(t.id); saveGardenTime(profileId, t.id); }}>{t.label}</button>)}</div>
             <div className="growing-row"><button onClick={() => setTurn(turn - 1)}>⟲ まわす</button><button onClick={() => setTurn(turn + 1)}>まわす ⟳</button></div>
             {quote && <div className="growing-row">{quote.sides.map(side => <button key={side} disabled={own.drops < quote.price}
                 onClick={() => void run({ type: 'expand', side }, () => { setMenu(false); audio.play('assemble'); })}>

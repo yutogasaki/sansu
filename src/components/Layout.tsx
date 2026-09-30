@@ -8,6 +8,8 @@ import { IslandNavigationContext, useIslandNavigationState } from './island/useI
 import { Spinner } from './ui/Spinner';
 
 import { IslandRenderBoundary } from './island/IslandRenderBoundary';
+import { growingIslandEnabled } from './island/growing/feature';
+import { GrowingLoading } from './island/growing/GrowingLoading';
 
 const Island = React.lazy(() => import('../pages/Island'));
 
@@ -51,7 +53,7 @@ export const Layout: React.FC = () => {
                     <Outlet />
                 </div>
                 {navigation.mounted && <div className="island-session-host" hidden={!navigation.active} inert={!navigation.active || undefined}>
-                    <IslandRenderBoundary><React.Suspense fallback={<Spinner fullScreen message="しまを じゅんびちゅう…" />}><Island /></React.Suspense></IslandRenderBoundary>
+                    <IslandRenderBoundary><React.Suspense fallback={growingIslandEnabled() ? <GrowingLoading step="app" /> : <Spinner fullScreen message="しまを じゅんびちゅう…" />}><Island /></React.Suspense></IslandRenderBoundary>
                 </div>}
             </main>
 

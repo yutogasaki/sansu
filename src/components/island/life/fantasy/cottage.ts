@@ -55,5 +55,5 @@ export function buildGardenCottage() {
         g.pebble(i%3?'#6d874d':'#83985b',[-.91+Math.sin(i*.8)*.07,y,.87],[.07,.11,.033],body);
     }
     g.batch(body); root.userData.visualSource = 'living-fantasy-cottage-v1';
-    return { root, setTime(time:GardenTime){glow.material.opacity=time==='day'?.06:time==='dusk'?.38:.55;},dispose: () => {g.dispose();glow.dispose();} };
+    return { root, setTime(time:GardenTime){glow.material.opacity=(time==='day'||time==='morning')?.06:time==='dusk'?.38:.55;},dispose: () => {g.dispose();glow.dispose();} };
 }

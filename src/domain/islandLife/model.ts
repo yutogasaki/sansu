@@ -86,7 +86,7 @@ export interface LifeResident {
     discovery?: { itemId: string; at: number; mood: 'notice' | 'curious' };
 }
 export type LifeWorldStyle = 'moon-garden-v1' | 'canopy-dots-c3-v1' | 'fantasy-garden-v1';
-export type GardenTime = 'day' | 'dusk' | 'night';
+export type GardenTime = 'morning' | 'day' | 'dusk' | 'night';
 export interface LifeState {
     residency?: ResidencyState;
     food?: FoodLoopState;

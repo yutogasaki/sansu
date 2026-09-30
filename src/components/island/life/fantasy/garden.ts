@@ -142,8 +142,8 @@ export function buildGardenGround(ground: GardenGround, point: (cell: Cell) => T
     const setTime=(time:GardenTime)=>{
         seaMaterial.uniforms.deep.value.set(time==='night'?'#264e60':time==='dusk'?'#426d72':'#427f80');
         seaMaterial.uniforms.shallow.value.set(time==='night'?'#477786':time==='dusk'?'#759890':'#73a79b');
-        dustMaterial.opacity=time==='day'?.18:.42;
-        glow.material.opacity=time==='day'?.08:time==='dusk'?.40:.55;
+        dustMaterial.opacity=(time==='day'||time==='morning')?.18:.42;
+        glow.material.opacity=(time==='day'||time==='morning')?.08:time==='dusk'?.40:.55;
     };
     g.batch(root);
     return {root,setTime,animate(at:number,reduced:boolean){

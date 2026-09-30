@@ -6,6 +6,7 @@ import './growingLoading.css';
  * learning, the 3D world, the first picture); the number is the step's share, not bytes.
  */
 export const LOADING_STEPS = {
+    app: { percent: 5, label: 'アプリを よんでいるよ' },
     page: { percent: 10, label: 'しまの じゅんびを しているよ' },
     screen: { percent: 25, label: 'しまの がめんを よんでいるよ' },
     learning: { percent: 40, label: 'まなんだ ぶんを かぞえているよ' },

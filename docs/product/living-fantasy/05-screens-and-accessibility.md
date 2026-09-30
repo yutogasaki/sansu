@@ -35,7 +35,7 @@
 | `/island?view=inventory` / `placement` / `furniture` / `play` | 所有物・配置・既存家具と遊びの対応画面。placementのBackは所有物。対象不明は一覧へ |
 | `/island?view=camera` / `photos&photo=ID` | 撮影／指定写真。Backは写真、無効なIDは本人の写真一覧 |
 | `/island?view=challenge` / `workshop` / `showcase` | 既存の任意チャレンジ・工作・展示を互換表示。新しい通常報酬と混ぜず、家からの入口を保つ |
-| `/island?view=customization` / `expression` | 旧取得済みの外見・着替えの権利を維持。新しい無料の景色選択とは台帳を混ぜない |
+| `/island?view=customization` / `expression` | 旧取得済みの外見・着替えの権利を維持。時刻に合わせる景色とは台帳を混ぜない |
 | `/island?view=growth` / `experience` / `guide` / `help` | 指定された旧記録・説明があれば保持して表示。新規の説明は次期へ。過去を現在の成果にしない |
 | `/island?view=reward` | 未処理の旧予約報酬があればその契約で一度だけ処理。対象なしなら島。新規の受取面として再利用しない |
 | `/stats` | 学習記録。島の思い出へ置き換えない |

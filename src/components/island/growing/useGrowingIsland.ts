@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { holdPwaUpdateForCriticalPersistence } from '../../../pwa';
 import { lifeDb, terminalFacts } from '../../../domain/islandLife/repository';
 import { getProfile } from '../../../domain/user/repository';
-import { commandGrowingIsland, growingDb, syncGrowingIsland, type GrowingRecord } from '../../../domain/growingIsland/repository';
+import { commandGrowingIsland, growingDb, readGrowingIsland, syncGrowingIsland, type GrowingRecord } from '../../../domain/growingIsland/repository';
 import type { Command, NatureEvent, TownEvent } from '../../../domain/growingIsland';
 import type { LoadingStep } from './GrowingLoading';
 
@@ -27,12 +27,16 @@ export function useGrowingIsland(profileId: string, active: boolean) {
     const [step, setStep] = useState<LoadingStep>('learning');
     const running = useRef<Promise<void> | undefined>(undefined), revealId = useRef(0);
 
-    const sync = useCallback(() => {
+    /**
+     * `full` reads every learning completion and the learning levels; the periodic refresh only
+     * grows nature, since learning happens on another screen and returning runs a full sync.
+     */
+    const sync = useCallback((full = true) => {
         if (running.current) return running.current;
         const release = holdPwaUpdateForCriticalPersistence();
         running.current = (async () => {
             try {
-                const [profile, facts] = await Promise.all([getProfile(profileId), terminalFacts(profileId)]);
+                const [profile, facts] = full ? await Promise.all([getProfile(profileId), terminalFacts(profileId)]) : [undefined, []];
                 const levels = profile ? { math: profile.mathMainLevel, vocab: profile.vocabMainLevel } : undefined;
                 setStep('saving');
                 const result = await syncGrowingIsland(profileId, facts, Date.now(), growingDb, lifeDb, levels);
@@ -69,11 +73,14 @@ export function useGrowingIsland(profileId: string, active: boolean) {
     }, [active, profileId, sync]);
     useEffect(() => {
         if (!active) return;
+        let live = true;
+        // A saved island appears at once; the full sync then adds learning and opens town time.
+        void readGrowingIsland(profileId).then(saved => { if (live && saved) setRecord(current => current ?? saved); }).catch(() => undefined);
         void sync();
-        const refresh = () => { if (document.visibilityState === 'visible') void sync(); };
-        const id = window.setInterval(refresh, 15_000);
-        document.addEventListener('visibilitychange', refresh);
-        return () => { clearInterval(id); document.removeEventListener('visibilitychange', refresh); };
+        const visible = () => { if (document.visibilityState === 'visible') void sync(); };
+        const id = window.setInterval(() => { if (document.visibilityState === 'visible') void sync(false); }, 15_000);
+        document.addEventListener('visibilitychange', visible);
+        return () => { live = false; clearInterval(id); document.removeEventListener('visibilitychange', visible); };
     }, [active, sync]);
 
     return { record: record?.profileId === profileId ? record : undefined, reveal, error, busy, dispatch, sync, step,

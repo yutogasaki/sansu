@@ -21,12 +21,27 @@ function roof(parent: T.Object3D, paint: Paint, color: string, style: PlotStyle,
 }
 
 function windows(parent: T.Object3D, paint: Paint, style: PlotStyle, width: number, y: number, count: number) {
-    const glow = paint(style === 'light' ? '#ffe39a' : '#f6ca80', .5);
+    const glow = paint(style === 'light' ? '#ffe39a' : '#f6ca80', .5), frame = paint('#fff8ea', .7);
     const total = style === 'light' ? count + 1 : count;
     for (let i = 0; i < total; i++) {
-        const x = (i - (total - 1) / 2) * width / (total + .5);
-        mesh(parent, new T.PlaneGeometry(.12, .14), glow, [x, y, width / 2 + .005]);
+        const x = (i - (total - 1) / 2) * width / (total + .5), z = width / 2 + .006;
+        mesh(parent, new T.BoxGeometry(.16, .18, .015), frame, [x, y, z]);
+        mesh(parent, new T.PlaneGeometry(.12, .14), glow, [x, y, z + .009]);
+        mesh(parent, new T.BoxGeometry(.012, .14, .01), frame, [x, y, z + .012]);
+        // A flower box under the window.
+        mesh(parent, new T.BoxGeometry(.17, .04, .05), paint('#9b7250'), [x, y - .11, z + .02]);
+        for (const dx of [-.05, 0, .05]) ball(parent, paint, style === 'flower' ? '#f6c6d4' : dx ? '#fff0a8' : '#e58ea3', [x + dx, y - .08, z + .03], .022);
     }
+}
+
+/** An arched door with a knob and a step, so each home reads as a place someone lives. */
+function door(parent: T.Object3D, paint: Paint, width: number) {
+    const z = width / 2 + .012;
+    mesh(parent, new T.BoxGeometry(.15, .17, .02), paint('#865a3f'), [0, .1, z]);
+    const arch = mesh(parent, new T.CylinderGeometry(.075, .075, .02, 16, 1, false, 0, Math.PI), paint('#865a3f'), [0, .185, z]);
+    arch.rotation.x = Math.PI / 2; arch.rotation.y = Math.PI / 2;
+    ball(parent, paint, '#e0b454', [.045, .1, z + .014], .014);
+    mesh(parent, new T.BoxGeometry(.24, .03, .1), paint('#cbbfa6'), [0, .015, z + .05]);
 }
 
 /** Homes grow upward: 1 tent, 2 hut, 3 house, 4 two storeys. Seeds show stakes and a flag. */
@@ -53,15 +68,28 @@ export function buildHome(paint: Paint, stage: number, style: PlotStyle, roofCol
     if (stage === 1) {
         const tent = mesh(body, new T.ConeGeometry(.38, .6, 6), roofPaint(color), [0, .3, 0]);
         tent.rotation.y = Math.PI / 6;
+        // A pennant on top and a round mat by the door.
+        mesh(body, new T.CylinderGeometry(.008, .008, .18, 5), paint(WOOD), [0, .66, 0]);
+        const pennant = mesh(body, new T.ConeGeometry(.04, .12, 3), paint('#f0c166'), [.05, .71, 0]); pennant.rotation.z = -Math.PI / 2;
+        mesh(body, new T.CylinderGeometry(.13, .13, .012, 14), paint('#e3c896'), [0, .008, .42]);
         mesh(body, new T.PlaneGeometry(.16, .26), paint('#4a3a2e'), [0, .13, .31]).rotation.x = -.45;
         return root;
     }
     const width = stage === 2 ? .56 : .7, height = stage === 2 ? .42 : .52;
     box(body, paint, WALL, [0, height / 2, 0], [width, height, width]);
-    box(body, paint, '#865a3f', [0, .13, width / 2 + .005], [.14, .24, .02]);
-    windows(body, paint, style, width, height * .62, stage === 2 ? 1 : 2);
+    box(body, paint, '#d9ccb0', [0, .03, 0], [width + .04, .06, width + .04]);
+    door(body, paint, width);
+    windows(body, paint, style, width, height * .66, stage === 2 ? 1 : 2);
+    if (style === 'light') {
+        // A little lantern by the door.
+        mesh(body, new T.CylinderGeometry(.012, .012, .3, 6), paint(WOOD), [width / 2 - .06, .15, width / 2 + .08]);
+        mesh(body, new T.BoxGeometry(.06, .07, .06), paint('#ffe39a', .3), [width / 2 - .06, .33, width / 2 + .08]);
+    }
     if (stage === 4) {
         box(body, paint, WALL, [0, height + height * .42, 0], [width * .84, height * .84, width * .84]);
+        // A balcony with a colour-block rail: one wonder accent on the grandest homes.
+        box(body, paint, '#b89a72', [0, height + .01, width / 2 + .06], [width * .8, .03, .14]);
+        mesh(body, new T.BoxGeometry(width * .8, .07, .015), wonder('blocks'), [0, height + .06, width / 2 + .13]);
         windows(body, paint, style, width * .84, height * 1.45, 2);
         roof(body, roofPaint, color, style, width * .84, height * 1.84);
     } else roof(body, roofPaint, color, style, width, height);
