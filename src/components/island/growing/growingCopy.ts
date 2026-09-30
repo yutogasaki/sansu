@@ -68,7 +68,9 @@ export function revealLine(state: GrowingState, events: TownEvent[]) {
 
 function arrivalName(state: GrowingState) {
     const v = state.villagers.find(v => v.id === state.arrivals[0]);
-    return v ? villagerName(v) : 'なかま';
+    // A new animal's name is not known yet, so say what kind of friend they are first.
+    if (!v) return 'なかま';
+    return v.species === 'girl' || v.species === 'boy' || !v.name ? villagerName(v) : `${SPECIES_NAME[v.species]}の ${v.name}`;
 }
 
 /** What Pokomoko says while the child plays; it suggests, never asks for more learning. */
