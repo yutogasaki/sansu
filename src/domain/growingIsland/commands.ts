@@ -2,6 +2,7 @@ import { islandLevel, occupantsOf, refreshUnlocks } from './community';
 import { styleAt, syncSoil } from './environment';
 import { CAPE_LEVEL, isKid, FLAG_PATTERNS, HATS, LAND_PRICE, LANDMARK_PRICE, RULES, SEED_PRICE, STYLE_LEVEL } from './rules';
 import { isVacant, occupant, onLand } from './space';
+import { DEFAULT_DECOR, patternOpen, RUG_COLORS, WORD_GROUPS } from './room';
 import { welcome } from './town';
 import type { Cell, Command, GrowingState, Side, TownEvent } from './types';
 
@@ -153,6 +154,26 @@ function apply(state: GrowingState, command: Command): TownEvent[] {
                 outfit.hat = command.hat || undefined;
             }
             villager.outfit = outfit.color === undefined && outfit.hat === undefined ? undefined : outfit;
+            break;
+        }
+        case 'decorate': {
+            // Free and changeable any time; a shape opens with the math level already reached.
+            const room = { ...DEFAULT_DECOR, ...state.room };
+            if (command.pattern !== undefined) {
+                if (!patternOpen(command.pattern, state.mastery?.math ?? 0)) fail('まだ えらべないよ。');
+                room.pattern = command.pattern;
+            }
+            if (command.rug !== undefined) {
+                if (!Number.isInteger(command.rug) || command.rug < 0 || command.rug >= RUG_COLORS.length) fail('いろを えらびなおしてね。');
+                room.rug = command.rug;
+            }
+            if (command.hidden !== undefined) {
+                const ids = new Set<string>(WORD_GROUPS.map(g => g.id));
+                if (command.hidden.some(id => !ids.has(id))) fail('いろを えらびなおしてね。');
+                room.hidden = [...new Set(command.hidden)];
+                if (!room.hidden.length) delete room.hidden;
+            }
+            state.room = room;
             break;
         }
         case 'flag': {

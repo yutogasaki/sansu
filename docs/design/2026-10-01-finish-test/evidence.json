@@ -1,0 +1,42 @@
+{
+  "target": "http://127.0.0.1:5238",
+  "kind": "DEV diagnostic, isolated seeded readiness profiles",
+  "revision": "43d22b967d96d97375ac31433143e7710dc37d07",
+  "sourceHash": "fe5147a03417c0105e3a905a704c0e60516193a4e98afe8a37744cddcf146e6f",
+  "buildRevision": "development-local",
+  "delivery": "snap-root-v1",
+  "islandEnabled": true,
+  "lifeEnabled": true,
+  "candidate": "finish-path-v1",
+  "sound": false,
+  "serviceWorkerControlled": false,
+  "phone": "390x844",
+  "tablet": "768x1024",
+  "reducedMotion": true,
+  "passResult": {
+    "level": 16,
+    "next": 17,
+    "correct": 19,
+    "total": 20
+  },
+  "practiceResult": {
+    "level": 16,
+    "correct": 16,
+    "total": 20,
+    "progressed": false
+  },
+  "gates": {
+    "visualAppeal": "author reviewed runtime",
+    "silentComprehensionSafety": "author reviewed; child observation not performed",
+    "runtimeIntegrity": "4388 tests PASS; full island release gates incomplete"
+  },
+  "captures": [
+    "phone-ready-final.png",
+    "phone-test.png",
+    "phone-cleared.png",
+    "phone-practice.png",
+    "tablet-test.png",
+    "tablet-cleared.png",
+    "tablet-practice.png"
+  ]
+}

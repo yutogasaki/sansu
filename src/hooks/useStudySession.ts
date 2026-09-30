@@ -15,6 +15,8 @@ import { prepareStudyBlockPresentation } from '../domain/math/studyPresentation'
 import { generateVocabProblem } from "../domain/english/generator";
 import { Problem, SubjectKey, UserProfile } from "../domain/types";
 import type { LearningEvidenceContext } from '../domain/learning/types';
+import { reserveFinishTest, completeFinishTest, recordFinishTestAnswer } from '../domain/finishTestRepository';
+import type { FinishTestReservation, FinishTestResult } from '../domain/finishTest';
 import { db } from '../db';
 import { readRuntimeMathUnitPractice } from '../domain/learning/runtimeUnitPractice';
 import { getAvailableSkills } from "../domain/math/curriculum";
@@ -71,6 +73,11 @@ type StudySessionOptions = {
 };
 
 export const useStudySession = (options: StudySessionOptions = {}) => {
+    const finishReservationRef = useRef<FinishTestReservation | null>(null);
+    const finishAnswersRef = useRef(new Map<string, boolean>());
+    const [finishResumeIndex, setFinishResumeIndex] = useState<number | undefined>();
+    const [finishLoadedKey, setFinishLoadedKey] = useState<string>();
+    const [finishResult, setFinishResult] = useState<FinishTestResult | null>(null);
     const [queue, setQueue] = useState<Problem[]>([]);
     const [loading, setLoading] = useState(true);
     const [generationError, setGenerationError] = useState(false);
@@ -456,6 +463,19 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             return generateLevelBlock(activeProfile, blockSize);
         }
 
+        if (sessionKind === "finish-test") {
+            const subject = options.focusSubject || (activeProfile.subjectMode === "vocab" ? "vocab" : "math");
+            const set = await reserveFinishTest(activeProfile.id, subject);
+            finishReservationRef.current = set;
+            const answers = Object.entries(set.answers ?? {});
+            answers.forEach(([index, correct]) => finishAnswersRef.current.set(`finish-${set.id}-${index}`, correct));
+            let resumeIndex = 0;
+            while (set.answers?.[String(resumeIndex)] !== undefined && resumeIndex < 20) resumeIndex++;
+            setFinishResumeIndex(resumeIndex);
+            setFinishLoadedKey(sessionKey);
+            return set.problems.map((p, i) => ({ ...p, id: `finish-${set.id}-${i}`, subject, isReview: false }));
+        }
+
         // New Periodic Test (Plan A)
         if (sessionKind === "periodic-test") {
             const subject: SubjectKey =
@@ -525,7 +545,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
         prepareStudyBlockPresentation(
             await generateRawBlock(pid, activeProfile, blockIndex),
             activeProfile.hissanModeEnabled ?? true,
-            options.sessionKind === 'periodic-test' || options.benchmarkId === COLD_OPEN_FIXED_TEN_ID,
+            options.sessionKind === 'finish-test' || options.sessionKind === 'periodic-test' || options.benchmarkId === COLD_OPEN_FIXED_TEN_ID,
         );
 
     // ============================================================
@@ -541,6 +561,11 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
         setQueue([]);
         blockIndexRef.current = 1;
         sessionHistoryRef.current = [];
+        finishReservationRef.current = null;
+        finishAnswersRef.current.clear();
+        setFinishResult(null);
+        setFinishResumeIndex(undefined);
+        setFinishLoadedKey(undefined);
 
         try {
             logInDev("[useStudySession] generating block...");
@@ -638,6 +663,18 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
     ): Promise<boolean> => {
         const processResult = async (): Promise<boolean> => {
             const sessionKind = options.sessionKind || "normal";
+            if (sessionKind === "finish-test") {
+                const reservation = finishReservationRef.current;
+                const index = queue.findIndex(item => item.id === problem.id);
+                if (!reservation || index < 0 || problem.subject !== reservation.subject) return false;
+                if (!finishAnswersRef.current.has(problem.id)) {
+                    const correct = result === 'correct' && learningEvidence?.assistance === 'independent'
+                        && learningEvidence.completion === 'whole-problem';
+                    if (!await recordFinishTestAnswer(reservation, index, correct)) return false;
+                    finishAnswersRef.current.set(problem.id, correct);
+                }
+                return true;
+            }
             if (!shouldRecordLearningAttempt(sessionKind)) return true;
             if (!profileId) return false;
 
@@ -789,6 +826,17 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             if (!currentProfile || currentProfile.id !== profileId) return false;
 
             const sessionKind = options.sessionKind || "normal";
+            if (sessionKind === "finish-test") {
+                const reservation = finishReservationRef.current;
+                if (!reservation) return false;
+                const saved = await completeFinishTest(reservation, { ...sessionStats,
+                    total: finishAnswersRef.current.size,
+                    correct: [...finishAnswersRef.current.values()].filter(Boolean).length });
+                if (!saved) return false;
+                setFinishResult(saved.result);
+                updateProfile(saved.profile);
+                return true;
+            }
             const persistedProfile = await updateProfileAtomically(
                 profileId,
                 async latestProfile => (
@@ -809,5 +857,5 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
         }
     };
 
-    return { queue, initSession, nextBlock, handleResult, completeSession, loading, generationError, blockSize };
+    return { finishResumeIndex: finishLoadedKey === sessionKey ? finishResumeIndex : undefined, finishResult, queue, initSession, nextBlock, handleResult, completeSession, loading, generationError, blockSize };
 };

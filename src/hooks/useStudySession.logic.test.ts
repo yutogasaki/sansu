@@ -157,110 +157,16 @@ describe("useStudySession.logic", () => {
         expect(updated).toBeNull();
     });
 
-    it("resolveProfileProgressionAfterAttempt unlocks and promotes math levels", async () => {
-        const profile = createInitialProfile("T", 1, 1, 1, "mix");
-        profile.mathLevels = profile.mathLevels?.map(level =>
-            level.level === 3
-                ? { ...level, recentAnswersNonReview: [true, false] }
-                : level
-        );
-
-        const checkMathUnlock = vi.fn().mockResolvedValue(true);
-        const checkMathPromotion = vi.fn().mockResolvedValue(true);
-        const checkVocabPromotion = vi.fn();
-        const updated = await resolveProfileProgressionAfterAttempt({
-            currentProfile: profile,
-            subject: "math",
-            nowIso: "2026-03-17T00:00:00.000Z",
-            checkMathUnlock,
-            checkMathPromotion,
-            checkVocabUnlockReadiness: vi.fn(),
-            checkVocabPromotion,
-        });
-
-        expect(checkMathUnlock).toHaveBeenCalledWith(profile);
-        expect(checkMathPromotion).toHaveBeenCalledWith(expect.objectContaining({ mathMaxUnlocked: 3 }), 3);
-        expect(checkVocabPromotion).not.toHaveBeenCalled();
-        expect(updated.mathMaxUnlocked).toBe(3);
-        expect(updated.mathMainLevel).toBe(3);
-        expect(updated.mathMainLevelStartedAt).toBe("2026-03-17T00:00:00.000Z");
-        expect(updated.pendingLevelUpNotification).toEqual({
-            subject: "math",
-            newLevel: 3,
-            achievedAt: "2026-03-17T00:00:00.000Z",
-        });
-        expect(updated.mathLevels?.find(level => level.level === 3)).toEqual(expect.objectContaining({
-            unlocked: true,
-            enabled: true,
-            recentAnswersNonReview: [],
-        }));
-    });
-
-    it("resolveProfileProgressionAfterAttempt unlocks vocab without promotion when only readiness passes", async () => {
-        const profile = createInitialProfile("T", 1, 1, 1, "vocab");
-        const checkVocabUnlockReadiness = vi.fn().mockReturnValue(true);
-        const checkVocabPromotion = vi.fn().mockResolvedValue(false);
-
-        const updated = await resolveProfileProgressionAfterAttempt({
-            currentProfile: profile,
-            subject: "vocab",
-            nowIso: "2026-03-17T00:00:00.000Z",
-            checkMathUnlock: vi.fn(),
-            checkMathPromotion: vi.fn(),
-            checkVocabUnlockReadiness,
-            checkVocabPromotion,
-        });
-
-        expect(checkVocabUnlockReadiness).toHaveBeenCalledWith(profile);
-        expect(checkVocabPromotion).toHaveBeenCalledWith(expect.objectContaining({ vocabMaxUnlocked: 2 }));
-        expect(updated.vocabMaxUnlocked).toBe(2);
-        expect(updated.vocabMainLevel).toBe(1);
-        expect(updated.pendingLevelUpNotification).toBeUndefined();
-        expect(updated.vocabLevels?.find(level => level.level === 2)).toEqual(expect.objectContaining({
-            unlocked: true,
-            enabled: true,
-        }));
-    });
-
-    it("resolveProfileProgressionAfterAttempt promotes an already unlocked vocab level", async () => {
-        const profile = createInitialProfile("T", 1, 1, 1, "vocab");
-        profile.vocabMaxUnlocked = 2;
-        profile.vocabLevels = profile.vocabLevels?.map(level => {
-            if (level.level === 2) {
-                return {
-                    ...level,
-                    unlocked: true,
-                    enabled: true,
-                    recentAnswersNonReview: [true, false, true],
-                };
-            }
-            return level;
-        });
-
-        const checkVocabPromotion = vi.fn().mockResolvedValue(true);
-        const updated = await resolveProfileProgressionAfterAttempt({
-            currentProfile: profile,
-            subject: "vocab",
-            nowIso: "2026-03-17T00:00:00.000Z",
-            checkMathUnlock: vi.fn(),
-            checkMathPromotion: vi.fn(),
-            checkVocabUnlockReadiness: vi.fn(),
-            checkVocabPromotion,
-        });
-
-        expect(checkVocabPromotion).toHaveBeenCalledWith(profile);
-        expect(updated.vocabMainLevel).toBe(2);
-        expect(updated.vocabMainLevelStartedAt).toBe("2026-03-17T00:00:00.000Z");
-        expect(updated.pendingLevelUpNotification).toEqual({
-            subject: "vocab",
-            newLevel: 2,
-            achievedAt: "2026-03-17T00:00:00.000Z",
-        });
-        expect(updated.vocabLevels?.find(level => level.level === 2)).toEqual(expect.objectContaining({
-            unlocked: true,
-            enabled: true,
-            recentAnswersNonReview: [],
-        }));
+    it("ordinary practice never unlocks or promotes even with ready evidence", async () => {
+        for (const subject of ["math", "vocab"] as const) {
+            const profile = createInitialProfile("T", 1, 1, 1, subject);
+            const checks = { checkMathUnlock: vi.fn().mockResolvedValue(true), checkMathPromotion: vi.fn().mockResolvedValue(true),
+                checkVocabUnlockReadiness: vi.fn().mockReturnValue(true), checkVocabPromotion: vi.fn().mockResolvedValue(true) };
+            const updated = await resolveProfileProgressionAfterAttempt({ currentProfile: profile, subject,
+                nowIso: "2026-10-01T00:00:00Z", ...checks });
+            expect(updated).toBe(profile);
+            Object.values(checks).forEach(check => expect(check).not.toHaveBeenCalled());
+        }
     });
 
     it("resolveProfileProgressionAfterAttempt returns the same profile when no progression check passes", async () => {

@@ -81,7 +81,7 @@ export function useGrowingIsland(profileId: string, active: boolean) {
         const id = window.setInterval(() => { if (document.visibilityState === 'visible') void sync(false); }, 15_000);
         document.addEventListener('visibilitychange', visible);
         return () => { live = false; clearInterval(id); document.removeEventListener('visibilitychange', visible); };
-    }, [active, sync]);
+    }, [active, profileId, sync]);
 
     return { record: record?.profileId === profileId ? record : undefined, reveal, error, busy, dispatch, sync, step,
         clearError: () => setError(undefined) };

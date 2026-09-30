@@ -1,3 +1,7 @@
+import { finishEligibility } from '../../domain/finishTest';
+import { readMathLevel11Pilot } from '../../domain/learning/pilotRepository';
+import { db } from '../../db';
+import { useIslandNavigation } from '../island/useIslandNavigation';
 import { useEffect, useRef, useState } from 'react';
 import type { UserProfile } from '../../domain/types';
 import type { IslandPlan } from '../../domain/island/types';
@@ -8,7 +12,19 @@ import { getWordLevel } from '../../domain/english/words';
 import './LearningProgressCue.css';
 
 /** No DB reads or write on the answer path; only committed profile changes. */
-export function LearningProgressCue({ profile, plan, active }: { profile: UserProfile; plan: IslandPlan; active: boolean }) {
+export function LearningProgressCue({ profile, plan, active, busy = false }: { profile: UserProfile; plan: IslandPlan; active: boolean; busy?: boolean }) {
+    const navigation = useIslandNavigation();
+    const [coverage, setCoverage] = useState<{ owner: string; revision: UserProfile; ready: boolean }>();
+    useEffect(() => {
+        if (!active || plan.subject !== 'math' || profile.mathMainLevel !== 11) return;
+        let cancelled = false;
+        void readMathLevel11Pilot(db, profile.id).then(pilot => {
+            if (!cancelled) setCoverage({ owner: profile.id, revision: profile, ready: pilot.practice.coverageReady });
+        }).catch(() => { if (!cancelled) setCoverage(undefined); });
+        return () => { cancelled = true; };
+    }, [active, plan.subject, profile]);
+    const units = coverage?.owner === profile.id && coverage.revision === profile && coverage.ready ? [] : undefined;
+    const ready = finishEligibility(profile, plan.subject, units).status === 'ready';
     const previous = useRef({ profile, active });
     const [notice, setNotice] = useState<{ text: string; owner: string; subject: string }>();
     useEffect(() => {
@@ -35,6 +51,9 @@ export function LearningProgressCue({ profile, plan, active }: { profile: UserPr
     const status = slot.assisted ? 'ヒントと いっしょに れんしゅう中' : problem.isReview ? 'まえの はんいを ふくしゅう中' : level != null && level > main ? 'つぎの はんいを れんしゅう中' : 'ひとりで 解けるか たしかめ中';
     const message = notice?.owner === profile.id && active ? notice.text : undefined;
     return <div className="learning-progress-cue" data-learning-progress="true">
+        {ready && plan.cursor === 0 && <button type="button" className="learning-progress-finish-link" disabled={busy} onClick={() => {
+            if (navigation) navigation.open('/learn'); else window.location.hash = '/learn';
+        }}>しあげに ちょうせんできるよ！ <span aria-hidden="true">→</span></button>}
         <span className="learning-progress-cue-label" title={`${title} · ${status}`}>{title} · {status}</span>
         <span className="learning-progress-cue-notice" role="status" aria-live="polite">{message}</span>
     </div>;

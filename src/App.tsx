@@ -18,6 +18,7 @@ import { LaunchRoute } from "./components/LaunchRoute";
 import { islandAvailable, islandEnabled } from "./domain/island/feature";
 import { islandStudyDestination } from "./domain/island/studyRoute";
 
+const Learn = lazy(() => import('./pages/Learn'));
 const NatureTown = lazy(() => import('./pages/NatureTown'));
 const Island = lazy(() => import('./pages/Island'));
 const Explore = lazy(() => import('./pages/Explore').then(module => ({ default: module.Explore })));
@@ -240,6 +241,7 @@ function App() {
                             <PrivateRoute>{islandEnabled() ? null : <Suspense fallback={<Spinner fullScreen message="しまを じゅんびちゅう…" />}><Island /></Suspense>}</PrivateRoute>
                             : <Navigate to="/" replace />
                         } />
+                        <Route path="/learn" element={<PrivateRoute><Suspense fallback={<Spinner fullScreen message="まなぶ じゅんびを しているよ…" />}><Learn /></Suspense></PrivateRoute>} />
                         <Route path="/study" element={
                             <PrivateRoute>
                                 <StudyRoute />

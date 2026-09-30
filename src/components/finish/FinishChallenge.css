@@ -1,0 +1,38 @@
+.finish-page { width: 100%; height: 100%; overflow-y: auto; overscroll-behavior-y: contain; padding: max(24px, env(safe-area-inset-top)) 16px 32px; color: var(--pokomoko-ink); background: var(--pokomoko-canvas); }
+.finish-page > * { max-width: 488px; margin-inline: auto; }
+.finish-page > h1 { font-size: 26px; font-weight: 900; margin-bottom: 20px; }
+.finish-card { background: var(--pokomoko-paper); border: 1px solid var(--pokomoko-edge); border-radius: 26px; padding: 24px 20px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 4px 0 var(--pokomoko-edge); }
+.finish-card + .finish-card { margin-top: 20px; }
+.finish-card-heading { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 800; }
+.finish-card h1, .finish-card h2 { font-size: clamp(21px, 5.7vw, 27px); line-height: 1.5; font-weight: 900; text-wrap: balance; }
+.finish-description { color: var(--pokomoko-muted); font-size: 14px; line-height: 1.8; white-space: pre-line; }
+.finish-path { display: grid; grid-template-columns: minmax(0, 1fr) 26px minmax(0, 1fr); gap: 12px; align-items: start; padding: 22px 12px; border: 1px solid var(--pokomoko-edge); border-radius: 24px 18px 24px 18px; background: linear-gradient(115deg, var(--pokomoko-mint), var(--pokomoko-paper) 52%, var(--pokomoko-rose)); }
+.finish-milestone { display: flex; align-items: center; flex-direction: column; gap: 10px; text-align: center; }
+.finish-milestone-label { font-size: 12px; font-weight: 800; }
+.finish-stamp { position: relative; width: 76px; height: 76px; border-radius: 45% 48% 42% 46%; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 3px 0 var(--pokomoko-edge); }
+.finish-stamp::after { content: ''; position: absolute; inset: 5px; border: 1px dashed currentColor; border-radius: inherit; opacity: .65; pointer-events: none; }
+.finish-stamp > span { font-size: 12px; font-weight: 700; }
+.finish-stamp strong { font-size: 36px; font-weight: 900; line-height: 1; }
+.finish-stamp--current { background: var(--pokomoko-blue); color: white; }
+.finish-stamp--next { background: var(--pokomoko-paper); border: 1px solid var(--pokomoko-stitch); color: var(--pokomoko-muted); }
+.finish-path--cleared .finish-stamp--next { background: var(--pokomoko-mint); color: var(--pokomoko-ink); }
+.finish-companion { position: absolute; width: 48px; height: 54px; left: -24px; bottom: 0; background-size: 800% 100%; background-position: left top; background-repeat: no-repeat; z-index: 1; }
+.finish-level-title { font-size: 14px; font-weight: 800; line-height: 1.5; text-wrap: balance; }
+.finish-path-arrow { align-self: start; margin-top: 58px; color: var(--pokomoko-muted); stroke-dasharray: 2 4; }
+.finish-rule { font-size: 12px; color: var(--pokomoko-muted); text-align: center; }
+.finish-primary.app-button { background: var(--pokomoko-blue); gap: 10px; min-height: 52px; height: auto; box-shadow: 0 3px 0 var(--pokomoko-blue-deep); }
+.finish-practice { margin-top: 24px; text-align: center; }
+.finish-practice p { margin-top: 10px; color: var(--pokomoko-muted); font-size: 12px; }
+.finish-result { padding-top: 32px; }
+.finish-result .finish-card { text-align: center; }
+.finish-result-icon { margin: auto; background: var(--pokomoko-lavender); border-radius: 45% 55% 48% 52%; padding: 12px; }
+.finish-eyebrow { color: var(--pokomoko-muted); font-size: 12px; font-weight: 800; }
+.finish-score { display: flex; flex-direction: column; gap: 4px; border-radius: 16px; padding: 16px; background: var(--pokomoko-mint); }
+.finish-score strong { font-size: 32px; line-height: 1.2; }
+.finish-score strong span { font-size: 16px; }
+.finish-score > span { font-size: 12px; font-weight: 700; }
+.finish-clear-mark { position: absolute; bottom: -7px; right: -5px; border-radius: 50%; padding: 3px; background: var(--pokomoko-paper); color: var(--pokomoko-ink); z-index: 1; }
+[data-finish-state=cleared] .finish-stamp--next { animation: finish-open 480ms ease-out both; }
+@keyframes finish-open { from { transform: scale(.88); } to { transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) { [data-finish-state=cleared] .finish-stamp--next { animation: none; } }
+@media (max-width: 360px) { .finish-card { padding: 20px 14px; } .finish-path { gap: 7px; padding-inline: 6px; } .finish-stamp { width: 68px; height: 68px; } }

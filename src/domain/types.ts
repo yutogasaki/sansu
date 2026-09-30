@@ -412,6 +412,9 @@ export interface PeriodicTestResult {
     level: number;
     mode: 'auto' | 'manual';
     method: 'online' | 'paper';
+    kind?: 'finish';
+    passed?: boolean;
+    newLevel?: number;
     correctCount: number;
     totalQuestions: number; // 20
     score: number; // 0-100
@@ -504,6 +507,7 @@ export interface UserProfile {
     testHistory?: PeriodicTestResult[];
     periodicTestState?: PeriodicTestState;
     periodicTestSets?: Partial<Record<SubjectKey, PeriodicTestSet>>;
+    finishTestSets?: Partial<Record<SubjectKey, PeriodicTestSet & { id: string; profileId: string; targetLevel: number; answers?: Record<string, boolean> }>>;
     periodicTestTimeLimitSeconds?: number; // undefined means no limit
 
     // Streak / Daily

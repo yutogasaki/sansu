@@ -37,7 +37,7 @@ export interface SessionHistoryItem {
     countsTowardReviewCap?: boolean;
 }
 
-export type SessionKind = "normal" | "review" | "weak" | "check-normal" | "check-event" | "weak-review" | "periodic-test" | "dev";
+export type SessionKind = "normal" | "review" | "weak" | "check-normal" | "check-event" | "weak-review" | "periodic-test" | "finish-test" | "dev";
 
 export interface ProblemGenerationResult {
     problem: Omit<Problem, 'id' | 'subject' | 'isReview'>;

@@ -1,3 +1,4 @@
+import { FinishChallengeResult, type FinishPayoff } from '../components/finish/FinishChallenge';
 import { allowsDecimalEntry } from '../domain/math/numberEntry';
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -27,7 +28,7 @@ import { HissanGrid } from "../components/domain/HissanGrid";
 import { HissanGridData } from "../domain/math/hissanTypes";
 import { cn } from "../utils/cn";
 
-type SessionKind = "normal" | "review" | "weak" | "check-normal" | "check-event" | "weak-review" | "periodic-test" | "dev";
+type SessionKind = "normal" | "review" | "weak" | "check-normal" | "check-event" | "weak-review" | "periodic-test" | "finish-test" | "dev";
 
 interface StudyLayoutProps {
     replaceFieldIndex?: number;
@@ -50,6 +51,8 @@ interface StudyLayoutProps {
     // Session info for result display
     sessionKind?: SessionKind;
     correctCount?: number;
+    finishResult?: FinishPayoff;
+    finishOwnerId?: string;
     sessionResult?: { correct: number; total: number; durationSeconds: number };
     testTimeLimitSeconds?: number;
     testRemainingSeconds?: number;
@@ -135,6 +138,8 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
     sessionKind = "normal",
     correctCount = 0,
     sessionResult,
+    finishResult,
+    finishOwnerId,
     testTimeLimitSeconds,
     testRemainingSeconds,
     currentIndex,
@@ -310,6 +315,9 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
     }
 
     if (isFinished) {
+        if (sessionKind === "finish-test" && finishResult) {
+            return <FinishChallengeResult result={finishResult} onNavigate={onNavigate} ownerId={finishOwnerId} />;
+        }
         if (sessionKind === "periodic-test" && sessionResult) {
             const score = sessionResult.total > 0
                 ? Math.round((sessionResult.correct / sessionResult.total) * 100)
@@ -527,7 +535,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                             <span className="text-5xl">🌱</span>
                         </div>
                         <h2 className="mb-2 text-3xl font-black tracking-[-0.02em] text-slate-800">{t("とばして だいじょうぶ", "スキップOK")}</h2>
-                        <p className="mb-6 text-sm font-medium text-slate-500">{t("また でてくるよ", "また出題されます")}</p>
+                        <p className="mb-6 text-sm font-medium text-slate-500">{sessionKind === 'finish-test' ? t("つぎの もんだいへ すすもう", "次の問題へ進もう") : t("また でてくるよ", "また出題されます")}</p>
 
                         {/* Question Display */}
                         <div className="mb-5 flex w-full max-w-sm justify-center rounded-[24px] border border-white/80 bg-white/50 p-4 shadow-[0_20px_34px_-26px_rgba(15,23,42,0.34)] backdrop-blur-md">
@@ -556,12 +564,12 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
             {/* Header: モバイルでは非表示 */}
             <div id="debug-header" className="flex-none mobile:hidden">
                 <Header
-                    title={currentProblem.subject === 'math' ? t('さんすう', '算数') : t('えいご', '英語')}
+                    title={sessionKind === 'finish-test' ? 'しあげ' : currentProblem.subject === 'math' ? t('さんすう', '算数') : t('えいご', '英語')}
                     onBack={() => onNavigate("/")}
                     center={
                         <div className="flex items-center gap-3">
                             <span className="app-pill px-3 py-1 text-sm font-black text-slate-500">
-                                {currentIndex + 1} 問目
+                                {sessionKind === 'finish-test' ? `しあげ ${currentIndex + 1} / ${blockSize}もん` : `${currentIndex + 1} 問目`}
                             </span>
                             {showTestTimer && (
                                 <span className={timerBadgeClass}>
@@ -585,7 +593,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                 )}
                 <div className="flex items-center gap-2">
                     <span className="app-pill px-2.5 py-0.5 text-[11px] font-black text-slate-500">
-                        {currentIndex + 1} 問目
+                        {sessionKind === 'finish-test' ? `しあげ ${currentIndex + 1} / ${blockSize}もん` : `${currentIndex + 1} 問目`}
                     </span>
                     {showTestTimer && (
                         <span className={mobileTimerBadgeClass}>

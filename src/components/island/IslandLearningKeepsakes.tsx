@@ -16,6 +16,8 @@ export interface IslandLearningKeepsakesProps {
     active?: boolean;
     walkingAvailable?: boolean;
     challenge?: ReactNode;
+    /** Redecorating the room with learned words (growing island only). */
+    decor?: ReactNode;
     section?: IslandHouseSection;
     onSectionChange?: (section: IslandHouseSection) => void;
     island: IslandRecord;
@@ -41,7 +43,7 @@ function displayAction(keepsakeId: IslandLearningKeepsakeId, displayed: boolean)
 /** The page supplies the actual house. Reading an award never places one;
  * only the explicit display controls save the person's display selection. */
 export function IslandLearningKeepsakes({ island, controls, disabled, onClose, onLearn, onPhoto, onSelect, onShowRoom, comparisonDisabled = disabled,
-    onPhotos, onAlbum, onShared, onRewards, section, onSectionChange, challenge, walkingAvailable = true, active = true }: IslandLearningKeepsakesProps) {
+    onPhotos, onAlbum, onShared, onRewards, section, onSectionChange, challenge, decor, walkingAvailable = true, active = true }: IslandLearningKeepsakesProps) {
     const [localSection, setLocalSection] = useState<IslandHouseSection>('home');
     const currentSection = section ?? localSection;
     const panelRef = useRef<HTMLElement>(null);
@@ -112,6 +114,7 @@ export function IslandLearningKeepsakes({ island, controls, disabled, onClose, o
                 <button className="island-secondary" data-keepsake-action="notices" disabled={disabled} onClick={() => choose(() => changeSection('notices'))}>
                     <IslandToyIcon kind="gift" /><strong>おしらせ</strong><small>{island.pendingRewards.length > 0 ? `おくりもの ${island.pendingRewards.length}こ` : 'けいじばんを みる'}</small></button>
             </nav>
+            {decor}
             {challenge}
             <footer className="island-panel-footer">
                 {onPhoto && <button className="island-secondary" disabled={disabled} onClick={() => choose(onPhoto)}><Camera size={18} aria-hidden="true" />しゃしんに のこす</button>}

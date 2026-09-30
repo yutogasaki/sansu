@@ -63,6 +63,7 @@ const StudyContent: React.FC = () => {
     const focusSubject = searchParams.get("focus_subject") as "math" | "vocab" | null;
     const focusIdsParam = searchParams.get("focus_ids");
     const backTo = searchParams.get("back_to");
+    const finishRetry = searchParams.get("retry") || "";
     const forceReview = searchParams.get("force_review") === "1";
     const sessionKindParam = searchParams.get("session") as
         | "normal"
@@ -72,6 +73,7 @@ const StudyContent: React.FC = () => {
         | "check-event"
         | "weak-review"
         | "periodic-test"
+        | "finish-test"
         | "dev"
         | null;
     const isDevSession = sessionKindParam === "dev";
@@ -91,11 +93,12 @@ const StudyContent: React.FC = () => {
             focusIdsParam || "",
             forceReview ? "1" : "0",
             benchmarkId || "",
+            finishRetry,
         ].join("|"),
-        [benchmarkId, devSkill, focusIdsParam, focusSubject, forceReview, sessionKindParam]
+        [benchmarkId, devSkill, focusIdsParam, focusSubject, forceReview, sessionKindParam, finishRetry]
     );
 
-    const { queue, initSession, nextBlock, handleResult, completeSession, loading, generationError, blockSize } = useStudySession({
+    const { queue, initSession, nextBlock, handleResult, completeSession, finishResult, finishResumeIndex, loading, generationError, blockSize } = useStudySession({
         devSkill,
         focusSubject: focusSubject || undefined,
         focusIds,
@@ -107,6 +110,16 @@ const StudyContent: React.FC = () => {
 
     // State
     const [currentIndex, setCurrentIndex] = useState(0);                    // 0-4
+    const finishLoadedKeyRef = React.useRef<string | undefined>(undefined);
+    const finishHydratedKeyRef = React.useRef<string | undefined>(undefined);
+    useLayoutEffect(() => {
+        if (sessionKindParam !== 'finish-test') return;
+        if (loading) { finishLoadedKeyRef.current = sessionResetKey; return; }
+        if (!queue.length || finishLoadedKeyRef.current !== sessionResetKey
+            || finishHydratedKeyRef.current === sessionResetKey || finishResumeIndex === undefined) return;
+        finishHydratedKeyRef.current = sessionResetKey;
+        setCurrentIndex(finishResumeIndex);
+    }, [sessionKindParam, loading, queue.length, sessionResetKey, finishResumeIndex]);
     const [userInput, setUserInput] = useState("");                         // Single input
     const numberDraft = React.useRef(userInput);
     useLayoutEffect(() => { numberDraft.current = userInput; }, [userInput]);
@@ -350,7 +363,7 @@ const StudyContent: React.FC = () => {
             }
 
             setFixedSessionCompletion({ status: "saved", stats });
-            if (sessionKindParam === "periodic-test") {
+            if (sessionKindParam === "periodic-test" || sessionKindParam === "finish-test") {
                 setSessionResult({
                     correct: stats.correct,
                     total: stats.total,
@@ -935,6 +948,8 @@ const StudyContent: React.FC = () => {
                 sessionKind={sessionKindParam || "normal"}
                 correctCount={correctCount}
                 sessionResult={sessionResult || undefined}
+                finishResult={finishResult ?? undefined}
+                finishOwnerId={listeningProfile?.id}
                 testTimeLimitSeconds={testTimeLimitSeconds}
                 testRemainingSeconds={testRemainingSeconds}
                 onNavigate={handleNavigate}

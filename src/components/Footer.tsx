@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useRef, useState } from "react";
+import { readReadyFinishChallenges } from "../hooks/useFinishChallenge";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Icons } from "./icons";
 import { warmUpTTS } from "../utils/tts";
@@ -23,6 +24,24 @@ export const Footer: React.FC = () => {
     const islandHome = islandEnabled();
     const navigation = useIslandNavigation();
     const seeds = useWaitingSeeds();
+    const [checkingFinish, setCheckingFinish] = useState(false);
+    const locationRef = useRef(location.key);
+    locationRef.current = location.key;
+    const startLearning = async () => {
+        if (checkingFinish) return;
+        const entryKey = locationRef.current;
+        warmUpTTS();
+        setCheckingFinish(true);
+        try {
+            const challenges = await readReadyFinishChallenges();
+            if (locationRef.current !== entryKey) return;
+            if (challenges.length > 0) navigate('/learn');
+            else if (navigation) navigation.startLearning();
+            else navigate('/study');
+        } catch {
+            if (locationRef.current === entryKey) navigate('/learn');
+        } finally { setCheckingFinish(false); }
+    };
 
     if (islandHome) {
         const tabs: TabItem[] = [
@@ -36,7 +55,8 @@ export const Footer: React.FC = () => {
         return (
             <nav className="island-shell-nav" aria-label="メインメニュー">
                 {tabs.map(item => {
-                    const active = navigation ? item.tab === navigation.tab : currentPath === item.to;
+                    const active = item.to === "/study" && currentPath === "/learn"
+                        ? true : currentPath === "/learn" ? false : navigation ? item.tab === navigation.tab : currentPath === item.to;
                     const primary = item.to === "/study";
                     const waiting = primary && growingIslandEnabled() && seeds > 0 ? seeds : 0;
                     return (
@@ -46,12 +66,12 @@ export const Footer: React.FC = () => {
                             className={`island-shell-tab${primary ? " island-shell-tab--learn island-start" : ""}`}
                             aria-label={waiting ? `${item.label}（たねが ${waiting}こ まってるよ）` : item.label}
                             aria-current={active ? "page" : undefined}
-                            disabled={navigation?.blocked || (primary && navigation?.learningBlocked)}
+                            disabled={navigation?.blocked || (primary && (navigation?.learningBlocked || checkingFinish))}
                             onClick={() => {
                                 if (navigation) {
-                                    if (primary) navigation.startLearning();
+                                    if (primary) void startLearning();
                                     else if (item.tab) navigation.selectTab(item.tab);
-                                } else { if (primary) warmUpTTS(); navigate(item.to); }
+                                } else { if (primary) void startLearning(); else navigate(item.to); }
                             }}
                         >
                             <item.icon width={24} height={24} strokeWidth={active ? 2.5 : 2} aria-hidden="true" />
@@ -116,9 +136,9 @@ export const Footer: React.FC = () => {
                 className="fab"
                 type="button"
                 aria-label="まなぶ"
+                disabled={checkingFinish}
                 onClick={() => {
-                    warmUpTTS();
-                    navigate("/study");
+                    void startLearning();
                 }}
             >
                 <Icons.Study

@@ -4,6 +4,16 @@ import { ISLAND_LEARNING_KEEPSAKES, isIslandLearningKeepsakeAvailable,
     type IslandLearningKeepsakeId, type IslandLearningKeepsakesState } from '../../../domain/island/learningKeepsakes';
 import { roundedBoxGeometry } from './geometry';
 import { cylinder, ellipsoid, mesh, star } from './primitives';
+import { RUG_COLORS, type LearnedWord, type RoomDecor } from '../../../domain/growingIsland/room';
+import { paintWall, spotAt, wallOf, type WallSpot } from './roomWallpaper';
+
+/** Pokomoko's room redecorated with learned words (spec 52 §13.1). */
+export interface IslandRoomDecor extends RoomDecor { words: readonly LearnedWord[] }
+const WALLS = [
+    { name: 'room-wallpaper-back', size: [6.8, 4.1], position: [0, 2.05, -.278], turn: 0 },
+    { name: 'room-wallpaper-left', size: [5.3, 4.1], position: [-3.302, 2.05, 2.2], turn: Math.PI / 2 },
+    { name: 'room-wallpaper-right', size: [5.3, 4.1], position: [3.302, 2.05, 2.2], turn: -Math.PI / 2 },
+] as const;
 
 export type IslandChallengeDisplayId = 'certificate' | 'trophy';
 
@@ -16,7 +26,7 @@ export interface IslandKeepsakeFrameView {
     selectedId: IslandLearningKeepsakeId | null;
 }
 
-export type IslandHomeHit = { type: 'keepsake'; id: IslandLearningKeepsakeId } | { type: 'album' } | { type: 'notices' };
+export type IslandHomeHit = { type: 'keepsake'; id: IslandLearningKeepsakeId } | { type: 'album' } | { type: 'notices' } | { type: 'word'; word: string };
 
 /** A closed, static interior for the same island renderer. It never owns or hides the
  * island, changes learning state, or exhibits an unavailable award. Leaving the
@@ -31,6 +41,9 @@ export class IslandLearningKeepsakeScenery {
     private disposed = false;
     private selectedId: IslandLearningKeepsakeId | null = null;
     private selection: IslandLearningKeepsakeId[] = [];
+    private decor?: IslandRoomDecor;
+    private decorKey = '';
+    private wallpaper: { mesh: THREE.Mesh; spots: WallSpot[]; aspect: number; texture: THREE.CanvasTexture }[] = [];
 
     constructor() { this.group.name = ISLAND_KEEPSAKE_SCENERY_CANDIDATE; this.group.visible = false; }
     private material(color: string, metalness = 0) {
@@ -202,6 +215,44 @@ export class IslandLearningKeepsakeScenery {
         this.group.traverse(object => {
             if (object instanceof THREE.Mesh) { object.castShadow = false; object.receiveShadow = false; }
         });
+        this.decorKey = ''; this.applyDecor();
+    }
+
+    /** Wallpaper from learned words and the chosen shape; the rug takes the chosen colour. */
+    setDecor(decor?: IslandRoomDecor) { this.decor = decor; if (this.built) return this.applyDecor(); return false; }
+    private applyDecor() {
+        const decor = this.decor;
+        const key = decor ? JSON.stringify([decor.pattern, decor.rug, decor.hidden ?? [], decor.words.length, decor.words[decor.words.length - 1]?.id]) : '';
+        if (key === this.decorKey) return false;
+        this.decorKey = key;
+        for (const paper of this.wallpaper) { paper.mesh.removeFromParent(); paper.mesh.geometry.dispose(); (paper.mesh.material as THREE.Material).dispose(); paper.texture.dispose(); }
+        this.wallpaper = [];
+        const rug = this.group.getObjectByName('home-rug') as THREE.Mesh | undefined;
+        if (!decor) return true;
+        if (rug) rug.material = this.material(RUG_COLORS[decor.rug] ?? RUG_COLORS[0]);
+        const shown = decor.words.filter(word => !decor.hidden?.includes(word.group));
+        WALLS.forEach((wall, index) => {
+            const aspect = wall.size[0] / wall.size[1];
+            const paint = paintWall(shown.filter(word => wallOf(word.id) === index), decor.pattern, aspect, index + 1);
+            const paper = new THREE.Mesh(new THREE.PlaneGeometry(wall.size[0], wall.size[1]), new THREE.MeshStandardMaterial({ map: paint.texture, roughness: .9 }));
+            paper.name = wall.name; paper.position.set(wall.position[0], wall.position[1], wall.position[2]); paper.rotation.y = wall.turn;
+            this.group.add(paper);
+            this.wallpaper.push({ mesh: paper, spots: paint.spots, aspect, texture: paint.texture });
+        });
+        return true;
+    }
+    /** The learned word under a tap on the wallpaper, read aloud by the caller. */
+    wordAt(ray: THREE.Ray) {
+        if (!this.group.visible || !this.wallpaper.length) return undefined;
+        this.group.updateWorldMatrix(true, true);
+        const raycaster = new THREE.Raycaster(); raycaster.ray.copy(ray);
+        const hit = raycaster.intersectObject(this.group, true).find(candidate => {
+            for (let object: THREE.Object3D | null = candidate.object; object; object = object.parent) if (!object.visible) return false;
+            return true;
+        });
+        const paper = hit && this.wallpaper.find(entry => entry.mesh === hit.object);
+        if (!paper || !hit.uv) return undefined;
+        return spotAt(paper.spots, hit.uv.x, hit.uv.y, paper.aspect);
     }
 
     update(state?: IslandLearningKeepsakesState, completedSets = 0, active = false, selectedId?: IslandLearningKeepsakeId, challengeDisplayed: readonly IslandChallengeDisplayId[] = []) {
@@ -285,6 +336,7 @@ export class IslandLearningKeepsakeScenery {
         geometries.forEach(geometry => geometry.dispose()); this.materials.forEach(material => material.dispose());
         this.group.clear(); this.awards.clear(); this.challengeAwards.clear(); this.challengeSelection = []; this.materials.clear(); this.built = false;
         this.selection = []; this.selectedId = null;
+        this.wallpaper.forEach(paper => paper.texture.dispose()); this.wallpaper = []; this.decorKey = '';
     }
     dispose() {
         if (this.disposed) return;

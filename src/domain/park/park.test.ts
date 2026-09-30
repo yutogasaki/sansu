@@ -172,7 +172,7 @@ describe('reserved learning and atomic rewards', () => {
         await expect(d.exploreRuns.get('legacy')).resolves.toEqual(run);
         expect(await d.parks.count()).toBe(0);
     });
-    it('uses existing vocabulary progression only after independent answers', async () => {
+    it('accumulates independent vocabulary readiness without automatically advancing', async () => {
         const d = await setup();
         const app = (await d.appData.get('app'))!;
         const p = { ...app.profiles.child, subjectMode: 'vocab' as const,
@@ -185,7 +185,8 @@ describe('reserved learning and atomic rewards', () => {
         expect((await d.profiles.get('child'))?.vocabMaxUnlocked).toBe(1);
         expect(await d.logs.count()).toBe(0);
         await commitParkLearning('child', plan.id, plan.revision, correctAction(plan), d);
-        expect((await d.profiles.get('child'))?.vocabMaxUnlocked).toBe(2);
+        expect((await d.profiles.get('child'))?.vocabMaxUnlocked).toBe(1);
+        expect((await d.profiles.get('child'))?.vocabLevels?.[0].recentIndependentAnswersNonReview).toHaveLength(20);
         expect((await d.profiles.get('child'))?.vocabMainLevel).toBe(1);
     });
 });

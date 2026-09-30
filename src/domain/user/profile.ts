@@ -2,10 +2,10 @@ import { LevelState, UserProfile } from "../types";
 import { v4 as uuidv4 } from "uuid";
 import { MAX_MATH_LEVEL, MAX_VOCAB_LEVEL } from "../math/curriculum";
 
-const createLevelStates = (maxLevel: number, unlockedUpTo: number, mainLevel: number): LevelState[] => {
+const createLevelStates = (maxLevel: number, unlockedUpTo: number, mainLevel: number, minLevel = 1): LevelState[] => {
     const now = new Date().toISOString();
     const states: LevelState[] = [];
-    for (let level = 1; level <= maxLevel; level += 1) {
+    for (let level = minLevel; level <= maxLevel; level += 1) {
         const unlocked = level <= unlockedUpTo;
         states.push({
             level,
@@ -145,7 +145,7 @@ export const createInitialProfile = (
         vocabMaxUnlocked: vocabStartLevel,
         vocabMainLevelStartedAt: now,
 
-        mathLevels: createLevelStates(MAX_MATH_LEVEL, mathMaxUnlocked, mathMainLevel),
+        mathLevels: createLevelStates(MAX_MATH_LEVEL, mathMaxUnlocked, mathMainLevel, 0),
         vocabLevels: createLevelStates(MAX_VOCAB_LEVEL, vocabStartLevel, vocabStartLevel),
 
         mathSkills: {}, // Will be populated as we go? Or pre-fill? 

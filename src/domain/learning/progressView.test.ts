@@ -1,12 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { createInitialProfile } from '../user/profile';
 import { learningProgressNotice, learningProgressView } from './progressView';
-import { hasMathPromotionEvidence } from '../levelProgression';
-import { generateMathProblem } from '../math';
-import { learningEvidenceForProblem } from './attemptContext';
-import { getWordsByLevel } from '../english/words';
-import type { AttemptLog } from '../../db';
-import type { MemoryState } from '../types';
 
 const profile = () => createInitialProfile('はる', 2, 7, 1, 'mix');
 const promotionProfile = () => {
@@ -27,38 +21,35 @@ describe('honest learning progress presentation', () => {
     it('keeps quantity and accuracy separate and includes the Lv11 gate', () => {
         const p = profile(); p.mathMainLevel = 11; p.mathMaxUnlocked = 11;
         p.mathLevels!.find(l => l.level === 11)!.recentIndependentAnswersNonReview = Array(20).fill(true);
-        expect(learningProgressView(p, 'math', [], [], 2).conditions.map(c => c.met)).toEqual([true, true, false]);
+        expect(learningProgressView(p, 'math', 2).conditions.map(c => c.met)).toEqual([true, true, false]);
     });
-    it('agrees with the actual math promotion evidence across supported, skipped and review answers', () => {
+    it('uses current range readiness even when a legacy next range is open', () => {
         const p = promotionProfile();
-        const problem = { ...generateMathProblem('add_1d_2'), id: 'q', subject: 'math' as const, isReview: false };
-        const logs: AttemptLog[] = Array.from({ length: 30 }, (_, index) => ({ profileId: p.id, subject: 'math', itemId: 'add_1d_2', result: 'correct',
-            isReview: false, timestamp: new Date(100000 + index).toISOString(), learningEvidence: learningEvidenceForProblem(problem, 'independent') }));
-        for (const count of [0, 19, 29, 30]) {
-            const subset = logs.slice(0, count);
-            expect(learningProgressView(p, 'math', subset).conditions.every(c => c.met)).toBe(hasMathPromotionEvidence(subset));
-        }
-        const supported = logs.map(log => ({ ...log, learningEvidence: learningEvidenceForProblem(problem, 'assisted') }));
-        expect(learningProgressView(p, 'math', supported).conditions[1].met).toBe(false);
-        const skipped = logs.map(log => ({ ...log, skipped: true }));
-        expect(learningProgressView(p, 'math', skipped).conditions[0].met).toBe(false);
-        expect(learningProgressView(p, 'math', logs.map(log => ({ ...log, isReview: true }))).conditions[0].count).toBe(0);
-        expect(learningProgressView(p, 'math', logs.map(log => ({ ...log, profileId: 'other' }))).conditions[0].count).toBe(0);
+        p.mathLevels!.find(l => l.level === 8)!.recentIndependentAnswersNonReview = [...Array(17).fill(true), ...Array(3).fill(false)];
+        expect(learningProgressView(p, 'math')).toMatchObject({ stage: 'ready', main: 8, next: 9 });
+        p.mathLevels!.find(l => l.level === 8)!.recentIndependentAnswersNonReview = [...Array(16).fill(true), ...Array(4).fill(false)];
+        expect(learningProgressView(p, 'math').stage).toBe('unlock');
     });
-    it('counts distinct independently recalled words, not raw correct answers', () => {
-        const p = profile(); p.vocabMaxUnlocked = 2;
-        p.vocabLevels = p.vocabLevels?.map(l => l.level === 2 ? { ...l, unlocked: true, enabled: true } : l);
-        const words = getWordsByLevel(2);
-        const memory = words.map(w => ({ id: w.id, correctAnswers: 50 } as MemoryState));
-        expect(learningProgressView(p, 'vocab', [], memory).conditions[0].count).toBe(0);
-        const target = Math.ceil(words.length * .7);
-        expect(learningProgressView(p, 'vocab', [], memory.slice(0, target).map(m => ({ ...m, independentCorrectAnswers: 1 }))).conditions[0].met).toBe(true);
+    it('does not substitute word memory counts for the current independent answer window', () => {
+        const p = profile();
+        expect(learningProgressView(p, 'vocab').conditions[0].count).toBe(0);
+        p.vocabLevels!.find(l => l.level === 1)!.recentIndependentAnswersNonReview = Array(20).fill(true);
+        expect(learningProgressView(p, 'vocab').stage).toBe('ready');
     });
     it('handles parent-disabled next range and the real last math level', () => {
         const p = promotionProfile(); p.mathLevels!.find(l => l.level === 9)!.enabled = false;
         expect(learningProgressView(p, 'math').stage).toBe('paused');
         p.mathMainLevel = 28; p.mathMaxUnlocked = 28;
         expect(learningProgressView(p, 'math')).toMatchObject({ stage: 'complete', next: null, conditions: [] });
+    });
+    it('announces readiness only on a newly saved answer', () => {
+        const p = profile();
+        const after = structuredClone(p);
+        after.mathLevels!.find(l => l.level === 8)!.recentIndependentAnswersNonReview = Array(20).fill(true);
+        expect(learningProgressNotice(p, after, 'math')).toBeNull();
+        after.recentAttempts = [{ id: 'ready', timestamp: new Date().toISOString(), subject: 'math', skillId: 'add_1d_1', result: 'correct' }];
+        expect(learningProgressNotice(p, after, 'math')).toContain('しあげ');
+        expect(learningProgressNotice(after, after, 'math')).toBeNull();
     });
     it('announces only a newly saved learning transition in the same profile and subject', () => {
         const p = profile(); const next = { ...p, mathMaxUnlocked: 9 };

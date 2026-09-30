@@ -96,7 +96,7 @@ describe("learning progression from real generated questions", () => {
         expect(next.every(item => !item.isReview && !item.countsTowardReviewCap)).toBe(true);
     });
 
-    it("enables only the newly unlocked vocab level in the atomic merge", async () => {
+    it("preserves locked and disabled vocab levels while practice becomes ready", async () => {
         const profile = createInitialProfile("T", 1, 1, 2, "vocab");
         profile.vocabLevels = profile.vocabLevels?.map(level => ({ ...level,
             enabled: level.level === 1 ? false : level.enabled,
@@ -106,15 +106,18 @@ describe("learning progression from real generated questions", () => {
         const merged = applyResolvedProgressionToLatestProfile({
             baseProfile: profile, resolvedProfile: resolved, latestProfile: profile, subject: "vocab",
         });
-        expect(merged.vocabLevels?.find(level => level.level === 3)).toMatchObject({ unlocked: true, enabled: true });
+        expect(merged.vocabLevels?.find(level => level.level === 3)).toMatchObject({ unlocked: false, enabled: false });
+        expect(checkVocabUnlockReadiness(merged)).toBe(true);
         expect(merged.vocabLevels?.find(level => level.level === 1)?.enabled).toBe(false);
     });
 
-    it("reaches 70% promotion through generated normal blocks and persisted answers", async () => {
+    it("preserves legacy next range practice evidence without auto promotion", async () => {
         vi.spyOn(Math, "random").mockReturnValue(0);
         let profile = createInitialProfile("T", 1, 1, 1, "vocab");
         profile.vocabLevels = profile.vocabLevels?.map(level => level.level === 1
             ? { ...level, recentIndependentAnswersNonReview: Array(20).fill(true) } : level);
+        profile.vocabMaxUnlocked = 2;
+        profile.vocabLevels = profile.vocabLevels?.map(level => level.level === 2 ? { ...level, unlocked: true, enabled: true } : level);
         profile = await resolveVocabProgression(profile);
         expect(profile.vocabLevels?.find(level => level.level === 2)?.enabled).toBe(true);
         await saveProfile(profile);
@@ -133,12 +136,13 @@ describe("learning progression from real generated questions", () => {
                 profile = await resolveVocabProgression(hydrated!);
                 await saveProfile(profile);
                 const reached = [...targetIds].filter(id => (profile.vocabWords[id]?.independentCorrectAnswers ?? 0) > 0).length;
-                expect(profile.vocabMainLevel).toBe(reached >= threshold ? 2 : 1);
-                if (profile.vocabMainLevel === 2) break;
+                expect(profile.vocabMainLevel).toBe(1);
+                if (reached >= threshold) expect(await checkVocabMainPromotion(profile)).toBe(true);
             }
         }
-        expect(profile.vocabMainLevel).toBe(2);
-        expect(profile.pendingLevelUpNotification?.newLevel).toBe(2);
+        expect(profile.vocabMainLevel).toBe(1);
+        expect(profile.pendingLevelUpNotification).toBeUndefined();
+        expect([...targetIds].filter(id => (profile.vocabWords[id]?.independentCorrectAnswers ?? 0) > 0).length).toBeGreaterThanOrEqual(threshold);
     }, 15000);
 
     it('keeps unknown vocabulary answers out of the independent unlock window', async () => {
@@ -157,7 +161,7 @@ describe("learning progression from real generated questions", () => {
         expect((await resolveVocabProgression(hydrated)).vocabMaxUnlocked).toBe(1);
     });
 
-    it("holds the old math test range when the persisted 30th answer promotes the main level", async () => {
+    it("keeps the current math range after the 30th practice answer and reserves its confirmation test", async () => {
         const profile = createInitialProfile("T", 1, 7, 1, "math");
         profile.mathMaxUnlocked = 9;
         profile.mathMainLevelStartedAt = new Date(Date.now() - 15 * 86400000).toISOString();
@@ -171,13 +175,13 @@ describe("learning progression from real generated questions", () => {
         expect(before?.mathMainLevel).toBe(8);
         await answer();
         const after = (await getProfile(profile.id))!;
-        expect(after.mathMainLevel).toBe(9);
+        expect(after.mathMainLevel).toBe(8);
         const triggerProfile = resolvePeriodicTestTriggerProfile(before, after, "math");
         const trigger = await checkPeriodTestTrigger(triggerProfile, "math");
         expect(trigger).toEqual({ isTriggered: true, reason: "slow" });
         const testSet = buildPeriodicTestSet(triggerProfile, "math");
         const withPending = applyPendingPeriodicTestTrigger(after, "math", trigger, testSet)!;
-        expect(withPending.mathMainLevel).toBe(9);
+        expect(withPending.mathMainLevel).toBe(8);
         expect(withPending.periodicTestSets?.math?.level).toBe(8);
         expect(testSet.problems.every(item => getSkillsForLevel(8).includes(item.categoryId))).toBe(true);
     });

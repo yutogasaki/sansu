@@ -10,3 +10,4 @@ export { boatProgress, docked, rareChance } from './pier';
 export { deliverKeepsakes, keepsakeKind, receiveGifts, type FlowerGift, type KeepsakeKind, type LearningLevels } from './gifts';
 export { dayMoment, friendOf, momentCandidates } from './moments';
 export { arrivalName, NAME_CANDIDATES } from './names';
+export { WORD_GROUPS, WALL_PATTERNS, RUG_COLORS, DEFAULT_DECOR, learnedWords, wordGroupOf, isLearnedWord, patternOpen, type RoomDecor, type WallPatternId, type WordGroupId, type LearnedWord } from './room';

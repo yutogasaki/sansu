@@ -1,3 +1,4 @@
+import type { IslandRoomDecor } from './learningKeepsakeScenery';
 import type { IslandDirectTarget, IslandDirectMarker } from '../islandDirectTargets';
 import type { IslandItemKind } from '../../../domain/island/types';
 export type { IslandItemKind } from '../../../domain/island/types';
@@ -39,7 +40,7 @@ export interface IslandStageState {
     challengeDisplayed?: readonly ('certificate' | 'trophy')[];
     directInteractions?: boolean;
     directPlaySelection?: boolean;
-    learningKeepsakes?: { closeOverview?: boolean; state?: IslandLearningKeepsakesState; selectedId?: IslandLearningKeepsakeId };
+    learningKeepsakes?: { closeOverview?: boolean; state?: IslandLearningKeepsakesState; selectedId?: IslandLearningKeepsakeId; decor?: IslandRoomDecor };
     shared?: IslandSharedStageState;
     sharedRequest?: IslandSharedSceneRequest;
     workshop?: WorkshopSceneState;
@@ -82,7 +83,7 @@ export interface IslandStageProps extends IslandStageState {
     onDirectSelect?: (target: IslandDirectTarget) => void;
     onDirectMarkers?: (markers: IslandDirectMarker[]) => void;
     onHomeEnter?: () => void;
-    onHomeAction?: (action: { type: 'keepsake'; id: IslandLearningKeepsakeId } | { type: 'album' } | { type: 'notices' }) => void;
+    onHomeAction?: (action: { type: 'keepsake'; id: IslandLearningKeepsakeId } | { type: 'album' } | { type: 'notices' } | { type: 'word'; word: string }) => void;
     onFurniturePlacement?: (result: IslandFurniturePlacementResult) => void;
     onSharedAction?: (action: IslandSharedMemoriesAction) => void;
     onSharedDisplaySelect?: (displayId: SharedDisplayId) => void;

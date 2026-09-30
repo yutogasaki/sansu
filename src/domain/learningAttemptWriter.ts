@@ -5,15 +5,11 @@ import { getNextReviewDate, updateMemoryState, updateSkillStatus } from "./algor
 import { getWordLevel } from "./english/words";
 import {
     getLevelForSkill,
-    getSkillsForLevel,
-    MAX_MATH_LEVEL,
 } from "./math/curriculum";
 import type { MemoryState, SubjectKey, UserProfile } from "./types";
-import { getNextPromotionLevel, hasMathPromotionEvidence } from './levelProgression';
 import type { LearningEvidenceContext } from './learning/types';
 import { validateLearningEvidenceContext } from './learning/context';
 import { hasKnownWholeAttempt, independentCorrectCount, isIndependentCorrect } from './learning/independentProgress';
-import { readMathLevel11Pilot } from './learning/pilotRepository';
 
 const APP_DATA_ID = "app";
 
@@ -111,85 +107,6 @@ const saveProfileToDatabase = async (
     });
 };
 
-const resolveMathProgression = async (
-    database: SansuDatabase,
-    profile: UserProfile,
-    nowIso: string,
-): Promise<UserProfile> => {
-    let updated = profile;
-
-    if (
-        updated.mathMainLevel < MAX_MATH_LEVEL
-        && updated.mathMaxUnlocked === updated.mathMainLevel
-    ) {
-        const levelState = updated.mathLevels?.find(
-            (level) => level.level === updated.mathMainLevel,
-        );
-        const recent = levelState?.recentIndependentAnswersNonReview || [];
-        if (
-            recent.length >= 20
-            && recent.filter(Boolean).length / recent.length >= 0.85
-            && (updated.mathMainLevel !== 11 || (await readMathLevel11Pilot(database, updated.id, nowIso)).practice.coverageReady)
-        ) {
-            const nextLevel = Math.min(MAX_MATH_LEVEL, updated.mathMaxUnlocked + 1);
-            updated = {
-                ...updated,
-                mathMaxUnlocked: nextLevel,
-                mathLevels: updated.mathLevels?.map((level) => (
-                    level.level === nextLevel ? { ...level, unlocked: true, enabled: true } : level
-                )),
-            };
-        }
-    }
-
-    const nextMainLevel = getNextPromotionLevel(updated, 'math');
-    if (nextMainLevel !== null) {
-        const targetSkills = getSkillsForLevel(nextMainLevel);
-        if (targetSkills.length > 0) {
-            const attempts = await database.logs
-                .where("[profileId+subject]")
-                .equals([updated.id, "math"])
-                .filter((log) => (
-                    targetSkills.includes(log.itemId)
-                    && !log.isReview
-                ))
-                .toArray();
-            if (hasMathPromotionEvidence(attempts)
-                && (nextMainLevel !== 11 || (await readMathLevel11Pilot(database, updated.id, nowIso)).practice.coverageReady)) {
-                const nextLevels = updated.mathLevels?.map((level) => (
-                    level.level === nextMainLevel
-                        ? {
-                            ...level,
-                            unlocked: true,
-                            enabled: true,
-                            recentAnswersNonReview: [],
-                            recentIndependentAnswersNonReview: [],
-                            updatedAt: nowIso,
-                        }
-                        : level
-                ));
-                const ensuredLevels = nextLevels && nextLevels.some((level) => level.enabled)
-                    ? nextLevels
-                    : nextLevels?.map((level) => (
-                        level.level === nextMainLevel ? { ...level, enabled: true } : level
-                    ));
-                updated = {
-                    ...updated,
-                    mathMainLevel: nextMainLevel,
-                    mathMainLevelStartedAt: nowIso,
-                    mathLevels: ensuredLevels,
-                    pendingLevelUpNotification: {
-                        subject: "math",
-                        newLevel: nextMainLevel,
-                        achievedAt: nowIso,
-                    },
-                };
-            }
-        }
-    }
-
-    return updated;
-};
 
 /**
  * Writes one learning attempt using the caller's active Dexie transaction.
@@ -301,6 +218,14 @@ export const writeLearningAttemptInTransaction = async (
             : getWordLevel(input.itemId);
         if (!input.isReview && level !== null) {
             if (input.subject === "math" && level === profile.mathMainLevel) {
+                // Legacy Lv0 profiles had no level state. Create it only when
+                // an actual Lv0 answer arrives; never infer independent history.
+                if (level === 0 && !profile.mathLevels?.some(item => item.level === 0)) {
+                    profile = { ...profile, mathLevels: [...(profile.mathLevels ?? []), {
+                        level: 0, unlocked: true, enabled: true, recentAnswersNonReview: [],
+                        recentIndependentAnswersNonReview: [], updatedAt: input.timestamp,
+                    }] };
+                }
                 profile = {
                     ...profile,
                     mathLevels: profile.mathLevels?.map((item) => item.level === level
@@ -356,7 +281,7 @@ export const writeLearningAttemptInTransaction = async (
             },
         ].slice(-300);
 
-        let updatedProfile: UserProfile = {
+        const updatedProfile: UserProfile = {
             ...profile,
             mathSkills: input.subject === "math"
                 ? { ...(profile.mathSkills || {}), [input.itemId]: dbMemory }
@@ -373,9 +298,7 @@ export const writeLearningAttemptInTransaction = async (
             lastStudyDate: todayKey,
             recentAttempts,
         };
-        if (input.subject === "math") {
-            updatedProfile = await resolveMathProgression(database, updatedProfile, input.timestamp);
-        }
+        // Practice records readiness; finish-test completion owns progression.
         await saveProfileToDatabase(database, updatedProfile);
         profile = updatedProfile;
     }

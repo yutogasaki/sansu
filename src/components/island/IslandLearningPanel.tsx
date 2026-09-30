@@ -81,7 +81,7 @@ export function IslandLearningPanel({ plan, profile, active = true, intro = fals
             </div>
             <span className="island-learning-count">{plan.cursor + 1}<small> / {plan.slots.length}</small></span>
         </div>
-        {profile && <LearningProgressCue profile={profile} plan={plan} active={active} />}
+        {profile && <LearningProgressCue profile={profile} plan={plan} active={active} busy={busy} />}
         <IslandAnswerFeedback feedback={feedback?.id === dismissedReceipt ? undefined : feedback} party={party} burst={celebration.burst} inputCue={celebration.inputCue} active={active} level={celebration.level} pulse={music.pulse} onCue={music.cue} heroStyle={heroStyle} />
         <PokomokoFullscreenCelebration burst={celebration.burst} root={section} level={celebration.level} />
         <PokomokoInputSpark cue={celebration.inputCue} root={section} />

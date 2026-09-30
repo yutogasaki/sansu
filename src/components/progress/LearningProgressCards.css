@@ -40,7 +40,7 @@
     border: 1px solid var(--pokomoko-stitch);
     box-shadow: 0 3px 0 var(--pokomoko-edge);
 }
-.learning-progress-card [data-progress-stage=practice] .progress-patch-next {
+.learning-progress-card [data-progress-stage=ready] .progress-patch-next {
     background: var(--pokomoko-mint);
     color: var(--pokomoko-ink);
 }
@@ -64,3 +64,18 @@
     background: var(--pokomoko-paper);
     box-shadow: 0 2px 0 var(--pokomoko-edge);
 }
+
+.learning-progress-card .progress-finish-ready { display: grid; gap: 10px; }
+.learning-progress-card .progress-finish-ready > p { color: var(--pokomoko-blue-deep); }
+.learning-progress-card .progress-challenge-ready {
+    background: var(--pokomoko-blue);
+    color: var(--pokomoko-paper);
+    border: 1px solid var(--pokomoko-blue-deep);
+    box-shadow: 0 4px 0 var(--pokomoko-blue-deep);
+}
+.learning-progress-card .progress-finish-locked {
+    color: var(--pokomoko-muted);
+    background: var(--pokomoko-paper);
+    border: 1px dashed var(--pokomoko-stitch);
+}
+.learning-progress-card [data-progress-stage=ready] .progress-path-arrow { stroke-dasharray: none; color: var(--pokomoko-blue); }

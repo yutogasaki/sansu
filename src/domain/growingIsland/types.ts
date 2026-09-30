@@ -1,4 +1,5 @@
 import type { Cell, ItemKind, LifeItem } from '../islandLife/model';
+import type { RoomDecor, WallPatternId, WordGroupId } from './room';
 
 export type { Cell, ItemKind };
 
@@ -105,6 +106,8 @@ export interface GrowingState {
     mastery?: { math: number; vocab: number };
     /** Flower gifts from siblings' visits that were already received (§13). */
     gifts?: string[];
+    /** Pokomoko's room: wallpaper drawn with learned words, chosen shapes and rug (§13.1). */
+    room?: RoomDecor;
     applied: string[];
     nextId: number;
 }
@@ -124,7 +127,8 @@ export type Command =
     | { type: 'disembark'; id: string }
     | { type: 'away'; id: string; away: boolean }
     | { type: 'dress'; id: string; color?: number; hat?: number }
-    | { type: 'flag'; color?: number; pattern?: number };
+    | { type: 'flag'; color?: number; pattern?: number }
+    | { type: 'decorate'; pattern?: WallPatternId; rug?: number; hidden?: WordGroupId[] };
 
 export type TownEvent =
     | { type: 'built'; plotId: string }

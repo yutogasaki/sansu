@@ -373,6 +373,7 @@ export const Stats: React.FC = () => {
             <div className={navigation ? "utility-layout-content stats-layout" : "island-utility-content mx-auto w-full max-w-[22rem] space-y-8 pb-2"}>
                 <LearningProgressCards profile={profile} refreshKey={learningOverlay}
                     onLearn={() => { warmUpTTS(); if (navigation) navigation.startLearning(); else navigate('/study'); }}
+                    onFinish={subject => { warmUpTTS(); const path = `/study?session=finish-test&focus_subject=${subject}`; if (navigation) navigation.open(path); else navigate(path); }}
                     onTest={subject => { warmUpTTS(); const path = `/study?session=periodic-test&focus_subject=${subject}`; if (navigation) navigation.open(path); else navigate(path); }} />
                 <div className={navigation ? "stats-overview" : "space-y-8"}>
                 {totalStats.count === 0 ? (
@@ -567,7 +568,7 @@ export const Stats: React.FC = () => {
 
                     <SurfacePanel className="space-y-4 rounded-[28px] p-5">
                         <SurfacePanelHeader
-                            title={t("ていき テスト りれき", "定期テスト履歴")}
+                            title={t("テストの きろく", "テストの記録")}
                             description={t("さいきん の テストけっか を のこしておく", "最近のテスト結果を確認")}
                         />
                         {periodicTestHistory.length === 0 ? (
@@ -580,6 +581,7 @@ export const Stats: React.FC = () => {
                                         <div className="min-w-0">
                                             <div className="text-sm font-bold text-slate-700">
                                                 {test.subject === "math" ? t("さんすう", "算数") : t("えいご", "英語")} Lv.{test.level}
+                                                <span className="ml-2 text-xs text-pokomoko-muted">{test.kind === 'finish' ? t("しあげ", "仕上げ") : t("かくにん", "確認")}</span>
                                             </div>
                                             <div className="mt-0.5 text-[11px] text-pokomoko-muted">
                                                 {new Date(test.timestamp).toLocaleString("ja-JP")} / {test.method === "paper" ? t("かみ", "紙") : t("アプリ", "アプリ")}

@@ -1,7 +1,7 @@
 import { SubjectKey, TriggerState, UserProfile, PeriodicTestResult, PeriodicTestSet, PeriodicTestState, Problem } from "../domain/types";
 import { BLOCK_SIZE } from "./blockGenerators";
 import type { SessionKind } from "./blockGenerators";
-import { MAX_MATH_LEVEL, MAX_VOCAB_LEVEL } from "../domain/math/curriculum";
+import { MAX_VOCAB_LEVEL } from "../domain/math/curriculum";
 import { getNextPromotionLevel } from '../domain/levelProgression';
 
 type SessionStats = {
@@ -36,10 +36,10 @@ const createDefaultPeriodicTestState = (): PeriodicTestState => ({
 });
 
 export const isFixedSessionKind = (sessionKind?: SessionKind | null): boolean =>
-    sessionKind === "periodic-test" || sessionKind === "weak-review" || sessionKind === "check-event";
+    sessionKind === "finish-test" || sessionKind === "periodic-test" || sessionKind === "weak-review" || sessionKind === "check-event";
 
 export const shouldRecordLearningAttempt = (sessionKind?: SessionKind | null): boolean =>
-    sessionKind !== "periodic-test" && sessionKind !== "dev";
+    sessionKind !== "finish-test" && sessionKind !== "periodic-test" && sessionKind !== "dev";
 
 export const needsVocabNextLevelActivation = (profile: UserProfile): boolean => {
     const nextLevel = profile.vocabMainLevel + 1;
@@ -107,7 +107,7 @@ export const resolvePeriodicTestTriggerProfile = (
 };
 
 export const resolveSessionBlockSize = (sessionKind?: SessionKind | null): number => {
-    if (sessionKind === "periodic-test" || sessionKind === "check-event") {
+    if (sessionKind === "finish-test" || sessionKind === "periodic-test" || sessionKind === "check-event") {
         return 20;
     }
     return BLOCK_SIZE;
@@ -314,99 +314,9 @@ export const isInputLocked = (
 
 export const resolveProfileProgressionAfterAttempt = async ({
     currentProfile,
-    subject,
-    nowIso,
-    checkMathUnlock,
-    checkMathPromotion,
-    checkVocabUnlockReadiness,
-    checkVocabPromotion,
 }: AttemptProgressionOptions): Promise<UserProfile> => {
-    let updatedProfile = currentProfile;
-
-    if (subject === "math") {
-        if (updatedProfile.mathMainLevel < MAX_MATH_LEVEL && updatedProfile.mathMaxUnlocked === updatedProfile.mathMainLevel) {
-            const canUnlock = await checkMathUnlock(updatedProfile);
-            if (canUnlock) {
-                const nextLevel = Math.min(MAX_MATH_LEVEL, updatedProfile.mathMaxUnlocked + 1);
-                const mathLevels = updatedProfile.mathLevels
-                    ? updatedProfile.mathLevels.map(level => (level.level === nextLevel ? { ...level, unlocked: true, enabled: true } : level))
-                    : updatedProfile.mathLevels;
-                updatedProfile = { ...updatedProfile, mathMaxUnlocked: nextLevel, mathLevels };
-            }
-        }
-
-        const nextMain = getNextPromotionLevel(updatedProfile, 'math');
-        if (nextMain !== null) {
-            const canPromote = await checkMathPromotion(updatedProfile, nextMain);
-            if (canPromote) {
-                const mathLevels = updatedProfile.mathLevels
-                    ? ensureMainEnabled(
-                        updatedProfile.mathLevels.map(level =>
-                            level.level === nextMain
-                                ? { ...level, enabled: true, recentAnswersNonReview: [], recentIndependentAnswersNonReview: [] }
-                                : level
-                        ),
-                        nextMain
-                    )
-                    : updatedProfile.mathLevels;
-                updatedProfile = {
-                    ...updatedProfile,
-                    mathMainLevel: nextMain,
-                    mathMainLevelStartedAt: nowIso,
-                    mathLevels,
-                    pendingLevelUpNotification: {
-                        subject: "math",
-                        newLevel: nextMain,
-                        achievedAt: nowIso,
-                    },
-                };
-            }
-        }
-
-        return updatedProfile;
-    }
-
-    if (updatedProfile.vocabMainLevel < MAX_VOCAB_LEVEL && updatedProfile.vocabMaxUnlocked === updatedProfile.vocabMainLevel) {
-        if (checkVocabUnlockReadiness(updatedProfile)) {
-            const nextLevel = Math.min(MAX_VOCAB_LEVEL, updatedProfile.vocabMaxUnlocked + 1);
-            const vocabLevels = updatedProfile.vocabLevels
-                ? updatedProfile.vocabLevels.map(level => level.level === nextLevel
-                    ? { ...level, unlocked: true, enabled: true }
-                    : level)
-                : updatedProfile.vocabLevels;
-            updatedProfile = { ...updatedProfile, vocabMaxUnlocked: nextLevel, vocabLevels };
-        }
-    }
-
-    const nextMain = getNextPromotionLevel(updatedProfile, 'vocab');
-    if (nextMain !== null) {
-        const canPromote = await checkVocabPromotion(updatedProfile);
-        if (canPromote) {
-            const vocabLevels = updatedProfile.vocabLevels
-                ? ensureMainEnabled(
-                    updatedProfile.vocabLevels.map(level =>
-                        level.level === nextMain
-                            ? { ...level, enabled: true, recentAnswersNonReview: [], recentIndependentAnswersNonReview: [] }
-                            : level
-                    ),
-                    nextMain
-                )
-                : updatedProfile.vocabLevels;
-            updatedProfile = {
-                ...updatedProfile,
-                vocabMainLevel: nextMain,
-                vocabMainLevelStartedAt: nowIso,
-                vocabLevels,
-                pendingLevelUpNotification: {
-                    subject: "vocab",
-                    newLevel: nextMain,
-                    achievedAt: nowIso,
-                },
-            };
-        }
-    }
-
-    return updatedProfile;
+    // Ordinary practice supplies readiness; only a completed finish test advances.
+    return currentProfile;
 };
 
 export const applyResolvedProgressionToLatestProfile = ({

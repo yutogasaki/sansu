@@ -462,7 +462,8 @@ export class IslandScene {
         if (previousHome !== this.keepsakeRoomActive && previous && !state.learning) this.homePresentation.begin(this.camera, performance.now(), this.motion.matches);
         if (state.learning) this.homePresentation.cancel();
         const keepsakesChanged = this.keepsakeRoom.update(state.learningKeepsakes?.state, state.completedSets,
-            this.keepsakeRoomActive, state.learningKeepsakes?.selectedId, state.challengeDisplayed);
+            this.keepsakeRoomActive, state.learningKeepsakes?.selectedId, state.challengeDisplayed)
+            || this.keepsakeRoom.setDecor(this.keepsakeRoomActive ? state.learningKeepsakes?.decor : undefined);
         if (this.keepsakeRoomActive && !state.learningKeepsakes?.selectedId) {
             this.homeResident.show(this.keepsakeRoom.group);
             if (!this.homeResident.group.parent) this.scene.add(this.homeResident.group);
@@ -1628,7 +1629,9 @@ export class IslandScene {
             this.raycaster.setFromCamera(new THREE.Vector2((event.clientX - rect.left) / rect.width * 2 - 1,
                 -(event.clientY - rect.top) / rect.height * 2 + 1), this.homeCamera);
             const action = this.keepsakeRoom.selectHit(this.raycaster.ray);
+            const word = action ? undefined : this.keepsakeRoom.wordAt(this.raycaster.ray);
             if (action) this.callbacks.homeAction?.(action);
+            else if (word) this.callbacks.homeAction?.({ type: 'word', word });
             else if (!this.state?.learningKeepsakes?.selectedId) {
                 const hit = this.raycaster.intersectObject(this.keepsakeRoom.group, true).find(hit => {
                     for (let node: THREE.Object3D | null = hit.object; node; node = node.parent) if (!node.visible) return false;

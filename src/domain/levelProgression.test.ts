@@ -80,7 +80,7 @@ describe('evidence required for level progression', () => {
         })).toBe(latest);
     });
 
-    it('uses the same math evidence in the atomic writer and Study service', async () => {
+    it('retains math readiness evidence without automatic promotion and respects manual downgrade', async () => {
         const profile = createInitialProfile('T', 1, 1, 1, 'math'); // main 2
         profile.mathMaxUnlocked = 3;
         profile.mathLevels = profile.mathLevels?.map(level => level.level === 3 ? { ...level, unlocked: true, enabled: true } : level);
@@ -91,7 +91,9 @@ describe('evidence required for level progression', () => {
         expect(await checkMathMainPromotion(stored, 3)).toBe(false);
         for (let i = 0; i < 17; i++) await logAttempt(profile.id, 'math', 'count_10', 'correct', false, false, false, undefined, evidence('math', 'count_10'));
         stored = (await getProfile(profile.id))!;
-        expect(stored.mathMainLevel).toBe(3);
+        expect(stored.mathMainLevel).toBe(2);
+        expect(stored.mathMaxUnlocked).toBe(3);
+        expect(stored.mathSkills.count_10?.independentCorrectAnswers).toBe(17);
         expect(await checkMathMainPromotion(profile, 3)).toBe(true);
         const downgraded = syncLevelState(stored, 'math', 2);
         await saveProfile(downgraded);

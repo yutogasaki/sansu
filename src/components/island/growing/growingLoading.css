@@ -10,3 +10,27 @@
 .growing-loading-bar { width: 100%; height: 12px; overflow: hidden; background: #ece6da; border-radius: 6px; }
 .growing-loading-bar span { display: block; height: 100%; background: repeating-linear-gradient(90deg, #f25c8a 0 18px, #ffd23f 18px 36px, #3fb8e8 36px 54px, #6ccf6b 54px 72px); border-radius: 6px; transition: width .4s ease-out; }
 .growing-loading-label { margin: 0; font-size: 13px; color: var(--pokomoko-muted, #7a6f88); }
+
+/* もようがえ in Pokomoko's room (spec 52 §13.1). */
+.room-decor-open { display: grid; gap: 2px; text-align: left; }
+.room-decor { display: grid; gap: 8px; padding: 12px; background: var(--pokomoko-paper, #fffdf9); border: 1px solid var(--pokomoko-edge, #e3d6bf); border-radius: 18px; }
+.room-decor header { display: flex; align-items: center; justify-content: space-between; }
+.room-decor h3 { margin: 4px 0 0; font-size: 14px; }
+.room-decor-note { margin: 0; font-size: 13px; color: var(--pokomoko-muted, #7a6f88); }
+.room-decor-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.room-decor-row button[aria-pressed="true"] { background: var(--pokomoko-lavender, #e9e1f6); }
+.room-decor-row button small { display: block; font-size: 11px; }
+.room-decor-color { display: inline-flex; align-items: center; gap: 6px; border-width: 2px !important; }
+.room-decor-color span { width: 14px; height: 14px; border-radius: 50%; }
+.room-decor-color[aria-pressed="false"] { opacity: .45; }
+.room-decor-swatch { width: 40px; height: 40px; border: 2px solid #fff; border-radius: 50%; box-shadow: 0 0 0 1px var(--pokomoko-edge, #e3d6bf); }
+.room-decor-swatch[aria-pressed="true"] { box-shadow: 0 0 0 3px var(--pokomoko-ink, #3a3346); }
+.room-word {
+    position: fixed; z-index: 30; left: 50%; top: 30%; display: grid; justify-items: center; gap: 2px; margin: 0; padding: 12px 22px;
+    background: var(--pokomoko-paper, #fffdf9); border: 3px solid #1f1a24; border-radius: 22px; transform: translateX(-50%);
+    box-shadow: 6px 6px 0 #ffd23f; animation: room-word 2.6s ease-out forwards; pointer-events: none;
+}
+.room-word strong { font-size: 30px; letter-spacing: .02em; }
+.room-word span { font-size: 15px; font-weight: 700; color: var(--pokomoko-muted, #7a6f88); }
+@keyframes room-word { 0% { opacity: 0; transform: translate(-50%, 10px) scale(.9); } 12% { opacity: 1; transform: translate(-50%, 0) scale(1); } 80% { opacity: 1; } 100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .room-word { animation: none; } }

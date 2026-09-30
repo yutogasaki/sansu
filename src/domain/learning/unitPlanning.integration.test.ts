@@ -115,7 +115,7 @@ describe('Lv11 unit planning and persistence integration', () => {
         expect((await readMathLevel11Pilot(d, CHILD, NOW)).practice.missingUnitIds).toHaveLength(6);
     });
 
-    it.each([[3, 11], [4, 10]])('requires 17 of the last 20 in addition to full unit coverage (%s errors)', async (errors, expectedMain) => {
+    it.each([3, 4])('preserves the current range during ordinary practice despite covered next units (%s errors)', async (errors) => {
         const d = await database(profile(10, 11));
         const content = generateMathProblem('add_2d1d_nc_bridge', { random: () => 0 });
         const incorrect: AttemptLog = { ...scenarioLogs(0)[0], itemId: content.categoryId, result: 'incorrect',
@@ -129,8 +129,8 @@ describe('Lv11 unit planning and persistence integration', () => {
         await d.logs.bulkAdd(history);
         expect((await readMathLevel11Pilot(d, CHILD, NOW)).practice.coverageReady).toBe(true);
         const receipt = await write(d);
-        expect(receipt.profile?.mathMainLevel).toBe(expectedMain);
-        expect((await d.profiles.get(CHILD))?.mathMainLevel).toBe(expectedMain);
+        expect(receipt.profile?.mathMainLevel).toBe(10);
+        expect((await d.profiles.get(CHILD))?.mathMainLevel).toBe(10);
     });
 
     it('still requires 30 non-review answers when every unit is covered', async () => {
@@ -142,7 +142,7 @@ describe('Lv11 unit planning and persistence integration', () => {
         expect(receipt.profile?.mathMainLevel).toBe(10);
     });
 
-    it.each([[0, 11], [3, 12]])('requires all units before unlocking Lv12 (scenario %s)', async (scenario, expectedMax) => {
+    it.each([0, 3])('accumulates Lv11 readiness without automatically unlocking Lv12 (scenario %s)', async (scenario) => {
         const p = profile();
         // A previously recorded, known independent window: 16 successes and
         // three errors. The next independent answer reaches exactly 17/20.
@@ -152,7 +152,7 @@ describe('Lv11 unit planning and persistence integration', () => {
         await d.logs.bulkAdd(scenarioLogs(scenario));
         const receipt = await write(d);
         expect(receipt.profile?.mathMainLevel).toBe(11);
-        expect(receipt.profile?.mathMaxUnlocked).toBe(expectedMax);
+        expect(receipt.profile?.mathMaxUnlocked).toBe(11);
         expect(receipt.profile?.mathLevels?.find(level => level.level === 11)?.recentIndependentAnswersNonReview)
             .toHaveLength(20);
     });

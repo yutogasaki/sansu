@@ -128,7 +128,7 @@ describe('island frozen learning sets', () => {
         expect((await d.memoryMath.get(['child', original.categoryId]))?.skippedAnswers).toBe(1);
     });
 
-    it('supports mixed vocabulary sets and applies vocabulary progression only to independent answers', async () => {
+    it('supports mixed vocabulary sets and accumulates independent readiness without auto progression', async () => {
         const p = { ...profile('child', 1, 'mix'), vocabLevels: [{ level: 1, unlocked: true, enabled: true,
             recentAnswersNonReview: Array(19).fill(true), recentIndependentAnswersNonReview: Array(19).fill(true) }] };
         const d = await setup(p, true);
@@ -146,7 +146,8 @@ describe('island frozen learning sets', () => {
         vocab = (await commitIslandLearning('child', vocab.id, vocab.revision, correctAction(vocab), d)).plan;
         expect((await d.profiles.get('child'))?.vocabMaxUnlocked).toBe(1);
         await commitIslandLearning('child', vocab.id, vocab.revision, correctAction(vocab), d);
-        expect((await d.profiles.get('child'))?.vocabMaxUnlocked).toBe(2);
+        expect((await d.profiles.get('child'))?.vocabMaxUnlocked).toBe(1);
+        expect((await d.profiles.get('child'))?.vocabLevels?.[0].recentIndependentAnswersNonReview).toHaveLength(20);
     });
 
     it('preserves fraction multi-input and stepwise written arithmetic in complete reserved plans', async () => {

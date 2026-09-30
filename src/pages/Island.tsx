@@ -3,6 +3,8 @@ import { Spinner } from '../components/ui/Spinner';
 import { useIslandLife } from '../components/island/life/useIslandLife';
 import { growingIslandEnabled } from '../components/island/growing/feature';
 import { GrowingLoading } from '../components/island/growing/GrowingLoading';
+import { RoomDecorPanel } from '../components/island/growing/RoomDecorPanel';
+import { readWordAloud, useGrowingRoom } from '../components/island/growing/useGrowingRoom';
 import { lifeEnabled } from '../domain/islandLife/model';
 import { replayLife } from '../domain/islandLife/simulation';
 import { IslandDirectActions } from '../components/island/IslandDirectActions';
@@ -162,6 +164,9 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     const learningScreen = plan?.status === 'completed' && isFirstIslandPlan(plan) && !plan.growthTarget ? 'reward' : 'learning';
     const screen = navigation ? navigation.learning ? learningScreen : navigation.view : localScreen;
     // The growing island keeps its own save; the current island's record is left untouched.
+    const [roomWord, setRoomWord] = useState<{ text: string; japanese?: string; at: number }>();
+    useEffect(() => { if (!roomWord) return; const id = window.setTimeout(() => setRoomWord(undefined), 2600); return () => clearTimeout(id); }, [roomWord]);
+    const growingRoom = useGrowingRoom(profile.id, profile.vocabWords, growingIslandEnabled() && screen === 'keepsakes');
     const lifeControls = useIslandLife(profile.id, active && screen === 'home' && !growingIslandEnabled());
     const learningHeroStyle = useMemo(() => lifeControls.record ? replayLife(lifeControls.record).heroStyle : 'original', [lifeControls.record]);
     const setScreen = navigation?.setView ?? setLocalScreen;
@@ -689,6 +694,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                 : navigation ? null : <button className="island-icon-button" aria-label="せってい" disabled={busy} onClick={() => navigate('/settings')}><Settings2 size={20} /></button>}</div>
         </header>}
         {(error || loadError) && <div className="island-error" role="alert"><p>{error}</p><button className="island-text-button" onClick={() => window.location.reload()}>よみなおす</button></div>}
+        {roomWord && screen === 'keepsakes' && <p className="room-word" role="status" key={roomWord.at}><strong>{roomWord.text}</strong>{roomWord.japanese && <span>{roomWord.japanese}</span>}</p>}
         {screen === 'placement' && preview && <IslandPlacementActions valid={valid} disabled={busy} onSave={savePlacement} onCancel={cancelPlacement} />}
         {active && screen === 'home' && lifeEnabled() && <Suspense fallback={growingIslandEnabled() ? <GrowingLoading step="screen" /> : <Spinner fullScreen message="しまを ひらいているよ…" />}>{growingIslandEnabled()
             ? <GrowingIsland profileId={profile.id} profileName={profile.name} active={active && screen === 'home'} sound={Boolean(profile.soundEnabled)} onHome={enterHouse} />
@@ -699,6 +705,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
             onHomeAction={!busy && screen === 'keepsakes' ? action => {
                 if (action.type === 'album') { setReturnToHouse(true); setAlbumComparison('garden'); setScreen('album'); }
                 else if (action.type === 'notices') { setKeepsakeFocus(undefined); setHouseSection('notices'); }
+                else if (action.type === 'word') { const word = readWordAloud(action.word); setRoomWord({ text: word?.surface ?? action.word.replace(/_lv\d+$/, ''), japanese: word?.japanese, at: Date.now() }); }
                 else if (!keepsakes.pending) { keepsakes.select(action.id); setKeepsakeFocus(action.id); setHouseSection('keepsakes'); }
             } : undefined}
             photographing={screen === 'camera'} photoRequestId={screen === 'camera' ? photos.requestId : undefined} onPhoto={photos.consume}
@@ -721,11 +728,12 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                 onGrow={() => { void chooseGrowth('garden').then(updated => { if (updated) setDirectSelection(undefined); }); }}
                 onPlay={openDirectPlay} onBrowsePlay={residentId => openDirectPlay(undefined, residentId)} onMove={item => { setDirectSelection(undefined); select(item); }}
                 onInventory={() => { setDirectSelection(undefined); setScreen('inventory'); }} onClose={closeDirect} /> : undefined}
-            learningKeepsakes={keepsakeRoomActive ? { closeOverview: houseOverview, state: island.learningKeepsakes, selectedId: keepsakeFocus } : undefined}
+            learningKeepsakes={keepsakeRoomActive ? { closeOverview: houseOverview, state: island.learningKeepsakes, selectedId: keepsakeFocus, decor: growingRoom.decor } : undefined}
             onHomeEnter={!busy && ['home', 'play'].includes(screen) ? enterHouse : undefined}
             onHomeAction={!busy && screen === 'keepsakes' ? action => {
                 if (action.type === 'album') { setReturnToHouse(true); setAlbumComparison('garden'); setScreen('album'); }
                 else if (action.type === 'notices') { setKeepsakeFocus(undefined); setHouseSection('notices'); }
+                else if (action.type === 'word') { const word = readWordAloud(action.word); setRoomWord({ text: word?.surface ?? action.word.replace(/_lv\d+$/, ''), japanese: word?.japanese, at: Date.now() }); }
                 else if (!keepsakes.pending) { keepsakes.select(action.id); setKeepsakeFocus(action.id); setHouseSection('keepsakes'); }
             } : undefined}
             furnitureTrial={furnitureTrial}
@@ -896,6 +904,8 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                     active={active}
                     walkingAvailable={!homeJourneyScene}
                     challenge={<ChallengeHomeCard key={profile.id} profileId={profile.id} disabled={busy} onLearn={() => void begin()} onResult={() => { setChallengeStartIntent(false); setScreen('challenge'); }} onStart={() => { setChallengeStartIntent(true); setScreen('challenge'); }} />}
+                    decor={growingIslandEnabled() ? <RoomDecorPanel room={growingRoom.room} words={growingRoom.words} mathLevel={growingRoom.mathLevel}
+                        error={growingRoom.error} onDecorate={command => void growingRoom.decorate(command)} /> : undefined}
                     section={houseSection} onSectionChange={section => { setHouseSection(section); setKeepsakeFocus(undefined); }}
                     onSelect={setKeepsakeFocus} onShowRoom={() => setKeepsakeFocus(undefined)}
                     onClose={home} onLearn={() => void begin()} onPhoto={photograph} onPhotos={openPhotos}
