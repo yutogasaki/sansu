@@ -5,7 +5,7 @@ import type { Cell, Command, GrowingState, LandmarkKind, SeedKind, TownEvent } f
 import { addMoment, flowerSentToday, listMoments, readGrowingIsland, sendFlower, type MomentRecord } from '../../../domain/growingIsland/repository';
 import { getAllProfiles } from '../../../domain/user/repository';
 import { gardenTimes, readGardenTime, saveGardenTime, type GardenTime } from '../life/fantasy/presentation';
-import { Spinner } from '../../ui/Spinner';
+import { GrowingLoading, type LoadingStep } from './GrowingLoading';
 import { useIslandWorkshopAudio } from '../useIslandWorkshopAudio';
 import { useIslandAmbience } from '../useIslandAmbience';
 import { actorLine, CHARACTER_NAME, idleLine, revealLine } from './growingCopy';
@@ -61,6 +61,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     const [faces, setFaces] = useState<Record<string, string>>({});
     const [visit, setVisit] = useState<Visit>(), [siblings, setSiblings] = useState<{ id: string; name: string }[]>([]);
     const [naming, setNaming] = useState<string>();
+    const [worldStep, setWorldStep] = useState<LoadingStep | 'ready'>('world');
     const camera = useRef<WorldCamera | undefined>(undefined), pendingPicture = useRef(false);
     const audio = useIslandWorkshopAudio(sound && active);
     useIslandAmbience(show ? 'shell-three-notes' : time === 'night' ? 'evening' : 'breeze', sound, active);
@@ -114,7 +115,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
 
     if (!state || !own) return <div className="island-life growing-island" data-growing-island="loading">
         {island.error ? <div className="growing-error" role="alert"><p>{island.error}</p><button onClick={() => void island.sync()}>もういちど</button></div>
-            : <Spinner fullScreen message="しまを ひらいているよ…" />}
+            : <GrowingLoading step={island.step} />}
     </div>;
 
     const run = async (command: Command, after?: () => void) => { if (await island.dispatch(command)) { after?.(); return true; } return false; };
@@ -181,7 +182,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
 
     const world = <GrowingWorld state={state} time={time} ghost={visit ? undefined : ghost} selectedId={visit ? undefined : selected} turn={turn} cheer={cheer} festival={festival}
         hints={visit ? [] : hints} moment={visit ? undefined : moment} show={show} focus={focus} onCamera={c => { camera.current = c; }}
-        onPop={() => audio.play('glass')}
+        onPop={() => audio.play('glass')} onStage={setWorldStep}
         onCell={cell => { void audio.unlock(); if (visit) return; if (placing) setPlacing({ ...placing, cell }); else setLine(undefined); }}
         onSelect={id => { if (!placing && !visit) { setSelected(id); setPanel(undefined); } }}
         onOpen={id => { if (visit) return; void run({ type: 'open', id }, () => setLine(own.unopened.length > 1 ? 'まだ つぼみが あるよ' : undefined)); }}
@@ -195,12 +196,12 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         }} />;
 
     if (show) return <div className="island-life growing-island" data-growing-island="show">
-        <Suspense fallback={<Spinner fullScreen message="しまを ひらいているよ…" />}>{world}</Suspense>
+        <Suspense fallback={null}>{world}</Suspense>{worldStep !== 'ready' && <GrowingLoading step={worldStep} overlay />}
         <button className="growing-chip growing-show-exit" onClick={() => setShow(false)}>おわる</button>
     </div>;
 
     return <div className="island-life growing-island" data-growing-island={visit ? 'visit' : 'ready'} data-dawn={dawn ? 'true' : undefined}>
-        <Suspense fallback={<Spinner fullScreen message="しまを ひらいているよ…" />}>{world}</Suspense>
+        <Suspense fallback={null}>{world}</Suspense>{worldStep !== 'ready' && <GrowingLoading step={worldStep} overlay />}
         {dawn > 0 && <div className="growing-dawn" aria-hidden="true"><span>☀</span></div>}
         <div className="growing-hud-top">
             {visit ? <span className="growing-chip">{visit.name}の しま・{CHARACTER_NAME[visit.state.character]}</span> : <>

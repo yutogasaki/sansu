@@ -18,6 +18,8 @@ export interface WorldHandlers {
     onDisembark: () => void;
     onActorTap: (id: string) => void;
     onPop?: () => void;
+    /** The world's own loading steps: the scene is built, then the first picture is on screen. */
+    onStage?: (stage: 'scene' | 'ready') => void;
 }
 /** Pictures of the island for the card and the island's story; never uploaded anywhere. */
 export interface WorldCamera {
@@ -53,6 +55,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
         renderer.domElement.setAttribute('aria-label', 'ぽこもこと なかまが くらす しま');
         renderer.domElement.style.touchAction = 'none';
         node.append(renderer.domElement);
+        handlerRef.current.onStage?.('scene');
         const world = createWorldScene(renderer), effects = new WorldEffects(world.scene), moments = new MomentEffects(world.scene);
         const camera = new T.OrthographicCamera(-5, 5, 5, -5, .1, 100), view = initialView();
         let layout: SceneLayout = world.layout(latest.current.state), layer: ObjectLayer | undefined;
@@ -177,12 +180,14 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             moments.tick(now);
             world.animate(now, reduced);
             renderer.render(world.scene, camera);
+            if (!shown) { shown = true; handlerRef.current.onStage?.('ready'); }
         };
+        let shown = false;
         loop();
 
         // Touch: a still tap selects; a drag pans, or carries a friend; two fingers zoom.
         const pointers = new Map<number, { x: number; y: number; sx: number; sy: number }>();
-        let moved = false, carrying: string | undefined, pendingActor: string | undefined, pinch = 0;
+        let moved = false, carrying: string | undefined, pendingActor: string | undefined, pinch = 0, twist = 0;
         const ray = new T.Raycaster(), ndc = new T.Vector2(), plane = new T.Plane(new T.Vector3(0, 1, 0), -.04);
         const cast = (event: PointerEvent) => {
             const rect = renderer.domElement.getBoundingClientRect();
@@ -192,10 +197,14 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
         const ground = (event: PointerEvent) => cast(event).ray.intersectPlane(plane, new T.Vector3());
         const actorAt = (event: PointerEvent) => cast(event).intersectObjects(world.life.objects(), true)[0]?.object.userData.actorId as string | undefined;
         const down = (event: PointerEvent) => {
-            renderer.domElement.setPointerCapture(event.pointerId);
+            try { renderer.domElement.setPointerCapture(event.pointerId); } catch { /* A pointer that already ended cannot be captured. */ }
             pointers.set(event.pointerId, { x: event.clientX, y: event.clientY, sx: event.clientX, sy: event.clientY });
             if (pointers.size === 1) { moved = false; pendingActor = actorAt(event); carrying = undefined; }
-            if (pointers.size === 2) { const [a, b] = [...pointers.values()]; pinch = Math.hypot(a.x - b.x, a.y - b.y); pendingActor = undefined; }
+            if (pointers.size === 2) {
+                const [a, b] = [...pointers.values()];
+                pinch = Math.hypot(a.x - b.x, a.y - b.y); twist = Math.atan2(b.y - a.y, b.x - a.x); pendingActor = undefined;
+                if (carrying) { world.life.drop(carrying, performance.now()); carrying = undefined; }
+            }
         };
         const move = (event: PointerEvent) => {
             const p = pointers.get(event.pointerId); if (!p) return;
@@ -203,6 +212,10 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             if (pointers.size === 2) {
                 const [a, b] = [...pointers.values()], distance = Math.hypot(a.x - b.x, a.y - b.y);
                 if (pinch > 0) view.zoom = Math.max(1, Math.min(4, view.zoom * distance / pinch));
+                // Two fingers twisting turn the island, as on the current island.
+                const angle = Math.atan2(b.y - a.y, b.x - a.x);
+                let turn = angle - twist; if (turn > Math.PI) turn -= Math.PI * 2; if (turn < -Math.PI) turn += Math.PI * 2;
+                view.azimuth += turn; twist = angle;
                 pinch = distance; moved = true; frameCamera(camera, layout, view, width / height); return;
             }
             if (!moved && Math.hypot(event.clientX - p.sx, event.clientY - p.sy) < 7) return;

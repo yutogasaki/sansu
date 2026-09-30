@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { Spinner } from '../components/ui/Spinner';
 import { useIslandLife } from '../components/island/life/useIslandLife';
 import { growingIslandEnabled } from '../components/island/growing/feature';
+import { GrowingLoading } from '../components/island/growing/GrowingLoading';
 import { lifeEnabled } from '../domain/islandLife/model';
 import { replayLife } from '../domain/islandLife/simulation';
 import { IslandDirectActions } from '../components/island/IslandDirectActions';
@@ -636,7 +637,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     const complex = Boolean(plan?.slots.some(candidate => candidate.problem.inputType === 'multi-number'
         || candidate.problem.questionVisual?.kind === 'operation-base10' || parkHissanGrid(candidate.problem)));
     if (loadError) return <IslandLoadingError />;
-    if (opening || !island) return <Spinner fullScreen message="しまを ひらいているよ…" />;
+    if (opening || !island) return growingIslandEnabled() ? <GrowingLoading step="page" /> : <Spinner fullScreen message="しまを ひらいているよ…" />;
     const valid = Boolean(preview?.position && isValidIslandPlacement(island, preview.id, preview.position, preview.rotation));
     const growthLook = direct?.preview ? islandGrowthPreview(island, 'garden') : screen === 'growth' && growthPreviewHabitat ? islandGrowthPreview(island, growthPreviewHabitat) : undefined;
     const stageIsland = growthLook?.island ?? (screen === 'experience' ? experience.previewIsland : undefined) ?? island;
@@ -689,7 +690,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         </header>}
         {(error || loadError) && <div className="island-error" role="alert"><p>{error}</p><button className="island-text-button" onClick={() => window.location.reload()}>よみなおす</button></div>}
         {screen === 'placement' && preview && <IslandPlacementActions valid={valid} disabled={busy} onSave={savePlacement} onCancel={cancelPlacement} />}
-        {active && screen === 'home' && lifeEnabled() && <Suspense fallback={<Spinner fullScreen message="しまを ひらいているよ…" />}>{growingIslandEnabled()
+        {active && screen === 'home' && lifeEnabled() && <Suspense fallback={growingIslandEnabled() ? <GrowingLoading step="screen" /> : <Spinner fullScreen message="しまを ひらいているよ…" />}>{growingIslandEnabled()
             ? <GrowingIsland profileId={profile.id} profileName={profile.name} active={active && screen === 'home'} sound={Boolean(profile.soundEnabled)} onHome={enterHouse} />
             : <IslandLife controls={lifeControls} onHome={enterHouse} disabled={busy || preparingLearning} islandName={island.experience?.islandName ?? 'ふしぎな しま'} />}</Suspense>}
         {active && homeJourneyScene && <Suspense fallback={<Spinner fullScreen message="しまを ひらいているよ…" />}><HomeJourneyPreview key={profile.id} state={island.homeJourney}
@@ -1032,5 +1033,5 @@ export default function Island() {
         if (app && !profile) navigate('/onboarding', { replace: true });
     }, [app, profile, navigate]);
     if (error) return <IslandLoadingError />;
-    return profile ? <IslandSession key={profile.id} profile={profile} /> : <Spinner fullScreen message="しまを ひらいているよ…" />;
+    return profile ? <IslandSession key={profile.id} profile={profile} /> : growingIslandEnabled() ? <GrowingLoading step="page" /> : <Spinner fullScreen message="しまを ひらいているよ…" />;
 }

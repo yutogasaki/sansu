@@ -4,6 +4,7 @@ import { lifeDb, terminalFacts } from '../../../domain/islandLife/repository';
 import { getProfile } from '../../../domain/user/repository';
 import { commandGrowingIsland, growingDb, syncGrowingIsland, type GrowingRecord } from '../../../domain/growingIsland/repository';
 import type { Command, NatureEvent, TownEvent } from '../../../domain/growingIsland';
+import type { LoadingStep } from './GrowingLoading';
 
 export interface Reveal { id: number; town: TownEvent[]; nature: NatureEvent[] }
 
@@ -23,6 +24,7 @@ export function useGrowingIsland(profileId: string, active: boolean) {
     const [reveal, setReveal] = useState<Reveal>();
     const [error, setError] = useState<string>();
     const [busy, setBusy] = useState(false);
+    const [step, setStep] = useState<LoadingStep>('learning');
     const running = useRef<Promise<void> | undefined>(undefined), revealId = useRef(0);
 
     const sync = useCallback(() => {
@@ -30,9 +32,10 @@ export function useGrowingIsland(profileId: string, active: boolean) {
         const release = holdPwaUpdateForCriticalPersistence();
         running.current = (async () => {
             try {
-                const profile = await getProfile(profileId);
+                const [profile, facts] = await Promise.all([getProfile(profileId), terminalFacts(profileId)]);
                 const levels = profile ? { math: profile.mathMainLevel, vocab: profile.vocabMainLevel } : undefined;
-                const result = await syncGrowingIsland(profileId, await terminalFacts(profileId), Date.now(), growingDb, lifeDb, levels);
+                setStep('saving');
+                const result = await syncGrowingIsland(profileId, facts, Date.now(), growingDb, lifeDb, levels);
                 setRecord(result.record); setError(undefined);
                 // Only meaningful changes are announced, so two open tabs never ping-pong refreshes.
                 if (result.learned > 0 || result.town.length) announce(profileId);
@@ -73,6 +76,6 @@ export function useGrowingIsland(profileId: string, active: boolean) {
         return () => { clearInterval(id); document.removeEventListener('visibilitychange', refresh); };
     }, [active, sync]);
 
-    return { record: record?.profileId === profileId ? record : undefined, reveal, error, busy, dispatch, sync,
+    return { record: record?.profileId === profileId ? record : undefined, reveal, error, busy, dispatch, sync, step,
         clearError: () => setError(undefined) };
 }
