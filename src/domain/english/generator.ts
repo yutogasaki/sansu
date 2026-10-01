@@ -4,6 +4,7 @@ import type { EnglishWord } from "./types";
 import { shuffleArray } from "../../utils/shuffle";
 import type { RandomSource } from "../../utils/random";
 import { createLearningProblemContext } from '../learning/context';
+import { vocabMeaningsOverlap } from './meaning';
 
 type VocabGeneratorOptions = {
     cooldownIds?: string[];
@@ -35,7 +36,8 @@ export const generateVocabProblem = (
     for (const tier of tiers) {
         for (const word of shuffleArray(tier, random)) {
             if (ids.has(word.id) || labels.has(label(word))
-                || (word.surface ?? word.id) === (target.surface ?? target.id)) continue;
+                || vocabMeaningsOverlap(target, word)
+                || distractors.some(selected => vocabMeaningsOverlap(selected, word))) continue;
             distractors.push(word);
             ids.add(word.id);
             labels.add(label(word));

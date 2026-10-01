@@ -3,6 +3,7 @@ import { MATH_CURRICULUM } from '../math/curriculum';
 import { generateMathProblem, MATH_GENERATORS } from '../math';
 import { createSeededRandom } from '../../utils/random';
 import { MATH_ITEM_MAPPINGS, MATH_LEARNING_UNITS, MATH_LV11_UNIT_IDS } from './mathCatalog';
+import { MATH_FOUNDATIONS, isMathFoundation } from '../math/foundationConfig';
 
 const mappings = new Map(MATH_ITEM_MAPPINGS.map(mapping => [mapping.itemId, mapping]));
 const units = new Map(MATH_LEARNING_UNITS.map(unit => [unit.id, unit]));
@@ -12,9 +13,10 @@ describe('math unit catalog', () => {
         const legacyItems = Object.values(MATH_CURRICULUM).flat();
         expect(Object.keys(MATH_CURRICULUM)).toHaveLength(29);
         expect(legacyItems).toHaveLength(118);
-        expect(MATH_ITEM_MAPPINGS).toHaveLength(118);
-        expect(mappings.size).toBe(118);
-        expect([...mappings.keys()].sort()).toEqual([...legacyItems].sort());
+        expect(MATH_ITEM_MAPPINGS).toHaveLength(127);
+        expect(mappings.size).toBe(127);
+        expect([...mappings.keys()].filter(id => !isMathFoundation(id)).sort()).toEqual([...legacyItems].sort());
+        expect([...mappings.keys()].filter(isMathFoundation).sort()).toEqual(Object.keys(MATH_FOUNDATIONS).sort());
         expect([...mappings.keys()].sort()).toEqual(Object.keys(MATH_GENERATORS).sort());
 
         for (const [level, itemIds] of Object.entries(MATH_CURRICULUM)) {
@@ -56,7 +58,7 @@ describe('math unit catalog', () => {
 
     it('splits the 19 Lv11 ids into seven concepts while preserving their prompted representations', () => {
         expect(MATH_LV11_UNIT_IDS).toHaveLength(7);
-        const lv11 = MATH_ITEM_MAPPINGS.filter(item => item.legacyLevel === 11);
+        const lv11 = MATH_ITEM_MAPPINGS.filter(item => item.legacyLevel === 11 && !isMathFoundation(item.itemId));
         expect(new Set(lv11.map(item => item.unitId))).toEqual(new Set(MATH_LV11_UNIT_IDS));
         expect(MATH_LV11_UNIT_IDS.map(id => units.get(id)?.itemIds.length)).toEqual([4, 4, 4, 4, 1, 1, 1]);
         expect(lv11.map(item => item.itemId).sort()).toEqual([...MATH_CURRICULUM[11]].sort());
@@ -98,14 +100,15 @@ describe('math unit catalog', () => {
         expect(units.get('math.add-two-one-no-regroup')?.notes).toContain('数直線の補助');
     });
 
-    it('keeps language/color outside arithmetic prerequisites and marks missing foundations as planned', () => {
+    it('keeps language/color outside arithmetic prerequisites and supplies direct foundation content', () => {
         for (const unit of MATH_LEARNING_UNITS) {
             expect([...unit.prerequisites, ...unit.suggestedPrerequisites]).not.toContain('math.color-recognition');
             expect([...unit.prerequisites, ...unit.suggestedPrerequisites]).not.toContain('math.number-reading');
         }
         for (const id of ['math.place-value-tens', 'math.decimal-place-value', 'math.fraction-quantity', 'math.fraction-equivalence']) {
-            expect(units.get(id)?.availability).toBe('planned');
-            expect(units.get(id)?.itemIds).toEqual([]);
+            expect(units.get(id)?.availability).toBe('existing');
+            expect(units.get(id)?.itemIds).toHaveLength(1);
+            expect(isMathFoundation(units.get(id)!.itemIds[0])).toBe(true);
         }
         expect(units.get('math.decimal-compare')?.prerequisites).toContain('math.decimal-place-value');
         expect(units.get('math.fraction-compare')?.prerequisites).toContain('math.fraction-quantity');

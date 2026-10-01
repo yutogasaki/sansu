@@ -1,0 +1,25 @@
+FAIL 390 foundation_tens locator.waitFor: Timeout 15000ms exceeded.
+Call log:
+[2m  - waiting for locator('.island-page[data-learning-candidate="mystic-island-learning-v2"]') to be visible[22m
+
+FAIL 390 foundation_expanded locator.waitFor: Timeout 15000ms exceeded.
+Call log:
+[2m  - waiting for locator('.island-page[data-learning-candidate="mystic-island-learning-v2"]') to be visible[22m
+
+FAIL 390 foundation_groups locator.waitFor: Timeout 15000ms exceeded.
+Call log:
+[2m  - waiting for locator('.island-page[data-learning-candidate="mystic-island-learning-v2"]') to be visible[22m
+
+FAIL 390 foundation_division locator.waitFor: Target page, context or browser has been closed
+Call log:
+[2m  - waiting for locator('.island-page[data-learning-candidate="mystic-island-learning-v2"]') to be visible[22m
+
+REPORT output/playwright/learning-content-fixes/ui-1 false
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+browserContext.close: Target page, context or browser has been closed
+    at async file:///Users/yutogasaki/Projects/sansu/docs/audits/2026-10-01-learning-content-fixes/ui.mjs:50:3
+
+Node.js v24.18.0

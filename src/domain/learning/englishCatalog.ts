@@ -1,4 +1,5 @@
 import { ENGLISH_WORDS } from '../english/words';
+import { vocabularySenseId } from '../english/meaning';
 import type { LearningItemMapping, LearningUnitDefinition } from './types';
 
 /** Each saved item identifies one existing lexical sense, including repeated senses. */
@@ -27,6 +28,7 @@ export interface EnglishCatalogInventory {
     readonly itemCount: number;
     readonly unitCount: number;
     readonly distinctSpellingCount: number;
+    readonly distinctSenseCount: number;
     readonly legacyCategoryCount: number;
     readonly legacyLevels: readonly { readonly level: number; readonly itemCount: number }[];
     readonly legacyCategories: readonly { readonly category: string; readonly itemCount: number }[];
@@ -45,6 +47,7 @@ export function getEnglishCatalogInventory(): EnglishCatalogInventory {
         itemCount: ENGLISH_ITEM_MAPPINGS.length,
         unitCount: ENGLISH_LEARNING_UNITS.length,
         distinctSpellingCount: new Set(ENGLISH_WORDS.map(word => word.surface ?? word.id)).size,
+        distinctSenseCount: new Set(ENGLISH_WORDS.map(vocabularySenseId)).size,
         legacyCategoryCount: categoryCounts.size,
         legacyLevels: [...levelCounts].sort(([a], [b]) => a - b)
             .map(([level, itemCount]) => ({ level, itemCount })),

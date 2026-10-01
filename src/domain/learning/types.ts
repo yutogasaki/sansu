@@ -1,6 +1,7 @@
 import type { InputType, MathRepresentationMode, SubjectKey } from '../types';
 
-export const LEARNING_CATALOG_VERSION = 'curriculum-v1' as const;
+export const LEARNING_CATALOG_VERSION = 'curriculum-v2' as const;
+export type LearningCatalogVersion = 'curriculum-v1' | typeof LEARNING_CATALOG_VERSION;
 
 export type LearningRepresentation = MathRepresentationMode | 'recognition';
 
@@ -28,7 +29,7 @@ export interface LearningItemMapping {
 
 /** Frozen with a newly generated question; absent means legacy/unknown. */
 export interface LearningProblemContext {
-    catalogVersion: typeof LEARNING_CATALOG_VERSION;
+    catalogVersion: LearningCatalogVersion;
     subject: SubjectKey;
     itemId: string;
     unitId: string;

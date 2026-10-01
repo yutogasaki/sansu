@@ -107,7 +107,7 @@ const buildPairs = (predicate: (a: number, b: number) => boolean): AdditionPair[
     return pairs;
 };
 
-const LEVEL4_POOL = buildPairs((a, b) => a + b <= 5);
+const LEVEL4_POOL = buildPairs((a, b) => b <= 3 && a + b <= 12);
 const ADD_TINY_POOL = buildPairs((a, b) => a <= 3 && b <= 3);
 const ADD_FINGER_SUM5_POOL = buildPairs((a, b) => a <= 4 && b <= 4 && a + b === 5);
 const ADD_FINGER_POOL = buildPairs((a, b) => a <= 4 && b <= 4 && a + b <= 5);

@@ -24,7 +24,7 @@ function FinishPath({ subject, level, nextLevel, cleared = false }: { subject: S
         </div>
         <ArrowRight className="finish-path-arrow" size={26} aria-hidden="true" />
         <div className="finish-milestone">
-            <span className="finish-milestone-label">{cleared ? 'ひらいたよ' : 'つぎ'}</span>
+            <span className="finish-milestone-label">{cleared ? 'レベルアップ！' : 'クリアで レベルアップ'}</span>
             <div className="finish-stamp finish-stamp--next"><span>Lv</span><strong>{nextLevel ?? level + 1}</strong></div>
             <span className="finish-level-title">{learningLevelTitle(subject, nextLevel ?? level + 1)}</span>
         </div>
@@ -34,8 +34,8 @@ function FinishPath({ subject, level, nextLevel, cleared = false }: { subject: S
 export function FinishChallengeEntry({ subject, level, nextLevel, onStart }: { subject: SubjectKey; level: number; nextLevel?: number | null; onStart: () => void }) {
     return <section className="finish-card" aria-label={`${subject === 'math' ? 'さんすう' : 'えいご'}の しあげ`}>
         <div className="finish-card-heading"><IslandToyIcon kind="album" size={38} /><span>{subject === 'math' ? 'さんすう' : 'えいご'}の しあげ</span></div>
-        <h2>つぎの はんいへ すすもう</h2>
-        <p className="finish-description">ひとりで 解けることが ふえたね。<br />しあげを クリアすると、つぎが ひらくよ。</p>
+        <h2>クリアで Lv{nextLevel ?? level + 1}へ！</h2>
+        <p className="finish-description">しあげは レベルアップの チャレンジ。<br />20もん ぜんぶ ひとりで できたら つぎへ。</p>
         <FinishPath subject={subject} level={level} nextLevel={nextLevel} />
         <p className="finish-rule">20もん · ひとりで ぜんもんできたら クリア</p>
         <Button size="xl" className="finish-primary" onClick={onStart}>しあげに ちょうせん<ArrowRight size={18} aria-hidden="true" /></Button>
@@ -53,8 +53,8 @@ export function FinishChallengeResultView({ result, onNavigate, continuation }: 
         <section className="finish-card" aria-labelledby="finish-result-title">
             <div className="finish-result-icon"><IslandToyIcon kind={result.passed ? 'keepsake' : 'album'} size={58} /></div>
             <p className="finish-eyebrow">しあげの きろく</p>
-            <h1 id="finish-result-title">{result.passed ? `${learningLevelTitle(result.subject, result.level)} クリア！` : 'できたところを ふやそう'}</h1>
-            <p className="finish-description">{opened ? 'あたらしい はんいが ひらいたよ。' : result.passed ? 'ひとりで 解けた きろくが のこったよ。' : 'できた きろくは のこっているよ。\nれんしゅうしてから、あたらしい もんだいで ちょうせんしよう。'}</p>
+            <h1 id="finish-result-title">{opened ? `Lv${result.newLevel}へ レベルアップ！` : result.passed ? `${learningLevelTitle(result.subject, result.level)} クリア！` : 'できたところを ふやそう'}</h1>
+            <p className="finish-description">{opened ? `${learningLevelTitle(result.subject, result.level)} クリア！あたらしい はんいが ひらいたよ。` : result.passed ? 'ひとりで 解けた きろくが のこったよ。' : 'できた きろくは のこっているよ。\nれんしゅうしてから、あたらしい もんだいで ちょうせんしよう。'}</p>
             {opened && <FinishPath subject={result.subject} level={result.level} nextLevel={result.newLevel} cleared />}
             <div className="finish-score"><strong>{result.correctCount}<span> / {result.totalQuestions}もん</span></strong><span>ひとりで できた</span></div>
             {opened && continuation === 'pending' && <p className="finish-description">とちゅうの れんしゅうを つづけるよ。<br />あたらしい はんいは つぎの くぎりから。</p>}

@@ -30,10 +30,21 @@ describe("additionProgress", () => {
         expect(selectAdditionPair("add_1d_1", 2)).toEqual([2, 1]);
     });
 
-    it("keeps late add_1d_1 problems within sums of 5", () => {
-        vi.spyOn(Math, "random").mockReturnValue(0);
-        const [a, b] = selectAdditionPair("add_1d_1", 30);
-        expect(a + b).toBeLessThanOrEqual(5);
+    it("keeps the full documented range after add_1d_1 introduction", () => {
+        const random = vi.spyOn(Math, 'random');
+        const observed = new Set<string>();
+        for (let i = 0; i < 270; i++) {
+            random.mockReturnValue(i / 270);
+            const [a, b] = selectAdditionPair('add_1d_1', 30);
+            expect(a).toBeGreaterThanOrEqual(1);
+            expect(a).toBeLessThanOrEqual(9);
+            expect(b).toBeGreaterThanOrEqual(1);
+            expect(b).toBeLessThanOrEqual(3);
+            expect(a + b).toBeLessThanOrEqual(12);
+            observed.add(`${a}+${b}`);
+        }
+        expect(observed.size).toBe(27);
+        expect(observed.has('9+3')).toBe(true);
     });
 
     it("keeps late add_tiny, add_finger, and add_5 inside supported ranges", () => {

@@ -10,6 +10,7 @@ import { commitIslandLearning } from './commit';
 import { claimIslandReward, IslandConflict, openIsland, saveIslandEdit, startIslandPlan } from './repository';
 import { mathCheckQuestionKey } from './learningChecks';
 import type { IslandPlan } from './types';
+import { isMathFoundation } from '../math/foundationConfig';
 
 const databases: SansuDatabase[] = [];
 const memory = (id: string, profileId: string, nextReview = '2099-01-01') => ({
@@ -22,7 +23,9 @@ async function setup(subject: 'math' | 'vocab' | 'mix' = 'math', level = 11) {
     const p = { ...createInitialProfile('test', 2, level - 1, 2, subject), id: 'child', hissanModeEnabled: false };
     await d.profiles.put(p);
     await d.appData.put({ id: 'app', schemaVersion: 1, activeProfileId: p.id, profiles: { [p.id]: p } });
-    await d.memoryMath.bulkPut(getAvailableSkills(level).map(id => ({ ...memory(id, p.id), status: 'active' as const })));
+    await d.memoryMath.bulkPut(getAvailableSkills(level).map(id => ({ ...memory(id, p.id), status: 'active' as const,
+        ...(isMathFoundation(id) ? { independentCorrectAnswers: 3 } : {}),
+    })));
     await d.memoryVocab.bulkPut(ENGLISH_WORDS.filter(word => word.level <= 2).map(word => memory(word.id, p.id)));
     await openIsland(p.id, d);
     return d;

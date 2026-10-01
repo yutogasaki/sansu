@@ -1,4 +1,5 @@
 import type { LearningItemMapping, LearningRepresentation, LearningUnitDefinition } from './types';
+import { mathContentVariants } from '../math/contentVariants';
 
 type Item = readonly [id: string, level: number, representation: LearningRepresentation, variants?: readonly string[]];
 type Dependencies = {
@@ -17,21 +18,13 @@ const existing = (
             id, subject: 'math', label, strand, itemIds: items.map(item => item[0]),
             availability: 'existing', prerequisites: [], suggestedPrerequisites: [], ...dependencies,
         },
-        mappings: items.map(([itemId, legacyLevel, representation, variants = ['default']]) => ({
+        mappings: items.map(([itemId, legacyLevel, representation, variants = mathContentVariants(itemId)]) => ({
             itemId, subject: 'math', unitId: id, legacyLevel, representation, variants,
         })),
     };
 };
 
-const planned = (concept: string, label: string, strand: string, dependencies: Dependencies = {}): Entry => ({
-    unit: {
-        id: `math.${concept}`, subject: 'math', label, strand, itemIds: [], availability: 'planned',
-        prerequisites: [], suggestedPrerequisites: [], ...dependencies,
-    },
-    mappings: [],
-});
-
-/** Shadow metadata: these relationships must never gate the legacy planner. */
+/** Relationships select supporting introductions; they do not lock saved levels. */
 const ENTRIES: readonly Entry[] = [
     existing('count-quantity', 'ものの個数を数える', 'quantity', [
         ['count_5', 0, 'concrete'], ['count_dot', 0, 'concrete'], ['count_10', 3, 'concrete'],
@@ -301,33 +294,33 @@ const ENTRIES: readonly Entry[] = [
     existing('speed', '速さ・時間・距離の関係', 'proportional-reasoning', [['speed_basic', 28, 'symbol']], {
         prerequisites: ['math.unit-rate'], suggestedPrerequisites: ['math.multiply-one-digit', 'math.divide-one-digit-exact'],
     }),
-    planned('place-value-tens', '10のまとまりと1の位', 'place-value', {
+    existing('place-value-tens', '10のまとまりと1の位', 'place-value', [['foundation_tens', 11, 'bridge']], {
         suggestedPrerequisites: ['math.compose-ten', 'math.count-quantity'],
-        notes: '図の補助は既存計算にあるが、10と1への分解・再構成を直接答える教材は未実装。',
+        notes: '10のまとまりと1を数で再構成する短い導入。保存済みLv11の19教材とは別の補助教材。',
     }),
-    planned('place-value-expanded', '100以上の位と位ごとの再構成', 'place-value', {
+    existing('place-value-expanded', '100以上の位と位ごとの再構成', 'place-value', [['foundation_expanded', 12, 'bridge']], {
         prerequisites: ['math.place-value-tens'],
     }),
-    planned('decimal-place-value', '1を10等分した量と小数の位', 'decimal', {
+    existing('decimal-place-value', '1を10等分した量と小数の位', 'decimal', [['foundation_decimal', 19, 'bridge']], {
         prerequisites: ['math.place-value-tens'],
-        notes: '小数比較や計算を通じた間接証拠から、量・位取りの直接確認を作らない。',
+        notes: '等分図の量を小数で表す・小数を比較する・10倍する導入を直接確認する。',
     }),
-    planned('fraction-quantity', '等分した1と分数の量', 'fraction', {
+    existing('fraction-quantity', '等分した1と分数の量', 'fraction', [['foundation_fraction', 21, 'bridge']], {
         suggestedPrerequisites: ['math.equal-sharing'],
     }),
-    planned('fraction-equivalence', '等しい分数・約分・通分の意味', 'fraction', {
+    existing('fraction-equivalence', '等しい分数・約分・通分の意味', 'fraction', [['foundation_equivalence', 21, 'bridge']], {
         prerequisites: ['math.fraction-quantity'], suggestedPrerequisites: ['math.multiplication-facts', 'math.divide-facts'],
     }),
-    planned('fraction-mixed-meaning', '整数と分数を合わせた量', 'fraction', {
+    existing('fraction-mixed-meaning', '整数と分数を合わせた量', 'fraction', [['foundation_mixed', 22, 'bridge']], {
         prerequisites: ['math.fraction-quantity'],
     }),
-    planned('equal-groups', '同じ数ずつの集まりと掛け算', 'multiplication', {
+    existing('equal-groups', '同じ数ずつの集まりと掛け算', 'multiplication', [['foundation_groups', 13, 'bridge']], {
         suggestedPrerequisites: ['math.count-quantity', 'math.combine-small'],
     }),
-    planned('division-meaning', '等分除・包含除・余りの量', 'division', {
+    existing('division-meaning', '等分除・包含除・余りの量', 'division', [['foundation_division', 16, 'bridge']], {
         suggestedPrerequisites: ['math.equal-sharing', 'math.equal-groups'],
     }),
-    planned('unit-rate', '1あたりの量と二量の対応', 'proportional-reasoning', {
+    existing('unit-rate', '1あたりの量と二量の対応', 'proportional-reasoning', [['foundation_rate', 26, 'bridge']], {
         prerequisites: ['math.division-meaning'], suggestedPrerequisites: ['math.equal-groups'],
     }),
 ];

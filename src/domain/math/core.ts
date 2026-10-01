@@ -6,7 +6,7 @@ import { independentCorrectCount } from '../learning/independentProgress';
 export interface MathGeneratorContext {
     profile?: UserProfile;
     random?: RandomSource;
-    /** A new reservation may target a missing conceptual variant. */
+    /** A new reservation may target a content variant or an introduction step. */
     preferredLearningVariant?: string;
 }
 

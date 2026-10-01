@@ -30,6 +30,13 @@ export function isRepresentativeMathContent(itemId: string, question?: string): 
         const match = question?.match(/^\s*(\d+)\s*[-−]\s*(\d+)\s*=\s*$/);
         return Boolean(match && Number(match[1]) >= 11 && Number(match[1]) % 10 < Number(match[2]));
     }
+    if (itemId === 'average_basic') {
+        const numbers = question?.split(' の ')[0].split('、').map(Number) ?? [];
+        if (numbers.length < 3 || numbers.some(n => !Number.isFinite(n))) return false;
+        const sorted = [...numbers].sort((a, b) => a - b);
+        const average = numbers.reduce((a, b) => a + b, 0) / numbers.length;
+        return (sorted[0] + sorted[sorted.length - 1]) / 2 !== average;
+    }
     return true;
 }
 

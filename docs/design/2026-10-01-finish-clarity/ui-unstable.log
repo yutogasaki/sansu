@@ -1,0 +1,20 @@
+PASS 390 empty
+PASS 390 partial
+PASS 390 coverage
+PASS 390 paused
+PASS 390 ready
+PASS 390 vocab
+PASS 390 complete
+PASS 768 empty
+PASS 768 partial
+PASS 768 coverage
+PASS 768 paused
+FAIL 768 ready locator.waitFor: Timeout 15000ms exceeded.
+Call log:
+[2m  - waiting for locator('[data-study-index="4"]') to be visible[22m
+
+    at index (/Users/yutogasaki/Projects/sansu/docs/design/2026-10-01-finish-clarity/ui.mjs:28:78)
+    at /Users/yutogasaki/Projects/sansu/docs/design/2026-10-01-finish-clarity/ui.mjs:36:532
+PASS 768 vocab
+PASS 768 complete
+REPORT false

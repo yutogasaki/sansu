@@ -47,21 +47,11 @@ export const generators: Record<string, GeneratorFn> = {
 
     // Level 14: 2桁÷2桁（割切）
     "div_2d2d_exact": (context) => {
-        const b = randomInt(10, 99, context?.random);
-
-        // Ensure a is 2 digits?
-        // If b=10, q=9, a=90. OK.
-        // If b=50, q=2, a=100. NG.
-        // So b * q <= 99.
-        // Max q = 99 / b.
-        const maxQ = Math.floor(99 / b);
-        if (maxQ < 1) {
-            // b > 99 impossible
-            return createProblem("div_2d2d_exact", `10 ÷ 10 =`, "1", "number"); // Fallback
-        }
-        const safeQ = randomInt(1, maxQ, context?.random);
-        const a = b * safeQ;
-        return createProblem("div_2d2d_exact", `${a} ÷ ${b} =`, safeQ.toString(), "number");
+        const one = context?.preferredLearningVariant === 'quotient-one'
+            || (context?.preferredLearningVariant !== 'quotient-many' && (context?.random ?? Math.random)() < 0.2);
+        const q = one ? 1 : randomInt(2, 9, context?.random);
+        const b = randomInt(10, Math.floor(99 / q), context?.random);
+        return createProblem("div_2d2d_exact", `${b * q} ÷ ${b} =`, String(q), "number");
     },
     // Level 14: 3桁÷1桁（割切）
     "div_3d1d_exact": (context) => {

@@ -64,6 +64,7 @@ describe('English learning unit inventory', () => {
         expect(inventory.itemCount).toBe(1184);
         expect(inventory.unitCount).toBe(1184);
         expect(inventory.distinctSpellingCount).toBe(1173);
+        expect(inventory.distinctSenseCount).toBe(1183);
         expect(inventory.legacyCategoryCount).toBe(49);
         expect(inventory.legacyLevels.map(entry => entry.level))
             .toEqual(Array.from({ length: 20 }, (_, index) => index + 1));

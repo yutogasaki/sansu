@@ -222,6 +222,8 @@ const describeSharingVisual = (visual: Extract<ProblemVisual, { kind: "sharing-i
 
 const buildVisualPrompt = (visual: ProblemVisual): string => {
     switch (visual.kind) {
+        case 'fraction-strips':
+            return visual.groups.map(group => `${group.label}: 1を${group.parts}等分したうち${group.filled}こぶん`).join('\n');
         case "number-card":
             return `${visual.card.value}\n${describeCountGroup(visual.card.supportGroup)}`;
         case "reference-choice-grid":

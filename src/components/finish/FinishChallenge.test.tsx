@@ -15,7 +15,7 @@ describe('finish challenge meaning and payoff', () => {
     it('shows saved progression separately from the answer count', () => {
         const html = renderToStaticMarkup(<FinishChallengeResultView continuation="fresh" result={{ passed: true, subject: 'math', level: 16, newLevel: 17, correctCount: 20, totalQuestions: 20 }} onNavigate={() => {}} />);
         expect(html).toContain('data-finish-state="cleared"');
-        expect(html).toContain('ひらいたよ');
+        expect(html).toContain('Lv17へ レベルアップ！');
         expect(html).toContain('つぎを はじめる');
         expect(html).toContain('あまりのある わりざん');
     });

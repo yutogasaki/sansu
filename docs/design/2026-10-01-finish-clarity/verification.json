@@ -1,0 +1,31 @@
+{
+  "location": "local, uncommitted",
+  "baseRevision": "008e0c8bfb1f784c86e8f1b6083c823a9b5189e3",
+  "core": {
+    "result": "PASS",
+    "files": 510,
+    "tests": 4547,
+    "note": "Shared working-copy run; concurrent edits mean this is not a fixed whole-app release certification"
+  },
+  "relatedTests": {
+    "result": "PASS",
+    "tests": 16
+  },
+  "ui": {
+    "result": "PASS",
+    "cases": 14,
+    "sourceStable": true,
+    "target": "http://127.0.0.1:5274",
+    "runtime": "fixed-source-dev-snapshot",
+    "changedFromSnapshot": [
+      "src/components/island/growing/GrowingIsland.tsx",
+      "src/components/island/growing/GrowingWorld.tsx",
+      "src/components/island/growing/growingCamera.ts",
+      "src/domain/growingIsland/repository.test.ts",
+      "src/domain/growingIsland/repository.ts"
+    ],
+    "changedImplementationMatchesSnapshot": true
+  },
+  "deployed": false,
+  "fullRelease": "not performed"
+}

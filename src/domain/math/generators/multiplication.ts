@@ -16,7 +16,8 @@ export const generators: Record<string, GeneratorFn> = {
 
     // Level 10: 九九ランダム
     "mul_99_rand": (context) => {
-        const a = randomInt(1, 9, context?.random);
+        const preferred = context?.preferredLearningVariant?.match(/^table-([1-9])$/);
+        const a = preferred ? Number(preferred[1]) : randomInt(1, 9, context?.random);
         const b = randomInt(1, 9, context?.random);
         return createProblem("mul_99_rand", `${a} × ${b} =`, (a * b).toString(), "number");
     },

@@ -1,7 +1,7 @@
 import { indexedDB, IDBKeyRange } from 'fake-indexeddb';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { SansuDatabase } from '../../db';
-import type { Problem } from '../types';
+import { createDefaultMemoryState, type Problem } from '../types';
 import { createInitialProfile } from '../user/profile';
 import { createLearningProblemContext } from './context';
 import * as contextHelpers from './context';
@@ -78,7 +78,9 @@ describe('new learning evidence persistence', () => {
 
     it('freezes the actual written representation after new-plan mode selection', () => {
         const p = { ...createInitialProfile('test', 2, 11, 2, 'math'), mathMainLevel: 11, mathMaxUnlocked: 11,
-            hissanModeEnabled: true, mathSkills: {} };
+            hissanModeEnabled: true, mathSkills: { foundation_tens: {
+                ...createDefaultMemoryState('foundation_tens', 'math', true), independentCorrectAnswers: 3,
+            } } };
         p.mathLevels = p.mathLevels?.map(level => ({ ...level, enabled: level.level === 11, unlocked: level.level <= 11 }));
         const plan = planParkLearning(p, [], [], [], 0, 'written-evidence', Date.now());
         expect(plan.slots.some(slot => slot.problem.inputType === 'hissan')).toBe(true);

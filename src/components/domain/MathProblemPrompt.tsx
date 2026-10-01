@@ -2,6 +2,8 @@ import React from "react";
 import { Problem, ProblemVisualBalanceItem, ProblemVisualCategoryBucket, ProblemVisualGroup, ProblemVisualItem, ProblemVisualLengthBar, ProblemVisualNumberCard, ProblemVisualNumberLine, ProblemVisualPairItem, ProblemVisualPositionScene, ProblemVisualReferenceChoice, ProblemVisualSequenceSlot, ProblemVisualValueGroup } from "../../domain/types";
 import { cn } from "../../utils/cn";
 import { MathRenderer } from "./MathRenderer";
+import { FractionStrips } from './FractionStrips';
+import { isMathFoundation } from '../../domain/math/foundationConfig';
 
 type PromptProblem = Pick<Problem, "questionText" | "questionVisual" | "categoryId">;
 
@@ -13,6 +15,7 @@ interface MathProblemPromptProps {
 
 // An illustration can change material, never the reserved item's identity or geometry.
 const ItemIllustrationContext = React.createContext<MathProblemPromptProps["renderItem"]>(undefined);
+const FoundationCaptionContext = React.createContext(false);
 const ItemIllustration = ({ item }: { item?: ProblemVisualItem }) => {
     const renderItem = React.useContext(ItemIllustrationContext);
     return item ? <>{renderItem ? renderItem(item) : item.emoji}</> : null;
@@ -172,7 +175,7 @@ const BaseTenGuideCard: React.FC = () => (
 
 const PromptCaption: React.FC<{
     text: string;
-}> = ({ text }) => (
+}> = ({ text }) => React.useContext(FoundationCaptionContext) ? null : (
     <p data-visual-caption className="text-sm font-black tracking-[0.08em] text-slate-500">
         {text}
     </p>
@@ -557,6 +560,34 @@ const ItemPairCard: React.FC<{
 
 const MathProblemPromptContent: React.FC<MathProblemPromptProps> = ({ problem, className }) => {
     const visual = problem?.questionVisual;
+    if (problem && isMathFoundation(problem.categoryId) && visual?.kind === 'sharing-items') return (
+        <div className={cn('grid w-full grid-cols-2 gap-2', className)}>
+            {[visual.source, visual.recipients].map((group, index) => <div key={index} className="rounded-lg border border-slate-200 bg-white p-1">
+                <div className="mb-1 text-xs font-bold text-slate-600">{group.label}</div>
+                <div className="grid grid-cols-4 justify-items-center gap-1">
+                    {Array.from({ length: group.count }, (_, item) => <span key={item} data-count-item={item} className="text-lg leading-none"><ItemIllustration item={group} /></span>)}
+                </div>
+            </div>)}
+        </div>
+    );
+    if (problem && isMathFoundation(problem.categoryId) && visual?.kind === 'item-order') return (
+        <div className={cn('grid w-full gap-2', className)} style={{ gridTemplateColumns: `repeat(${visual.groups.length}, minmax(0, 1fr))` }}>
+            {visual.groups.map((group, index) => (
+                <div key={index} data-visual-surface="group" data-visual-count={group.count} className="min-w-0 rounded-lg border border-slate-200 bg-white p-1">
+                    <div className="mb-1 text-xs font-bold leading-tight text-slate-600">{group.label}</div>
+                    <div className="grid justify-items-center gap-1" style={{ gridTemplateColumns: `repeat(${Math.min(2, group.count)}, minmax(0, 1fr))` }}>
+                        {Array.from({ length: group.count }, (_, item) => <span key={item} data-count-item={item} className="text-lg leading-none"><ItemIllustration item={group} /></span>)}
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
+    if (visual?.kind === 'fraction-strips') return (
+        <div className={cn('w-full space-y-4', className)}>
+            <FractionStrips visual={visual} />
+            <PromptCaption text={visual.prompt || problem?.questionText || ''} />
+        </div>
+    );
     const showSpatialQuestionCard = problem?.categoryId === "spatial_words"
         && (visual?.kind === "item-pair" || visual?.kind === "position-scene");
     const showComparisonQuestionCard = (problem?.categoryId === "compare_1d" || problem?.categoryId === "compare_2d")
@@ -848,8 +879,16 @@ const MathProblemPromptContent: React.FC<MathProblemPromptProps> = ({ problem, c
 };
 
 
-export const MathProblemPrompt: React.FC<MathProblemPromptProps> = ({ renderItem, ...props }) => (
-    <ItemIllustrationContext.Provider value={renderItem}>
-        <MathProblemPromptContent {...props} />
-    </ItemIllustrationContext.Provider>
-);
+export const MathProblemPrompt: React.FC<MathProblemPromptProps> = ({ renderItem, ...props }) => {
+    const foundation = Boolean(props.problem?.questionVisual && isMathFoundation(props.problem.categoryId));
+    return (
+        <ItemIllustrationContext.Provider value={renderItem}>
+            <FoundationCaptionContext.Provider value={foundation}>
+                {foundation ? <div className="w-full space-y-2" data-math-foundation>
+                    <p data-visual-caption className="text-sm font-bold leading-snug text-slate-600">{props.problem?.questionText}</p>
+                    <MathProblemPromptContent {...props} />
+                </div> : <MathProblemPromptContent {...props} />}
+            </FoundationCaptionContext.Provider>
+        </ItemIllustrationContext.Provider>
+    );
+};

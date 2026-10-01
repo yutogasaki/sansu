@@ -9,11 +9,16 @@ import {
 } from "./curriculum";
 import { planMathProblemSlots, planMathProblems } from "./planner";
 import { createDefaultMemoryState } from "../types";
+import { MATH_FOUNDATIONS } from './foundationConfig';
 
 const createMathProfile = (mainLevel = 8, maxUnlocked = mainLevel) => {
     const profile = createInitialProfile("Planner", 1, mainLevel, 1, "math");
     profile.mathMainLevel = mainLevel;
     profile.mathMaxUnlocked = maxUnlocked;
+    // These planner tests isolate legacy selection after the short introductions.
+    for (const id of Object.keys(MATH_FOUNDATIONS)) profile.mathSkills[id] = {
+        ...createDefaultMemoryState(id, 'math', true), independentCorrectAnswers: 3,
+    };
     return profile;
 };
 

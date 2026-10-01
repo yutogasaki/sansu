@@ -6,6 +6,7 @@ import { generators as division } from "./generators/division";
 import { generators as decimal } from "./generators/decimal";
 import { generators as fraction } from "./generators/fraction";
 import { generators as advanced } from "./generators/advanced";
+import { generators as foundations } from './generators/foundations';
 
 import { GeneratorFn, MathGeneratorContext } from "./core";
 
@@ -20,6 +21,7 @@ export const MATH_GENERATORS: Record<string, GeneratorFn> = {
     ...decimal,
     ...fraction,
     ...advanced,
+    ...foundations,
 };
 
 export const generateMathProblem = (skillId: string, context?: MathGeneratorContext) => {

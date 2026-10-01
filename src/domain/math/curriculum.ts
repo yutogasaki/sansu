@@ -3,6 +3,7 @@ import type {
     MathSkillMetadata,
     UserProfile,
 } from "../types";
+import { MATH_FOUNDATIONS, isMathFoundation } from './foundationConfig';
 
 export const MAX_MATH_LEVEL = 28;
 export const MAX_VOCAB_LEVEL = 20;
@@ -230,6 +231,7 @@ const EXPLICIT_MATH_SKILL_METADATA: Record<string, Partial<MathSkillMetadata>> =
 };
 
 const inferMathSkillRepresentation = (skillId: string): MathRepresentationMode => {
+    if (isMathFoundation(skillId)) return 'bridge';
     if (skillId.endsWith("_bridge")) return "bridge";
     if (skillId.includes("_hissan") || skillId.includes("_algorithm")) return "algorithm";
     if (skillId.includes("_mental")) return "mental";
@@ -259,10 +261,11 @@ export const getAvailableSkills = (maxLevel: number): string[] => {
             skills = skills.concat(MATH_CURRICULUM[i]);
         }
     }
-    return skills;
+    return skills.concat(Object.entries(MATH_FOUNDATIONS).filter(([, foundation]) => foundation.level <= maxLevel).map(([id]) => id));
 };
 
 export const getLevelForSkill = (skillId: string): number | null => {
+    if (isMathFoundation(skillId)) return MATH_FOUNDATIONS[skillId].level;
     for (const [level, skills] of Object.entries(MATH_CURRICULUM)) {
         if (skills.includes(skillId)) {
             return Number(level);

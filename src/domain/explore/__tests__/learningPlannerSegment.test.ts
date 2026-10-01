@@ -616,6 +616,9 @@ describe("Explore immutable learning-segment planner integration", () => {
     it("checkpoints and resumes a full-reserved retry selected from the main source", async () => {
         const attemptTime = Date.now();
         const profile = createProfile(13);
+        // Isolate multiplication retry persistence after its concept introduction.
+        profile.mathSkills.foundation_groups = { id: 'foundation_groups', strength: 3, nextReview: '2099-01-01',
+            totalAnswers: 3, correctAnswers: 3, incorrectAnswers: 0, skippedAnswers: 0, independentCorrectAnswers: 3, updatedAt: '' };
         await persistProfile(profile);
         const fixture = await startRoutedRun(profile, "retry-main-source-checkpoint");
         const initial = await reserveOpeningSegment(profile, fixture);

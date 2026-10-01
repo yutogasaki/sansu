@@ -1,6 +1,9 @@
 import type { Problem, SubjectKey } from '../types';
 import { getLearningItemMapping } from './catalog';
 import { LEARNING_CATALOG_VERSION } from './types';
+import type { LearningCatalogVersion } from './types';
+import { classifyMathContent } from '../math/contentVariants';
+import { isMathFoundation } from '../math/foundationConfig';
 import type { LearningEvidenceContext, LearningProblemContext } from './types';
 
 type ContextProblem = Pick<Problem,
@@ -18,7 +21,7 @@ const canonical = (value: unknown): string => {
     return JSON.stringify(value) ?? 'null';
 };
 
-const getVariant = (problem: ContextProblem, variants: readonly string[]): string => {
+const getVariant = (problem: ContextProblem, variants: readonly string[], version: LearningCatalogVersion): string => {
     if (problem.categoryId === 'sub_2d2d') {
         // Classify the actual reserved equation, never the last learner answer.
         const match = problem.questionText?.match(/^\s*(\d{2})\s*[-−]\s*(\d{2})\s*=\s*$/);
@@ -28,13 +31,16 @@ const getVariant = (problem: ContextProblem, variants: readonly string[]): strin
         if (a < 10 || b < 10 || a < b || String(a - b) !== problem.correctAnswer) return 'unknown';
         return a % 10 < b % 10 ? 'regroup' : 'no-regroup';
     }
-    return variants.length === 1 ? variants[0] : 'unknown';
+    if (version === 'curriculum-v1') return 'default';
+    const variant = classifyMathContent(problem);
+    return variants.includes(variant) ? variant : 'unknown';
 };
 
 /** Additive, deterministic metadata. Does not consume RNG, time or profile state. */
 export const createLearningProblemContext = (
     subject: SubjectKey,
     problem: ContextProblem,
+    version: LearningCatalogVersion = LEARNING_CATALOG_VERSION,
 ): LearningProblemContext | undefined => {
     const mapping = getLearningItemMapping(subject, problem.categoryId);
     if (!mapping) return undefined;
@@ -53,12 +59,12 @@ export const createLearningProblemContext = (
         operands: problem.hissanOperands,
     });
     return {
-        catalogVersion: LEARNING_CATALOG_VERSION,
+        catalogVersion: version,
         subject,
         itemId: mapping.itemId,
         unitId: mapping.unitId,
         representation: subject === 'math' && problem.inputType === 'hissan' ? 'algorithm' : mapping.representation,
-        variant: getVariant(problem, mapping.variants),
+        variant: subject === 'vocab' ? 'default' : getVariant(problem, mapping.variants, version),
         inputType: problem.inputType,
         problemKey,
     };
@@ -78,13 +84,16 @@ export const validateLearningEvidenceContext = (
         || !record(value.problem)) return undefined;
     const problem = value.problem;
     const mapping = getLearningItemMapping(subject, itemId);
-    if (!mapping || problem.catalogVersion !== LEARNING_CATALOG_VERSION
+    if (!mapping || typeof problem.catalogVersion !== 'string'
+        || !['curriculum-v1', LEARNING_CATALOG_VERSION].includes(problem.catalogVersion)
+        || (subject === 'math' && isMathFoundation(itemId) && problem.catalogVersion === 'curriculum-v1')
         || problem.subject !== subject || problem.itemId !== itemId
         || !['number', 'multi-number', 'choice', 'hissan'].includes(String(problem.inputType))
         || problem.unitId !== mapping.unitId
         || problem.representation !== (subject === 'math' && problem.inputType === 'hissan' ? 'algorithm' : mapping.representation)
         || typeof problem.variant !== 'string'
-        || (problem.variant !== 'unknown' && !mapping.variants.includes(problem.variant))
+        || (problem.variant !== 'unknown' && !mapping.variants.includes(problem.variant)
+            && !(problem.catalogVersion === 'curriculum-v1' && problem.variant === 'default'))
         || typeof problem.problemKey !== 'string' || problem.problemKey.length === 0
         || problem.problemKey.length > 32768) return undefined;
     // Bind metadata to the frozen content. Membership alone would let the same
@@ -104,7 +113,7 @@ export const validateLearningEvidenceContext = (
             inputConfig: content.input as Problem['inputConfig'],
             questionVisual: content.visual as Problem['questionVisual'],
             hissanOperands: content.operands as Problem['hissanOperands'],
-        });
+        }, problem.catalogVersion as LearningCatalogVersion);
         if (!rebuilt || rebuilt.problemKey !== problem.problemKey || rebuilt.variant !== problem.variant
             || rebuilt.representation !== problem.representation) return undefined;
     } catch { return undefined; }
@@ -113,7 +122,7 @@ export const validateLearningEvidenceContext = (
         completion: 'whole-problem',
         assistance: value.assistance as LearningEvidenceContext['assistance'],
         problem: {
-            catalogVersion: LEARNING_CATALOG_VERSION, subject, itemId,
+            catalogVersion: problem.catalogVersion as LearningCatalogVersion, subject, itemId,
             unitId: mapping.unitId, representation: problem.representation as LearningProblemContext['representation'],
             inputType: problem.inputType as LearningProblemContext['inputType'],
             variant: problem.variant, problemKey: problem.problemKey,

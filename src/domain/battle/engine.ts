@@ -1,4 +1,5 @@
 import { getAvailableSkills } from "../math/curriculum";
+import { isMathFoundation } from '../math/foundationConfig';
 import { generateMathProblem } from "../math/index";
 import { randomChoice } from "../math/core";
 import { generateVocabProblem } from "../english/generator";
@@ -67,7 +68,7 @@ const toBattleMathProblem = (
 export function generateBattleMathProblem(grade: BattleGrade): BattleProblem {
     const { min, max } = GRADE_TO_LEVELS[grade];
 
-    const allSkills = getAvailableSkills(max);
+    const allSkills = getAvailableSkills(max).filter(id => !isMathFoundation(id));
     const belowMin = min > 1 ? new Set(getAvailableSkills(min - 1)) : new Set<string>();
 
     const eligible = allSkills.filter(

@@ -41,6 +41,13 @@ describe('honest learning progress presentation', () => {
     it('handles parent-disabled next range and the real last math level', () => {
         const p = promotionProfile(); p.mathLevels!.find(l => l.level === 9)!.enabled = false;
         expect(learningProgressView(p, 'math').stage).toBe('paused');
+        const paused = learningProgressView(p, 'math', undefined, { ...ready, recentCount: 8, recentCorrect: 6, coveredCount: 0, coverageReady: false, fresh: false });
+        expect(paused.conditions[0].count).toBe(8);
+        expect(paused.conditions[1].detail).toContain('6問 ひとりでできた');
+        expect(paused.conditions[2].count).toBe(0);
+        expect(paused.message).toContain('設定で おやすみ中');
+        p.mathLevels = p.mathLevels!.filter(level => level.level !== 9);
+        expect(learningProgressView(p, 'math', undefined, ready).message).toContain('設定を たしかめて');
         p.mathMainLevel = 28; p.mathMaxUnlocked = 28;
         expect(learningProgressView(p, 'math')).toMatchObject({ stage: 'complete', next: null, conditions: [] });
     });

@@ -1,4 +1,21 @@
-import { GeneratorFn, createProblem, randomChoice, randomInt } from "../core";
+import { GeneratorFn, createProblem, getMathSkillProgress, randomChoice, randomInt } from "../core";
+import { shuffleArray } from "../../../utils/shuffle";
+import { mathContentVariants } from "../contentVariants";
+import type { MathGeneratorContext } from "../core";
+
+const modeFor = (id: string, context?: MathGeneratorContext): number => {
+    const variants = mathContentVariants(id);
+    const preferred = variants.indexOf(context?.preferredLearningVariant ?? "");
+    return preferred >= 0 ? preferred : randomInt(0, variants.length - 1, context?.random);
+};
+
+const unlikeFractions: [number, number, number, number][] = [];
+for (let b = 2; b <= 12; b++) for (let d = 2; d <= 12; d++) {
+    if (b === d) continue;
+    for (let a = 1; a < b; a++) for (let c = 1; c < d; c++) {
+        if (a !== c && a * d !== b * c) unlikeFractions.push([a, b, c, d]);
+    }
+}
 
 const comparisonChoices = [
     { label: ">", value: ">" },
@@ -15,7 +32,7 @@ const formatInt = (value: number): string => value.toLocaleString("ja-JP");
 export const generators: Record<string, GeneratorFn> = {
     // Level 20: 10倍、100倍、1/10
     "scale_10x": (context) => {
-        const type = randomInt(0, 2, context?.random); // 0: x10, 1: x100, 2: /10
+        const type = modeFor("scale_10x", context);
         const a = randomInt(1, 999, context?.random);
 
         if (type === 0) {
@@ -29,7 +46,7 @@ export const generators: Record<string, GeneratorFn> = {
         return createProblem("scale_10x", `${a} ÷ 10 =`, (a / 10).toString(), "number");
     },
     "large_number_unit": (context) => {
-        const usesOku = randomInt(0, 1, context?.random) === 1;
+        const usesOku = modeFor("large_number_unit", context) === 1;
         if (usesOku) {
             const oku = randomInt(1, 99, context?.random);
             const value = oku * 100000000;
@@ -58,7 +75,7 @@ export const generators: Record<string, GeneratorFn> = {
         });
     },
     "frac_compare": (context) => {
-        const mode = randomInt(0, 2, context?.random);
+        const mode = modeFor("frac_compare", context);
         let a: number;
         let b: number;
         let c: number;
@@ -76,7 +93,7 @@ export const generators: Record<string, GeneratorFn> = {
             d = randomInt(a + 1, 11, context?.random);
             if (d >= b) d += 1;
             c = a;
-        } else {
+        } else if (mode === 2) {
             const baseDenominator = randomInt(2, 9, context?.random);
             const baseNumerator = randomInt(1, baseDenominator - 1, context?.random);
             const multiplier = randomInt(2, 4, context?.random);
@@ -84,6 +101,8 @@ export const generators: Record<string, GeneratorFn> = {
             b = baseDenominator;
             c = baseNumerator * multiplier;
             d = baseDenominator * multiplier;
+        } else {
+            [a, b, c, d] = randomChoice(unlikeFractions, context?.random);
         }
 
         const left = a / b;
@@ -98,25 +117,41 @@ export const generators: Record<string, GeneratorFn> = {
         const percent = randomChoice([10, 20, 25, 50, 75], context?.random);
         const part = (whole * percent) / 100;
 
-        if (randomInt(0, 1, context?.random) === 0) {
+        if (modeFor("percent_basic", context) === 0) {
             return createProblem("percent_basic", `${part} は ${whole} の なん%？`, percent.toString(), "number");
         }
 
         return createProblem("percent_basic", `${whole} の ${percent}% は？`, part.toString(), "number");
     },
     "average_basic": (context) => {
-        const average = randomInt(3, 30, context?.random);
-
-        if (randomInt(0, 1, context?.random) === 0) {
-            const distance = randomInt(1, Math.min(8, average - 1), context?.random);
+        const progress = getMathSkillProgress("average_basic", context);
+        if (!context?.preferredLearningVariant && progress !== undefined && progress < 3) {
+            const average = randomInt(3, 15, context?.random);
+            const distance = randomInt(1, average - 1, context?.random);
             const numbers = [average - distance, average, average + distance];
-            return createProblem("average_basic", `${numbers.join("、")} の へいきんは？`, average.toString(), "number");
+            return createProblem("average_basic", `${numbers.join("、")} の へいきんは？`, String(average), "number");
         }
-
-        const outer = randomInt(2, Math.min(9, average - 1), context?.random);
-        const inner = randomInt(1, outer, context?.random);
-        const numbers = [average - outer, average - inner, average + inner, average + outer];
-        return createProblem("average_basic", `${numbers.join("、")} の へいきんは？`, average.toString(), "number");
+        const decimal = modeFor("average_basic", context) === 1;
+        const count = decimal ? randomChoice([4, 5], context?.random) : randomInt(3, 5, context?.random);
+        const average = randomInt(5, 20, context?.random) + (decimal ? count === 4 ? 0.5 : 0.2 : 0);
+        const total = Math.round(average * count);
+        // Asymmetric positive partitions, then shuffle. No rejection loops or hidden midpoint pattern.
+        const numbers = [1, randomInt(2, 4, context?.random)];
+        for (let i = 2; i < count - 1; i++) numbers.push(randomInt(1, 4, context?.random));
+        numbers.push(total - numbers.reduce((a, b) => a + b, 0));
+        // Redistribute the partition without changing its sum. Keep the range
+        // positive and reject midpoint-only lists with a bounded number of steps.
+        for (let i = 0; i < count * 3; i++) {
+            const from = randomInt(0, count - 1, context?.random);
+            const to = randomInt(0, count - 1, context?.random);
+            if (from === to || numbers[from] <= 1) continue;
+            const amount = randomInt(1, numbers[from] - 1, context?.random);
+            const candidate = [...numbers];
+            candidate[from] -= amount;
+            candidate[to] += amount;
+            if ((Math.min(...candidate) + Math.max(...candidate)) / 2 !== average) numbers.splice(0, count, ...candidate);
+        }
+        return createProblem("average_basic", `${shuffleArray(numbers, context?.random).join("、")} の へいきんは？`, String(average), "number");
     },
     "ratio_basic": (context) => {
         const a = randomInt(1, 9, context?.random);
@@ -146,7 +181,7 @@ export const generators: Record<string, GeneratorFn> = {
         const speed = randomChoice([30, 40, 50, 60, 70, 80, 90], context?.random);
         const hours = randomInt(2, 8, context?.random);
         const distance = speed * hours;
-        const mode = randomInt(0, 2, context?.random);
+        const mode = modeFor("speed_basic", context);
 
         if (mode === 0) {
             return createProblem("speed_basic", `はやさ ${speed} km/h で ${hours} じかん。きょりは？`, distance.toString(), "number");

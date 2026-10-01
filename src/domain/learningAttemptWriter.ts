@@ -12,6 +12,7 @@ import type { MemoryState, SubjectKey, UserProfile } from "./types";
 import type { LearningEvidenceContext } from './learning/types';
 import { validateLearningEvidenceContext } from './learning/context';
 import { hasKnownWholeAttempt, independentCorrectCount, isIndependentCorrect } from './learning/independentProgress';
+import { isMathFoundation } from './math/foundationConfig';
 
 const APP_DATA_ID = "app";
 
@@ -230,7 +231,7 @@ export const writeLearningAttemptInTransaction = async (
         const level = input.subject === "math"
             ? getLevelForSkill(input.itemId)
             : getWordLevel(input.itemId);
-        if (!input.isReview && level !== null) {
+        if (!input.isReview && level !== null && !(input.subject === 'math' && isMathFoundation(input.itemId))) {
             if (input.subject === "math" && level === profile.mathMainLevel) {
                 // Legacy Lv0 profiles had no level state. Create it only when
                 // an actual Lv0 answer arrives; never infer independent history.

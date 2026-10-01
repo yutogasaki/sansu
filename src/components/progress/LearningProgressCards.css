@@ -58,6 +58,13 @@
     pointer-events: none;
 }
 .learning-progress-card .progress-level-title { text-wrap: balance; }
+.learning-progress-card .progress-preparation {
+    padding: 12px;
+    border-radius: 16px;
+    background: var(--pokomoko-paper);
+    border: 1px solid var(--pokomoko-edge);
+}
+.learning-progress-card .progress-route { color: var(--pokomoko-blue-deep); }
 .learning-progress-card .progress-path-arrow { stroke-dasharray: 2 4; }
 .learning-progress-card .progress-challenge {
     border-color: var(--pokomoko-edge);

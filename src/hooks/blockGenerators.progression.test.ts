@@ -128,6 +128,7 @@ describe('Study math generation preserves reserved eligibility', () => {
     it('generates the missing Lv11 variant selected from unit evidence', () => {
         const ctx = mathContext();
         ctx.profile = syncLevelState(ctx.profile, 'math', 11);
+        ctx.profile.mathSkills.foundation_tens = { ...createDefaultMemoryState('foundation_tens', 'math', true), independentCorrectAnswers: 3 };
         const records = createMathPilotScenarios()[3].records.filter(record =>
             record.itemId !== 'sub_2d2d' || record.learningEvidence?.problem.variant === 'no-regroup');
         ctx.unitPractice = getMathLevel11Practice(evaluateMathLevel11Pilot(

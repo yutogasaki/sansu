@@ -3,6 +3,20 @@ import { ENGLISH_EXAMPLE_SENTENCES, getEnglishExampleSentence } from './examples
 import { ENGLISH_WORDS } from './words';
 
 describe('vocabulary example catalog', () => {
+    it.each([
+        ['hard', 'This stone is hard.'], ['apply', 'I apply for a new job.'],
+        ['measure', 'This measure keeps children safe.'], ['present', 'We live in the present.'],
+        ['age', 'This was an age of discovery.'], ['heart', 'She has a kind heart.'],
+        ['sound', 'Your idea can sound good.'], ['free', 'I am free after school.'],
+        ['step', 'This is the next step in learning.'], ['sense', 'I have a good sense of smell.'],
+        ['potential', 'This is a potential problem.'], ['cold', 'I feel cold in winter.'],
+        ['back', 'The garden is back there.'], ['atmosphere', 'The atmosphere surrounds the earth.'],
+        ['pick', 'I pick a coin off the floor.'], ['act', 'We act to protect the forest.'],
+        ['form', 'The cloud has a round form.'], ['clear', 'The meaning is clear to me.'],
+        ['secure', 'We secure seats for the show.'], ['establish', 'They establish a new school.'],
+    ])('keeps the reviewed example for the adopted sense of %s', (id, sentence) => {
+        expect(getEnglishExampleSentence(id)).toBe(sentence);
+    });
     it('covers every vocabulary item with a short fixed English sentence', () => {
         const coveredWords = ENGLISH_WORDS;
         const coveredWordIds = new Set(coveredWords.map(word => word.id));

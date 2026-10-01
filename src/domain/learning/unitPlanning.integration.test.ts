@@ -1,7 +1,8 @@
 import { indexedDB, IDBKeyRange } from 'fake-indexeddb';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { SansuDatabase, type AttemptLog } from '../../db';
-import type { UserProfile } from '../types';
+import { createDefaultMemoryState, type UserProfile } from '../types';
+import { MATH_FOUNDATIONS } from '../math/foundationConfig';
 import { createInitialProfile } from '../user/profile';
 import { getLevelForSkill } from '../math/curriculum';
 import { generateMathProblem, planMathProblems } from '../math';
@@ -21,7 +22,10 @@ const NOW = '2026-09-12T12:00:00.000Z';
 const databases: SansuDatabase[] = [];
 const profile = (main = 11, max = main): UserProfile => {
     const p = { ...createInitialProfile('Unit planning', 2, main, 2, 'math'), id: CHILD,
-        mathMainLevel: main, mathMaxUnlocked: max, hissanModeEnabled: false, mathSkills: {} };
+        mathMainLevel: main, mathMaxUnlocked: max, hissanModeEnabled: false,
+        mathSkills: Object.fromEntries(Object.keys(MATH_FOUNDATIONS).map(id => [id, {
+            ...createDefaultMemoryState(id, 'math', true), independentCorrectAnswers: 3,
+        }])) };
     p.mathLevels = p.mathLevels?.map(level => ({ ...level, enabled: level.level <= max, unlocked: level.level <= max }));
     return p;
 };

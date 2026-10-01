@@ -60,6 +60,7 @@ export const buildPeriodicTestSet = (
                 // the learner's adaptive introductory counter.
                 const candidate = generateMathProblem(id, { random, preferredLearningVariant: required?.variant });
                 if (!isRepresentativeMathContent(id, candidate.questionText)) continue;
+                if (required && candidate.learningContext?.variant !== required.variant) continue;
                 const key = `${id}:${finishContentKey(candidate)}`;
                 const use = seen.get(key) ?? 0;
                 if (use < selectedUse) { selected = candidate; selectedUse = use; selectedKey = key; }

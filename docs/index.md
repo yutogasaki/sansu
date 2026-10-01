@@ -16,6 +16,7 @@
 
 **まず読む：[今の島に、自然と町の仕組みを取り込む](product/island-nature-integration.md)。** 今の島を本体にし、Nature Townを別作品としては進めません。何を残し、何を取り込むかを一枚にまとめました。
 
+
 ## 今の全体像
 
 | 分類 | 何のことか | 今の状態 |
@@ -76,6 +77,7 @@
 - [算数02](product/02_math_skills.md) / [英語03](product/03_english_skills.md)：教材と技能。
 - [学習曲線29](product/29_learning_progression_spec.md)：初回難度と段階進行。
 - [学習単元31](product/31_learning_units_spec.md)：単元と習得証拠。
+- [教材の意味・種類・導入](product/learning-content-integrity.md)：語義・問題の型・基礎9教材と保存互換。
 - [学習強化34](product/34_learning_reinforcement_spec.md)：独力正解、再学習、復習期限。
 
 ### 島の次の段階

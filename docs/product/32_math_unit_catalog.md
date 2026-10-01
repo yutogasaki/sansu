@@ -1,12 +1,13 @@
 # 算数の単元対応表
 
-親仕様は[学習単元と習得証拠](31_learning_units_spec.md)。カタログ版は `curriculum-v1`。対応の実装は `src/domain/learning/mathCatalog.ts`。
+2026-10-01: [教材の意味・種類・導入の整合性](learning-content-integrity.md)を適用する。既存ID・所属と保存済み予約を維持し、語義/例文、問題の範囲・型、追加の基礎導入を修正する。新規文脈はcurriculum-v2とし、旧文脈は保存版のまま検証する。
+親仕様は[学習単元と習得証拠](31_learning_units_spec.md)。新規カタログ版は `curriculum-v2`。対応の実装は `src/domain/learning/mathCatalog.ts`。
 
 ## 適用範囲
 
-既存118教材を74単元に対応させ、未実装の基礎9単元を別に示す。これは保存済みの29レベルを再採番する処理ではない。現在の出題・解放・SRSは[仕様29](29_learning_progression_spec.md)を保ち、この対応表で通常出題を制限しない。
+既存118教材の74単元と、追加の基礎9教材の9単元を合わせて83単元に対応させる。これは保存済みの29レベルを再採番する処理ではない。現在の出題・解放・SRSは[仕様29](29_learning_progression_spec.md)を保ち、短い基礎導入と型の循環は教材整合性の契約に従う。保存レベルの必須ロックは増やさない。
 
-単元は概念の整理先。範囲の異なる旧ID、入力形式、表現、実問題の内容を保持する。単元に属する一つの教材の正解から、ほかの教材・表現・数範囲の達成を作らない。Lv11以外の達成判定は今回実装しない。
+単元は概念の整理先。範囲の異なる旧ID、入力形式、表現、実問題の内容を保持する。単元に属する一つの教材の正解から、ほかの教材・表現・数範囲の達成を作らない。仕上げの資格は現在範囲の全単元・型を確認する。Lv11の詳細な遅延確認と型別比較は34に従う。
 
 ## Lv11の比較対象
 
@@ -109,23 +110,23 @@
 | 12 | add_4d | add-multi-digit | symbol | default |
 | 12 | sub_3d3d | subtract-multi-digit | symbol | default |
 | 12 | sub_4d | subtract-multi-digit | symbol | default |
-| 13 | mul_99_1 | multiplication-facts | symbol | default |
-| 13 | mul_99_2 | multiplication-facts | symbol | default |
-| 13 | mul_99_3 | multiplication-facts | symbol | default |
-| 13 | mul_99_4 | multiplication-facts | symbol | default |
-| 13 | mul_99_5 | multiplication-facts | symbol | default |
-| 14 | mul_99_6 | multiplication-facts | symbol | default |
-| 14 | mul_99_7 | multiplication-facts | symbol | default |
-| 14 | mul_99_8 | multiplication-facts | symbol | default |
-| 14 | mul_99_9 | multiplication-facts | symbol | default |
-| 14 | mul_99_rand | multiplication-facts | symbol | default |
+| 13 | mul_99_1 | multiplication-facts | symbol | table-1 |
+| 13 | mul_99_2 | multiplication-facts | symbol | table-2 |
+| 13 | mul_99_3 | multiplication-facts | symbol | table-3 |
+| 13 | mul_99_4 | multiplication-facts | symbol | table-4 |
+| 13 | mul_99_5 | multiplication-facts | symbol | table-5 |
+| 14 | mul_99_6 | multiplication-facts | symbol | table-6 |
+| 14 | mul_99_7 | multiplication-facts | symbol | table-7 |
+| 14 | mul_99_8 | multiplication-facts | symbol | table-8 |
+| 14 | mul_99_9 | multiplication-facts | symbol | table-9 |
+| 14 | mul_99_rand | multiplication-facts | symbol | table-1 / table-2 / table-3 / table-4 / table-5 / table-6 / table-7 / table-8 / table-9 |
 | 15 | mul_2d1d | multiply-one-digit | symbol | default |
 | 15 | mul_3d1d | multiply-one-digit | symbol | default |
 | 16 | div_2d1d_exact | divide-one-digit-exact | symbol | default |
 | 16 | div_99_rev | divide-facts | symbol | default |
 | 17 | div_rem_q1 | divide-remainder | symbol | default |
 | 17 | div_rem_q2 | divide-remainder | symbol | default |
-| 18 | div_2d2d_exact | divide-two-digit-exact | symbol | default |
+| 18 | div_2d2d_exact | divide-two-digit-exact | symbol | quotient-one / quotient-many |
 | 18 | div_3d1d_exact | divide-one-digit-exact | symbol | default |
 | 18 | div_3d2d_exact | divide-two-digit-exact | symbol | default |
 | 18 | mul_2d2d | multiply-two-digit | symbol | default |
@@ -146,14 +147,28 @@
 | 23 | frac_mul_int | fraction-multiply-integer | symbol | default |
 | 24 | frac_div_frac | fraction-divide-fraction | symbol | default |
 | 24 | frac_div_int | fraction-divide-integer | symbol | default |
-| 24 | scale_10x | scale-powers-ten | symbol | default |
+| 24 | scale_10x | scale-powers-ten | symbol | times-ten / times-hundred / divide-ten |
 | 25 | dec_compare | decimal-compare | symbol | default |
-| 25 | large_number_unit | large-number-units | symbol | default |
-| 26 | frac_compare | fraction-compare | symbol | default |
-| 26 | percent_basic | percent | symbol | default |
-| 27 | average_basic | average | symbol | default |
+| 25 | large_number_unit | large-number-units | symbol | man / oku |
+| 26 | frac_compare | fraction-compare | symbol | same-denominator / same-numerator / equivalent / different |
+| 26 | percent_basic | percent | symbol | percent / part |
+| 27 | average_basic | average | symbol | integer / decimal |
 | 27 | ratio_basic | ratio | symbol | default |
-| 28 | speed_basic | speed | symbol | default |
+| 28 | speed_basic | speed | symbol | distance / speed / time |
+
+### 追加の基礎9教材（旧118教材の所属とは別）
+
+| 開始Lv | 教材ID | 単元ID（math.を省略） | 表現 | 型 |
+|---:|---|---|---|---|
+| 11 | foundation_tens | place-value-tens | bridge | default |
+| 12 | foundation_expanded | place-value-expanded | bridge | default |
+| 19 | foundation_decimal | decimal-place-value | bridge | default |
+| 21 | foundation_fraction | fraction-quantity | bridge | default |
+| 21 | foundation_equivalence | fraction-equivalence | bridge | default |
+| 22 | foundation_mixed | fraction-mixed-meaning | bridge | default |
+| 13 | foundation_groups | equal-groups | bridge | default |
+| 16 | foundation_division | division-meaning | bridge | default |
+| 26 | foundation_rate | unit-rate | bridge | default |
 
 ## 前提と推奨順序
 
@@ -237,15 +252,15 @@
 | average | 複数の値の平均 | existing | division-meaning | add-multi-digit、divide-one-digit-exact |
 | ratio | 等しい比の穴を埋める | existing | unit-rate | multiplication-facts、divide-facts |
 | speed | 速さ・時間・距離の関係 | existing | unit-rate | multiply-one-digit、divide-one-digit-exact |
-| place-value-tens | 10のまとまりと1の位 | planned | — | compose-ten、count-quantity |
-| place-value-expanded | 100以上の位と位ごとの再構成 | planned | place-value-tens | — |
-| decimal-place-value | 1を10等分した量と小数の位 | planned | place-value-tens | — |
-| fraction-quantity | 等分した1と分数の量 | planned | — | equal-sharing |
-| fraction-equivalence | 等しい分数・約分・通分の意味 | planned | fraction-quantity | multiplication-facts、divide-facts |
-| fraction-mixed-meaning | 整数と分数を合わせた量 | planned | fraction-quantity | — |
-| equal-groups | 同じ数ずつの集まりと掛け算 | planned | — | count-quantity、combine-small |
-| division-meaning | 等分除・包含除・余りの量 | planned | — | equal-sharing、equal-groups |
-| unit-rate | 1あたりの量と二量の対応 | planned | division-meaning | equal-groups |
+| place-value-tens | 10のまとまりと1の位 | existing | — | compose-ten、count-quantity |
+| place-value-expanded | 100以上の位と位ごとの再構成 | existing | place-value-tens | — |
+| decimal-place-value | 1を10等分した量と小数の位 | existing | place-value-tens | — |
+| fraction-quantity | 等分した1と分数の量 | existing | — | equal-sharing |
+| fraction-equivalence | 等しい分数・約分・通分の意味 | existing | fraction-quantity | multiplication-facts、divide-facts |
+| fraction-mixed-meaning | 整数と分数を合わせた量 | existing | fraction-quantity | — |
+| equal-groups | 同じ数ずつの集まりと掛け算 | existing | — | count-quantity、combine-small |
+| division-meaning | 等分除・包含除・余りの量 | existing | — | equal-sharing、equal-groups |
+| unit-rate | 1あたりの量と二量の対応 | existing | division-meaning | equal-groups |
 
 ## 教材から読み取れる範囲と不足
 
@@ -262,15 +277,15 @@
 - **2桁−2桁（subtract-two-two）**: 一の位を借りるかは生成した問題から区別し、二つの型の証拠を混ぜない。
 - **九九の積を求める（multiplication-facts）**: 段は概念の別単元ではなく練習範囲。後続評価では各因子・積の被覆を確認し、一つの段で全体達成にしない。
 - **九九範囲の割り算（divide-facts）**: revというIDでも問題は a ÷ b = の式。掛け算の穴埋めによる逆向き表現ではない。
-- **商と余りを求める（divide-remainder）**: 商1桁/2桁の範囲と複数欄入力を保持。余りの量を直接説明する教材は未実装。
+- **商と余りを求める（divide-remainder）**: 商1桁/2桁の範囲と複数欄入力を保持。余りの量はfoundation_divisionの追加導入で直接扱う。
 - **同分母の分数を足す（fraction-add-same）**: 現行解答には約分が必要。分母の意味だけの達成と分けて扱う。
-- **10倍・100倍・10分の1（scale-powers-ten）**: 整数の×10/×100と小数にもなる÷10を同IDに含む。defaultは型別の達成を証明しない。
-- **分数の大小と等しさ（fraction-compare）**: 同分母、同分子、等しい分数の3型を含む。分数の計算完了を比較の前提にしない。
-- **10のまとまりと1の位（place-value-tens）**: 図の補助は既存計算にあるが、10と1への分解・再構成を直接答える教材は未実装。
-- **1を10等分した量と小数の位（decimal-place-value）**: 小数比較や計算を通じた間接証拠から、量・位取りの直接確認を作らない。
+- **10倍・100倍・10分の1（scale-powers-ten）**: 整数の×10/×100と小数にもなる÷10を同IDに含む。v2はtimes-ten / times-hundred / divide-tenを内容から検証する。旧defaultは型別の達成を証明しない。
+- **分数の大小と等しさ（fraction-compare）**: 同分母、同分子、等値、分子分母とも異なる不等値の4型を含む。分数の計算完了を比較の前提にしない。
+- **10のまとまりと1の位（place-value-tens）**: 10と1への分解・再構成を追加の短い導入で直接確認する。
+- **1を10等分した量と小数の位（decimal-place-value）**: 等分図の量・小数比較・10倍を追加の短い導入で直接確認する。
 
-次の教材追加は、10と1への分解・再構成を直接確認する小さな問題から始める。既存の計算図、年齢からの開始レベル、初期のretiredや旧ログの正答合計は、未実装単元の習得証拠にしない。
+基礎9教材は直接答える短い導入として追加した。既存の計算図、年齢からの開始レベル、初期のretiredや旧ログの正答合計を、基礎単元の習得証拠に読み替えない。数直線・対応表・全般的な方略転移は別の後続設計とする。
 
-後続の型別設計が必要な例は、2桁足し算のどの位で繰り上がるか、連続する借り、九九の因子被覆、商の桁数、帯分数の繰上/繰下、小数の位数、分数比較の同分母/同分子/等価、10倍/100倍/10分の1、割合・速さの求める量。v1の `default` の証拠だけから、これらを区別した習得を認定しない。
+v2では九九各段、2桁÷2桁の商1/複数、分数比較4型、10倍/100倍/10分の1、割合・速さの求める量、平均の整数/小数、万/億を区別する。後続の型別設計が必要な例は、2桁足し算の繰上の位、連続する借り、帯分数の繰上/繰下、小数の位数。v1の `default` の証拠だけから、これらを区別した習得を認定しない。
 
 この分割は既存生成器を正しく記述し、Lv11を比較できる状態にする初期設計である。全単元数や順序が最適と確認された段階ではない。

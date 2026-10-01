@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { generateVocabProblem } from './generator';
 import { ENGLISH_WORDS, getWord } from './words';
 import { createSeededRandom } from '../../utils/random';
+import { vocabMeaningsOverlap } from './meaning';
 
 describe('English catalog and choices', () => {
     it('has stable unique identities and preserves every original catalog item', () => {
@@ -29,6 +30,10 @@ describe('English catalog and choices', () => {
                 for (const choice of choices.filter(choice => choice.value !== word.id)) {
                     const distractor = getWord(choice.value)!;
                     expect(distractor.surface ?? distractor.id).not.toBe(word.surface ?? word.id);
+                    expect(vocabMeaningsOverlap(word, distractor), `${word.id}/${distractor.id}`).toBe(false);
+                }
+                for (let i = 0; i < choices.length; i++) for (let j = i + 1; j < choices.length; j++) {
+                    expect(vocabMeaningsOverlap(getWord(choices[i].value)!, getWord(choices[j].value)!)).toBe(false);
                 }
                 expect(problem.questionText).toBe(word.surface ?? word.id);
                 expect(problem.correctAnswer).toBe(word.id);
@@ -41,5 +46,10 @@ describe('English catalog and choices', () => {
         const make = () => generateVocabProblem('orange_lv2', { random: createSeededRandom('same') });
         expect(make()).toEqual(make());
         expect(make().questionText).toBe('orange');
+    });
+    it('excludes alternate correct meanings despite different kana/kanji labels', () => {
+        expect(vocabMeaningsOverlap(getWord('way_lv12')!, getWord('method')!)).toBe(true);
+        expect(vocabMeaningsOverlap(getWord('hard')!, getWord('difficult')!)).toBe(true);
+        expect(vocabMeaningsOverlap(getWord('properly')!, getWord('properly_lv18')!)).toBe(true);
     });
 });

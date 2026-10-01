@@ -11,6 +11,7 @@ import { createLearningProblemContext } from './context';
 import { learningEvidenceForProblem, studyLearningEvidence } from './attemptContext';
 import { prepareStudyBlockPresentation, resolveStudyHissanPresentation } from '../math/studyPresentation';
 import { createFinishRecovery } from '../finishRecovery';
+import { generateMathProblem } from '../math';
 
 const databases: SansuDatabase[] = [];
 const timestamp = '2026-09-08T03:00:00.000Z';
@@ -47,6 +48,27 @@ afterEach(async () => {
 });
 
 describe('independent progress through the learning writer', () => {
+    it('stores foundation answers separately without filling the level qualification window', async () => {
+        const database = await setup();
+        const profile = { ...createInitialProfile('test', 2, 18, 2, 'math'), id: 'child', mathMainLevel: 19, mathMaxUnlocked: 19 };
+        profile.mathLevels = profile.mathLevels.map(level => level.level === 19 ? {
+            ...level, recentAnswersNonReview: [true, false], recentIndependentAnswersNonReview: [true, false],
+        } : level);
+        await database.profiles.put(profile);
+        await database.appData.put({ id: 'app', schemaVersion: 1, activeProfileId: 'child', profiles: { child: profile } });
+        const before = structuredClone(profile.mathLevels);
+        const reserved: Problem = { ...generateMathProblem('foundation_decimal', { profile, random: () => 0 }),
+            id: 'foundation', subject: 'math', isReview: false };
+        const receipt = await write(database, { itemId: reserved.categoryId,
+            learningEvidence: learningEvidenceForProblem(reserved, 'independent') });
+        expect(receipt.memory.independentCorrectAnswers).toBe(1);
+        expect(receipt.profile?.mathLevels).toEqual(before);
+        expect((await database.logs.get(receipt.logId))?.learningEvidence?.problem.itemId).toBe('foundation_decimal');
+        const assisted = await write(database, { itemId: reserved.categoryId,
+            learningEvidence: learningEvidenceForProblem(reserved, 'assisted') });
+        expect(assisted.memory.independentCorrectAnswers).toBe(1);
+        expect(assisted.profile?.mathLevels).toEqual(before);
+    });
     it.each(['written', 'mental', 'corrected', 'toggled', 'legacy', 'partial'] as const)(
         'counts only a whole independent Study answer with the actual %s presentation', async mode => {
             const database = await setup();

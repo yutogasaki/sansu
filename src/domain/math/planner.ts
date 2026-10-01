@@ -8,6 +8,10 @@ import {
 import { getMathFollowupPlan } from "./followups";
 import { MATH_UNIT_PRACTICE_ORDER, type MathLevel11Practice } from '../learning/unitPractice';
 import { isNormalReviewEligible } from '../learning/reviewPolicy';
+import { mathPracticeVariants } from './contentVariants';
+import { pendingMathFoundation } from './foundationPlanning';
+import { isMathFoundation } from './foundationConfig';
+import { independentCorrectCount } from '../learning/independentProgress';
 
 export type MathProblemPlanSource =
     | "retry"
@@ -430,12 +434,29 @@ export const planMathProblemSlots = (
             if (skillId) item = createPlanItem(skillId, source);
         }
 
+        if (item && ['main', 'plus-one', 'followup'].includes(item.source)) {
+            const foundation = pendingMathFoundation(item.skillId, options.profile, id =>
+                selection.isSkillEligible(id, selection.plannedIndex)
+                && !selection.skippedTodayIds.includes(id)
+                && !selection.cooldownIds.includes(id)
+                && (blockCounts.get(id) ?? 0) < sameSkillLimit);
+            if (foundation) item = createPlanItem(foundation, 'followup');
+        }
         plannedSlots.push(item);
         if (!item) continue;
         const preference = options.unitPractice?.priorities.find(unit => unit.itemIds.includes(item.skillId));
-        if (preference?.preferredVariants.length) {
+        if (isMathFoundation(item.skillId)) {
+            const stage = (independentCorrectCount(options.profile.mathSkills?.[item.skillId]) + (blockCounts.get(item.skillId) ?? 0)) % 3;
+            item.preferredVariant = `intro-${stage}`;
+        } else if (preference?.preferredVariants.length) {
             const count = preference.itemIds.reduce((sum, id) => sum + (blockCounts.get(id) ?? 0), 0);
             item.preferredVariant = preference.preferredVariants[count % preference.preferredVariants.length];
+        } else {
+            const variants = mathPracticeVariants(item.skillId);
+            if (variants.length > 1) {
+                const previous = options.profile.mathSkills?.[item.skillId]?.independentCorrectAnswers ?? 0;
+                item.preferredVariant = variants[(previous + (blockCounts.get(item.skillId) ?? 0)) % variants.length];
+            }
         }
         plannedItems.push(item);
         blockCounts.set(item.skillId, (blockCounts.get(item.skillId) || 0) + 1);

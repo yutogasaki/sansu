@@ -18,6 +18,7 @@ import {
     type GeneratorOptions,
 } from "./blockGenerators";
 import { getMathSkillFamily } from "../domain/math/curriculum";
+import { createDefaultMemoryState } from '../domain/types';
 
 describe("blockGenerators utilities", () => {
     afterEach(() => {
@@ -426,6 +427,7 @@ describe("blockGenerators utilities", () => {
 
     it("generateSingleMathProblem uses mental follow-up after a base-ten bridge success", () => {
         const profile = syncLevelState(createInitialProfile("T", 1, 0, 1, "math"), "math", 11);
+        profile.mathSkills.foundation_tens = { ...createDefaultMemoryState('foundation_tens', 'math', true), independentCorrectAnswers: 3 };
         profile.recentAttempts = [
             {
                 id: "attempt-bridge-success-2d",
@@ -461,6 +463,7 @@ describe("blockGenerators utilities", () => {
 
     it("generateSingleMathProblem uses hissan follow-up after a mental success", () => {
         const profile = syncLevelState(createInitialProfile("T", 1, 0, 1, "math"), "math", 11);
+        profile.mathSkills.foundation_tens = { ...createDefaultMemoryState('foundation_tens', 'math', true), independentCorrectAnswers: 3 };
         profile.recentAttempts = [
             {
                 id: "attempt-mental-success-2d",

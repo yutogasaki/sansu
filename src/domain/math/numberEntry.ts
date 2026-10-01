@@ -3,7 +3,7 @@ import type { Problem } from '../types';
 /** Capability belongs to the exercise family, not the length/value of its answer. */
 export function allowsDecimalEntry(problem: Pick<Problem, 'subject' | 'categoryId' | 'inputType'> | undefined): boolean {
     return problem?.subject === 'math' && problem.inputType === 'number'
-        && (problem.categoryId.startsWith('dec_') || ['scale_10x', 'percent_basic'].includes(problem.categoryId));
+        && (problem.categoryId.startsWith('dec_') || ['scale_10x', 'percent_basic', 'average_basic', 'foundation_decimal'].includes(problem.categoryId));
 }
 
 export function appendNumberField(values: readonly string[], active: number, digit: string, limits: readonly number[]) {

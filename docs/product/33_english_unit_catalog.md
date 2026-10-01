@@ -1,5 +1,6 @@
 # 英語の単元対応表
 
+2026-10-01: [教材の意味・種類・導入の整合性](learning-content-integrity.md)を適用する。既存ID・所属と保存済み予約を維持し、語義/例文、問題の範囲・型、追加の基礎導入を修正する。新規文脈はcurriculum-v2とし、旧文脈は保存版のまま検証する。
 親仕様は [01_app_spec.md](01_app_spec.md)。単元と証拠の共通契約は [31_learning_units_spec.md](31_learning_units_spec.md)、既存の生成規則は [03_english_skills.md](03_english_skills.md)、教材本文は [05_english_words.md](05_english_words.md) に従う。
 
 ## 今回の対応範囲
@@ -8,7 +9,7 @@
 
 | 項目 | 契約 |
 |---|---|
-| カタログ版 | 共通の `curriculum-v1` |
+| カタログ版 | 新規は共通の `curriculum-v2`（v1保存を保持） |
 | 単元ID | `vocab.recognition.` + 既存教材ID |
 | 対応 | 全1,184項目から各1単元へ1対1 |
 | 系統 | `vocabulary-recognition` |
@@ -17,7 +18,7 @@
 | 提供状況 | 全単元 `existing` |
 | 表示ラベル | `surface ?? id` と既存かな訳 |
 
-同じ綴りの11組も、保存IDごとに別単元とする。異なる綴りは1,173。`orange`と`orange_lv2`、同義の再登場である`properly`と`properly_lv18`も統合せず、過去の正解・Due・強度を別項目へコピーしない。訳語4択から聞く・話す・綴る・文脈で使う能力の達成を作らない。新規問題の文脈や独力・支援の証拠は仕様31に従う。
+同じ綴りの11組も、保存IDごとに別単元とする。異なる綴りは1,173。同義properlyの再登場を除く語義識別子は1,183。`orange`と`orange_lv2`、同義の再登場である`properly`と`properly_lv18`も統合せず、過去の正解・Due・強度を別項目へコピーしない。訳語4択から聞く・話す・綴る・文脈で使う能力の達成を作らない。新規問題の文脈や独力・支援の証拠は仕様31に従う。
 
 ## 既存の分類と棚卸しAPI
 
@@ -25,7 +26,7 @@
 
 `src/domain/learning/englishCatalog.ts` は `ENGLISH_LEARNING_UNITS` と `ENGLISH_ITEM_MAPPINGS` を公開する。`getEnglishCatalogInventory()` はレポート向けに次を返す。
 
-- `itemCount` / `unitCount` / `distinctSpellingCount` / `legacyCategoryCount`
+- `itemCount` / `unitCount` / `distinctSpellingCount` / `distinctSenseCount` / `legacyCategoryCount`
 - `legacyLevels`: レベル番号順の `{ level, itemCount }`
 - `legacyCategories`: 元教材の初出順の `{ category, itemCount }`
 
@@ -33,7 +34,7 @@
 
 ## 教材の校訂
 
-今回の本文変更は、既存の漢字訳と一致する明白なかな誤記2点に限る。
+既存かな訳の2点の訂正に加え、教材整合性の契約に従って採用語義に合わせた20例文と同義の誤答選択肢を修正する。
 
 | 教材ID | 旧かな | 校訂後 | 既存漢字訳 |
 |---|---|---|---|
