@@ -1,4 +1,5 @@
-import Dexie, { type Table } from 'dexie';
+import { migrateGuidance, noteTownBuilds, validateGuidance } from './guidance';
+import Dexie, { liveQuery, type Table } from 'dexie';
 import { lifeDb, type IslandLifeDatabase } from '../islandLife/repository';
 import { replayLife } from '../islandLife/simulation';
 import { readableLifeVersion } from '../islandLife/model';
@@ -11,7 +12,7 @@ import type { GrowingState, NatureEvent, TownEvent } from './types';
 
 export interface GrowingRecord {
     profileId: string;
-    version: 1;
+    version: 1 | 2 | 3;
     revision: number;
     createdAt: number;
     updatedAt: number;
@@ -31,18 +32,35 @@ export class GrowingIslandDatabase extends Dexie {
     moments!: Table<MomentRecord, number>;
     /** Flowers left by siblings' visits, waiting for the recipient's next opening. */
     gifts!: Table<FlowerGift, string>;
+    /** Source at cutover; older builds can only write their own lineage. */
+    legacyIslands!: Table<GrowingRecord, string>;
+    balancedIslands!: Table<GrowingRecord, string>;
     constructor(name = growingDatabaseName()) {
         super(name);
         this.version(1).stores({ islands: '&profileId' });
         this.version(2).stores({ islands: '&profileId', moments: '++id, profileId, [profileId+at]', gifts: '&id, to, from' });
+        // Dexie retries a VersionError without a version. A schema bump alone is no fence.
+        // Keep the old lineage but copy once into a table unknown to old command writers.
+        this.version(3).stores({ balancedIslands: '&profileId' }).upgrade(async tx => {
+            await tx.table('balancedIslands').bulkAdd(await tx.table('islands').toArray());
+        });
+        // Fence older balance writers, which cannot preserve guidance or acknowledgement receipts.
+        this.version(4).stores({ guidedIslands: '&profileId' }).upgrade(async tx => {
+            await tx.table('guidedIslands').bulkAdd(await tx.table('balancedIslands').toArray());
+        });
+        this.legacyIslands = this.table('islands');
+        this.balancedIslands = this.table('balancedIslands');
+        this.islands = this.table('guidedIslands');
     }
 }
 export const growingDb = new GrowingIslandDatabase();
 
 export async function deleteGrowingOwner(profileId: string, database = growingDb) {
     if (!await Dexie.exists(database.name)) return;
-    await database.transaction('rw', database.islands, database.moments, database.gifts, async () => {
+    await database.transaction('rw', [database.islands, database.balancedIslands, database.legacyIslands, database.moments, database.gifts], async () => {
         await database.islands.delete(profileId);
+        await database.legacyIslands.delete(profileId);
+        await database.balancedIslands.delete(profileId);
         await database.moments.where('profileId').equals(profileId).delete();
         await database.gifts.where('to').equals(profileId).delete();
         await database.gifts.where('from').equals(profileId).delete();
@@ -51,6 +69,21 @@ export async function deleteGrowingOwner(profileId: string, database = growingDb
 
 export interface Completion { id: string; at: number }
 export interface SyncResult { record: GrowingRecord; town: TownEvent[]; nature: NatureEvent[]; learned: number }
+
+function readable(record: GrowingRecord) {
+    if (record.version !== 1 && record.version !== 2 && record.version !== 3) throw new Error('この島のデータは新しい版で開いてください。');
+    if (record.version === 3 && !record.state.guidance) throw new Error('この島のあそびかたは新しい版で開いてください。');
+    if (record.state.guidance) validateGuidance(record.state.guidance);
+}
+
+/** Preserve all rights and clocks; no old learning or missed surprises are reissued. */
+function upgrade(record: GrowingRecord): GrowingRecord {
+    readable(record);
+    if (record.version === 3 && record.state.guidance) return record;
+    const state = structuredClone(record.state);
+    migrateGuidance(state);
+    return { ...record, version: 3, state };
+}
 
 async function firstState(profileId: string, now: number, life: IslandLifeDatabase) {
     const old = await Dexie.exists(life.name) ? await life.worlds.get(profileId) : undefined;
@@ -76,17 +109,18 @@ export async function syncGrowingIsland(profileId: string, completions: readonly
     const created = existing ? undefined : await firstState(profileId, now, life);
     return database.transaction('rw', database.islands, database.gifts, async () => {
         const current = await database.islands.get(profileId);
-        let record: GrowingRecord = current ?? { profileId, version: 1, revision: 0, createdAt: now, updatedAt: now,
+        let record: GrowingRecord = current ? upgrade(current) : { profileId, version: 3, revision: 0, createdAt: now, updatedAt: now,
             state: created!.state, ...(created?.migratedFrom ? { migratedFrom: created.migratedFrom } : {}) };
-        if (record.version !== 1) throw new Error('この島のデータは新しい版で開いてください。');
         const ingested = ingestCompletions(record.state, completions);
         const state = structuredClone(ingested.state);
         const mailbox = await database.gifts.where('to').equals(profileId).toArray();
         const received = [...receiveGifts(state, mailbox), ...deliverKeepsakes(state, levels)];
         const nature = advanceNature(state, now);
-        const town = [...received, ...(state.town.bank > 0 ? openTown(state) : [])];
+        const opened = state.town.bank > 0 ? openTown(state) : [];
+        noteTownBuilds(state, opened);
+        const town = [...received, ...opened];
         if (mailbox.length) await database.gifts.bulkDelete(mailbox.filter(g => state.gifts?.includes(g.id)).map(g => g.id));
-        const changed = !current || ingested.added > 0 || nature.length > 0 || town.length > 0
+        const changed = !current || current.version !== record.version || ingested.added > 0 || nature.length > 0
             || JSON.stringify(state) !== JSON.stringify(record.state);
         if (changed) {
             record = { ...record, revision: record.revision + (current ? 1 : 0), updatedAt: now, state };
@@ -94,6 +128,10 @@ export async function syncGrowingIsland(profileId: string, completions: readonly
         }
         return { record, town, nature, learned: ingested.added };
     });
+}
+
+export class GuidanceReceiptConflict extends Error {
+    constructor() { super('しまの いまを たしかめています。'); this.name = 'GuidanceReceiptConflict'; }
 }
 
 /**
@@ -105,9 +143,15 @@ export async function commandGrowingIsland(profileId: string, intent: Intent, no
     return database.transaction('rw', database.islands, async () => {
         const current = await database.islands.get(profileId);
         if (!current) throw new Error('しまを よみこんでから もういちど ためしてね。');
-        if (current.state.applied.includes(intent.id)) return { record: current, town: [] };
-        const { state, events } = applyIntent(current.state, intent);
-        const record = { ...current, revision: current.revision + 1, updatedAt: now, state };
+        const upgraded = upgrade(current);
+        if (current.state.applied.includes(intent.id) && current.version === upgraded.version) return { record: current, town: [] };
+        const command = intent.command;
+        if (command.type === 'concert-started' || command.type === 'learning-returned' || command.type === 'ack-achievements') {
+            if (command.profileId !== profileId || current.state.seed !== profileId) throw new Error('じぶんの しまを もういちど ひらいてね。');
+            if (command.expectedRevision !== current.revision) throw new GuidanceReceiptConflict();
+        }
+        const { state, events } = applyIntent(upgraded.state, intent, now);
+        const record = { ...upgraded, revision: current.revision + 1, updatedAt: now, state };
         await database.islands.put(record);
         return { record, town: events };
     });
@@ -115,7 +159,19 @@ export async function commandGrowingIsland(profileId: string, intent: Intent, no
 
 /** Another profile's island, read without growing, saving or migrating anything (§13). */
 export async function readGrowingIsland(profileId: string, database = growingDb) {
-    return await Dexie.exists(database.name) ? database.islands.get(profileId) : undefined;
+    const record = await Dexie.exists(database.name) ? await database.islands.get(profileId) : undefined;
+    if (record) readable(record);
+    return record;
+}
+
+/** An open owner's book follows saves without syncing clocks. Query the table directly:
+ * probing Dexie.exists() inside a liveQuery can lose the cross-tab observation range. */
+export function observeGrowingIsland(profileId: string, database = growingDb) {
+    return liveQuery(async () => {
+        const record = await database.islands.get(profileId);
+        if (record) readable(record);
+        return record;
+    });
 }
 
 const localDay = (at: number) => { const d = new Date(at); return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`; };

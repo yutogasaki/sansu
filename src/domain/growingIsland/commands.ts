@@ -1,7 +1,8 @@
+import { ACHIEVEMENTS, noteGuidanceIntent, noteTownBuilds } from './guidance';
 import { islandLevel, occupantsOf, refreshUnlocks } from './community';
 import { styleAt, syncSoil } from './environment';
 import { CAPE_LEVEL, isKid, FLAG_PATTERNS, HATS, LAND_PRICE, LANDMARK_PRICE, RULES, SEED_PRICE, STYLE_LEVEL } from './rules';
-import { isVacant, occupant, onLand } from './space';
+import { isReachable, isVacant, occupant, onLand, reachableFromHome } from './space';
 import { DEFAULT_DECOR, patternOpen, RUG_COLORS, WORD_GROUPS } from './room';
 import { noteColor, PLANTED_COLORS } from './flowers';
 import { welcome } from './town';
@@ -58,6 +59,18 @@ function find(state: GrowingState, id: string) {
 function apply(state: GrowingState, command: Command): TownEvent[] {
     const events: TownEvent[] = [];
     switch (command.type) {
+        case 'choose-goal': {
+            if (!state.guidance || (command.id !== undefined && !ACHIEVEMENTS.includes(command.id))) fail('もういちど えらんでね。');
+            state.guidance.selected = command.id;
+            state.guidance.starter.automatic = false;
+            break;
+        }
+        case 'starter-guide': if (state.guidance) state.guidance.starter.automatic = command.automatic; break;
+        case 'ack-achievements': {
+            if (state.guidance) for (const id of command.ids) if (state.guidance.achievements[id] && !state.guidance.notified.includes(id)) state.guidance.notified.push(id);
+            break;
+        }
+        case 'concert-started': case 'learning-returned': break;
         case 'plant': {
             if (command.kind === 'wonder') {
                 if (!state.wonderSeeds) fail('ふしぎの たねが まだ ないよ。');
@@ -215,10 +228,12 @@ function apply(state: GrowingState, command: Command): TownEvent[] {
  * Applies a child's action once. A repeated intent id (double tap, second tab, a lost
  * commit notice) returns the saved state unchanged.
  */
-export function applyIntent(previous: GrowingState, intent: Intent): { state: GrowingState; events: TownEvent[] } {
+export function applyIntent(previous: GrowingState, intent: Intent, at?: number): { state: GrowingState; events: TownEvent[] } {
     if (previous.applied.includes(intent.id)) return { state: previous, events: [] };
     const state = structuredClone(previous);
     const events = apply(state, intent.command);
+    noteTownBuilds(state, events);
+    noteGuidanceIntent(previous, state, intent.command, intent.id, at);
     state.applied = [...state.applied, intent.id].slice(-RULES.appliedMemory);
     return { state, events };
 }
@@ -227,4 +242,14 @@ export function canPlace(state: GrowingState, cell: Cell, except?: string) {
     if (isVacant(state, cell, except)) return true;
     const found = occupant(state, cell, except);
     return found?.type === 'plot' && found.spread;
+}
+
+/** Preview a home's own blocking cell, rather than pretending it is an open path. */
+export function canReachHomePlacement(state: GrowingState, cell: Cell, id?: string) {
+    if (!canPlace(state, cell, id)) return false;
+    const preview = structuredClone(state);
+    const home = preview.plots.find(p => p.id === id);
+    if (home) home.cell = cell;
+    else preview.plots.push({ id: 'placement-preview', kind: 'home', cell, stage: 0, plantedAt: 0, growth: 0, origin: 'seed', paid: 0 });
+    return isReachable(cell, reachableFromHome(preview));
 }

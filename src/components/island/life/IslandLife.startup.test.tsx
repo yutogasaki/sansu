@@ -62,6 +62,7 @@ beforeEach(() => {
     hooks.landCells.mockReset().mockImplementation(space.landCells);
     hooks.catalog.mockReset().mockImplementation(capabilities.lifeCatalogKinds);
     const storage = new Map<string, string>();
+    vi.stubGlobal('document', { visibilityState: 'visible', addEventListener: vi.fn(), removeEventListener: vi.fn() });
     vi.stubGlobal('window', { setInterval: vi.fn(() => 1), clearInterval: vi.fn(), setTimeout: vi.fn(() => 2), clearTimeout: vi.fn(), addEventListener: vi.fn(), removeEventListener: vi.fn(),
         sessionStorage: { getItem: (key: string) => storage.get(key) ?? null, setItem: (key: string, value: string) => storage.set(key, value) } });
 });

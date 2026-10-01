@@ -1,0 +1,134 @@
+import 'fake-indexeddb/auto';
+import Dexie from 'dexie';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { IslandLifeDatabase } from '../islandLife/repository';
+import { GrowingIslandDatabase, GuidanceReceiptConflict, commandGrowingIsland, deleteGrowingOwner, observeGrowingIsland, readGrowingIsland, syncGrowingIsland } from './repository';
+import type { GrowingRecord } from './repository';
+import { newIsland } from './island';
+const stores: Dexie[] = [];
+const make = () => { const db = new GrowingIslandDatabase(`guidance-${crypto.randomUUID()}`), life = new IslandLifeDatabase(`guidance-life-${crypto.randomUUID()}`); stores.push(db, life); return { db, life }; };
+afterEach(async () => { await Promise.all(stores.splice(0).map(db => db.delete())); });
+
+describe('guidance save boundary', () => {
+    it('observes another connection saving the owner without consuming time, and excludes sibling changes', async () => {
+        const { db, life } = make();
+        const before = (await syncGrowingIsland('kid', [], 0, db, life)).record;
+        await syncGrowingIsland('sibling', [], 0, db, life);
+        const writer = new GrowingIslandDatabase(db.name); stores.push(writer);
+        const seen: GrowingRecord[] = [];
+        let initial!: () => void, changed!: () => void;
+        const first = new Promise<void>(resolve => { initial = resolve; });
+        const next = new Promise<void>(resolve => { changed = resolve; });
+        const subscription = observeGrowingIsland('kid', db).subscribe(value => {
+            if (!value) return;
+            seen.push(value); initial();
+            if (value.state.guidance?.achievements.A3) changed();
+        });
+        try {
+            await first;
+            expect(await db.islands.get('kid')).toEqual(before);
+            await commandGrowingIsland('sibling', { id: 'other', command: { type: 'flag', color: 1 } }, 1, writer);
+            const saved = await commandGrowingIsland('kid', { id: 'mine', command: { type: 'flag', color: 2 } }, 2, writer);
+            await next;
+            expect(seen.at(-1)).toEqual(saved.record);
+            expect(seen.every(record => record.profileId === 'kid')).toBe(true);
+            expect(seen.at(-1)?.state.town).toEqual(before.state.town);
+            expect(seen.at(-1)?.state.learned).toEqual(before.state.learned);
+        } finally { subscription.unsubscribe(); }
+    });
+    it('atomically records colour evidence once under retries/concurrent tabs and preserves the original snapshot', async () => {
+        const { db, life } = make();
+        await syncGrowingIsland('kid', [], 0, db, life);
+        const intent = { id: 'colour', command: { type: 'flag' as const, color: 2 } };
+        const put = vi.spyOn(db.islands, 'put').mockRejectedValueOnce(new Error('disk-full'));
+        await expect(commandGrowingIsland('kid', intent, 10, db)).rejects.toThrow('disk-full');
+        expect((await db.islands.get('kid'))?.state.guidance?.achievements.A3).toBeUndefined();
+        put.mockRestore();
+        const [a, b] = await Promise.all([commandGrowingIsland('kid', intent, 10, db), commandGrowingIsland('kid', intent, 11, db)]);
+        expect(a.record.revision).toBe(b.record.revision);
+        expect(a.record.state.guidance?.achievements.A3?.at).toBe(10);
+        db.close(); await db.open();
+        const again = await readGrowingIsland('kid', db);
+        expect(again?.state.guidance?.achievements.A3).toEqual(a.record.state.guidance?.achievements.A3);
+        expect((await commandGrowingIsland('kid', { id: 'other', command: { type: 'flag', color: 3 } }, 20, db)).record.state.guidance?.achievements.A3).toEqual(a.record.state.guidance?.achievements.A3);
+    });
+    it('accepts concert only after a matching own-profile renderer receipt and persists notices only after acknowledgement', async () => {
+        const { db, life } = make();
+        const synced = await syncGrowingIsland('kid', [], 0, db, life);
+        const state = synced.record.state;
+        state.landmarks.push({ id: 'music', kind: 'bandstand', cell: { x: 4, z: 3 }, growth: 0 });
+        await db.islands.put({ ...synced.record, state });
+        const receipt = { id: 'render', command: { type: 'concert-started' as const, id: 'music', profileId: 'kid', expectedRevision: 0 } };
+        await commandGrowingIsland('kid', { id: 'changed', command: { type: 'name', target: 'island', name: 'しま' } }, 1, db);
+        await expect(commandGrowingIsland('kid', receipt, 2, db)).rejects.toBeInstanceOf(GuidanceReceiptConflict);
+        await expect(commandGrowingIsland('kid', { ...receipt, command: { ...receipt.command, profileId: 'sibling', expectedRevision: 1 } }, 2, db)).rejects.toThrow('じぶん');
+        await expect(commandGrowingIsland('kid', { ...receipt, command: { ...receipt.command, id: 'missing', expectedRevision: 1 } }, 2, db)).rejects.toThrow('ひろば');
+        const result = await commandGrowingIsland('kid', { ...receipt, command: { ...receipt.command, expectedRevision: 1 } }, 2, db);
+        expect(result.record.state.guidance?.achievements.A5?.targetId).toBe('music');
+        expect(result.record.state.guidance?.notified).toEqual([]);
+        expect((await commandGrowingIsland('kid', receipt, 3, db)).record.revision).toBe(result.record.revision);
+        const ack = await commandGrowingIsland('kid', { id: 'displayed', command: { type: 'ack-achievements', ids: ['A5'], profileId: 'kid', expectedRevision: result.record.revision } }, 4, db);
+        expect(ack.record.state.guidance?.notified).toEqual(['A5']);
+    });
+    it('separates completion ingestion from foreground return and isolates owners', async () => {
+        const { db, life } = make();
+        await syncGrowingIsland('kid', [], 0, db, life);
+        const sibling = await syncGrowingIsland('sibling', [], 0, db, life);
+        const sync = await syncGrowingIsland('kid', [{ id: 'complete', at: 1 }], 2, db, life);
+        expect(sync.record.state.guidance?.starter.steps.S4).toBeUndefined();
+        const returned = await commandGrowingIsland('kid', { id: 'return', command: { type: 'learning-returned', profileId: 'kid', expectedRevision: sync.record.revision } }, 3, db);
+        expect(returned.record.state.guidance?.starter.steps.S4?.source).toBe('learning:complete');
+        expect(await db.islands.get('sibling')).toEqual(sibling.record);
+    });
+    it('fences schema3 writers and copies their source once; deleting the owner clears every lineage', async () => {
+        const { db } = make();
+        const old = new Dexie(db.name); stores.push(old);
+        old.version(1).stores({ islands: '&profileId' });
+        old.version(2).stores({ moments: '++id, profileId, [profileId+at]', gifts: '&id, to, from' });
+        old.version(3).stores({ balancedIslands: '&profileId' });
+        const state = newIsland('kid', 0); delete state.guidance;
+        const source: GrowingRecord = { profileId: 'kid', version: 2, revision: 4, createdAt: 0, updatedAt: 0, state };
+        await old.table('balancedIslands').put(source); old.close();
+        await db.open(); expect(await db.islands.get('kid')).toEqual(source);
+        const guided = await commandGrowingIsland('kid', { id: 'select', command: { type: 'choose-goal', id: 'A3' } }, 5, db);
+        expect(guided.record.version).toBe(3); expect(guided.record.state.guidance?.starter.automatic).toBe(false);
+        db.close(); await old.open();
+        await old.table('balancedIslands').put({ ...source, state: { ...state, drops: 999 } }); old.close();
+        await db.open(); expect(await db.islands.get('kid')).toEqual(guided.record);
+        await deleteGrowingOwner('kid', db);
+        expect(await db.islands.get('kid')).toBeUndefined(); expect(await db.balancedIslands.get('kid')).toBeUndefined(); expect(await db.legacyIslands.get('kid')).toBeUndefined();
+    });
+    it('rolls back a failed schema4 copy with its schema3 source and photos intact', async () => {
+        const { db } = make();
+        const old = new Dexie(db.name); stores.push(old);
+        old.version(1).stores({ islands: '&profileId' });
+        old.version(2).stores({ moments: '++id, profileId, [profileId+at]', gifts: '&id, to, from' });
+        old.version(3).stores({ balancedIslands: '&profileId' });
+        const state = newIsland('kid', 0); delete state.guidance;
+        const source: GrowingRecord = { profileId: 'kid', version: 2, revision: 7, createdAt: 0, updatedAt: 0, state };
+        await old.table('balancedIslands').put(source);
+        await old.table('moments').add({ profileId: 'kid', at: 0, image: new Blob(['photo']), width: 1, height: 1 });
+        old.close();
+        db.version(4).upgrade(() => { throw new Error('guidance-copy-aborted'); });
+        await expect(db.open()).rejects.toThrow('guidance-copy-aborted');
+        await old.open();
+        expect(await old.table('balancedIslands').get('kid')).toEqual(source);
+        expect(await old.table('moments').count()).toBe(1);
+        expect(old.backendDB().objectStoreNames.contains('guidedIslands')).toBe(false);
+        old.close();
+        const retry = new GrowingIslandDatabase(db.name); stores.push(retry);
+        await retry.open();
+        expect(await retry.islands.get('kid')).toEqual(source);
+        expect(await retry.moments.count()).toBe(1);
+    });
+
+    it('rejects unknown or corrupt guidance without overwriting the island', async () => {
+        const { db, life } = make();
+        const source = (await syncGrowingIsland('kid', [], 0, db, life)).record;
+        source.state.guidance!.version = 99 as 1;
+        await db.islands.put(source);
+        await expect(readGrowingIsland('kid', db)).rejects.toThrow('新しい版');
+        await expect(commandGrowingIsland('kid', { id: 'bad', command: { type: 'open-all' } }, 2, db)).rejects.toThrow('新しい版');
+        expect(await db.islands.get('kid')).toEqual(source);
+    });
+});

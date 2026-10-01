@@ -1,3 +1,4 @@
+import { migrateGuidance, newGuidance, noteLearning } from './guidance';
 import type { LifeState } from '../islandLife/model';
 import { refreshUnlocks } from './community';
 import { islandCharacter, syncSoil } from './environment';
@@ -30,6 +31,7 @@ export function newIsland(profileId: string, now: number): GrowingState {
     state.landmarks.push({ id: 'starter-flower', kind: 'flower', cell: { x: 1, z: 2 }, growth: 6 },
         { id: 'starter-bench', kind: 'bench', cell: { x: 3, z: 3 }, growth: 0 });
     state.tutorial = 'first-home';
+    state.guidance = newGuidance(true);
     syncSoil(state);
     seatPier(state, true);
     refreshUnlocks(state);
@@ -64,6 +66,7 @@ export function fromLife(life: LifeState, profileId: string, now: number): Growi
     state.character = islandCharacter(state);
     seatPier(state, false);
     refreshUnlocks(state);
+    migrateGuidance(state);
     return state;
 }
 
@@ -73,10 +76,14 @@ export function fromLife(life: LifeState, profileId: string, now: number): Growi
  */
 export function ingestCompletions(previous: GrowingState, facts: readonly { id: string; at: number }[]) {
     const known = new Set(previous.learned), floor = previous.learnedFloor ?? -Infinity;
-    const fresh = facts.filter(f => f.at >= previous.enrolledAt && f.at > floor && !known.has(f.id));
+    const fresh = facts.filter(f => {
+        if (!Number.isFinite(f.at) || f.at < previous.enrolledAt || f.at <= floor || known.has(f.id)) return false;
+        known.add(f.id);
+        return true;
+    });
     if (!fresh.length) return { state: previous, added: 0 };
     const state = structuredClone(previous);
-    for (const fact of fresh) { state.learned.push(fact.id); known.add(fact.id); }
+    for (const fact of fresh) { state.learned.push(fact.id); known.add(fact.id); noteLearning(state, fact.id, fact.at); }
     state.drops += fresh.length * RULES.dropsPerCompletion;
     state.town.bank += fresh.length * RULES.townHoursPerCompletion;
     if (state.learned.length > RULES.learnedMemory) {

@@ -3,6 +3,7 @@ import { Spinner } from '../components/ui/Spinner';
 import { useIslandLife } from '../components/island/life/useIslandLife';
 import { growingIslandEnabled } from '../components/island/growing/feature';
 import { GrowingLoading } from '../components/island/growing/GrowingLoading';
+import type { GrowingGuideRequest } from '../components/island/growing/GrowingGuideEntry';
 import { RoomDecorPanel } from '../components/island/growing/RoomDecorPanel';
 import { readWordAloud, useGrowingRoom } from '../components/island/growing/useGrowingRoom';
 import { LettersPanel } from '../components/island/growing/LettersPanel';
@@ -125,6 +126,7 @@ function sharingHint(items: IslandItem[], selectedId: string) {
 
 const IslandLife = lazy(() => import('../components/island/life/IslandLife'));
 const GrowingIsland = lazy(() => import('../components/island/growing/GrowingIsland'));
+const GrowingHouseGuide = lazy(() => import('../components/island/growing/GrowingHouseGuide'));
 const HomeJourneyPreview = lazy(() => import('../components/island/homeJourney/HomeJourneyPreview'));
 const IslandStage = lazy(() => import('../components/island/IslandStage'));
 const IslandAlbum = lazy(() => import('../components/island/IslandAlbum').then(module => ({ default: module.IslandAlbum })));
@@ -164,6 +166,8 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     const [challengeStartIntent, setChallengeStartIntent] = useState(false);
     const challengeSummary = useLiveQuery(() => db.challengeSummaries.get(profile.id), [profile.id]);
     const [localScreen, setLocalScreen] = useState<Screen>('home');
+    const [houseGuideAt, setHouseGuideAt] = useState<string>();
+    const [growingGuideRequest, setGrowingGuideRequest] = useState<GrowingGuideRequest>();
     // An old reservation's gift is part of the same focused session. Changing
     // the route here would incorrectly allow a deferred PWA reload mid-receipt.
     const learningScreen = plan?.status === 'completed' && isFirstIslandPlan(plan) && !plan.growthTarget ? 'reward' : 'learning';
@@ -702,7 +706,8 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         {roomWord && screen === 'keepsakes' && <p className="room-word" role="status" key={roomWord.at}><strong>{roomWord.text}</strong>{roomWord.japanese && <span>{roomWord.japanese}</span>}</p>}
         {screen === 'placement' && preview && <IslandPlacementActions valid={valid} disabled={busy} onSave={savePlacement} onCancel={cancelPlacement} />}
         {active && screen === 'home' && lifeEnabled() && <Suspense fallback={growingIslandEnabled() ? <GrowingLoading step="screen" /> : <Spinner fullScreen message="しまを ひらいているよ…" />}>{growingIslandEnabled()
-            ? <GrowingIsland profileId={profile.id} profileName={profile.name} active={active && screen === 'home'} sound={Boolean(profile.soundEnabled)} onHome={enterHouse} />
+            ? <GrowingIsland key={profile.id} profileId={profile.id} profileName={profile.name} active={active && screen === 'home'} sound={Boolean(profile.soundEnabled)} onHome={enterHouse} onLearn={() => void begin()}
+                guideRequest={growingGuideRequest} onGuideRequestConsumed={() => setGrowingGuideRequest(undefined)} />
             : <IslandLife controls={lifeControls} onHome={enterHouse} disabled={busy || preparingLearning} islandName={island.experience?.islandName ?? 'ふしぎな しま'} />}</Suspense>}
         {active && homeJourneyScene && <Suspense fallback={<Spinner fullScreen message="しまを ひらいているよ…" />}><HomeJourneyPreview key={profile.id} state={island.homeJourney}
             room={keepsakeRoomActive ? { state: island.learningKeepsakes, completedSets: island.completedSets, selectedId: keepsakeFocus, challengeDisplayed: challengeSummary?.displayed } : undefined}
@@ -926,6 +931,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                     section={houseSection} onSectionChange={section => { setHouseSection(section); setKeepsakeFocus(undefined); }}
                     onSelect={setKeepsakeFocus} onShowRoom={() => setKeepsakeFocus(undefined)}
                     onClose={home} onLearn={() => void begin()} onPhoto={photograph} onPhotos={openPhotos}
+                    onGrowingGuide={growingIslandEnabled() ? () => setHouseGuideAt(location.key) : undefined}
                     onAlbum={() => { setReturnToHouse(true); setAlbumComparison('garden'); setScreen('album'); }}
                     onShared={island.completedSets >= 1 ? () => { setReturnToHouse(true); openShared(); } : undefined}
                     onRewards={() => { setReturnToHouse(true); setScreen('reward'); }} />
@@ -1030,6 +1036,12 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                 onChange: selected => { void run(() => setIslandNextSubject(profile.id, island.revision, plan.id, selected))
                     .then(updated => { if (updated) setSnapshot(updated); }); },
             } : undefined} />}
+        {active && growingIslandEnabled() && screen === 'keepsakes' && houseSection === 'home' && houseGuideAt === location.key
+            && <Suspense fallback={null}><GrowingHouseGuide key={profile.id} profileId={profile.id} onClose={() => setHouseGuideAt(undefined)}
+                onLearn={() => { setHouseGuideAt(undefined); void begin(); }}
+                onIslandAction={action => {
+                    setHouseGuideAt(undefined); setGrowingGuideRequest({ id: crypto.randomUUID(), action }); setScreen('home');
+                }} /></Suspense>}
         {listening.isOpen && listening.sentence && <EnglishListening sentence={listening.sentence} easy={profile.uiTextMode === 'easy'} onClose={listening.close} />}
     </main>;
 }

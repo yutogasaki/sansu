@@ -133,6 +133,7 @@ Islandの画面captureは `tools/island-e2e-helpers.mjs` の `runtimeMetadata` �
 | Build-and-play domain/page/storage | `npm run verify:core`, `npm run e2e:smoke`, `npm run e2e:pwa-update`, `npm run e2e:park`, `npm run e2e:park-pwa` | 390×844と768×1024で初回再演→制作→支援/再開→配置変更→次制作を確認。視覚的魅力・無文字理解・実装整合を別々に記録 | DEVはflag有効で5187、production previewはflag有効で5287を先に起動。接続先は各scriptの環境変数で変更可能。PWA hook検証と実機インストール検証を区別する |
 | Image-led UI / encounter | `npm run verify:core`, `npm run e2e:smoke`, `npm run assets:check`, `npm run benchmark:fixed-ten` | On the actual app target, compare 390×844 and 768×1024 runtime screenshots beside the approved benchmark; capture launch through the next destination; verify full TenKey, fixed-question throughput, sound off, reduced motion, and cold-cache/PWA update | Fixed-tenはreportの `evidence.eligible = true` かつ `pass = true` とversioned監査への集計転記を必須とし、10反復未満をdiagnostic、通常planner真正性を別検証とする。Record build revision, delivery flag, rendered candidate ID, and cache state. Report visual magnetism, silent comprehension/safety, and runtime integrity separately; mixed legacy/HOLD visual lineage is a HOLD |
 | Storage/schema/profile data | `npm run lint`, `npm run typecheck`, `npm run test:run`, `npm run build` | Existing profile load/save | Write ADR or migration note if needed |
+| Growing Island guidance v1 | `npm run verify:core`, `npm run e2e:smoke`, `npx vitest run src/domain/growingIsland/guidance.test.ts src/domain/growingIsland/guidance.repository.test.ts` | DEV `tools/e2e-growing-guidance.mjs` と本番形式 `tools/e2e-growing-guidance-production.mjs`。390×844/768×1024でS1を閉じる/再開、無料家→入居、実回答→S4、通常種を開く→S5/A2、A3/A4/A5/A6、目標/不変snapshot/同予約の再開を確認 | 実獲得と旧保存/資源豊富な明示fixtureを分ける。前景実開始・表示受領とCAS、未知/破損、旧writer隔離・削除はrepository回帰。DEVの読み込んだ画面でのoffline保存と本番実SW offline/reloadは別。two-build、実機iOS、子どもの無説明理解/再訪は別ゲート |
 | PWA/deploy/update flow | `npm run lint`, `npm run typecheck`, `npm run test:run`, `npm run build`, `npm run assets:check`, `npm run e2e:smoke`, `npm run e2e:pwa-update`, `npm run e2e:pwa-two-build` | Real two-build install/update/reload path; iOS relaunch | `e2e:pwa-update` はclassic build（`VITE_ISLAND_ENABLED=false VITE_BUILD_PLAY_ENABLED=false`）専用。島有効buildは専用PWAハーネスを使う。Two-buildはclassicの異なる実buildを `SANSU_PWA_OLD_DIR` / `SANSU_PWA_NEW_DIR` で指定。実SW更新・保護フォーム・1回reload・全IDB/localStorage保持、SWを旧版に固定した復旧・検知後切断・offline再起動・cache保持を検査。実iOSとは区別する |
 | Release candidate | All of the above | Critical path smoke on target devices | Include iOS/Android/PWA notes if relevant |
 
@@ -228,3 +229,15 @@ Life two-buildの `SANSU_LIFE_RESIDENCY_UPGRADE=1` は保存20→21の実SW更�
 
 
 2026-09-29: `node tools/e2e-island-loading.mjs` は本番形式の `SANSU_LOADING_URL`、新しい `SANSU_LOADING_OUTPUT`、HTMLを含むapp/dist SHAの `SANSU_LOADING_MANIFEST` を指定。390通常/768 reducedでentry・庭・家のmoduleを明示保留し、起動前HTML/長い待機/完了後の消去を確認。実初回3問、実WebGL context loss/retry、所有と学習の保持、記録/設定への移動、実SW offline再開と同予約への追加回答、entry module失敗からHTML retryを検査する。boot撮影では保留したmoduleに依存するfonts.readyを待たずsystem fontの実表示を撮影する。実通信速度・実iPhone・子どもの理解の測定とは区別する。
+
+
+### 育つ島の任意の導きと記念v1（2026-10-01）
+
+[導きと記念の仕様](../product/island-starter-achievements-proposal.md)のS1〜S5/A1〜A6を検証する。
+
+- DEV: `npm run dev:growing-island`（port5260）。`SANSU_GROWING_GUIDANCE_URL` と新しい `SANSU_GROWING_GUIDANCE_OUTPUT` を指定して `node tools/e2e-growing-guidance.mjs` を実行する。`SANSU_GROWING_GUIDANCE_OFFLINE=1` は、既に読み込んだDEV画面でのoffline保存→再接続/reloadの診断で、SW offline起動の証拠にはしない。
+- 本番形式: Growing/Islandを有効にした固定buildをlocal previewで配信し、`SANSU_GUIDANCE_PRODUCTION_URL` と新しい `SANSU_GUIDANCE_PRODUCTION_OUTPUT` を指定して `node tools/e2e-growing-guidance-production.mjs` を実行する。実初回設定・実回答・配置・本・学習の同予約への復帰と、実SW制御のoffline回答/再起動を確認する。
+- DEVの実回答/配置で獲得した島と、version2の明示既存保存（A1/A6の確実な事実だけをsilent移行）、豊富な資源/完成ひろばの明示fixture（A5実演開始・A6有料拡張）を別scenarioとして残す。fixtureを実獲得や移行済み利用者の観察に読み替えない。
+- 案内や目標の選択だけでは時間・抽選・学習・費用を進めない。旧無料種を再配布せず、通常種/自然種の時計を区別する。色/移動/土地の記念snapshotはその後の変更でも維持し、演奏は本人の前景rendererの実開始から受領する。
+- reportは実URL、版/revision、Growing flag、島/本のcandidate、音/reduced motion、cache/SW状態、各scenarioと画面を記録する。app/QA（productionではdistも）の開始終了hashを一致させる。実行中のsource変更は診断として保存し、最終PASSの証拠に使わない。
+- `guidance.repository.test.ts` は版1/2→3、旧writerが触れられない `guidedIslands` 正本、CAS/重複/rollback/削除を検証する。実two-build更新、旧公開版からの復旧、実iOS、子どもの無説明理解・翌日の再訪を別に確認する。視覚・理解/安全・runtimeは独立して判定する。

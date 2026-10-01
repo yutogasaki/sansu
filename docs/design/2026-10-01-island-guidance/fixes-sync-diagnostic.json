@@ -1,0 +1,17 @@
+{
+  "scope": "Focused disposable-profile browser diagnostic, not a full journey",
+  "command": "Same-origin second tab commandGrowingIsland flag color=2",
+  "savedRevision": 3,
+  "directTableObservedRevisions": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "readGrowingIslandWrappedObservedRevisions": [
+    0,
+    1,
+    2
+  ],
+  "finding": "Dexie.exists() inside the read wrapper lost the cross-tab observation range; observeGrowingIsland validates a direct table liveQuery instead."
+}

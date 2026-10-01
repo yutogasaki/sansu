@@ -298,3 +298,18 @@ Life worldデータ版4は既存の経済checkpointを保持し、`tourCutover` 
 ## 学習監査後のoptional保存（2026-10-01）
 
 プロフィールに `evaluationContacts`（教科別・内容別の最新表示日時）、`finishRecovery`（元レベル・失敗内容/variant・失敗問題key・新しい独力正解key）、新規 `finishTestSets` に資格snapshotを追加する。RecentAttemptのoptionalなassistanceを実際の検証済み回答から保存する。既存のappData/profilesへの同一transactionで保存し、store/index/schema version追加や旧記録の一括書換えは行わない。欠損した旧assistanceを独力へ推定しない。既存予約は再生成せず、旧予約には資格snapshotを後付けしない。表示接触でログやmemory行を新設しない。
+
+
+## 育つ島の案内と記念（2026-10-01）
+
+[導きと記念v1](island-starter-achievements-proposal.md)の本人recordは保存版3、独立Growing DBのschema4へ切り替える。同一upgrade transactionでschema3の `balancedIslands` を新正本 `guidedIslands` へ一度だけ複製し、旧 `islands` と `balancedIslands` は保持する。新版は `guidedIslands` だけを読み書きし、旧tableからの再取り込み・合算はしない。schema増加だけで旧writer拒否を証明せず、旧writerが新正本の案内・選択・記念を消せないtable境界を使う。復旧buildも新正本と保存3を読めること。
+
+- `guidance.version: 1` に `starter`（自動案内の可否、S1〜S5の根拠）、`achievements`（A1〜A6の根拠）、任意の `selected`、通知済みIDの `notified`、任意の学習帰島根拠 `learning` を保存する。根拠は `source`、確実な時刻だけの `at?`、`targetId?`、対象の必要最小限の不変snapshot。UserProfileや旧案内localStorageへ達成状態を増やさない。
+- 既存の版1/2と `guidance` のない本人行は、所有・住人・残高・時計・完了ID・操作IDを保持して一度だけ版3へ移す。自動案内はOFF。確実に保存されている下船済みの住人と土地拡張だけA1/A6へ引き継ぎ、「これまでの しま」と示す。待機中のarrivalは入居達成にせず、色替え・移動・演奏や通常種を開いた事実を推測しない。旧無料導入をやり直せない場合は `starter.legacy: true` でS1〜S3の案内を省き、現在の家・下船の確実な事実だけを段階へ記録する。過去の有料通常種で `builtAt > plantedAt` が確認できる場合は `townBuilt` を保持し、今後本人が開いた時だけS5/A2を記録する。引継ぎは `legacy: true`、時刻不明の `at` は補わず、通知済みにして祝福を連発しない。
+- 配置・開く・下船・色替え・移動・拡張の根拠は、既存のintent ID/revisionによる命令成功と同じtransactionで保存する。無料導入・通常種・自然種、取消・同位置・再送を区別し、同じIDは再取得しない。無料種の旧 `tutorial` 権利は保持する。
+- `concert-started` はrendererの実演開始を確認したあと、対象ID・本人ID・期待revisionを渡す前景受領。完成済みの本人のひろばだけを対象にする。実演の開始意図に所有者を固定し、受領時にも同じ本人の島が前景であることを確認する。他人の島で始めた演奏の遅延受領を、帰島後の本人の記念へ書き込まない。`learning-returned` は本人ID・期待revisionを持つ帰島受領で、既存の有効完了取り込みの根拠を使う。対象/本人/版の不一致を拒否し、rendererの予定や他人の島の操作で達成を作らない。音OFFでも実演は記録できる。
+- 受領のintent IDで重複を防ぐ。revision競合では再読込して検証し直し、保存失敗では島と案内の更新を一緒にrollbackする。学習・演奏そのものを案内保存の完了待ちにしない。`ack-achievements` も本人ID・期待revisionを持ち、通知済みは実際の前景表示を確認したIDだけを保存する。
+- 本の開閉・目標の選択/解除・案内の停止/再開は、まち/自然時計・費用・報酬・抽選を進めない。未知版・破損した案内は推測修復せず読込/書込を拒否し、元recordと学習正本を保持して互換復旧へ案内する。保存3なのに案内境界がない行も拒否し、旧版行の移行と取り違えない。
+- 本人削除は `guidedIslands`・`balancedIslands`・旧 `islands` と本人の写真/贈り物を同一transactionで消去する。他プロフィールや訪問先へ案内・記念を書き込まない。
+
+版1/2から3の保持、旧writerによる新正本の不変、破損/未知版拒否、再送・CAS・保存失敗・削除をrepository回帰で確認する。PWA/offline・実two-build・実機・利用者観察は[実装タスク](../tasks/active/2026-10-01-island-guidance.md)で証拠を分けて記録する。

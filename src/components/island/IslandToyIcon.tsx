@@ -1,12 +1,13 @@
 import type { SVGProps } from 'react';
 import './IslandToyIcon.css';
 
-type Toy = 'island' | 'house' | 'album' | 'camera' | 'keepsake' | 'gift' | 'display' | 'play' | 'find' | 'box' | 'palette' | 'boat' | 'telescope';
+type Toy = 'island' | 'house' | 'book' | 'album' | 'camera' | 'keepsake' | 'gift' | 'display' | 'play' | 'find' | 'box' | 'palette' | 'boat' | 'telescope';
 type Props = SVGProps<SVGSVGElement> & { kind: Toy; size?: number };
 /** Small navigation objects: fixed silhouettes and color masses, never state or rewards. */
 export function IslandToyIcon({ kind, size = 40, className = '', ...props }: Props) {
     const blue = 'var(--toy-blue)', pink = 'var(--toy-pink)', yellow = 'var(--toy-yellow)', mint = 'var(--toy-mint)', paper = 'var(--pokomoko-paper)';
     const drawings = {
+        book: <><path fill={pink} d="M4 13Q14 7 24 14Q34 7 44 13V39Q34 33 24 40Q14 33 4 39Z"/><path fill={paper} d="M7 10Q16 7 24 13Q32 7 41 10V35Q32 32 24 38Q16 32 7 35Z"/><path d="M24 13V38M12 26L19 28M29 28L36 26"/><path fill={yellow} d="M16 14L17 18L21 19L18 22L18 26L15 23L11 24L13 20L11 17L15 17Z" strokeWidth="1.2"/><path fill={mint} d="M29 21Q28 14 35 14Q36 20 29 21Z"/></>,
         telescope: <><path d="M24 27V42M24 30L12 43M24 30L37 43" strokeWidth="3"/><path fill={pink} d="m8 20 6-3 6 10-6 3Z"/><path fill={yellow} d="m14 15 21-9 9 15-23 8Z"/><path fill={blue} d="m32 7 5-2 9 15-5 3Z"/><path d="m20 15 4 7" stroke={paper} strokeWidth="3"/><circle cx="24" cy="29" r="3" fill={mint}/></>,
         island: <><path fill={blue} d="M5 37Q12 29 24 32Q43 27 44 38Q38 47 20 44Q7 44 5 37Z"/><path fill={mint} d="M8 34Q13 26 22 29Q34 23 40 34Q29 41 8 34Z"/><path fill={yellow} d="M22 33Q29 23 22 14L27 12Q35 24 28 34Z"/><path fill={pink} d="M12 17Q6 8 18 7Q25 0 29 9Q43 6 40 18Q27 25 12 17Z"/><circle cx="18" cy="12" r="2.4" fill={paper} stroke="none"/><circle cx="31" cy="15" r="3" fill={paper} stroke="none"/></>,
         house: <><path fill={yellow} d="M12 21L37 19L39 41Q24 46 10 40Z"/><path fill={pink} d="M5 23Q17 14 21 5Q25 17 43 21Q27 29 5 23Z"/><path fill={blue} d="M24 42L24 32Q29 27 33 32L33 42"/><rect x="14" y="28" width="6" height="6" rx="2" fill={paper}/><circle cx="23" cy="17" r="3" fill={paper} stroke="none"/></>,

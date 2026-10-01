@@ -1,6 +1,12 @@
 # 島のあそびかたとその場の案内
 
-## 採用範囲
+## 育つ島への適用境界（2026-10-01）
+
+[仕様52](52_growing_island_game_spec.md)のGrowing画面は[スターターとアチーブメントv1](island-starter-achievements-proposal.md)を使う。「はじめての しまづくり」のS1〜S5と「しまの できごと」のA1〜A6を一つの本へまとめる。下記の旧島の案内をGrowingへ重ねず、`islandTutorialVersion` と旧localStorageの表示済みをGrowingの達成根拠として流用しない。
+
+新しい島の自動案内は描画と操作が準備できてから。最初の連続した流れを閉じる・学習・別の遊び・背景化で終了し、自動催促を繰り返さない。本人はメニューから再開できる。既存の島は自動案内なしで、保存済みの確実な事実だけを「これまでの しま」として記入する。無料種や学習報酬を再配布しない。学習に割り込まず、閉じる・音なし・reduced motion・44px・元の入口へのfocusを維持する。Growingの保存は[13](13_data_storage_migration_spec.md)の本人recordへ分離する。
+
+## 旧島の採用範囲
 
 2026-09-09のユーザー承認に基づく。[親仕様](01_app_spec.md)、[島](28_mystic_island_spec.md)、[成長](30_living_island_growth_spec.md)、[レイアウト](44_display_layout_spec.md)の学習開始・連問・保存契約を維持する。説明専用の必須チュートリアルは設けない。
 

@@ -33,6 +33,7 @@ export interface IslandLearningKeepsakesProps {
     onAlbum?: () => void;
     onShared?: () => void;
     onRewards?: () => void;
+    onGrowingGuide?: () => void;
 }
 const subjectName = (subject: string) => subject === 'math' ? 'さんすう' : subject === 'vocab' ? 'えいご' : 'まなんだ こと';
 const awardName = (id: IslandLearningKeepsakeId) => ISLAND_LEARNING_KEEPSAKES.find(item => item.id === id)!.name;
@@ -43,7 +44,7 @@ function displayAction(keepsakeId: IslandLearningKeepsakeId, displayed: boolean)
 /** The page supplies the actual house. Reading an award never places one;
  * only the explicit display controls save the person's display selection. */
 export function IslandLearningKeepsakes({ island, controls, disabled, onClose, onLearn, onPhoto, onSelect, onShowRoom, comparisonDisabled = disabled,
-    onPhotos, onAlbum, onShared, onRewards, section, onSectionChange, challenge, decor, walkingAvailable = true, active = true }: IslandLearningKeepsakesProps) {
+    onPhotos, onAlbum, onShared, onRewards, onGrowingGuide, section, onSectionChange, challenge, decor, walkingAvailable = true, active = true }: IslandLearningKeepsakesProps) {
     const [localSection, setLocalSection] = useState<IslandHouseSection>('home');
     const currentSection = section ?? localSection;
     const panelRef = useRef<HTMLElement>(null);
@@ -105,8 +106,10 @@ export function IslandLearningKeepsakes({ island, controls, disabled, onClose, o
                 : `${awardName(controls.pending.keepsakeId)}を ${controls.pending.displayed ? 'かざる' : 'しまう'}`} きろくを {controls.error ? 'もういちど たしかめられるよ。' : 'たしかめているよ。'}</p>}
         </div>}
         {currentSection === 'home' && <IslandHouseOverview active={active} disabled={disabled} comparisonDisabled={comparisonDisabled}
-            walkingAvailable={walkingAvailable} onAlbum={onAlbum} onPhotos={onPhotos}>{choose => <>
+            walkingAvailable={walkingAvailable} onAlbum={onAlbum} onPhotos={onPhotos} onGrowingGuide={onGrowingGuide}>{choose => <>
             <nav className="island-house-destinations" aria-label="いえの なかで みるもの">
+                {onGrowingGuide && <button className="island-secondary" data-keepsake-action="growing-guide" disabled={disabled} onClick={() => choose(onGrowingGuide)}>
+                    <IslandToyIcon kind="book" /><strong>しまの あそびかた</strong><small>ためすことと、できたこと</small></button>}
                 {onShared && <button className="island-secondary" data-keepsake-action="shared" disabled={disabled} onClick={() => choose(onShared)}>
                     <IslandToyIcon kind="display" /><strong>かざりと きおく</strong><small>だいじな たからもの</small></button>}
                 <button className="island-secondary" data-keepsake-action="open-keepsakes" disabled={disabled} onClick={() => choose(() => changeSection('keepsakes'))}>

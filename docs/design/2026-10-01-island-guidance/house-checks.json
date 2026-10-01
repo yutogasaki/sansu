@@ -1,0 +1,56 @@
+{
+  "date": "2026-10-01",
+  "scope": "House book entry follow-up; local DEV and working-copy core",
+  "core": {
+    "command": "VITE_ISLAND_ENABLED=true VITE_ISLAND_FANTASY_ENABLED=true VITE_GROWING_ISLAND_ENABLED=true npm run verify:core",
+    "exitCode": 0,
+    "testFiles": 516,
+    "tests": 4586,
+    "output": "house-core-output.txt"
+  },
+  "browser": {
+    "pass": true,
+    "scenarios": [
+      {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "answers": 3,
+        "pass": true
+      },
+      {
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "answers": 3,
+        "pass": true
+      }
+    ],
+    "captures": 10,
+    "exceptions": [],
+    "inputHashesEqual": true,
+    "inputCount": 1491,
+    "inputSha256": "6bda837460e668af024f030683207e4a08018bd50f37b88c1761ab737858ac1b",
+    "report": "house-dev/report.json"
+  },
+  "gates": {
+    "visualAppeal": "HOLD: no user evaluation",
+    "silentComprehensionSafety": "HOLD: no independent user evaluation",
+    "runtime": "GO: scoped DEV house journeys"
+  },
+  "published": false,
+  "finalDocs": {
+    "command": "npm run docs:check",
+    "exitCode": 1,
+    "unrelatedFailures": [
+      "docs/design/2026-10-01-menu-atelier/README.md -> screens.html",
+      "docs/design/2026-10-01-menu-atelier/README.md -> contact-sheet.png"
+    ],
+    "existingDeadlineWarnings": 4
+  },
+  "diffCheck": {
+    "exitCode": 0
+  }
+}

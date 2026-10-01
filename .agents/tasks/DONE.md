@@ -1,5 +1,14 @@
 # Shared Done Index
 
+- 2026-10-02: [家の本と案内の修正](../../docs/design/2026-10-01-island-guidance/fixes-checks.json)。直接入口・不足理由・あとでやる・別タブ同期。コミット対象core4,570、両幅DEV/production offline PASS -> `docs/done/2026-10.md`
+
+
+- 2026-10-01: [あそびかたの家入口](../../docs/design/2026-10-01-island-guidance/house-entry.html)を追加。家で開閉、遊びを選ぶと島へ。読書の保存不変・両幅の実操作/学習予約再開・core4,586テストPASS。未公開 -> `docs/done/2026-10.md`
+- 2026-10-01: [育つ島のスターターとアチーブメント実装](../../docs/design/2026-10-01-island-guidance/README.md)。任意S1〜S5/A1〜A6・本・固定記念・保存3。core4,586テスト、固定両幅DEV/production/offline PASS。ローカル実装、未公開 -> `docs/done/2026-10.md`
+
+
+- 2026-10-01: [スターターとアチーブメントの仕様案](../../docs/product/island-starter-achievements-proposal.md)を検討。最初の一周・初期6件・任意目標・実達成/保存/受入を整理。文書検証済み、採用前・未実装 -> `docs/done/2026-10.md`
+
 
 - 2026-10-01: しあげの準備3条件を常時表示し、入口と保存済みの結果にレベルアップを明示。関連16テスト・固定両幅14ケースPASS。ローカル実装 -> `docs/done/2026-10.md`
 

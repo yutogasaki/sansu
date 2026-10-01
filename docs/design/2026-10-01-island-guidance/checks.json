@@ -1,0 +1,114 @@
+{
+  "at": "2026-10-01T09:13:00.082Z",
+  "scope": "Shared working checkout; local Growing build. No clean-commit, release or deployment claim.",
+  "core": {
+    "command": "VITE_ISLAND_ENABLED=true VITE_ISLAND_FANTASY_ENABLED=true VITE_GROWING_ISLAND_ENABLED=true npm run verify:core",
+    "pass": true,
+    "files": 516,
+    "tests": 4586,
+    "logSha256": "9b64e516f4ebc5bbdbb698382bcdba1f1b3c63fae0537be4cdb1873144c9cae9",
+    "existingWarnings": [
+      "IslandMilestone Fast Refresh export warning",
+      "Four expired Review By warnings",
+      "Browserslist age warning"
+    ]
+  },
+  "smoke": {
+    "pass": true,
+    "scenarios": 31,
+    "target": "http://127.0.0.1:4173",
+    "mode": "Explicit flag-off classic regression"
+  },
+  "balance": {
+    "pass": true,
+    "scenarios": 4,
+    "mode": "Growing DEV; real UI and explicit v1 fixture separate"
+  },
+  "firstCoreFailure": {
+    "cause": "Existing IslandLife.startup node test lacked document mock required by current useGardenTime",
+    "resolution": "Added visibilityState + add/removeEventListener test mock; four tests now pass"
+  },
+  "reviewFixes": [
+    "Concert receipt checks initiating island owner even after visiting exit; two regression tests",
+    "Guidance suppressed while sync is loading/saving",
+    "Other play menu choices pause automatic starter; visiting concerts do not write own starter"
+  ],
+  "frozenCore": {
+    "command": "VITE_ISLAND_ENABLED=true VITE_ISLAND_FANTASY_ENABLED=true VITE_GROWING_ISLAND_ENABLED=true npm run verify:core",
+    "pass": true,
+    "files": 516,
+    "tests": 4586,
+    "logSha256": "c9f8434e18316e2d72e6ae9cfa94e98fc84b6b1a8d6bd18d4648acd7fc4a9ef8",
+    "existingWarnings": [
+      "IslandMilestone Fast Refresh export warning",
+      "Four expired Review By warnings",
+      "Browserslist age warning"
+    ],
+    "source": "Physically copied src/public/tools/configs; frozen app inputs, shared docs checked separately"
+  },
+  "production": {
+    "pass": true,
+    "sourceStable": true,
+    "scenarios": 2,
+    "version": {
+      "version": "development-local:ba98f68e-4fc8-4d8b-b425-28275786436e",
+      "revision": "development-local",
+      "delivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "park": {
+        "enabled": false,
+        "renderer": "retired"
+      },
+      "island": {
+        "enabled": true,
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "life": {
+          "enabled": true,
+          "discovery": false,
+          "fantasy": true,
+          "candidate": "living-fantasy-garden-v2",
+          "saveVersion": 21
+        },
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "residentCandidate": "patchwork-otter-v1",
+        "artDirection": "moon-garden"
+      }
+    },
+    "sourceHash": "ff0ec610fbdbf506003fd7c4814c752e418944465815d04edd80ce2d794b90e7"
+  },
+  "dev": {
+    "pass": true,
+    "scenarios": 8,
+    "captures": 14,
+    "sourceStable": true,
+    "exceptions": [],
+    "consoleErrors": []
+  },
+  "closeout": {
+    "at": "2026-10-01T09:26:46.534192+00:00",
+    "implementationMatchesFrozenCandidate": {
+      "src/components/island/growing/GrowingIsland.tsx": true,
+      "src/components/island/growing/GrowingWorld.tsx": true,
+      "src/components/island/growing/useGrowingIsland.ts": true,
+      "src/components/island/growing/useGrowingGuide.ts": true,
+      "src/components/island/growing/GrowingGuideBook.tsx": true,
+      "src/components/island/growing/GrowingGuideArt.tsx": true,
+      "src/components/island/growing/GrowingGuideCue.tsx": true,
+      "src/components/island/growing/growingGuide.css": true,
+      "src/components/island/growing/growing.css": true,
+      "src/components/island/growing/concertReceipt.ts": true,
+      "src/components/island/growing/concertReceipt.test.ts": true,
+      "src/domain/growingIsland/guidance.ts": true,
+      "src/domain/growingIsland/guidance.test.ts": true,
+      "src/domain/growingIsland/guidance.repository.test.ts": true,
+      "src/domain/growingIsland/repository.ts": true,
+      "src/domain/growingIsland/commands.ts": true,
+      "src/domain/growingIsland/island.ts": true,
+      "src/domain/growingIsland/types.ts": true,
+      "src/pages/Island.tsx": true
+    },
+    "contactSheetImages": 30,
+    "publication": "Not performed"
+  }
+}

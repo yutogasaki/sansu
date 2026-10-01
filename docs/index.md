@@ -1,6 +1,6 @@
 # Sansu 文書の入口
 
-**2026-09-29 北極星を改訂：** [CONSTITUTION](../CONSTITUTION.md)の北極星を旧探索（地底）から「育つ島」（くふう・にぎわい・ふしぎ＋愛着）へ。人口は地区ごとに増やし、学習は材料と道具をもたらす。[決定の記録](adr/2026-09-29-north-star-growing-island.md)。仕様51の住人上限3などは無効で、[整合表](product/51_living_fantasy_island_spec.md#北極星との整合2026-09-29)に従う。次期の遊びの規則は[52 育つ島 ゲーム仕様](product/52_growing_island_game_spec.md)（しこむ→まなぶ→ひらく、設計確定・未実装）。
+**2026-09-29 北極星を改訂：** [CONSTITUTION](../CONSTITUTION.md)の北極星を旧探索（地底）から「育つ島」（くふう・にぎわい・ふしぎ＋愛着）へ。人口は地区ごとに増やし、学習は材料と道具をもたらす。[決定の記録](adr/2026-09-29-north-star-growing-island.md)。仕様51の住人上限3などは無効で、[整合表](product/51_living_fantasy_island_spec.md#北極星との整合2026-09-29)に従う。次期の遊びの規則は[52 育つ島 ゲーム仕様](product/52_growing_island_game_spec.md)（しこむ→まなぶ→ひらく。実装・公開状況はタスク参照）。
 
 更新: 2026-09-29。[現在のタスク](../.agents/tasks/TASKS.md)を4本に整理し、庭と家の連続表示・住人の招待・保存版21・30品の軽量化を一括実装・本番へ反映。[本番の実画面と検証](design/2026-09-29-island-community/index.html)から同じ版の学習・庭・家を確認できます。残るフレーム時間、実機・利用者評価は分けて管理します。
 
@@ -16,6 +16,8 @@
 
 **まず読む：[今の島に、自然と町の仕組みを取り込む](product/island-nature-integration.md)。** 今の島を本体にし、Nature Townを別作品としては進めません。何を残し、何を取り込むかを一枚にまとめました。
 
+
+育つ島の任意の導きと記念：[スターターとアチーブメントv1](product/island-starter-achievements-proposal.md)。S1〜S5/A1〜A6・本・保存3をローカル実装し、[固定両幅の実画面と検証](design/2026-10-01-island-guidance/README.md)を残しています。公開・実機・子どもの観察は別の状態です。
 
 ## 今の全体像
 

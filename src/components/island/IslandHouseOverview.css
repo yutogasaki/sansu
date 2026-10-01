@@ -101,3 +101,12 @@
         grid-column: 2; grid-row: 1; height: 100%; min-height: 0; border-radius: 20px 0 0 20px;
     }
 }
+
+.island-house-guide-book {
+    position: absolute; bottom: 114px; right: 16px; display: grid; justify-items: center;
+    min-width: 88px; min-height: 88px; padding: 8px; pointer-events: auto;
+    border: 0; background: transparent; color: var(--pokomoko-ink); font: inherit; font-weight: 800;
+}
+.island-house-guide-book span { padding: 3px 8px; border-radius: 12px; background: var(--pokomoko-paper); font-size: 13px; }
+.island-house-guide-book:focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 2px; border-radius: 16px; }
+.island-house-guide-book:disabled { opacity: .55; }

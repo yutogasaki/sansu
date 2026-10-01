@@ -1,0 +1,75 @@
+/* A quiet paper book sits below the live island. Pictures invite play before a goal is chosen. */
+.growing-guide-cue {
+    position: absolute; z-index: 5; left: 12px; bottom: 86px; width: min(310px, calc(100% - 94px));
+    display: flex; gap: 6px; align-items: flex-start; padding: 10px 10px 10px 14px;
+    color: var(--pokomoko-ink); background: var(--pokomoko-paper); border: 2px solid var(--pokomoko-lavender);
+    border-radius: 20px 20px 20px 5px; box-shadow: 0 4px 15px rgb(48 54 79 / 14%);
+}
+.growing-guide-cue > div { flex: 1; min-width: 0; }
+.growing-guide-cue span { display: block; color: var(--pokomoko-muted); font-size: 11px; }
+.growing-guide-cue strong { display: block; font-size: 14px; line-height: 1.6; }
+.growing-guide-cue button { min-height: 44px; padding: 7px 10px; border: 0; border-radius: 12px; background: var(--pokomoko-lavender); font-size: 13px; font-weight: 800; }
+.growing-guide-cue > div button { margin-top: 5px; }
+.growing-guide-cue .growing-guide-cue-close { flex: none; width: 44px; font-size: 20px; background: transparent; }
+.growing-guide-cue .growing-guide-art { width: 64px; flex: none; align-self: center; }
+.growing-guide-notice { width: min(350px, calc(100% - 24px)); }
+.growing-guide-goal { position: absolute; z-index: 4; left: 12px; bottom: 170px; width: 106px; display: grid; justify-items: center; padding: 7px; min-height: 44px;
+    border: 2px solid var(--pokomoko-lavender); border-radius: 17px; background: var(--pokomoko-paper); font-size: 12px; font-weight: 800; line-height: 1.5; }
+.growing-guide-goal .growing-guide-art { width: 70px; }
+.growing-guide-cue button:focus-visible, .growing-guide-goal:focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 3px; }
+.growing-guide-book {
+    position: absolute; z-index: 8; inset: auto 0 0; max-height: 66%; display: flex; flex-direction: column;
+    background: var(--pokomoko-paper); color: var(--pokomoko-ink); border-radius: 24px 24px 0 0;
+    border-top: 5px solid var(--pokomoko-lavender); box-shadow: 0 -8px 28px rgb(48 54 79 / 18%);
+    padding: 13px 14px max(12px, env(safe-area-inset-bottom));
+}
+.growing-guide-book button { min-height: 44px; border: 1px solid var(--pokomoko-edge); border-radius: 12px; background: var(--pokomoko-paper); font-weight: 800; padding: 8px 12px; }
+.growing-guide-book button:disabled { opacity: .55; cursor: default; }
+.growing-guide-book :is(button, summary):focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 3px; }
+.growing-guide-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex: none; }
+.growing-guide-kicker { display: block; font-size: 11px; font-weight: 800; color: var(--pokomoko-muted); letter-spacing: .06em; }
+.growing-guide-header h2 { font-size: 20px; line-height: 1.5; margin: 0; font-weight: 900; }
+.growing-guide-header h2:focus { outline: none; }
+.growing-guide-close { flex: none; font-size: 13px; }
+.growing-guide-close span { font-size: 21px; vertical-align: middle; margin-left: 5px; }
+.growing-guide-tabs { display: flex; gap: 6px; flex: none; margin: 12px 0 0; padding-bottom: 8px; border-bottom: 1px solid var(--pokomoko-edge); }
+.growing-guide-tabs button { flex: 1; font-size: 15px; border-color: transparent; }
+.growing-guide-tabs button[aria-selected="true"] { background: var(--pokomoko-lavender); box-shadow: inset 0 -3px var(--pokomoko-stitch); }
+.growing-guide-page { overflow-y: auto; overscroll-behavior: contain; min-height: 0; padding: 12px 2px 6px; }
+.growing-guide-page h3 { font-size: 16px; line-height: 1.55; margin: 3px 0 5px; }
+.growing-guide-page p { font-size: 14px; line-height: 1.65; margin: 4px 0 8px; }
+.growing-guide-art { display: block; width: 100%; height: auto; }
+.growing-guide-starter, .growing-guide-detail { display: grid; grid-template-columns: 100px 1fr; gap: 8px; align-items: center; padding: 12px 10px; margin-bottom: 13px; border-radius: 16px; background: var(--pokomoko-mint); }
+.growing-guide-starter .growing-guide-art { align-self: start; margin-top: 12px; }
+.growing-guide-detail { background: var(--pokomoko-rose); }
+.growing-guide-detail-memory { background: var(--pokomoko-mint); }
+.growing-guide-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.growing-guide-actions button { font-size: 13px; }
+.growing-guide-book button.growing-guide-primary { background: var(--pokomoko-blue); color: var(--pokomoko-paper); border-color: var(--pokomoko-blue-deep); box-shadow: 0 3px 0 var(--pokomoko-blue-deep); }
+.growing-guide-note { color: var(--pokomoko-muted); font-size: 13px; }
+.growing-guide-section-title { margin: 14px 0 6px !important; }
+.growing-guide-candidates { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
+.growing-guide-book button.growing-guide-card { padding: 7px 3px 10px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 3px; text-align: center; border-color: transparent; background: var(--pokomoko-canvas); }
+.growing-guide-card .growing-guide-art { width: 100%; margin: 0; }
+.growing-guide-card strong { font-size: 13px; line-height: 1.55; overflow-wrap: anywhere; }
+.growing-guide-book button.growing-guide-card[aria-pressed="true"] { border-color: var(--pokomoko-blue); box-shadow: inset 0 0 0 1px var(--pokomoko-blue); }
+.growing-guide-memory, .growing-guide-bookmark { font-size: 11px; line-height: 1.5; color: var(--pokomoko-muted); }
+.growing-guide-bookmark { color: var(--pokomoko-blue-deep); }
+.growing-guide-all { margin-top: 12px; }
+.growing-guide-all summary { min-height: 44px; padding: 10px 6px; font-size: 14px; font-weight: 800; cursor: pointer; }
+.growing-guide-grid, .growing-guide-memories { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+.growing-guide-empty { display: grid; justify-items: center; text-align: center; padding: 4px 12px 16px; }
+.growing-guide-empty .growing-guide-art { width: 160px; }
+.growing-guide-empty p { max-width: 300px; }
+@media (min-width: 640px) {
+    .growing-guide-book { left: 50%; right: auto; width: min(640px, calc(100% - 32px)); transform: translateX(-50%); padding: 16px 22px max(14px, env(safe-area-inset-bottom)); }
+    .growing-guide-starter, .growing-guide-detail { grid-template-columns: 154px 1fr; padding: 12px 18px; gap: 16px; }
+    .growing-guide-card strong { font-size: 15px; }
+    .growing-guide-grid, .growing-guide-memories { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 360px) {
+    .growing-guide-header h2 { font-size: 18px; }
+    .growing-guide-starter, .growing-guide-detail { grid-template-columns: 76px 1fr; }
+    .growing-guide-candidates { gap: 4px; }
+    .growing-guide-card strong { font-size: 12px; }
+}

@@ -20,6 +20,7 @@ export interface WorldHandlers {
     onPop?: () => void;
     /** The world's own loading steps: the scene is built, then the first picture is on screen. */
     onStage?: (stage: 'scene' | 'ready') => void;
+    onConcertStarted?: (receipt: number) => void;
 }
 /** Pictures of the island for the card and the island's story; never uploaded anywhere. */
 export interface WorldCamera {
@@ -38,7 +39,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
     const handlerRef = useRef(handlers);
     useEffect(() => { handlerRef.current = handlers; });
     const api = useRef<{ rebuild: (state: GrowingState, ghost?: Ghost, selectedId?: string, hints?: readonly Cell[]) => void; setTime: (time: GardenTime) => void; turn: (by: number) => void;
-        cheer: () => void; festival: () => void; moment: (m: ShownMoment) => void; focus: (id: string) => void; concert: (cell: Cell) => void } | undefined>(undefined);
+        cheer: () => void; festival: () => void; moment: (m: ShownMoment) => void; focus: (id: string) => void; concert: (cell: Cell, receipt: number) => void } | undefined>(undefined);
     const [failed, setFailed] = useState(false);
     const latest = useRef({ state, ghost, selectedId, time, hints, show });
     useEffect(() => { latest.current = { state, ghost, selectedId, time, hints, show }; });
@@ -61,6 +62,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
         let layout: SceneLayout = world.layout(latest.current.state), layer: ObjectLayer | undefined;
         let unopened = new Set<string>(), known: Set<string> | undefined, frame = 0, last = performance.now(), width = 1, height = 1, nextWave = 0, showing = false;
         const reduced = reducedMotion();
+        let pendingConcert: number | undefined;
 
         const rebuild = (next: GrowingState, nextGhost?: Ghost, selected?: string, nextHints?: readonly Cell[]) => {
             layout = world.layout(next);
@@ -95,9 +97,9 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
                 const at = shown.cell ? layout.point(shown.cell) : new T.Vector3(0, 0, 0);
                 moments.play(shown.moment, at, performance.now(), reduced);
             },
-            concert: cell => { world.life.startConcert(cell, performance.now()); },
+            concert: (cell, receipt) => { world.life.startConcert(cell, performance.now()); pendingConcert = receipt; },
             focus: id => {
-                const target = world.life.positionOf(id); if (!target) return;
+                const target = world.life.positionOf(id) ?? layer?.objects.get(id)?.position; if (!target) return;
                 view.zoom = Math.max(view.zoom, 2.2);
                 const home = frameCamera(camera, layout, { ...view, pan: { x: 0, z: 0 } }, width / height);
                 view.pan = { x: target.x - home.x, z: target.z - home.z };
@@ -185,6 +187,10 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             moments.tick(now);
             world.animate(now, reduced);
             renderer.render(world.scene, camera);
+            if (pendingConcert !== undefined && document.visibilityState === 'visible') {
+                const receipt = pendingConcert; pendingConcert = undefined;
+                if (world.life.concertActive(now)) handlerRef.current.onConcertStarted?.(receipt);
+            }
             if (!shown) { shown = true; handlerRef.current.onStage?.('ready'); }
         };
         let shown = false;
@@ -272,14 +278,14 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
     useEffect(() => { api.current?.rebuild(state, ghost, selectedId, hints); }, [state, ghost, selectedId, hints]);
     useEffect(() => { if (moment) api.current?.moment(moment); }, [moment]);
     useEffect(() => { if (focus) api.current?.focus(focus.id); }, [focus]);
-    useEffect(() => { if (concert) api.current?.concert(concert.cell); }, [concert]);
+    useEffect(() => { if (concert) api.current?.concert(concert.cell, concert.n); }, [concert]);
     useEffect(() => { api.current?.setTime(time); }, [time]);
     useEffect(() => { if (cheer) api.current?.cheer(); }, [cheer]);
     useEffect(() => { if (festival) api.current?.festival(); }, [festival]);
     const lastTurn = useRef(turn);
     useEffect(() => { if (turn !== lastTurn.current) { api.current?.turn(turn - lastTurn.current); lastTurn.current = turn; } }, [turn]);
 
-    return <div className="growing-world" ref={host} data-growing-world>
+    return <div className="growing-world" ref={host} data-growing-world data-visual-candidate="growing-island-v1" data-growing-feature-enabled="true">
         {failed && <p className="growing-world-failed">しまを ひょうじ できなかったよ。よみなおしてみてね。</p>}
     </div>;
 }

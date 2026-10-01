@@ -38,6 +38,9 @@ export interface Plot {
     origin: 'seed' | 'spread';
     paid: number;
     roof?: number;
+    /** Verified free introduction and bank-consuming construction provenance. */
+    starter?: true;
+    townBuilt?: true;
 }
 
 export interface Landmark {
@@ -76,6 +79,23 @@ export interface Villager {
     outfit?: { color?: number; hat?: number };
 }
 
+export type StarterStepId = 'S1' | 'S2' | 'S3' | 'S4' | 'S5';
+export type AchievementId = 'A1' | 'A2' | 'A3' | 'A4' | 'A5' | 'A6';
+export interface GuidanceEvidence {
+    source: string;
+    at?: number;
+    targetId?: string;
+    snapshot: { flagColor: number; land?: GrowingState['land']; target?: Plot | Landmark | Keepsake | Villager; legacy?: boolean };
+}
+export interface GrowingGuidance {
+    version: 1;
+    starter: { automatic: boolean; legacy?: true; steps: Partial<Record<StarterStepId, GuidanceEvidence>> };
+    achievements: Partial<Record<AchievementId, GuidanceEvidence>>;
+    selected?: AchievementId;
+    notified: AchievementId[];
+    learning?: GuidanceEvidence;
+}
+
 export interface GrowingState {
     rules: 'growing-island-v1';
     seed: string;
@@ -84,7 +104,7 @@ export interface GrowingState {
     /** Island Lv7 lets children draw a pattern on the island flag (§8). */
     flagPattern?: number;
     drops: number;
-    land: { expanded?: 'east' | 'west'; extra: Side[]; capes: ('east' | 'west')[] };
+    land: { expanded?: 'east' | 'west'; extra: Side[]; capes: ('east' | 'west')[]; districts?: Side[] };
     plots: Plot[];
     landmarks: Landmark[];
     keepsakes: Keepsake[];
@@ -101,6 +121,7 @@ export interface GrowingState {
     unopened: string[];
     arrivals: string[];
     tutorial: 'first-home' | 'done';
+    guidance?: GrowingGuidance;
     learned: string[];
     /** Completions at or before this time were counted and their ids pruned (§18.1). */
     learnedFloor?: number;
@@ -140,7 +161,12 @@ export type Command =
     | { type: 'dress'; id: string; color?: number; hat?: number }
     | { type: 'flag'; color?: number; pattern?: number }
     | { type: 'decorate'; pattern?: WallPatternId; rug?: number; hidden?: WordGroupId[] }
-    | { type: 'emblem'; image: string; glyph: string };
+    | { type: 'emblem'; image: string; glyph: string }
+    | { type: 'choose-goal'; id?: AchievementId }
+    | { type: 'starter-guide'; automatic: boolean }
+    | { type: 'ack-achievements'; ids: AchievementId[]; profileId: string; expectedRevision: number }
+    | { type: 'concert-started'; id: string; profileId: string; expectedRevision: number }
+    | { type: 'learning-returned'; profileId: string; expectedRevision: number };
 
 export type TownEvent =
     | { type: 'built'; plotId: string }

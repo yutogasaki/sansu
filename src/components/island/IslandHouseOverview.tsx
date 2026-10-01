@@ -9,11 +9,12 @@ interface Props {
     walkingAvailable: boolean;
     onAlbum?: () => void;
     onPhotos?: () => void;
+    onGrowingGuide?: () => void;
     children: (choose: (action: () => void) => void) => ReactNode;
 }
 
 /** Keep the room open; secondary destinations share the island's optional sheet. */
-export function IslandHouseOverview({ active, disabled, comparisonDisabled, walkingAvailable, onAlbum, onPhotos, children }: Props) {
+export function IslandHouseOverview({ active, disabled, comparisonDisabled, walkingAvailable, onAlbum, onPhotos, onGrowingGuide, children }: Props) {
     const dialog = useRef<HTMLDialogElement>(null);
     const trigger = useRef<HTMLButtonElement>(null);
     const [open, setOpen] = useState(false);
@@ -25,6 +26,8 @@ export function IslandHouseOverview({ active, disabled, comparisonDisabled, walk
     const choose = (action: () => void) => { close(); action(); };
     return <div className="island-house-overview">
         <p className="island-house-hint">{walkingAvailable ? 'ゆかを タップすると ぽこもこが あるくよ。' : 'おもいでを ひらく。きねんを かざる。'}</p>
+        {onGrowingGuide && <button type="button" className="island-house-guide-book" data-house-guide-book disabled={disabled} onClick={onGrowingGuide}>
+            <IslandToyIcon kind="book" size={64} /><span>あそびかた</span></button>}
         <nav className="island-house-tools" aria-label="いえで できること">
             {onAlbum && <button type="button" data-keepsake-action="album" disabled={comparisonDisabled} onClick={onAlbum}>
                 <IslandToyIcon kind="album" /><span>アルバム</span></button>}

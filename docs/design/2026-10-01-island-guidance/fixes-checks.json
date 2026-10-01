@@ -1,0 +1,56 @@
+{
+  "date": "2026-10-02",
+  "scope": "Main commit candidate: starter/achievements and house guidance follow-up. Balance and atelier source changes remain separate.",
+  "core": {
+    "pass": true,
+    "testFiles": 514,
+    "tests": 4570,
+    "output": "fixes-core-output.txt"
+  },
+  "smoke": {
+    "pass": true,
+    "scenarios": 31,
+    "report": "fixes-smoke/smoke-report.json",
+    "flags": "Island=false / BuildPlay=false"
+  },
+  "journeys": {
+    "commit-dev": {
+      "target": "http://127.0.0.1:5264",
+      "pass": true,
+      "scenarios": 2,
+      "captures": 16,
+      "sourceStable": true,
+      "report": "commit-dev/report.json"
+    },
+    "commit-guidance": {
+      "target": "http://127.0.0.1:5264",
+      "pass": true,
+      "scenarios": 6,
+      "captures": 14,
+      "sourceStable": true,
+      "report": "commit-guidance/report.json"
+    },
+    "commit-production-final": {
+      "target": "http://127.0.0.1:5265",
+      "pass": true,
+      "scenarios": 2,
+      "captures": 20,
+      "sourceStable": true,
+      "report": "commit-production-final/report.json"
+    }
+  },
+  "applicationIndexMatch": {
+    "files": 1486,
+    "mismatches": []
+  },
+  "gates": {
+    "visualAppeal": "HOLD: no child evaluation",
+    "silentComprehensionSafety": "HOLD: no independent child evaluation",
+    "runtime": "GO: stated DEV/production journeys"
+  },
+  "unverified": [
+    "Actual two-build Growing update",
+    "Physical iPhone relaunch",
+    "Child comprehension and return motivation"
+  ]
+}
