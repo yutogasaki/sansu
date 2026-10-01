@@ -15,6 +15,11 @@ export function waterLayout(state: GrowingState): WaterLayout {
 }
 
 export const TREE_MATURE_HOURS = 18;
+
+/** A wonder seed's form follows its surroundings (§3.5): heart tree, polka-dot arch or pumpkin. */
+export type WonderForm = 'heart-tree' | 'dot-arch' | 'pumpkin';
+export const wonderForm = (style?: PlotStyle): WonderForm => style === 'tree' || style === 'flower' ? 'heart-tree' : style === 'water' || style === 'light' ? 'dot-arch' : 'pumpkin';
+const wonderFeature = (style?: PlotStyle): Feature => { const form = wonderForm(style); return form === 'heart-tree' ? 'flower' : form === 'dot-arch' ? 'light' : 'farm'; };
 export const BLOOM_HOURS = 6;
 
 /** Feature points of everything that stands on the island (spec 52 §3.2, §6). */
@@ -22,7 +27,7 @@ export function features(state: GrowingState): { cell: Cell; feature: Feature; p
     const reached = connectedWaterChannels(waterLayout(state)), out: { cell: Cell; feature: Feature; points: number }[] = [];
     for (const l of state.landmarks) {
         if (!l.cell) continue;
-        if (l.kind === 'water-bowl') out.push({ cell: l.cell, feature: 'water', points: 2 });
+        if (l.kind === 'water-bowl' || l.kind === 'fountain') out.push({ cell: l.cell, feature: 'water', points: 2 });
         else if (l.kind === 'water-channel' && reached.has(key(l.cell))) out.push({ cell: l.cell, feature: 'water', points: 1 });
         else if (l.kind === 'sapling') out.push({ cell: l.cell, feature: 'tree', points: l.growth >= TREE_MATURE_HOURS ? 2 : 1 });
         else if (l.kind === 'flower' && growthStage({ kind: 'flower', growth: l.growth }) === 2) out.push({ cell: l.cell, feature: 'flower', points: 1 });
@@ -33,6 +38,7 @@ export function features(state: GrowingState): { cell: Cell; feature: Feature; p
     for (const p of state.plots) {
         if (!p.cell || p.stage === 0) continue;
         if (p.kind === 'farm' || p.kind === 'market') out.push({ cell: p.cell, feature: 'farm', points: 2 });
+        else if (p.kind === 'wonder') out.push({ cell: p.cell, feature: wonderFeature(p.style), points: 2 });
         else if (p.kind === 'wild' && p.growth >= BLOOM_HOURS) {
             const feature: Feature = p.style === 'tree' ? 'tree' : p.style === 'water' ? 'water' : p.style === 'light' ? 'light' : 'flower';
             out.push({ cell: p.cell, feature, points: 1 });

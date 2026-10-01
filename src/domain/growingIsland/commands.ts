@@ -59,7 +59,9 @@ function apply(state: GrowingState, command: Command): TownEvent[] {
     const events: TownEvent[] = [];
     switch (command.type) {
         case 'plant': {
-            if (!state.unlocked.includes(`seed:${command.kind}`)) fail('まだ えらべないよ。');
+            if (command.kind === 'wonder') {
+                if (!state.wonderSeeds) fail('ふしぎの たねが まだ ないよ。');
+            } else if (!state.unlocked.includes(`seed:${command.kind}`)) fail('まだ えらべないよ。');
             const tutorial = state.tutorial === 'first-home' && command.kind === 'home';
             claim(state, command.cell);
             const price = tutorial ? 0 : SEED_PRICE[command.kind];
@@ -67,6 +69,7 @@ function apply(state: GrowingState, command: Command): TownEvent[] {
             const plot = { id: `p${state.nextId++}`, kind: command.kind, cell: { ...command.cell }, plantedAt: state.town.clock,
                 stage: 0 as const, growth: 0, origin: 'seed' as const, paid: price };
             state.plots.push(plot);
+            if (command.kind === 'wonder') state.wonderSeeds = state.wonderSeeds! - 1;
             if (tutorial) {
                 // The first home shows the whole loop once without learning (§14).
                 Object.assign(plot, { stage: 1, builtAt: state.town.clock, stagedAt: state.town.clock, style: styleAt(state, plot.cell) });
@@ -106,6 +109,7 @@ function apply(state: GrowingState, command: Command): TownEvent[] {
             if (plot?.stage === 0) {
                 state.plots = state.plots.filter(p => p.id !== plot.id);
                 state.drops += plot.paid;
+                if (plot.kind === 'wonder') state.wonderSeeds = (state.wonderSeeds ?? 0) + 1;
                 break;
             }
             if (plot?.kind === 'home' && occupantsOf(state, plot.id).length) fail('だれかが すんでいるよ。');

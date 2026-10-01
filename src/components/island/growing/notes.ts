@@ -3,7 +3,7 @@ import type { Species } from '../../../domain/growingIsland';
 /** A gentle pentatonic: whatever order friends are touched in, it sounds pleasant. */
 const SCALE = [261.6, 293.7, 329.6, 392, 440, 523.3, 587.3, 659.3, 784];
 const SPECIES_NOTE: Record<Species | 'pokomoko', number> = {
-    pokomoko: 0, hedgehog: 1, otter: 2, rabbit: 3, fox: 4, duck: 5, squirrel: 6, bird: 7, girl: 8, boy: 5,
+    pokomoko: 0, hedgehog: 1, otter: 2, rabbit: 3, fox: 4, duck: 5, squirrel: 6, bird: 7, girl: 8, boy: 5, penguin: 1, owl: 0, frog: 6,
 };
 let context: AudioContext | undefined;
 

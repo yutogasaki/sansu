@@ -43,15 +43,22 @@ export function momentCandidates(state: GrowingState): Candidate[] {
     const tree = state.landmarks.find(l => l.kind === 'sapling' && l.cell && l.growth >= TREE_MATURE_HOURS
         && benches.some(c => distance(c, l.cell!) <= 2) && flowers.filter(c => distance(c, l.cell!) <= 2).length >= 2);
     if (tree?.cell) out.push({ moment: 'guest-grove', cell: tree.cell });
+    // Three more one-night guests: a whale by a watery island, a rainbow bird for a flower
+    // book of five colours, and the moon rabbit where many lights glow.
+    const waters = state.landmarks.filter(l => l.cell && (l.kind === 'water-bowl' || l.kind === 'fountain')).length;
+    if (waters >= 2 || state.landmarks.some(l => l.kind === 'lighthouse' && l.cell)) out.push({ moment: 'whale' });
+    if ((state.flowerBook?.length ?? 0) >= 5) out.push({ moment: 'rainbow-bird', cell: flowers[0] });
+    if (lights.length >= 3) out.push({ moment: 'moon-rabbit', cell: lights[0] });
     return out;
 }
 
 const MOMENT_CHANCE = .6, GUEST_CHANCE = .3;
+const GUESTS: readonly Moment[] = ['guest-water', 'guest-grove', 'whale', 'rainbow-bird', 'moon-rabbit'];
 
 /** At most one surprise for a town day, from a deterministic draw: reopening never rerolls it. */
 export function dayMoment(state: GrowingState, day: number): Candidate | undefined {
     const guests = roll(state.seed, 'moment-guest', 'day', day) < GUEST_CHANCE;
-    const candidates = momentCandidates(state).filter(c => guests || !c.moment.startsWith('guest'));
+    const candidates = momentCandidates(state).filter(c => guests || !GUESTS.includes(c.moment));
     if (!candidates.length || roll(state.seed, 'moment', 'day', day) >= MOMENT_CHANCE) return undefined;
     return candidates[Math.floor(roll(state.seed, 'moment-pick', 'day', day) * candidates.length)];
 }

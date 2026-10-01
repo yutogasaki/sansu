@@ -3,7 +3,7 @@ import type { Character, GrowingState, KeepsakeKind, Like, LandmarkKind, SeedKin
 
 export const SPECIES_NAME: Record<Species, string> = {
     rabbit: 'うさぎ', otter: 'カワウソ', fox: 'キツネ', duck: 'カモ', squirrel: 'リス', hedgehog: 'ハリネズミ', bird: 'ことり',
-    girl: 'えま', boy: 'えいた',
+    girl: 'えま', boy: 'えいた', penguin: 'ペンギン', owl: 'ふくろう', frog: 'かえる',
 };
 export const CHARACTER_NAME: Record<Character, string> = {
     water: 'みずべの しま', tree: 'もりの しま', flower: 'はなの しま', farm: 'はたけの しま', light: 'ほしあかりの しま', mixed: 'いろいろの しま',
@@ -15,12 +15,15 @@ export const SEED_LABEL: Record<SeedKind, { name: string; icon: string; note: st
     wild: { name: 'しぜん', icon: '🌼', note: '花や 草が ひろがるよ' },
     market: { name: 'いちば', icon: '🧺', note: 'ごはんが いっぱい' },
     festival: { name: 'おまつり ひろば', icon: '🎪', note: 'みんなで あそべるよ' },
+    wonder: { name: 'ふしぎの たね', icon: '✨', note: 'なにが そだつかな？' },
 };
 export const LANDMARK_LABEL: Partial<Record<LandmarkKind, { name: string; icon: string }>> = {
     flower: { name: 'おはな', icon: '🌸' }, bench: { name: 'ベンチ', icon: '🪑' }, 'water-bowl': { name: '水ばち', icon: '💧' },
     sapling: { name: '木の なえ', icon: '🌱' }, 'water-channel': { name: 'みずみち', icon: '〰️' }, 'picnic-table': { name: 'テーブル', icon: '🍽️' },
     planter: { name: 'うえ木ばち', icon: '🪴' }, swing: { name: 'ブランコ', icon: '🎠' }, lantern: { name: 'あかり', icon: '🏮' },
     fence: { name: 'さく', icon: '🪵' }, lighthouse: { name: 'とうだい', icon: '🗼' }, bandstand: { name: 'おんがくの ひろば', icon: '🎵' },
+    slide: { name: 'すべりだい', icon: '🛝' }, trampoline: { name: 'トランポリン', icon: '🤸' }, fountain: { name: 'ふんすい', icon: '⛲' },
+    bakery: { name: 'パンやさん', icon: '🥐' }, postbox: { name: 'ポスト', icon: '📮' },
     pinwheel: { name: 'かざぐるま', icon: '🌀' }, 'flower-arch': { name: '花の アーチ', icon: '🌺' }, sandbox: { name: 'すなば', icon: '⛱️' },
     'garden-hut': { name: 'えんげい 小屋', icon: '🛖' }, library: { name: 'としょしつ', icon: '📚' },
 };
@@ -32,6 +35,8 @@ export const KEEPSAKE_NAME: Record<KeepsakeKind, string> = {
 const MOMENT_LINE = {
     rainbow: 'にじが でたよ！', butterflies: 'ちょうちょが あつまってきたよ', friends: 'なかよしの ふたりが いっしょに いるよ',
     'guest-water': 'みなもの たびどりが あそびに きたよ。こんやだけ だって', 'guest-grove': 'こもれびの おきゃくさんが きたよ。こんやだけ だって',
+    whale: 'うみに くじらが きたよ！ しおを ふいてる', 'rainbow-bird': 'にじいろの とりが とんできたよ。こんやだけ だって',
+    'moon-rabbit': 'つきの うさぎが あかりを みに きたよ。こんやだけ だって',
 } as const;
 
 export const HOME_STAGE = ['たね', 'テント', 'こや', 'いえ', 'ふたかいだて'] as const;
@@ -46,6 +51,7 @@ export function revealLine(state: GrowingState, events: TownEvent[]) {
     const arrived = events.filter(e => e.type === 'arrived').length;
     if (state.arrivals.length) return arrived > 1 ? 'なかまが きたよ！ ふねを さわってね' : `${arrivalName(state)}が きたよ！ ふねを さわってね`;
     if (state.unopened.length) return 'つぼみが できたよ。さわって ひらいてみよう';
+    if (events.some(e => e.type === 'wonder-seed')) return 'ふしぎの たねが とどいたよ！「たね」から おいてみよう。なにが そだつかな';
     if (events.some(e => e.type === 'keepsake')) return 'まなびの きねんひんが とどいたよ！「たね」の しまってある から おいてみよう';
     const gift = events.find(e => e.type === 'gift');
     if (gift?.type === 'gift') return `${gift.from}が おはなを くれたよ`;

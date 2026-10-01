@@ -14,6 +14,9 @@ export const NAME_CANDIDATES: Record<Species, readonly string[]> = {
     squirrel: ['くるみ', 'どんぐり', 'まろん', 'くりこ', 'ちっぷ', 'ぽっけ'],
     hedgehog: ['とげまる', 'ころん', 'まるる', 'いがっち', 'ちくちく', 'はりぃ'],
     bird: ['ぴぴ', 'ちゅんた', 'るり', 'ぴいこ', 'ことね', 'そよ'],
+    penguin: ['ぺんた', 'こおり', 'ぺぺ', 'しずく'],
+    owl: ['ほうほう', 'もりお', 'つきみ', 'ふくすけ'],
+    frog: ['けろり', 'あまがえ', 'ぴょこ', 'みどり'],
     girl: [KID.girl.name],
     boy: [KID.boy.name],
 };

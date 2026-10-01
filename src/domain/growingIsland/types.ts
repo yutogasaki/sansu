@@ -5,17 +5,17 @@ import type { FlowerColor } from './flowers';
 export type { Cell, ItemKind };
 
 /** Plots are zones the island builds by itself (spec 52 §3). */
-export type SeedKind = 'home' | 'farm' | 'play' | 'wild' | 'market' | 'festival';
+export type SeedKind = 'home' | 'farm' | 'play' | 'wild' | 'market' | 'festival' | 'wonder';
 /** Instant landmarks: the current catalog plus the late-game lighthouse (§4, §8). */
 /** The current catalog plus the island's own landmarks: the lighthouse and the bandstand (§4). */
-export type LandmarkKind = ItemKind | 'lighthouse' | 'bandstand';
-export const OWN_LANDMARKS: readonly string[] = ['lighthouse', 'bandstand'];
+export type LandmarkKind = ItemKind | 'lighthouse' | 'bandstand' | 'slide' | 'trampoline' | 'fountain' | 'bakery' | 'postbox';
+export const OWN_LANDMARKS: readonly string[] = ['lighthouse', 'bandstand', 'slide', 'trampoline', 'fountain', 'bakery', 'postbox'];
 export type PlotStyle = 'water' | 'tree' | 'flower' | 'light' | 'plain';
 /**
  * Animal friends, and the island's two children: the girl is always えま and the boy always
  * えいた, one of each per island (spec 52 §7.1). Pokomoko is not a species.
  */
-export type Species = 'rabbit' | 'otter' | 'fox' | 'duck' | 'squirrel' | 'hedgehog' | 'bird' | 'girl' | 'boy';
+export type Species = 'rabbit' | 'otter' | 'fox' | 'duck' | 'squirrel' | 'hedgehog' | 'bird' | 'girl' | 'boy' | 'penguin' | 'owl' | 'frog';
 export type Like = 'flower' | 'water' | 'tree' | 'light' | 'food' | 'play' | 'farm' | 'quiet';
 export type Trait = 'lively' | 'mellow' | 'shy' | 'hungry';
 export type Character = 'water' | 'tree' | 'flower' | 'farm' | 'light' | 'mixed';
@@ -113,6 +113,8 @@ export interface GrowingState {
     gifts?: string[];
     /** Flower colours the island has grown, for the flower book (§5.1). */
     flowerBook?: FlowerColor[];
+    /** ふしぎの たね waiting to be planted; island levels 3, 5, 7 and 9 bring one each (§3.5). */
+    wonderSeeds?: number;
     /** Pokomoko's room: wallpaper drawn with learned words, chosen shapes and rug (§13.1). */
     room?: RoomDecor;
     applied: string[];
@@ -147,12 +149,13 @@ export type TownEvent =
     | { type: 'blocked'; reason: 'full' | 'food' | 'unreachable'; plotId?: string }
     | { type: 'boat'; hoursLeft: number }
     | { type: 'keepsake'; unitId: string }
+    | { type: 'wonder-seed' }
     | { type: 'gift'; from: string; landmarkId?: string }
     | { type: 'moment'; moment: Moment; cell?: Cell }
     | { type: 'quiet' };
 
 /** Small surprises of the day (§11.2). Presentation only: none of them changes the island. */
-export type Moment = 'rainbow' | 'friends' | 'butterflies' | 'guest-water' | 'guest-grove';
+export type Moment = 'rainbow' | 'friends' | 'butterflies' | 'guest-water' | 'guest-grove' | 'whale' | 'rainbow-bird' | 'moon-rabbit';
 
 export type NatureEvent =
     | { type: 'bloomed'; id: string }

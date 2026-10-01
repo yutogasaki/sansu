@@ -3,11 +3,21 @@ import { features, islandCharacter, styleAt } from './environment';
 import { dayMoment } from './moments';
 import { arrivalName } from './names';
 import { advancePier, docked } from './pier';
-import { RULES } from './rules';
+import { RULES, WONDER_LEVELS } from './rules';
 import { isReachable, reachableFromHome } from './space';
 import type { Cell, GrowingState, Moment, Plot, TownEvent, Villager } from './types';
 
 const isDawn = (hour: number) => hour % 24 === RULES.dawnHour;
+
+/** Level events for each level crossed; levels 3, 5, 7 and 9 also bring a ふしぎの たね (§3.5). */
+export function levelUp(state: GrowingState, before: number, after: number): TownEvent[] {
+    const events: TownEvent[] = [];
+    for (let level = before + 1; level <= after; level++) {
+        events.push({ type: 'level', level });
+        if ((WONDER_LEVELS as readonly number[]).includes(level)) { state.wonderSeeds = (state.wonderSeeds ?? 0) + 1; events.push({ type: 'wonder-seed' }); }
+    }
+    return events;
+}
 
 function build(state: GrowingState, hour: number, events: TownEvent[]) {
     const due = state.plots.filter(p => p.cell && p.stage === 0 && p.plantedAt + RULES.buildHours <= hour);
@@ -41,7 +51,7 @@ function refreshCommunity(state: GrowingState, events: TownEvent[]) {
     state.genki.current = genki(state);
     state.genki.best = Math.max(state.genki.best, state.genki.current);
     const after = levelFor(state.genki.best);
-    for (let level = before + 1; level <= after; level++) events.push({ type: 'level', level });
+    events.push(...levelUp(state, before, after));
     const character = islandCharacter(state);
     if (character !== state.character) { state.character = character; events.push({ type: 'character', character }); }
     const keys = refreshUnlocks(state);

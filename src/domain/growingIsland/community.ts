@@ -29,7 +29,11 @@ export function foodSupport(state: GrowingState, reached = reachableFromHome(sta
         if (p.kind === 'farm') support += waterAt(state, p.cell) > 0 ? FOOD_SUPPORT.farm! + 1 : FOOD_SUPPORT.farm!;
         else if (p.kind === 'market') support += FOOD_SUPPORT.market!;
     }
-    for (const l of state.landmarks) if (l.kind === 'planter' && l.cell && isReachable(l.cell, reached)) support += 1;
+    for (const l of state.landmarks) {
+        if (!l.cell || !isReachable(l.cell, reached)) continue;
+        if (l.kind === 'planter') support += 1;
+        else if (l.kind === 'bakery') support += 3;
+    }
     return support;
 }
 
@@ -59,7 +63,7 @@ function likeCells(state: GrowingState, like: Like): Cell[] {
             ...state.landmarks.filter(l => l.kind === 'flower' && l.cell && growthStage({ kind: 'flower', growth: l.growth }) === 2).map(l => l.cell!),
             ...state.plots.filter(p => p.kind === 'wild' && p.cell && p.stage > 0 && p.growth >= 6 && p.style !== 'tree').map(p => p.cell!),
         ];
-        case 'water': return state.landmarks.filter(l => l.cell && (l.kind === 'water-bowl'
+        case 'water': return state.landmarks.filter(l => l.cell && (l.kind === 'water-bowl' || l.kind === 'fountain'
             || l.kind === 'water-channel' && reached.has(key(l.cell)))).map(l => l.cell!);
         case 'tree': return state.landmarks.filter(l => l.kind === 'sapling' && l.cell && l.growth >= TREE_MATURE_HOURS).map(l => l.cell!);
         case 'light': return state.landmarks.filter(l => l.cell && (l.kind === 'lantern' || l.kind === 'lighthouse')).map(l => l.cell!);

@@ -1,6 +1,6 @@
 import { islandCharacter, richness } from './environment';
 import { pick, roll } from './random';
-import { AVAILABLE_SPECIES, FAVORED, isKid, KID, KIDS, RULES } from './rules';
+import { AVAILABLE_SPECIES, FAVORED, isKid, KID, KIDS, RARE, RULES } from './rules';
 import type { GrowingState, Species, Trait, Visitor } from './types';
 
 const TRAITS: readonly Trait[] = ['lively', 'mellow', 'shy', 'hungry'];
@@ -24,7 +24,11 @@ export function rollVisitor(state: GrowingState, ordinal: number, only?: readonl
     }
     const character = islandCharacter(state), favored = character === 'mixed' ? [] : FAVORED[character];
     const pool = (only ?? AVAILABLE_SPECIES).filter(s => !isKid(s) || (ordinal > 0 && missing.includes(s)));
-    const weight = (s: Species) => isKid(s) || favored.includes(s) ? RULES.favoredWeight : 1;
+    const weight = (s: Species) => {
+        const rare = RARE[s];
+        if (rare) return rare.weight * (rare.home === character ? 3 : 1);
+        return isKid(s) || favored.includes(s) ? RULES.favoredWeight : 1;
+    };
     const species = pick(pool, pool.map(weight), roll(state.seed, 'pier-species', 'boat', ordinal));
     if (isKid(species)) return { ordinal, species, variant: { ...KID[species].variant }, trait: KID[species].trait };
     return {

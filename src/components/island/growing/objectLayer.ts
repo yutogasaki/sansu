@@ -9,6 +9,7 @@ import type { Cell, FlowerColor, GrowingState, Landmark, LandmarkKind, PlotStyle
 import { keepsakeKind, treeAge } from '../../../domain/growingIsland';
 import { buildBud, buildLighthouse, buildPlot } from './plotGeometry';
 import { buildBandstand, buildFlag, buildKeepsake } from './keepsakeGeometry';
+import { buildBakery, buildFountain, buildPostbox, buildSlide, buildTrampoline } from './ownLandmarks';
 import { wonder } from './wonderPaint';
 import { buildColorFlower } from './flowerGeometry';
 import { buildBoat, buildPier } from './pierGeometry';
@@ -16,12 +17,16 @@ import type { SceneLayout } from './sceneLayout';
 
 export interface Ghost { kind: SeedKind | LandmarkKind; seed: boolean; cell?: Cell; valid: boolean; style: PlotStyle; allowed: Cell[]; keepsake?: string; color?: FlowerColor }
 
-export type Seat = 'sit' | 'swing' | 'eat';
-const SEATS: Partial<Record<LandmarkKind, Seat>> = { bench: 'sit', swing: 'swing', 'picnic-table': 'eat' };
+export type Seat = 'sit' | 'swing' | 'eat' | 'bounce';
+const SEATS: Partial<Record<LandmarkKind, Seat>> = { bench: 'sit', swing: 'swing', 'picnic-table': 'eat', slide: 'sit', trampoline: 'bounce' };
+const OWN_MODELS: Partial<Record<LandmarkKind, (m: IslandMaterials) => T.Group>> = {
+    slide: buildSlide, trampoline: buildTrampoline, fountain: buildFountain, bakery: buildBakery, postbox: buildPostbox,
+};
 
 function landmarkModel(m: IslandMaterials, state: GrowingState, landmark: Landmark, reached: Set<string>) {
     if (landmark.kind === 'lighthouse') return buildLighthouse(m);
     if (landmark.kind === 'bandstand') return buildBandstand(m);
+    const own = OWN_MODELS[landmark.kind]; if (own) return own(m);
     if (landmark.kind === 'flower' && landmark.color) return buildColorFlower(m, landmark.color, landmark.growth);
     const layout = waterLayout(state);
     const item: LifeItem = {
@@ -39,6 +44,7 @@ function ghostModel(m: IslandMaterials, ghost: Ghost) {
         : ghost.seed ? buildPlot(m, ghost.kind as SeedKind, 1, ghost.style, 6)
         : ghost.kind === 'lighthouse' ? buildLighthouse(m)
             : ghost.kind === 'bandstand' ? buildBandstand(m)
+            : OWN_MODELS[ghost.kind as LandmarkKind] ? OWN_MODELS[ghost.kind as LandmarkKind]!(m)
             : ghost.kind === 'flower' && ghost.color ? buildColorFlower(m, ghost.color, 6)
             : buildLifeItem({ id: 'ghost', kind: ghost.kind as ItemKind, growth: 18, style: 'original' }, m).root;
     model.traverse(o => {

@@ -2,6 +2,8 @@ import * as T from 'three';
 import type { IslandMaterials } from '../three/primitives';
 import type { PlotStyle, SeedKind } from '../../../domain/growingIsland';
 import { buildFarm, buildPlay, buildWild } from './fieldGeometry';
+import { buildWonder } from './ownLandmarks';
+import { wonderForm } from '../../../domain/growingIsland/environment';
 import { buildHome } from './homeGeometry';
 import { mesh, type Paint } from './plotParts';
 import { wonder } from './wonderPaint';
@@ -11,6 +13,7 @@ export { ROOF_COLORS } from './plotParts';
 export function buildPlot(m: IslandMaterials, kind: SeedKind, stage: number, style: PlotStyle, growth: number, roofColor?: number) {
     const paint: Paint = (color, roughness = .85) => m.surface(color, roughness);
     if (kind === 'home') return buildHome(paint, stage, style, roofColor);
+    if (kind === 'wonder') return buildWonder(m, wonderForm(style), stage);
     if (kind === 'farm' || kind === 'market') return buildFarm(paint, stage, style, kind === 'market');
     if (kind === 'play' || kind === 'festival') return buildPlay(paint, stage, style, kind === 'festival');
     return buildWild(paint, stage, style, growth);

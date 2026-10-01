@@ -21,6 +21,9 @@ export class MomentEffects {
         if (moment === 'rainbow') this.rainbow(at, now);
         else if (moment === 'butterflies') this.butterflies(at, now, reduced);
         else if (moment === 'guest-water' || moment === 'guest-grove') this.guest(moment, at, now, reduced);
+        else if (moment === 'whale') this.whale(now, reduced);
+        else if (moment === 'rainbow-bird') this.rainbowBird(at, now, reduced);
+        else if (moment === 'moon-rabbit') this.moonRabbit(at, now, reduced);
         else this.hearts(at, now);
     }
 
@@ -92,6 +95,66 @@ export class MomentEffects {
                 (((w as T.Mesh).material) as T.MeshBasicMaterial).opacity = .75 * fade;
                 if (!reduced) w.rotation.x = Math.sin(age / 120 + i) * .5;
             });
+        });
+    }
+
+    /** くじら: a whale rises from the sea beyond the pier and blows a spout, then dives. */
+    private whale(now: number, reduced: boolean) {
+        const root = new T.Group(); root.name = 'moment-whale';
+        const body = new T.Mesh(new T.SphereGeometry(.9, 20, 14), new T.MeshStandardMaterial({ color: '#3d5f86', roughness: .6 }));
+        body.scale.set(1.8, .55, .8); root.add(body);
+        const belly = new T.Mesh(new T.SphereGeometry(.7, 16, 12), new T.MeshStandardMaterial({ color: '#dfe8f0', roughness: .7 }));
+        belly.scale.set(1.5, .35, .62); belly.position.set(.2, -.18, 0); root.add(belly);
+        const tail = new T.Mesh(new T.ConeGeometry(.35, .5, 3), new T.MeshStandardMaterial({ color: '#3d5f86', roughness: .6 }));
+        tail.rotation.z = Math.PI / 2; tail.position.set(-1.8, .1, 0); tail.scale.z = .3; root.add(tail);
+        const spout = new T.Mesh(new T.ConeGeometry(.18, .9, 10, 1, true), basic('#e6f7ff', 0)); spout.position.set(.7, .9, 0); root.add(spout);
+        root.position.set(4.5, -1, 5.5); root.rotation.y = -.6;
+        this.add(root, now, 12000, t => {
+            const rise = Math.sin(Math.min(1, t * 1.15) * Math.PI);
+            root.position.y = -1.1 + rise * (reduced ? .8 : 1.15);
+            (spout.material as T.MeshBasicMaterial).opacity = t > .25 && t < .6 ? .7 * Math.sin((t - .25) / .35 * Math.PI) : 0;
+            spout.scale.y = 1 + Math.sin(now / 120) * .1;
+        });
+        root.traverse(o => { if (o instanceof T.Mesh) o.castShadow = false; });
+    }
+
+    /** にじいろの とり: a bird of seven colours circles the island with a short rainbow trail. */
+    private rainbowBird(at: T.Vector3, now: number, reduced: boolean) {
+        const root = new T.Group(); root.name = 'moment-rainbow-bird';
+        const colors = ['#f19a9a', '#f5c27a', '#f3e38a', '#a9d79a', '#95c6e8', '#b8a3dc'];
+        const bird = new T.Group(); root.add(bird);
+        const body = new T.Mesh(new T.SphereGeometry(.12, 12, 10), basic('#ffffff', 1)); body.scale.set(1.4, 1, 1); bird.add(body);
+        colors.forEach((color, i) => {
+            const feather = new T.Mesh(new T.BoxGeometry(.3, .012, .05), basic(color, .9)); feather.position.set(-.18 - i * .02, 0, -.12 + i * .045); bird.add(feather);
+        });
+        const trail = colors.map((color, i) => { const dot = new T.Mesh(new T.SphereGeometry(.05, 8, 6), basic(color, .6)); root.add(dot); return { dot, i }; });
+        const center = at.clone().add(new T.Vector3(0, 1.8, 0));
+        this.add(root, now, 11000, (t, age) => {
+            const a = age / (reduced ? 2600 : 1500), r = 2.2;
+            bird.position.set(center.x + Math.cos(a) * r, center.y + Math.sin(a * 2) * .3, center.z + Math.sin(a) * r);
+            bird.rotation.y = -a; bird.children.slice(1).forEach((f, i) => { f.rotation.x = Math.sin(age / 80 + i) * .4; });
+            trail.forEach(({ dot, i }) => {
+                const b = a - (i + 1) * .12; dot.position.set(center.x + Math.cos(b) * r, center.y + Math.sin(b * 2) * .3, center.z + Math.sin(b) * r);
+                (dot.material as T.MeshBasicMaterial).opacity = .6 * Math.min(1, (1 - t) * 6);
+            });
+        });
+    }
+
+    /** つきの うさぎ: a glowing rabbit on a crescent moon drifts over the lights for one night. */
+    private moonRabbit(at: T.Vector3, now: number, reduced: boolean) {
+        const root = new T.Group(); root.name = 'moment-moon-rabbit';
+        const moon = new T.Mesh(new T.TorusGeometry(.32, .09, 10, 24, Math.PI * 1.2), basic('#fff2a6', .9)); moon.rotation.z = -.4; root.add(moon);
+        const glow = basic('#fdfbff', .95);
+        const rabbit = new T.Group(); rabbit.position.set(.05, -.12, 0); root.add(rabbit);
+        const body = new T.Mesh(new T.SphereGeometry(.11, 12, 10), glow); body.scale.y = 1.15; rabbit.add(body);
+        const head = new T.Mesh(new T.SphereGeometry(.08, 12, 10), glow); head.position.set(0, .15, .02); rabbit.add(head);
+        for (const side of [-1, 1]) { const ear = new T.Mesh(new T.SphereGeometry(.03, 8, 6), glow); ear.scale.set(1, 3.2, 1); ear.position.set(side * .035, .28, 0); rabbit.add(ear); }
+        const base = at.clone().add(new T.Vector3(0, 1.6, 0));
+        this.add(root, now, 14000, (t, age) => {
+            const fade = Math.min(1, t * 8, (1 - t) * 6);
+            root.position.copy(base).add(new T.Vector3(Math.sin(age / 2200) * .6, reduced ? 0 : Math.sin(age / 900) * .1, 0));
+            root.traverse(o => { if (o instanceof T.Mesh) (o.material as T.MeshBasicMaterial).opacity = .92 * fade; });
+            rabbit.rotation.y = Math.sin(age / 1300) * .5;
         });
     }
 

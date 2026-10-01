@@ -12,6 +12,8 @@ type Mode = 'idle' | 'walk' | 'seat' | 'held' | 'boat' | 'pier' | 'sailing' | 's
 interface Walker {
     actor: Actor; at: { x: number; z: number }; path: Cell[]; mode: Mode; until: number;
     seat?: { cell: Cell; kind: Seat }; hopAt?: number; heading: number; home: Cell;
+    /** How a friend answers a touch: lively ones spin, shy ones turn away, others wave. */
+    react?: { kind: 'wave' | 'spin' | 'shy'; at: number };
 }
 
 export const VISIBLE_WALKERS = 12;
@@ -111,7 +113,30 @@ export class GrowingLife {
     startConcert(cell: Cell, now: number, length = 30000) { this.concert = { cell, until: now + length }; }
     concertActive(now: number) { return Boolean(this.concert && now < this.concert.until); }
 
-    hop(id: string, now: number) { const w = this.walkers.get(id); if (w) w.hopAt = now; }
+    hop(id: string, now: number) {
+        const w = this.walkers.get(id); if (!w) return;
+        w.hopAt = now;
+        const trait = w.actor.trait;
+        w.react = { kind: trait === 'lively' ? 'spin' : trait === 'shy' ? 'shy' : 'wave', at: now };
+    }
+
+    /** Arms follow what a friend is doing: swing while walking, wave or cheer when touched. */
+    private poseArms(w: Walker, now: number, reduced: boolean, concert: boolean) {
+        const arms = w.actor.arms; if (!arms?.length) return;
+        const react = w.react && now - w.react.at < 1400 ? w.react : undefined;
+        if (!react && w.react) w.react = undefined;
+        arms.forEach((arm, i) => {
+            const side = i === 0 ? -1 : 1;
+            let x = 0, z = 0;
+            if (w.mode === 'walk' && !reduced) x = Math.sin(now / 110 + i * Math.PI) * .6;
+            // Rotating a hanging arm about z by side × angle lifts it outward on its own side.
+            if (concert) z = side * (1.2 + (reduced ? 0 : Math.sin(now / 260 + i) * .5));
+            if (react?.kind === 'wave' && side > 0) z = 2.4 + (reduced ? 0 : Math.sin((now - react.at) / 90) * .45);
+            if (react?.kind === 'spin') z = side * 2.6;
+            if (react?.kind === 'shy') { x = -1.4; z = -side * .3; }
+            arm.rotation.x = x; arm.rotation.z = z;
+        });
+    }
 
     /** Everyone visible jumps in turn: the festival of a new island level (§8). */
     celebrate(now: number) {
@@ -171,6 +196,7 @@ export class GrowingLife {
                 if (w.hopAt !== undefined && now >= w.hopAt) { const t = (now - w.hopAt) / 520; if (t >= 1) w.hopAt = undefined; else y += Math.sin(Math.PI * t) * (reduced ? .08 : .35); }
                 actor.root.position.set(x, center.y + y, z);
                 actor.root.rotation.set(0, Math.atan2(center.x - x, center.z - z) + (reduced ? 0 : Math.sin(now / 400 + seat) * .15), 0);
+                this.poseArms(w, now, reduced, true);
                 w.at = { x: x + layout.center, z: z + 2 };
                 continue;
             }
@@ -212,7 +238,8 @@ export class GrowingLife {
             }
             if (w.mode === 'seat' && now > w.until) { w.mode = 'idle'; w.seat = undefined; w.until = now + 1500; }
             const position = w.mode === 'seat' && w.seat ? layout.point(w.seat.cell) : layout.point(w.at);
-            if (w.mode === 'seat' && w.seat) y = w.seat.kind === 'sit' ? .16 : w.seat.kind === 'swing' ? .2 : .05;
+            if (w.mode === 'seat' && w.seat) y = w.seat.kind === 'sit' ? .16 : w.seat.kind === 'swing' ? .2
+                : w.seat.kind === 'bounce' ? .2 + (reduced ? 0 : Math.abs(Math.sin(now / 260)) * .4) : .05;
             if (w.mode === 'held') y = .55 + (reduced ? 0 : Math.sin(now / 120) * .03);
             if (w.mode === 'walk' && !reduced) y = Math.abs(Math.sin(now / 110)) * .035;
             if (w.hopAt !== undefined && now >= w.hopAt) {
@@ -221,6 +248,12 @@ export class GrowingLife {
             }
             actor.root.position.set(position.x, position.y + y, position.z);
             actor.root.rotation.y = w.mode === 'seat' ? 0 : w.heading;
+            if (w.react && now - w.react.at < 1400 && !reduced) {
+                const t = (now - w.react.at) / 1400;
+                if (w.react.kind === 'spin') actor.root.rotation.y += t * Math.PI * 2;
+                else if (w.react.kind === 'shy') actor.root.rotation.y += Math.PI * .6 + Math.sin(t * Math.PI * 4) * .12;
+            }
+            this.poseArms(w, now, reduced, false);
             if (w.mode === 'seat' && w.seat?.kind === 'swing' && !reduced) actor.root.rotation.x = Math.sin(now / 500) * .18;
             else actor.root.rotation.x = 0;
             const swing = w.mode === 'walk' && !reduced ? Math.sin(now / 110) * .5 : 0;

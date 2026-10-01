@@ -93,6 +93,48 @@ export function buildHome(paint: Paint, stage: number, style: PlotStyle, roofCol
         windows(body, paint, style, width * .84, height * 1.45, 2);
         roof(body, roofPaint, color, style, width * .84, height * 1.84);
     } else roof(body, roofPaint, color, style, width, height);
-    if (stage >= 3) box(body, paint, '#b6a68b', [width * .26, height + .3, -width * .18], [.1, .26, .1]);
+    const top = stage === 4 ? height * 1.84 : height;
+    character(body, root, paint, style, width, top, stage);
     return root;
+}
+
+/**
+ * Each surrounding gives a home its own character (spec 52 §3.2): a little boat by the water,
+ * a tree growing through the roof, climbing vines, a big round window under a star, or a
+ * chimney and hedge. The form stays the one chosen when the home was built.
+ */
+function character(body: T.Group, root: T.Group, paint: Paint, style: PlotStyle, width: number, top: number, stage: number) {
+    const half = width / 2;
+    if (style === 'water') {
+        for (const z of [-.12, .12]) {
+            mesh(body, new T.TorusGeometry(.055, .015, 8, 18), paint('#f3ecdc'), [half + .006, top * .45, z]).rotation.y = Math.PI / 2;
+            mesh(body, new T.CircleGeometry(.05, 14), paint('#9fd3e4', .3), [half + .008, top * .45, z]).rotation.y = Math.PI / 2;
+        }
+        // A plank to a tiny moored boat beside the stilts.
+        box(root, paint, '#b08a62', [half + .2, .2, .1], [.32, .03, .12]);
+        const boat = mesh(root, new T.SphereGeometry(.13, 12, 8), paint('#8f6546'), [half + .42, .08, .1]); boat.scale.set(1.5, .45, .8);
+    } else if (style === 'tree') {
+        // The home is built around a living tree: trunk through the roof, canopy above, a ladder.
+        mesh(body, new T.CylinderGeometry(.07, .1, top + .55, 10), paint('#8a6a48'), [-half * .45, (top + .55) / 2, -half * .45]);
+        for (const [x, y, z, r] of [[-half * .45, top + .55, -half * .45, .3], [-half * .1, top + .45, -half * .6, .22], [-half * .75, top + .42, -half * .2, .2]] as const)
+            mesh(body, new T.SphereGeometry(r, 14, 10), paint(r > .25 ? '#5d8a51' : '#7fa865'), [x, y, z]);
+        for (const x of [half + .04, half + .14]) mesh(body, new T.BoxGeometry(.018, top * .8, .018), paint(WOOD), [x, top * .4, .1]);
+        for (let i = 0; i < 4; i++) mesh(body, new T.BoxGeometry(.11, .014, .014), paint(WOOD), [half + .09, .08 + i * top * .2, .1]);
+    } else if (style === 'flower') {
+        // Vines climb the front corners and bloom.
+        for (const side of [-1, 1]) {
+            mesh(body, new T.CylinderGeometry(.014, .014, top * .9, 6), paint('#5d8a51'), [side * (half - .02), top * .45, half + .02]);
+            for (let i = 0; i < 4; i++) ball(body, paint, i % 2 ? '#f6c6d4' : '#fff0a8', [side * (half - .02) + Math.sin(i * 2) * .03, .12 + i * top * .22, half + .04], .03);
+        }
+    } else if (style === 'light') {
+        // A big round window and a star weathervane on the roof.
+        mesh(body, new T.TorusGeometry(.09, .018, 8, 24), paint('#fff8ea'), [0, top * .82, half + .012]);
+        mesh(body, new T.CircleGeometry(.08, 20), paint('#ffe39a', .3), [0, top * .82, half + .014]);
+        mesh(body, new T.CylinderGeometry(.008, .008, .26, 6), paint('#6f6a8e'), [0, top + width * .62 + .1, 0]);
+        mesh(body, new T.OctahedronGeometry(.06), paint('#f0cf6a', .4), [0, top + width * .62 + .25, 0]);
+    } else {
+        box(body, paint, '#b6a68b', [width * .26, top + .3, -width * .18], [.1, .26, .1]);
+        for (let i = 0; i < 3; i++) ball(body, paint, '#6f9a52', [-half - .08, .1, -half * .6 + i * .18], .1, .9);
+    }
+    if (stage === 4 && style !== 'plain') box(body, paint, '#b6a68b', [width * .3, top + .25, -width * .25], [.09, .22, .09]);
 }

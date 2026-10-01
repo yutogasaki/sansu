@@ -62,7 +62,11 @@ export function isVacant(state: GrowingState, cell: Cell, except?: string) {
  * Crops, wild plants and flowers can be stepped between, so scattering flowers never walls
  * the island off; buildings, furniture and keepsakes block.
  */
-function plotBlocks(plot: Plot) { return plot.kind !== 'farm' && plot.kind !== 'wild'; }
+function plotBlocks(plot: Plot) {
+    // The polka-dot arch is walked through, like the flower arch.
+    if (plot.kind === 'wonder') return plot.stage === 0 || !(plot.style === 'water' || plot.style === 'light');
+    return plot.kind !== 'farm' && plot.kind !== 'wild';
+}
 const OPEN_LANDMARKS: ReadonlySet<string> = new Set(['water-channel', 'flower-arch', 'flower']);
 function landmarkBlocks(landmark: Landmark) { return !OPEN_LANDMARKS.has(landmark.kind); }
 

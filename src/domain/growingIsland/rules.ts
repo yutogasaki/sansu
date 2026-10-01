@@ -45,11 +45,13 @@ export const RULES = {
     learnedMemory: 3000,
 } as const;
 
-export const SEED_PRICE: Record<SeedKind, number> = { home: 4, farm: 4, play: 6, wild: 1, market: 8, festival: 10 };
+export const SEED_PRICE: Record<SeedKind, number> = { home: 4, farm: 4, play: 6, wild: 1, market: 8, festival: 10, wonder: 0 };
+/** Island levels that each bring one ふしぎの たね (§3.5). */
+export const WONDER_LEVELS = [3, 5, 7, 9] as const;
 
 export const LANDMARK_PRICE: Partial<Record<LandmarkKind, number>> = {
     flower: 2, bench: 4, 'water-bowl': 4, sapling: 4, 'water-channel': 2, 'picnic-table': 8,
-    planter: 6, swing: 6, lantern: 8, fence: 4, lighthouse: 16, bandstand: 6,
+    planter: 6, swing: 6, lantern: 8, fence: 4, lighthouse: 16, bandstand: 6, slide: 8, trampoline: 8, fountain: 10, bakery: 14, postbox: 4,
 };
 
 /** Land steps 1-3 keep the current 12/24/48 contract; capes open with the island level. */
@@ -60,6 +62,12 @@ export const LIKES: Record<Species, readonly [Like, Like]> = {
     rabbit: ['flower', 'play'], otter: ['water', 'food'], fox: ['tree', 'light'], duck: ['water', 'play'],
     squirrel: ['tree', 'food'], hedgehog: ['farm', 'quiet'], bird: ['flower', 'light'],
     girl: ['water', 'play'], boy: ['tree', 'food'],
+    penguin: ['water', 'quiet'], owl: ['tree', 'light'], frog: ['water', 'flower'],
+};
+
+/** Rare friends: seldom on the boat, a little more often on an island of their own kind (§7.1). */
+export const RARE: Partial<Record<Species, { weight: number; home: Character }>> = {
+    penguin: { weight: .35, home: 'water' }, owl: { weight: .35, home: 'tree' }, frog: { weight: .35, home: 'flower' },
 };
 
 export const likesOf = (friend: { species: Species }) => LIKES[friend.species];
@@ -80,7 +88,7 @@ export const FAVORED: Record<Exclude<Character, 'mixed'>, readonly Species[]> = 
     farm: ['hedgehog', 'rabbit'], light: ['bird', 'fox'],
 };
 
-export const SPECIES: readonly Species[] = ['rabbit', 'otter', 'fox', 'duck', 'squirrel', 'hedgehog', 'bird', 'girl', 'boy'];
+export const SPECIES: readonly Species[] = ['rabbit', 'otter', 'fox', 'duck', 'squirrel', 'hedgehog', 'bird', 'girl', 'boy', 'penguin', 'owl', 'frog'];
 /** Everyone who can sail in. A boat never shows a friend the island cannot draw. */
 export const AVAILABLE_SPECIES: readonly Species[] = SPECIES;
 
@@ -90,8 +98,9 @@ export const UNLOCKS: readonly { key: string; villagers?: number; level?: number
     { key: 'landmark:flower' }, { key: 'landmark:bench' }, { key: 'landmark:water-bowl' },
     { key: 'seed:farm', villagers: 1 }, { key: 'landmark:sapling', villagers: 1 }, { key: 'landmark:water-channel', villagers: 1 },
     { key: 'landmark:picnic-table', villagers: 2 }, { key: 'landmark:planter', villagers: 2 },
-    { key: 'seed:play', level: 2 }, { key: 'landmark:swing', level: 2 }, { key: 'landmark:bandstand', level: 2 },
-    { key: 'landmark:lantern', level: 3 }, { key: 'landmark:fence', level: 3 },
+    { key: 'seed:play', level: 2 }, { key: 'landmark:swing', level: 2 }, { key: 'landmark:bandstand', level: 2 }, { key: 'landmark:slide', level: 2 }, { key: 'landmark:postbox', villagers: 3 },
+    { key: 'landmark:lantern', level: 3 }, { key: 'landmark:fence', level: 3 }, { key: 'landmark:trampoline', level: 3 }, { key: 'landmark:fountain', level: 3 },
+    { key: 'landmark:bakery', level: 4 },
     { key: 'seed:market', level: 4 }, { key: 'seed:festival', level: 5 }, { key: 'landmark:lighthouse', level: 6 },
 ];
 
@@ -102,5 +111,5 @@ export const HATS = 5;
 
 export const FOOD_SUPPORT: Partial<Record<SeedKind, number>> = { farm: 2, market: 4 };
 export const PLAY_SUPPORT: Partial<Record<SeedKind | LandmarkKind, number>> = {
-    play: 4, festival: 6, bench: 1, swing: 2, bandstand: 2, sandbox: 2, 'garden-hut': 2, library: 2,
+    play: 4, festival: 6, wonder: 3, bench: 1, swing: 2, bandstand: 2, slide: 2, trampoline: 2, postbox: 1, sandbox: 2, 'garden-hut': 2, library: 2,
 };

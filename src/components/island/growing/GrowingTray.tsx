@@ -8,14 +8,14 @@ import { HOME_STAGE, KEEPSAKE_NAME, LANDMARK_LABEL, SEED_LABEL } from './growing
 export type Pick = { mode: 'seed'; kind: SeedKind } | { mode: 'landmark'; kind: LandmarkKind; color?: FlowerColor }
     | { mode: 'unstore'; id: string; kind: SeedKind | LandmarkKind; seed: boolean; keepsake?: string };
 
-const SEEDS: SeedKind[] = ['home', 'farm', 'play', 'wild', 'market', 'festival'];
-const LANDMARKS: LandmarkKind[] = ['flower', 'bench', 'water-bowl', 'sapling', 'water-channel', 'picnic-table', 'planter', 'swing', 'lantern', 'fence', 'lighthouse', 'bandstand'];
+const SEEDS: SeedKind[] = ['home', 'farm', 'play', 'wild', 'market', 'festival', 'wonder'];
+const LANDMARKS: LandmarkKind[] = ['flower', 'bench', 'water-bowl', 'sapling', 'water-channel', 'picnic-table', 'planter', 'swing', 'lantern', 'fence', 'lighthouse', 'bandstand', 'slide', 'trampoline', 'fountain', 'bakery', 'postbox'];
 
 /** Seeds first and large; landmarks and stored things one swipe away (spec 52 §12.1). */
 export function GrowingTray({ state, onPick, onClose }: { state: GrowingState; onPick: (pick: Pick) => void; onClose: () => void }) {
     const [tab, setTab] = useState<'seeds' | 'landmarks' | 'stored'>('seeds');
     const tutorial = state.tutorial === 'first-home';
-    const seeds = SEEDS.filter(kind => state.unlocked.includes(`seed:${kind}`) && (!tutorial || kind === 'home'));
+    const seeds = SEEDS.filter(kind => (kind === 'wonder' ? (state.wonderSeeds ?? 0) > 0 : state.unlocked.includes(`seed:${kind}`)) && (!tutorial || kind === 'home'));
     const landmarks = LANDMARKS.filter(kind => state.unlocked.includes(`landmark:${kind}`));
     const stored = [
         ...state.landmarks.filter(l => !l.cell).map(l => ({ id: l.id, kind: l.kind as SeedKind | LandmarkKind, seed: false, label: LANDMARK_LABEL[l.kind] })),
@@ -39,7 +39,7 @@ export function GrowingTray({ state, onPick, onClose }: { state: GrowingState; o
                 const cost = tutorial ? 0 : SEED_PRICE[kind];
                 return <button key={kind} className="growing-card" data-growing-seed={kind} onClick={() => onPick({ mode: 'seed', kind })}>
                     <span className="growing-card-icon" aria-hidden="true">{SEED_LABEL[kind].icon}</span>
-                    <strong>{SEED_LABEL[kind].name}</strong><small>{SEED_LABEL[kind].note}</small>
+                    <strong>{SEED_LABEL[kind].name}{kind === 'wonder' && (state.wonderSeeds ?? 0) > 1 ? ` ×${state.wonderSeeds}` : ''}</strong><small>{SEED_LABEL[kind].note}</small>
                     {cost === 0 ? <span className="growing-price growing-free">むりょう</span> : price(cost)}
                 </button>;
             })}

@@ -15,6 +15,9 @@ export interface Actor {
     body: T.Object3D;
     feet: T.Object3D[];
     sparkle?: T.Object3D;
+    /** Shoulder pivots for waving; Pokomoko keeps its own established rig and has none here. */
+    arms?: T.Object3D[];
+    trait?: Villager['trait'];
 }
 
 type Rig = ReturnType<typeof makeFriendRig>;
@@ -73,7 +76,7 @@ export function makeVillagerActor(m: IslandMaterials, villager: Villager): Actor
     let sparkle: T.Object3D | undefined;
     if (villager.variant.sparkle) { sparkle = buildSparkle(); sparkle.position.set(0, 1.25, 0); root.add(sparkle); }
     root.traverse(o => { o.userData.actorId = villager.id; });
-    return { id: villager.id, root, body: rig.body, feet: rig.feet, sparkle };
+    return { id: villager.id, root, body: rig.body, feet: rig.feet, sparkle, arms: rig.arms, trait: villager.trait };
 }
 
 export function wrapPokomoko(hero: T.Group, heroBody: T.Object3D, heroFeet: T.Object3D[]): Actor {
