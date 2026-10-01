@@ -83,7 +83,7 @@ export interface IslandStageProps extends IslandStageState {
     onDirectSelect?: (target: IslandDirectTarget) => void;
     onDirectMarkers?: (markers: IslandDirectMarker[]) => void;
     onHomeEnter?: () => void;
-    onHomeAction?: (action: { type: 'keepsake'; id: IslandLearningKeepsakeId } | { type: 'album' } | { type: 'notices' } | { type: 'word'; word: string }) => void;
+    onHomeAction?: (action: { type: 'keepsake'; id: IslandLearningKeepsakeId } | { type: 'album' } | { type: 'notices' } | { type: 'word'; word: string } | { type: 'guest'; id: string }) => void;
     onFurniturePlacement?: (result: IslandFurniturePlacementResult) => void;
     onSharedAction?: (action: IslandSharedMemoriesAction) => void;
     onSharedDisplaySelect?: (displayId: SharedDisplayId) => void;

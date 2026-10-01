@@ -1629,8 +1629,10 @@ export class IslandScene {
             this.raycaster.setFromCamera(new THREE.Vector2((event.clientX - rect.left) / rect.width * 2 - 1,
                 -(event.clientY - rect.top) / rect.height * 2 + 1), this.homeCamera);
             const action = this.keepsakeRoom.selectHit(this.raycaster.ray);
-            const word = action ? undefined : this.keepsakeRoom.wordAt(this.raycaster.ray);
+            const guest = action ? undefined : this.keepsakeRoom.guestAt(this.raycaster.ray);
+            const word = action || guest ? undefined : this.keepsakeRoom.wordAt(this.raycaster.ray);
             if (action) this.callbacks.homeAction?.(action);
+            else if (guest) this.callbacks.homeAction?.({ type: 'guest', id: guest });
             else if (word) this.callbacks.homeAction?.({ type: 'word', word });
             else if (!this.state?.learningKeepsakes?.selectedId) {
                 const hit = this.raycaster.intersectObject(this.keepsakeRoom.group, true).find(hit => {

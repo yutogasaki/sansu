@@ -6,9 +6,21 @@ import { roundedBoxGeometry } from './geometry';
 import { cylinder, ellipsoid, mesh, star } from './primitives';
 import { RUG_COLORS, type LearnedWord, type RoomDecor } from '../../../domain/growingIsland/room';
 import { paintWall, spotAt, wallOf, type WallSpot } from './roomWallpaper';
+import { IslandMaterials as GuestMaterials } from './primitives';
+import { makeFriendRig } from '../growing/friendRig';
+import type { Villager } from '../../../domain/growingIsland';
 
 /** Pokomoko's room redecorated with learned words (spec 52 §13.1). */
-export interface IslandRoomDecor extends RoomDecor { words: readonly LearnedWord[] }
+export interface IslandRoomDecor extends RoomDecor {
+    words: readonly LearnedWord[];
+    /** Island friends visiting today, sitting on the sofa and the rug. */
+    guests?: readonly Pick<Villager, 'id' | 'species' | 'variant' | 'outfit'>[];
+    /** The latest saved picture of the island, shown through the window. */
+    view?: ImageBitmap;
+}
+const GUEST_SPOTS = [
+    { position: [-2.05, .5, 2.15], turn: .5 }, { position: [.75, .035, 2.05], turn: .25 }, { position: [1.85, .035, 2.75], turn: -.45 },
+] as const;
 const WALLS = [
     { name: 'room-wallpaper-back', size: [6.8, 4.1], position: [0, 2.05, -.278], turn: 0 },
     { name: 'room-wallpaper-left', size: [5.3, 4.1], position: [-3.302, 2.05, 2.2], turn: Math.PI / 2 },
@@ -26,7 +38,7 @@ export interface IslandKeepsakeFrameView {
     selectedId: IslandLearningKeepsakeId | null;
 }
 
-export type IslandHomeHit = { type: 'keepsake'; id: IslandLearningKeepsakeId } | { type: 'album' } | { type: 'notices' } | { type: 'word'; word: string };
+export type IslandHomeHit = { type: 'keepsake'; id: IslandLearningKeepsakeId } | { type: 'album' } | { type: 'notices' } | { type: 'word'; word: string } | { type: 'guest'; id: string };
 
 /** A closed, static interior for the same island renderer. It never owns or hides the
  * island, changes learning state, or exhibits an unavailable award. Leaving the
@@ -44,6 +56,9 @@ export class IslandLearningKeepsakeScenery {
     private decor?: IslandRoomDecor;
     private decorKey = '';
     private wallpaper: { mesh: THREE.Mesh; spots: WallSpot[]; aspect: number; texture: THREE.CanvasTexture }[] = [];
+    private guests = new THREE.Group();
+    private guestMaterials?: GuestMaterials;
+    private viewTexture?: THREE.Texture;
 
     constructor() { this.group.name = ISLAND_KEEPSAKE_SCENERY_CANDIDATE; this.group.visible = false; }
     private material(color: string, metalness = 0) {
@@ -222,9 +237,11 @@ export class IslandLearningKeepsakeScenery {
     setDecor(decor?: IslandRoomDecor) { this.decor = decor; if (this.built) return this.applyDecor(); return false; }
     private applyDecor() {
         const decor = this.decor;
-        const key = decor ? JSON.stringify([decor.pattern, decor.rug, decor.hidden ?? [], decor.words.length, decor.words[decor.words.length - 1]?.id]) : '';
+        const key = decor ? JSON.stringify([decor.pattern, decor.rug, decor.hidden ?? [], decor.words.length, decor.words[decor.words.length - 1]?.id,
+            decor.guests?.map(g => [g.id, g.outfit]), decor.view?.width ?? 0]) : '';
         if (key === this.decorKey) return false;
         this.decorKey = key;
+        this.applyGuests(decor); this.applyView(decor?.view);
         for (const paper of this.wallpaper) { paper.mesh.removeFromParent(); paper.mesh.geometry.dispose(); (paper.mesh.material as THREE.Material).dispose(); paper.texture.dispose(); }
         this.wallpaper = [];
         const rug = this.group.getObjectByName('home-rug') as THREE.Mesh | undefined;
@@ -240,6 +257,39 @@ export class IslandLearningKeepsakeScenery {
             this.wallpaper.push({ mesh: paper, spots: paint.spots, aspect, texture: paint.texture });
         });
         return true;
+    }
+    private applyGuests(decor?: IslandRoomDecor) {
+        this.guests.traverse(o => { if (o instanceof THREE.Mesh) o.geometry.dispose(); });
+        this.guests.clear(); this.guestMaterials?.dispose(); this.guestMaterials = undefined;
+        if (!decor?.guests?.length) { this.guests.removeFromParent(); return; }
+        this.guestMaterials = new GuestMaterials();
+        decor.guests.slice(0, GUEST_SPOTS.length).forEach((guest, i) => {
+            const rig = makeFriendRig(guest.species, this.guestMaterials!);
+            const spot = GUEST_SPOTS[i];
+            rig.pose.position.set(spot.position[0], spot.position[1], spot.position[2]); rig.pose.rotation.y = spot.turn;
+            rig.pose.traverse(o => { o.userData.guestId = guest.id; });
+            this.guests.add(rig.pose);
+        });
+        this.guests.name = 'home-guests';
+        if (!this.guests.parent) this.group.add(this.guests);
+    }
+    private applyView(view?: ImageBitmap) {
+        const glass = this.group.getObjectByName('home-window-glass') as THREE.Mesh | undefined;
+        this.viewTexture?.dispose(); this.viewTexture = undefined;
+        if (!glass) return;
+        if (!view) { glass.material = this.material('#bce1dc'); return; }
+        const texture = new THREE.Texture(view); texture.colorSpace = THREE.SRGBColorSpace; texture.needsUpdate = true;
+        // The glass faces into the room from the right-hand wall; mirror so the island reads correctly.
+        texture.wrapS = THREE.RepeatWrapping; texture.repeat.x = -1;
+        this.viewTexture = texture;
+        const material = new THREE.MeshBasicMaterial({ map: texture }); this.materials.add(material); glass.material = material;
+    }
+    /** A visiting friend under a tap: they say hello and play their note. */
+    guestAt(ray: THREE.Ray) {
+        if (!this.group.visible || !this.guests.children.length) return undefined;
+        const raycaster = new THREE.Raycaster(); raycaster.ray.copy(ray);
+        const hit = raycaster.intersectObject(this.group, true)[0];
+        return hit?.object.userData.guestId as string | undefined;
     }
     /** The learned word under a tap on the wallpaper, read aloud by the caller. */
     wordAt(ray: THREE.Ray) {
@@ -337,6 +387,7 @@ export class IslandLearningKeepsakeScenery {
         this.group.clear(); this.awards.clear(); this.challengeAwards.clear(); this.challengeSelection = []; this.materials.clear(); this.built = false;
         this.selection = []; this.selectedId = null;
         this.wallpaper.forEach(paper => paper.texture.dispose()); this.wallpaper = []; this.decorKey = '';
+        this.guestMaterials?.dispose(); this.guestMaterials = undefined; this.guests.clear(); this.viewTexture?.dispose(); this.viewTexture = undefined;
     }
     dispose() {
         if (this.disposed) return;

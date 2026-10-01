@@ -7,6 +7,9 @@ import { RoomDecorPanel } from '../components/island/growing/RoomDecorPanel';
 import { readWordAloud, useGrowingRoom } from '../components/island/growing/useGrowingRoom';
 import { LettersPanel } from '../components/island/growing/LettersPanel';
 import { islandLetters } from '../components/island/growing/letters';
+import { guestLine } from '../components/island/growing/houseGuests';
+import { noteFor, playNote } from '../components/island/growing/notes';
+import { villagerName } from '../components/island/growing/growingCopy';
 import { lifeEnabled } from '../domain/islandLife/model';
 import { replayLife } from '../domain/islandLife/simulation';
 import { IslandDirectActions } from '../components/island/IslandDirectActions';
@@ -708,6 +711,10 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                 if (action.type === 'album') { setReturnToHouse(true); setAlbumComparison('garden'); setScreen('album'); }
                 else if (action.type === 'notices') { setKeepsakeFocus(undefined); setHouseSection('notices'); }
                 else if (action.type === 'word') { const word = readWordAloud(action.word); setRoomWord({ text: word?.surface ?? action.word.replace(/_lv\d+$/, ''), japanese: word?.japanese, at: Date.now() }); }
+                else if (action.type === 'guest') {
+                    const guest = growingRoom.guests.find(g => g.id === action.id);
+                    if (guest) { if (profile.soundEnabled) playNote(noteFor(guest.species)); setRoomWord({ text: villagerName(guest), japanese: guestLine(guest), at: Date.now() }); }
+                }
                 else if (!keepsakes.pending) { keepsakes.select(action.id); setKeepsakeFocus(action.id); setHouseSection('keepsakes'); }
             } : undefined}
             photographing={screen === 'camera'} photoRequestId={screen === 'camera' ? photos.requestId : undefined} onPhoto={photos.consume}
@@ -736,6 +743,10 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                 if (action.type === 'album') { setReturnToHouse(true); setAlbumComparison('garden'); setScreen('album'); }
                 else if (action.type === 'notices') { setKeepsakeFocus(undefined); setHouseSection('notices'); }
                 else if (action.type === 'word') { const word = readWordAloud(action.word); setRoomWord({ text: word?.surface ?? action.word.replace(/_lv\d+$/, ''), japanese: word?.japanese, at: Date.now() }); }
+                else if (action.type === 'guest') {
+                    const guest = growingRoom.guests.find(g => g.id === action.id);
+                    if (guest) { if (profile.soundEnabled) playNote(noteFor(guest.species)); setRoomWord({ text: villagerName(guest), japanese: guestLine(guest), at: Date.now() }); }
+                }
                 else if (!keepsakes.pending) { keepsakes.select(action.id); setKeepsakeFocus(action.id); setHouseSection('keepsakes'); }
             } : undefined}
             furnitureTrial={furnitureTrial}
