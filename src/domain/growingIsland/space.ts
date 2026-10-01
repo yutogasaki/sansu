@@ -1,6 +1,6 @@
 import { occupiedCells } from '../islandLife/footprint';
 import type { ItemKind } from '../islandLife/model';
-import type { Cell, GrowingState, Landmark, Plot } from './types';
+import { OWN_LANDMARKS, type Cell, type GrowingState, type Landmark, type Plot } from './types';
 
 export const HOME_CELL: Cell = { x: 2, z: 1 };
 /** Pokomoko's house covers the two north cells and the doorstep that residents leave from. */
@@ -39,7 +39,7 @@ export const isHouseCell = (cell: Cell) => HOUSE_CELLS.some(c => same(c, cell));
 
 function landmarkCells(landmark: Landmark): Cell[] {
     if (!landmark.cell) return [];
-    return landmark.kind === 'lighthouse' ? [landmark.cell] : occupiedCells({ kind: landmark.kind as ItemKind, cell: landmark.cell });
+    return OWN_LANDMARKS.includes(landmark.kind) ? [landmark.cell] : occupiedCells({ kind: landmark.kind as ItemKind, cell: landmark.cell });
 }
 
 /** What occupies a cell. Spread wild plants are reported so seeds can replace them. */

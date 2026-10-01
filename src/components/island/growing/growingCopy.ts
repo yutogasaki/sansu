@@ -20,7 +20,7 @@ export const LANDMARK_LABEL: Partial<Record<LandmarkKind, { name: string; icon: 
     flower: { name: 'おはな', icon: '🌸' }, bench: { name: 'ベンチ', icon: '🪑' }, 'water-bowl': { name: '水ばち', icon: '💧' },
     sapling: { name: '木の なえ', icon: '🌱' }, 'water-channel': { name: 'みずみち', icon: '〰️' }, 'picnic-table': { name: 'テーブル', icon: '🍽️' },
     planter: { name: 'うえ木ばち', icon: '🪴' }, swing: { name: 'ブランコ', icon: '🎠' }, lantern: { name: 'あかり', icon: '🏮' },
-    fence: { name: 'さく', icon: '🪵' }, lighthouse: { name: 'とうだい', icon: '🗼' },
+    fence: { name: 'さく', icon: '🪵' }, lighthouse: { name: 'とうだい', icon: '🗼' }, bandstand: { name: 'おんがくの ひろば', icon: '🎵' },
     pinwheel: { name: 'かざぐるま', icon: '🌀' }, 'flower-arch': { name: '花の アーチ', icon: '🌺' }, sandbox: { name: 'すなば', icon: '⛱️' },
     'garden-hut': { name: 'えんげい 小屋', icon: '🛖' }, library: { name: 'としょしつ', icon: '📚' },
 };

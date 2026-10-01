@@ -52,3 +52,25 @@ export function buildFlag(m: IslandMaterials, color = 0, pattern = 0) {
     root.traverse(o => { if (o instanceof T.Mesh) o.castShadow = false; });
     return root;
 }
+
+/** おんがくの ひろば: a round stage under a colour-block roof, with notes floating above (§4). */
+export function buildBandstand(m: IslandMaterials) {
+    const root = new T.Group(); root.name = 'growing-bandstand';
+    const paint = (color: string, roughness = .8) => m.surface(color, roughness);
+    mesh(root, new T.CylinderGeometry(.42, .44, .08, 20), paint('#c89b62'), [0, .04, 0]);
+    for (let i = 0; i < 4; i++) {
+        const a = i * Math.PI / 2 + Math.PI / 4;
+        mesh(root, new T.CylinderGeometry(.025, .025, .62, 8), paint('#f3ecdc'), [Math.cos(a) * .34, .39, Math.sin(a) * .34]);
+    }
+    const roof = mesh(root, new T.ConeGeometry(.5, .3, 16), wonder('blocks'), [0, .84, 0]); roof.name = 'bandstand-roof';
+    mesh(root, new T.SphereGeometry(.05, 10, 8), paint('#f0cf6a', .4), [0, 1.02, 0]);
+    const ink = paint('#2b2622', .5);
+    for (const [x, y, z] of [[-.18, 1.2, .05], [.2, 1.32, -.04]] as const) {
+        const note = new T.Group(); note.name = 'bandstand-note'; note.position.set(x, y, z);
+        mesh(note, new T.SphereGeometry(.045, 10, 8), ink, [0, 0, 0]).scale.set(1.2, .85, .7);
+        mesh(note, new T.CylinderGeometry(.008, .008, .16, 6), ink, [.045, .08, 0]);
+        root.add(note);
+    }
+    root.traverse(o => { if (o instanceof T.Mesh) o.castShadow = false; });
+    return root;
+}

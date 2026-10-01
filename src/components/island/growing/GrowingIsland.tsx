@@ -19,6 +19,7 @@ import type { Ghost } from './objectLayer';
 import type { ShownMoment, WorldCamera } from './GrowingWorld';
 import { useGrowingIsland } from './useGrowingIsland';
 import { publishWaitingSeeds } from './seedBadge';
+import { noteFor, playNote, playTune } from './notes';
 import './growing.css';
 
 const GrowingWorld = lazy(() => import('./GrowingWorld'));
@@ -63,6 +64,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     const [faces, setFaces] = useState<Record<string, string>>({});
     const [visit, setVisit] = useState<Visit>(), [siblings, setSiblings] = useState<{ id: string; name: string }[]>([]);
     const [naming, setNaming] = useState<string>();
+    const [concert, setConcert] = useState<{ cell: Cell; n: number; until: number }>();
     const [worldStep, setWorldStep] = useState<LoadingStep | 'ready'>('world');
     const camera = useRef<WorldCamera | undefined>(undefined), pendingPicture = useRef(false);
     const audio = useIslandWorkshopAudio(sound && active);
@@ -188,15 +190,31 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     };
 
     const world = <GrowingWorld state={state} time={time} ghost={visit ? undefined : ghost} selectedId={visit ? undefined : selected} turn={turn} cheer={cheer} festival={festival}
-        hints={visit ? [] : hints} moment={visit ? undefined : moment} show={show} focus={focus} onCamera={c => { camera.current = c; }}
+        hints={visit ? [] : hints} moment={visit ? undefined : moment} show={show} focus={focus} concert={visit ? undefined : concert} onCamera={c => { camera.current = c; }}
         onPop={() => audio.play('glass')} onStage={setWorldStep}
         onCell={cell => { void audio.unlock(); if (visit) return; if (placing) setPlacing({ ...placing, cell }); else setLine(undefined); }}
-        onSelect={id => { if (!placing && !visit) { setSelected(id); setPanel(undefined); } }}
+        onSelect={id => {
+            if (placing || visit) return;
+            const stand = own.landmarks.find(l => l.id === id && l.kind === 'bandstand');
+            if (stand?.cell && !(concert && Date.now() < concert.until)) {
+                // えんそうかい (§4): friends gather; each one plays their own note when touched.
+                const length = Math.max(30000, playTune(sound) + 2000);
+                setConcert({ cell: stand.cell, n: Date.now(), until: Date.now() + length }); setPanel(undefined);
+                setLine('えんそうかいだよ！ みんなを さわって おとを ならそう'); return;
+            }
+            setSelected(id); setPanel(undefined);
+        }}
         onOpen={id => { if (visit) return; void run({ type: 'open', id }, () => setLine(own.unopened.length > 1 ? 'まだ つぼみが あるよ' : undefined)); }}
         onDisembark={() => { if (!visit) void disembark(); }}
         onActorTap={id => {
-            void audio.unlock(); audio.play('pick');
+            void audio.unlock();
+            const playing = concert && Date.now() < concert.until;
+            if (playing && sound) {
+                const species = id === 'pokomoko' ? 'pokomoko' : id === 'visitor' ? own.pier.visitor.species : (visit?.state ?? own).villagers.find(v => v.id === id)?.species;
+                if (species) playNote(noteFor(species));
+            } else audio.play('pick');
             if (visit) { setLine(actorLine(visit.state, id)); return; }
+            if (playing) return;
             // A friend still on the boat comes ashore when touched (§11.1).
             if (own.arrivals.includes(id)) { void disembark(); return; }
             setLine(actorLine(own, id)); if (own.villagers.some(v => v.id === id)) setSelected(`villager:${id}`);

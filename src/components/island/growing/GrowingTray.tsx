@@ -9,7 +9,7 @@ export type Pick = { mode: 'seed'; kind: SeedKind } | { mode: 'landmark'; kind: 
     | { mode: 'unstore'; id: string; kind: SeedKind | LandmarkKind; seed: boolean; keepsake?: string };
 
 const SEEDS: SeedKind[] = ['home', 'farm', 'play', 'wild', 'market', 'festival'];
-const LANDMARKS: LandmarkKind[] = ['flower', 'bench', 'water-bowl', 'sapling', 'water-channel', 'picnic-table', 'planter', 'swing', 'lantern', 'fence', 'lighthouse'];
+const LANDMARKS: LandmarkKind[] = ['flower', 'bench', 'water-bowl', 'sapling', 'water-channel', 'picnic-table', 'planter', 'swing', 'lantern', 'fence', 'lighthouse', 'bandstand'];
 
 /** Seeds first and large; landmarks and stored things one swipe away (spec 52 §12.1). */
 export function GrowingTray({ state, onPick, onClose }: { state: GrowingState; onPick: (pick: Pick) => void; onClose: () => void }) {

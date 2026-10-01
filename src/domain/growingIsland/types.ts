@@ -7,7 +7,9 @@ export type { Cell, ItemKind };
 /** Plots are zones the island builds by itself (spec 52 §3). */
 export type SeedKind = 'home' | 'farm' | 'play' | 'wild' | 'market' | 'festival';
 /** Instant landmarks: the current catalog plus the late-game lighthouse (§4, §8). */
-export type LandmarkKind = ItemKind | 'lighthouse';
+/** The current catalog plus the island's own landmarks: the lighthouse and the bandstand (§4). */
+export type LandmarkKind = ItemKind | 'lighthouse' | 'bandstand';
+export const OWN_LANDMARKS: readonly string[] = ['lighthouse', 'bandstand'];
 export type PlotStyle = 'water' | 'tree' | 'flower' | 'light' | 'plain';
 /**
  * Animal friends, and the island's two children: the girl is always えま and the boy always

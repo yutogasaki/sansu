@@ -2,7 +2,7 @@ import { growthStage, type ItemKind } from '../islandLife/model';
 import { connectedWaterChannels, shadeInfluence, waterInfluence, type WaterLayout } from '../islandLife/waterChannels';
 import { RULES } from './rules';
 import { distance, key, landCells } from './space';
-import type { Cell, Character, GrowingState, PlotStyle } from './types';
+import { OWN_LANDMARKS, type Cell, type Character, type GrowingState, type PlotStyle } from './types';
 
 type Feature = Exclude<Character, 'mixed'>;
 export type Scores = Record<Feature, number>;
@@ -10,7 +10,7 @@ const empty = (): Scores => ({ water: 0, tree: 0, flower: 0, farm: 0, light: 0 }
 
 /** The shared water/shade formulas read only placed current-catalog items. */
 export function waterLayout(state: GrowingState): WaterLayout {
-    return { items: state.landmarks.filter(l => l.kind !== 'lighthouse' && l.cell)
+    return { items: state.landmarks.filter(l => !OWN_LANDMARKS.includes(l.kind) && l.cell)
         .map(l => ({ kind: l.kind as ItemKind, cell: l.cell, growth: l.growth })) };
 }
 

@@ -8,7 +8,7 @@ import { key } from '../../../domain/growingIsland/space';
 import type { Cell, FlowerColor, GrowingState, Landmark, LandmarkKind, PlotStyle, SeedKind } from '../../../domain/growingIsland';
 import { keepsakeKind, treeAge } from '../../../domain/growingIsland';
 import { buildBud, buildLighthouse, buildPlot } from './plotGeometry';
-import { buildFlag, buildKeepsake } from './keepsakeGeometry';
+import { buildBandstand, buildFlag, buildKeepsake } from './keepsakeGeometry';
 import { wonder } from './wonderPaint';
 import { buildColorFlower } from './flowerGeometry';
 import { buildBoat, buildPier } from './pierGeometry';
@@ -21,6 +21,7 @@ const SEATS: Partial<Record<LandmarkKind, Seat>> = { bench: 'sit', swing: 'swing
 
 function landmarkModel(m: IslandMaterials, state: GrowingState, landmark: Landmark, reached: Set<string>) {
     if (landmark.kind === 'lighthouse') return buildLighthouse(m);
+    if (landmark.kind === 'bandstand') return buildBandstand(m);
     if (landmark.kind === 'flower' && landmark.color) return buildColorFlower(m, landmark.color, landmark.growth);
     const layout = waterLayout(state);
     const item: LifeItem = {
@@ -37,6 +38,7 @@ function ghostModel(m: IslandMaterials, ghost: Ghost) {
     const model = ghost.keepsake ? buildKeepsake(m, keepsakeKind(ghost.keepsake))
         : ghost.seed ? buildPlot(m, ghost.kind as SeedKind, 1, ghost.style, 6)
         : ghost.kind === 'lighthouse' ? buildLighthouse(m)
+            : ghost.kind === 'bandstand' ? buildBandstand(m)
             : ghost.kind === 'flower' && ghost.color ? buildColorFlower(m, ghost.color, 6)
             : buildLifeItem({ id: 'ghost', kind: ghost.kind as ItemKind, growth: 18, style: 'original' }, m).root;
     model.traverse(o => {

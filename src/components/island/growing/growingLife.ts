@@ -29,6 +29,7 @@ export class GrowingLife {
     private state?: GrowingState;
     private layout?: SceneLayout;
     private layer?: ObjectLayer;
+    private concert?: { cell: Cell; until: number };
 
     constructor(private readonly m: IslandMaterials, pokomoko: Actor) {
         this.root.name = 'growing-life';
@@ -106,6 +107,10 @@ export class GrowingLife {
         }
     }
 
+    /** えんそうかい: everyone visible gathers in a ring around the bandstand for a while. */
+    startConcert(cell: Cell, now: number, length = 30000) { this.concert = { cell, until: now + length }; }
+    concertActive(now: number) { return Boolean(this.concert && now < this.concert.until); }
+
     hop(id: string, now: number) { const w = this.walkers.get(id); if (w) w.hopAt = now; }
 
     /** Everyone visible jumps in turn: the festival of a new island level (§8). */
@@ -148,9 +153,27 @@ export class GrowingLife {
             });
             return;
         }
+        if (this.concert && now >= this.concert.until) {
+            // The concert ends: each friend steps off onto the nearest open ground.
+            for (const w of this.walkers.values()) if (w.mode === 'seat' || w.mode === 'idle' || w.mode === 'walk') { w.mode = 'idle'; w.path = []; w.until = now + 1500; }
+            this.concert = undefined;
+        }
+        const players = this.concert ? [...this.walkers.entries()].filter(([id, w]) => id !== 'visitor' && w.mode !== 'boat' && w.mode !== 'sailing' && w.mode !== 'held') : [];
         for (const [id, w] of this.walkers) {
             const { actor } = w;
             actor.root.visible = true;
+            const seat = players.findIndex(([player]) => player === id);
+            if (this.concert && seat >= 0) {
+                const center = layout.point(this.concert.cell), a = seat / players.length * Math.PI * 2;
+                const ring = .75 + (players.length > 8 ? .25 : 0);
+                const x = center.x + Math.sin(a) * ring, z = center.z + Math.cos(a) * ring;
+                let y = reduced ? 0 : Math.abs(Math.sin(now / 260 + seat)) * .05;
+                if (w.hopAt !== undefined && now >= w.hopAt) { const t = (now - w.hopAt) / 520; if (t >= 1) w.hopAt = undefined; else y += Math.sin(Math.PI * t) * (reduced ? .08 : .35); }
+                actor.root.position.set(x, center.y + y, z);
+                actor.root.rotation.set(0, Math.atan2(center.x - x, center.z - z) + (reduced ? 0 : Math.sin(now / 400 + seat) * .15), 0);
+                w.at = { x: x + layout.center, z: z + 2 };
+                continue;
+            }
             if (id !== 'pokomoko' && id !== 'visitor' && night && w.mode !== 'held' && w.mode !== 'boat') { actor.root.visible = false; continue; }
             let y = 0;
             if (w.mode === 'sailing' || w.mode === 'boat') {
