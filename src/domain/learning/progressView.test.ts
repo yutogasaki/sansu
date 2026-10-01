@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { createInitialProfile } from '../user/profile';
 import { learningProgressNotice, learningProgressView } from './progressView';
 
+const ready = { coverageReady: true, fresh: true, recentCount: 20, recentCorrect: 17, missingUnitIds: [], coveredCount: 1, requiredCount: 1 };
 const profile = () => createInitialProfile('はる', 2, 7, 1, 'mix');
 const promotionProfile = () => {
     const p = profile();
@@ -26,15 +27,16 @@ describe('honest learning progress presentation', () => {
     it('uses current range readiness even when a legacy next range is open', () => {
         const p = promotionProfile();
         p.mathLevels!.find(l => l.level === 8)!.recentIndependentAnswersNonReview = [...Array(17).fill(true), ...Array(3).fill(false)];
-        expect(learningProgressView(p, 'math')).toMatchObject({ stage: 'ready', main: 8, next: 9 });
+        expect(learningProgressView(p, 'math', undefined, ready)).toMatchObject({ stage: 'ready', main: 8, next: 9 });
         p.mathLevels!.find(l => l.level === 8)!.recentIndependentAnswersNonReview = [...Array(16).fill(true), ...Array(4).fill(false)];
-        expect(learningProgressView(p, 'math').stage).toBe('unlock');
+        expect(learningProgressView(p, 'math', undefined, { ...ready, recentCorrect: 16 }).stage).toBe('unlock');
     });
     it('does not substitute word memory counts for the current independent answer window', () => {
         const p = profile();
         expect(learningProgressView(p, 'vocab').conditions[0].count).toBe(0);
         p.vocabLevels!.find(l => l.level === 1)!.recentIndependentAnswersNonReview = Array(20).fill(true);
-        expect(learningProgressView(p, 'vocab').stage).toBe('ready');
+        expect(learningProgressView(p, 'vocab').stage).toBe('unlock');
+        expect(learningProgressView(p, 'vocab', undefined, ready).stage).toBe('ready');
     });
     it('handles parent-disabled next range and the real last math level', () => {
         const p = promotionProfile(); p.mathLevels!.find(l => l.level === 9)!.enabled = false;
@@ -48,7 +50,7 @@ describe('honest learning progress presentation', () => {
         after.mathLevels!.find(l => l.level === 8)!.recentIndependentAnswersNonReview = Array(20).fill(true);
         expect(learningProgressNotice(p, after, 'math')).toBeNull();
         after.recentAttempts = [{ id: 'ready', timestamp: new Date().toISOString(), subject: 'math', skillId: 'add_1d_1', result: 'correct' }];
-        expect(learningProgressNotice(p, after, 'math')).toContain('しあげ');
+        expect(learningProgressNotice(p, after, 'math', { beforeReady: false, afterReady: true })).toContain('しあげ');
         expect(learningProgressNotice(after, after, 'math')).toBeNull();
     });
     it('announces only a newly saved learning transition in the same profile and subject', () => {

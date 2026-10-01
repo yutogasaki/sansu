@@ -95,8 +95,10 @@ try {
         const joined = await owner(page); assert.equal(joined.version, 21);
         assert.equal(joined.actions.filter(a => a.command.type === 'invite-friend').length, 1);
         assert.deepEqual(joined.credits, bought.credits); assert.deepEqual(await readNative(page), learning);
-        for (const [button, time] of [['ひる', 'day'], ['夕ぐれ', 'dusk'], ['よる', 'night']]) {
-            await page.getByRole('button', { name: button, exact: true }).click(); await capture(page, `garden-${time}`);
+        for (const [hour, time] of [[7, 'morning'], [12, 'day'], [17, 'dusk'], [21, 'night']]) {
+            await page.clock.setFixedTime(new Date(2026, 9, 1, hour));
+            await page.evaluate(() => window.dispatchEvent(new Event('focus')));
+            await page.waitForFunction(t => document.querySelector('.island-life')?.dataset.gardenTime === t, time); await capture(page, `garden-${time}`);
             await page.getByRole('button', { name: 'しまの ようす', exact: true }).click();
             await page.getByRole('button', { name: 'いえへ', exact: true }).click(); await room(page);
             await capture(page, `house-${time}`);

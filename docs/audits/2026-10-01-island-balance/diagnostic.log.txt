@@ -1,0 +1,73 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+stdout | src/domain/growingIsland/balanceAudit.diagnostic.test.ts > island balance audit diagnostics (observations, not acceptance gates) > measures several learning volumes and batching habits
+┌─────────┬───────┬───────────────┬─────┬───────────┬───────┬──────┬───────┬───────┐
+│ (index) │ daily │ habit         │ day │ villagers │ level │ land │ drops │ homes │
+├─────────┼───────┼───────────────┼─────┼───────────┼───────┼──────┼───────┼───────┤
+│ 0       │ 1     │ 'daily'       │ 1   │ 1         │ 1     │ 30   │ 2     │ 1     │
+│ 1       │ 1     │ 'daily'       │ 7   │ 1         │ 1     │ 30   │ 6     │ 2     │
+│ 2       │ 1     │ 'daily'       │ 30  │ 3         │ 3     │ 30   │ 22    │ 4     │
+│ 3       │ 1     │ 'daily'       │ 90  │ 8         │ 4     │ 30   │ 118   │ 7     │
+│ 4       │ 3     │ 'daily'       │ 1   │ 1         │ 1     │ 30   │ 2     │ 2     │
+│ 5       │ 3     │ 'daily'       │ 7   │ 3         │ 2     │ 30   │ 4     │ 4     │
+│ 6       │ 3     │ 'daily'       │ 30  │ 8         │ 4     │ 30   │ 118   │ 7     │
+│ 7       │ 3     │ 'daily'       │ 90  │ 20        │ 6     │ 120  │ 186   │ 11    │
+│ 8       │ 6     │ 'daily'       │ 1   │ 1         │ 1     │ 30   │ 4     │ 2     │
+│ 9       │ 6     │ 'daily'       │ 7   │ 4         │ 3     │ 30   │ 38    │ 5     │
+│ 10      │ 6     │ 'daily'       │ 30  │ 15        │ 5     │ 120  │ 14    │ 9     │
+│ 11      │ 6     │ 'daily'       │ 90  │ 32        │ 8     │ 120  │ 678   │ 17    │
+│ 12      │ 12    │ 'daily'       │ 1   │ 2         │ 1     │ 30   │ 12    │ 3     │
+│ 13      │ 12    │ 'daily'       │ 7   │ 8         │ 4     │ 45   │ 84    │ 7     │
+│ 14      │ 12    │ 'daily'       │ 30  │ 25        │ 7     │ 120  │ 328   │ 14    │
+│ 15      │ 12    │ 'daily'       │ 90  │ 51        │ 9     │ 120  │ 1664  │ 27    │
+│ 16      │ 24    │ 'daily'       │ 1   │ 2         │ 2     │ 30   │ 30    │ 3     │
+│ 17      │ 24    │ 'daily'       │ 7   │ 14        │ 5     │ 45   │ 222   │ 8     │
+│ 18      │ 24    │ 'daily'       │ 30  │ 39        │ 8     │ 120  │ 946   │ 21    │
+│ 19      │ 24    │ 'daily'       │ 90  │ 67        │ 10    │ 144  │ 3608  │ 35    │
+│ 20      │ 12    │ 'weekly'      │ 1   │ 1         │ 1     │ 30   │ 154   │ 2     │
+│ 21      │ 12    │ 'weekly'      │ 7   │ 1         │ 1     │ 30   │ 154   │ 2     │
+│ 22      │ 12    │ 'weekly'      │ 30  │ 5         │ 3     │ 96   │ 606   │ 6     │
+│ 23      │ 12    │ 'weekly'      │ 90  │ 22        │ 7     │ 120  │ 1816  │ 12    │
+│ 24      │ 12    │ 'decor-first' │ 1   │ 2         │ 1     │ 30   │ 4     │ 3     │
+│ 25      │ 12    │ 'decor-first' │ 7   │ 8         │ 4     │ 45   │ 76    │ 7     │
+│ 26      │ 12    │ 'decor-first' │ 30  │ 23        │ 7     │ 144  │ 180   │ 13    │
+│ 27      │ 12    │ 'decor-first' │ 90  │ 26        │ 7     │ 144  │ 1604  │ 14    │
+└─────────┴───────┴───────────────┴─────┴───────────┴───────┴──────┴───────┴───────┘
+
+stdout | src/domain/growingIsland/balanceAudit.diagnostic.test.ts > island balance audit diagnostics (observations, not acceptance gates) > observes duplicate ids within one ingest batch
+same-batch-duplicate { added: 2, drops: 4, hours: 8 }
+
+stdout | src/domain/growingIsland/balanceAudit.diagnostic.test.ts > island balance audit diagnostics (observations, not acceptance gates) > observes surprise opportunities from more learning and more openings
+opening-moments { together: 1, split: 9, townHours: 240 }
+
+stdout | src/domain/growingIsland/balanceAudit.diagnostic.test.ts > island balance audit diagnostics (observations, not acceptance gates) > checks later growth and different island seeds
+┌─────────┬─────────────┬───────┬─────┬───────────┬───────┬──────┬───────┬───────┐
+│ (index) │ seed        │ decor │ day │ villagers │ level │ land │ drops │ homes │
+├─────────┼─────────────┼───────┼─────┼───────────┼───────┼──────┼───────┼───────┤
+│ 0       │ 'pace-kid'  │ false │ 90  │ 51        │ 9     │ 120  │ 1664  │ 27    │
+│ 1       │ 'pace-kid'  │ false │ 180 │ 67        │ 10    │ 144  │ 3600  │ 36    │
+│ 2       │ 'pace-kid'  │ false │ 365 │ 67        │ 10    │ 144  │ 8040  │ 36    │
+│ 3       │ 'pace-kid'  │ true  │ 90  │ 26        │ 7     │ 144  │ 1604  │ 14    │
+│ 4       │ 'pace-kid'  │ true  │ 180 │ 26        │ 7     │ 144  │ 3764  │ 14    │
+│ 5       │ 'pace-kid'  │ true  │ 365 │ 26        │ 7     │ 144  │ 8204  │ 14    │
+│ 6       │ 'kid-one'   │ false │ 90  │ 51        │ 9     │ 120  │ 1642  │ 27    │
+│ 7       │ 'kid-one'   │ true  │ 90  │ 26        │ 7     │ 144  │ 1604  │ 14    │
+│ 8       │ 'kid-two'   │ false │ 90  │ 51        │ 9     │ 120  │ 1668  │ 26    │
+│ 9       │ 'kid-two'   │ true  │ 90  │ 26        │ 7     │ 144  │ 1604  │ 14    │
+│ 10      │ 'kid-three' │ false │ 90  │ 51        │ 9     │ 120  │ 1664  │ 27    │
+│ 11      │ 'kid-three' │ true  │ 90  │ 26        │ 7     │ 144  │ 1604  │ 14    │
+└─────────┴─────────────┴───────┴─────┴───────────┴───────┴──────┴───────┴───────┘
+
+stdout | src/domain/growingIsland/balanceAudit.diagnostic.test.ts > island balance audit diagnostics (observations, not acceptance gates) > observes birthday points from an unreachable bench and vacant home
+unreachable-home { reachable: false, vacancy: 0, villagers: 1 }
+
+ ✓ src/domain/growingIsland/balanceAudit.diagnostic.test.ts (5 tests) 14177ms
+   ✓ island balance audit diagnostics (observations, not acceptance gates) > measures several learning volumes and batching habits 3556ms
+   ✓ island balance audit diagnostics (observations, not acceptance gates) > checks later growth and different island seeds 10612ms
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  12:18:48
+   Duration  15.05s (transform 183ms, setup 0ms, collect 238ms, tests 14.18s, environment 0ms, prepare 66ms)
+

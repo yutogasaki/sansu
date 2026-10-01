@@ -684,9 +684,17 @@ export const shouldForceVocabReviewBlock = (
     subjectMode: UserProfile["subjectMode"],
     vocabDueCount: number,
     recentAttempts: { subject: SubjectKey; isReview: boolean }[],
-): boolean => subjectMode !== "math"
-    && vocabDueCount > 0
-    && calculateRecentReviewRatio(recentAttempts.filter(item => item.subject === 'vocab').slice(0, REVIEW_BLOCK_CHECK_WINDOW)) < REVIEW_BLOCK_THRESHOLD;
+): boolean => {
+    if (subjectMode === "math" || vocabDueCount <= 0) return false;
+    // All answered subjects count here, including review, so an English backlog
+    // cannot hide a run of English answers from the mixed-mode balance guard.
+    const mixRecent = recentAttempts.slice(0, MIX_WINDOW);
+    if (subjectMode === "mix" && mixRecent.length >= 5
+        && mixRecent.filter(item => item.subject === "vocab").length / mixRecent.length > 0.6) return false;
+    const target = resolveReviewBudget({ count: BLOCK_SIZE, dueCount: vocabDueCount }).reviewLimit / BLOCK_SIZE;
+    return calculateRecentReviewRatio(recentAttempts.filter(item => item.subject === "vocab")
+        .slice(0, REVIEW_BLOCK_CHECK_WINDOW)) < target;
+};
 
 /**
  * Calculate recent review ratio from attempts
@@ -705,8 +713,8 @@ export const calculateRecentReviewRatio = (
 export const getMixSubject = (
     recentAttempts: { subject: SubjectKey; isReview: boolean }[]
 ): SubjectKey => {
-    const nonReview = recentAttempts.filter(r => !r.isReview);
-    const recent = nonReview.slice(0, MIX_WINDOW);
+    // Review answers also consume the child's time in a subject.
+    const recent = recentAttempts.slice(0, MIX_WINDOW);
 
     if (recent.length < 5) {
         return Math.random() > 0.5 ? 'math' : 'vocab';

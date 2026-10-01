@@ -294,3 +294,7 @@ Life worldデータ版4は既存の経済checkpointを保持し、`tourCutover` 
 `residencyCutover` は規則ID、本人profileId、時刻、action数、既存参加者、過去actionの写しとSHA-256を持つ。切替以前の履歴を変えず、既存はうさぎ/カワウソの資格を保持。新規Lifeだけ未参加として開始する。切替と版21を同一world transactionで保存し、版20以下の旧writerが書き戻さない。学習writer・DB schema・旧Nature Town DBは変更しない。
 
 招待資格はcutover以降の実履歴から再現する消去可能なprojectionで、参加の正本は `invite-friend` action。再送は元intent/commandを照合し、別内容・古いrevision・資格なし・未来版を拒否する。abortでは参加もactionも保存しない。版21非対応のbuildへの降格は行わず、復旧buildも版21を読む。新しい保存を既存版20へ戻す変換は実装しない。
+
+## 学習監査後のoptional保存（2026-10-01）
+
+プロフィールに `evaluationContacts`（教科別・内容別の最新表示日時）、`finishRecovery`（元レベル・失敗内容/variant・失敗問題key・新しい独力正解key）、新規 `finishTestSets` に資格snapshotを追加する。RecentAttemptのoptionalなassistanceを実際の検証済み回答から保存する。既存のappData/profilesへの同一transactionで保存し、store/index/schema version追加や旧記録の一括書換えは行わない。欠損した旧assistanceを独力へ推定しない。既存予約は再生成せず、旧予約には資格snapshotを後付けしない。表示接触でログやmemory行を新設しない。

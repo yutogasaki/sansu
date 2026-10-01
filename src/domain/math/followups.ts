@@ -53,12 +53,14 @@ export const getMathFollowupPlan = (
 
         const sourceMetadata = getMathSkillMetadata(latestAttempt.skillId);
 
-        if (latestAttempt.result !== "correct") {
+        if (latestAttempt.result !== "correct" || latestAttempt.assistance === "assisted") {
             (sourceMetadata.reviewFallbackSkillIds || []).forEach((fallbackId, index) => {
                 addCandidate(fallbackId, 70 - index, "remediation");
             });
             return;
         }
+
+        if (latestAttempt.assistance !== "independent") return;
 
         const targetRepresentations: readonly MathRepresentationMode[] =
             REPRESENTATION_PROGRESSIONS[sourceMetadata.representation] || [];

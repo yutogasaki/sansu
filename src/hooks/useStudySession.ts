@@ -12,6 +12,9 @@ import {
 } from "../domain/learningRepository";
 import { generateMathProblem } from "../domain/math";
 import { prepareStudyBlockPresentation } from '../domain/math/studyPresentation';
+import { recordEvaluationContact } from '../domain/learning/evaluationContacts';
+import { getWordLevel } from '../domain/english/words';
+import { generateMathFinishRecoveryProblem } from '../domain/finishRecoveryPractice';
 import { generateVocabProblem } from "../domain/english/generator";
 import { Problem, SubjectKey, UserProfile } from "../domain/types";
 import type { LearningEvidenceContext } from '../domain/learning/types';
@@ -164,6 +167,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
         const focusIds = options.focusIds!;
         const sessionKind = options.sessionKind || "normal";
         const isReviewSession = options.forceReview === true || sessionKind === "review";
+        const recovery = profileRef.current?.finishRecovery?.math;
 
         const buildCooldownIds = (pending: string[]) =>
             buildVocabCooldownIds(recentAttempts, sessionHistoryRef.current, pending);
@@ -173,7 +177,9 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
             const problem = safeGenerateProblem(
                 () => subject === 'math'
-                    ? generateMathProblem(id, { profile: profileRef.current || undefined })
+                    ? (isReviewSession && recovery && recovery.level === profileRef.current?.mathMainLevel
+                        ? generateMathFinishRecoveryProblem(recovery, id, i) : undefined)
+                        ?? generateMathProblem(id, { profile: profileRef.current || undefined })
                     : generateVocabProblem(id, { cooldownIds: buildCooldownIds([]), kanjiMode: profileRef.current?.kanjiMode }),
                 () => createFallbackProblem(subject, `focus mode: ${id}`),
                 `focus mode: ${id}`
@@ -268,7 +274,14 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
         const recentIds = sessionHistoryRef.current.slice(-COOLDOWN_WINDOW).map(h => h.id);
 
         // Determine subject
-        const vocabDue = await getReviewItems(pid, 'vocab');
+        const vocabStopped = new Set(await getSkippedItemsToday(pid, 'vocab'));
+        const vocabDue = (await getReviewItems(pid, 'vocab')).filter(item => {
+            const level = getWordLevel(item.id);
+            const state = activeProfile.vocabLevels?.find(candidate => candidate.level === level);
+            return level !== null && !vocabStopped.has(item.id)
+                && level <= activeProfile.vocabMaxUnlocked
+                && (!activeProfile.vocabLevels || state?.unlocked === true && state.enabled === true);
+        });
         const forceVocabReviewBlock = shouldForceVocabReviewBlock(
             activeProfile.subjectMode,
             vocabDue.length,
@@ -584,7 +597,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             // A failed test-range review stays empty for an explicit retry;
             // a generic fallback would silently change its learning scope.
             const fallbackQueue: Problem[] = [];
-            if (options.sessionKind !== "weak-review") {
+            if (options.sessionKind !== "weak-review" && options.sessionKind !== 'finish-test' && options.sessionKind !== 'periodic-test') {
                 for (let i = 0; i < BLOCK_SIZE; i++) {
                     fallbackQueue.push({
                         ...createFallbackProblem('math', 'session init failure'),
@@ -663,6 +676,14 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
     ): Promise<boolean> => {
         const processResult = async (): Promise<boolean> => {
             const sessionKind = options.sessionKind || "normal";
+            if (sessionKind === 'finish-test' || sessionKind === 'periodic-test') {
+                try {
+                    if (!profileId || !await recordEvaluationContact(profileId, problem.subject, problem.categoryId)) return false;
+                } catch (error) {
+                    errorInDev('[useStudySession] error saving evaluation contact:', error);
+                    return false;
+                }
+            }
             if (sessionKind === "finish-test") {
                 const reservation = finishReservationRef.current;
                 const index = queue.findIndex(item => item.id === problem.id);

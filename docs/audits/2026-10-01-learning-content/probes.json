@@ -1,0 +1,176 @@
+{
+  "samples": {
+    "hard": {
+      "seed": 2,
+      "question": "hard",
+      "example": "This work is hard.",
+      "choices": [
+        {
+          "label": "すべて",
+          "value": "all"
+        },
+        {
+          "label": "かたい",
+          "value": "hard"
+        },
+        {
+          "label": "むずかしい",
+          "value": "difficult"
+        },
+        {
+          "label": "いちがつ",
+          "value": "January"
+        }
+      ],
+      "correct": "hard"
+    },
+    "way_lv12": {
+      "seed": 8,
+      "question": "way",
+      "example": "This is a good way.",
+      "choices": [
+        {
+          "label": "いち",
+          "value": "position"
+        },
+        {
+          "label": "しんぽ",
+          "value": "progress"
+        },
+        {
+          "label": "やりかた",
+          "value": "method"
+        },
+        {
+          "label": "ほうほう",
+          "value": "way_lv12"
+        }
+      ],
+      "correct": "way_lv12"
+    }
+  },
+  "distributionSeeds": 10000,
+  "quotientOne": 7094,
+  "averageShortcut": 10000,
+  "fractionCompareModes": {
+    "sameDenominator": 3333,
+    "sameNumerator": 3336,
+    "equivalent": 3331,
+    "otherUnequal": 0
+  },
+  "advancedCount": 70000,
+  "failures": [],
+  "manualReview": [
+    {
+      "id": "hard",
+      "level": 5,
+      "japanese": "かたい",
+      "japaneseKanji": "硬い",
+      "category": "形容詞",
+      "example": "This work is hard."
+    },
+    {
+      "id": "apply",
+      "level": 15,
+      "japanese": "おうぼする",
+      "japaneseKanji": "応募する",
+      "category": "動詞",
+      "example": "I apply the new rule."
+    },
+    {
+      "id": "measure",
+      "level": 16,
+      "japanese": "たいさく",
+      "japaneseKanji": "対策",
+      "category": "社会問題",
+      "example": "We measure the distance."
+    },
+    {
+      "id": "present",
+      "level": 13,
+      "japanese": "げんざい",
+      "japaneseKanji": "現在",
+      "category": "時間",
+      "example": "This present is for you."
+    },
+    {
+      "id": "age",
+      "level": 13,
+      "japanese": "じだい",
+      "japaneseKanji": "時代",
+      "category": "時間",
+      "example": "Tell me your age."
+    },
+    {
+      "id": "heart",
+      "level": 8,
+      "japanese": "こころ",
+      "japaneseKanji": "心",
+      "category": "感情",
+      "example": "My heart beats fast."
+    },
+    {
+      "id": "sound",
+      "level": 9,
+      "japanese": "きこえる",
+      "japaneseKanji": "聞こえる",
+      "category": "動詞",
+      "example": "I like this sound."
+    },
+    {
+      "id": "free",
+      "level": 9,
+      "japanese": "ひま",
+      "japaneseKanji": "暇",
+      "category": "形容詞",
+      "example": "This seat is free."
+    },
+    {
+      "id": "step",
+      "level": 12,
+      "japanese": "だんかい",
+      "japaneseKanji": "段階",
+      "category": "概念",
+      "example": "Take one step forward."
+    },
+    {
+      "id": "sense",
+      "level": 15,
+      "japanese": "かんかく",
+      "japaneseKanji": "感覚",
+      "category": "名詞",
+      "example": "I sense a change."
+    },
+    {
+      "id": "potential",
+      "level": 20,
+      "japanese": "せんざいてきな",
+      "japaneseKanji": "潜在的な",
+      "category": "形容詞",
+      "example": "This idea has potential."
+    },
+    {
+      "id": "cold",
+      "level": 1,
+      "japanese": "さむい",
+      "category": "形容詞",
+      "example": "The water is cold."
+    },
+    {
+      "id": "back",
+      "level": 7,
+      "japanese": "うしろに",
+      "japaneseKanji": "後ろに",
+      "category": "副詞",
+      "example": "Please come back soon."
+    },
+    {
+      "id": "atmosphere",
+      "level": 16,
+      "japanese": "たいき",
+      "japaneseKanji": "大気",
+      "category": "環境問題",
+      "example": "The atmosphere is calm."
+    }
+  ]
+}

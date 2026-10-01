@@ -215,6 +215,18 @@ describe("resolveWeakState", () => {
     });
 });
 
+describe('legacy weakness evidence', () => {
+    it('does not turn unknown legacy successes into errors or recovery', () => {
+        const unknownSuccesses = logsFor('legacy-item', Array.from({ length: 10 }, () => 'correct' as const));
+        expect(resolveWeakState(unknownSuccesses)).toBe(false);
+        expect(resolveWeakStateAfterAttempt(true, unknownSuccesses)).toBe(true);
+        expect(resolveWeakState([
+            ...logsFor('legacy-item', Array.from({ length: 5 }, () => 'incorrect' as const)),
+            ...unknownSuccesses,
+        ])).toBe(true);
+    });
+});
+
 describe("getWeakMathSkillIds", () => {
     it("uses the shared hysteresis contract and only considers active skills", async () => {
         mocks.mathItems = [

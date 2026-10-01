@@ -1,6 +1,5 @@
-import { finishEligibility } from '../../domain/finishTest';
-import { readMathLevel11Pilot } from '../../domain/learning/pilotRepository';
-import { db } from '../../db';
+import { readLearningProgress } from '../../domain/learning/progressRepository';
+import { getAppData } from '../../domain/user/repository';
 import { useIslandNavigation } from '../island/useIslandNavigation';
 import { useEffect, useRef, useState } from 'react';
 import type { UserProfile } from '../../domain/types';
@@ -14,29 +13,27 @@ import './LearningProgressCue.css';
 /** No DB reads or write on the answer path; only committed profile changes. */
 export function LearningProgressCue({ profile, plan, active, busy = false }: { profile: UserProfile; plan: IslandPlan; active: boolean; busy?: boolean }) {
     const navigation = useIslandNavigation();
-    const [coverage, setCoverage] = useState<{ owner: string; revision: UserProfile; ready: boolean }>();
+    const [coverage, setCoverage] = useState<{ owner: string; revision: UserProfile; subject: string; ready: boolean }>();
+    const previous = useRef({ profile, active, ready: false, subject: plan.subject });
+    const [notice, setNotice] = useState<{ text: string; owner: string; subject: string }>();
     useEffect(() => {
-        if (!active || plan.subject !== 'math' || profile.mathMainLevel !== 11) return;
+        if (!active) return;
         let cancelled = false;
-        void readMathLevel11Pilot(db, profile.id).then(pilot => {
-            if (!cancelled) setCoverage({ owner: profile.id, revision: profile, ready: pilot.practice.coverageReady });
+        void Promise.all([readLearningProgress(profile), getAppData()]).then(([progress, appData]) => {
+            if (cancelled || appData.activeProfileId !== profile.id) return;
+            const ready = progress.finish[plan.subject].status === 'ready';
+            setCoverage({ owner: profile.id, revision: profile, subject: plan.subject, ready });
+            const before = previous.current;
+            previous.current = { profile, active, ready, subject: plan.subject };
+            const earned = before.active && before.subject === plan.subject
+                ? learningProgressNotice(before.profile, profile, plan.subject, { beforeReady: before.ready, afterReady: ready }) : null;
+            if (earned) setNotice({ text: `${plan.subject === 'math' ? 'さんすう' : 'えいたんご'}：${earned}`,
+                owner: profile.id, subject: plan.subject });
         }).catch(() => { if (!cancelled) setCoverage(undefined); });
         return () => { cancelled = true; };
     }, [active, plan.subject, profile]);
-    const units = coverage?.owner === profile.id && coverage.revision === profile && coverage.ready ? [] : undefined;
-    const ready = finishEligibility(profile, plan.subject, units).status === 'ready';
-    const previous = useRef({ profile, active });
-    const [notice, setNotice] = useState<{ text: string; owner: string; subject: string }>();
-    useEffect(() => {
-        const before = previous.current;
-        previous.current = { profile, active };
-        const subject = profile.recentAttempts?.slice(-1)[0]?.subject ?? plan.subject;
-        const earned = active && before.active ? learningProgressNotice(before.profile, profile, subject) : null;
-        const text = earned ? `${subject === 'math' ? 'さんすう' : 'えいたんご'}：${earned}` : null;
-        if (!text) return;
-        const show = setTimeout(() => setNotice({ text, owner: profile.id, subject: plan.subject }), 0);
-        return () => clearTimeout(show);
-    }, [profile, active, plan.subject]);
+    const ready = coverage?.owner === profile.id && coverage.revision === profile
+        && coverage.subject === plan.subject && coverage.ready === true;
     useEffect(() => {
         if (!notice) return;
         const timer = setTimeout(() => setNotice(undefined), active ? 5000 : 0);
@@ -49,7 +46,7 @@ export function LearningProgressCue({ profile, plan, active, busy = false }: { p
     const level = plan.subject === 'math' ? getLevelForSkill(problem.categoryId) : getWordLevel(problem.categoryId);
     const title = plan.subject === 'math' ? MATH_SKILL_LABELS[problem.categoryId] ?? learningLevelTitle('math', main) : learningLevelTitle('vocab', level ?? main);
     const status = slot.assisted ? 'ヒントと いっしょに れんしゅう中' : problem.isReview ? 'まえの はんいを ふくしゅう中' : level != null && level > main ? 'つぎの はんいを れんしゅう中' : 'ひとりで 解けるか たしかめ中';
-    const message = notice?.owner === profile.id && active ? notice.text : undefined;
+    const message = notice?.owner === profile.id && notice.subject === plan.subject && active ? notice.text : undefined;
     return <div className="learning-progress-cue" data-learning-progress="true">
         {ready && plan.cursor === 0 && <button type="button" className="learning-progress-finish-link" disabled={busy} onClick={() => {
             if (navigation) navigation.open('/learn'); else window.location.hash = '/learn';

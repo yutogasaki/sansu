@@ -44,7 +44,7 @@ export function IslandStage(props: IslandStageProps & { onTutorialReady?: (ready
     const sharedEnabled = props.shared?.active;
     const sceneLabel = workshopActive
         ? props.workshop?.mode === 'build' ? 'みぞと 水車を つなぐ いりえ' : 'ものを しらべる いりえ'
-        : props.learningKeepsakes && !props.learning ? 'しまの いえ。ゆかを タップ、または やじるしキーで カワウソが あるくよ'
+        : props.learningKeepsakes && !props.learning ? 'しまの いえ。ゆかを タップ、または やじるしキーで ぽこもこが あるくよ'
         : sharedActive ? 'しまの かざりと なかま'
         : props.expressionFlagFocus && !props.learning ? 'しまの はたと かざり'
         : props.preview ? 'しまの ものを おく ばしょを えらんでいるよ'

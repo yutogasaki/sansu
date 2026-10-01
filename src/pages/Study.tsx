@@ -1,4 +1,5 @@
 import { integerFractionProblem } from '../domain/math/fractionInput';
+import { recordEvaluationContact } from '../domain/learning/evaluationContacts';
 import { useLearningSessionLease } from '../hooks/useLearningSessionLease';
 import { allowsDecimalEntry, appendNumberField } from '../domain/math/numberEntry';
 import React, { useState, useEffect, useLayoutEffect, useCallback, useMemo } from "react";
@@ -28,7 +29,7 @@ import { DevStudySwitcher } from "../components/dev/DevStudySwitcher";
 import { getDevStudyAdjacentSelection, getDevStudySelectionSummary } from "../components/dev/devStudySelection";
 import { reachPwaUpdateCheckpoint } from "../pwa";
 import { COLD_OPEN_FIXED_TEN_ID } from "../domain/benchmark/coldOpenFixedTen";
-import { studyLearningEvidence } from '../domain/learning/attemptContext';
+import { studyDisplayedLearningEvidence } from '../domain/math/studyPresentation';
 import { canConfirmNumberFields, mathAnswerShape, appendAnswerDigit, removeAnswerDigit, isAnswerShapeComplete } from '../domain/math/answerCompletion';
 import { acknowledgeAnswerConfirmation } from '../components/domain/answerConfirmGuidance';
 
@@ -170,6 +171,15 @@ const StudyContent: React.FC = () => {
 
     const storedProblem = queue[currentIndex];
     const currentProblem = useMemo(() => integerFractionProblem(storedProblem), [storedProblem]);
+    useEffect(() => {
+        const ownerId = listeningProfile?.id;
+        if (!ownerId || !storedProblem || (sessionKindParam !== 'finish-test' && sessionKindParam !== 'periodic-test')) return;
+        let active = true;
+        void recordEvaluationContact(ownerId, storedProblem.subject, storedProblem.categoryId)
+            .then(accepted => { if (active && !accepted) setSaveError(true); })
+            .catch(() => { if (active) setSaveError(true); });
+        return () => { active = false; };
+    }, [listeningProfile?.id, storedProblem, sessionKindParam]);
     const activeProblemRef = React.useRef(currentProblem);
     useLayoutEffect(() => { activeProblemRef.current = currentProblem; }, [currentProblem]);
     useLayoutEffect(() => { fieldDraft.current.lastEdited = undefined; fieldDraft.current.replaceOnInput = false; setReplaceFieldIndex(undefined); }, [currentProblem]);
@@ -583,7 +593,7 @@ const StudyContent: React.FC = () => {
                 let saved = false;
                 try {
                     saved = await handleResult(storedProblem, 'correct', timeMs,
-                        studyLearningEvidence(currentProblem, learningAssistanceRef.current, true, learningRepresentationChangedRef.current));
+                        studyDisplayedLearningEvidence(storedProblem, currentProblem, learningAssistanceRef.current, true, learningRepresentationChangedRef.current));
                     if (saved) {
                         setCorrectCount(prev => prev + 1);
                     } else {
@@ -621,7 +631,7 @@ const StudyContent: React.FC = () => {
             let saved = false;
             try {
                 saved = await handleResult(storedProblem, 'correct', timeMs,
-                    studyLearningEvidence(currentProblem, learningAssistanceRef.current, false, learningRepresentationChangedRef.current));
+                    studyDisplayedLearningEvidence(storedProblem, currentProblem, learningAssistanceRef.current, false, learningRepresentationChangedRef.current));
                 if (saved) {
                     setCorrectCount(prev => prev + 1);
                 } else {
@@ -639,7 +649,7 @@ const StudyContent: React.FC = () => {
             setFeedback("incorrect");
             playSound("incorrect");
             try {
-                const evidence = studyLearningEvidence(currentProblem, learningAssistanceRef.current, false, learningRepresentationChangedRef.current);
+                const evidence = studyDisplayedLearningEvidence(storedProblem, currentProblem, learningAssistanceRef.current, false, learningRepresentationChangedRef.current);
                 learningAssistanceRef.current = 'assisted';
                 const saved = await handleResult(storedProblem, 'incorrect', timeMs, evidence);
                 if (saved) {
@@ -749,7 +759,7 @@ const StudyContent: React.FC = () => {
 
         try {
             const evidence = hissan.isHissanActive ? undefined
-                : studyLearningEvidence(currentProblem, learningAssistanceRef.current, false, learningRepresentationChangedRef.current);
+                : studyDisplayedLearningEvidence(storedProblem, currentProblem, learningAssistanceRef.current, false, learningRepresentationChangedRef.current);
             learningAssistanceRef.current = 'assisted';
             const saved = await handleResult(storedProblem, 'skipped', undefined, evidence);
             if (saved) {
@@ -921,12 +931,12 @@ const StudyContent: React.FC = () => {
     }, [handleApplyDevSelection]);
 
     const handleNavigate = useCallback((path: string) => {
-        if (isDevSession && path === "/") {
+        if ((isDevSession || sessionKindParam === 'review' && backTo === '/learn') && path === "/") {
             navigate(backPath);
             return;
         }
         navigate(path);
-    }, [isDevSession, backPath, navigate]);
+    }, [isDevSession, sessionKindParam, backTo, backPath, navigate]);
 
     return (
         <>

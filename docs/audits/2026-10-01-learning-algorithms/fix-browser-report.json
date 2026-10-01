@@ -1,0 +1,1567 @@
+{
+  "revision": "b62cec07c43ebd6d03775d8a2d026fca2198c51b",
+  "target": "http://127.0.0.1:5204",
+  "flags": {
+    "island": false
+  },
+  "startedAt": "2026-10-01T03:52:05.667Z",
+  "sourceStart": {
+    "src/pages/Study.tsx": "31f37bd4992f769f04aa70a6f7304aaf734c70edb617394e8354b27a41f2c6ea",
+    "src/hooks/useStudySession.ts": "523ff3ffcdf91d54f83617f29d0246aeb95b2c665b15c89a28ff94f764ff4f95",
+    "src/domain/math/studyPresentation.ts": "4d7962185ba203ec7e604b9ef3da894f0f61db3277d1fc67cb6d15b783dd8392",
+    "src/domain/test/testSet.ts": "7b9c2a7fc7c7df7327a44ab19da46707fa88a70fb4048b318b47ab01ccd79c10",
+    "src/domain/finishCoverage.ts": "2926fb1567951f3c0d9c6d3407f6873e746b5dbfda6bd436da59ce69de42cb7a",
+    "src/domain/finishRecovery.ts": "293b5bf38a78e02cd4e487177aac1452b7e3bd273f0c507a9332cccef64f9546",
+    "src/domain/finishTest.ts": "db378e233fd703cba2c3335b40770206fc1f96f8c9792825d2b4dbb253633d62",
+    "src/domain/finishTestRepository.ts": "a5f43405a5461c3af20b99857700d262e643bb5ab759e491f968681163ca1b55",
+    "src/domain/learningAttemptWriter.ts": "e3efd755a5b5a850f908de0dacde5951b1a3f839631106a4c1867aef362b713c",
+    "src/pages/StudyLayout.tsx": "d9013386bca53d5b2586713d7922a9d212cbd51e749f780884c80998a7b7bb8a",
+    "src/components/finish/FinishChallenge.tsx": "025fab411974ffbdbd16f1874a47ce542faaafb851636867039ea0718467b6bb",
+    "src/components/finish/FinishChallenge.css": "9efbfa2f6272c67a62acdac1e967506390a14ba06bde54122413cbdb55f92bf2",
+    "src/domain/learning/evaluationContacts.ts": "eec5bb0091998b4829538da90e9c3164a443be2b8d9850a235fe0d5fa199d162",
+    "src/domain/learning/pilotRepository.ts": "1747d41613a74dd83e587bf1ee60764abdd1236fea24a0c58d67021afe78c310",
+    "src/domain/learning/progressRepository.ts": "c8ebd0f8fe62a49b865ec813b3cd55551a94e30e550a709f612e94ea4d0e2322",
+    "src/domain/learning/progressView.ts": "bad8d97c110c3bef8b8a84397f6cdb79162c62bd22c437419c8506ff90e5ff7b",
+    "src/domain/types.ts": "da06e598186daede34c04e0e1e499548ece9c729315a7eb3c91daa976475eae9",
+    "src/components/finish/finishNavigation.ts": "05b01787a23530e35166b4fec65b2e29763836a4e4d9de7ebfa9e08f972d808d",
+    "src/domain/learning/attemptContext.ts": "0304947ac0f7be95ad9c31eac39b1e3d5f6c5c52d1a97c08de36f4831fe6c0fd",
+    "src/hooks/useHissanSession.ts": "8b1a57e183c41af1d7fe9dc44175857998e5e76f849d6f6b05fa83af2208dcfe",
+    "src/domain/finishRecoveryPractice.ts": "3e97b00d6510a1a72d8f3a0f769d64c1ce470590ae43d8213d4748863ccf72ac"
+  },
+  "cases": [
+    {
+      "name": "phone-written",
+      "width": 390,
+      "level": 16,
+      "written": true,
+      "resume": true,
+      "pass": true,
+      "errors": [],
+      "integerFractionCount": 0,
+      "readiness": {
+        "coverageReady": true,
+        "missingUnitIds": [],
+        "coveredCount": 2,
+        "requiredCount": 2,
+        "recentCount": 20,
+        "recentCorrect": 20,
+        "fresh": true
+      },
+      "profileId": "c9635653-3b7a-4424-a0b3-db0fa6462c4b",
+      "beforeFinishLogCount": 20,
+      "beforeFinishMemory": [
+        {
+          "profileId": "c9635653-3b7a-4424-a0b3-db0fa6462c4b",
+          "id": "div_2d1d_exact",
+          "strength": 2,
+          "nextReview": "2099-01-01",
+          "updatedAt": "2026-10-01T03:52:06.433Z",
+          "status": "active",
+          "totalAnswers": 20,
+          "correctAnswers": 20,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0
+        },
+        {
+          "profileId": "c9635653-3b7a-4424-a0b3-db0fa6462c4b",
+          "id": "div_99_rev",
+          "strength": 2,
+          "nextReview": "2099-01-01",
+          "updatedAt": "2026-10-01T03:52:06.431Z",
+          "status": "active",
+          "totalAnswers": 20,
+          "correctAnswers": 20,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0
+        }
+      ],
+      "reservationId": "56f607cf-f39d-47c5-a015-40470f373870",
+      "questions": [
+        {
+          "item": "div_99_rev",
+          "question": "2 ÷ 1 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "18 ÷ 2 =",
+          "input": "hissan",
+          "presentation": {
+            "version": 1,
+            "hissan": true
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "7 ÷ 7 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "25 ÷ 5 =",
+          "input": "hissan",
+          "presentation": {
+            "version": 1,
+            "hissan": true
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "18 ÷ 6 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "66 ÷ 6 =",
+          "input": "hissan",
+          "presentation": {
+            "version": 1,
+            "hissan": true
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "33 ÷ 3 =",
+          "input": "hissan",
+          "presentation": {
+            "version": 1,
+            "hissan": true
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "21 ÷ 7 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "12 ÷ 4 =",
+          "input": "hissan",
+          "presentation": {
+            "version": 1,
+            "hissan": true
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "3 ÷ 3 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "3 ÷ 1 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "48 ÷ 6 =",
+          "input": "hissan",
+          "presentation": {
+            "version": 1,
+            "hissan": true
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "63 ÷ 9 =",
+          "input": "hissan",
+          "presentation": {
+            "version": 1,
+            "hissan": true
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "28 ÷ 4 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "35 ÷ 7 =",
+          "input": "hissan",
+          "presentation": {
+            "version": 1,
+            "hissan": true
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "56 ÷ 7 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "63 ÷ 7 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "80 ÷ 8 =",
+          "input": "hissan",
+          "presentation": {
+            "version": 1,
+            "hissan": true
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "14 ÷ 2 =",
+          "input": "hissan",
+          "presentation": {
+            "version": 1,
+            "hissan": true
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "9 ÷ 1 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        }
+      ],
+      "writtenCapture": true,
+      "resumeUnchanged": true,
+      "challengeContactCount": 0,
+      "evaluationContacts": {
+        "math": {
+          "div_99_rev": "2026-10-01T03:52:23.032Z",
+          "div_2d1d_exact": "2026-10-01T03:52:22.238Z"
+        }
+      },
+      "history": {
+        "passed": true,
+        "subject": "math",
+        "level": 16,
+        "newLevel": 17,
+        "correctCount": 20,
+        "totalQuestions": 20,
+        "id": "56f607cf-f39d-47c5-a015-40470f373870",
+        "timestamp": 1790826743552,
+        "kind": "finish",
+        "mode": "manual",
+        "method": "online",
+        "score": 100,
+        "durationSeconds": 13
+      }
+    },
+    {
+      "name": "tablet-mental-recovery",
+      "width": 768,
+      "level": 16,
+      "written": false,
+      "fail": true,
+      "pass": true,
+      "errors": [],
+      "integerFractionCount": 0,
+      "readiness": {
+        "coverageReady": true,
+        "missingUnitIds": [],
+        "coveredCount": 2,
+        "requiredCount": 2,
+        "recentCount": 20,
+        "recentCorrect": 20,
+        "fresh": true
+      },
+      "profileId": "3343e1ab-7764-4105-a3f3-ea962f704641",
+      "beforeFinishLogCount": 20,
+      "beforeFinishMemory": [
+        {
+          "profileId": "3343e1ab-7764-4105-a3f3-ea962f704641",
+          "id": "div_2d1d_exact",
+          "strength": 2,
+          "nextReview": "2099-01-01",
+          "updatedAt": "2026-10-01T03:52:24.029Z",
+          "status": "active",
+          "totalAnswers": 20,
+          "correctAnswers": 20,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0
+        },
+        {
+          "profileId": "3343e1ab-7764-4105-a3f3-ea962f704641",
+          "id": "div_99_rev",
+          "strength": 2,
+          "nextReview": "2099-01-01",
+          "updatedAt": "2026-10-01T03:52:24.029Z",
+          "status": "active",
+          "totalAnswers": 20,
+          "correctAnswers": 20,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0
+        }
+      ],
+      "reservationId": "e8361eef-baeb-4630-ae04-f0c355640310",
+      "questions": [
+        {
+          "item": "div_99_rev",
+          "question": "63 ÷ 7 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "48 ÷ 8 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "72 ÷ 8 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "20 ÷ 5 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "42 ÷ 6 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "18 ÷ 9 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "30 ÷ 3 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "8 ÷ 8 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "12 ÷ 3 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "18 ÷ 2 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "72 ÷ 9 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "56 ÷ 7 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "77 ÷ 7 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "12 ÷ 2 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "6 ÷ 2 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "48 ÷ 6 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "54 ÷ 9 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "25 ÷ 5 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "24 ÷ 6 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "32 ÷ 8 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        }
+      ],
+      "challengeContactCount": 0,
+      "evaluationContacts": {
+        "math": {
+          "div_99_rev": "2026-10-01T03:52:40.190Z",
+          "div_2d1d_exact": "2026-10-01T03:52:39.362Z"
+        }
+      },
+      "history": {
+        "passed": false,
+        "subject": "math",
+        "level": 16,
+        "correctCount": 19,
+        "totalQuestions": 20,
+        "recoveryItemIds": [
+          "div_99_rev"
+        ],
+        "id": "e8361eef-baeb-4630-ae04-f0c355640310",
+        "timestamp": 1790826761136,
+        "kind": "finish",
+        "mode": "manual",
+        "method": "online",
+        "score": 95,
+        "durationSeconds": 16
+      },
+      "recoveryAnswers": 2,
+      "recovery": {
+        "subject": "math",
+        "level": 16,
+        "items": [
+          {
+            "itemId": "div_99_rev",
+            "variant": "default",
+            "failedProblemKey": "math:div_99_rev:{\"question\":\"32÷8=\",\"answer\":\"4\"}",
+            "correctProblemKeys": [
+              "math:div_99_rev:{\"question\":\"3÷1=\",\"answer\":\"3\"}",
+              "math:div_99_rev:{\"question\":\"12÷2=\",\"answer\":\"6\"}"
+            ]
+          }
+        ]
+      },
+      "freshRetry": true
+    },
+    {
+      "name": "phone-fraction",
+      "width": 390,
+      "level": 21,
+      "written": false,
+      "pass": true,
+      "errors": [],
+      "integerFractionCount": 3,
+      "readiness": {
+        "coverageReady": true,
+        "missingUnitIds": [],
+        "coveredCount": 2,
+        "requiredCount": 2,
+        "recentCount": 20,
+        "recentCorrect": 20,
+        "fresh": true
+      },
+      "profileId": "a12486bc-9e0a-4a17-bdf4-d1e9d822f808",
+      "beforeFinishLogCount": 20,
+      "beforeFinishMemory": [
+        {
+          "profileId": "a12486bc-9e0a-4a17-bdf4-d1e9d822f808",
+          "id": "frac_add_same",
+          "strength": 2,
+          "nextReview": "2099-01-01",
+          "updatedAt": "2026-10-01T03:52:43.167Z",
+          "status": "active",
+          "totalAnswers": 20,
+          "correctAnswers": 20,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0
+        },
+        {
+          "profileId": "a12486bc-9e0a-4a17-bdf4-d1e9d822f808",
+          "id": "frac_sub_same",
+          "strength": 2,
+          "nextReview": "2099-01-01",
+          "updatedAt": "2026-10-01T03:52:43.168Z",
+          "status": "active",
+          "totalAnswers": 20,
+          "correctAnswers": 20,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0
+        }
+      ],
+      "reservationId": "c67921e3-f357-4f0d-9374-61ba1bd4e6c8",
+      "questions": [
+        {
+          "item": "frac_add_same",
+          "question": "3/8 + 4/8 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_same",
+          "question": "2/3 - 1/3 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_add_same",
+          "question": "2/3 + 1/3 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_same",
+          "question": "5/7 - 4/7 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_add_same",
+          "question": "1/5 + 2/5 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_same",
+          "question": "6/9 - 3/9 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_add_same",
+          "question": "2/5 + 2/5 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_same",
+          "question": "4/8 - 3/8 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_same",
+          "question": "3/11 - 2/11 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_add_same",
+          "question": "5/7 + 2/7 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_add_same",
+          "question": "1/2 + 1/2 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_same",
+          "question": "3/8 - 1/8 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_same",
+          "question": "4/11 - 2/11 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_add_same",
+          "question": "4/11 + 1/11 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_same",
+          "question": "10/11 - 7/11 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_add_same",
+          "question": "5/8 + 2/8 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_add_same",
+          "question": "10/12 + 1/12 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_same",
+          "question": "6/10 - 1/10 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_add_same",
+          "question": "5/8 + 1/8 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_same",
+          "question": "7/9 - 3/9 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        }
+      ],
+      "challengeContactCount": 0,
+      "evaluationContacts": {
+        "math": {
+          "frac_add_same": "2026-10-01T03:53:01.184Z",
+          "frac_sub_same": "2026-10-01T03:53:02.038Z"
+        }
+      },
+      "history": {
+        "passed": true,
+        "subject": "math",
+        "level": 21,
+        "newLevel": 22,
+        "correctCount": 20,
+        "totalQuestions": 20,
+        "id": "c67921e3-f357-4f0d-9374-61ba1bd4e6c8",
+        "timestamp": 1790826782556,
+        "kind": "finish",
+        "mode": "manual",
+        "method": "online",
+        "score": 100,
+        "durationSeconds": 18
+      }
+    },
+    {
+      "name": "tablet-mixed-fraction",
+      "width": 768,
+      "level": 22,
+      "written": false,
+      "pass": true,
+      "errors": [],
+      "integerFractionCount": 1,
+      "readiness": {
+        "coverageReady": true,
+        "missingUnitIds": [],
+        "coveredCount": 4,
+        "requiredCount": 4,
+        "recentCount": 20,
+        "recentCorrect": 20,
+        "fresh": true
+      },
+      "profileId": "b26eb184-5f71-4ca7-9d39-6b0bceb2c839",
+      "beforeFinishLogCount": 20,
+      "beforeFinishMemory": [
+        {
+          "profileId": "b26eb184-5f71-4ca7-9d39-6b0bceb2c839",
+          "id": "frac_add_diff",
+          "strength": 2,
+          "nextReview": "2099-01-01",
+          "updatedAt": "2026-10-01T03:53:03.042Z",
+          "status": "active",
+          "totalAnswers": 20,
+          "correctAnswers": 20,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0
+        },
+        {
+          "profileId": "b26eb184-5f71-4ca7-9d39-6b0bceb2c839",
+          "id": "frac_mixed",
+          "strength": 2,
+          "nextReview": "2099-01-01",
+          "updatedAt": "2026-10-01T03:53:03.042Z",
+          "status": "active",
+          "totalAnswers": 20,
+          "correctAnswers": 20,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0
+        },
+        {
+          "profileId": "b26eb184-5f71-4ca7-9d39-6b0bceb2c839",
+          "id": "frac_mixed_sub",
+          "strength": 2,
+          "nextReview": "2099-01-01",
+          "updatedAt": "2026-10-01T03:53:03.042Z",
+          "status": "active",
+          "totalAnswers": 20,
+          "correctAnswers": 20,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0
+        },
+        {
+          "profileId": "b26eb184-5f71-4ca7-9d39-6b0bceb2c839",
+          "id": "frac_sub_diff",
+          "strength": 2,
+          "nextReview": "2099-01-01",
+          "updatedAt": "2026-10-01T03:53:03.042Z",
+          "status": "active",
+          "totalAnswers": 20,
+          "correctAnswers": 20,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0
+        }
+      ],
+      "reservationId": "a1f6a76e-5b25-4f6a-b584-b5e18e74f86f",
+      "questions": [
+        {
+          "item": "frac_add_diff",
+          "question": "2/4 + 1/2 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_diff",
+          "question": "5/6 - 2/5 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_mixed",
+          "question": "2 3/4 + 2 3/4 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_mixed_sub",
+          "question": "3 10/11 - 1 8/11 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_mixed",
+          "question": "3 1/11 + 2 7/11 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_add_diff",
+          "question": "1/6 + 1/2 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_diff",
+          "question": "3/5 - 1/2 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_mixed_sub",
+          "question": "4 2/3 - 2 1/3 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_mixed_sub",
+          "question": "4 1/4 - 1 2/4 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_diff",
+          "question": "1/2 - 2/5 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_add_diff",
+          "question": "1/3 + 3/5 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_mixed",
+          "question": "3 7/9 + 2 5/9 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_diff",
+          "question": "2/3 - 1/5 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_mixed_sub",
+          "question": "2 4/6 - 1 1/6 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_mixed",
+          "question": "1 2/10 + 2 9/10 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_add_diff",
+          "question": "2/4 + 2/3 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_mixed_sub",
+          "question": "3 3/5 - 2 4/5 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_diff",
+          "question": "2/5 - 1/4 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_add_diff",
+          "question": "2/3 + 1/6 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_mixed",
+          "question": "2 1/9 + 3 3/9 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        }
+      ],
+      "challengeContactCount": 0,
+      "evaluationContacts": {
+        "math": {
+          "frac_add_diff": "2026-10-01T03:53:23.138Z",
+          "frac_sub_diff": "2026-10-01T03:53:22.099Z",
+          "frac_mixed": "2026-10-01T03:53:24.440Z",
+          "frac_mixed_sub": "2026-10-01T03:53:21.058Z"
+        }
+      },
+      "history": {
+        "passed": true,
+        "subject": "math",
+        "level": 22,
+        "newLevel": 23,
+        "correctCount": 20,
+        "totalQuestions": 20,
+        "id": "a1f6a76e-5b25-4f6a-b584-b5e18e74f86f",
+        "timestamp": 1790826804949,
+        "kind": "finish",
+        "mode": "manual",
+        "method": "online",
+        "score": 100,
+        "durationSeconds": 21
+      }
+    }
+  ],
+  "errors": [],
+  "appTarget": "classic local functional verification",
+  "runtime": "dedicated production build preview",
+  "scope": "Native isolated profile/memory/log fixtures generated by real pure domain generators in Node. Actual Learn/Study,20 UI answers, reservation/writer/finish/recovery. No browser app imports, route interception, problem or progress injection.",
+  "pass": true,
+  "distStart": {
+    "_headers": "b25111b3e4371fd5ef7367f726e14b205d2135cdef9c3a61dfe376915fc48bc7",
+    "assets/Explore-C0qQ-HMA.css": "614ef1d41903a85145bdb81a534cf8b9172245b930d9bf6fbcdd3c2ac45672b6",
+    "assets/Explore-DBd2Sf2Q.js": "36cff8c72092f220bc9162dba0a1c0218d428f4f0a9bd7ed4aa8f89ba1d4c992",
+    "assets/GrowingIsland-BfSsx_3Z.css": "33bd202135b0adcfb855de6aca21f0ea5bcbbcf218fb473f8f71ca5b4383e104",
+    "assets/GrowingIsland-DbzY8Njw.js": "c7582bb569f844cb089df39763cee35f3920cce6f14316ff91a9a3ef1972cb78",
+    "assets/GrowingWorld-DrzZQG4-.js": "6343fc0c97ec215a8a051fe1b8a0754971acac2cc817a88b5ffea3b606aecd1f",
+    "assets/HomeJourneyPreview-C5E7gYAM.js": "33d08519b4380b5a3ee0518bde8b2c5e2b0176a4b2efe85a5774c6b892bff240",
+    "assets/Island-BI3kj2Eq.js": "34126a81ac2f8d6aa764b937edf6187815e9bcc9d3846a7fc8de3e7ab9ed05e8",
+    "assets/Island-BQ8Dihyc.css": "92d13d0bc5a3627f22dbe52e3b6d01fb35b521f727867e8ee7221b79dba7b861",
+    "assets/Island-DIHcNOio.js": "9758042c1e513dee94d9c9582c397399436fb4d90afcff9a07fa6a67579ad1ad",
+    "assets/Island-DVCPJhVi.css": "7effcae9096eea8e175c38e3e9b1e65c1cb367b7cb455e770c9052424af9463b",
+    "assets/IslandAlbum-BId0MGKo.js": "e2f3de989012b6112856540e65591ea33b67a237d40d956f778c0a959642db0a",
+    "assets/IslandCustomization-BKdIHMdQ.css": "c6be452db48d1252ad7d44c80e1ae91d816cc687e973ece5e4a0705029279b7c",
+    "assets/IslandCustomization-C_84UUwS.js": "77017aea9eecb2ddd06fd9874b05aba8d036891142b57d94ecd61fe5eadb2056",
+    "assets/IslandDiscoveryGuide-DENtFkr1.js": "31558f3e3c02f880c4ebd1a0944763c114ea84653c8c3146363ca8a29617f401",
+    "assets/IslandDiscoveryGuide-DpYKYTkf.css": "df0da5378540a390cf22df84064aad6d78f7308b7e41545386f947debc879fd1",
+    "assets/IslandExperiencePanel-Cn-0xXmE.css": "631628f0fa02be095c8e40be1c1a6447fea38243a5dafa00599203f2a0d6e60d",
+    "assets/IslandExperiencePanel-CoxWST9P.js": "892cfe56b15dd9da9e8cfe0caa4651d850e201ca60aa2e4f1fb9d8dfbcf1a1d1",
+    "assets/IslandExpression-BAzaKUz5.css": "b42acb6b645c555f17daf024586f55c1b8232ef1bb7f9fa61f1900e0b1f60039",
+    "assets/IslandExpression-BRSRNiTI.js": "b9b9f5703640018572878422a3348f97bf2326b2241539f6a2ae2ddbf7d07bb2",
+    "assets/IslandFurniture-7NZ9dhCz.css": "4e5e8f3f21d5e7c6ce27c54a0b10efb181b925cab20afb4b5369dfb703e4d160",
+    "assets/IslandFurniture-O5LQ968z.js": "0cb69b095884079879343415583cebf72b7865ca685b176a41685ee30a607b4b",
+    "assets/IslandLife-hubdKn_-.js": "ee5e4c54c68ba033f5e75d8737cbc08088260e8cb6bf02d9a9e73b934579c764",
+    "assets/IslandLife-twUpqDIC.css": "f3d217e3120478aebd44b646c73263ddeced1564162865d869499b774d4ed862",
+    "assets/IslandOnboarding-sXv2z6pV.js": "830ef1dd1ed2dc5f672b38495085346d6caab333c58facb21be3a4f87fb138cf",
+    "assets/IslandPhotos-Dz-XgAxv.css": "eab57c2e6e6821affcf1b305338943dfd021ea1a4bf62a2012f48f86d5aece9b",
+    "assets/IslandPhotos-DzUD_tNf.js": "bdd53375f7e6856b270f9a53395deef1b7904d9c138d8b80565c1c3fd730a97b",
+    "assets/IslandSharedMemories-BEVZEpgQ.js": "50f2b8b452d47424d8d2f86a1944d124ff009fabb0c647a179ddda9348c83e75",
+    "assets/IslandSharedMemories-CxXlpls3.css": "cb2656902dd34e4712874afe99cc00ff6eea0dd61eaff21076e05f6f3c5bdd7c",
+    "assets/IslandStage-BctzDSoi.css": "8e7b7c3dd926fd870d25e27a4720e952c311f2f1dd33a034257aea961ddc7395",
+    "assets/IslandStage-CIbjIO5z.js": "cee4a8f7c349c9c3555477e32f95e857b7500e6308e14ea50abc4f6e3cdaccb4",
+    "assets/IslandStage-CWaO1avh.js": "740d3535068185044d2aaa3115e858386d0c6b9b1dfba8ddcf0962af3a7171ec",
+    "assets/IslandWelcome-BJp8Sa-m.css": "e4fef7c767dd064d64625f5f9713b9d0fa395eeed78b0ddf3ceeda603d557965",
+    "assets/IslandWelcome-fwNv6CJ4.js": "549064b31e379e47edf702b21d2fc95c0749ac0ae869b863a88a7fc88037156e",
+    "assets/IslandWorkReplay-CjeJGB39.js": "0f091f5ae8f7d94af47b92a282c2f31e21cbb39c68ee29c41a4d6a4e7a0d1310",
+    "assets/IslandWorkshop-KxE1cutE.css": "8600b3be6bf042573b190d1802b9a7709d121eda223072518f46a5aeb6445039",
+    "assets/IslandWorkshop-tY4_hqxC.js": "e7327bf6e776bc3db23082b597c32c2ce8f633161ba4a1b302bbfd793b5d6571",
+    "assets/Learn-COOjZeB0.js": "73c905c2eaf6687783e1a20733259573bf694c3acd0e341eafd78679517500ab",
+    "assets/LifeMemories-Cia3-2wk.css": "793c8b3196d013857e5341bad5e4baf16949dddb5dc507f5144d7fc51d96e5f0",
+    "assets/LifeMemories-Dqy9C7t3.js": "8930ee3147ceba74cffe2793cf83e43bf1554b43008627ce562dc0f7e968cf6a",
+    "assets/LifeObservation-BXWm1IVc.js": "bf2bdab3714b17a4e1be980f668425ed27fff1a41146e9a893769bcdb1ba7989",
+    "assets/LifeResidentPortrait-q0u-n5Tg.js": "3de5f1c35686d2b58e1eefb8f27778376d544902922b087f10e6f7b3d4372a9b",
+    "assets/LifeWorld-CxpCd2kv.js": "b598d5df9a091e1982d9dc3642537e27adfdc6b15840725486a6c6d3f729d1c2",
+    "assets/NatureTown-BM-2fTUO.js": "208ceb88497a676baaa584910b4feb057feec02114f969ab9c070358b57baef5",
+    "assets/NatureTown-CusrCJWB.css": "b87b747533e6826dbcdaa227404f480699f05dc4b77527d8c25f0e86a7f8b61a",
+    "assets/NotoSansJP-C_ziqpoc.woff2": "539b381a6e0a5a49d299867d9ab722ad7e41d01f07bbcb6bed4518b63f8d4b0a",
+    "assets/PokomokoLearningActor-Bvl-jrAl.js": "a7af8fff168f0ed7e713e2b10ff485bd227016c6abbef024a8d0853b27eaae84",
+    "assets/RoundedBoxGeometry-Cuyrp3Vy.js": "9225541f57b253aea8cd97f0f61335e18080c551616f35e777dc94d9ee808755",
+    "assets/Stats-CXUvh5Ta.css": "d6b106b1a20e90a03514632b49e9a0e3f401116fdf0bf28fdca2df1433a5894b",
+    "assets/Stats-CyDW1JMn.js": "ce4b76f70c0f3b1542fa3e0886ab5749db9a3b6e1f43aaf097db0e188988038f",
+    "assets/audio-DwtSHwBT.js": "e5eca991f0dda6f43a7688985f25d4603863804c42ab5ab449b3366a49269f15",
+    "assets/basis_transcoder-VXdx5NbI.wasm": "6cf17dc889352c42e9acf8897107978d127005fe3386c36a0e3845e27967630a",
+    "assets/basis_transcoder-o4Hde_L7.js": "8478b5b6d6b74e7d3082b89f6417321d8d1dc0307f2b30d4484bb11b441696a1",
+    "assets/catalog-C9jTiRjH.png": "f441761385a6b0544608ba29fde251ef823c6c9a8135b5cf603f36e3bb74b1dc",
+    "assets/catalog-MsWF2Ofo.png": "984f26c3976e496a9435efd6acbdfd74edd0e916bc833790f9c3cfcf5f8b0e67",
+    "assets/charts-B2Phfr4C.js": "46ce78264981534b06a93487adbc72b56c7b66e2475136f19a5ccccebbc45207",
+    "assets/cottage-Ct7DuouZ.js": "7a571973e6daa1f0263227e5fce268002897a4d7af78b929247a29b39726478e",
+    "assets/data-CYRvWfdS.js": "bb98c417b94bf024baa98d140812d6c9f146dc15dbf086192faeda0b57299bcf",
+    "assets/dela-gothic-one-tzEOUe9y.woff2": "09d52d907874e6cd566428b856b2e52ef64d4f068f3367c39eb400d30b286b98",
+    "assets/explore/firefly-flower/scene-dew-trail-stumble-bloom-pokko-v5.webp": "c7ffa99c2baf167e86f4e679b39ee79bbb541b63f3ec1929e8c6e92a46ad494b",
+    "assets/explore/firefly-flower/scene-light-path-stumble-bloom-pokko-v5.webp": "9dad90c337bd896e2650727c7da5f29b205a9d429ef806f22beb1fc9a7b30842",
+    "assets/explore/firefly-flower/scene-ringing-petals-stumble-bloom-pokko-v5.webp": "3a2fff92eff04ff7b24e8c714f829fbbedb3f25daa7f38d9334a19783b933120",
+    "assets/explore/firefly-flower/scene-waiting-stumble-bloom-pokko-v5.webp": "98b22e52e1f018472cdd98c61db3a484dfa8d9d49564872eb940a37cf43fe92a",
+    "assets/explore/firefly-flower/scene-warm-bud-stumble-bloom-pokko-v5.webp": "61c8efe79508ee7189c6b96e4eba1c643f21342130c6d47488556ceb1b121d3b",
+    "assets/explore/light-bridge/scene-complete-leaf-carry-bloom-pokko-v7.webp": "67bd079655029f834915666808b33f551379aa77b93c9756c035c7fea8435abd",
+    "assets/explore/light-bridge/scene-crossed-leaf-carry-bloom-pokko-v7.webp": "d43c50ac7a2d51645de226379d71b0d0511e2e9d61ccdd7df4c4c8b2232a2539",
+    "assets/explore/light-bridge/scene-idle-leaf-carry-bloom-pokko-v7.webp": "72788b9167d8679e446dab71131fce298924a02bddfa95988c61e77e288c8008",
+    "assets/explore/opening-root-pull-v1/payoff.webp": "0768d8024d9d4bdb795afb3e4864011a3a17b35750c6a7c53f77791f9a2f1c5a",
+    "assets/explore/opening-root-pull-v1/pull-one.webp": "8672d32b04c1f465799e676727bbe00d4033bd31349f7b22e24638ae8e08c7a3",
+    "assets/explore/opening-root-pull-v1/pull-two.webp": "62f27c1e412e6349e2eab02bbbdfa0cb6584434404c1c977c2cab0d713fef0d3",
+    "assets/explore/opening-root-pull-v1/ready.webp": "11bd67c94bbe3b439dd2804bc6ae1448ef7fa730eb43c3849b2dbcf50a33fe77",
+    "assets/explore/opening-root-pull-v2/payoff-dirt-hat.webp": "cc58a385620bed3d231a81564cdaf3ac426c1b99ce45c5811d037b851358295e",
+    "assets/explore/opening-root-pull-v2/payoff-leaf-hat.webp": "63e4a65f763aa852fbef84e8a4a34a5348241ebe1ad7f3cc2321e99c2a9b071a",
+    "assets/explore/opening-root-pull-v2/pull-one.webp": "ac1da3606816ae55a77b6295f348ba7306c615e2d2aed64a7f77e224e98fe694",
+    "assets/explore/opening-root-pull-v2/pull-two.webp": "bc258578b5741d1ff8c9e83cba1c3a1c1efde58de4f22f7f9c0a515e1a9865c0",
+    "assets/explore/opening-root-pull-v2/ready.webp": "8dc7b3806aa8ad666806a3992e05c0ea497f95a51e4f44cc377e56da7bd74f40",
+    "assets/explore/opening-snap-root-carry-bloom-v3/scene-dig-one.webp": "5dc23f200e889b623cb67dc4e8711584bf827f6a45d3b188aa0f1c6d1d4f962c",
+    "assets/explore/opening-snap-root-carry-bloom-v3/scene-dig-two.webp": "5f0f8d1c444346dd65af43afce41664201ad9b48ffc7484353ef8e6dc6bee81c",
+    "assets/explore/opening-snap-root-carry-bloom-v3/scene-popped.webp": "bf16192f0af349861e876bc2b3605efa0cdcb94e510d47b67728b655df4e1b27",
+    "assets/explore/opening-snap-root-carry-bloom-v3/scene-ready.webp": "fe44f1b7c6e36c4c96f9fe7bd9e43899ea936cd90af9fcec44c70eea5700edad",
+    "assets/explore/rapid-trail/scene-run-pop-v1.webp": "2270f0e9833ebc3772a9338d6699a5334d8f2bfdeaa697edcb84af198e454a92",
+    "assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.webp": "eacf0065761eb31e41d82abe7728a2d1251bcff7250b00c8e5dcee552bf2c5aa",
+    "assets/explore/root-tangle/scene-open-carry-bloom-pokko-v7.webp": "a1aa7436e4c89c81434cc081a445c5faa121a0036771dfe6b4999cfd276c8128",
+    "assets/explore/root-tangle/scene-tangled-carry-bloom-pokko-v7.webp": "d966ab2a35828569a6575ebc26dbc3ec9b7cab21da05fcf180bdbdc78c5dc477",
+    "assets/explore/route-choice/scene-fork-three-dew-path-pokko-v2.webp": "0e9c9452d938f119fae58489414ca166c0684b08a703bcad53aa8074abe2c0ca",
+    "assets/explore/route-choice/scene-fork-two-dew-path-pokko-v2.webp": "7ae1478f5814210fa96964ad1fb40a4b5f11b453ca5c945bcdf27cf93fd9b44e",
+    "assets/far-BNsdfYHM.glb": "df35e7344b78fbabeca7d9a26ff195f9a50536c8c1022a3e09afbcbd462a9118",
+    "assets/far-CbQUffpN.glb": "d5ffe92d1c8a9317950d92e257758e6abb872d3ddae94dfc07508499c6c40fb0",
+    "assets/far-Zj6wZqfp.glb": "b3fb7f25a3a022c5d4d9182ff7beecc3cf578a767022f72915c979b3b068e86c",
+    "assets/far-geometry-B5GXTTw0.glb": "1f90138a896c3a10bafd0ef363ad1c86d8b2bab3ed1a95655154cb23667f927b",
+    "assets/far-geometry-BV4Tmqez.glb": "a7a3e730579579c731c033ae65cb67f5207c12a6eaf8d523d6c8313c249779ac",
+    "assets/far-geometry-C2nCL94K.glb": "29aa6bcdda5dc60bb39b5e0ff0fda50b5508492eca3aba086f5fa75dc1019c52",
+    "assets/far-geometry-CUf7iENq.glb": "548edd12d215b454d16da0dcd17f640585bff379eb6946775ef3e37a64f240f4",
+    "assets/far-geometry-DTfZ_trK.glb": "1256e9b72ea8e323fcc20160a857caeb50456d9a9ee7e360870af83ceac19bbd",
+    "assets/far-geometry-Di-gBAev.glb": "faacdfff28bef2ecf1e8e04785df3f7f3bd8b048f6c73dfc7d588c51878b55e2",
+    "assets/far-iUTsXLLh.glb": "735a102b02ff3c51028d4c40f5be9251141c9cd2bfd1ae1368a1b6acc85dae4d",
+    "assets/feature-DTknTrpN.js": "fa1c1795c0a73ec3851c475849164a406ae8e4812452b4f867ca5d1d6b4f6dcc",
+    "assets/flower-bloom-original-Bhc8ZRS8.png": "0480292c0370a2affcc0eefb047c353b3823784614e6ab72aaaa8146a066f6b4",
+    "assets/footprint-Bvl4RY7E.js": "eadf6dff73c97ce11455ab44561a7c7cdbaf3b089822409017a58789cfdb4020",
+    "assets/friendRig-SiBKz7cn.js": "6ef25415d92126eedb11f4a18aa5f368ad4db5ae10893105aedcd3b82000bc44",
+    "assets/geometry-epx0TtMF.js": "09800bbba2b39c82bd2fc643c1ac870da0a99d1cba32c113279609da573b3727",
+    "assets/homeInteriorCamera-C-NvE0v2.js": "8ea246884dc86787479c806287e0b27f190a03bc068e8dcc766176394ae01abb",
+    "assets/homeJourney-BkBsv3V2.js": "7b4ff219493f87e641bbf5f691b826518685d6da4ce4bbcdedc0eeda7dd3c347",
+    "assets/icons-ii3ss8WH.js": "61898e3c05c5620f3915fa8a646a2ac24e7720d88bd807cfdd0d6a7e7075313c",
+    "assets/index-C1EeiRfU.js": "9262bb3d94442acd9882ffadf1579ef4d54802732ead541118bab7ae9628a928",
+    "assets/index-CbJJ8DlU.css": "c45ba07267bac5ebb0ce47eceb1544bcea4b4835520258e2c8cdf97c0c02f508",
+    "assets/islandFurniturePlacement-DW-vUMOn.js": "5946ce5ca0b79067cb039da6f25ef85a2c2cf1bff67f87396eac1d0b0e7c2322",
+    "assets/itemGeometry-B1qc9Ub4.js": "4577e042628ddebdce377240f435cefe728173520e35e8a11ad6d70c5c145782",
+    "assets/life-observation-DvQvywiD.css": "ce89affec52edca8b227e2c883f730a560c06da64d6a38ec26812ff1652ad0c1",
+    "assets/life-observation-SkGEknic.js": "a63536261a3cd7dd1ad6df75099b5f19d4ae0eb919efa0d5c73d1215178525e7",
+    "assets/lifeUpdate.worker-Dhu9JuL8.js": "b94942b80d3acabcda4f157ddba6d4416538bb18f00c142e0d0a4ef739dfabbb",
+    "assets/lighting-DDMNzMaD.js": "0844db00ecd1863799ba5bad84be448ef8821d3431b038d58c100d36ad2fb015",
+    "assets/motion-iLBaTeAD.js": "2eafa186a77ed80ef3a1646d9c0b533cc4c1e3a35bd1d9f572ad4fadeb9c8861",
+    "assets/near-3yaftuce.glb": "850e16d8c2daf5a34bea05cccb3fb8a54c7bf7a75649fe931338e7adceeabf98",
+    "assets/near-7GK7mDBY.glb": "0a294d828a86d00efa294ec8b8fb2652c1e903cb7d3f4450a54f80430cd38092",
+    "assets/near-B3PvBOT3.glb": "9a5409afd83b654a41d2cbe46bbc81a0b69c49b7a9779397717b2fea96d9e701",
+    "assets/near-B8znkHvM.glb": "88e57665916f04a737f686e1a91796e1faceb2b09bd95531045e5fe5472d49c8",
+    "assets/near-Bt9PwG61.glb": "7d9d90db4cff5698b3262fc3764ce9fba94bf482189135b020fc25c060db1197",
+    "assets/near-CMx7NApC.glb": "efc003a7071c2a2d658c7eab31c23427b62f6040faaf563f4c563d7ec27647bf",
+    "assets/near-C_b32qsb.glb": "db5459bb00a9628b9da7d383a352bf2dbcba01713be759a6fcadd3db0848e6cb",
+    "assets/near-CuR2H6Uc.glb": "925db3139e79743233d94d034bd7996e038057bccb44f6dfcee65de83c85a310",
+    "assets/near-DoEuBhay.glb": "0faacb1773b8d904b05729ad0987e33a4fb50bc2e244dd717a4ca3b0afe62b60",
+    "assets/near-l6ZZxCWq.glb": "8d2512d5422fed515ea27e58bb88e8baaf3a5beccb4692b72d720684ad109b4f",
+    "assets/pdf-l0sNRNKZ.js": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "assets/pokomoko-learning-poses-B-Jfr41M.webp": "899524cf5319161fb77913a771216c7ad99e271ca00c463892d6cf22af66f78c",
+    "assets/pokomoko-original-8wLdjUXI.png": "e2a975cf0f3880cbd439630beebb56debdf9070cce0e5ac56995920a9b8a8328",
+    "assets/random-BDr3YF07.js": "0422fadc00e70b6d288545874645af73aa29218e5635ae4a3fecb1ed6fed31fd",
+    "assets/react-DcHpdqMy.js": "dd48938f099158343f1f43ca5363f3b5ec5be3d5ae4fd20186dbaed3c5782ab3",
+    "assets/repository-CvV7cgGY.js": "0286ef47f9b6b5f13484d9c03befd32a5ea662d744ace613cb3d65eec4277ec9",
+    "assets/repository-DEDlnEV5.js": "479563981255ef7b7874d264d53cc4e3f7d52b92ffc1f9b93201d86c0ddabdf1",
+    "assets/repository-DQpghpyK.js": "5e1f32c695b3be4ab1fa38c1ab209804127e0e359d9c485b8df31e3ed6b72026",
+    "assets/residentInterest-DdCMgwVi.js": "f7997bdb14024d5fe9e6870a6d4e1cc2e7af5a45459a1ea289a5dc48b9c7e9e3",
+    "assets/residentRig-hb5XFxdC.js": "73444374bc4971f014fcb48e631caf28f22e8bed9f18b0e7d64a9be2acb2c269",
+    "assets/room-CuEudZaC.js": "4a0f5b90b810efdb408ff2685ea666d728485676e94816276f2f6699c20b26cf",
+    "assets/runtime-CDef-3zr.js": "98e11bc7f4f49d89c8fedc1d93f1714b3c240f5deb6dd79071d9d78f4ca17dbf",
+    "assets/runtimeAssets-BiWD2iD7.js": "81d6a9ea75068f721cfacadd9aec9a1e44e2ad5aed08378d92981643b9705f2f",
+    "assets/scene-BpJi3FyB.js": "e4b411c66c9b3cfc8b37812796d35240287a48d9924fb4894dd2c8e2e8f5acf3",
+    "assets/scene-CKRjyjsm.js": "4b1582895481965ae948968bb6fe8c83dbfbbf8f48e935e2a76807e0313af3d2",
+    "assets/town-otter-carrying-CNTvBDdk.png": "d6be3fed1841369bded5be6cfe96d1d7fd827337a3d431bb5c33f9859ebfa951",
+    "assets/town-otter-giving-C4wtqVhT.png": "e7abce2ee43d98296f984c226946d602f15dd7498fe364f35a18bb6f1762a9f7",
+    "assets/town-otter-idle-BshfulWh.png": "4638608833dec37cfc9eb5d682459f748833763eeb81bef8023db0f27dfd0fbf",
+    "assets/town-otter-receiving-hjH-v6Y1.png": "1147d0accc260d1c987b06cdcba520f3e45633c09847249392a8431427b9ca23",
+    "assets/town-pokomoko-carrying-B6igduKw.png": "affa4aedfce753b3aa38a0612d750df83c793419728f2bd565eeda27da0ad6e7",
+    "assets/town-pokomoko-giving-BOi7RcKv.png": "05fa8eb9665ba78747be83472a1fa1b8fd76299b8dd0fbb7a97cc3eaae2fca1d",
+    "assets/town-pokomoko-idle-hYR2u8GP.png": "c4993e7a9925eba2ce08fd0b7ebda39bb5c0bffbd8495b9166f5e6871e1c2790",
+    "assets/town-pokomoko-receiving-CKZT-N1L.png": "59bca099076cf22084eedc84603ee41e6f4efcf34c4c84f9e22ff0a0cdb9752d",
+    "assets/town-prop-bench-FdKjOSai.png": "4340e1f5b9690bd1f4721dbc6e044e1735d48bd71c1b05b5f63ed91d6ae5c080",
+    "assets/town-prop-flowers-BOUxk4Bw.png": "70a982e838e88474df186c11e243bf975fcc78532499e73862a32c7f0c49b651",
+    "assets/town-prop-home-B1P8AAtr.png": "270a99763703b8ef9bd8db8eade0dcdec8780a7ed303a9a65a310ec3bfb6a79f",
+    "assets/town-prop-tree-Yw3JP1Jo.png": "a8517bf33316a154945fd36f6f2758fe3a00b18f6495a548adfb3bda1ce60113",
+    "assets/town-rabbit-carrying-RfQ1w-aH.png": "02c93d03e0a6862e4ccc5fdb00e46f53fc5547a552947dacc8ec42bfb112ed65",
+    "assets/town-rabbit-giving-CnJ9JmwQ.png": "462f539c144edb6fa256710c831ad19b8724c437c0b1455e02d31ae1bdba73b4",
+    "assets/town-rabbit-idle-Bh01hjGD.png": "bde9855e68cbf8c1c3fbfdce92b761e41e27383fa2206fdf3f31f26fa5275344",
+    "assets/town-rabbit-receiving-DUoJoWgV.png": "b15c570189e2b6eab40818817861962a09f780b1373d8374e8fa4375f19f0832",
+    "assets/useGardenTime-hvwMA9lq.js": "34f26cddf522e5e1e15ac61877b1c9a773ef60be500d7941d07558468a55a805",
+    "assets/utils-B-dksMZM.js": "c7b843bc2bba461110e5ddf916d9c40180a383804ce73658730ec46e5196d2fd",
+    "assets/zen-maru-gothic-black-DnteofP1.woff2": "e3266aca5e0a680e2cc1e4fbb9d4320f6dfee22c11525b9d0e1f7acd56b02a55",
+    "fonts/NotoSansJP-Japanese.woff2": "34e66dbbac2ded91b36d9ba6154573a4e9576842559e466cd1fdb84370cb45a3",
+    "fonts/NotoSansJP-Regular.otf": "c2f3b4d463500a2ddcd3849cded1fceeb9fd6d1c32e6cbecd568453ba50fc68f",
+    "fonts/NotoSansJP.woff2": "539b381a6e0a5a49d299867d9ab722ad7e41d01f07bbcb6bed4518b63f8d4b0a",
+    "icons/apple-touch-icon.png": "724e49b978468741ec8f2dee5a00def26d671ba463453f84a8c50c249364ac11",
+    "icons/favicon-32.png": "73189d40ecfeb2e31c129870b6515a05c11895b86219fc2ddac37d796b013446",
+    "icons/icon-192.png": "ffa0a900a780e0705653222f351724ff2492dfe40d9204d61d7ad7792b00b3ef",
+    "icons/icon-512.png": "f214ae4c26ae2bc1b9f0bea16f7811b202077a4d46cbc1301e3e3f91276ad9da",
+    "icons/icon-maskable-192.png": "ffa0a900a780e0705653222f351724ff2492dfe40d9204d61d7ad7792b00b3ef",
+    "icons/icon-maskable-512.png": "f214ae4c26ae2bc1b9f0bea16f7811b202077a4d46cbc1301e3e3f91276ad9da",
+    "ikimono/0-1.webp": "6e17ecaa5504ff8249e5f9129644f6abb10d75deea06d3a9e8d19e6bafa3efa4",
+    "ikimono/0-2.webp": "ffb392499691ed94295f26f5edd367ca9794c8731a55a8d981559a23a4be2f97",
+    "ikimono/0-3.webp": "c942d64bf2135f67fa042f5214516e57f302c111af8cd2adaacb786cc901959a",
+    "ikimono/1-1.webp": "6f9f343439d2f11d29b271321ca2b16062309ca12aaa5c0fb3e135c3e22cf0d3",
+    "ikimono/1-2.webp": "7b7f6581b3d8b9cd6b3acb4578805cc09f90682a1f1262e06cbd634d1020bd69",
+    "ikimono/1-3.webp": "1eaf7d4fe203654f4748603af16346144a742b51e31d4a661fe257699a39f569",
+    "ikimono/2-1.webp": "6008b85651c8ffb7ae506ff53dc8d6ca80ea4582cb16c170e6b0f80d09edf590",
+    "ikimono/2-2.webp": "50981e44b30fd6a19f645418a24cd5eede5c5514b23ebb9dc890be931bad9adf",
+    "ikimono/2-3.webp": "1bec305e07e22e690022b22229318e7392be3b02d6c1ead7b2d4701e518f2421",
+    "ikimono/3-1.webp": "f082e7bb85bdf4fe6d605bd779848cbcb35f763c27f30809aaf251d1acb33a54",
+    "ikimono/3-2.webp": "35c19ab1f385ada73bd3c3bb1c709870e6a5670a61b1fff0b698ebe451d07991",
+    "ikimono/3-3.webp": "76ffe75a7d84494e3edc4db617ee2e54d93bbb02e69f82a8f4320179ccf02595",
+    "ikimono/4-1.webp": "6f32026280134a5e915b6a4103416fb5ddf594bbda6ddbf8791b7eac310ac5d9",
+    "ikimono/4-2.webp": "2dd61bf84420d850aed2bcefd32a094d8deed88e9aa2678e55ae401c9749dbdb",
+    "ikimono/4-3.webp": "80c1ab09c8e18655e5c9bab65f6cad81e4dbf51836bda249ac5dea3ca38ac503",
+    "ikimono/5-1.webp": "d58f9f7031e25b0d017552676ce16a59aa165e8bb5e7ad7a14ba224b4ed07efa",
+    "ikimono/5-2.webp": "5c27dffbe2fb5e1a9052bc835a4cad9ae39810ac244bc749b9397d2a8acc6c0f",
+    "ikimono/5-3.webp": "a1bd69372312f66c393dc9f167c6657af5d3e5adcdfd8a14cb4e7a72ef8336aa",
+    "ikimono/6-1.webp": "a0de35d28429821d3ce24afa25ce7d1f00d19ec1923805c8e114e2a7e62eaf7d",
+    "ikimono/6-2.webp": "11ac8b5ad043dfbe628809c705d0521c8b70b33ad073d9bc0c0053b9c9e015c8",
+    "ikimono/6-3.webp": "1ada091a861dd01e87dfb86b8d4c7e2483a1807810436f28812a2c44f2cbd8f6",
+    "ikimono/7-1.webp": "d8dfa91fbf5bd1d89c53f7803f78d00dcd86581e711abbfafd6f03831fd6a188",
+    "ikimono/7-2.webp": "991215ab59d39d944aad3b8b9e16ccc30472c9e2364f603a57914919ea518301",
+    "ikimono/7-3.webp": "4298f18ad748728fc3ce06be86f43dc8b8481ca31847ed05ced243689eaa8a67",
+    "ikimono/8-1.webp": "683ee1b25a0daeff7d39f54c53179c69b5e2e4b18df7845e76d757b795ee454c",
+    "ikimono/8-2.webp": "631d9a4bcf8889e029990d8a7d31576dcb54810a522ff352720d9b52f0f3a69a",
+    "ikimono/8-3.webp": "1c4a1522563f27e7799dd7659ccd802d5dd45f63f773611040e14c9a849f096c",
+    "ikimono/9-1.webp": "82200a9764c82295a8c5c7766b3fd640d6c03360e081b858bbd41bff65ab7026",
+    "ikimono/9-2.webp": "b8f8abf4f9f4abc096ef7b8a2026b88f6e563911c21cc3873c0d9faeb81c623d",
+    "ikimono/9-3.webp": "565beffc5578b79331d21eef0f13af8d96079c88b0c3d3ea7ccc39d78acafd36",
+    "index.html": "0107de82af192986c3dcdba8eee117c333afc036073c58d220d15537010f408f",
+    "manifest.json": "d3d0efe57ed2165b56625c89c39a4c19759f10c1196c664ac7d5beb050194cef",
+    "sounds/bgm_menu.mp3": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sounds/bgm_study.mp3": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sounds/clear.mp3": "d55fdb2be713093eaba2923038c0f5ea46afd59746cbb4b3f0144df14cf06206",
+    "sounds/correct.mp3": "1cace7ca4862c4b7e72719428a4bbf4e22bfee29b30bf3e743db3a6558534704",
+    "sounds/incorrect.mp3": "efa8df6ae4841704f07b15bb48f2efede2f0cabedcac3118d6cb0c7ddc6eec4a",
+    "sounds/level_up.mp3": "0bf7cfbe918d44ffb5e591a0aa3cf880d2d9474ecba77ec11561fbcb28d91705",
+    "sounds/start.mp3": "f018b912b2acbc0295c49e3332974a6f252b2570e2eb2eb577ddc52cefe51ae8",
+    "sounds/step.mp3": "1ad1175c08f4b65a430cd8ffc5eeb3c0850f5089e31b9793367860ceaceb6131",
+    "sounds/tap.mp3": "98b7bc75fe330840d2f2924b72ee36b7a8f0c5115599087563e25c4789b3ff82",
+    "sw.js": "3e410a8a0d4e3e8814cb1a165d9ce5192b1fc47ee6708ecb9e47cdd7554b40d5",
+    "version.json": "b34325adfb120bbe341b6908ef3f61823d1cff913664de84785c5f2c4d43a7e9",
+    "workbox-1d305bb8.js": "633cf55bf3565defde45f562db4253059d9201d2d24cacb3246d2704cc502196"
+  },
+  "delivery": {
+    "version": "development-local:91a534d2-9e5b-4352-bcc4-1f7008d02e30",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": false,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": false,
+        "discovery": false,
+        "fantasy": false,
+        "candidate": "island-life-v1",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "fixtureModuleHash": "b2a1e068324857cedb539416eba8a5a9c72af3447c672a73773c1615c5ddcf4c",
+  "sourceEnd": {
+    "src/pages/Study.tsx": "31f37bd4992f769f04aa70a6f7304aaf734c70edb617394e8354b27a41f2c6ea",
+    "src/hooks/useStudySession.ts": "523ff3ffcdf91d54f83617f29d0246aeb95b2c665b15c89a28ff94f764ff4f95",
+    "src/domain/math/studyPresentation.ts": "4d7962185ba203ec7e604b9ef3da894f0f61db3277d1fc67cb6d15b783dd8392",
+    "src/domain/test/testSet.ts": "7b9c2a7fc7c7df7327a44ab19da46707fa88a70fb4048b318b47ab01ccd79c10",
+    "src/domain/finishCoverage.ts": "2926fb1567951f3c0d9c6d3407f6873e746b5dbfda6bd436da59ce69de42cb7a",
+    "src/domain/finishRecovery.ts": "293b5bf38a78e02cd4e487177aac1452b7e3bd273f0c507a9332cccef64f9546",
+    "src/domain/finishTest.ts": "db378e233fd703cba2c3335b40770206fc1f96f8c9792825d2b4dbb253633d62",
+    "src/domain/finishTestRepository.ts": "a5f43405a5461c3af20b99857700d262e643bb5ab759e491f968681163ca1b55",
+    "src/domain/learningAttemptWriter.ts": "e3efd755a5b5a850f908de0dacde5951b1a3f839631106a4c1867aef362b713c",
+    "src/pages/StudyLayout.tsx": "d9013386bca53d5b2586713d7922a9d212cbd51e749f780884c80998a7b7bb8a",
+    "src/components/finish/FinishChallenge.tsx": "025fab411974ffbdbd16f1874a47ce542faaafb851636867039ea0718467b6bb",
+    "src/components/finish/FinishChallenge.css": "9efbfa2f6272c67a62acdac1e967506390a14ba06bde54122413cbdb55f92bf2",
+    "src/domain/learning/evaluationContacts.ts": "eec5bb0091998b4829538da90e9c3164a443be2b8d9850a235fe0d5fa199d162",
+    "src/domain/learning/pilotRepository.ts": "1747d41613a74dd83e587bf1ee60764abdd1236fea24a0c58d67021afe78c310",
+    "src/domain/learning/progressRepository.ts": "c8ebd0f8fe62a49b865ec813b3cd55551a94e30e550a709f612e94ea4d0e2322",
+    "src/domain/learning/progressView.ts": "bad8d97c110c3bef8b8a84397f6cdb79162c62bd22c437419c8506ff90e5ff7b",
+    "src/domain/types.ts": "da06e598186daede34c04e0e1e499548ece9c729315a7eb3c91daa976475eae9",
+    "src/components/finish/finishNavigation.ts": "05b01787a23530e35166b4fec65b2e29763836a4e4d9de7ebfa9e08f972d808d",
+    "src/domain/learning/attemptContext.ts": "0304947ac0f7be95ad9c31eac39b1e3d5f6c5c52d1a97c08de36f4831fe6c0fd",
+    "src/hooks/useHissanSession.ts": "8b1a57e183c41af1d7fe9dc44175857998e5e76f849d6f6b05fa83af2208dcfe",
+    "src/domain/finishRecoveryPractice.ts": "3e97b00d6510a1a72d8f3a0f769d64c1ce470590ae43d8213d4748863ccf72ac"
+  },
+  "distEnd": {
+    "_headers": "b25111b3e4371fd5ef7367f726e14b205d2135cdef9c3a61dfe376915fc48bc7",
+    "assets/Explore-C0qQ-HMA.css": "614ef1d41903a85145bdb81a534cf8b9172245b930d9bf6fbcdd3c2ac45672b6",
+    "assets/Explore-DBd2Sf2Q.js": "36cff8c72092f220bc9162dba0a1c0218d428f4f0a9bd7ed4aa8f89ba1d4c992",
+    "assets/GrowingIsland-BfSsx_3Z.css": "33bd202135b0adcfb855de6aca21f0ea5bcbbcf218fb473f8f71ca5b4383e104",
+    "assets/GrowingIsland-DbzY8Njw.js": "c7582bb569f844cb089df39763cee35f3920cce6f14316ff91a9a3ef1972cb78",
+    "assets/GrowingWorld-DrzZQG4-.js": "6343fc0c97ec215a8a051fe1b8a0754971acac2cc817a88b5ffea3b606aecd1f",
+    "assets/HomeJourneyPreview-C5E7gYAM.js": "33d08519b4380b5a3ee0518bde8b2c5e2b0176a4b2efe85a5774c6b892bff240",
+    "assets/Island-BI3kj2Eq.js": "34126a81ac2f8d6aa764b937edf6187815e9bcc9d3846a7fc8de3e7ab9ed05e8",
+    "assets/Island-BQ8Dihyc.css": "92d13d0bc5a3627f22dbe52e3b6d01fb35b521f727867e8ee7221b79dba7b861",
+    "assets/Island-DIHcNOio.js": "9758042c1e513dee94d9c9582c397399436fb4d90afcff9a07fa6a67579ad1ad",
+    "assets/Island-DVCPJhVi.css": "7effcae9096eea8e175c38e3e9b1e65c1cb367b7cb455e770c9052424af9463b",
+    "assets/IslandAlbum-BId0MGKo.js": "e2f3de989012b6112856540e65591ea33b67a237d40d956f778c0a959642db0a",
+    "assets/IslandCustomization-BKdIHMdQ.css": "c6be452db48d1252ad7d44c80e1ae91d816cc687e973ece5e4a0705029279b7c",
+    "assets/IslandCustomization-C_84UUwS.js": "77017aea9eecb2ddd06fd9874b05aba8d036891142b57d94ecd61fe5eadb2056",
+    "assets/IslandDiscoveryGuide-DENtFkr1.js": "31558f3e3c02f880c4ebd1a0944763c114ea84653c8c3146363ca8a29617f401",
+    "assets/IslandDiscoveryGuide-DpYKYTkf.css": "df0da5378540a390cf22df84064aad6d78f7308b7e41545386f947debc879fd1",
+    "assets/IslandExperiencePanel-Cn-0xXmE.css": "631628f0fa02be095c8e40be1c1a6447fea38243a5dafa00599203f2a0d6e60d",
+    "assets/IslandExperiencePanel-CoxWST9P.js": "892cfe56b15dd9da9e8cfe0caa4651d850e201ca60aa2e4f1fb9d8dfbcf1a1d1",
+    "assets/IslandExpression-BAzaKUz5.css": "b42acb6b645c555f17daf024586f55c1b8232ef1bb7f9fa61f1900e0b1f60039",
+    "assets/IslandExpression-BRSRNiTI.js": "b9b9f5703640018572878422a3348f97bf2326b2241539f6a2ae2ddbf7d07bb2",
+    "assets/IslandFurniture-7NZ9dhCz.css": "4e5e8f3f21d5e7c6ce27c54a0b10efb181b925cab20afb4b5369dfb703e4d160",
+    "assets/IslandFurniture-O5LQ968z.js": "0cb69b095884079879343415583cebf72b7865ca685b176a41685ee30a607b4b",
+    "assets/IslandLife-hubdKn_-.js": "ee5e4c54c68ba033f5e75d8737cbc08088260e8cb6bf02d9a9e73b934579c764",
+    "assets/IslandLife-twUpqDIC.css": "f3d217e3120478aebd44b646c73263ddeced1564162865d869499b774d4ed862",
+    "assets/IslandOnboarding-sXv2z6pV.js": "830ef1dd1ed2dc5f672b38495085346d6caab333c58facb21be3a4f87fb138cf",
+    "assets/IslandPhotos-Dz-XgAxv.css": "eab57c2e6e6821affcf1b305338943dfd021ea1a4bf62a2012f48f86d5aece9b",
+    "assets/IslandPhotos-DzUD_tNf.js": "bdd53375f7e6856b270f9a53395deef1b7904d9c138d8b80565c1c3fd730a97b",
+    "assets/IslandSharedMemories-BEVZEpgQ.js": "50f2b8b452d47424d8d2f86a1944d124ff009fabb0c647a179ddda9348c83e75",
+    "assets/IslandSharedMemories-CxXlpls3.css": "cb2656902dd34e4712874afe99cc00ff6eea0dd61eaff21076e05f6f3c5bdd7c",
+    "assets/IslandStage-BctzDSoi.css": "8e7b7c3dd926fd870d25e27a4720e952c311f2f1dd33a034257aea961ddc7395",
+    "assets/IslandStage-CIbjIO5z.js": "cee4a8f7c349c9c3555477e32f95e857b7500e6308e14ea50abc4f6e3cdaccb4",
+    "assets/IslandStage-CWaO1avh.js": "740d3535068185044d2aaa3115e858386d0c6b9b1dfba8ddcf0962af3a7171ec",
+    "assets/IslandWelcome-BJp8Sa-m.css": "e4fef7c767dd064d64625f5f9713b9d0fa395eeed78b0ddf3ceeda603d557965",
+    "assets/IslandWelcome-fwNv6CJ4.js": "549064b31e379e47edf702b21d2fc95c0749ac0ae869b863a88a7fc88037156e",
+    "assets/IslandWorkReplay-CjeJGB39.js": "0f091f5ae8f7d94af47b92a282c2f31e21cbb39c68ee29c41a4d6a4e7a0d1310",
+    "assets/IslandWorkshop-KxE1cutE.css": "8600b3be6bf042573b190d1802b9a7709d121eda223072518f46a5aeb6445039",
+    "assets/IslandWorkshop-tY4_hqxC.js": "e7327bf6e776bc3db23082b597c32c2ce8f633161ba4a1b302bbfd793b5d6571",
+    "assets/Learn-COOjZeB0.js": "73c905c2eaf6687783e1a20733259573bf694c3acd0e341eafd78679517500ab",
+    "assets/LifeMemories-Cia3-2wk.css": "793c8b3196d013857e5341bad5e4baf16949dddb5dc507f5144d7fc51d96e5f0",
+    "assets/LifeMemories-Dqy9C7t3.js": "8930ee3147ceba74cffe2793cf83e43bf1554b43008627ce562dc0f7e968cf6a",
+    "assets/LifeObservation-BXWm1IVc.js": "bf2bdab3714b17a4e1be980f668425ed27fff1a41146e9a893769bcdb1ba7989",
+    "assets/LifeResidentPortrait-q0u-n5Tg.js": "3de5f1c35686d2b58e1eefb8f27778376d544902922b087f10e6f7b3d4372a9b",
+    "assets/LifeWorld-CxpCd2kv.js": "b598d5df9a091e1982d9dc3642537e27adfdc6b15840725486a6c6d3f729d1c2",
+    "assets/NatureTown-BM-2fTUO.js": "208ceb88497a676baaa584910b4feb057feec02114f969ab9c070358b57baef5",
+    "assets/NatureTown-CusrCJWB.css": "b87b747533e6826dbcdaa227404f480699f05dc4b77527d8c25f0e86a7f8b61a",
+    "assets/NotoSansJP-C_ziqpoc.woff2": "539b381a6e0a5a49d299867d9ab722ad7e41d01f07bbcb6bed4518b63f8d4b0a",
+    "assets/PokomokoLearningActor-Bvl-jrAl.js": "a7af8fff168f0ed7e713e2b10ff485bd227016c6abbef024a8d0853b27eaae84",
+    "assets/RoundedBoxGeometry-Cuyrp3Vy.js": "9225541f57b253aea8cd97f0f61335e18080c551616f35e777dc94d9ee808755",
+    "assets/Stats-CXUvh5Ta.css": "d6b106b1a20e90a03514632b49e9a0e3f401116fdf0bf28fdca2df1433a5894b",
+    "assets/Stats-CyDW1JMn.js": "ce4b76f70c0f3b1542fa3e0886ab5749db9a3b6e1f43aaf097db0e188988038f",
+    "assets/audio-DwtSHwBT.js": "e5eca991f0dda6f43a7688985f25d4603863804c42ab5ab449b3366a49269f15",
+    "assets/basis_transcoder-VXdx5NbI.wasm": "6cf17dc889352c42e9acf8897107978d127005fe3386c36a0e3845e27967630a",
+    "assets/basis_transcoder-o4Hde_L7.js": "8478b5b6d6b74e7d3082b89f6417321d8d1dc0307f2b30d4484bb11b441696a1",
+    "assets/catalog-C9jTiRjH.png": "f441761385a6b0544608ba29fde251ef823c6c9a8135b5cf603f36e3bb74b1dc",
+    "assets/catalog-MsWF2Ofo.png": "984f26c3976e496a9435efd6acbdfd74edd0e916bc833790f9c3cfcf5f8b0e67",
+    "assets/charts-B2Phfr4C.js": "46ce78264981534b06a93487adbc72b56c7b66e2475136f19a5ccccebbc45207",
+    "assets/cottage-Ct7DuouZ.js": "7a571973e6daa1f0263227e5fce268002897a4d7af78b929247a29b39726478e",
+    "assets/data-CYRvWfdS.js": "bb98c417b94bf024baa98d140812d6c9f146dc15dbf086192faeda0b57299bcf",
+    "assets/dela-gothic-one-tzEOUe9y.woff2": "09d52d907874e6cd566428b856b2e52ef64d4f068f3367c39eb400d30b286b98",
+    "assets/explore/firefly-flower/scene-dew-trail-stumble-bloom-pokko-v5.webp": "c7ffa99c2baf167e86f4e679b39ee79bbb541b63f3ec1929e8c6e92a46ad494b",
+    "assets/explore/firefly-flower/scene-light-path-stumble-bloom-pokko-v5.webp": "9dad90c337bd896e2650727c7da5f29b205a9d429ef806f22beb1fc9a7b30842",
+    "assets/explore/firefly-flower/scene-ringing-petals-stumble-bloom-pokko-v5.webp": "3a2fff92eff04ff7b24e8c714f829fbbedb3f25daa7f38d9334a19783b933120",
+    "assets/explore/firefly-flower/scene-waiting-stumble-bloom-pokko-v5.webp": "98b22e52e1f018472cdd98c61db3a484dfa8d9d49564872eb940a37cf43fe92a",
+    "assets/explore/firefly-flower/scene-warm-bud-stumble-bloom-pokko-v5.webp": "61c8efe79508ee7189c6b96e4eba1c643f21342130c6d47488556ceb1b121d3b",
+    "assets/explore/light-bridge/scene-complete-leaf-carry-bloom-pokko-v7.webp": "67bd079655029f834915666808b33f551379aa77b93c9756c035c7fea8435abd",
+    "assets/explore/light-bridge/scene-crossed-leaf-carry-bloom-pokko-v7.webp": "d43c50ac7a2d51645de226379d71b0d0511e2e9d61ccdd7df4c4c8b2232a2539",
+    "assets/explore/light-bridge/scene-idle-leaf-carry-bloom-pokko-v7.webp": "72788b9167d8679e446dab71131fce298924a02bddfa95988c61e77e288c8008",
+    "assets/explore/opening-root-pull-v1/payoff.webp": "0768d8024d9d4bdb795afb3e4864011a3a17b35750c6a7c53f77791f9a2f1c5a",
+    "assets/explore/opening-root-pull-v1/pull-one.webp": "8672d32b04c1f465799e676727bbe00d4033bd31349f7b22e24638ae8e08c7a3",
+    "assets/explore/opening-root-pull-v1/pull-two.webp": "62f27c1e412e6349e2eab02bbbdfa0cb6584434404c1c977c2cab0d713fef0d3",
+    "assets/explore/opening-root-pull-v1/ready.webp": "11bd67c94bbe3b439dd2804bc6ae1448ef7fa730eb43c3849b2dbcf50a33fe77",
+    "assets/explore/opening-root-pull-v2/payoff-dirt-hat.webp": "cc58a385620bed3d231a81564cdaf3ac426c1b99ce45c5811d037b851358295e",
+    "assets/explore/opening-root-pull-v2/payoff-leaf-hat.webp": "63e4a65f763aa852fbef84e8a4a34a5348241ebe1ad7f3cc2321e99c2a9b071a",
+    "assets/explore/opening-root-pull-v2/pull-one.webp": "ac1da3606816ae55a77b6295f348ba7306c615e2d2aed64a7f77e224e98fe694",
+    "assets/explore/opening-root-pull-v2/pull-two.webp": "bc258578b5741d1ff8c9e83cba1c3a1c1efde58de4f22f7f9c0a515e1a9865c0",
+    "assets/explore/opening-root-pull-v2/ready.webp": "8dc7b3806aa8ad666806a3992e05c0ea497f95a51e4f44cc377e56da7bd74f40",
+    "assets/explore/opening-snap-root-carry-bloom-v3/scene-dig-one.webp": "5dc23f200e889b623cb67dc4e8711584bf827f6a45d3b188aa0f1c6d1d4f962c",
+    "assets/explore/opening-snap-root-carry-bloom-v3/scene-dig-two.webp": "5f0f8d1c444346dd65af43afce41664201ad9b48ffc7484353ef8e6dc6bee81c",
+    "assets/explore/opening-snap-root-carry-bloom-v3/scene-popped.webp": "bf16192f0af349861e876bc2b3605efa0cdcb94e510d47b67728b655df4e1b27",
+    "assets/explore/opening-snap-root-carry-bloom-v3/scene-ready.webp": "fe44f1b7c6e36c4c96f9fe7bd9e43899ea936cd90af9fcec44c70eea5700edad",
+    "assets/explore/rapid-trail/scene-run-pop-v1.webp": "2270f0e9833ebc3772a9338d6699a5334d8f2bfdeaa697edcb84af198e454a92",
+    "assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.webp": "eacf0065761eb31e41d82abe7728a2d1251bcff7250b00c8e5dcee552bf2c5aa",
+    "assets/explore/root-tangle/scene-open-carry-bloom-pokko-v7.webp": "a1aa7436e4c89c81434cc081a445c5faa121a0036771dfe6b4999cfd276c8128",
+    "assets/explore/root-tangle/scene-tangled-carry-bloom-pokko-v7.webp": "d966ab2a35828569a6575ebc26dbc3ec9b7cab21da05fcf180bdbdc78c5dc477",
+    "assets/explore/route-choice/scene-fork-three-dew-path-pokko-v2.webp": "0e9c9452d938f119fae58489414ca166c0684b08a703bcad53aa8074abe2c0ca",
+    "assets/explore/route-choice/scene-fork-two-dew-path-pokko-v2.webp": "7ae1478f5814210fa96964ad1fb40a4b5f11b453ca5c945bcdf27cf93fd9b44e",
+    "assets/far-BNsdfYHM.glb": "df35e7344b78fbabeca7d9a26ff195f9a50536c8c1022a3e09afbcbd462a9118",
+    "assets/far-CbQUffpN.glb": "d5ffe92d1c8a9317950d92e257758e6abb872d3ddae94dfc07508499c6c40fb0",
+    "assets/far-Zj6wZqfp.glb": "b3fb7f25a3a022c5d4d9182ff7beecc3cf578a767022f72915c979b3b068e86c",
+    "assets/far-geometry-B5GXTTw0.glb": "1f90138a896c3a10bafd0ef363ad1c86d8b2bab3ed1a95655154cb23667f927b",
+    "assets/far-geometry-BV4Tmqez.glb": "a7a3e730579579c731c033ae65cb67f5207c12a6eaf8d523d6c8313c249779ac",
+    "assets/far-geometry-C2nCL94K.glb": "29aa6bcdda5dc60bb39b5e0ff0fda50b5508492eca3aba086f5fa75dc1019c52",
+    "assets/far-geometry-CUf7iENq.glb": "548edd12d215b454d16da0dcd17f640585bff379eb6946775ef3e37a64f240f4",
+    "assets/far-geometry-DTfZ_trK.glb": "1256e9b72ea8e323fcc20160a857caeb50456d9a9ee7e360870af83ceac19bbd",
+    "assets/far-geometry-Di-gBAev.glb": "faacdfff28bef2ecf1e8e04785df3f7f3bd8b048f6c73dfc7d588c51878b55e2",
+    "assets/far-iUTsXLLh.glb": "735a102b02ff3c51028d4c40f5be9251141c9cd2bfd1ae1368a1b6acc85dae4d",
+    "assets/feature-DTknTrpN.js": "fa1c1795c0a73ec3851c475849164a406ae8e4812452b4f867ca5d1d6b4f6dcc",
+    "assets/flower-bloom-original-Bhc8ZRS8.png": "0480292c0370a2affcc0eefb047c353b3823784614e6ab72aaaa8146a066f6b4",
+    "assets/footprint-Bvl4RY7E.js": "eadf6dff73c97ce11455ab44561a7c7cdbaf3b089822409017a58789cfdb4020",
+    "assets/friendRig-SiBKz7cn.js": "6ef25415d92126eedb11f4a18aa5f368ad4db5ae10893105aedcd3b82000bc44",
+    "assets/geometry-epx0TtMF.js": "09800bbba2b39c82bd2fc643c1ac870da0a99d1cba32c113279609da573b3727",
+    "assets/homeInteriorCamera-C-NvE0v2.js": "8ea246884dc86787479c806287e0b27f190a03bc068e8dcc766176394ae01abb",
+    "assets/homeJourney-BkBsv3V2.js": "7b4ff219493f87e641bbf5f691b826518685d6da4ce4bbcdedc0eeda7dd3c347",
+    "assets/icons-ii3ss8WH.js": "61898e3c05c5620f3915fa8a646a2ac24e7720d88bd807cfdd0d6a7e7075313c",
+    "assets/index-C1EeiRfU.js": "9262bb3d94442acd9882ffadf1579ef4d54802732ead541118bab7ae9628a928",
+    "assets/index-CbJJ8DlU.css": "c45ba07267bac5ebb0ce47eceb1544bcea4b4835520258e2c8cdf97c0c02f508",
+    "assets/islandFurniturePlacement-DW-vUMOn.js": "5946ce5ca0b79067cb039da6f25ef85a2c2cf1bff67f87396eac1d0b0e7c2322",
+    "assets/itemGeometry-B1qc9Ub4.js": "4577e042628ddebdce377240f435cefe728173520e35e8a11ad6d70c5c145782",
+    "assets/life-observation-DvQvywiD.css": "ce89affec52edca8b227e2c883f730a560c06da64d6a38ec26812ff1652ad0c1",
+    "assets/life-observation-SkGEknic.js": "a63536261a3cd7dd1ad6df75099b5f19d4ae0eb919efa0d5c73d1215178525e7",
+    "assets/lifeUpdate.worker-Dhu9JuL8.js": "b94942b80d3acabcda4f157ddba6d4416538bb18f00c142e0d0a4ef739dfabbb",
+    "assets/lighting-DDMNzMaD.js": "0844db00ecd1863799ba5bad84be448ef8821d3431b038d58c100d36ad2fb015",
+    "assets/motion-iLBaTeAD.js": "2eafa186a77ed80ef3a1646d9c0b533cc4c1e3a35bd1d9f572ad4fadeb9c8861",
+    "assets/near-3yaftuce.glb": "850e16d8c2daf5a34bea05cccb3fb8a54c7bf7a75649fe931338e7adceeabf98",
+    "assets/near-7GK7mDBY.glb": "0a294d828a86d00efa294ec8b8fb2652c1e903cb7d3f4450a54f80430cd38092",
+    "assets/near-B3PvBOT3.glb": "9a5409afd83b654a41d2cbe46bbc81a0b69c49b7a9779397717b2fea96d9e701",
+    "assets/near-B8znkHvM.glb": "88e57665916f04a737f686e1a91796e1faceb2b09bd95531045e5fe5472d49c8",
+    "assets/near-Bt9PwG61.glb": "7d9d90db4cff5698b3262fc3764ce9fba94bf482189135b020fc25c060db1197",
+    "assets/near-CMx7NApC.glb": "efc003a7071c2a2d658c7eab31c23427b62f6040faaf563f4c563d7ec27647bf",
+    "assets/near-C_b32qsb.glb": "db5459bb00a9628b9da7d383a352bf2dbcba01713be759a6fcadd3db0848e6cb",
+    "assets/near-CuR2H6Uc.glb": "925db3139e79743233d94d034bd7996e038057bccb44f6dfcee65de83c85a310",
+    "assets/near-DoEuBhay.glb": "0faacb1773b8d904b05729ad0987e33a4fb50bc2e244dd717a4ca3b0afe62b60",
+    "assets/near-l6ZZxCWq.glb": "8d2512d5422fed515ea27e58bb88e8baaf3a5beccb4692b72d720684ad109b4f",
+    "assets/pdf-l0sNRNKZ.js": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "assets/pokomoko-learning-poses-B-Jfr41M.webp": "899524cf5319161fb77913a771216c7ad99e271ca00c463892d6cf22af66f78c",
+    "assets/pokomoko-original-8wLdjUXI.png": "e2a975cf0f3880cbd439630beebb56debdf9070cce0e5ac56995920a9b8a8328",
+    "assets/random-BDr3YF07.js": "0422fadc00e70b6d288545874645af73aa29218e5635ae4a3fecb1ed6fed31fd",
+    "assets/react-DcHpdqMy.js": "dd48938f099158343f1f43ca5363f3b5ec5be3d5ae4fd20186dbaed3c5782ab3",
+    "assets/repository-CvV7cgGY.js": "0286ef47f9b6b5f13484d9c03befd32a5ea662d744ace613cb3d65eec4277ec9",
+    "assets/repository-DEDlnEV5.js": "479563981255ef7b7874d264d53cc4e3f7d52b92ffc1f9b93201d86c0ddabdf1",
+    "assets/repository-DQpghpyK.js": "5e1f32c695b3be4ab1fa38c1ab209804127e0e359d9c485b8df31e3ed6b72026",
+    "assets/residentInterest-DdCMgwVi.js": "f7997bdb14024d5fe9e6870a6d4e1cc2e7af5a45459a1ea289a5dc48b9c7e9e3",
+    "assets/residentRig-hb5XFxdC.js": "73444374bc4971f014fcb48e631caf28f22e8bed9f18b0e7d64a9be2acb2c269",
+    "assets/room-CuEudZaC.js": "4a0f5b90b810efdb408ff2685ea666d728485676e94816276f2f6699c20b26cf",
+    "assets/runtime-CDef-3zr.js": "98e11bc7f4f49d89c8fedc1d93f1714b3c240f5deb6dd79071d9d78f4ca17dbf",
+    "assets/runtimeAssets-BiWD2iD7.js": "81d6a9ea75068f721cfacadd9aec9a1e44e2ad5aed08378d92981643b9705f2f",
+    "assets/scene-BpJi3FyB.js": "e4b411c66c9b3cfc8b37812796d35240287a48d9924fb4894dd2c8e2e8f5acf3",
+    "assets/scene-CKRjyjsm.js": "4b1582895481965ae948968bb6fe8c83dbfbbf8f48e935e2a76807e0313af3d2",
+    "assets/town-otter-carrying-CNTvBDdk.png": "d6be3fed1841369bded5be6cfe96d1d7fd827337a3d431bb5c33f9859ebfa951",
+    "assets/town-otter-giving-C4wtqVhT.png": "e7abce2ee43d98296f984c226946d602f15dd7498fe364f35a18bb6f1762a9f7",
+    "assets/town-otter-idle-BshfulWh.png": "4638608833dec37cfc9eb5d682459f748833763eeb81bef8023db0f27dfd0fbf",
+    "assets/town-otter-receiving-hjH-v6Y1.png": "1147d0accc260d1c987b06cdcba520f3e45633c09847249392a8431427b9ca23",
+    "assets/town-pokomoko-carrying-B6igduKw.png": "affa4aedfce753b3aa38a0612d750df83c793419728f2bd565eeda27da0ad6e7",
+    "assets/town-pokomoko-giving-BOi7RcKv.png": "05fa8eb9665ba78747be83472a1fa1b8fd76299b8dd0fbb7a97cc3eaae2fca1d",
+    "assets/town-pokomoko-idle-hYR2u8GP.png": "c4993e7a9925eba2ce08fd0b7ebda39bb5c0bffbd8495b9166f5e6871e1c2790",
+    "assets/town-pokomoko-receiving-CKZT-N1L.png": "59bca099076cf22084eedc84603ee41e6f4efcf34c4c84f9e22ff0a0cdb9752d",
+    "assets/town-prop-bench-FdKjOSai.png": "4340e1f5b9690bd1f4721dbc6e044e1735d48bd71c1b05b5f63ed91d6ae5c080",
+    "assets/town-prop-flowers-BOUxk4Bw.png": "70a982e838e88474df186c11e243bf975fcc78532499e73862a32c7f0c49b651",
+    "assets/town-prop-home-B1P8AAtr.png": "270a99763703b8ef9bd8db8eade0dcdec8780a7ed303a9a65a310ec3bfb6a79f",
+    "assets/town-prop-tree-Yw3JP1Jo.png": "a8517bf33316a154945fd36f6f2758fe3a00b18f6495a548adfb3bda1ce60113",
+    "assets/town-rabbit-carrying-RfQ1w-aH.png": "02c93d03e0a6862e4ccc5fdb00e46f53fc5547a552947dacc8ec42bfb112ed65",
+    "assets/town-rabbit-giving-CnJ9JmwQ.png": "462f539c144edb6fa256710c831ad19b8724c437c0b1455e02d31ae1bdba73b4",
+    "assets/town-rabbit-idle-Bh01hjGD.png": "bde9855e68cbf8c1c3fbfdce92b761e41e27383fa2206fdf3f31f26fa5275344",
+    "assets/town-rabbit-receiving-DUoJoWgV.png": "b15c570189e2b6eab40818817861962a09f780b1373d8374e8fa4375f19f0832",
+    "assets/useGardenTime-hvwMA9lq.js": "34f26cddf522e5e1e15ac61877b1c9a773ef60be500d7941d07558468a55a805",
+    "assets/utils-B-dksMZM.js": "c7b843bc2bba461110e5ddf916d9c40180a383804ce73658730ec46e5196d2fd",
+    "assets/zen-maru-gothic-black-DnteofP1.woff2": "e3266aca5e0a680e2cc1e4fbb9d4320f6dfee22c11525b9d0e1f7acd56b02a55",
+    "fonts/NotoSansJP-Japanese.woff2": "34e66dbbac2ded91b36d9ba6154573a4e9576842559e466cd1fdb84370cb45a3",
+    "fonts/NotoSansJP-Regular.otf": "c2f3b4d463500a2ddcd3849cded1fceeb9fd6d1c32e6cbecd568453ba50fc68f",
+    "fonts/NotoSansJP.woff2": "539b381a6e0a5a49d299867d9ab722ad7e41d01f07bbcb6bed4518b63f8d4b0a",
+    "icons/apple-touch-icon.png": "724e49b978468741ec8f2dee5a00def26d671ba463453f84a8c50c249364ac11",
+    "icons/favicon-32.png": "73189d40ecfeb2e31c129870b6515a05c11895b86219fc2ddac37d796b013446",
+    "icons/icon-192.png": "ffa0a900a780e0705653222f351724ff2492dfe40d9204d61d7ad7792b00b3ef",
+    "icons/icon-512.png": "f214ae4c26ae2bc1b9f0bea16f7811b202077a4d46cbc1301e3e3f91276ad9da",
+    "icons/icon-maskable-192.png": "ffa0a900a780e0705653222f351724ff2492dfe40d9204d61d7ad7792b00b3ef",
+    "icons/icon-maskable-512.png": "f214ae4c26ae2bc1b9f0bea16f7811b202077a4d46cbc1301e3e3f91276ad9da",
+    "ikimono/0-1.webp": "6e17ecaa5504ff8249e5f9129644f6abb10d75deea06d3a9e8d19e6bafa3efa4",
+    "ikimono/0-2.webp": "ffb392499691ed94295f26f5edd367ca9794c8731a55a8d981559a23a4be2f97",
+    "ikimono/0-3.webp": "c942d64bf2135f67fa042f5214516e57f302c111af8cd2adaacb786cc901959a",
+    "ikimono/1-1.webp": "6f9f343439d2f11d29b271321ca2b16062309ca12aaa5c0fb3e135c3e22cf0d3",
+    "ikimono/1-2.webp": "7b7f6581b3d8b9cd6b3acb4578805cc09f90682a1f1262e06cbd634d1020bd69",
+    "ikimono/1-3.webp": "1eaf7d4fe203654f4748603af16346144a742b51e31d4a661fe257699a39f569",
+    "ikimono/2-1.webp": "6008b85651c8ffb7ae506ff53dc8d6ca80ea4582cb16c170e6b0f80d09edf590",
+    "ikimono/2-2.webp": "50981e44b30fd6a19f645418a24cd5eede5c5514b23ebb9dc890be931bad9adf",
+    "ikimono/2-3.webp": "1bec305e07e22e690022b22229318e7392be3b02d6c1ead7b2d4701e518f2421",
+    "ikimono/3-1.webp": "f082e7bb85bdf4fe6d605bd779848cbcb35f763c27f30809aaf251d1acb33a54",
+    "ikimono/3-2.webp": "35c19ab1f385ada73bd3c3bb1c709870e6a5670a61b1fff0b698ebe451d07991",
+    "ikimono/3-3.webp": "76ffe75a7d84494e3edc4db617ee2e54d93bbb02e69f82a8f4320179ccf02595",
+    "ikimono/4-1.webp": "6f32026280134a5e915b6a4103416fb5ddf594bbda6ddbf8791b7eac310ac5d9",
+    "ikimono/4-2.webp": "2dd61bf84420d850aed2bcefd32a094d8deed88e9aa2678e55ae401c9749dbdb",
+    "ikimono/4-3.webp": "80c1ab09c8e18655e5c9bab65f6cad81e4dbf51836bda249ac5dea3ca38ac503",
+    "ikimono/5-1.webp": "d58f9f7031e25b0d017552676ce16a59aa165e8bb5e7ad7a14ba224b4ed07efa",
+    "ikimono/5-2.webp": "5c27dffbe2fb5e1a9052bc835a4cad9ae39810ac244bc749b9397d2a8acc6c0f",
+    "ikimono/5-3.webp": "a1bd69372312f66c393dc9f167c6657af5d3e5adcdfd8a14cb4e7a72ef8336aa",
+    "ikimono/6-1.webp": "a0de35d28429821d3ce24afa25ce7d1f00d19ec1923805c8e114e2a7e62eaf7d",
+    "ikimono/6-2.webp": "11ac8b5ad043dfbe628809c705d0521c8b70b33ad073d9bc0c0053b9c9e015c8",
+    "ikimono/6-3.webp": "1ada091a861dd01e87dfb86b8d4c7e2483a1807810436f28812a2c44f2cbd8f6",
+    "ikimono/7-1.webp": "d8dfa91fbf5bd1d89c53f7803f78d00dcd86581e711abbfafd6f03831fd6a188",
+    "ikimono/7-2.webp": "991215ab59d39d944aad3b8b9e16ccc30472c9e2364f603a57914919ea518301",
+    "ikimono/7-3.webp": "4298f18ad748728fc3ce06be86f43dc8b8481ca31847ed05ced243689eaa8a67",
+    "ikimono/8-1.webp": "683ee1b25a0daeff7d39f54c53179c69b5e2e4b18df7845e76d757b795ee454c",
+    "ikimono/8-2.webp": "631d9a4bcf8889e029990d8a7d31576dcb54810a522ff352720d9b52f0f3a69a",
+    "ikimono/8-3.webp": "1c4a1522563f27e7799dd7659ccd802d5dd45f63f773611040e14c9a849f096c",
+    "ikimono/9-1.webp": "82200a9764c82295a8c5c7766b3fd640d6c03360e081b858bbd41bff65ab7026",
+    "ikimono/9-2.webp": "b8f8abf4f9f4abc096ef7b8a2026b88f6e563911c21cc3873c0d9faeb81c623d",
+    "ikimono/9-3.webp": "565beffc5578b79331d21eef0f13af8d96079c88b0c3d3ea7ccc39d78acafd36",
+    "index.html": "0107de82af192986c3dcdba8eee117c333afc036073c58d220d15537010f408f",
+    "manifest.json": "d3d0efe57ed2165b56625c89c39a4c19759f10c1196c664ac7d5beb050194cef",
+    "sounds/bgm_menu.mp3": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sounds/bgm_study.mp3": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sounds/clear.mp3": "d55fdb2be713093eaba2923038c0f5ea46afd59746cbb4b3f0144df14cf06206",
+    "sounds/correct.mp3": "1cace7ca4862c4b7e72719428a4bbf4e22bfee29b30bf3e743db3a6558534704",
+    "sounds/incorrect.mp3": "efa8df6ae4841704f07b15bb48f2efede2f0cabedcac3118d6cb0c7ddc6eec4a",
+    "sounds/level_up.mp3": "0bf7cfbe918d44ffb5e591a0aa3cf880d2d9474ecba77ec11561fbcb28d91705",
+    "sounds/start.mp3": "f018b912b2acbc0295c49e3332974a6f252b2570e2eb2eb577ddc52cefe51ae8",
+    "sounds/step.mp3": "1ad1175c08f4b65a430cd8ffc5eeb3c0850f5089e31b9793367860ceaceb6131",
+    "sounds/tap.mp3": "98b7bc75fe330840d2f2924b72ee36b7a8f0c5115599087563e25c4789b3ff82",
+    "sw.js": "3e410a8a0d4e3e8814cb1a165d9ce5192b1fc47ee6708ecb9e47cdd7554b40d5",
+    "version.json": "b34325adfb120bbe341b6908ef3f61823d1cff913664de84785c5f2c4d43a7e9",
+    "workbox-1d305bb8.js": "633cf55bf3565defde45f562db4253059d9201d2d24cacb3246d2704cc502196"
+  },
+  "distStable": true,
+  "stable": true,
+  "finishedAt": "2026-10-01T03:53:39.461Z"
+}

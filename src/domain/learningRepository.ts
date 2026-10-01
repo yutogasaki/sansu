@@ -1,4 +1,5 @@
 import { db, AttemptLog } from "../db";
+import { weakAttemptOutcome } from "./learningAttemptWriter";
 import { SubjectKey } from "./types";
 import { differenceInCalendarDays, parseISO } from "date-fns";
 import { getLearningDayStart } from "../utils/learningDay";
@@ -189,29 +190,26 @@ export const getBatchRecentCounts = async (
 /**
  * 回答履歴（古い順）から weak 状態を復元する。
  * IN: 最低5回答かつ直近10回答の正答率 < 60%
- * OUT: 直近10回答の正答率 >= 80%
+ * OUT: 直近10回答の独力正答率 >= 80%（旧履歴の不明・支援正解は解除に使わない）
  * 60%以上80%未満では直前の状態を維持する。
  */
 export const resolveWeakState = (
-    resultsOldestFirst: AttemptLog['result'][],
+    resultsOldestFirst: (AttemptLog['result'] | AttemptLog)[],
     windowSize: number = 10,
     minAnswers: number = 5
 ): boolean => {
     let isWeak = false;
-    const recent: AttemptLog['result'][] = [];
+    const recent: (AttemptLog['result'] | AttemptLog)[] = [];
 
     for (const result of resultsOldestFirst) {
         recent.push(result);
         if (recent.length > windowSize) recent.shift();
         if (recent.length < minAnswers) continue;
-
-        const correct = recent.filter(item => item === 'correct').length;
-        const accuracy = correct / recent.length;
-        if (accuracy < 0.6) {
-            isWeak = true;
-        } else if (accuracy >= 0.8) {
-            isWeak = false;
-        }
+        const outcomes = recent.map(weakAttemptOutcome);
+        const failureRate = outcomes.filter(value => value === false).length / outcomes.length;
+        const recoveryRate = outcomes.filter(value => value === true).length / outcomes.length;
+        if (failureRate > 0.4) isWeak = true;
+        else if (recoveryRate >= 0.8) isWeak = false;
     }
 
     return isWeak;
@@ -279,7 +277,7 @@ export const getBatchWeakStatus = async (
         await Promise.all(stillUnresolvedIds.map(async (id) => {
             const itemLogs = (byItem.get(id) || [])
                 .sort((a, b) => a.timestamp.localeCompare(b.timestamp));
-            const isWeak = resolveWeakState(itemLogs.map(log => log.result));
+            const isWeak = resolveWeakState(itemLogs);
             result.set(id, isWeak);
             await table.update([profileId, id], { isWeak });
         }));

@@ -24,7 +24,7 @@ export function IslandHouseOverview({ active, disabled, comparisonDisabled, walk
     const close = () => setOpen(false);
     const choose = (action: () => void) => { close(); action(); };
     return <div className="island-house-overview">
-        <p className="island-house-hint">{walkingAvailable ? 'ゆかを タップすると カワウソが あるくよ。' : 'おもいでを ひらく。きねんを かざる。'}</p>
+        <p className="island-house-hint">{walkingAvailable ? 'ゆかを タップすると ぽこもこが あるくよ。' : 'おもいでを ひらく。きねんを かざる。'}</p>
         <nav className="island-house-tools" aria-label="いえで できること">
             {onAlbum && <button type="button" data-keepsake-action="album" disabled={comparisonDisabled} onClick={onAlbum}>
                 <IslandToyIcon kind="album" /><span>アルバム</span></button>}

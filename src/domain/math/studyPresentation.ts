@@ -1,5 +1,8 @@
 import type { Problem } from '../types';
 import { createLearningProblemContext } from '../learning/context';
+import { studyLearningEvidence } from '../learning/attemptContext';
+import type { LearningEvidenceContext } from '../learning/types';
+import { integerFractionProblem } from './fractionInput';
 import { generateHissanGrid } from './hissanEngine';
 import { isHissanEligible, type HissanGridData } from './hissanTypes';
 import { generateWrittenArithmeticGrid } from './writtenArithmetic';
@@ -59,3 +62,21 @@ export function prepareStudyBlockPresentation(
 /** A written problem can still use the ordinary input after a visible toggle. */
 export const hasStudySingleNumberInput = (problem: Pick<Problem, 'inputType'>): boolean =>
     problem.inputType === 'number' || problem.inputType === 'hissan';
+
+/** Whole-number fraction input is a lossless display adapter. Bind evidence to
+ * the original reservation, while rejecting any other unrecognized display edit. */
+export function studyDisplayedLearningEvidence(
+    stored: Problem,
+    displayed: Problem,
+    assistance: LearningEvidenceContext['assistance'],
+    hissanActive: boolean,
+    representationChanged: boolean,
+): LearningEvidenceContext | undefined {
+    try {
+        const expected = createLearningProblemContext(stored.subject, integerFractionProblem(stored));
+        const actual = createLearningProblemContext(displayed.subject, displayed);
+        if (!expected || !actual || expected.problemKey !== actual.problemKey
+            || expected.subject !== actual.subject) return undefined;
+    } catch { return undefined; }
+    return studyLearningEvidence(stored, assistance, hissanActive, representationChanged);
+}

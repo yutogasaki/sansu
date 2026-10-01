@@ -1,0 +1,42 @@
+
+> pokko-fushigi-zukan-app@0.0.0 test:run
+> vitest run src/domain/math src/domain/english src/domain/learning/catalog.test.ts
+
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+ ✓ src/domain/math/numberSenseProgress.test.ts (32 tests) 4ms
+ ✓ src/domain/math/writtenArithmetic.test.ts (38 tests) 57ms
+ ✓ src/domain/math/generators/advanced.test.ts (10 tests) 16ms
+ ✓ src/domain/math/generators/subtraction.test.ts (10 tests) 4ms
+ ✓ src/domain/english/planner.test.ts (14 tests) 7ms
+ ✓ src/domain/math/generators/counting.test.ts (51 tests) 23ms
+ ✓ src/domain/math/generators/addition.test.ts (10 tests) 18ms
+ ✓ src/domain/english/listening.test.ts (4 tests) 6ms
+ ✓ src/domain/math/generators/division.test.ts (5 tests) 32ms
+ ✓ src/domain/math/hissanEngine.test.ts (8 tests) 5ms
+ ✓ src/domain/math/generators/fraction.test.ts (6 tests) 6ms
+ ✓ src/domain/math/additionProgress.test.ts (9 tests) 5ms
+ ✓ src/domain/math/subtractionProgress.test.ts (5 tests) 4ms
+ ✓ src/domain/math/writtenPlaceValue.test.ts (10 tests) 9ms
+ ✓ src/domain/english/examples.test.ts (3 tests) 106ms
+ ✓ src/domain/math/sequenceProgress.test.ts (5 tests) 2ms
+ ✓ src/domain/math/fractionInput.test.ts (3 tests) 4ms
+ ✓ src/domain/math/comparisonProgress.test.ts (5 tests) 2ms
+ ✓ src/domain/math/planner.test.ts (35 tests) 20ms
+ ✓ src/domain/math/followups.test.ts (2 tests) 4ms
+ ✓ src/domain/math/studyPresentation.test.ts (15 tests) 12ms
+ ✓ src/domain/math/profileProgress.test.ts (67 tests) 70ms
+ ✓ src/domain/math/writtenInput.test.ts (3 tests) 3ms
+ ✓ src/domain/math/answerCompletion.test.ts (13 tests) 153ms
+ ✓ src/domain/math/hissanTypes.test.ts (2 tests) 3ms
+ ✓ src/domain/math/numberEntry.test.ts (4 tests) 46ms
+ ✓ src/domain/english/generator.test.ts (4 tests) 856ms
+   ✓ English catalog and choices > every word produces four unique rendered choices (kanji=false) 568ms
+ ✓ src/domain/math/deterministicGeneration.test.ts (2 tests) 17ms
+
+ Test Files  28 passed (28)
+      Tests  375 passed (375)
+   Start at  13:08:29
+   Duration  1.95s (transform 833ms, setup 0ms, collect 6.53s, tests 1.49s, environment 8ms, prepare 1.17s)
+

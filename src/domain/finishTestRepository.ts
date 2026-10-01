@@ -1,6 +1,7 @@
 import { db } from '../db';
 import { getAppData, saveAppData, updateProfileAtomically } from './user/repository';
 import { readMathLevel11Pilot } from './learning/pilotRepository';
+import { evaluateFinishCoverage } from './finishCoverage';
 import { buildPeriodicTestSet } from './test/testSet';
 import { applyFinishTestCompletion, finishEligibility, type FinishTestReservation } from './finishTest';
 import type { SubjectKey } from './types';
@@ -14,12 +15,16 @@ export async function reserveFinishTest(profileId: string, subject: SubjectKey):
         if (!profile || data.activeProfileId !== profileId) throw new Error('学習者が変わりました。画面を開き直してください。');
         const missingUnits = subject === 'math' && profile.mathMainLevel === 11
             ? (await readMathLevel11Pilot(db, profileId)).practice.coverageReady ? [] : ['coverage'] : [];
-        if (finishEligibility(profile, subject, missingUnits).status !== 'ready') throw new Error('しあげの準備中です。');
+        const logs = await db.logs.where('[profileId+subject]').equals([profileId, subject]).toArray();
+        const readiness = evaluateFinishCoverage(profile, subject, logs);
+        if (finishEligibility(profile, subject, missingUnits, readiness).status !== 'ready') throw new Error('しあげの準備中です。');
         const existing = profile.finishTestSets?.[subject];
         const mainLevel = subject === 'math' ? profile.mathMainLevel : profile.vocabMainLevel;
-        if (existing?.profileId === profileId && existing.subject === subject && existing.level === mainLevel
-            && existing.targetLevel === mainLevel + 1 && existing.problems.length === 20) return existing;
-        const set = { ...buildPeriodicTestSet(profile, subject), id: crypto.randomUUID(), profileId,
+        const reusable = existing?.profileId === profileId && existing.subject === subject && existing.level === mainLevel
+            && existing.targetLevel === mainLevel + 1 && existing.problems.length === 20;
+        if (reusable) return existing;
+        const snapshot = { ...readiness, version: 1 as const, admittedAt: new Date().toISOString() };
+        const set = { ...buildPeriodicTestSet(profile, subject), readiness: snapshot, id: crypto.randomUUID(), profileId,
             targetLevel: (subject === 'math' ? profile.mathMainLevel : profile.vocabMainLevel) + 1 };
         if (set.problems.length !== 20) throw new Error('しあげの問題を準備できませんでした。');
         const updated = { ...profile, finishTestSets: { ...profile.finishTestSets, [subject]: set } };
@@ -38,10 +43,14 @@ export async function completeFinishTest(reservation: FinishTestReservation,
         const missingUnits = reservation.subject === 'math' && profile.mathMainLevel === 11
             ? (await readMathLevel11Pilot(db, profile.id)).practice.coverageReady ? [] : ['coverage'] : [];
         const persisted = profile.finishTestSets?.[reservation.subject];
-        const answers = persisted?.id === reservation.id ? Object.values(persisted.answers ?? {}) : [];
+        const responses = persisted?.id === reservation.id ? Object.entries(persisted.answers ?? {}) : [];
+        if (responses.some(([index, answer]) => !/^(?:[0-9]|1[0-9])$/.test(index) || typeof answer !== 'boolean')) return null;
+        const answers = responses.map(([, answer]) => answer);
+        const logs = await db.logs.where('[profileId+subject]').equals([profile.id, reservation.subject]).toArray();
+        const readiness = evaluateFinishCoverage(profile, reservation.subject, logs);
         const completed = applyFinishTestCompletion(profile, reservation, { ...stats,
             total: stats.timedOut ? 20 : answers.length,
-            correct: answers.filter(Boolean).length }, Date.now(), missingUnits);
+            correct: answers.filter(answer => answer === true).length }, Date.now(), missingUnits, readiness);
         if (!completed.result) return null;
         await saveAppData({ ...data, profiles: { ...data.profiles, [profile.id]: completed.profile } });
         await db.profiles.put(completed.profile);

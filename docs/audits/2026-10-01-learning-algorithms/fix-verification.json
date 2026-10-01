@@ -1,0 +1,50 @@
+{
+  "scope": "local implementation; no deployment; final core includes concurrent unrelated island changes",
+  "baseRevision": "b62cec07c43ebd6d03775d8a2d026fca2198c51b",
+  "results": {
+    "verify:core": {
+      "pass": true,
+      "files": 505,
+      "tests": 4474
+    },
+    "e2e:smoke": {
+      "pass": true,
+      "scenarios": 31
+    },
+    "final_targeted": {
+      "pass": true,
+      "tests": 55
+    },
+    "fixed_preview": {
+      "pass": true,
+      "cases": 4,
+      "ui_answers": 80
+    }
+  },
+  "logs": {
+    "/tmp/sansu-learning-fixes-core-final-03.log": {
+      "sha256": "f64159ffadb22ad70766ca86b0ce8f0a66213d42c414bb828507a20d24b5ce7b",
+      "bytes": 94638
+    },
+    "/tmp/sansu-learning-fixes-smoke-final-02.log": {
+      "sha256": "dd1cc6df6617562d7de8255a2cfc5c1b6703e134ccef6cecd45b382574c2aa7e",
+      "bytes": 2882
+    },
+    "/tmp/sansu-learning-fixes-finite-final.log": {
+      "sha256": "7ef892eca57125182a4782056085776598172a52ca84350958454bfbe7e3fc68",
+      "bytes": 596
+    },
+    "/tmp/sansu-learning-fixes-types-final-04.log": {
+      "sha256": "9e59605fb9172da9759b4feeda0238f5bc35ea2d1abb67d3392904705d025041",
+      "bytes": 68
+    },
+    "/tmp/sansu-learning-fixes-suite-first.log": {
+      "sha256": "45acc24673c9ae33c373ae6abe1ba9a94bdf169235f0fc3e118b1c1901aea42e",
+      "bytes": 95622
+    },
+    "/tmp/sansu-learning-fixes-smoke-final.log": {
+      "sha256": "41c023bd66cb19060b91e114b1da82264db9c0f8c06bcaa41f9a19aaaeabf4ca",
+      "bytes": 3319
+    }
+  }
+}

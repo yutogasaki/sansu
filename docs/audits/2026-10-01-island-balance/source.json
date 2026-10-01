@@ -1,0 +1,534 @@
+{
+  "revision": "bbd263a72857ce1813036b9f2a2b333838c8a271",
+  "target": "local source; deployed build not checked",
+  "files": [
+    {
+      "path": "CONSTITUTION.md",
+      "sha256": "5ef2541bc4de9439200c3a0b2a80c75800443d4f9b3a9230b20be09f428e480d"
+    },
+    {
+      "path": "docs/product/48_island_life_spec.md",
+      "sha256": "47ab6219790bc43c9c1cac3ab521159aab006b2392ae608d95b5b26b19adc75e"
+    },
+    {
+      "path": "docs/product/52_growing_island_game_spec.md",
+      "sha256": "053f42c3d0a8e71c6de3b919f4c605878b175591e20e3481c3dcc1a762d3f0ff"
+    },
+    {
+      "path": "src/components/island/growing/feature.ts",
+      "sha256": "816deabcc28785551152e5118abb62b6e54364201acb765152896be2959aa1aa"
+    },
+    {
+      "path": "src/components/island/growing/useGrowingIsland.ts",
+      "sha256": "0c70db8597656df13b8347d8632cc3a1069afb6925eb5b328bae42627e9af9c4"
+    },
+    {
+      "path": "src/domain/growingIsland/commands.ts",
+      "sha256": "cff1c823ae2912b0b16dae6dbaf96281ed637d2fffbb4c1dbf227248017498d0"
+    },
+    {
+      "path": "src/domain/growingIsland/community.ts",
+      "sha256": "aa7d043ae246999151895af7a5df0af9c2167fd973e23d5a7c70d7c5a224fc65"
+    },
+    {
+      "path": "src/domain/growingIsland/environment.ts",
+      "sha256": "c848b23a316ac544e8955266d02d8fc07db66399c521a5c84bec72a4d2cf7351"
+    },
+    {
+      "path": "src/domain/growingIsland/flowers.test.ts",
+      "sha256": "f40e65c9d060fc34146756b13b5babbd3e0a5e4eb14b5708445c8fadeb6c69df"
+    },
+    {
+      "path": "src/domain/growingIsland/flowers.ts",
+      "sha256": "23aadbd5349364aded5b2e8424b26f9e99fdcfa6f1c3f2f491c9a38d149c9c18"
+    },
+    {
+      "path": "src/domain/growingIsland/friends.test.ts",
+      "sha256": "8fe87473db47669ba0a3698d60fbb7bd4ec669efbeabc1b9cd77c1465f89e398"
+    },
+    {
+      "path": "src/domain/growingIsland/gifts.ts",
+      "sha256": "4e220b054597b04caea1a21489bca699d87e8b6745b578bf6501d9fa376cd6a8"
+    },
+    {
+      "path": "src/domain/growingIsland/index.ts",
+      "sha256": "07bcc6f2d10302de39af7b3f7f84ac5c12b493ce8ea420e429f8f9b653019577"
+    },
+    {
+      "path": "src/domain/growingIsland/island.ts",
+      "sha256": "cb96c880f147ae2072923c959dc3b80cb650024cddd8e83f9dc7151797227186"
+    },
+    {
+      "path": "src/domain/growingIsland/moments.ts",
+      "sha256": "d64070c1656e05dc560d084469fca511c617fa40312010aaf95e4b50e1c436e5"
+    },
+    {
+      "path": "src/domain/growingIsland/names.ts",
+      "sha256": "85f617af0b52b5f47792d357a48901a7020e0f08d4ba1f2a5c6ccb5cc4dd7721"
+    },
+    {
+      "path": "src/domain/growingIsland/nature.ts",
+      "sha256": "591389c83ec276c85d500cb32d61643ca2a478678a5de4b6b78ea063a31d6c21"
+    },
+    {
+      "path": "src/domain/growingIsland/pacing.test.ts",
+      "sha256": "1e1a2d5f080aa2fa33dc256877b2979a6a38b7f3178b237bb788f358b670ab9f"
+    },
+    {
+      "path": "src/domain/growingIsland/pier.ts",
+      "sha256": "a45aa2e46870fa07c03949abcca1281066aad887d042c450697dce4837e13bef"
+    },
+    {
+      "path": "src/domain/growingIsland/random.ts",
+      "sha256": "2d3e35f0f26da88acc2228454193fda88b759ac9f58ce8cc96d96b2234c01175"
+    },
+    {
+      "path": "src/domain/growingIsland/repository.test.ts",
+      "sha256": "673b21742cd76553c1d909b7cb6ef21807dc0d927b7c669925ad6607b57f4394"
+    },
+    {
+      "path": "src/domain/growingIsland/repository.ts",
+      "sha256": "12d1b9aa8c58ed73267d46192b2d32e7a7116ff6800db09cfa23a180d57accd7"
+    },
+    {
+      "path": "src/domain/growingIsland/room.test.ts",
+      "sha256": "dfca86050d23ee5c341ef8e9af1a140f7b1294c263969e65a185b51217cf7cc0"
+    },
+    {
+      "path": "src/domain/growingIsland/room.ts",
+      "sha256": "6344e2acd8d9fc6393eb84494e792e01753ea07847537115c3c7ddf39f713e73"
+    },
+    {
+      "path": "src/domain/growingIsland/rules.test.ts",
+      "sha256": "677e6478cd8e31d43e29966ebffa647443edf22c9d6327ca6dddc52da8c13b17"
+    },
+    {
+      "path": "src/domain/growingIsland/rules.ts",
+      "sha256": "8f4399384667b79a0e3663c85cd50c4d827aa42b591ee94bf87a977d398ccbe4"
+    },
+    {
+      "path": "src/domain/growingIsland/space.ts",
+      "sha256": "559aebf3737b2b6d26d3f837d65ec81fdf0ff332ba4407cf49ee954323b11bd7"
+    },
+    {
+      "path": "src/domain/growingIsland/town.ts",
+      "sha256": "e96f1860bf60242b676576f2392a0457eb72a2932a20a75aa65ad5e20e464cfc"
+    },
+    {
+      "path": "src/domain/growingIsland/types.ts",
+      "sha256": "628fed62920da8164323d4e0becc93810d289083b74f0078748015d79faa75fb"
+    },
+    {
+      "path": "src/domain/islandLife/activities.test.ts",
+      "sha256": "3eb3a6fc42b2c632b380d262a4449315097897ffc507ba3f879d6e46e60efaa5"
+    },
+    {
+      "path": "src/domain/islandLife/activity.ts",
+      "sha256": "6e81161823ae2013b9cd8425fbdcd995a516b3e7003c283b28b626b63a1912f1"
+    },
+    {
+      "path": "src/domain/islandLife/cadence.test.ts",
+      "sha256": "80e9f7ff963f0fb9c9aeb7e602a3a19eda2eedbe4fcf0564b3857efed3e7a59d"
+    },
+    {
+      "path": "src/domain/islandLife/cadence.ts",
+      "sha256": "749bba250fc63c51716b2ebb3b6860bf3fcf8e050facd9f3235653a17b810000"
+    },
+    {
+      "path": "src/domain/islandLife/cadenceMigration.test.ts",
+      "sha256": "32a7ec8b7d1e964152cef8e83d0f18cc2193ef2ed08f693587701e6eae3bb1d7"
+    },
+    {
+      "path": "src/domain/islandLife/cadenceMigration.ts",
+      "sha256": "647b5a2c052d38311d4f9c7bef119a75ecdcea59431bef8b6547efc1528a387e"
+    },
+    {
+      "path": "src/domain/islandLife/capabilities.test.ts",
+      "sha256": "e735ae375bdba2682039b0c893ac7bbf397b9cc2de409a9b0de79f8a86e73b82"
+    },
+    {
+      "path": "src/domain/islandLife/capabilities.ts",
+      "sha256": "8e13ebbaa96daf5655f5b84d96f08315a6681cb1849c626e6be6fa77d4373eee"
+    },
+    {
+      "path": "src/domain/islandLife/commandPerformance.test.ts",
+      "sha256": "a803ba14420ef4a5d5b92aad7a03eae3d9c7b7fe8b0590fc8780c2c297198f5a"
+    },
+    {
+      "path": "src/domain/islandLife/creditPerformance.test.ts",
+      "sha256": "c30052df80e864ea6b7129e63d7906e9a506aa204904b32c18721eabae30558d"
+    },
+    {
+      "path": "src/domain/islandLife/decorations.test.ts",
+      "sha256": "b3baf3b5c35d01dba75992d98616c62ff174b429a47094295d54c7f56df81098"
+    },
+    {
+      "path": "src/domain/islandLife/decorations.ts",
+      "sha256": "5cfbccce407f289411af0f7317fa15ad96eea8f6abfb52b79a89203f4195ecb1"
+    },
+    {
+      "path": "src/domain/islandLife/diagonalMigration.test.ts",
+      "sha256": "89f5173828b05424e8002b6094d9db7ac86f54cd3aed8319e22b15657fb69172"
+    },
+    {
+      "path": "src/domain/islandLife/diagonalMigration.ts",
+      "sha256": "a45ed8026259d7242d789bb03efadc441eba1b38f14015927e9812261e9d5fff"
+    },
+    {
+      "path": "src/domain/islandLife/diagonalRoam.ts",
+      "sha256": "929a9d39b6c1eeeedbf4d6b2cccf113e3bc50889aefa94cac26ae645791284cf"
+    },
+    {
+      "path": "src/domain/islandLife/discovery.test.ts",
+      "sha256": "dcfc27b43c8bcff9a158bc5db7d5eb6524923de51711d8b97c041e3742592fc7"
+    },
+    {
+      "path": "src/domain/islandLife/discovery.ts",
+      "sha256": "4dba96e310ff9cbbb9a2e418c6a75dc14e76666a6685a4dd8703b3ec4b580861"
+    },
+    {
+      "path": "src/domain/islandLife/discoveryJournal.test.ts",
+      "sha256": "9a4983388d7de9ea178ca6a8ae414ec9ecf0b2caa21ce76eaf90cd7ca7d825f0"
+    },
+    {
+      "path": "src/domain/islandLife/discoveryJournal.ts",
+      "sha256": "30f6229a5167d8838e4545496d46bc04011e009c263b3d1085e1f16f9549fad0"
+    },
+    {
+      "path": "src/domain/islandLife/discoveryPresentation.ts",
+      "sha256": "dae58e338d9d4676d1ce321db7887ac620149f2c4a71db924638a26563156a39"
+    },
+    {
+      "path": "src/domain/islandLife/discoveryRecall.test.ts",
+      "sha256": "ec6f87f3dbae5482968156551d6f41ad71b2ee0538986a33415da96d1b3b5f2f"
+    },
+    {
+      "path": "src/domain/islandLife/discoveryRecall.ts",
+      "sha256": "f748edd8de5debf6693e84cfa9fda3494b70d7333ff46418e38b102a4099a95d"
+    },
+    {
+      "path": "src/domain/islandLife/discoveryRepository.ts",
+      "sha256": "b2b86078db9bc246b81f28c43104b27d2b67991a0901c626b0d5dfa88db8b5d1"
+    },
+    {
+      "path": "src/domain/islandLife/economyMigration.test.ts",
+      "sha256": "c8e165f7e5ff87a99a1199b2290354ce9d0eb30b2492b6fe27c9277a7d247312"
+    },
+    {
+      "path": "src/domain/islandLife/economyMigration.ts",
+      "sha256": "d07b2a64352d897fd62e005a14153d9ed5537212e40596790908fd8800d7baff"
+    },
+    {
+      "path": "src/domain/islandLife/economyRepository.test.ts",
+      "sha256": "1c4cbf8d54332db0d4a26998e680b22a39a6a5feb1090242911bc7dbf9377b58"
+    },
+    {
+      "path": "src/domain/islandLife/economyRules.test.ts",
+      "sha256": "36af2ea0af9335c9b216b77cd44606bc071df8524216f307bc725bb84de770e3"
+    },
+    {
+      "path": "src/domain/islandLife/economyRules.ts",
+      "sha256": "2feb596641a89a83ff6fb7cd915548f3bcf9a8212ddafa75ddc05910e4091272"
+    },
+    {
+      "path": "src/domain/islandLife/extendedGatherings.test.ts",
+      "sha256": "79901b07403deeb643f71fc5bb9767f3cab146485bf3fa99e050ac889ba2cdb6"
+    },
+    {
+      "path": "src/domain/islandLife/extendedGatherings.ts",
+      "sha256": "16c8f3796bcded23dca6a90114769bd3976a3509673367c44b32ed759a079043"
+    },
+    {
+      "path": "src/domain/islandLife/facilities.test.ts",
+      "sha256": "271b96f91a410bfbb3793ed0cca867ecd95a4d3c6686b0bb2084c533a81100ca"
+    },
+    {
+      "path": "src/domain/islandLife/facilityMigration.ts",
+      "sha256": "2a38089816585ab7b000cf608c8dd4d1e72b05e8d801fc876351856fbf07adb1"
+    },
+    {
+      "path": "src/domain/islandLife/facilityTrips.test.ts",
+      "sha256": "d472b91160990dc104e24b94007d9198e0d5268bc392c91cb9f9847b569dbcad"
+    },
+    {
+      "path": "src/domain/islandLife/facilityTrips.ts",
+      "sha256": "fcd7c85c8a2f2ff2db7d893dce220dd0832a89192570963a8328ca72fcc3a3a6"
+    },
+    {
+      "path": "src/domain/islandLife/foodLoop.test.ts",
+      "sha256": "916f09020b4b1a7858323a844ae4a8368faad0f619e4bb7baaf563e430485cc4"
+    },
+    {
+      "path": "src/domain/islandLife/foodLoop.ts",
+      "sha256": "c76885b9bce60821c946898891b33e2c434ead9a753ca8eda5c2d6559ad1b83d"
+    },
+    {
+      "path": "src/domain/islandLife/footprint.ts",
+      "sha256": "756e569dff83698e12dc6401fb96be06a23b950b003df4b1af21b8a1aa38916b"
+    },
+    {
+      "path": "src/domain/islandLife/footstepMagic.test.ts",
+      "sha256": "500099ec9d71be1256297b1fd3b627083559da6260eea85109fcb008bb7cbfa2"
+    },
+    {
+      "path": "src/domain/islandLife/footstepMagic.ts",
+      "sha256": "26cc0eabe4868e1c90bdf35291a65ca41517f6c49e36336cfcf7f7e8a2d51b71"
+    },
+    {
+      "path": "src/domain/islandLife/groupEncounters.test.ts",
+      "sha256": "8d70a74946f287bf865d0d6c3ff695d2fb7c9fac196fcc99117793a801132c97"
+    },
+    {
+      "path": "src/domain/islandLife/groupEncounters.ts",
+      "sha256": "9f0d23635b1a76b5e4c7f823e70ed1b64fb0f9a5bde26e727456a880e94987c5"
+    },
+    {
+      "path": "src/domain/islandLife/growthIntegration.test.ts",
+      "sha256": "d4301bb5a7fd33d66c2b21e549e629cb5cc9ecd61bfb07befb6278a8f2bf51f9"
+    },
+    {
+      "path": "src/domain/islandLife/heroVisit.test.ts",
+      "sha256": "f46b207e1219911fd13e765b2992d8520c2caac9b0e2280af62a073a9d6b60fb"
+    },
+    {
+      "path": "src/domain/islandLife/heroVisit.ts",
+      "sha256": "68ec5435999753ae604f83e01d77a9736d5c05b722cb55b0e79573d9142f82b0"
+    },
+    {
+      "path": "src/domain/islandLife/heroVisitMigration.test.ts",
+      "sha256": "6337e9456ee8ef14bba498662a53e03b44b6a9d51fa926ba23b16b2f84934628"
+    },
+    {
+      "path": "src/domain/islandLife/heroVisitMigration.ts",
+      "sha256": "14af516f0a552f4cc4b6b8bb91bdcc50f35c095afbcd172ff871c2adfd4c67b9"
+    },
+    {
+      "path": "src/domain/islandLife/isolation.test.ts",
+      "sha256": "971544a55e716de4628aab7def7bb81df6d33d1ba4f2fc8f3347d9f3191cded1"
+    },
+    {
+      "path": "src/domain/islandLife/itemComponents.ts",
+      "sha256": "671482c0b7fea47bfc1b05df5d6b3b3c87ea1bf2ffda506267ec4bde733298b4"
+    },
+    {
+      "path": "src/domain/islandLife/landRules.test.ts",
+      "sha256": "6698f4e84d5bc7e374156e7459f9185b460278744a10a285b31b8d6686d77a89"
+    },
+    {
+      "path": "src/domain/islandLife/landRules.ts",
+      "sha256": "db73f083a1e73dbfa280401898a406afe9a8294d51d7aaaa5cf57140942dd774"
+    },
+    {
+      "path": "src/domain/islandLife/magicTiming.ts",
+      "sha256": "e332c2c682b33e4649146797ba366b186bb687b8843e6c03eb133e7010745d2d"
+    },
+    {
+      "path": "src/domain/islandLife/model.ts",
+      "sha256": "c373f5a532347d3f030420f40774a85e8a9434b095cb763138a34b45cd925ea3"
+    },
+    {
+      "path": "src/domain/islandLife/observationVisit.test.ts",
+      "sha256": "eef890c48c6d60e3e423aac20eef36bcda336324601dc9d44c3e63a88fb78120"
+    },
+    {
+      "path": "src/domain/islandLife/observationVisit.ts",
+      "sha256": "2530b470c3a48b81b6d26c23f26e1b3790b5e7f66f9fe88ab50eb787eaa7acdb"
+    },
+    {
+      "path": "src/domain/islandLife/picnicTable.test.ts",
+      "sha256": "d6e2afd3e764b42f6490184f115083634cd0d2ccf0cdb9cb19850bee7ec57877"
+    },
+    {
+      "path": "src/domain/islandLife/placementClearance.test.ts",
+      "sha256": "0513ab26e42ed5d10883fde13723cc82a9c12b57a72b0dc1d9feb9b94568d22e"
+    },
+    {
+      "path": "src/domain/islandLife/placementClearance.ts",
+      "sha256": "fbb88bfb4303fd5e7425dc44cacf044cb709ab19d87ccf2b3049fedf6570c43d"
+    },
+    {
+      "path": "src/domain/islandLife/placementMigration.test.ts",
+      "sha256": "6f0fc815328d197a1c939dbda0679bd744194bba9b885a4a4722272cb9051551"
+    },
+    {
+      "path": "src/domain/islandLife/placementMigration.ts",
+      "sha256": "b5ad3e0ecacbe53ae14f4d1f1e40b8cac7be2b9de293c2f5466c93dd569ec727"
+    },
+    {
+      "path": "src/domain/islandLife/placementUndo.test.ts",
+      "sha256": "1f2bca90bc49a2e44f84cf9c4072fc4077b0962382e84926900823fa90d17a52"
+    },
+    {
+      "path": "src/domain/islandLife/placementUndo.ts",
+      "sha256": "60435bf1ee4395b08ed639d80c5810026f3bc6cf60aafaa96049c284fa4d3e74"
+    },
+    {
+      "path": "src/domain/islandLife/plantsWater.test.ts",
+      "sha256": "e6dea52692e094cfe378e30840c99dcf47129416dec849b8560e6b857d2bb393"
+    },
+    {
+      "path": "src/domain/islandLife/playTourSimulation.test.ts",
+      "sha256": "434eb4d73585d8a8a56c945bcde29f44b2534cf2f4eda2df3cb2b81819730752"
+    },
+    {
+      "path": "src/domain/islandLife/playTours.test.ts",
+      "sha256": "f4835e5538384f0025322aa3a8c2d4cba323cc419b7980b9236f80e2486456ee"
+    },
+    {
+      "path": "src/domain/islandLife/playTours.ts",
+      "sha256": "1ed50fbf3af4232672c252cc016e3c8b3d81a1a8955a3b5fbfc1bcb9a9a478aa"
+    },
+    {
+      "path": "src/domain/islandLife/production.test.ts",
+      "sha256": "68eec177781618eb91a5269a554de04a53d5ca8bf16e4cf42d8149f86bb5d42e"
+    },
+    {
+      "path": "src/domain/islandLife/purchases.test.ts",
+      "sha256": "0234f70a7ecbf2336668100e9e9f75e1fb2702055fba4c29d67da1ed4ec739f5"
+    },
+    {
+      "path": "src/domain/islandLife/purchases.ts",
+      "sha256": "6ddcde5fcab41f809063f8a631ade5e5541afeb15936f0a968f3f8733a0cc3e3"
+    },
+    {
+      "path": "src/domain/islandLife/readingEncounter.test.ts",
+      "sha256": "9b216a85f1e00a0aba79ed4922bcb473aee54aba7f67ed666f4138e834b16788"
+    },
+    {
+      "path": "src/domain/islandLife/readingEncounter.ts",
+      "sha256": "dc58238de0084e581575b3c2a1cf66ed12b1a49450ffc180fac29ab857bf5534"
+    },
+    {
+      "path": "src/domain/islandLife/relationMigration.ts",
+      "sha256": "e556674e70a9b55b1544d502499cc49093e89471fc1f290fd54ff23eb4945ea4"
+    },
+    {
+      "path": "src/domain/islandLife/relationObservation.test.ts",
+      "sha256": "819372fe7b86f90bf3a24e67058d2649361d42dfd40e7c56d16d130c2057bdbd"
+    },
+    {
+      "path": "src/domain/islandLife/relationObservation.ts",
+      "sha256": "ab2d0be82937d5047b041a0522b94bdfd40c39b029eae480389331b50cd769a8"
+    },
+    {
+      "path": "src/domain/islandLife/relationSelection.test.ts",
+      "sha256": "27dc9f500e78fbc5e89bf11535a7bd5862c0641aa60bfb658c567d57745cfc96"
+    },
+    {
+      "path": "src/domain/islandLife/replayCache.ts",
+      "sha256": "8002447c197861416272666a13bba34c909d26846d27001da0dc9e62f7a7ba9a"
+    },
+    {
+      "path": "src/domain/islandLife/replaySnapshot.test.ts",
+      "sha256": "9c89f04806ac53c9c752011ca7804e80ecd380f6552e4fb3171e00ad999550ed"
+    },
+    {
+      "path": "src/domain/islandLife/replaySnapshot.ts",
+      "sha256": "ed9f1adf51c57dfcbaa438139b7172acc427447bce6f8d64e18e964653ef08bf"
+    },
+    {
+      "path": "src/domain/islandLife/repository.test.ts",
+      "sha256": "e5f85c78e0e43b9a58f00f65e18d6827ce4682eec3bdec9bcf230e967ef45b4b"
+    },
+    {
+      "path": "src/domain/islandLife/repository.ts",
+      "sha256": "805995936beb6a3ea95e80ff284ccc177a9ee38f2ab98dfa8618c155052ccc78"
+    },
+    {
+      "path": "src/domain/islandLife/residency.test.ts",
+      "sha256": "32a2dbd3d336b0c1e977c2cb0d5a9a6d2175618cb4b117c335511db0f6dced5b"
+    },
+    {
+      "path": "src/domain/islandLife/residency.ts",
+      "sha256": "8fa46b3d70a3d74106d7df0131ca8a297cd4c10a32a201cb897c014078a36e49"
+    },
+    {
+      "path": "src/domain/islandLife/roaming.test.ts",
+      "sha256": "13b2b350f0be5a95aa4a72686c5e95338cb233ddf898c1c04df21e6b8d3d7b9b"
+    },
+    {
+      "path": "src/domain/islandLife/sandbox.test.ts",
+      "sha256": "503c46417b1e73a4921f98bb7e351ac2ef868aa7c9c7a2879eda553e54b99f34"
+    },
+    {
+      "path": "src/domain/islandLife/shadowMagic.test.ts",
+      "sha256": "d6846e9fd5d51a5df34b645271ace2b7ab782ccc121bdb2b40bdaed031116eb4"
+    },
+    {
+      "path": "src/domain/islandLife/shadowMagic.ts",
+      "sha256": "d46cbe73d8767ae66f9f1f563ab6adf537a2054faef44f4cf47949920d77649d"
+    },
+    {
+      "path": "src/domain/islandLife/simulation.test.ts",
+      "sha256": "cfc38822dc4ced30467ff6a89f09d359ba8eeb4a245ec4e02a02ca1e8d08002e"
+    },
+    {
+      "path": "src/domain/islandLife/simulation.ts",
+      "sha256": "67335a64489f9b77e73d240066ed0dc3b36c9bc989163611391a6188679bc27d"
+    },
+    {
+      "path": "src/domain/islandLife/soilMoisture.test.ts",
+      "sha256": "f67f0a74df8df50b8b831a5513f844b8cdaf52518cff76589ed5114015251136"
+    },
+    {
+      "path": "src/domain/islandLife/soilMoisture.ts",
+      "sha256": "d2234e67a3ceee82ad65363d718dec8d2440d23e8849c718280328b6f02bb716"
+    },
+    {
+      "path": "src/domain/islandLife/space.ts",
+      "sha256": "699f197c86b4e7142b20a1790a6adefd3287445848c708990dc9c5c1423fff55"
+    },
+    {
+      "path": "src/domain/islandLife/terminalFacts.test.ts",
+      "sha256": "ed466c92d9c2a934ed79077f3cb38cd0a4c30572d5ec988ed11e04c73147a653"
+    },
+    {
+      "path": "src/domain/islandLife/tourMigration.test.ts",
+      "sha256": "1406fbe4ea2527fdea67a43f38b10a52bee393cfdef3fda763ddff04ba1146bc"
+    },
+    {
+      "path": "src/domain/islandLife/tourMigration.ts",
+      "sha256": "79aeb4d755f1bc1bcbe303759b1f863fc2f89808d697df2bca4f6dbdeef30065"
+    },
+    {
+      "path": "src/domain/islandLife/visitPerformance.test.ts",
+      "sha256": "ac99c6ba1f91ba39612ac6fed49e4a56657df55319a06d757fd3b55a0ab213c8"
+    },
+    {
+      "path": "src/domain/islandLife/walkingSpace.test.ts",
+      "sha256": "5387c5b4b40e84de3c7d05479ab4ab7bbb2dca3cebc22c62fd167799cfa1e878"
+    },
+    {
+      "path": "src/domain/islandLife/walkingSpace.ts",
+      "sha256": "5143cdea48aa648b4b2b34f8920168d61b0ea0ed4034b3890e0a76a1c7b85827"
+    },
+    {
+      "path": "src/domain/islandLife/waterBench.test.ts",
+      "sha256": "39838a8fc71d75fbe9f454dc36a607413036e80c32997efa7e6d6e119fd8f7ab"
+    },
+    {
+      "path": "src/domain/islandLife/waterChannels.test.ts",
+      "sha256": "47a3c20050528c295656ccd21822376cfb085cb5eaf04e571cecef6477c1f13a"
+    },
+    {
+      "path": "src/domain/islandLife/waterChannels.ts",
+      "sha256": "379e6d748fa9ffcd02862e776fe7d0240ac948c7454426db181c858a0a5eedea"
+    },
+    {
+      "path": "src/domain/islandLife/waterMagic.test.ts",
+      "sha256": "055c2ac373c84c8c8edd31a909587b30b71a359eb4ede81f04cf41525d1e7326"
+    },
+    {
+      "path": "src/domain/islandLife/waterMagic.ts",
+      "sha256": "25143343bb4420a81bcd0f6e55ed1f112b6a0eb8a18f16ef0710470967cfe0b5"
+    },
+    {
+      "path": "src/domain/islandLife/windArch.test.ts",
+      "sha256": "104d07fe86d727166c3f096b03dcd460aa64a98978218c748886547d0121f3e6"
+    },
+    {
+      "path": "vercel.json",
+      "sha256": "3e8a0c29b3f25a6a271c4581b964adef74ae586a13a734d901568e20a791affa"
+    }
+  ]
+}

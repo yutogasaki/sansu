@@ -12,6 +12,7 @@ import type { IslandPlan } from '../island/types';
 import { createLearningProblemContext } from './context';
 import { learningBarrierForProblem, learningEvidenceForProblem } from './attemptContext';
 import { readMathLevel11Pilot } from './pilotRepository';
+import { recordEvaluationContact } from './evaluationContacts';
 
 const SUBJECT_ITEM = 'add_2d1d_nc';
 const UNIT = 'math.add-two-one-no-regroup';
@@ -52,6 +53,20 @@ const unit = (report: Awaited<ReturnType<typeof readMathLevel11Pilot>>) => repor
 afterEach(async () => { vi.useRealTimers(); vi.restoreAllMocks(); for (const d of databases.splice(0)) { d.close(); await d.delete(); } });
 
 describe('read-only persisted Lv11 pilot', () => {
+    it('uses test display contact across representations without creating an answer', async () => {
+        const d = await database();
+        await d.logs.bulkAdd([
+            record(problem(23), '2026-09-08T09:00:00.000Z'),
+            record(problem(33), '2026-09-08T09:01:00.000Z'),
+            record(problem(43), '2026-09-08T09:02:00.000Z'),
+        ]);
+        await recordEvaluationContact('child', 'math', 'add_2d1d_nc_bridge', '2026-09-10T09:59:00.000Z', d);
+        expect(await d.logs.count()).toBe(3);
+        await d.logs.add(record(problem(23), '2026-09-10T10:00:00.000Z'));
+        const report = unit(await readMathLevel11Pilot(d, 'child', BEFORE_SUPPORT));
+        expect(report.retention).toBe('unconfirmed');
+        expect(report.facets.find(facet => facet.representation === 'symbol')?.delayedConfirmationCount).toBe(0);
+    });
     it.each<Mode>(['park', 'island'])('reads numeric %s support events as barriers after retained evidence', async mode => {
         const d = await database();
         await seedRetained(d);

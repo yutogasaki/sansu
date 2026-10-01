@@ -5,11 +5,11 @@ import { IslandToyIcon } from '../island/IslandToyIcon';
 import { Button } from '../ui/Button';
 import pokomoko from '../../assets/pokomoko-learning-poses.webp';
 import './FinishChallenge.css';
-import { finishStudyPath } from './finishNavigation';
+import { finishRecoveryStudyPath } from './finishNavigation';
 import { useFinishContinuation, type FinishContinuation } from '../../hooks/useFinishContinuation';
 import { islandEnabled } from '../../domain/island/feature';
 
-export type FinishPayoff = { passed: boolean; subject: SubjectKey; level: number; newLevel?: number; correctCount: number; totalQuestions: number };
+export type FinishPayoff = { passed: boolean; subject: SubjectKey; level: number; newLevel?: number; correctCount: number; totalQuestions: number; recoveryItemIds?: string[] };
 
 function FinishPath({ subject, level, nextLevel, cleared = false }: { subject: SubjectKey; level: number; nextLevel?: number | null; cleared?: boolean }) {
     return <div className={`finish-path${cleared ? ' finish-path--cleared' : ''}`}>
@@ -58,8 +58,8 @@ export function FinishChallengeResultView({ result, onNavigate, continuation }: 
             {opened && <FinishPath subject={result.subject} level={result.level} nextLevel={result.newLevel} cleared />}
             <div className="finish-score"><strong>{result.correctCount}<span> / {result.totalQuestions}もん</span></strong><span>ひとりで できた</span></div>
             {opened && continuation === 'pending' && <p className="finish-description">とちゅうの れんしゅうを つづけるよ。<br />あたらしい はんいは つぎの くぎりから。</p>}
-            <Button size="xl" className="finish-primary" onClick={() => onNavigate(islandEnabled() ? '/island?start=learn' : '/study')}>{opened ? continuation === 'fresh' ? 'つぎを はじめる' : 'つづけて まなぶ' : 'れんしゅうする'}<ArrowRight size={18} aria-hidden="true" /></Button>
-            {!result.passed && <Button size="xl" variant="secondary" onClick={() => onNavigate(`${finishStudyPath(result.subject)}&retry=${Date.now()}`)}>もういちど しあげに ちょうせん</Button>}
+            <Button size="xl" className="finish-primary" onClick={() => onNavigate(result.passed ? islandEnabled() ? '/island?start=learn' : '/study' : finishRecoveryStudyPath(result.subject, result.recoveryItemIds ?? []))}>{opened ? continuation === 'fresh' ? 'つぎを はじめる' : 'つづけて まなぶ' : 'ここを れんしゅうする'}<ArrowRight size={18} aria-hidden="true" /></Button>
+            {!result.passed && <p className="finish-description">ちがう もんだいで ひとりで 解けたら、<br />また しあげに ちょうせんできるよ。</p>}
             <Button size="lg" variant="ghost" onClick={() => onNavigate('/stats')}>きろくを みる</Button>
         </section>
     </main>;

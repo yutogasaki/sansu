@@ -1,0 +1,46 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+stdout | src/domain/learning/algorithmAudit.diagnostic.test.ts > read-only policy diagnostics (assertions describe observed behavior, not acceptance) > D1: default written presentation loses finish provenance
+D1 {"skill":"add_2d2d_c","input":"number","written":true,"evidence":false}
+
+stdout | src/domain/learning/algorithmAudit.diagnostic.test.ts > read-only policy diagnostics (assertions describe observed behavior, not acceptance) > D2: whole fraction presentation loses normal and finish provenance
+D2 {"original":["1","1"],"displayed":"1","evidence":false}
+
+stdout | src/domain/learning/algorithmAudit.diagnostic.test.ts > read-only policy diagnostics (assertions describe observed behavior, not acceptance) > D3: Lv9 with ten independent successes per skill still tests one non-carry equation
+D3 {"questions":20,"equations":["1 + 7 ="],"skills":["add_1d_2_bridge","add_1d_2"]}
+
+stdout | src/domain/learning/algorithmAudit.diagnostic.test.ts > read-only policy diagnostics (assertions describe observed behavior, not acceptance) > D4: readiness ignores elapsed time and distinct items
+D4 { status: 'ready', updatedAt: '2020-01-01T00:00:00Z' }
+
+stdout | src/domain/learning/algorithmAudit.diagnostic.test.ts > read-only policy diagnostics (assertions describe observed behavior, not acceptance) > D5: vocab eligibility has no word coverage requirement
+D5 { eligibleWords: 60, recordedWords: 0, status: 'ready' }
+
+stdout | src/domain/learning/algorithmAudit.diagnostic.test.ts > read-only policy diagnostics (assertions describe observed behavior, not acceptance) > D6: a single Due forces English even after 40 English questions at 10% review
+D6 { vocabHistory: 40, reviewRatio: 0.1, due: 1, forcedEnglish: true }
+
+stdout | src/domain/learning/algorithmAudit.diagnostic.test.ts > read-only policy diagnostics (assertions describe observed behavior, not acceptance) > D7: raw corrected successes can clear weak without independent successes
+D7 { rawCorrect: 10, previousWeak: true, nextWeak: false }
+
+stdout | src/domain/learning/algorithmAudit.diagnostic.test.ts > read-only policy diagnostics (assertions describe observed behavior, not acceptance) > D8: presentation followup trusts raw correct
+D8 [{"skillId":"add_2d1d_mental_nc","priority":55,"reason":"progression"}]
+
+stdout | src/domain/learning/algorithmAudit.diagnostic.test.ts > read-only policy diagnostics (assertions describe observed behavior, not acceptance) > D9: old lowest-strength Due can fill both slots of short math section
+D9 [{"skillId":"speed_basic","source":"due","isReview":true,"isMaintenanceCheck":false,"countsTowardReviewCap":true},{"skillId":"speed_basic","source":"main","isReview":false,"isMaintenanceCheck":false,"countsTowardReviewCap":false}]
+
+stdout | src/domain/learning/algorithmAudit.diagnostic.test.ts > read-only policy diagnostics (assertions describe observed behavior, not acceptance) > D10: independent retry within 24h cannot advance SRS
+D10 { withContact: 3, unrecordedContact: 4 }
+
+stdout | src/domain/learning/algorithmAudit.diagnostic.test.ts > read-only policy diagnostics (assertions describe observed behavior, not acceptance) > D11: failed finish does not write memory, logs or contact; immediate retry remains available
+D11 { logs: 0, memory: 0, contacts: 0, retryFresh: true, main: 8 }
+
+stdout | src/domain/learning/algorithmAudit.diagnostic.test.ts > read-only policy diagnostics (assertions describe observed behavior, not acceptance) > D12: seeded smoke over every math generator; arithmetic spot invariants
+D12 { skills: 118, generated: 11800, arithmetic: 5600 }
+
+ ✓ src/domain/learning/algorithmAudit.diagnostic.test.ts (12 tests) 170ms
+
+ Test Files  1 passed (1)
+      Tests  12 passed (12)
+   Start at  12:12:08
+   Duration  940ms (transform 155ms, setup 0ms, collect 605ms, tests 170ms, environment 0ms, prepare 33ms)
+

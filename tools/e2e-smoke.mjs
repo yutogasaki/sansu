@@ -671,9 +671,11 @@ const scenarioStatsToPeriodicTest = async (browser) => {
 
   await navigateHash(page, "/stats", /#\/stats/);
 
+  const mathProgress = page.getByRole('region', { name: 'さんすうの進みぐあい', exact: true });
+  await mathProgress.locator('summary').click();
   await Promise.all([
     waitForHash(page, /#\/study\?session=periodic-test/),
-    page.getByRole("button", { name: /挑戦|ちょうせん/ }).click(),
+    mathProgress.getByRole('button', { name: /かくにんテスト|確認テスト/ }).click(),
   ]);
   await waitForStudyReady(page);
   await completeSessionBySkipping(page, 20);

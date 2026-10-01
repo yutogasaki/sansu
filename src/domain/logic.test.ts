@@ -234,6 +234,7 @@ describe('Session Queue Generation', () => {
         profile.recentAttempts = [
             {
                 id: 'attempt-concrete-1',
+                assistance: 'independent',
                 timestamp: new Date(2026, 2, 28, 8, 55, 0).toISOString(),
                 subject: 'math',
                 skillId: 'add_tiny',
@@ -290,6 +291,7 @@ describe('Session Queue Generation', () => {
         profile.recentAttempts = [
             {
                 id: 'attempt-2',
+                assistance: 'independent',
                 timestamp: new Date(2026, 2, 28, 9, 5, 0).toISOString(),
                 subject: 'math',
                 skillId: 'add_1d_2_bridge',
@@ -318,6 +320,7 @@ describe('Session Queue Generation', () => {
         profile.recentAttempts = [
             {
                 id: 'attempt-bridge-2d',
+                assistance: 'independent',
                 timestamp: new Date(2026, 2, 28, 9, 7, 0).toISOString(),
                 subject: 'math',
                 skillId: 'add_2d1d_nc_bridge',
@@ -346,6 +349,7 @@ describe('Session Queue Generation', () => {
         profile.recentAttempts = [
             {
                 id: 'attempt-mental-2d',
+                assistance: 'independent',
                 timestamp: new Date(2026, 2, 28, 9, 8, 0).toISOString(),
                 subject: 'math',
                 skillId: 'add_2d1d_mental_nc',
@@ -374,6 +378,7 @@ describe('Session Queue Generation', () => {
         profile.recentAttempts = [
             {
                 id: 'attempt-hissan-2d',
+                assistance: 'independent',
                 timestamp: new Date(2026, 2, 28, 9, 9, 0).toISOString(),
                 subject: 'math',
                 skillId: 'add_2d1d_hissan_nc',

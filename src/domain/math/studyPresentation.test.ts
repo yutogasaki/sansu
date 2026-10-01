@@ -2,7 +2,9 @@ import { describe, expect, it } from 'vitest';
 import type { Problem } from '../types';
 import { createLearningProblemContext } from '../learning/context';
 import { studyLearningEvidence } from '../learning/attemptContext';
-import { hasStudySingleNumberInput, prepareStudyBlockPresentation, resolveStudyHissanPresentation } from './studyPresentation';
+import { checkAnswer } from '../../hooks/useStudySession.logic';
+import { integerFractionProblem } from './fractionInput';
+import { hasStudySingleNumberInput, prepareStudyBlockPresentation, resolveStudyHissanPresentation, studyDisplayedLearningEvidence } from './studyPresentation';
 
 const problem = (categoryId = 'add_2d2d_nc', questionText = '23 + 14 =', correctAnswer = '37'): Problem => {
     const p: Problem = { id: 'study-question', subject: 'math', categoryId, questionText, correctAnswer,
@@ -12,6 +14,16 @@ const problem = (categoryId = 'add_2d2d_nc', questionText = '23 + 14 =', correct
 };
 
 describe('new Study input reservation', () => {
+    it.each([false, true])('keeps all 20 newly reserved finish answers identifiable with written preference %s', enabled => {
+        const reserved = prepareStudyBlockPresentation(Array.from({ length: 20 }, (_, i) =>
+            problem('add_2d2d_c', `${27 + i} + 18 =`, String(45 + i))), enabled);
+        for (const saved of reserved) {
+            const resumed = resolveStudyHissanPresentation(saved, !enabled);
+            expect(resumed.isHissanActive).toBe(enabled);
+            expect(studyDisplayedLearningEvidence(saved, saved, 'independent', resumed.isHissanActive, false))
+                .toMatchObject({ completion: 'whole-problem', assistance: 'independent', problem: saved.learningContext });
+        }
+    });
     it.each([
         ['add_2d2d_nc', '23 + 14 =', '37'],
         ['add_2d2d_c', '27 + 18 =', '45'],
@@ -80,5 +92,50 @@ describe('new Study input reservation', () => {
             correctAnswer: 'りんご', isReview: false };
         expect(prepareStudyBlockPresentation([vocab], true)[0]).toBe(vocab);
         expect(hasStudySingleNumberInput(vocab)).toBe(false);
+    });
+});
+
+describe('Study evidence through integer fraction input', () => {
+    const fraction = (answer: string[], labels = ['分子', '分母']): Problem => {
+        const mixed = labels.length === 3;
+        const saved: Problem = { id: 'fraction', subject: 'math', categoryId: mixed ? 'frac_mixed' : 'frac_add_same',
+            questionText: mixed ? '1 1/2 + 1 1/2 =' : answer[1] === '1' ? '1/2 + 1/2 =' : '1/4 + 1/4 =',
+            inputType: 'multi-number', correctAnswer: answer, isReview: false,
+            inputConfig: { fields: labels.map(label => ({ label, length: 2 })) } };
+        saved.learningContext = createLearningProblemContext('math', saved);
+        return saved;
+    };
+
+    it.each([
+        [['1', '1'], ['分子', '分母'], '1'],
+        [['3', '0', '2'], ['整数', '分子', '分母'], '3'],
+    ])('grades an integer display while preserving the original whole-problem evidence: %j', (answer, labels, correct) => {
+        const saved = fraction(answer, labels), before = structuredClone(saved);
+        const display = integerFractionProblem(saved);
+        expect(checkAnswer('number', display.correctAnswer, correct, [], undefined)).toBe(true);
+        expect(checkAnswer('number', display.correctAnswer, '9', [], undefined)).toBe(false);
+        expect(studyDisplayedLearningEvidence(saved, display, 'independent', false, false))
+            .toMatchObject({ assistance: 'independent', problem: saved.learningContext });
+        expect(studyDisplayedLearningEvidence(saved, display, 'assisted', false, false)?.assistance).toBe('assisted');
+        expect(saved).toEqual(before);
+    });
+
+    it('keeps ordinary fraction input and its original evidence', () => {
+        const saved = fraction(['1', '2']);
+        const display = integerFractionProblem(saved);
+        expect(display).toBe(saved);
+        expect(checkAnswer('multi-number', display.correctAnswer, '', ['1', '2'], undefined)).toBe(true);
+        expect(checkAnswer('multi-number', display.correctAnswer, '', ['1', '3'], undefined)).toBe(false);
+        expect(studyDisplayedLearningEvidence(saved, display, 'independent', false, false)?.problem).toEqual(saved.learningContext);
+    });
+
+    it('refuses unknown provenance, changed content and changed representation', () => {
+        const saved = fraction(['1', '1']), display = integerFractionProblem(saved);
+        expect(studyDisplayedLearningEvidence({ ...saved, learningContext: undefined }, display, 'independent', false, false)).toBeUndefined();
+        expect(studyDisplayedLearningEvidence(saved, { ...display, correctAnswer: '2' }, 'independent', false, false)).toBeUndefined();
+        expect(studyDisplayedLearningEvidence(saved, { ...display, questionText: '1/2 + 3/2 =' }, 'independent', false, false)).toBeUndefined();
+        expect(studyDisplayedLearningEvidence(saved, display, 'independent', true, false)).toBeUndefined();
+        expect(studyDisplayedLearningEvidence(saved, display, 'independent', false, true)).toBeUndefined();
+        expect(studyDisplayedLearningEvidence({ ...saved, correctAnswer: ['2', '1'] }, display, 'independent', false, false)).toBeUndefined();
     });
 });

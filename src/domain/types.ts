@@ -399,6 +399,8 @@ export interface RecentAttempt {
     result: AttemptResult;
     skipped?: boolean;
     timeMs?: number;
+    /** Missing on legacy records; only explicit whole-problem independence advances representation. */
+    assistance?: 'independent' | 'assisted' | 'unknown';
 }
 
 // ============================================================
@@ -469,6 +471,12 @@ export interface AppData {
     profiles: Record<string, UserProfile>;
 }
 
+export interface FinishRecovery {
+    subject: SubjectKey;
+    level: number;
+    items: { itemId: string; variant?: string; failedProblemKey: string; correctProblemKeys: string[] }[];
+}
+
 export interface UserProfile {
     /** New profiles opt into contextual help; absent preserves existing users. */
     islandTutorialVersion?: 1;
@@ -507,7 +515,10 @@ export interface UserProfile {
     testHistory?: PeriodicTestResult[];
     periodicTestState?: PeriodicTestState;
     periodicTestSets?: Partial<Record<SubjectKey, PeriodicTestSet>>;
-    finishTestSets?: Partial<Record<SubjectKey, PeriodicTestSet & { id: string; profileId: string; targetLevel: number; answers?: Record<string, boolean> }>>;
+    finishTestSets?: Partial<Record<SubjectKey, PeriodicTestSet & { id: string; profileId: string; targetLevel: number; answers?: Record<string, boolean>; readiness?: import('./finishCoverage').FinishReadinessSnapshot }>>;
+    finishRecovery?: Partial<Record<SubjectKey, FinishRecovery>>;
+    /** Display contacts are separate from answers and never increase mastery. */
+    evaluationContacts?: Partial<Record<SubjectKey, Record<string, string>>>;
     periodicTestTimeLimitSeconds?: number; // undefined means no limit
 
     // Streak / Daily

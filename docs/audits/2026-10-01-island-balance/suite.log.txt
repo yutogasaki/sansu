@@ -1,0 +1,119 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+ ✓ src/domain/growingIsland/rules.test.ts (24 tests) 64ms
+ ✓ src/domain/growingIsland/friends.test.ts (10 tests) 72ms
+ ✓ src/domain/islandLife/relationObservation.test.ts (13 tests) 105ms
+ ✓ src/domain/islandLife/relationSelection.test.ts (11 tests) 114ms
+ ✓ src/domain/islandLife/discoveryJournal.test.ts (14 tests) 128ms
+ ✓ src/domain/islandLife/facilityTrips.test.ts (10 tests) 162ms
+ ✓ src/domain/islandLife/activities.test.ts (7 tests) 214ms
+ ✓ src/domain/islandLife/foodLoop.test.ts (10 tests) 16ms
+ ✓ src/domain/islandLife/economyMigration.test.ts (7 tests) 233ms
+ ✓ src/domain/islandLife/landRules.test.ts (6 tests) 146ms
+ ✓ src/domain/islandLife/diagonalMigration.test.ts (4 tests) 199ms
+ ✓ src/domain/islandLife/simulation.test.ts (11 tests) 345ms
+ ✓ src/domain/islandLife/playTours.test.ts (9 tests) 14ms
+ ✓ src/domain/islandLife/placementUndo.test.ts (6 tests) 132ms
+ ✓ src/domain/islandLife/placementMigration.test.ts (4 tests) 100ms
+ ✓ src/domain/islandLife/economyRepository.test.ts (5 tests) 521ms
+ ✓ src/domain/islandLife/cadence.test.ts (8 tests) 316ms
+ ✓ src/domain/islandLife/decorations.test.ts (4 tests) 198ms
+ ✓ src/domain/islandLife/heroVisit.test.ts (5 tests) 159ms
+ ✓ src/domain/islandLife/plantsWater.test.ts (5 tests) 140ms
+ ✓ src/domain/islandLife/walkingSpace.test.ts (7 tests) 54ms
+ ✓ src/domain/growingIsland/repository.test.ts (8 tests) 1366ms
+   ✓ growing island persistence > copies a well-used current island: every item, the land, the drops and the friends 1116ms
+ ✓ src/domain/islandLife/discovery.test.ts (6 tests) 8ms
+ ✓ src/domain/islandLife/residency.test.ts (7 tests) 535ms
+stdout | src/domain/islandLife/commandPerformance.test.ts > reuses a storage command after a day of history and persists the cold-replay state
+store warm command + replay ms 4.373291999999992
+store cold replay ms 573.493333
+
+ ✓ src/domain/islandLife/observationVisit.test.ts (5 tests) 15ms
+ ✓ src/domain/islandLife/cadenceMigration.test.ts (4 tests) 231ms
+ ✓ src/domain/islandLife/picnicTable.test.ts (5 tests) 24ms
+ ✓ src/domain/islandLife/heroVisitMigration.test.ts (3 tests) 252ms
+ ✓ src/domain/islandLife/sandbox.test.ts (3 tests) 314ms
+ ✓ src/domain/islandLife/windArch.test.ts (4 tests) 60ms
+ ✓ src/domain/islandLife/isolation.test.ts (5 tests) 34ms
+ ✓ src/domain/islandLife/purchases.test.ts (5 tests) 119ms
+ ✓ src/domain/islandLife/commandPerformance.test.ts (20 tests) 1756ms
+   ✓ reuses a storage command after a day of history and persists the cold-replay state 1269ms
+ ✓ src/domain/islandLife/readingEncounter.test.ts (10 tests) 17ms
+ ✓ src/domain/islandLife/soilMoisture.test.ts (4 tests) 47ms
+ ✓ src/domain/islandLife/repository.test.ts (10 tests) 2443ms
+   ✓ independent life persistence > never awards a diagnostic time jump twice and recovers from backward clock 855ms
+   ✓ independent life persistence > persists channel receipts and reroutes water after storing and replacing a segment 895ms
+ ✓ src/domain/islandLife/waterMagic.test.ts (5 tests) 23ms
+ ✓ src/domain/islandLife/tourMigration.test.ts (5 tests) 227ms
+ ✓ src/domain/islandLife/discoveryRecall.test.ts (4 tests) 10ms
+stdout | src/domain/islandLife/replaySnapshot.test.ts > persistent replay acceleration > survives cold reopen and matches full replay after 1 and 7 days, purchases and new facts
+snapshot benchmark {"hours":24,"fullMs":284.86304100000007,"restoreMs":2.4750830000000406,"snapshotBytes":7378}
+
+ ✓ src/domain/islandLife/placementClearance.test.ts (3 tests) 41ms
+stdout | src/domain/growingIsland/pacing.test.ts > pacing (spec 52 §15, starting values) > grows a village over a month without running away
+┌─────────┬─────┬───────────┬───────┬──────┐
+│ (index) │ day │ villagers │ level │ land │
+├─────────┼─────┼───────────┼───────┼──────┤
+│ 0       │ 1   │ 2         │ 1     │ 30   │
+│ 1       │ 3   │ 4         │ 3     │ 30   │
+│ 2       │ 7   │ 8         │ 4     │ 45   │
+│ 3       │ 14  │ 14        │ 5     │ 45   │
+│ 4       │ 30  │ 25        │ 7     │ 120  │
+└─────────┴─────┴───────────┴───────┴──────┘
+
+stdout | src/domain/growingIsland/pacing.test.ts > pacing (spec 52 §15, starting values) > keeps growing slowly for three months
+┌─────────┬─────┬───────────┬───────┬──────┐
+│ (index) │ day │ villagers │ level │ land │
+├─────────┼─────┼───────────┼───────┼──────┤
+│ 0       │ 45  │ 32        │ 8     │ 120  │
+│ 1       │ 60  │ 39        │ 8     │ 120  │
+│ 2       │ 90  │ 51        │ 9     │ 120  │
+└─────────┴─────┴───────────┴───────┴──────┘
+
+ ✓ src/domain/growingIsland/pacing.test.ts (3 tests) 949ms
+   ✓ pacing (spec 52 §15, starting values) > keeps growing slowly for three months 659ms
+ ✓ src/domain/islandLife/roaming.test.ts (4 tests) 10ms
+ ✓ src/domain/islandLife/extendedGatherings.test.ts (4 tests) 18ms
+ ✓ src/domain/islandLife/facilities.test.ts (2 tests) 85ms
+ ✓ src/domain/islandLife/waterChannels.test.ts (3 tests) 9ms
+ ✓ src/domain/islandLife/footstepMagic.test.ts (3 tests) 8ms
+ ✓ src/domain/islandLife/waterBench.test.ts (4 tests) 13ms
+ ✓ src/domain/growingIsland/flowers.test.ts (4 tests) 22ms
+ ✓ src/domain/islandLife/economyRules.test.ts (12 tests) 2ms
+ ✓ src/domain/islandLife/capabilities.test.ts (3 tests) 57ms
+ ✓ src/domain/islandLife/groupEncounters.test.ts (3 tests) 30ms
+ ✓ src/domain/islandLife/shadowMagic.test.ts (3 tests) 7ms
+ ✓ src/domain/islandLife/growthIntegration.test.ts (2 tests) 30ms
+ ✓ src/domain/growingIsland/room.test.ts (3 tests) 6ms
+ ✓ src/domain/islandLife/production.test.ts (2 tests) 31ms
+ ✓ src/domain/islandLife/playTourSimulation.test.ts (7 tests) 2221ms
+   ✓ authoritative GP3 time and interruption > keeps all three residents circulating during a long absence 2130ms
+stdout | src/domain/islandLife/visitPerformance.test.ts > reuses the applied visit without replaying a day of history, with identical saved state
+visit warm command + replay ms 1.5772920000000568
+visit cold replay ms 245.5557500000001
+
+ ✓ src/domain/islandLife/visitPerformance.test.ts (1 test) 969ms
+   ✓ reuses the applied visit without replaying a day of history, with identical saved state 969ms
+ ✓ src/domain/islandLife/terminalFacts.test.ts (1 test) 40ms
+stdout | src/domain/islandLife/replaySnapshot.test.ts > persistent replay acceleration > survives cold reopen and matches full replay after 1 and 7 days, purchases and new facts
+snapshot benchmark {"hours":168,"fullMs":719.8141250000003,"restoreMs":0.45020900000008623,"snapshotBytes":7563}
+
+stdout | src/domain/islandLife/replaySnapshot.test.ts > persistent replay acceleration > survives cold reopen and matches full replay after 1 and 7 days, purchases and new facts
+snapshot benchmark {"hours":168.0000002777778,"fullMs":602.800041,"restoreMs":0.596625000000131,"snapshotBytes":7563}
+
+ ✓ src/domain/islandLife/replaySnapshot.test.ts (2 tests) 3939ms
+   ✓ persistent replay acceleration > survives cold reopen and matches full replay after 1 and 7 days, purchases and new facts 3932ms
+stdout | src/domain/islandLife/creditPerformance.test.ts > reuses the persisted prefix for new learning after seven days with identical cold replay
+seven-day incremental credit ms 0.2185829999998532
+seven-day cold credit ms 1433.6887500000003
+
+ ✓ src/domain/islandLife/creditPerformance.test.ts (3 tests) 4120ms
+   ✓ reuses the persisted prefix for new learning after seven days with identical cold replay 4008ms
+
+ Test Files  60 passed (60)
+      Tests  365 passed (365)
+   Start at  12:16:43
+   Duration  6.63s (transform 1.87s, setup 0ms, collect 7.84s, tests 23.52s, environment 6ms, prepare 2.14s)
+

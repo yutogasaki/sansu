@@ -144,7 +144,7 @@ describe("planMathProblems", () => {
 
     it("excludes graduated automatic progression but retains remediation after an error", () => {
         const profile = createMathProfile(8);
-        profile.recentAttempts = [{ subject: "math", skillId: "add_1d_1_bridge", result: "correct", timestamp: new Date().toISOString() }];
+        profile.recentAttempts = [{ subject: "math", skillId: "add_1d_1_bridge", result: "correct", assistance: "independent", timestamp: new Date().toISOString() }];
         const progressed = planMathProblems({ profile, count: 1,
             retiredSkillIds: ["add_1d_1"], maintenanceRate: 0, random: () => 0,
         });

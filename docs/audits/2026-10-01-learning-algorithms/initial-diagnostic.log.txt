@@ -1,0 +1,81 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+stdout | src/domain/learning/algorithmAudit.diagnostic.test.ts > read-only policy diagnostics (assertions describe observed behavior, not acceptance) > D1: default written presentation loses finish provenance
+D1 {"skill":"add_2d2d_c","input":"number","written":true,"evidence":false}
+
+stdout | src/domain/learning/algorithmAudit.diagnostic.test.ts > read-only policy diagnostics (assertions describe observed behavior, not acceptance) > D2: whole fraction presentation loses normal and finish provenance
+D2 {"original":["1","1"],"displayed":"1","evidence":false}
+
+stdout | src/domain/learning/algorithmAudit.diagnostic.test.ts > read-only policy diagnostics (assertions describe observed behavior, not acceptance) > D4: readiness ignores elapsed time and distinct items
+D4 { status: 'ready', updatedAt: '2020-01-01T00:00:00Z' }
+
+stdout | src/domain/learning/algorithmAudit.diagnostic.test.ts > read-only policy diagnostics (assertions describe observed behavior, not acceptance) > D5: vocab eligibility has no word coverage requirement
+D5 { eligibleWords: 60, recordedWords: 0, status: 'ready' }
+
+stdout | src/domain/learning/algorithmAudit.diagnostic.test.ts > read-only policy diagnostics (assertions describe observed behavior, not acceptance) > D6: a single Due forces English even after 40 English questions at 10% review
+D6 { vocabHistory: 40, reviewRatio: 0.1, due: 1, forcedEnglish: true }
+
+stdout | src/domain/learning/algorithmAudit.diagnostic.test.ts > read-only policy diagnostics (assertions describe observed behavior, not acceptance) > D7: raw corrected successes can clear weak without independent successes
+D7 { rawCorrect: 10, previousWeak: true, nextWeak: false }
+
+stdout | src/domain/learning/algorithmAudit.diagnostic.test.ts > read-only policy diagnostics (assertions describe observed behavior, not acceptance) > D10: independent retry within 24h cannot advance SRS
+D10 { withContact: 3, unrecordedContact: 4 }
+
+stdout | src/domain/learning/algorithmAudit.diagnostic.test.ts > read-only policy diagnostics (assertions describe observed behavior, not acceptance) > D11: failed finish does not write memory, logs or contact; immediate retry remains available
+D11 { logs: 0, memory: 0, contacts: 0, retryFresh: true, main: 8 }
+
+ ❯ src/domain/learning/algorithmAudit.diagnostic.test.ts (11 tests | 3 failed) 26ms
+   × read-only policy diagnostics (assertions describe observed behavior, not acceptance) > D3: new Lv4 finish repeats one equation 20 times 4ms
+     → expected 6 to be 1 // Object.is equality
+   × read-only policy diagnostics (assertions describe observed behavior, not acceptance) > D8: presentation followup trusts raw correct 0ms
+     → expected false to be true // Object.is equality
+   × read-only policy diagnostics (assertions describe observed behavior, not acceptance) > D9: old lowest-strength Due can fill both slots of short math section 1ms
+     → expected 'add_1d_1_bridge' to be 'add_1d_1' // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/domain/learning/algorithmAudit.diagnostic.test.ts > read-only policy diagnostics (assertions describe observed behavior, not acceptance) > D3: new Lv4 finish repeats one equation 20 times
+AssertionError: expected 6 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 6
+
+ ❯ src/domain/learning/algorithmAudit.diagnostic.test.ts:27:281
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  src/domain/learning/algorithmAudit.diagnostic.test.ts > read-only policy diagnostics (assertions describe observed behavior, not acceptance) > D8: presentation followup trusts raw correct
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/domain/learning/algorithmAudit.diagnostic.test.ts:32:258
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  src/domain/learning/algorithmAudit.diagnostic.test.ts > read-only policy diagnostics (assertions describe observed behavior, not acceptance) > D9: old lowest-strength Due can fill both slots of short math section
+AssertionError: expected 'add_1d_1_bridge' to be 'add_1d_1' // Object.is equality
+
+Expected: "add_1d_1"
+Received: "add_1d_1_bridge"
+
+ ❯ src/domain/learning/algorithmAudit.diagnostic.test.ts:33:472
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 8 passed (11)
+   Start at  12:07:03
+   Duration  844ms (transform 165ms, setup 0ms, collect 641ms, tests 26ms, environment 0ms, prepare 36ms)
+

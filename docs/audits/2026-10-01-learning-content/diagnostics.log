@@ -1,0 +1,864 @@
+{
+  "mathSkills": 118,
+  "generators": 118,
+  "mathLevels": 29,
+  "mathCount": 82600,
+  "oracleCount": 47600,
+  "vocabItems": 1184,
+  "distinctSpellings": 1173,
+  "vocabCount": 23680,
+  "exampleCount": 1184,
+  "missingExamples": [],
+  "catalogErrors": [],
+  "failures": [],
+  "prereqGaps": [
+    {
+      "unit": "math.compare-two-digit",
+      "missing": [
+        "math.place-value-tens"
+      ]
+    },
+    {
+      "unit": "math.add-two-one-no-regroup",
+      "missing": [
+        "math.place-value-tens"
+      ]
+    },
+    {
+      "unit": "math.add-two-one-regroup",
+      "missing": [
+        "math.place-value-tens"
+      ]
+    },
+    {
+      "unit": "math.subtract-two-one-no-regroup",
+      "missing": [
+        "math.place-value-tens"
+      ]
+    },
+    {
+      "unit": "math.subtract-two-one-regroup",
+      "missing": [
+        "math.place-value-tens"
+      ]
+    },
+    {
+      "unit": "math.add-two-two-no-regroup",
+      "missing": [
+        "math.place-value-tens"
+      ]
+    },
+    {
+      "unit": "math.add-two-two-regroup",
+      "missing": [
+        "math.place-value-tens"
+      ]
+    },
+    {
+      "unit": "math.subtract-two-two",
+      "missing": [
+        "math.place-value-tens"
+      ]
+    },
+    {
+      "unit": "math.add-multi-digit",
+      "missing": [
+        "math.place-value-expanded"
+      ]
+    },
+    {
+      "unit": "math.subtract-multi-digit",
+      "missing": [
+        "math.place-value-expanded"
+      ]
+    },
+    {
+      "unit": "math.multiplication-facts",
+      "missing": [
+        "math.equal-groups"
+      ]
+    },
+    {
+      "unit": "math.multiply-one-digit",
+      "missing": [
+        "math.place-value-expanded",
+        "math.equal-groups"
+      ]
+    },
+    {
+      "unit": "math.divide-facts",
+      "missing": [
+        "math.division-meaning"
+      ]
+    },
+    {
+      "unit": "math.divide-one-digit-exact",
+      "missing": [
+        "math.division-meaning",
+        "math.place-value-expanded"
+      ]
+    },
+    {
+      "unit": "math.divide-remainder",
+      "missing": [
+        "math.division-meaning"
+      ]
+    },
+    {
+      "unit": "math.multiply-two-digit",
+      "missing": [
+        "math.place-value-expanded",
+        "math.equal-groups"
+      ]
+    },
+    {
+      "unit": "math.divide-two-digit-exact",
+      "missing": [
+        "math.division-meaning",
+        "math.place-value-expanded"
+      ]
+    },
+    {
+      "unit": "math.decimal-add",
+      "missing": [
+        "math.decimal-place-value"
+      ]
+    },
+    {
+      "unit": "math.decimal-subtract",
+      "missing": [
+        "math.decimal-place-value"
+      ]
+    },
+    {
+      "unit": "math.decimal-multiply-integer",
+      "missing": [
+        "math.decimal-place-value"
+      ]
+    },
+    {
+      "unit": "math.decimal-divide-integer",
+      "missing": [
+        "math.decimal-place-value",
+        "math.division-meaning"
+      ]
+    },
+    {
+      "unit": "math.decimal-multiply-decimal",
+      "missing": [
+        "math.decimal-place-value"
+      ]
+    },
+    {
+      "unit": "math.decimal-divide-decimal",
+      "missing": [
+        "math.decimal-place-value",
+        "math.division-meaning"
+      ]
+    },
+    {
+      "unit": "math.fraction-add-same",
+      "missing": [
+        "math.fraction-quantity",
+        "math.fraction-equivalence"
+      ]
+    },
+    {
+      "unit": "math.fraction-subtract-same",
+      "missing": [
+        "math.fraction-quantity",
+        "math.fraction-equivalence"
+      ]
+    },
+    {
+      "unit": "math.fraction-add-different",
+      "missing": [
+        "math.fraction-quantity",
+        "math.fraction-equivalence"
+      ]
+    },
+    {
+      "unit": "math.fraction-subtract-different",
+      "missing": [
+        "math.fraction-quantity",
+        "math.fraction-equivalence"
+      ]
+    },
+    {
+      "unit": "math.fraction-add-mixed",
+      "missing": [
+        "math.fraction-mixed-meaning",
+        "math.fraction-equivalence"
+      ]
+    },
+    {
+      "unit": "math.fraction-subtract-mixed",
+      "missing": [
+        "math.fraction-mixed-meaning",
+        "math.fraction-equivalence"
+      ]
+    },
+    {
+      "unit": "math.fraction-multiply-integer",
+      "missing": [
+        "math.fraction-quantity",
+        "math.fraction-equivalence"
+      ]
+    },
+    {
+      "unit": "math.fraction-multiply-fraction",
+      "missing": [
+        "math.fraction-quantity",
+        "math.fraction-equivalence"
+      ]
+    },
+    {
+      "unit": "math.fraction-divide-integer",
+      "missing": [
+        "math.fraction-quantity",
+        "math.fraction-equivalence",
+        "math.division-meaning"
+      ]
+    },
+    {
+      "unit": "math.fraction-divide-fraction",
+      "missing": [
+        "math.fraction-quantity",
+        "math.fraction-equivalence",
+        "math.division-meaning"
+      ]
+    },
+    {
+      "unit": "math.scale-powers-ten",
+      "missing": [
+        "math.place-value-expanded",
+        "math.decimal-place-value"
+      ]
+    },
+    {
+      "unit": "math.large-number-units",
+      "missing": [
+        "math.place-value-expanded"
+      ]
+    },
+    {
+      "unit": "math.decimal-compare",
+      "missing": [
+        "math.decimal-place-value"
+      ]
+    },
+    {
+      "unit": "math.fraction-compare",
+      "missing": [
+        "math.fraction-quantity",
+        "math.fraction-equivalence"
+      ]
+    },
+    {
+      "unit": "math.percent",
+      "missing": [
+        "math.unit-rate"
+      ]
+    },
+    {
+      "unit": "math.average",
+      "missing": [
+        "math.division-meaning"
+      ]
+    },
+    {
+      "unit": "math.ratio",
+      "missing": [
+        "math.unit-rate"
+      ]
+    },
+    {
+      "unit": "math.speed",
+      "missing": [
+        "math.unit-rate"
+      ]
+    }
+  ],
+  "laterSuggestions": [
+    {
+      "unit": "math.decimal-add",
+      "level": 19,
+      "prerequisite": "math.decimal-compare",
+      "prerequisiteLevel": 25
+    },
+    {
+      "unit": "math.decimal-subtract",
+      "level": 19,
+      "prerequisite": "math.decimal-compare",
+      "prerequisiteLevel": 25
+    },
+    {
+      "unit": "math.decimal-multiply-integer",
+      "level": 20,
+      "prerequisite": "math.decimal-compare",
+      "prerequisiteLevel": 25
+    },
+    {
+      "unit": "math.decimal-divide-integer",
+      "level": 20,
+      "prerequisite": "math.decimal-compare",
+      "prerequisiteLevel": 25
+    },
+    {
+      "unit": "math.decimal-multiply-decimal",
+      "level": 20,
+      "prerequisite": "math.scale-powers-ten",
+      "prerequisiteLevel": 24
+    },
+    {
+      "unit": "math.decimal-divide-decimal",
+      "level": 20,
+      "prerequisite": "math.scale-powers-ten",
+      "prerequisiteLevel": 24
+    },
+    {
+      "unit": "math.fraction-add-same",
+      "level": 21,
+      "prerequisite": "math.fraction-compare",
+      "prerequisiteLevel": 26
+    },
+    {
+      "unit": "math.fraction-subtract-same",
+      "level": 21,
+      "prerequisite": "math.fraction-compare",
+      "prerequisiteLevel": 26
+    }
+  ],
+  "duplicates": [
+    {
+      "surface": "orange",
+      "items": [
+        {
+          "id": "orange",
+          "level": 1,
+          "japanese": "オレンジ",
+          "category": "食べ物",
+          "example": "This is an orange."
+        },
+        {
+          "id": "orange_lv2",
+          "surface": "orange",
+          "level": 2,
+          "japanese": "オレンジいろ",
+          "category": "色",
+          "example": "The ball is orange."
+        }
+      ]
+    },
+    {
+      "surface": "please",
+      "items": [
+        {
+          "id": "please",
+          "level": 1,
+          "japanese": "おねがい",
+          "japaneseKanji": "お願い",
+          "category": "その他",
+          "example": "Please help me."
+        },
+        {
+          "id": "please_lv8",
+          "surface": "please",
+          "level": 8,
+          "japanese": "よろこばせる",
+          "japaneseKanji": "喜ばせる",
+          "category": "動詞",
+          "example": "Your words please my heart."
+        }
+      ]
+    },
+    {
+      "surface": "thank",
+      "items": [
+        {
+          "id": "thank",
+          "level": 1,
+          "japanese": "ありがとう",
+          "category": "その他",
+          "example": "Thank you very much."
+        },
+        {
+          "id": "thank_lv8",
+          "surface": "thank",
+          "level": 8,
+          "japanese": "かんしゃする",
+          "japaneseKanji": "感謝する",
+          "category": "動詞",
+          "example": "I thank my teacher."
+        }
+      ]
+    },
+    {
+      "surface": "hard",
+      "items": [
+        {
+          "id": "hard",
+          "level": 5,
+          "japanese": "かたい",
+          "japaneseKanji": "硬い",
+          "category": "形容詞",
+          "example": "This work is hard."
+        },
+        {
+          "id": "hard_lv9",
+          "surface": "hard",
+          "level": 9,
+          "japanese": "いっしょうけんめい",
+          "japaneseKanji": "一生懸命",
+          "category": "副詞",
+          "example": "I work hard every day."
+        }
+      ]
+    },
+    {
+      "surface": "right",
+      "items": [
+        {
+          "id": "right",
+          "level": 5,
+          "japanese": "ただしい",
+          "japaneseKanji": "正しい",
+          "category": "形容詞",
+          "example": "Your answer is right."
+        },
+        {
+          "id": "right_lv16",
+          "surface": "right",
+          "level": 16,
+          "japanese": "けんり",
+          "japaneseKanji": "権利",
+          "category": "社会問題",
+          "example": "You have the right to choose."
+        }
+      ]
+    },
+    {
+      "surface": "so",
+      "items": [
+        {
+          "id": "so",
+          "level": 5,
+          "japanese": "とても",
+          "category": "副詞",
+          "example": "I am so happy."
+        },
+        {
+          "id": "so_lv11",
+          "surface": "so",
+          "level": 11,
+          "japanese": "だから",
+          "category": "接続",
+          "example": "I am tired, so I rest."
+        }
+      ]
+    },
+    {
+      "surface": "clean",
+      "items": [
+        {
+          "id": "clean",
+          "level": 6,
+          "japanese": "そうじする",
+          "japaneseKanji": "掃除する",
+          "category": "動詞",
+          "example": "I clean my room."
+        },
+        {
+          "id": "clean_lv10",
+          "surface": "clean",
+          "level": 10,
+          "japanese": "きれい",
+          "japaneseKanji": "綺麗",
+          "category": "形容詞",
+          "example": "My room is clean."
+        }
+      ]
+    },
+    {
+      "surface": "way",
+      "items": [
+        {
+          "id": "way",
+          "level": 7,
+          "japanese": "みち",
+          "japaneseKanji": "道",
+          "category": "交通",
+          "example": "This is the right way."
+        },
+        {
+          "id": "way_lv12",
+          "surface": "way",
+          "level": 12,
+          "japanese": "ほうほう",
+          "japaneseKanji": "方法",
+          "category": "概念",
+          "example": "This is a good way."
+        }
+      ]
+    },
+    {
+      "surface": "own",
+      "items": [
+        {
+          "id": "own",
+          "level": 7,
+          "japanese": "もっている",
+          "japaneseKanji": "持っている",
+          "category": "動詞",
+          "example": "I own a small bike."
+        },
+        {
+          "id": "own_lv10",
+          "surface": "own",
+          "level": 10,
+          "japanese": "じぶんの",
+          "japaneseKanji": "自分の",
+          "category": "形容詞",
+          "example": "This is my own room."
+        }
+      ]
+    },
+    {
+      "surface": "cause",
+      "items": [
+        {
+          "id": "cause",
+          "level": 14,
+          "japanese": "ひきおこす",
+          "japaneseKanji": "引き起こす",
+          "category": "動詞",
+          "example": "Too much rain can cause trouble."
+        },
+        {
+          "id": "cause_lv15",
+          "surface": "cause",
+          "level": 15,
+          "japanese": "げんいん",
+          "japaneseKanji": "原因",
+          "category": "名詞",
+          "example": "The cause is not clear."
+        }
+      ]
+    },
+    {
+      "surface": "properly",
+      "items": [
+        {
+          "id": "properly",
+          "level": 15,
+          "japanese": "てきせつに",
+          "category": "副詞",
+          "example": "Please use the tool properly."
+        },
+        {
+          "id": "properly_lv18",
+          "surface": "properly",
+          "level": 18,
+          "japanese": "てきせつに",
+          "japaneseKanji": "適切に",
+          "category": "副詞",
+          "example": "Please wash your hands properly."
+        }
+      ]
+    }
+  ],
+  "levelCounts": [
+    {
+      "level": 0,
+      "skills": 5
+    },
+    {
+      "level": 1,
+      "skills": 5
+    },
+    {
+      "level": 2,
+      "skills": 5
+    },
+    {
+      "level": 3,
+      "skills": 5
+    },
+    {
+      "level": 4,
+      "skills": 6
+    },
+    {
+      "level": 5,
+      "skills": 6
+    },
+    {
+      "level": 6,
+      "skills": 6
+    },
+    {
+      "level": 7,
+      "skills": 4
+    },
+    {
+      "level": 8,
+      "skills": 2
+    },
+    {
+      "level": 9,
+      "skills": 2
+    },
+    {
+      "level": 10,
+      "skills": 4
+    },
+    {
+      "level": 11,
+      "skills": 19
+    },
+    {
+      "level": 12,
+      "skills": 4
+    },
+    {
+      "level": 13,
+      "skills": 5
+    },
+    {
+      "level": 14,
+      "skills": 5
+    },
+    {
+      "level": 15,
+      "skills": 2
+    },
+    {
+      "level": 16,
+      "skills": 2
+    },
+    {
+      "level": 17,
+      "skills": 2
+    },
+    {
+      "level": 18,
+      "skills": 5
+    },
+    {
+      "level": 19,
+      "skills": 2
+    },
+    {
+      "level": 20,
+      "skills": 4
+    },
+    {
+      "level": 21,
+      "skills": 2
+    },
+    {
+      "level": 22,
+      "skills": 4
+    },
+    {
+      "level": 23,
+      "skills": 2
+    },
+    {
+      "level": 24,
+      "skills": 3
+    },
+    {
+      "level": 25,
+      "skills": 2
+    },
+    {
+      "level": 26,
+      "skills": 2
+    },
+    {
+      "level": 27,
+      "skills": 2
+    },
+    {
+      "level": 28,
+      "skills": 1
+    }
+  ]
+}
+{
+  "samples": {
+    "hard": {
+      "seed": 2,
+      "question": "hard",
+      "example": "This work is hard.",
+      "choices": [
+        {
+          "label": "すべて",
+          "value": "all"
+        },
+        {
+          "label": "かたい",
+          "value": "hard"
+        },
+        {
+          "label": "むずかしい",
+          "value": "difficult"
+        },
+        {
+          "label": "いちがつ",
+          "value": "January"
+        }
+      ],
+      "correct": "hard"
+    },
+    "way_lv12": {
+      "seed": 8,
+      "question": "way",
+      "example": "This is a good way.",
+      "choices": [
+        {
+          "label": "いち",
+          "value": "position"
+        },
+        {
+          "label": "しんぽ",
+          "value": "progress"
+        },
+        {
+          "label": "やりかた",
+          "value": "method"
+        },
+        {
+          "label": "ほうほう",
+          "value": "way_lv12"
+        }
+      ],
+      "correct": "way_lv12"
+    }
+  },
+  "distributionSeeds": 10000,
+  "quotientOne": 7094,
+  "averageShortcut": 10000,
+  "fractionCompareModes": {
+    "sameDenominator": 3333,
+    "sameNumerator": 3336,
+    "equivalent": 3331,
+    "otherUnequal": 0
+  },
+  "advancedCount": 70000,
+  "failures": [],
+  "manualReview": [
+    {
+      "id": "hard",
+      "level": 5,
+      "japanese": "かたい",
+      "japaneseKanji": "硬い",
+      "category": "形容詞",
+      "example": "This work is hard."
+    },
+    {
+      "id": "apply",
+      "level": 15,
+      "japanese": "おうぼする",
+      "japaneseKanji": "応募する",
+      "category": "動詞",
+      "example": "I apply the new rule."
+    },
+    {
+      "id": "measure",
+      "level": 16,
+      "japanese": "たいさく",
+      "japaneseKanji": "対策",
+      "category": "社会問題",
+      "example": "We measure the distance."
+    },
+    {
+      "id": "present",
+      "level": 13,
+      "japanese": "げんざい",
+      "japaneseKanji": "現在",
+      "category": "時間",
+      "example": "This present is for you."
+    },
+    {
+      "id": "age",
+      "level": 13,
+      "japanese": "じだい",
+      "japaneseKanji": "時代",
+      "category": "時間",
+      "example": "Tell me your age."
+    },
+    {
+      "id": "heart",
+      "level": 8,
+      "japanese": "こころ",
+      "japaneseKanji": "心",
+      "category": "感情",
+      "example": "My heart beats fast."
+    },
+    {
+      "id": "sound",
+      "level": 9,
+      "japanese": "きこえる",
+      "japaneseKanji": "聞こえる",
+      "category": "動詞",
+      "example": "I like this sound."
+    },
+    {
+      "id": "free",
+      "level": 9,
+      "japanese": "ひま",
+      "japaneseKanji": "暇",
+      "category": "形容詞",
+      "example": "This seat is free."
+    },
+    {
+      "id": "step",
+      "level": 12,
+      "japanese": "だんかい",
+      "japaneseKanji": "段階",
+      "category": "概念",
+      "example": "Take one step forward."
+    },
+    {
+      "id": "sense",
+      "level": 15,
+      "japanese": "かんかく",
+      "japaneseKanji": "感覚",
+      "category": "名詞",
+      "example": "I sense a change."
+    },
+    {
+      "id": "potential",
+      "level": 20,
+      "japanese": "せんざいてきな",
+      "japaneseKanji": "潜在的な",
+      "category": "形容詞",
+      "example": "This idea has potential."
+    },
+    {
+      "id": "cold",
+      "level": 1,
+      "japanese": "さむい",
+      "category": "形容詞",
+      "example": "The water is cold."
+    },
+    {
+      "id": "back",
+      "level": 7,
+      "japanese": "うしろに",
+      "japaneseKanji": "後ろに",
+      "category": "副詞",
+      "example": "Please come back soon."
+    },
+    {
+      "id": "atmosphere",
+      "level": 16,
+      "japanese": "たいき",
+      "japaneseKanji": "大気",
+      "category": "環境問題",
+      "example": "The atmosphere is calm."
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { buildPeriodicTestSet } from './test/testSet';
 import { createInitialProfile } from './user/profile';
 import { applyFinishTestCompletion, finishEligibility, type FinishTestReservation } from './finishTest';
 
@@ -9,7 +10,7 @@ function ready(subject: 'math' | 'vocab' = 'math') {
     profile[key] = profile[key]?.map(level => level.level === main
         ? { ...level, recentIndependentAnswersNonReview: Array(20).fill(true) } : level);
     const reservation: FinishTestReservation = { id: 'finish-a', profileId: profile.id, subject, level: main,
-        targetLevel: main + 1, createdAt: '2026-10-01T00:00:00Z', problems: [] };
+        targetLevel: main + 1, createdAt: '2026-10-01T00:00:00Z', problems: buildPeriodicTestSet(profile, subject).problems };
     profile.finishTestSets = { [subject]: reservation };
     return { profile, reservation };
 }
@@ -33,20 +34,20 @@ describe('finish test progression', () => {
         const saved = applyFinishTestCompletion(profile, reservation, { ...stats, ...override }, 1);
         expect(saved.result?.passed).toBe(false);
         expect(saved.profile.mathMainLevel).toBe(profile.mathMainLevel);
-        // A fresh reservation enables a new try; history remains.
+        // Recovery must be cleared before another test can advance; history remains.
         const retry = { ...reservation, id: 'finish-b' };
         const next = { ...saved.profile, finishTestSets: { math: retry } };
-        expect(applyFinishTestCompletion(next, retry, stats, 2).result?.passed).toBe(true);
+        expect(applyFinishTestCompletion(next, retry, stats, 2).result).toBeNull();
+        expect(applyFinishTestCompletion({ ...next, finishRecovery: undefined }, retry, stats, 2).result?.passed).toBe(true);
     });
     it.each([{ total: 19 }, { correct: 21 }, { correct: -1 }, { durationSeconds: NaN }])('rejects malformed results %j', override => {
         const { profile, reservation } = ready();
         expect(applyFinishTestCompletion(profile, reservation, { ...stats, ...override }, 1)).toEqual({ profile, result: null });
     });
-    it('rejects stale ownership, main level, reservation replacement and lost readiness', () => {
+    it('rejects stale ownership, main level, reservation replacement', () => {
         const { profile, reservation } = ready();
         for (const altered of [{ ...profile, id: 'other' }, { ...profile, mathMainLevel: profile.mathMainLevel + 1 },
-            { ...profile, finishTestSets: { math: { ...reservation, id: 'new' } } },
-            { ...profile, mathLevels: profile.mathLevels?.map(level => ({ ...level, recentIndependentAnswersNonReview: [] })) }]) {
+            { ...profile, finishTestSets: { math: { ...reservation, id: 'new' } } }]) {
             expect(applyFinishTestCompletion(altered, reservation, stats, 1)).toEqual({ profile: altered, result: null });
         }
     });
@@ -65,7 +66,7 @@ describe('finish test progression', () => {
         const lv0 = { ...profile, mathMainLevel: 0, mathMaxUnlocked: 0,
             mathLevels: profile.mathLevels?.map(level => level.level === 0
                 ? { ...level, recentIndependentAnswersNonReview: Array(20).fill(true) } : level) };
-        expect(finishEligibility(lv0, 'math')).toMatchObject({ status: 'ready', mainLevel: 0, nextLevel: 1, count: 20 });
+        expect(finishEligibility(lv0, 'math', undefined, { coverageReady: true, fresh: true, recentCount: 20, recentCorrect: 20, missingUnitIds: [], coveredCount: 4, requiredCount: 4 })).toMatchObject({ status: 'ready', mainLevel: 0, nextLevel: 1, count: 20 });
         const legacy = { ...lv0, mathLevels: lv0.mathLevels?.map(level => level.level === 0
             ? { ...level, recentIndependentAnswersNonReview: undefined, recentAnswersNonReview: Array(20).fill(true) } : level) };
         expect(finishEligibility(legacy, 'math').status).toBe('practicing');
@@ -76,8 +77,8 @@ describe('finish test progression', () => {
             mathLevels: profile.mathLevels?.map(level => level.level === 11 ? { ...level, recentIndependentAnswersNonReview: Array(20).fill(true) } : level) };
         expect(finishEligibility(lv11, 'math').status).toBe('practicing');
         expect(finishEligibility(lv11, 'math', ['missing']).status).toBe('practicing');
-        expect(finishEligibility(lv11, 'math', []).status).toBe('ready');
-        const unsupported = { ...profile, mathLevels: profile.mathLevels?.map(level => ({ ...level, recentIndependentAnswersNonReview: [], recentAnswersNonReview: Array(20).fill(true) })) };
+        expect(finishEligibility(lv11, 'math', [], { coverageReady: true, fresh: true, recentCount: 20, recentCorrect: 20, missingUnitIds: [], coveredCount: 8, requiredCount: 8 }).status).toBe('ready');
+        const unsupported = { ...profile, finishTestSets: undefined, mathLevels: profile.mathLevels?.map(level => ({ ...level, recentIndependentAnswersNonReview: [], recentAnswersNonReview: Array(20).fill(true) })) };
         expect(finishEligibility(unsupported, 'math').status).toBe('practicing');
     });
 });

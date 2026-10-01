@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
-import { finishStudyPath } from './finishNavigation';
+import { finishStudyPath, finishRecoveryStudyPath } from './finishNavigation';
 import { FinishChallengeEntry, FinishChallengeResultView } from './FinishChallenge';
 
 describe('finish challenge meaning and payoff', () => {
@@ -26,11 +26,16 @@ describe('finish challenge meaning and payoff', () => {
         if (continuation === 'pending') expect(html).toContain('あたらしい はんいは つぎの くぎりから。');
         expect(html).toContain('あまりのある わりざん');
     });
-    it('offers practice and voluntary retry without claiming a new destination on low result', () => {
-        const html = renderToStaticMarkup(<FinishChallengeResultView continuation="fresh" result={{ passed: false, subject: 'math', level: 16, correctCount: 19, totalQuestions: 20 }} onNavigate={() => {}} />);
+    it('offers targeted recovery without an immediate retry or unearned destination', () => {
+        const html = renderToStaticMarkup(<FinishChallengeResultView continuation="fresh" result={{ passed: false, subject: 'math', level: 16, correctCount: 19, totalQuestions: 20, recoveryItemIds: ['div_2d1d'] }} onNavigate={() => {}} />);
         expect(html).toContain('できたところを ふやそう');
-        expect(html).toContain('れんしゅうする');
-        expect(html).toContain('もういちど しあげに ちょうせん');
+        expect(html).toContain('ここを れんしゅうする');
+        expect(html).not.toContain('もういちど しあげに ちょうせん');
+        const recovery = new URL(finishRecoveryStudyPath('math', ['div_2d1d', 'div_2d1d', 'div_1d1d']), 'https://example.test');
+        expect(recovery.searchParams.get('session')).toBe('review');
+        expect(recovery.searchParams.get('focus_ids')).toBe('div_2d1d,div_1d1d');
+        expect(recovery.searchParams.get('force_review')).toBe('1');
+        expect(recovery.searchParams.get('back_to')).toBe('/learn');
         expect(html).not.toContain('ひらいたよ');
         expect(html).not.toContain('つぎを はじめる');
     });

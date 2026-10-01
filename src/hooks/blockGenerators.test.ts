@@ -179,6 +179,12 @@ describe("blockGenerators utilities", () => {
         expect(getMixSubject(recent)).toBe("vocab");
     });
 
+    it("balances all answered subjects even when the English streak consists of reviews", () => {
+        const recent = Array.from({ length: 20 }, () => ({ subject: 'vocab' as const, isReview: true }));
+        expect(shouldForceVocabReviewBlock('mix', 20, recent)).toBe(false);
+        expect(getMixSubject(recent)).toBe('math');
+    });
+
     it("getMixSubject uses random when history is insufficient", () => {
         const spy = vi.spyOn(Math, "random").mockReturnValue(0.9);
         const recent = [
@@ -392,6 +398,7 @@ describe("blockGenerators utilities", () => {
                 subject: "math",
                 skillId: "add_tiny",
                 result: "correct",
+                assistance: "independent",
             },
         ];
 
@@ -426,6 +433,7 @@ describe("blockGenerators utilities", () => {
                 subject: "math",
                 skillId: "add_2d1d_nc_bridge",
                 result: "correct",
+                assistance: "independent",
             },
         ];
 
@@ -460,6 +468,7 @@ describe("blockGenerators utilities", () => {
                 subject: "math",
                 skillId: "add_2d1d_mental_nc",
                 result: "correct",
+                assistance: "independent",
             },
         ];
 
@@ -564,7 +573,7 @@ describe("blockGenerators utilities", () => {
     it("forces vocab Due review in vocab-only and mix modes", () => {
         const recent = Array.from({ length: 10 }, () => ({ subject: 'vocab' as const, isReview: false }));
         expect(shouldForceVocabReviewBlock("vocab", 1, recent)).toBe(true);
-        expect(shouldForceVocabReviewBlock("mix", 1, recent)).toBe(true);
+        expect(shouldForceVocabReviewBlock("mix", 1, recent)).toBe(false);
         expect(shouldForceVocabReviewBlock("math", 1, recent)).toBe(false);
         expect(shouldForceVocabReviewBlock("vocab", 0, recent)).toBe(false);
     });
@@ -577,6 +586,33 @@ describe("blockGenerators utilities", () => {
         expect(shouldForceVocabReviewBlock('mix', 1, [...mathReviews, ...vocabNormal])).toBe(true);
         expect(shouldForceVocabReviewBlock('mix', 1, [...mathReviews, ...vocabReviews, ...vocabNormal])).toBe(false);
         expect(shouldForceVocabReviewBlock('vocab', 1, [...vocabNormal, ...vocabNormal, ...vocabReviews])).toBe(true);
+    });
+
+    it("aligns small Due with one review per block and never starves math under backlog", () => {
+        const smallDueHistory = Array.from({ length: 40 }, (_, index) => ({
+            subject: 'vocab' as const, isReview: index % 10 === 0,
+        }));
+        expect(shouldForceVocabReviewBlock('vocab', 1, smallDueHistory)).toBe(false);
+        expect(shouldForceVocabReviewBlock('vocab', 10, smallDueHistory)).toBe(true);
+        expect(shouldForceVocabReviewBlock('mix', 10, smallDueHistory)).toBe(false);
+        const mathHistory = Array.from({ length: 20 }, () => ({ subject: 'math' as const, isReview: true }));
+        expect(shouldForceVocabReviewBlock('mix', 10, mathHistory)).toBe(true);
+        expect(shouldForceVocabReviewBlock('mix', 0, mathHistory)).toBe(false);
+    });
+
+    it.each([1, 20])("keeps both subjects in a long mix journey with %i eligible vocabulary Due", dueCount => {
+        vi.spyOn(Math, 'random').mockReturnValue(0.99);
+        const recent: { subject: 'math' | 'vocab'; isReview: boolean }[] = [];
+        const counts = { math: 0, vocab: 0 };
+        for (let block = 0; block < 120; block++) {
+            const subject = shouldForceVocabReviewBlock('mix', dueCount, recent) ? 'vocab' : getMixSubject(recent);
+            counts[subject] += 10;
+            const reviewCount = dueCount >= 10 ? 5 : 1;
+            recent.unshift(...Array.from({ length: 10 }, (_, index) => ({ subject,
+                isReview: subject === 'vocab' && index < reviewCount })));
+        }
+        expect(counts.math / 1200).toBeGreaterThanOrEqual(0.3);
+        expect(counts.math / 1200).toBeLessThanOrEqual(0.7);
     });
 
     it("generateLevelBlock alternates subjects in mix mode", () => {

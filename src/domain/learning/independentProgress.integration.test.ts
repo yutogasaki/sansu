@@ -10,6 +10,7 @@ import { planParkLearning } from '../park/learning';
 import { createLearningProblemContext } from './context';
 import { learningEvidenceForProblem, studyLearningEvidence } from './attemptContext';
 import { prepareStudyBlockPresentation, resolveStudyHissanPresentation } from '../math/studyPresentation';
+import { createFinishRecovery } from '../finishRecovery';
 
 const databases: SansuDatabase[] = [];
 const timestamp = '2026-09-08T03:00:00.000Z';
@@ -86,6 +87,58 @@ describe('independent progress through the learning writer', () => {
             .toEqual(['independent', 'assisted', 'unknown', undefined, 'independent']);
         expect((await database.profiles.get('child'))?.mathSkills[problem().categoryId]).toEqual(independent.memory);
         expect((await database.appData.get('app'))?.profiles.child.mathSkills[problem().categoryId]).toEqual(independent.memory);
+    });
+
+    it('preserves weak after assisted or unknown successes and clears only independent recovery', async () => {
+        const database = await setup();
+        await database.memoryMath.put(memory({ isWeak: true, status: 'active' }));
+        for (let i = 0; i < 10; i++) await write(database, { learningEvidence: evidence('assisted') });
+        expect(await database.memoryMath.get(['child', problem().categoryId])).toMatchObject({ isWeak: true });
+        for (let i = 0; i < 10; i++) await write(database, { learningEvidence: undefined });
+        expect(await database.memoryMath.get(['child', problem().categoryId])).toMatchObject({ isWeak: true });
+        for (let i = 0; i < 8; i++) await write(database);
+        expect(await database.memoryMath.get(['child', problem().categoryId])).toMatchObject({ isWeak: false });
+        const profile = await database.profiles.get('child');
+        expect(profile?.recentAttempts?.slice(-8).every(attempt => attempt.assistance === 'independent')).toBe(true);
+        expect(profile?.recentAttempts?.[0].assistance).toBe('assisted');
+        expect(profile?.recentAttempts?.[10].assistance).toBe('unknown');
+    });
+
+    it.each(['recent', 'invalid', 'other-representation'] as const)('keeps %s evaluation contacts from advancing the review clock', async mode => {
+        const database = await setup();
+        const profile = (await database.profiles.get('child'))!;
+        profile.evaluationContacts = { math: { [mode === 'other-representation' ? 'add_2d1d_nc_bridge' : problem().categoryId]: mode !== 'invalid'
+            ? '2026-09-08T02:00:00.000Z' : 'unknown-date' } };
+        await database.profiles.put(profile);
+        const appData = (await database.appData.get('app'))!;
+        await database.appData.put({ ...appData, profiles: { ...appData.profiles, child: profile } });
+        await database.memoryMath.put(memory({ strength: 3, status: 'active', independentCorrectAnswers: 10,
+            lastIndependentCorrectAt: '2026-08-01T03:00:00.000Z' }));
+        const receipt = await write(database);
+        expect(receipt.memory.strength).toBe(3);
+        expect(receipt.memory.independentCorrectAnswers).toBe(11);
+    });
+
+    it('persists finish recovery only from real independent new problems', async () => {
+        const database = await setup();
+        const profile = (await database.profiles.get('child'))!;
+        profile.finishRecovery = { math: createFinishRecovery({ subject: 'math', level: 11,
+            problems: [problem()], answers: { '0': false } }) };
+        const appData = (await database.appData.get('app'))!;
+        await database.profiles.put(profile);
+        await database.appData.put({ ...appData, profiles: { ...appData.profiles, child: profile } });
+        const newEvidence = (question: string, answer: string, assistance: 'independent' | 'assisted') => {
+            const next = { ...problem(), questionText: question, correctAnswer: answer };
+            next.learningContext = createLearningProblemContext('math', next);
+            return learningEvidenceForProblem(next, assistance);
+        };
+        await write(database, { learningEvidence: newEvidence('24 + 3 =', '27', 'assisted') });
+        expect((await database.profiles.get('child'))?.finishRecovery?.math?.items[0].correctProblemKeys).toEqual([]);
+        await write(database, { learningEvidence: newEvidence('24 + 3 =', '27', 'independent') });
+        await write(database, { learningEvidence: newEvidence('24 + 3 =', '27', 'independent') });
+        const receipt = await write(database, { learningEvidence: newEvidence('25 + 3 =', '28', 'independent') });
+        expect(receipt.profile?.finishRecovery?.math?.items[0].correctProblemKeys).toHaveLength(2);
+        expect((await database.appData.get('app'))?.profiles.child.finishRecovery).toEqual(receipt.profile?.finishRecovery);
     });
 
     it('rejects mismatched and partial metadata without erasing real raw successes', async () => {

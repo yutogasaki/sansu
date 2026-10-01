@@ -1,0 +1,78 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+ ✓ src/domain/math/generators/counting.test.ts (51 tests) 17ms
+ ✓ src/domain/algorithms/srs.test.ts (60 tests) 13ms
+ ✓ src/domain/math/planner.test.ts (35 tests) 23ms
+ ✓ src/hooks/useStudySession.logic.test.ts (38 tests) 17ms
+ ✓ src/hooks/blockGenerators.test.ts (32 tests) 16ms
+ ✓ src/domain/learning/evidence.test.ts (16 tests) 54ms
+ ✓ src/domain/math/numberSenseProgress.test.ts (32 tests) 6ms
+ ✓ src/domain/test/printability.test.ts (22 tests) 7ms
+ ✓ src/domain/math/writtenArithmetic.test.ts (38 tests) 91ms
+ ✓ src/domain/learning/attemptPersistence.test.ts (24 tests) 526ms
+ ✓ src/domain/learningRepository.test.ts (14 tests) 15ms
+ ✓ src/domain/island/progressiveSupport.test.ts (13 tests) 449ms
+ ✓ src/domain/learning/independentProgress.integration.test.ts (12 tests) 284ms
+ ✓ src/domain/island/learningObservationCommit.test.ts (28 tests) 1169ms
+ ✓ src/domain/english/planner.test.ts (14 tests) 11ms
+ ✓ src/domain/learning/unitPlanning.integration.test.ts (14 tests) 394ms
+ ✓ src/hooks/blockGenerators.progression.test.ts (13 tests) 17ms
+ ✓ src/domain/test/trigger.test.ts (8 tests) 5ms
+ ✓ src/domain/challenge/repository.test.ts (14 tests) 646ms
+ ✓ src/domain/finishTest.test.ts (15 tests) 7ms
+ ✓ src/domain/learning/pilotRepository.test.ts (6 tests) 169ms
+ ✓ src/domain/island/subjectSelection.test.ts (10 tests) 21ms
+ ✓ src/domain/learning/unitPractice.test.ts (7 tests) 19ms
+ ✓ src/domain/math/generators/advanced.test.ts (10 tests) 11ms
+ ✓ src/domain/learning/mathCatalog.test.ts (6 tests) 22ms
+ ✓ src/domain/math/studyPresentation.test.ts (9 tests) 6ms
+ ✓ src/domain/math/generators/subtraction.test.ts (10 tests) 8ms
+ ✓ src/domain/island/learningContinuity.test.ts (13 tests) 2366ms
+   ✓ island learning continuity > shares review opportunities across 3-question 'mix' sets 372ms
+   ✓ island learning continuity > does not disguise unselected pending checks as ordinary Due across repeated short sets 603ms
+ ✓ src/domain/learning/englishCatalog.test.ts (5 tests) 61ms
+ ✓ src/domain/test/paperTestRepository.test.ts (6 tests) 157ms
+ ✓ src/domain/math/generators/addition.test.ts (10 tests) 4ms
+ ✓ src/domain/learning/progressView.test.ts (7 tests) 5ms
+ ✓ src/domain/math/generators/division.test.ts (5 tests) 14ms
+ ✓ src/domain/english/listening.test.ts (4 tests) 4ms
+ ✓ src/domain/finishTestRepository.test.ts (6 tests) 680ms
+ ✓ src/domain/test/paperTest.test.ts (4 tests) 4ms
+ ✓ src/domain/learning/context.test.ts (6 tests) 33ms
+ ✓ src/domain/learning/independentProgress.test.ts (17 tests) 4ms
+ ✓ src/domain/math/answerCompletion.test.ts (13 tests) 115ms
+ ✓ src/domain/math/generators/fraction.test.ts (6 tests) 5ms
+ ✓ src/domain/math/hissanEngine.test.ts (8 tests) 4ms
+ ✓ src/domain/math/additionProgress.test.ts (9 tests) 5ms
+ ✓ src/domain/island/learningChecks.test.ts (14 tests) 10ms
+ ✓ src/domain/math/profileProgress.test.ts (67 tests) 18ms
+ ✓ src/domain/math/writtenPlaceValue.test.ts (10 tests) 5ms
+ ✓ src/domain/english/examples.test.ts (3 tests) 104ms
+ ✓ src/domain/math/subtractionProgress.test.ts (5 tests) 4ms
+ ✓ src/domain/learning/runtimeUnitPractice.test.ts (9 tests) 9ms
+ ✓ src/domain/test/testSet.test.ts (3 tests) 38ms
+ ✓ src/domain/math/sequenceProgress.test.ts (5 tests) 4ms
+ ✓ src/domain/math/fractionInput.test.ts (3 tests) 4ms
+ ✓ src/domain/learning/reviewBudget.test.ts (7 tests) 4ms
+ ✓ src/domain/park/englishPlanning.test.ts (7 tests) 204ms
+ ✓ src/domain/park/learningContinuation.test.ts (3 tests) 21ms
+ ✓ src/domain/math/comparisonProgress.test.ts (5 tests) 5ms
+ ✓ src/domain/math/writtenInput.test.ts (3 tests) 3ms
+ ✓ src/domain/challenge/engine.test.ts (17 tests) 2682ms
+   ✓ challenge source v1 > covers all 45 ordered pairs, balances each block, exhausts bags, and avoids repeated/reversed neighbors 2673ms
+ ✓ src/domain/math/hissanTypes.test.ts (2 tests) 3ms
+ ✓ src/domain/english/generator.test.ts (4 tests) 1017ms
+   ✓ English catalog and choices > every word produces four unique rendered choices (kanji=false) 528ms
+   ✓ English catalog and choices > every word produces four unique rendered choices (kanji=true) 486ms
+ ✓ src/domain/math/numberEntry.test.ts (4 tests) 46ms
+ ✓ src/domain/learning/reviewPolicy.test.ts (5 tests) 2ms
+ ✓ src/domain/math/deterministicGeneration.test.ts (2 tests) 18ms
+ ✓ src/hooks/learningProgression.integration.test.ts (12 tests) 5831ms
+   ✓ learning progression from real generated questions > preserves legacy next range practice evidence without auto promotion 5749ms
+
+ Test Files  63 passed (63)
+      Tests  860 passed (860)
+   Start at  12:11:30
+   Duration  7.68s (transform 1.55s, setup 0ms, collect 31.01s, tests 17.52s, environment 5ms, prepare 2.32s)
+

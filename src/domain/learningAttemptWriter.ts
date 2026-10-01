@@ -1,4 +1,6 @@
 import { addDays } from "date-fns";
+import { applyFinishRecoveryAttempt } from "./finishRecovery";
+import { evaluationContactTimes } from './learning/evaluationContacts';
 import type { AttemptLog, SansuDatabase } from "../db";
 import { getLearningDayStart, toLocaleDateKey } from "../utils/learningDay";
 import { getNextReviewDate, updateMemoryState, updateSkillStatus } from "./algorithms/srs";
@@ -38,17 +40,24 @@ export const getInitialNextReviewIso = (strength: number, skipped: boolean, now:
     return getNextReviewDate(strength, now).toISOString();
 };
 
+/** Unknown/assisted success is neutral, never an independent recovery or a failure. */
+export const weakAttemptOutcome = (attempt: AttemptLog["result"] | AttemptLog): boolean | undefined => {
+    if (typeof attempt === "string") return attempt === "correct";
+    if (attempt.result !== "correct" || attempt.skipped) return false;
+    return isIndependentCorrect(attempt) ? true : undefined;
+};
+
 export const resolveWeakStateAfterAttempt = (
     previous: boolean | undefined,
-    resultsNewestFirst: AttemptLog["result"][],
+    resultsNewestFirst: (AttemptLog["result"] | AttemptLog)[],
     minAnswers: number = 5,
 ): boolean | undefined => {
     if (resultsNewestFirst.length < minAnswers) return previous ?? false;
-
-    const correct = resultsNewestFirst.filter((result) => result === "correct").length;
-    const accuracy = correct / resultsNewestFirst.length;
-    if (accuracy < 0.6) return true;
-    if (accuracy >= 0.8) return false;
+    const outcomes = resultsNewestFirst.map(weakAttemptOutcome);
+    const failureRate = outcomes.filter(value => value === false).length / outcomes.length;
+    const recoveryRate = outcomes.filter(value => value === true).length / outcomes.length;
+    if (failureRate > 0.4) return true;
+    if (recoveryRate >= 0.8) return false;
     return previous;
 };
 
@@ -156,9 +165,15 @@ export const writeLearningAttemptInTransaction = async (
             .filter(previous => previous.id !== logId && previous.itemId === input.itemId && isIndependentCorrect(previous)).count()
         : independentCorrectCount(existing);
     const challengeContact = input.subject === 'math' ? await database.challengeContacts.get([input.profileId, input.itemId]) : undefined;
+    let profile = await getProfileFromDatabase(database, input.profileId);
+    const contactTimes = [challengeContact?.latestAt, ...evaluationContactTimes(profile, input.subject, input.itemId)]
+        .filter((value): value is string => value !== undefined);
+    const contactUncertain = contactTimes.some(value => !Number.isFinite(Date.parse(value)));
+    const latestContactAt = contactTimes.filter(value => Number.isFinite(Date.parse(value)))
+        .sort((a, b) => Date.parse(b) - Date.parse(a))[0];
     const memoryEvidence = {
-        latestChallengeContactAt: challengeContact?.latestAt,
-        challengeContactUncertain: challengeContact?.uncertain,
+        latestChallengeContactAt: latestContactAt,
+        challengeContactUncertain: challengeContact?.uncertain || contactUncertain,
         independence: learningEvidence?.assistance ?? 'unknown',
         wholeProblem: learningEvidence?.completion === 'whole-problem',
     } as const;
@@ -171,7 +186,7 @@ export const writeLearningAttemptInTransaction = async (
             updatedAt: input.timestamp,
             isWeak: resolveWeakStateAfterAttempt(
                 existing.isWeak,
-                [skipped ? "skipped" : scoredResult, ...recentItemLogs.map((item) => item.result)],
+                [log, ...recentItemLogs],
             ),
         };
         if (input.subject === "math" && (independent || scoredResult !== 'correct' || skipped)) {
@@ -211,7 +226,6 @@ export const writeLearningAttemptInTransaction = async (
     const dbMemory = { ...newState, profileId: input.profileId };
     await table.put(dbMemory);
 
-    let profile = await getProfileFromDatabase(database, input.profileId);
     if (profile) {
         const level = input.subject === "math"
             ? getLevelForSkill(input.itemId)
@@ -278,6 +292,7 @@ export const writeLearningAttemptInTransaction = async (
                 result: recentResult,
                 skipped: skipped || undefined,
                 timeMs: input.timeMs,
+                assistance: independent ? "independent" as const : learningEvidence?.assistance === "assisted" ? "assisted" as const : "unknown" as const,
             },
         ].slice(-300);
 
@@ -297,6 +312,11 @@ export const writeLearningAttemptInTransaction = async (
             todayCount: isSameDay ? (profile.todayCount || 0) + 1 : 1,
             lastStudyDate: todayKey,
             recentAttempts,
+            ...(profile.finishRecovery?.[input.subject] ? {
+                finishRecovery: { ...profile.finishRecovery, [input.subject]: applyFinishRecoveryAttempt(
+                    profile.finishRecovery[input.subject]!, log,
+                ) },
+            } : {}),
         };
         // Practice records readiness; finish-test completion owns progression.
         await saveProfileToDatabase(database, updatedProfile);

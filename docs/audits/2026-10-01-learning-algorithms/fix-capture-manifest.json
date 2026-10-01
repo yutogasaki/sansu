@@ -1,0 +1,113 @@
+{
+  "target": "http://127.0.0.1:5204",
+  "revision": "b62cec07c43ebd6d03775d8a2d026fca2198c51b",
+  "delivery": {
+    "version": "development-local:91a534d2-9e5b-4352-bcc4-1f7008d02e30",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": false,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": false,
+        "discovery": false,
+        "fantasy": false,
+        "candidate": "island-life-v1",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "sourceStart": {
+    "src/pages/Study.tsx": "31f37bd4992f769f04aa70a6f7304aaf734c70edb617394e8354b27a41f2c6ea",
+    "src/hooks/useStudySession.ts": "523ff3ffcdf91d54f83617f29d0246aeb95b2c665b15c89a28ff94f764ff4f95",
+    "src/domain/math/studyPresentation.ts": "4d7962185ba203ec7e604b9ef3da894f0f61db3277d1fc67cb6d15b783dd8392",
+    "src/domain/test/testSet.ts": "7b9c2a7fc7c7df7327a44ab19da46707fa88a70fb4048b318b47ab01ccd79c10",
+    "src/domain/finishCoverage.ts": "2926fb1567951f3c0d9c6d3407f6873e746b5dbfda6bd436da59ce69de42cb7a",
+    "src/domain/finishRecovery.ts": "293b5bf38a78e02cd4e487177aac1452b7e3bd273f0c507a9332cccef64f9546",
+    "src/domain/finishTest.ts": "db378e233fd703cba2c3335b40770206fc1f96f8c9792825d2b4dbb253633d62",
+    "src/domain/finishTestRepository.ts": "a5f43405a5461c3af20b99857700d262e643bb5ab759e491f968681163ca1b55",
+    "src/domain/learningAttemptWriter.ts": "e3efd755a5b5a850f908de0dacde5951b1a3f839631106a4c1867aef362b713c",
+    "src/pages/StudyLayout.tsx": "d9013386bca53d5b2586713d7922a9d212cbd51e749f780884c80998a7b7bb8a",
+    "src/components/finish/FinishChallenge.tsx": "025fab411974ffbdbd16f1874a47ce542faaafb851636867039ea0718467b6bb",
+    "src/components/finish/FinishChallenge.css": "9efbfa2f6272c67a62acdac1e967506390a14ba06bde54122413cbdb55f92bf2",
+    "src/domain/learning/evaluationContacts.ts": "eec5bb0091998b4829538da90e9c3164a443be2b8d9850a235fe0d5fa199d162",
+    "src/domain/learning/pilotRepository.ts": "1747d41613a74dd83e587bf1ee60764abdd1236fea24a0c58d67021afe78c310",
+    "src/domain/learning/progressRepository.ts": "c8ebd0f8fe62a49b865ec813b3cd55551a94e30e550a709f612e94ea4d0e2322",
+    "src/domain/learning/progressView.ts": "bad8d97c110c3bef8b8a84397f6cdb79162c62bd22c437419c8506ff90e5ff7b",
+    "src/domain/types.ts": "da06e598186daede34c04e0e1e499548ece9c729315a7eb3c91daa976475eae9",
+    "src/components/finish/finishNavigation.ts": "05b01787a23530e35166b4fec65b2e29763836a4e4d9de7ebfa9e08f972d808d",
+    "src/domain/learning/attemptContext.ts": "0304947ac0f7be95ad9c31eac39b1e3d5f6c5c52d1a97c08de36f4831fe6c0fd",
+    "src/hooks/useHissanSession.ts": "8b1a57e183c41af1d7fe9dc44175857998e5e76f849d6f6b05fa83af2208dcfe",
+    "src/domain/finishRecoveryPractice.ts": "3e97b00d6510a1a72d8f3a0f769d64c1ce470590ae43d8213d4748863ccf72ac"
+  },
+  "sourceEnd": {
+    "src/pages/Study.tsx": "31f37bd4992f769f04aa70a6f7304aaf734c70edb617394e8354b27a41f2c6ea",
+    "src/hooks/useStudySession.ts": "523ff3ffcdf91d54f83617f29d0246aeb95b2c665b15c89a28ff94f764ff4f95",
+    "src/domain/math/studyPresentation.ts": "4d7962185ba203ec7e604b9ef3da894f0f61db3277d1fc67cb6d15b783dd8392",
+    "src/domain/test/testSet.ts": "7b9c2a7fc7c7df7327a44ab19da46707fa88a70fb4048b318b47ab01ccd79c10",
+    "src/domain/finishCoverage.ts": "2926fb1567951f3c0d9c6d3407f6873e746b5dbfda6bd436da59ce69de42cb7a",
+    "src/domain/finishRecovery.ts": "293b5bf38a78e02cd4e487177aac1452b7e3bd273f0c507a9332cccef64f9546",
+    "src/domain/finishTest.ts": "db378e233fd703cba2c3335b40770206fc1f96f8c9792825d2b4dbb253633d62",
+    "src/domain/finishTestRepository.ts": "a5f43405a5461c3af20b99857700d262e643bb5ab759e491f968681163ca1b55",
+    "src/domain/learningAttemptWriter.ts": "e3efd755a5b5a850f908de0dacde5951b1a3f839631106a4c1867aef362b713c",
+    "src/pages/StudyLayout.tsx": "d9013386bca53d5b2586713d7922a9d212cbd51e749f780884c80998a7b7bb8a",
+    "src/components/finish/FinishChallenge.tsx": "025fab411974ffbdbd16f1874a47ce542faaafb851636867039ea0718467b6bb",
+    "src/components/finish/FinishChallenge.css": "9efbfa2f6272c67a62acdac1e967506390a14ba06bde54122413cbdb55f92bf2",
+    "src/domain/learning/evaluationContacts.ts": "eec5bb0091998b4829538da90e9c3164a443be2b8d9850a235fe0d5fa199d162",
+    "src/domain/learning/pilotRepository.ts": "1747d41613a74dd83e587bf1ee60764abdd1236fea24a0c58d67021afe78c310",
+    "src/domain/learning/progressRepository.ts": "c8ebd0f8fe62a49b865ec813b3cd55551a94e30e550a709f612e94ea4d0e2322",
+    "src/domain/learning/progressView.ts": "bad8d97c110c3bef8b8a84397f6cdb79162c62bd22c437419c8506ff90e5ff7b",
+    "src/domain/types.ts": "da06e598186daede34c04e0e1e499548ece9c729315a7eb3c91daa976475eae9",
+    "src/components/finish/finishNavigation.ts": "05b01787a23530e35166b4fec65b2e29763836a4e4d9de7ebfa9e08f972d808d",
+    "src/domain/learning/attemptContext.ts": "0304947ac0f7be95ad9c31eac39b1e3d5f6c5c52d1a97c08de36f4831fe6c0fd",
+    "src/hooks/useHissanSession.ts": "8b1a57e183c41af1d7fe9dc44175857998e5e76f849d6f6b05fa83af2208dcfe",
+    "src/domain/finishRecoveryPractice.ts": "3e97b00d6510a1a72d8f3a0f769d64c1ce470590ae43d8213d4748863ccf72ac"
+  },
+  "stable": true,
+  "distStable": true,
+  "captures": [
+    {
+      "file": "phone-written-ready.png",
+      "sha256": "1ae669db5e12148dabaff484b340084e639e115da6f718b57c4e317e2d6a5994"
+    },
+    {
+      "file": "phone-written-written-question.png",
+      "sha256": "68c8b9c3da9df15e68d86b985739dd27dd25741fa04ca26799907e3303587cd9"
+    },
+    {
+      "file": "phone-written-clear.png",
+      "sha256": "e25825261f3ec822965827ac32476eea78b4b76abacc5d639bd24131d5da8271"
+    },
+    {
+      "file": "tablet-mental-recovery-failure.png",
+      "sha256": "9383d968be743e406dc274906c3cc771a01faba0e737c760e00c149ab1f30b65"
+    },
+    {
+      "file": "tablet-mental-recovery-recovery.png",
+      "sha256": "ae69315df569171c6de2a18deaf7ab1964143565344ecfc58ed894f493a1b1a0"
+    },
+    {
+      "file": "tablet-mental-recovery-retry-ready.png",
+      "sha256": "eecdac78df35c2bebd005529cfdc11aa6a34fe79e0a68d6a5a2d41d6caacae78"
+    },
+    {
+      "file": "phone-fraction-integer-fraction-10.png",
+      "sha256": "e9ba15d06a4d09a1302c0f5bf96d3936db8a9c75722f33ccb39008b8e6899cbb"
+    },
+    {
+      "file": "tablet-mixed-fraction-clear.png",
+      "sha256": "2b025f1e25aa717772b4c4f699a3fa4ad89ebf1c889420b99f968a0d4dc5e7da"
+    }
+  ],
+  "contactSheet": "critical-path-contact-sheet.jpg",
+  "scope": "Classic dedicated local preview; reduced motion and sound off. Functional learning-path evidence, no production release or full art release claim."
+}
