@@ -17,6 +17,8 @@ export interface IslandRoomDecor extends RoomDecor {
     guests?: readonly Pick<Villager, 'id' | 'species' | 'variant' | 'outfit'>[];
     /** The latest saved picture of the island, shown through the window. */
     view?: ImageBitmap;
+    /** What the child learned today, laid out on Pokomoko's desk (§13.5). */
+    today?: readonly string[];
 }
 const GUEST_SPOTS = [
     { position: [-2.05, .5, 2.15], turn: .5 }, { position: [.75, .035, 2.05], turn: .25 }, { position: [1.85, .035, 2.75], turn: -.45 },
@@ -38,7 +40,7 @@ export interface IslandKeepsakeFrameView {
     selectedId: IslandLearningKeepsakeId | null;
 }
 
-export type IslandHomeHit = { type: 'keepsake'; id: IslandLearningKeepsakeId } | { type: 'album' } | { type: 'notices' } | { type: 'word'; word: string } | { type: 'guest'; id: string };
+export type IslandHomeHit = { type: 'keepsake'; id: IslandLearningKeepsakeId } | { type: 'album' } | { type: 'notices' } | { type: 'word'; word: string } | { type: 'guest'; id: string } | { type: 'desk' };
 
 /** A closed, static interior for the same island renderer. It never owns or hides the
  * island, changes learning state, or exhibits an unavailable award. Leaving the
@@ -59,6 +61,8 @@ export class IslandLearningKeepsakeScenery {
     private guests = new THREE.Group();
     private guestMaterials?: GuestMaterials;
     private viewTexture?: THREE.Texture;
+    private deskTexture?: THREE.CanvasTexture;
+    private hops = new Map<string, number>();
 
     constructor() { this.group.name = ISLAND_KEEPSAKE_SCENERY_CANDIDATE; this.group.visible = false; }
     private material(color: string, metalness = 0) {
@@ -238,10 +242,10 @@ export class IslandLearningKeepsakeScenery {
     private applyDecor() {
         const decor = this.decor;
         const key = decor ? JSON.stringify([decor.pattern, decor.rug, decor.hidden ?? [], decor.words.length, decor.words[decor.words.length - 1]?.id,
-            decor.guests?.map(g => [g.id, g.outfit]), decor.view?.width ?? 0]) : '';
+            decor.guests?.map(g => [g.id, g.outfit]), decor.view?.width ?? 0, decor.today ?? []]) : '';
         if (key === this.decorKey) return false;
         this.decorKey = key;
-        this.applyGuests(decor); this.applyView(decor?.view);
+        this.applyGuests(decor); this.applyView(decor?.view); this.applyDesk(decor);
         for (const paper of this.wallpaper) { paper.mesh.removeFromParent(); paper.mesh.geometry.dispose(); (paper.mesh.material as THREE.Material).dispose(); paper.texture.dispose(); }
         this.wallpaper = [];
         const rug = this.group.getObjectByName('home-rug') as THREE.Mesh | undefined;
@@ -283,6 +287,37 @@ export class IslandLearningKeepsakeScenery {
         texture.wrapS = THREE.RepeatWrapping; texture.repeat.x = -1;
         this.viewTexture = texture;
         const material = new THREE.MeshBasicMaterial({ map: texture }); this.materials.add(material); glass.material = material;
+    }
+    /** ぽこもこの つくえ: today's learning on a card by the album; touching it starts learning. */
+    private applyDesk(decor?: IslandRoomDecor) {
+        this.group.getObjectByName('home-desk-card')?.removeFromParent();
+        this.deskTexture?.dispose(); this.deskTexture = undefined;
+        if (!decor) return;
+        const canvas = document.createElement('canvas'); canvas.width = 256; canvas.height = 192;
+        const g = canvas.getContext('2d')!;
+        g.fillStyle = '#fffaf0'; g.fillRect(0, 0, 256, 192); g.strokeStyle = '#f25c8a'; g.lineWidth = 8; g.strokeRect(4, 4, 248, 184);
+        g.fillStyle = '#3a3346'; g.font = '900 26px "Zen Maru Gothic", sans-serif'; g.textAlign = 'center';
+        const today = decor.today ?? [];
+        g.fillText(today.length ? 'きょう まなんだ' : 'ここから まなぶ', 128, 40);
+        g.font = '800 24px "Zen Maru Gothic", sans-serif';
+        (today.length ? today.slice(0, 4) : ['▶']).forEach((text, i) => g.fillText(text.slice(0, 12), 128, 80 + i * 30));
+        this.deskTexture = new THREE.CanvasTexture(canvas); this.deskTexture.colorSpace = THREE.SRGBColorSpace;
+        const material = new THREE.MeshBasicMaterial({ map: this.deskTexture }); this.materials.add(material);
+        const card = new THREE.Mesh(new THREE.PlaneGeometry(.66, .5), material);
+        card.name = 'home-desk-card'; card.rotation.x = -Math.PI / 2; card.rotation.z = .25; card.position.set(.12, .548, 3.0);
+        card.userData.homeAction = 'desk'; this.group.add(card);
+    }
+    /** A touched visitor hops once; returns true while anyone is still in the air. */
+    hopGuest(id: string, now: number) { this.hops.set(id, now); }
+    animateGuests(now: number) {
+        let moving = false;
+        for (const pose of this.guests.children) {
+            const id = pose.children[0]?.userData.guestId ?? pose.userData.guestId, start = this.hops.get(id), base = pose.userData.baseY ?? (pose.userData.baseY = pose.position.y);
+            const t = start === undefined ? 1 : (now - start) / 600;
+            pose.position.y = base + (t < 1 ? Math.sin(Math.PI * t) * .45 : 0);
+            if (t < 1) moving = true; else if (start !== undefined) this.hops.delete(id);
+        }
+        return moving;
     }
     /** A visiting friend under a tap: they say hello and play their note. */
     guestAt(ray: THREE.Ray) {
@@ -348,6 +383,7 @@ export class IslandLearningKeepsakeScenery {
             if (id && this.selection.includes(id)) return { type: 'keepsake', id };
             if (object.userData.homeAction === 'album') return { type: 'album' };
             if (object.userData.homeAction === 'notices') return { type: 'notices' };
+            if (object.userData.homeAction === 'desk') return { type: 'desk' };
         }
     }
     /** Overview always includes the same room, independent of qualifications.
@@ -388,6 +424,7 @@ export class IslandLearningKeepsakeScenery {
         this.selection = []; this.selectedId = null;
         this.wallpaper.forEach(paper => paper.texture.dispose()); this.wallpaper = []; this.decorKey = '';
         this.guestMaterials?.dispose(); this.guestMaterials = undefined; this.guests.clear(); this.viewTexture?.dispose(); this.viewTexture = undefined;
+        this.deskTexture?.dispose(); this.deskTexture = undefined; this.hops.clear();
     }
     dispose() {
         if (this.disposed) return;

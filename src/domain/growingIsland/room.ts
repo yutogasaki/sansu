@@ -38,6 +38,9 @@ export const WALL_PATTERNS = [
     { id: 'rings', name: 'とけいの わ', mathLevel: 13 },
     { id: 'stars', name: 'ほし', mathLevel: 19 },
     { id: 'pie', name: 'ケーキ', mathLevel: 21 },
+    // English levels open shapes made of the words themselves.
+    { id: 'letters', name: 'アルファベット', vocabLevel: 3 },
+    { id: 'hearts', name: 'ハート', vocabLevel: 6 },
 ] as const;
 export type WallPatternId = (typeof WALL_PATTERNS)[number]['id'];
 
@@ -46,5 +49,8 @@ export const RUG_COLORS = ['#4d9b9b', '#e2574c', '#f2c14b', '#4f9bd9', '#9a74d6'
 export interface RoomDecor { pattern: WallPatternId; rug: number; hidden?: WordGroupId[] }
 export const DEFAULT_DECOR: RoomDecor = { pattern: 'dots', rug: 0 };
 
-export const patternOpen = (pattern: WallPatternId, mathLevel: number) =>
-    (WALL_PATTERNS.find(p => p.id === pattern)?.mathLevel ?? Infinity) <= mathLevel;
+export function patternOpen(pattern: WallPatternId, mathLevel: number, vocabLevel = 0) {
+    const entry = WALL_PATTERNS.find(p => p.id === pattern) as { mathLevel?: number; vocabLevel?: number } | undefined;
+    if (!entry) return false;
+    return entry.vocabLevel !== undefined ? entry.vocabLevel <= vocabLevel : (entry.mathLevel ?? Infinity) <= mathLevel;
+}

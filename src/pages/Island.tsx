@@ -171,7 +171,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     // The growing island keeps its own save; the current island's record is left untouched.
     const [roomWord, setRoomWord] = useState<{ text: string; japanese?: string; at: number }>();
     useEffect(() => { if (!roomWord) return; const id = window.setTimeout(() => setRoomWord(undefined), 2600); return () => clearTimeout(id); }, [roomWord]);
-    const growingRoom = useGrowingRoom(profile.id, profile.vocabWords, growingIslandEnabled() && screen === 'keepsakes');
+    const growingRoom = useGrowingRoom(profile.id, profile.vocabWords, growingIslandEnabled() && screen === 'keepsakes', profile.mathSkills);
     const lifeControls = useIslandLife(profile.id, active && screen === 'home' && !growingIslandEnabled());
     const learningHeroStyle = useMemo(() => lifeControls.record ? replayLife(lifeControls.record).heroStyle : 'original', [lifeControls.record]);
     const setScreen = navigation?.setView ?? setLocalScreen;
@@ -711,6 +711,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                 if (action.type === 'album') { setReturnToHouse(true); setAlbumComparison('garden'); setScreen('album'); }
                 else if (action.type === 'notices') { setKeepsakeFocus(undefined); setHouseSection('notices'); }
                 else if (action.type === 'word') { const word = readWordAloud(action.word); setRoomWord({ text: word?.surface ?? action.word.replace(/_lv\d+$/, ''), japanese: word?.japanese, at: Date.now() }); }
+                else if (action.type === 'desk') void begin();
                 else if (action.type === 'guest') {
                     const guest = growingRoom.guests.find(g => g.id === action.id);
                     if (guest) { if (profile.soundEnabled) playNote(noteFor(guest.species)); setRoomWord({ text: villagerName(guest), japanese: guestLine(guest), at: Date.now() }); }
@@ -743,6 +744,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                 if (action.type === 'album') { setReturnToHouse(true); setAlbumComparison('garden'); setScreen('album'); }
                 else if (action.type === 'notices') { setKeepsakeFocus(undefined); setHouseSection('notices'); }
                 else if (action.type === 'word') { const word = readWordAloud(action.word); setRoomWord({ text: word?.surface ?? action.word.replace(/_lv\d+$/, ''), japanese: word?.japanese, at: Date.now() }); }
+                else if (action.type === 'desk') void begin();
                 else if (action.type === 'guest') {
                     const guest = growingRoom.guests.find(g => g.id === action.id);
                     if (guest) { if (profile.soundEnabled) playNote(noteFor(guest.species)); setRoomWord({ text: villagerName(guest), japanese: guestLine(guest), at: Date.now() }); }
@@ -919,7 +921,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                     challenge={<ChallengeHomeCard key={profile.id} profileId={profile.id} disabled={busy} onLearn={() => void begin()} onResult={() => { setChallengeStartIntent(false); setScreen('challenge'); }} onStart={() => { setChallengeStartIntent(true); setScreen('challenge'); }} />}
                     decor={growingIslandEnabled() ? <>
                         <LettersPanel profileId={profile.id} letters={growingRoom.island ? islandLetters(growingRoom.island) : []} />
-                        <RoomDecorPanel room={growingRoom.room} words={growingRoom.words} mathLevel={growingRoom.mathLevel}
+                        <RoomDecorPanel room={growingRoom.room} words={growingRoom.words} mathLevel={growingRoom.mathLevel} vocabLevel={growingRoom.vocabLevel}
                             error={growingRoom.error} onDecorate={command => void growingRoom.decorate(command)} /></> : undefined}
                     section={houseSection} onSectionChange={section => { setHouseSection(section); setKeepsakeFocus(undefined); }}
                     onSelect={setKeepsakeFocus} onShowRoom={() => setKeepsakeFocus(undefined)}

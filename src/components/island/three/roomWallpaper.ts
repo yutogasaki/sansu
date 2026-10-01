@@ -15,9 +15,17 @@ function hash(text: string, salt: number) {
     return ((h >>> 0) % 100000) / 100000;
 }
 
-function shape(g: CanvasRenderingContext2D, pattern: WallPatternId, x: number, y: number, r: number, color: string) {
+function shape(g: CanvasRenderingContext2D, pattern: WallPatternId, x: number, y: number, r: number, color: string, word = '') {
     g.fillStyle = color; g.strokeStyle = color;
-    if (pattern === 'blocks') {
+    if (pattern === 'letters') {
+        // Each word stands on the wall as its own first letter.
+        g.font = `900 ${Math.round(r * 2.4)}px "Zen Maru Gothic", sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle';
+        g.fillText((word.replace(/_lv\d+$/, '')[0] ?? '?').toUpperCase(), x, y);
+    } else if (pattern === 'hearts') {
+        g.beginPath(); g.moveTo(x, y + r * .9);
+        g.bezierCurveTo(x - r * 1.4, y - r * .1, x - r * .7, y - r * 1.2, x, y - r * .45);
+        g.bezierCurveTo(x + r * .7, y - r * 1.2, x + r * 1.4, y - r * .1, x, y + r * .9); g.fill();
+    } else if (pattern === 'blocks') {
         g.fillRect(x - r, y - r, r * 2, r * 2); g.lineWidth = Math.max(1.5, r * .22); g.strokeStyle = '#1f1a24'; g.strokeRect(x - r, y - r, r * 2, r * 2);
     } else if (pattern === 'rings') {
         g.lineWidth = Math.max(1.5, r * .3);
@@ -57,7 +65,7 @@ export function paintWall(words: readonly LearnedWord[], pattern: WallPatternId,
     const spots: WallSpot[] = [];
     for (const word of words) {
         const u = .04 + hash(word.id, salt) * .92, v = .06 + hash(word.id, salt + 7) * .88;
-        shape(g, pattern, u * width, (1 - v) * height, r, COLOR[word.group]);
+        shape(g, pattern, u * width, (1 - v) * height, r, COLOR[word.group], word.id);
         spots.push({ u, v, r: r / width, word: word.id });
     }
     if (!words.length) {

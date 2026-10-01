@@ -30,7 +30,7 @@ export const LANDMARK_LABEL: Partial<Record<LandmarkKind, { name: string; icon: 
 export const KEEPSAKE_NAME: Record<KeepsakeKind, string> = {
     blocks: 'かずの つみき', balance: 'くらべっこの てんびん', fountain: 'けいさんの ふんすい', clock: 'くくの とけいとう',
     windmill: 'かけわりの ふうしゃ', star: 'しょうすうの ほし', flowerbed: 'ぶんすうの はなだん', tower: 'ちえの とう',
-    book: 'ことばの ほん', globe: 'えいごの ちきゅうぎ',
+    book: 'ことばの ほん', globe: 'えいごの ちきゅうぎ', abc: 'ABCの つみき', balloon: 'ことばの ふうせん', telescope: 'ことばの ぼうえんきょう',
 };
 const MOMENT_LINE = {
     rainbow: 'にじが でたよ！', butterflies: 'ちょうちょが あつまってきたよ', friends: 'なかよしの ふたりが いっしょに いるよ',

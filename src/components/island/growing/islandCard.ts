@@ -3,13 +3,19 @@ import type { GrowingState } from '../../../domain/growingIsland';
 import { CHARACTER_NAME, villagerName } from './growingCopy';
 
 export const CARD_WIDTH = 1080, CARD_HEIGHT = 1350;
-const KEEPSAKE_ICON = { blocks: '🧱', balance: '⚖️', fountain: '⛲', clock: '🕰️', windmill: '🌬️', star: '⭐', flowerbed: '🌷', tower: '🗼', book: '📘', globe: '🌐' } as const;
+const KEEPSAKE_ICON = { blocks: '🧱', balance: '⚖️', fountain: '⛲', clock: '🕰️', windmill: '🌬️', star: '⭐', flowerbed: '🌷', tower: '🗼', book: '📘', globe: '🌐', abc: '🔤', balloon: '🎈', telescope: '🔭' } as const;
 
 /**
  * しまカード (§13): the whole island, its name and character, up to twelve faces, how many
  * live there and the keepsakes. Drawn on this device only; the child decides to save it.
  */
-export async function drawIslandCard(state: GrowingState, island: HTMLCanvasElement, faces: Record<string, string>, owner: string) {
+/** Card frames the child can choose; the gold frame of island level 10 stays on top of any. */
+export const CARD_FRAMES = [
+    { id: 'dots', name: 'みずたま' }, { id: 'blocks', name: 'いろの ブロック' }, { id: 'stars', name: 'ほし' }, { id: 'plain', name: 'シンプル' },
+] as const;
+export type CardFrame = (typeof CARD_FRAMES)[number]['id'];
+
+export async function drawIslandCard(state: GrowingState, island: HTMLCanvasElement, faces: Record<string, string>, owner: string, frame: CardFrame = 'dots') {
     const canvas = document.createElement('canvas'); canvas.width = CARD_WIDTH; canvas.height = CARD_HEIGHT;
     const g = canvas.getContext('2d'); if (!g) throw new Error('card unavailable');
     const special = islandLevel(state) >= 10;
@@ -18,11 +24,20 @@ export async function drawIslandCard(state: GrowingState, island: HTMLCanvasElem
     g.strokeRect(g.lineWidth / 2, g.lineWidth / 2, CARD_WIDTH - g.lineWidth, CARD_HEIGHT - g.lineWidth);
     // A ring of wonder dots around the frame (Pokomoko's polka-dot lineage).
     const dots = ['#e23b3b', '#ffd23f', '#3fb8e8', '#6ccf6b', '#f25c8a', '#9b6ae0'];
-    for (let i = 0; i < 44; i++) {
+    if (frame === 'blocks') {
+        // Bold outlined colour blocks along the edge (Britto).
+        const size = 54;
+        for (let x = 0; x < CARD_WIDTH; x += size) for (const y of [0, CARD_HEIGHT - size]) { g.fillStyle = dots[(x / size + y) % dots.length]; g.fillRect(x, y, size, size); }
+        for (let y = size; y < CARD_HEIGHT - size; y += size) for (const x of [0, CARD_WIDTH - size]) { g.fillStyle = dots[(y / size + x) % dots.length]; g.fillRect(x, y, size, size); }
+        g.strokeStyle = '#1f1a24'; g.lineWidth = 4; g.strokeRect(size, size, CARD_WIDTH - size * 2, CARD_HEIGHT - size * 2);
+    }
+    for (let i = 0; frame !== 'plain' && frame !== 'blocks' && i < 44; i++) {
         const t = i / 44, side = Math.floor(t * 4), u = (t * 4) % 1, inset = special ? 44 : 32;
         const x = side === 0 ? inset + u * (CARD_WIDTH - 2 * inset) : side === 1 ? CARD_WIDTH - inset : side === 2 ? CARD_WIDTH - inset - u * (CARD_WIDTH - 2 * inset) : inset;
         const y = side === 0 ? inset : side === 1 ? inset + u * (CARD_HEIGHT - 2 * inset) : side === 2 ? CARD_HEIGHT - inset : CARD_HEIGHT - inset - u * (CARD_HEIGHT - 2 * inset);
-        g.fillStyle = dots[i % dots.length]; g.beginPath(); g.arc(x, y, special ? 12 : 8, 0, Math.PI * 2); g.fill();
+        g.fillStyle = dots[i % dots.length];
+        if (frame === 'stars') { g.font = `${special ? 34 : 26}px sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('★', x, y); }
+        else { g.beginPath(); g.arc(x, y, special ? 12 : 8, 0, Math.PI * 2); g.fill(); }
     }
     const font = (size: number, weight = 800) => `${weight} ${size}px "Zen Maru Gothic", "Hiragino Maru Gothic ProN", sans-serif`;
     g.fillStyle = '#3a3346'; g.textAlign = 'center';

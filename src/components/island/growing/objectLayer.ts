@@ -17,8 +17,8 @@ import type { SceneLayout } from './sceneLayout';
 
 export interface Ghost { kind: SeedKind | LandmarkKind; seed: boolean; cell?: Cell; valid: boolean; style: PlotStyle; allowed: Cell[]; keepsake?: string; color?: FlowerColor }
 
-export type Seat = 'sit' | 'swing' | 'eat' | 'bounce';
-const SEATS: Partial<Record<LandmarkKind, Seat>> = { bench: 'sit', swing: 'swing', 'picnic-table': 'eat', slide: 'sit', trampoline: 'bounce' };
+export type Seat = 'sit' | 'swing' | 'eat' | 'bounce' | 'slide' | 'tend';
+const SEATS: Partial<Record<LandmarkKind, Seat>> = { bench: 'sit', swing: 'swing', 'picnic-table': 'eat', slide: 'slide', trampoline: 'bounce' };
 const OWN_MODELS: Partial<Record<LandmarkKind, (m: IslandMaterials) => T.Group>> = {
     slide: buildSlide, trampoline: buildTrampoline, fountain: buildFountain, bakery: buildBakery, postbox: buildPostbox,
 };
@@ -114,10 +114,12 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
             continue;
         }
         add(p.id, buildPlot(m, p.kind, p.stage, p.style ?? 'plain', p.growth, p.roof), p.cell);
+        // Friends stop by built fields to tend them.
+        if ((p.kind === 'farm' || p.kind === 'market') && p.stage > 0 && !seats.has(key(p.cell))) seats.set(key(p.cell), 'tend');
     }
     for (const k of state.keepsakes) if (k.cell) add(k.id, buildKeepsake(m, keepsakeKind(k.unitId)), k.cell);
     const pier = buildPier(m); pier.position.copy(layout.pierRoot); root.add(pier);
-    const flag = buildFlag(m, state.flagColor ?? 0, state.flagPattern ?? 0);
+    const flag = buildFlag(m, state.flagColor ?? 0, state.flagPattern ?? 0, state.emblem?.image);
     flag.position.copy(layout.pierRoot).add(new T.Vector3(-.36, .02, .1));
     flag.traverse(o => { o.userData.objectId = 'flag'; }); root.add(flag);
     if (selectedId === 'flag') { const r = ring('#fff5ac', .3); r.position.copy(flag.position); root.add(r); }
@@ -155,6 +157,7 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
                 if (!(o instanceof T.Mesh)) return;
                 o.geometry.dispose();
                 if (o.userData.ownMaterial) (o.material as T.Material).dispose();
+                (o.userData.ownTexture as T.Texture | undefined)?.dispose();
             });
             root.removeFromParent();
         },

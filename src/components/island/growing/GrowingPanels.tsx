@@ -4,6 +4,7 @@ import { wishLine } from './growingCopy';
 import type { GrowingState, Like } from '../../../domain/growingIsland';
 import type { MomentRecord } from '../../../domain/growingIsland/repository';
 import { HOME_STAGE, kindName, villagerName } from './growingCopy';
+import { CARD_FRAMES, type CardFrame } from './islandCard';
 
 const LIKE_NAME: Record<Like, string> = { flower: 'おはな', water: 'みず', tree: 'き', light: 'あかり', food: 'ごはん', play: 'あそび', farm: 'はたけ', quiet: 'しずかな ところ' };
 const TRAIT_NAME = { lively: 'げんき', mellow: 'のんびり', shy: 'はずかしがり', hungry: 'くいしんぼう' } as const;
@@ -39,10 +40,11 @@ export function ShowPanel({ onPick, onClose }: { onPick: (choice: ShowChoice) =>
     </section>;
 }
 
-export function CardView({ url, busy, onSave, onClose }: { url?: string; busy: boolean; onSave: () => void; onClose: () => void }) {
+export function CardView({ url, busy, onSave, onClose, frame, onFrame }: { url?: string; busy: boolean; onSave: () => void; onClose: () => void; frame?: CardFrame; onFrame?: (frame: CardFrame) => void }) {
     return <div className="growing-overlay" role="dialog" aria-label="しまカード">
         <div className="growing-overlay-body">
             {url ? <img className="growing-card-image" src={url} alt="しまカード" /> : <p>カードを つくっているよ…</p>}
+            {onFrame && <div className="growing-row" aria-label="わく">{CARD_FRAMES.map(f => <button key={f.id} aria-pressed={frame === f.id} disabled={busy} onClick={() => onFrame(f.id)}>{f.name}</button>)}</div>}
             <div className="growing-row"><button className="growing-primary" disabled={!url || busy} onClick={onSave}>ほぞんする</button><button onClick={onClose}>とじる</button></div>
         </div>
     </div>;

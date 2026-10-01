@@ -63,3 +63,23 @@ describe('new items and friends', () => {
         expect(kinds).toEqual(expect.arrayContaining(['whale', 'rainbow-bird', 'moon-rabbit']));
     });
 });
+
+describe('learning-linked decorations', () => {
+    it('keep a traced letter or number on the flag, refusing anything that is not a small picture', () => {
+        const state = started();
+        const image = 'data:image/png;base64,iVBORw0KGgo=';
+        expect(act(state, { type: 'emblem', image, glyph: 'A' }).emblem).toEqual({ image, glyph: 'A' });
+        expect(() => act(state, { type: 'emblem', image: 'javascript:alert(1)', glyph: 'A' })).toThrow();
+        expect(() => act(state, { type: 'emblem', image, glyph: 'あ' })).toThrow();
+        expect(() => act(state, { type: 'emblem', image: `data:image/png;base64,${'A'.repeat(30000)}`, glyph: '1' })).toThrow();
+    });
+
+    it('open word-shaped wallpapers with English levels and grow English keepsakes with the words', async () => {
+        const { patternOpen } = await import('./room');
+        const { keepsakeKind } = await import('./gifts');
+        expect(patternOpen('letters', 0, 2)).toBe(false);
+        expect(patternOpen('letters', 0, 3)).toBe(true);
+        expect(patternOpen('hearts', 30, 5)).toBe(false);
+        expect(['vocab:1', 'vocab:5', 'vocab:8', 'vocab:12', 'vocab:18'].map(keepsakeKind)).toEqual(['abc', 'book', 'balloon', 'globe', 'telescope']);
+    });
+});

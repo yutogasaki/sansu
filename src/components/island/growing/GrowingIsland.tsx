@@ -12,19 +12,21 @@ import { actorLine, CHARACTER_NAME, idleLine, revealLine } from './growingCopy';
 import { GrowingSheet, type SheetAction } from './GrowingSheet';
 import { GrowingTray, type Pick } from './GrowingTray';
 import { CardView, FriendsPanel, ShowPanel, StoryView, VisitPicker, type ShowChoice } from './GrowingPanels';
-import { canvasBlob, drawIslandCard, saveImage } from './islandCard';
+import { canvasBlob, drawIslandCard, saveImage, type CardFrame } from './islandCard';
 import { FLOWER_NAME } from './flowerGeometry';
 import { FlowerBook } from './FlowerBook';
 import type { Ghost } from './objectLayer';
 import type { ShownMoment, WorldCamera } from './GrowingWorld';
 import { useGrowingIsland } from './useGrowingIsland';
 import { publishWaitingSeeds } from './seedBadge';
-import { noteFor, playNote, playTune } from './notes';
+import { noteFor, playNote, playTune, TUNES } from './notes';
+import { TracePanel } from './TracePanel';
+import { useNavigate } from 'react-router-dom';
 import './growing.css';
 
 const GrowingWorld = lazy(() => import('./GrowingWorld'));
 type Placing = { kind: SeedKind | LandmarkKind; seed: boolean; id?: string; mode: 'new' | 'move' | 'unstore'; cell?: Cell; keepsake?: string; color?: FlowerColor };
-type Panel = 'tray' | 'friends' | 'show' | 'visit' | 'flowers' | undefined;
+type Panel = 'tray' | 'stored' | 'friends' | 'show' | 'visit' | 'flowers' | 'trace' | undefined;
 type Visit = { id: string; name: string; state: GrowingState; sent: boolean };
 
 function speak(text: string) {
@@ -60,11 +62,12 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     const [cheer, setCheer] = useState(0), [festival, setFestival] = useState(0);
     const [hints, setHints] = useState<Cell[]>([]), [moment, setMoment] = useState<ShownMoment>();
     const [show, setShow] = useState(false), [focus, setFocus] = useState<{ id: string; n: number }>();
-    const [card, setCard] = useState<{ url?: string; blob?: Blob }>(), [story, setStory] = useState<MomentRecord[]>();
+    const [card, setCard] = useState<{ url?: string; blob?: Blob; frame?: CardFrame }>(), [story, setStory] = useState<MomentRecord[]>();
     const [faces, setFaces] = useState<Record<string, string>>({});
     const [visit, setVisit] = useState<Visit>(), [siblings, setSiblings] = useState<{ id: string; name: string }[]>([]);
     const [naming, setNaming] = useState<string>();
-    const [concert, setConcert] = useState<{ cell: Cell; n: number; until: number }>();
+    const [concert, setConcert] = useState<{ cell: Cell; n: number; until: number }>(), [song, setSong] = useState(0);
+    const navigate = useNavigate();
     const [worldStep, setWorldStep] = useState<LoadingStep | 'ready'>('world');
     const camera = useRef<WorldCamera | undefined>(undefined), pendingPicture = useRef(false);
     const audio = useIslandWorkshopAudio(sound && active);
@@ -174,12 +177,15 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
             const others = (await getAllProfiles()).filter(p => p.id !== profileId).map(p => ({ id: p.id, name: p.name }));
             setSiblings(others); setPanel('visit'); return;
         }
-        setCard({});
+        await makeCard('dots');
+    };
+    const makeCard = async (frame: CardFrame) => {
+        setCard(previous => { if (previous?.url) URL.revokeObjectURL(previous.url); return { frame }; });
         const shot = camera.current?.capture(1200, 800);
         if (!shot) { setCard(undefined); setLine('カードを つくれなかったよ。もういちど ためしてね'); return; }
-        const canvas = await drawIslandCard(own, shot, loadFaces(), profileName);
+        const canvas = await drawIslandCard(own, shot, loadFaces(), profileName, frame);
         const blob = await canvasBlob(canvas);
-        setCard({ blob, url: URL.createObjectURL(blob) });
+        setCard({ blob, url: URL.createObjectURL(blob), frame });
     };
     const startVisit = async (id: string) => {
         setPanel(undefined);
@@ -190,18 +196,20 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     };
 
     const world = <GrowingWorld state={state} time={time} ghost={visit ? undefined : ghost} selectedId={visit ? undefined : selected} turn={turn} cheer={cheer} festival={festival}
-        hints={visit ? [] : hints} moment={visit ? undefined : moment} show={show} focus={focus} concert={visit ? undefined : concert} onCamera={c => { camera.current = c; }}
+        hints={visit ? [] : hints} moment={visit ? undefined : moment} show={show} focus={focus} concert={concert} onCamera={c => { camera.current = c; }}
         onPop={() => audio.play('glass')} onStage={setWorldStep}
         onCell={cell => { void audio.unlock(); if (visit) return; if (placing) setPlacing({ ...placing, cell }); else setLine(undefined); }}
         onSelect={id => {
-            if (placing || visit) return;
-            const stand = own.landmarks.find(l => l.id === id && l.kind === 'bandstand');
+            if (placing) return;
+            // えんそうかい (§4): friends gather; each one plays their own note when touched. A
+            // sibling's bandstand plays too: visiting can be shared play without changing anything.
+            const stand = state.landmarks.find(l => l.id === id && l.kind === 'bandstand');
             if (stand?.cell && !(concert && Date.now() < concert.until)) {
-                // えんそうかい (§4): friends gather; each one plays their own note when touched.
-                const length = Math.max(30000, playTune(sound) + 2000);
+                const length = Math.max(30000, playTune(sound, song) + 2000);
                 setConcert({ cell: stand.cell, n: Date.now(), until: Date.now() + length }); setPanel(undefined);
-                setLine('えんそうかいだよ！ みんなを さわって おとを ならそう'); return;
+                setLine(`えんそうかいだよ！「${TUNES[song % TUNES.length].name}」 みんなを さわって おとを ならそう`); setSong(song + 1); return;
             }
+            if (visit) return;
             setSelected(id); setPanel(undefined);
         }}
         onOpen={id => { if (visit) return; void run({ type: 'open', id }, () => setLine(own.unopened.length > 1 ? 'まだ つぼみが あるよ' : undefined)); }}
@@ -210,7 +218,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
             void audio.unlock();
             const playing = concert && Date.now() < concert.until;
             if (playing && sound) {
-                const species = id === 'pokomoko' ? 'pokomoko' : id === 'visitor' ? own.pier.visitor.species : (visit?.state ?? own).villagers.find(v => v.id === id)?.species;
+                const species = id === 'pokomoko' ? 'pokomoko' : id === 'visitor' ? state.pier.visitor.species : state.villagers.find(v => v.id === id)?.species;
                 if (species) playNote(noteFor(species));
             } else audio.play('pick');
             if (visit) { setLine(actorLine(visit.state, id)); return; }
@@ -247,6 +255,11 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
                 <button onClick={() => { setMenu(false); setPanel('show'); }}>みせる</button>
                 <button onClick={() => { setMenu(false); setPanel('flowers'); }}>はなずかん</button>
             </div>
+            <div className="growing-row">
+                <button onClick={() => { setMenu(false); setPanel('trace'); }}>なぞる</button>
+                <button onClick={() => { setMenu(false); setPanel('stored'); }}>もちもの</button>
+                <button onClick={() => { setMenu(false); navigate('/settings'); }}>せってい</button>
+            </div>
             <div className="growing-row"><button onClick={() => setTurn(turn - 1)}>⟲ まわす</button><button onClick={() => setTurn(turn + 1)}>まわす ⟳</button></div>
             {quote && <div className="growing-row">{quote.sides.map(side => <button key={side} disabled={own.drops < quote.price}
                 onClick={() => void run({ type: 'expand', side }, () => { setMenu(false); audio.play('assemble'); })}>
@@ -269,14 +282,16 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
             <button className="growing-seed-button" data-attention={own.tutorial === 'first-home' ? 'true' : undefined}
                 onClick={() => { void audio.unlock(); setPanel(panel === 'tray' ? undefined : 'tray'); setSelected(undefined); }}>たね</button>
         </div>}
-        {!visit && panel === 'tray' && !placing && <GrowingTray state={own} onPick={pick} onClose={() => setPanel(undefined)} />}
+        {!visit && (panel === 'tray' || panel === 'stored') && !placing && <GrowingTray key={panel} state={own} onPick={pick} onClose={() => setPanel(undefined)} initialTab={panel === 'stored' ? 'stored' : 'seeds'} />}
+        {!visit && panel === 'trace' && <TracePanel profileId={profileId} onClose={() => setPanel(undefined)}
+            onSave={(image, glyph) => void run({ type: 'emblem', image, glyph }, () => { setPanel(undefined); audio.play('discovery'); setLine(`「${glyph}」が しまの はたに なったよ！`); })} />}
         {!visit && panel === 'friends' && <FriendsPanel state={own} faces={faces} onClose={() => setPanel(undefined)}
             onFocus={id => { setPanel(undefined); setFocus({ id, n: Date.now() }); setLine(actorLine(own, id)); }} />}
         {!visit && panel === 'show' && <ShowPanel onPick={choice => void showChoice(choice)} onClose={() => setPanel(undefined)} />}
         {!visit && panel === 'flowers' && <FlowerBook state={own} onClose={() => setPanel(undefined)} />}
         {panel === 'visit' && <VisitPicker profiles={siblings} onVisit={id => void startVisit(id)} onClose={() => setPanel(undefined)} />}
         {!visit && selected && !placing && <GrowingSheet state={own} target={selected} onAction={sheetAction} onClose={() => setSelected(undefined)} />}
-        {card && <CardView url={card.url} busy={!card.blob} onSave={() => { if (card.blob) saveImage(card.blob, `${own.islandName ?? 'しま'}-card.png`); }}
+        {card && <CardView url={card.url} busy={!card.blob} frame={card.frame} onFrame={frame => void makeCard(frame)} onSave={() => { if (card.blob) saveImage(card.blob, `${own.islandName ?? 'しま'}-card.png`); }}
             onClose={() => { if (card.url) URL.revokeObjectURL(card.url); setCard(undefined); }} />}
         {story && <StoryView moments={story} onClose={() => setStory(undefined)} />}
     </div>;

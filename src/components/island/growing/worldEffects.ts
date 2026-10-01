@@ -26,6 +26,18 @@ export class WorldEffects {
         }
     }
 
+    /** A ふしぎの品 opens with a ring of polka dots spiralling out (Pokomoko's lineage). */
+    burst(from: T.Vector3, at: number) {
+        const colors = ['#e23b3b', '#ffd23f', '#3fb8e8', '#6ccf6b', '#f25c8a', '#9b6ae0'];
+        for (let i = 0; i < 28; i++) {
+            const mesh = new T.Mesh(new T.CircleGeometry(.05 + (i % 3) * .02, 12), new T.MeshBasicMaterial({ color: colors[i % colors.length], side: T.DoubleSide, transparent: true }));
+            mesh.position.copy(from).add(new T.Vector3(0, .6, 0));
+            const a = i / 28 * Math.PI * 4, speed = .0015 + (i % 4) * .0004;
+            this.pieces.push({ mesh, start: at, velocity: new T.Vector3(Math.cos(a) * speed, .0032 + (i % 5) * .0003, Math.sin(a) * speed) });
+            this.parent.add(mesh);
+        }
+    }
+
     tick(at: number, delta: number) {
         this.pops = this.pops.filter(({ object, start }) => {
             const t = Math.min(1, (at - start) / 650);

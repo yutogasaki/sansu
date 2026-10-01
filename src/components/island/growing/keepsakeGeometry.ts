@@ -27,6 +27,18 @@ export function buildKeepsake(m: IslandMaterials, kind: KeepsakeKind) {
         case 'tower': mesh(root, new T.CylinderGeometry(.07, .15, .7, 4), wonder('dots-yellow'), [0, .45, 0]); add(new T.OctahedronGeometry(.07), '#9a7cc4', [0, .86, 0], .3); break;
         case 'book': { const cover = add(new T.BoxGeometry(.36, .05, .26), '#5f9ec4', [0, .32, 0]); cover.rotation.z = .1;
             add(new T.BoxGeometry(.33, .04, .23), '#fff8ea', [0, .35, 0]).rotation.z = .1; add(new T.CylinderGeometry(.04, .05, .2, 8), '#d9ccb0', [0, .18, 0]); break; }
+        case 'abc': [['#e2574c', -.11, .17, 0], ['#f2c14b', .11, .17, .3], ['#4f9bd9', 0, .33, -.2]].forEach(([c, x, y, r]) => {
+            const block = add(new T.BoxGeometry(.18, .16, .18), c as string, [x as number, y as number, 0]); block.rotation.y = r as number;
+            add(new T.BoxGeometry(.08, .1, .005), '#fff8ec', [x as number, y as number, .092]).rotation.y = r as number;
+        }); break;
+        case 'balloon': add(new T.CylinderGeometry(.04, .05, .14, 8), '#d9ccb0', [0, .15, 0]);
+            [['#e2574c', -.12, .72], ['#4f9bd9', .1, .8], ['#f2c14b', 0, .95]].forEach(([c, x, y]) => {
+                add(new T.SphereGeometry(.1, 12, 10), c as string, [x as number, y as number, 0], .4).scale.y = 1.2;
+                add(new T.CylinderGeometry(.004, .004, (y as number) - .2, 4), '#6f6a8e', [(x as number) / 2, ((y as number) + .2) / 2, 0]);
+            }); break;
+        case 'telescope': add(new T.CylinderGeometry(.03, .03, .3, 8), '#9b7250', [0, .25, 0]);
+            { const tube = add(new T.CylinderGeometry(.06, .08, .42, 12), '#4f6a9b', [0, .48, 0], .4); tube.rotation.z = .9;
+              add(new T.CylinderGeometry(.065, .065, .03, 12), '#f0cf6a', [.15, .58, 0], .3).rotation.z = .9; } break;
         default: add(new T.CylinderGeometry(.03, .03, .3, 8), '#9b7250', [0, .25, 0]); add(new T.SphereGeometry(.17, 16, 12), '#7fb8c8', [0, .52, 0], .5);
             add(new T.TorusGeometry(.19, .015, 6, 24), '#e0b454', [0, .52, 0], .4); break;
     }
@@ -37,7 +49,7 @@ const FLAG_COLORS = ['#d77a86', '#e59a58', '#e0b454', '#78a86a', '#5f9ec4', '#9a
 export { FLAG_COLORS };
 
 /** The island flag on the pier (§1 ぬる, §8 Lv7 patterns: plain, stripe, dots, star, heart). */
-export function buildFlag(m: IslandMaterials, color = 0, pattern = 0) {
+export function buildFlag(m: IslandMaterials, color = 0, pattern = 0, emblem?: string) {
     const root = new T.Group(); root.name = 'growing-flag';
     mesh(root, new T.CylinderGeometry(.02, .025, 1.1, 8), m.surface('#9b7250', .8), [0, .55, 0]);
     mesh(root, new T.SphereGeometry(.035, 8, 6), m.surface('#e0b454', .4), [0, 1.12, 0]);
@@ -49,6 +61,12 @@ export function buildFlag(m: IslandMaterials, color = 0, pattern = 0) {
     else if (pattern === 3) mesh(root, new T.OctahedronGeometry(.08), ink, front(0, 0)).scale.z = .15;
     else if (pattern === 4) { for (const x of [-.035, .035]) mesh(root, new T.SphereGeometry(.045, 10, 8), ink, front(x, .02)).scale.z = .2;
         const tip = mesh(root, new T.ConeGeometry(.075, .09, 4), ink, front(0, -.04)); tip.rotation.z = Math.PI; tip.scale.z = .2; }
+    if (emblem) {
+        // A traced letter or number, the child's own drawing, on the front of the flag.
+        const texture = new T.TextureLoader().load(emblem); texture.colorSpace = T.SRGBColorSpace;
+        const picture = mesh(root, new T.PlaneGeometry(.24, .24), new T.MeshBasicMaterial({ map: texture, transparent: true }), [.22, .94, .012]);
+        picture.name = 'growing-flag-emblem'; picture.userData.ownMaterial = true; picture.userData.ownTexture = texture;
+    }
     root.traverse(o => { if (o instanceof T.Mesh) o.castShadow = false; });
     return root;
 }

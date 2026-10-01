@@ -467,6 +467,8 @@ export class IslandScene {
         if (this.keepsakeRoomActive && !state.learningKeepsakes?.selectedId) {
             this.homeResident.show(this.keepsakeRoom.group);
             if (!this.homeResident.group.parent) this.scene.add(this.homeResident.group);
+            // Pokomoko comes over to greet whoever just came home.
+            if (!previousHome && this.homeResident.walkTo({ x: 1.35, z: 3.45 }, performance.now(), this.motion.matches)) this.requestFrame();
         } else this.homeResident.hide();
         this.sharedJobs.beforeUpdate(state.shared ? { ...state.shared,
             active: state.shared.active && !state.learning && !state.readOnly && !this.workshopActive && !state.preview } : undefined);
@@ -1632,7 +1634,7 @@ export class IslandScene {
             const guest = action ? undefined : this.keepsakeRoom.guestAt(this.raycaster.ray);
             const word = action || guest ? undefined : this.keepsakeRoom.wordAt(this.raycaster.ray);
             if (action) this.callbacks.homeAction?.(action);
-            else if (guest) this.callbacks.homeAction?.({ type: 'guest', id: guest });
+            else if (guest) { this.keepsakeRoom.hopGuest(guest, performance.now()); this.requestFrame(); this.callbacks.homeAction?.({ type: 'guest', id: guest }); }
             else if (word) this.callbacks.homeAction?.({ type: 'word', word });
             else if (!this.state?.learningKeepsakes?.selectedId) {
                 const hit = this.raycaster.intersectObject(this.keepsakeRoom.group, true).find(hit => {
@@ -1896,7 +1898,7 @@ export class IslandScene {
         const optionalFramed = this.frameOptionalFurniture();
         this.frameCosmeticFocus();
         this.frameExpressionFlag();
-        const homeWalking = this.keepsakeRoomActive && !this.state?.photographing && this.homeResident.update(now);
+        const homeWalking = this.keepsakeRoomActive && !this.state?.photographing && [this.homeResident.update(now), this.keepsakeRoom.animateGuests(now)].some(Boolean);
         this.frameKeepsakeRoom();
         const homeMoving = this.homePresentation.animate(this.camera, now, this.motion.matches);
         const renderedCamera = this.keepsakeRoomActive ? this.homeCamera : this.camera;

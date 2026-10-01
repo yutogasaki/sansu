@@ -6,13 +6,14 @@ import type { GrowingState, TownEvent } from './types';
  * independent evidence (spec 34), so a keepsake is never a prize for volume (§10). */
 export interface LearningLevels { math: number; vocab: number }
 
-export const KEEPSAKE_KINDS = ['blocks', 'balance', 'fountain', 'clock', 'windmill', 'star', 'flowerbed', 'tower', 'book', 'globe'] as const;
+export const KEEPSAKE_KINDS = ['blocks', 'balance', 'fountain', 'clock', 'windmill', 'star', 'flowerbed', 'tower', 'book', 'globe', 'abc', 'balloon', 'telescope'] as const;
 export type KeepsakeKind = typeof KEEPSAKE_KINDS[number];
 
 /** Each unit family has its own fixed shape: the island keeps a map of what was learned. */
 export function keepsakeKind(unitId: string): KeepsakeKind {
     const [subject, raw] = unitId.split(':'), level = Number(raw);
-    if (subject === 'vocab') return level % 2 ? 'book' : 'globe';
+    // English keepsakes grow with the words: letter blocks, a book, word balloons, a globe, a telescope.
+    if (subject === 'vocab') return level <= 3 ? 'abc' : level <= 6 ? 'book' : level <= 9 ? 'balloon' : level <= 13 ? 'globe' : 'telescope';
     if (level <= 3) return 'blocks';
     if (level <= 7) return 'balance';
     if (level <= 12) return 'fountain';

@@ -35,11 +35,18 @@ function playFrequency(frequency: number, at: number) {
 
 export const noteFor = (species: Species | 'pokomoko') => SPECIES_NOTE[species];
 
-/** "きらきら ぼし" (traditional), played when the bandstand is touched. */
-export function playTune(enabled: boolean) {
+const C = 261.6, D = 293.7, E = 329.6, F = 349.2, G = 392, A = 440;
+/** Traditional tunes in the public domain, taking turns at each concert (melody only). */
+export const TUNES: readonly { name: string; notes: number[] }[] = [
+    { name: 'きらきら ぼし', notes: [C, C, G, G, A, A, G, 0, F, F, E, E, D, D, C] },
+    { name: 'かえるの うた', notes: [C, D, E, F, E, D, C, 0, E, F, G, A, G, F, E] },
+    { name: 'メリーさんの ひつじ', notes: [E, D, C, D, E, E, E, 0, D, D, D, 0, E, G, G] },
+    { name: 'ぶんぶんぶん', notes: [G, F, E, 0, D, E, F, D, C, 0, E, F, G, E, F, G, A, F, E] },
+];
+/** Plays one tune; returns how long it lasts in milliseconds. */
+export function playTune(enabled: boolean, index = 0) {
     if (!enabled) return 0;
-    const C = 261.6, D = 293.7, E = 329.6, F = 349.2, G = 392, A = 440;
-    const tune = [C, C, G, G, A, A, G, 0, F, F, E, E, D, D, C];
+    const tune = TUNES[((index % TUNES.length) + TUNES.length) % TUNES.length].notes;
     tune.forEach((frequency, i) => { if (frequency) playFrequency(frequency, i * .32); });
     return tune.length * 320;
 }

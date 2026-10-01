@@ -129,6 +129,9 @@ export class GrowingLife {
             const side = i === 0 ? -1 : 1;
             let x = 0, z = 0;
             if (w.mode === 'walk' && !reduced) x = Math.sin(now / 110 + i * Math.PI) * .6;
+            if (w.mode === 'seat' && w.seat?.kind === 'eat' && !reduced) x = Math.max(0, Math.sin(now / 350 + i * Math.PI)) * -1.7;
+            if (w.mode === 'seat' && w.seat?.kind === 'tend') x = reduced ? -.8 : -.8 + Math.sin(now / 300 + i) * .4;
+            if (w.mode === 'seat' && w.seat?.kind === 'slide') z = side * .9;
             // Rotating a hanging arm about z by side × angle lifts it outward on its own side.
             if (concert) z = side * (1.2 + (reduced ? 0 : Math.sin(now / 260 + i) * .5));
             if (react?.kind === 'wave' && side > 0) z = 2.4 + (reduced ? 0 : Math.sin((now - react.at) / 90) * .45);
@@ -237,8 +240,18 @@ export class GrowingLife {
                 }
             }
             if (w.mode === 'seat' && now > w.until) { w.mode = 'idle'; w.seat = undefined; w.until = now + 1500; }
-            const position = w.mode === 'seat' && w.seat ? layout.point(w.seat.cell) : layout.point(w.at);
-            if (w.mode === 'seat' && w.seat) y = w.seat.kind === 'sit' ? .16 : w.seat.kind === 'swing' ? .2
+            const position = w.mode === 'seat' && w.seat ? layout.point(w.seat.kind === 'tend' ? w.at : w.seat.cell) : layout.point(w.at);
+            let lean = 0;
+            if (w.mode === 'seat' && w.seat?.kind === 'slide' && !reduced) {
+                // Up the steps at the back, then whoosh down the chute.
+                const t = (now / 2600 + (w.actor.id.length % 5) * .2) % 1;
+                const climb = t < .45, u = climb ? t / .45 : (t - .45) / .55;
+                position.z += climb ? -.35 : -.35 + u * .85;
+                position.y += climb ? u * .5 : .5 * (1 - u);
+                lean = climb ? 0 : -.5;
+            }
+            if (w.mode === 'seat' && w.seat?.kind === 'tend') lean = reduced ? .35 : .35 + Math.sin(now / 400) * .12;
+            if (w.mode === 'seat' && w.seat) y = w.seat.kind === 'sit' ? .16 : w.seat.kind === 'swing' ? .2 : w.seat.kind === 'slide' || w.seat.kind === 'tend' ? 0
                 : w.seat.kind === 'bounce' ? .2 + (reduced ? 0 : Math.abs(Math.sin(now / 260)) * .4) : .05;
             if (w.mode === 'held') y = .55 + (reduced ? 0 : Math.sin(now / 120) * .03);
             if (w.mode === 'walk' && !reduced) y = Math.abs(Math.sin(now / 110)) * .035;
@@ -247,7 +260,7 @@ export class GrowingLife {
                 if (t >= 1) w.hopAt = undefined; else y += Math.sin(Math.PI * t) * (reduced ? .08 : .35);
             }
             actor.root.position.set(position.x, position.y + y, position.z);
-            actor.root.rotation.y = w.mode === 'seat' ? 0 : w.heading;
+            actor.root.rotation.y = w.mode === 'seat' ? (w.seat?.kind === 'tend' && w.seat ? Math.atan2(w.seat.cell.x - w.at.x, w.seat.cell.z - w.at.z) : 0) : w.heading;
             if (w.react && now - w.react.at < 1400 && !reduced) {
                 const t = (now - w.react.at) / 1400;
                 if (w.react.kind === 'spin') actor.root.rotation.y += t * Math.PI * 2;
@@ -255,7 +268,7 @@ export class GrowingLife {
             }
             this.poseArms(w, now, reduced, false);
             if (w.mode === 'seat' && w.seat?.kind === 'swing' && !reduced) actor.root.rotation.x = Math.sin(now / 500) * .18;
-            else actor.root.rotation.x = 0;
+            else actor.root.rotation.x = lean;
             const swing = w.mode === 'walk' && !reduced ? Math.sin(now / 110) * .5 : 0;
             actor.feet.forEach((foot, i) => { foot.rotation.x = i ? swing : -swing; });
             if (actor.sparkle) actor.sparkle.rotation.y = now / 600;

@@ -4,8 +4,8 @@ import type { Command } from '../../../domain/growingIsland';
 import './growingLoading.css';
 
 /** もようがえ: the wall is drawn with the words the child learned; shapes open with math. */
-export function RoomDecorPanel({ room, words, mathLevel, error, onDecorate }: {
-    room: RoomDecor; words: readonly LearnedWord[]; mathLevel: number; error?: string;
+export function RoomDecorPanel({ room, words, mathLevel, vocabLevel = 0, error, onDecorate }: {
+    room: RoomDecor; words: readonly LearnedWord[]; mathLevel: number; vocabLevel?: number; error?: string;
     onDecorate: (command: Extract<Command, { type: 'decorate' }>) => void;
 }) {
     const [open, setOpen] = useState(false);
@@ -19,10 +19,11 @@ export function RoomDecorPanel({ room, words, mathLevel, error, onDecorate }: {
         <p className="room-decor-note">かべの みずたまは、おぼえた えいごの ことば。さわると よみあげるよ</p>
         <h3>もようの かたち</h3>
         <div className="room-decor-row">{WALL_PATTERNS.map(pattern => {
-            const available = patternOpen(pattern.id, mathLevel);
+            const available = patternOpen(pattern.id, mathLevel, vocabLevel);
+            const need = 'vocabLevel' in pattern ? `えいご Lv${pattern.vocabLevel}で` : `さんすう Lv${pattern.mathLevel}で`;
             return <button key={pattern.id} className="island-secondary" aria-pressed={room.pattern === pattern.id} disabled={!available}
                 onClick={() => onDecorate({ type: 'decorate', pattern: pattern.id })}>
-                {pattern.name}{!available && <small>さんすう Lv{pattern.mathLevel}で</small>}</button>;
+                {pattern.name}{!available && <small>{need}</small>}</button>;
         })}</div>
         <h3>つかう いろ</h3>
         <div className="room-decor-row">{WORD_GROUPS.filter(g => counts[g.id] > 0).map(group =>

@@ -113,6 +113,8 @@ export interface GrowingState {
     gifts?: string[];
     /** Flower colours the island has grown, for the flower book (§5.1). */
     flowerBook?: FlowerColor[];
+    /** A letter or number the child traced, shown on the island flag (§13.4). */
+    emblem?: { image: string; glyph: string };
     /** ふしぎの たね waiting to be planted; island levels 3, 5, 7 and 9 bring one each (§3.5). */
     wonderSeeds?: number;
     /** Pokomoko's room: wallpaper drawn with learned words, chosen shapes and rug (§13.1). */
@@ -137,7 +139,8 @@ export type Command =
     | { type: 'away'; id: string; away: boolean }
     | { type: 'dress'; id: string; color?: number; hat?: number }
     | { type: 'flag'; color?: number; pattern?: number }
-    | { type: 'decorate'; pattern?: WallPatternId; rug?: number; hidden?: WordGroupId[] };
+    | { type: 'decorate'; pattern?: WallPatternId; rug?: number; hidden?: WordGroupId[] }
+    | { type: 'emblem'; image: string; glyph: string };
 
 export type TownEvent =
     | { type: 'built'; plotId: string }

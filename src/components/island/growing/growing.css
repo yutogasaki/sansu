@@ -120,3 +120,5 @@
 .growing-flower-dot--wonder { background: radial-gradient(circle, #fff7f0 26%, transparent 28%) 0 0 / 10px 10px, #e23b3b !important; }
 .growing-flower-card small { font-size: 11px; color: var(--pokomoko-muted); }
 .growing-flower-note { margin: 0 0 10px; font-size: 13px; color: var(--pokomoko-muted); }
+.growing-trace-canvas { width: min(70vw, 260px); height: min(70vw, 260px); background: #fffaf0; border: 3px solid #1f1a24; border-radius: 22px; touch-action: none; box-shadow: 5px 5px 0 #ffd23f; }
+.growing-trace .growing-row button[aria-pressed] { min-width: 52px; font-size: 22px; font-weight: 900; }

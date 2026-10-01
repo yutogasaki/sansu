@@ -12,8 +12,8 @@ const SEEDS: SeedKind[] = ['home', 'farm', 'play', 'wild', 'market', 'festival',
 const LANDMARKS: LandmarkKind[] = ['flower', 'bench', 'water-bowl', 'sapling', 'water-channel', 'picnic-table', 'planter', 'swing', 'lantern', 'fence', 'lighthouse', 'bandstand', 'slide', 'trampoline', 'fountain', 'bakery', 'postbox'];
 
 /** Seeds first and large; landmarks and stored things one swipe away (spec 52 §12.1). */
-export function GrowingTray({ state, onPick, onClose }: { state: GrowingState; onPick: (pick: Pick) => void; onClose: () => void }) {
-    const [tab, setTab] = useState<'seeds' | 'landmarks' | 'stored'>('seeds');
+export function GrowingTray({ state, onPick, onClose, initialTab = 'seeds' }: { state: GrowingState; onPick: (pick: Pick) => void; onClose: () => void; initialTab?: 'seeds' | 'landmarks' | 'stored' }) {
+    const [tab, setTab] = useState<'seeds' | 'landmarks' | 'stored'>(initialTab);
     const tutorial = state.tutorial === 'first-home';
     const seeds = SEEDS.filter(kind => (kind === 'wonder' ? (state.wonderSeeds ?? 0) > 0 : state.unlocked.includes(`seed:${kind}`)) && (!tutorial || kind === 'home'));
     const landmarks = LANDMARKS.filter(kind => state.unlocked.includes(`landmark:${kind}`));
@@ -55,6 +55,7 @@ export function GrowingTray({ state, onPick, onClose }: { state: GrowingState; o
                 <strong>{LANDMARK_LABEL[kind]?.name}</strong>{price(LANDMARK_PRICE[kind] ?? 0)}
             </button>)}
         </div>}
+        {tab === 'stored' && !stored.length && <p className="growing-flower-note">しまってある ものは まだ ないよ</p>}
         {tab === 'stored' && <div className="growing-grid">
             {stored.map(item => <button key={item.id} className="growing-card" onClick={() => onPick({ mode: 'unstore', id: item.id, kind: item.kind, seed: item.seed, keepsake: 'keepsake' in item ? item.keepsake as string : undefined })}>
                 <span className="growing-card-icon" aria-hidden="true">{item.label?.icon}</span><strong>{item.label?.name}</strong>

@@ -69,7 +69,11 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             world.scene.add(layer.root);
             const now = performance.now();
             for (const id of unopened) if (!next.unopened.includes(id)) {
-                const opened = layer.objects.get(id); if (opened) { effects.pop(opened, now, reduced); handlerRef.current.onPop?.(); }
+                const opened = layer.objects.get(id);
+                if (opened) {
+                    effects.pop(opened, now, reduced); handlerRef.current.onPop?.();
+                    if (!reduced && next.plots.some(p => p.id === id && p.kind === 'wonder')) effects.burst(opened.position, now);
+                }
             }
             // Flowers that spread by themselves and gifts from a sibling grow in gently; they are not buds.
             if (known) for (const [id, object] of layer.objects) if (!known.has(id) && (next.plots.some(p => p.id === id && p.origin === 'spread')

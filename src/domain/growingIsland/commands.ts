@@ -172,7 +172,7 @@ function apply(state: GrowingState, command: Command): TownEvent[] {
             // Free and changeable any time; a shape opens with the math level already reached.
             const room = { ...DEFAULT_DECOR, ...state.room };
             if (command.pattern !== undefined) {
-                if (!patternOpen(command.pattern, state.mastery?.math ?? 0)) fail('まだ えらべないよ。');
+                if (!patternOpen(command.pattern, state.mastery?.math ?? 0, state.mastery?.vocab ?? 0)) fail('まだ えらべないよ。');
                 room.pattern = command.pattern;
             }
             if (command.rug !== undefined) {
@@ -186,6 +186,13 @@ function apply(state: GrowingState, command: Command): TownEvent[] {
                 if (!room.hidden.length) delete room.hidden;
             }
             state.room = room;
+            break;
+        }
+        case 'emblem': {
+            // なぞって かざる: a traced letter or number becomes the island flag's picture.
+            if (!/^data:image\/png;base64,[A-Za-z0-9+/=]+$/.test(command.image) || command.image.length > 24000) fail('もういちど なぞってね。');
+            if (!/^[0-9A-Za-z]$/.test(command.glyph)) fail('もういちど なぞってね。');
+            state.emblem = { image: command.image, glyph: command.glyph };
             break;
         }
         case 'flag': {
