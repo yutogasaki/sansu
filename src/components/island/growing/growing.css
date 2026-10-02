@@ -14,7 +14,7 @@
 .growing-menu-button { margin-left: auto; }
 .growing-menu {
     position: absolute; z-index: 8; top: calc(100px + env(safe-area-inset-top)); right: 12px; display: grid; gap: 8px; padding: 10px;
-    background: var(--pokomoko-paper); border-radius: 16px; box-shadow: 0 6px 20px rgb(30 40 60 / 18%);
+    max-width: calc(100% - 24px); background: var(--pokomoko-paper); border-radius: 16px; box-shadow: 0 6px 20px rgb(30 40 60 / 18%);
 }
 .growing-row { display: flex; gap: 6px; flex-wrap: wrap; }
 .growing-row button, .growing-placing button, .growing-action, .growing-name button {
@@ -35,8 +35,7 @@
     width: 64px; height: 64px; border: 0; border-radius: 50%; background: var(--pokomoko-blue); color: #fff !important;
     font-size: 17px; font-weight: 900; box-shadow: 0 4px 14px rgb(37 72 140 / 35%);
 }
-.growing-seed-button[data-attention="true"] { animation: growing-attention 1.4s ease-in-out infinite; }
-@keyframes growing-attention { 50% { transform: scale(1.1); box-shadow: 0 0 0 10px rgb(49 95 181 / 22%); } }
+.growing-seed-button[data-attention="true"] { outline: 4px solid var(--pokomoko-stitch); outline-offset: 4px; }
 .growing-open-all {
     min-height: 48px; padding: 8px 16px; border: 0; border-radius: 24px; background: #f0cf6a; font-weight: 900;
     box-shadow: 0 3px 10px rgb(120 90 20 / 25%);
@@ -74,7 +73,7 @@
 .growing-free { color: #b3502f; }
 .growing-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 .growing-swatches { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
-.growing-swatches button { width: 36px; height: 36px; border: 2px solid #fff; border-radius: 50%; box-shadow: 0 0 0 1px var(--pokomoko-edge); }
+.growing-swatches button { width: 44px; height: 44px; border: 2px solid #fff; border-radius: 50%; box-shadow: 0 0 0 1px var(--pokomoko-edge); }
 .growing-swatches button[aria-pressed="true"] { box-shadow: 0 0 0 3px var(--pokomoko-ink); }
 .growing-name { display: flex; gap: 8px; margin-bottom: 8px; }
 .growing-name input { flex: 1; min-height: 44px; padding: 0 12px; border: 1px solid var(--pokomoko-edge); border-radius: 12px; font: inherit; }

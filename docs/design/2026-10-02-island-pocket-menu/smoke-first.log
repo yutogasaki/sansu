@@ -1,0 +1,84 @@
+
+> pokko-fushigi-zukan-app@0.0.0 e2e:smoke
+> node tools/e2e-smoke.mjs
+
+Starting dev server on http://127.0.0.1:4173...
+
+> pokko-fushigi-zukan-app@0.0.0 dev:test-server
+> vite --host 127.0.0.1 --port 4173 --strictPort
+
+7:19:13 AM [vite] (client) Re-optimizing dependencies because vite config has changed
+
+  VITE v7.3.1  ready in 649 ms
+
+  ➜  Local:   http://127.0.0.1:4173/
+Browserslist: browsers data (caniuse-lite) is 9 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+Dev server ready on http://127.0.0.1:4173.
+PASS redirects to onboarding when no profile (6073ms)
+PASS completes onboarding, chooses a route, and opens Makimodon (2190ms)
+PASS keeps the classic opening playable with expanded mobile browser chrome (2129ms)
+PASS keeps the direct study route working (1977ms)
+PASS keeps the direct review route working (1396ms)
+PASS keeps the direct settings route working (1378ms)
+FAIL keeps legacy fuwafuwa album out of child records: locator.waitFor: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByRole('heading', { name: /せいちょう グラフ|成長グラフ/ }) to be visible[22m
+
+    at scenarioLegacyAlbumHidden (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:651:64)
+    at async runScenario (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:418:5)
+    at async main (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:6571:18)
+7:20:10 AM [vite] (client) hmr update /src/index.css
+7:20:12 AM [vite] (client) hmr update /src/index.css
+7:20:13 AM [vite] (client) hmr update /src/index.css
+7:20:16 AM [vite] (client) hmr update /src/index.css
+7:20:19 AM [vite] (client) hmr update /src/index.css
+PASS completes periodic test from stats and opens results (22262ms)
+7:20:24 AM [vite] (client) hmr update /src/index.css
+PASS launches explore immediately and safely returns at a route break (3416ms)
+7:20:27 AM [vite] (client) hmr update /src/index.css
+PASS keeps the 390x800 route boundary fully visible (3229ms)
+7:20:29 AM [vite] (client) hmr update /src/index.css
+7:20:31 AM [vite] (client) hmr update /src/index.css
+PASS runs Root Pull v2 inline with reduced motion and the numeric keypad (3124ms)
+7:20:34 AM [vite] (client) hmr update /src/index.css
+7:20:36 AM [vite] (client) hmr update /src/index.css
+Snap Root measured ms { firstIncorrect: 430, secondIncorrect: 535, correct: [ 137, 116 ] }
+PASS runs the Snap Root breakthrough loop at 390px (5401ms)
+PASS keeps the Snap Root breakthrough loop playable on tablet (3054ms)
+PASS can exit safely after explore start persistence fails (1897ms)
+7:20:44 AM [vite] (client) hmr update /src/index.css
+PASS safely exits and retries from a pending explore problem (2154ms)
+7:20:46 AM [vite] (client) hmr update /src/index.css
+PASS commits one explore answer under rapid double submit (2368ms)
+PASS retries the same explore attempt after a save failure (2222ms)
+7:20:49 AM [vite] (client) hmr update /src/index.css
+7:20:54 AM [vite] (client) hmr update /src/index.css
+PASS resumes fixed-ten explore across retry, route, discovery, and partial-input boundaries (8130ms)
+7:20:59 AM [vite] (client) hmr update /src/index.css
+PASS finishes last-light rescue without blocking on an ordinary clue (2081ms)
+PASS retries voluntary return without early terminal progress (3706ms)
+7:21:04 AM [vite] (client) hmr update /src/index.css
+PASS grows the immersive light bridge from an addition answer (4934ms)
+7:21:09 AM [vite] (client) hmr update /src/index.css
+PASS keeps the light bridge playable on tablet (4915ms)
+7:21:14 AM [vite] (client) hmr update /src/index.css
+PASS keeps the light bridge connected on a landscape tablet (5184ms)
+7:21:20 AM [vite] (client) hmr update /src/index.css
+PASS keeps the light bridge playable on a 1024px portrait tablet (5139ms)
+7:21:27 AM [vite] (client) hmr update /src/index.css
+PASS keeps the light bridge playable on a wide portrait tablet (5016ms)
+7:21:33 AM [vite] (client) hmr update /src/index.css
+PASS opens the root tangle with profile-near subtraction (6196ms)
+7:21:39 AM [vite] (client) hmr update /src/index.css
+7:21:39 AM [vite] (client) hmr update /src/index.css
+7:21:40 AM [vite] (client) hmr update /src/index.css
+7:21:40 AM [vite] (client) hmr update /src/index.css
+PASS keeps the root tangle playable on tablet (6324ms)
+7:21:46 AM [vite] (client) hmr update /src/index.css
+PASS keeps the root tangle playable on a landscape tablet (6977ms)
+7:21:48 AM [vite] (client) hmr update /src/index.css
+PASS keeps the root tangle playable on a 1024px portrait tablet (6315ms)
+PASS keeps the root tangle playable on a wide portrait tablet (7030ms)
+PASS guards /parents route behind parent gate (1494ms)

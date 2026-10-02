@@ -32,6 +32,16 @@ export function createWorldScene(renderer: T.WebGLRenderer) {
         if (layout.key === groundKey && ground) return;
         ground?.root.removeFromParent(); ground?.dispose();
         ground = buildGardenGround({ bounds: layout.bounds, moisture: cell => soilAt(state, cell) }, layout.point);
+        // The shared garden's 40-unit sea was sized for the old five expansions.
+        // Larger districts still need sea behind the whole zoomed-out camera.
+        if (layout.width + layout.depth > 26) {
+            const sea = ground.root.getObjectByName('life-sea') as T.Mesh<T.PlaneGeometry, T.ShaderMaterial>;
+            const size = (layout.width + layout.depth) * 12;
+            sea.geometry.dispose(); sea.geometry = new T.PlaneGeometry(size, size);
+            // Keep waves at the original world scale when widening the water plane.
+            sea.material.vertexShader = sea.material.vertexShader.replace('p=uv;', 'p=position.xy/40.+.5;');
+            sea.material.needsUpdate = true;
+        }
         groundKey = layout.key; scene.add(ground.root); ground.setTime(time);
         cottage.root.position.set(2.5 - layout.center, .035, -1.5); cottage.root.scale.setScalar(.8);
         if (!cottage.root.parent) scene.add(cottage.root);

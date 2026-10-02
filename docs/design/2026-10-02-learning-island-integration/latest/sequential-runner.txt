@@ -1,0 +1,24 @@
+import subprocess,os,json,time
+from pathlib import Path
+root=Path('/tmp/sansu-latest-qa');root.mkdir(exist_ok=True)
+cwd='/tmp/sansu-latest-main.n_z3b7o1'
+items=[
+('pocket','docs/design/2026-10-02-island-pocket-menu/ui.mjs',{'SANSU_MENU_URL':'http://127.0.0.1:5280','SANSU_MENU_SOURCE':cwd,'SANSU_MENU_OUTPUT':str(root/'pocket')}),
+('house','tools/e2e-growing-house-guide.mjs',{'SANSU_HOUSE_GUIDE_URL':'http://127.0.0.1:5280','SANSU_HOUSE_GUIDE_OUTPUT':str(root/'house')}),
+('balance','tools/e2e-growing-balance.mjs',{'SANSU_GROWING_URL':'http://127.0.0.1:5280','SANSU_GROWING_OUTPUT':str(root/'balance')}),
+('guidance','tools/e2e-growing-guidance.mjs',{'SANSU_GROWING_GUIDANCE_URL':'http://127.0.0.1:5280','SANSU_GROWING_GUIDANCE_OUTPUT':str(root/'guidance')}),
+('production-guidance','tools/e2e-growing-guidance-production.mjs',{'SANSU_GUIDANCE_PRODUCTION_URL':'http://127.0.0.1:5282','SANSU_GUIDANCE_PRODUCTION_OUTPUT':str(root/'production-guidance')}),
+('production-balance','tools/e2e-growing-balance-production.mjs',{'SANSU_GROWING_PRODUCTION_URL':'http://127.0.0.1:5282','SANSU_GROWING_PRODUCTION_OUTPUT':str(root/'production-balance')}),
+('finish','docs/design/2026-10-01-finish-clarity/ui.mjs',{'SANSU_FINISH_AUDIT_URL':'http://127.0.0.1:5280','SANSU_FINISH_CLARITY_OUTPUT':str(root/'finish'),'SANSU_FINISH_CLARITY_REVISION':'main-integration-0cf5deeb4688'}),
+('navigation','tools/e2e-island-navigation.mjs',{'SANSU_ISLAND_BASE_URL':'http://127.0.0.1:5281','SANSU_NAVIGATION_OUTPUT':str(root/'navigation'),'SANSU_NAVIGATION_VIEWPORTS':'390x844,768x1024'}),
+('smoke',None,{})]
+results=json.loads((root/"run-results.json").read_text())
+for name,script,env in items:
+ if any(r["name"]==name and r["exitCode"]==0 for r in results):continue
+ print('START '+name,flush=True);start=time.time()
+ with (root/(name+'.log')).open('w') as log:
+  r=subprocess.run(['node',script] if script else ['npm','run','e2e:smoke'],cwd=cwd,env={**os.environ,**env},stdout=log,stderr=subprocess.STDOUT)
+ results.append({'name':name,'exitCode':r.returncode,'seconds':round(time.time()-start,1),'environment':env})
+ (root/'run-results.json').write_text(json.dumps(results,indent=2))
+ print('END '+name+' '+str(r.returncode),flush=True)
+ if r.returncode:raise SystemExit(r.returncode)

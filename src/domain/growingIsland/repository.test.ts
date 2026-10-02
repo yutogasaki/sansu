@@ -1,5 +1,6 @@
 import 'fake-indexeddb/auto';
-import { afterEach, describe, expect, it } from 'vitest';
+import Dexie from 'dexie';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { IslandLifeDatabase, updateLife } from '../islandLife/repository';
 import type { LifeCommand } from '../islandLife/model';
 import { commandLife, replayLife } from '../islandLife/simulation';
@@ -7,6 +8,9 @@ import { commandLife, replayLife } from '../islandLife/simulation';
 import { learningDay, newLife } from '../islandLife/model';
 import { GrowingIslandDatabase, MOMENT_LIMIT, addMoment, commandGrowingIsland, deleteGrowingOwner, flowerSentToday, listMoments,
     readGrowingIsland, sendFlower, syncGrowingIsland } from './repository';
+import type { GrowingRecord } from './repository';
+import { newIsland } from './island';
+import { dayMoment } from './moments';
 
 const stores: (GrowingIslandDatabase | IslandLifeDatabase)[] = [];
 const growing = () => { const d = new GrowingIslandDatabase(`growing-test-${crypto.randomUUID()}`); stores.push(d); return d; };
@@ -15,6 +19,99 @@ afterEach(async () => { await Promise.all(stores.splice(0).map(d => d.delete()))
 const T0 = Date.UTC(2026, 8, 29, 9), HOUR = 3_600_000;
 
 describe('growing island persistence', () => {
+    it('persists an unseen real-day moment without rewriting or redrawing on repeated sync', async () => {
+        const db = growing(), old = life(), state = newIsland('batch', T0);
+        state.landmarks = Array.from({ length: 6 }, (_, x) => ({ id: `flower-${x}`, kind: 'flower', cell: { x, z: 3 }, growth: 6 }));
+        const day = Array.from({ length: 30 }, (_, i) => i).find(i => dayMoment(state, i))!;
+        const now = T0 + day * 24 * HOUR; state.nature.realAt = now;
+        await db.islands.put({ profileId: 'batch', version: 2, revision: 3, createdAt: T0, updatedAt: now, state });
+        const first = await syncGrowingIsland('batch', [], now, db, old);
+        expect(first.town).toHaveLength(1);
+        db.close(); await db.open();
+        const again = await syncGrowingIsland('batch', [], now, db, old);
+        expect(again.town).toEqual(first.town);
+        expect(again.record.revision).toBe(first.record.revision);
+        await commandGrowingIsland('batch', { id: 'shown', command: { type: 'ack-moment', day } }, now, db);
+        expect((await syncGrowingIsland('batch', [], now, db, old)).town).toEqual([]);
+    });
+
+    it('rolls back a failed table copy without losing the legacy source or photos', async () => {
+        const db = growing(), legacy = new Dexie(db.name);
+        legacy.version(2).stores({ islands: '&profileId', moments: '++id, profileId, [profileId+at]', gifts: '&id, to, from' });
+        const source: GrowingRecord = { profileId: 'kid', version: 1, revision: 9, createdAt: T0, updatedAt: T0, state: newIsland('kid', T0) };
+        await legacy.table('islands').put(source);
+        await legacy.table('moments').add({ profileId: 'kid', at: T0, image: new Blob(['photo']), width: 4, height: 3 });
+        legacy.close();
+        db.version(3).upgrade(() => { throw new Error('copy-aborted'); });
+        await expect(db.open()).rejects.toThrow('copy-aborted');
+        await legacy.open();
+        expect(await legacy.table('islands').get('kid')).toEqual(source);
+        expect(await legacy.table('moments').count()).toBe(1);
+        expect(legacy.backendDB().objectStoreNames.contains('balancedIslands')).toBe(false);
+        legacy.close();
+        const retry = new GrowingIslandDatabase(db.name); stores.push(retry);
+        await retry.open();
+        expect(await retry.islands.get('kid')).toEqual(source);
+        expect(await retry.moments.count()).toBe(1);
+    });
+
+    it('migrates v1 atomically, preserving earned rights, photos and undelivered gifts', async () => {
+        const db = growing();
+        const state = newIsland('migrate', T0);
+        state.drops = 123; state.town.bank = 336; state.learned = ['already-paid'];
+        state.land = { expanded: 'east', extra: ['west', 'south'], capes: ['east', 'west'] };
+        state.genki.best = 150; state.wonderSeeds = 4;
+        const original: GrowingRecord = { profileId: 'migrate', version: 1, revision: 7, createdAt: T0, updatedAt: T0, state };
+        await db.islands.put(original);
+        await addMoment('migrate', new Blob(['photo']), 4, 3, T0, db);
+        await sendFlower('migrate', 'みなと', 'sibling', T0, db);
+        const images = await db.moments.toArray(), gifts = await db.gifts.toArray();
+        const put = vi.spyOn(db.islands, 'put').mockRejectedValueOnce(new Error('disk-full'));
+        const intent = { id: 'rename', command: { type: 'name' as const, target: 'island', name: 'みなと' } };
+        await expect(commandGrowingIsland('migrate', intent, T0 + 24 * HOUR, db)).rejects.toThrow('disk-full');
+        expect(await db.islands.get('migrate')).toEqual(original);
+        put.mockRestore();
+        const next = await commandGrowingIsland('migrate', intent, T0 + 24 * HOUR, db);
+        expect(next.record).toMatchObject({ version: 3, revision: 8, createdAt: T0 });
+        expect(next.record.state).toEqual({ ...state, islandName: 'みなと', applied: ['rename'], surprise: { day: 1 } });
+        expect(await db.moments.toArray()).toEqual(images);
+        expect(await db.gifts.toArray()).toEqual(gifts);
+        const again = await commandGrowingIsland('migrate', intent, T0 + 25 * HOUR, db);
+        expect(again.record).toEqual(next.record);
+    });
+
+    it('refuses unknown records on reads, syncs and commands without writing', async () => {
+        const db = growing(), old = life();
+        const record = { profileId: 'future', version: 99, revision: 1, createdAt: T0, updatedAt: T0, state: newIsland('future', T0) } as unknown as GrowingRecord;
+        await db.islands.put(record);
+        await expect(readGrowingIsland('future', db)).rejects.toThrow('新しい版');
+        await expect(syncGrowingIsland('future', [], T0, db, old)).rejects.toThrow('新しい版');
+        await expect(commandGrowingIsland('future', { id: 'open', command: { type: 'open-all' } }, T0, db)).rejects.toThrow('新しい版');
+        expect(await db.islands.get('future')).toEqual(record);
+    });
+
+    it('isolates legacy writers and copies the old table once without truncating new districts', async () => {
+        const db = growing();
+        db.close();
+        const legacy = new Dexie(db.name);
+        legacy.version(1).stores({ islands: '&profileId' });
+        legacy.version(2).stores({ islands: '&profileId', moments: '++id, profileId, [profileId+at]', gifts: '&id, to, from' });
+        const record: GrowingRecord = { profileId: 'kid', version: 1, revision: 4, createdAt: T0, updatedAt: T0, state: newIsland('kid', T0) };
+        await legacy.table('islands').put(record);
+        legacy.close();
+        await db.open();
+        expect(await db.islands.get('kid')).toEqual(record);
+        const next = await commandGrowingIsland('kid', { id: 'rename', command: { type: 'name', target: 'island', name: 'あたらしい しま' } }, T0, db);
+        db.close();
+        await legacy.open();
+        await legacy.table('islands').put({ ...record, state: { ...record.state, drops: 999 } });
+        legacy.close();
+        await db.open();
+        expect(await db.islands.get('kid')).toEqual(next.record);
+        await deleteGrowingOwner('kid', db);
+        expect(await db.legacyIslands.get('kid')).toBeUndefined();
+    });
+
     it('creates a new island for a new child and saves it once', async () => {
         const db = growing(), old = life();
         const first = await syncGrowingIsland('new-kid', [], T0, db, old);
@@ -39,14 +136,14 @@ describe('growing island persistence', () => {
         expect(await old.worlds.get('kid')).toEqual(before);
     });
 
-    it('adds learning once and opens the banked town time in the same save', async () => {
+    it('adds learning once and retains time when nothing is prepared', async () => {
         const db = growing(), old = life();
         await syncGrowingIsland('kid', [], T0, db, old);
         const facts = [1, 2, 3].map(n => ({ id: `done-${n}`, at: T0 + n }));
         const opened = await syncGrowingIsland('kid', facts, T0 + 10, db, old);
         expect(opened.learned).toBe(3);
         expect(opened.record.state.drops).toBe(6);
-        expect(opened.record.state.town).toEqual({ clock: 12, bank: 0 });
+        expect(opened.record.state.town).toEqual({ clock: 0, bank: 12 });
         const again = await syncGrowingIsland('kid', facts, T0 + 20, db, old);
         expect(again.learned).toBe(0);
         expect(again.record.state.drops).toBe(6);

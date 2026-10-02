@@ -16,6 +16,7 @@
 
 **まず読む：[今の島に、自然と町の仕組みを取り込む](product/island-nature-integration.md)。** 今の島を本体にし、Nature Townを別作品としては進めません。何を残し、何を取り込むかを一枚にまとめました。
 
+育つ島の経済・育成時間・出来事と保存互換：[バランスの契約](product/growing-island-balance.md)。
 
 育つ島の任意の導きと記念：[スターターとアチーブメントv1](product/island-starter-achievements-proposal.md)。S1〜S5/A1〜A6・本・保存3をローカル実装し、[固定両幅の実画面と検証](design/2026-10-01-island-guidance/README.md)を残しています。公開・実機・子どもの観察は別の状態です。
 

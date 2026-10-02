@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { IslandToyIcon } from '../IslandToyIcon';
 import { patternOpen, RUG_COLORS, WALL_PATTERNS, WORD_GROUPS, type LearnedWord, type RoomDecor, type WordGroupId } from '../../../domain/growingIsland/room';
 import type { Command } from '../../../domain/growingIsland';
 import './growingLoading.css';
@@ -11,10 +12,11 @@ export function RoomDecorPanel({ room, words, mathLevel, vocabLevel = 0, error, 
     const [open, setOpen] = useState(false);
     const counts = useMemo(() => Object.fromEntries(WORD_GROUPS.map(g => [g.id, words.filter(w => w.group === g.id).length])) as Record<WordGroupId, number>, [words]);
     const hidden = new Set(room.hidden ?? []);
-    if (!open) return <button className="island-secondary room-decor-open" onClick={() => setOpen(true)}>
-        <strong>🎨 もようがえ</strong><small>{words.length ? `おぼえた ことば ${words.length}こで かべが できているよ` : 'ことばを おぼえると かべに みずたまが ふえるよ'}</small>
+    if (!open) return <button className="island-secondary room-decor-open" data-room-entry="decor" onClick={() => setOpen(true)}>
+        <span className="room-entry-icon" aria-hidden="true"><IslandToyIcon kind="palette" size={32} /></span>
+        <strong>もようがえ</strong><small>{words.length ? `おぼえた ことば ${words.length}こが かべの もように` : 'ことばを おぼえると かべに みずたまが ふえるよ'}</small>
     </button>;
-    return <section className="room-decor" aria-label="もようがえ">
+    return <section className="room-decor" data-room-panel="decor" aria-label="もようがえ">
         <header><strong>もようがえ</strong><button className="island-secondary" onClick={() => setOpen(false)}>とじる</button></header>
         <p className="room-decor-note">かべの みずたまは、おぼえた えいごの ことば。さわると よみあげるよ</p>
         <h3>もようの かたち</h3>

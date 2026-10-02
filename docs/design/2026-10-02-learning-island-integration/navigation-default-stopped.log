@@ -1,0 +1,10 @@
+PASS navigation 320x568
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.waitForFunction: Target page, context or browser has been closed
+    at waitReady (/private/tmp/sansu-integration-20261002.0mbu8ebi/tools/island-e2e-helpers.mjs:71:16)
+    at async file:///private/tmp/sansu-integration-20261002.0mbu8ebi/tools/e2e-island-navigation.mjs:283:53
+
+Node.js v24.14.0

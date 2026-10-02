@@ -1,0 +1,206 @@
+{
+  "candidate": {
+    "base": "5987adee0b4789b16ff419d4e4dfa7a3df0f4e22",
+    "tree": "0cf5deeb4688b3a63c57bfa9b637d4f1756c345a",
+    "directory": "/tmp/sansu-latest-main.n_z3b7o1",
+    "authorizedPaths": [
+      ".agents/tasks/DONE.md",
+      ".agents/tasks/TASKS.md",
+      ".gitignore",
+      "docs/ai/verification_matrix.md",
+      "docs/done/2026-10.md",
+      "docs/index.md",
+      "docs/product/01_app_spec.md",
+      "docs/product/07_ui_design_guideline.md",
+      "docs/product/13_data_storage_migration_spec.md",
+      "docs/product/52_growing_island_game_spec.md",
+      "docs/product/README.md",
+      "src/components/Layout.tsx",
+      "src/components/challenge/ChallengeHomeCard.tsx",
+      "src/components/island/IslandHomeActions.test.tsx",
+      "src/components/island/IslandHomeActions.tsx",
+      "src/components/island/IslandHouseOverview.css",
+      "src/components/island/IslandHouseOverview.tsx",
+      "src/components/island/IslandLearningKeepsakes.tsx",
+      "src/components/island/growing/GrowingIsland.tsx",
+      "src/components/island/growing/GrowingTray.tsx",
+      "src/components/island/growing/GrowingWorld.tsx",
+      "src/components/island/growing/LettersPanel.tsx",
+      "src/components/island/growing/RoomDecorPanel.tsx",
+      "src/components/island/growing/growing.css",
+      "src/components/island/growing/growingCamera.ts",
+      "src/components/island/growing/useGrowingIsland.ts",
+      "src/components/island/growing/worldScene.ts",
+      "src/domain/growingIsland/commands.ts",
+      "src/domain/growingIsland/community.ts",
+      "src/domain/growingIsland/moments.ts",
+      "src/domain/growingIsland/pacing.test.ts",
+      "src/domain/growingIsland/repository.test.ts",
+      "src/domain/growingIsland/repository.ts",
+      "src/domain/growingIsland/rules.test.ts",
+      "src/domain/growingIsland/space.ts",
+      "src/domain/growingIsland/town.ts",
+      "src/domain/growingIsland/types.ts",
+      "tools/e2e-growing-guidance.mjs",
+      "tools/e2e-island-navigation.mjs",
+      "tools/island-e2e-helpers.mjs",
+      "docs/audits/2026-10-01-island-balance-fixes/",
+      "docs/audits/2026-10-01-island-balance-recheck/",
+      "docs/design/2026-10-01-house-atelier/",
+      "docs/design/2026-10-01-menu-atelier/",
+      "docs/design/2026-10-02-island-pocket-menu/",
+      "docs/design/2026-10-02-learning-island-integration/",
+      "docs/product/growing-island-balance.md",
+      "src/components/island/IslandHouseMenu.css",
+      "src/components/island/growing/GrowingIslandMenu.test.tsx",
+      "src/components/island/growing/GrowingIslandMenu.tsx",
+      "src/components/island/growing/growingCamera.test.ts",
+      "src/components/island/growing/growingIslandMenu.css",
+      "src/components/ui/MenuAtelier.css",
+      "src/domain/growingIsland/balance.test.ts",
+      "tools/e2e-growing-balance-production.mjs",
+      "tools/e2e-growing-balance.mjs"
+    ]
+  },
+  "observedNewParent": "5defcb1c58f763a638f6562f970d2edcbc4f2eb0",
+  "observedNewIndex": "806d1dc17f5629f8a4ee84195ca7a02c6828c204",
+  "finalCommitEvidence": false,
+  "version": {
+    "version": "main-integration-0cf5deeb4688:e0315b1e-5b80-4b79-a5f1-890b3bcd6614",
+    "revision": "main-integration-0cf5deeb4688",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": true,
+        "fantasy": true,
+        "candidate": "living-fantasy-garden-v2",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "inputChecks": {
+    "app": {
+      "count": 1769,
+      "changed": []
+    },
+    "dist": {
+      "count": 214,
+      "changed": []
+    }
+  },
+  "runs": [
+    {
+      "name": "pocket",
+      "exitCode": 0,
+      "seconds": 99.5,
+      "environment": {
+        "SANSU_MENU_URL": "http://127.0.0.1:5280",
+        "SANSU_MENU_SOURCE": "/tmp/sansu-latest-main.n_z3b7o1",
+        "SANSU_MENU_OUTPUT": "/tmp/sansu-latest-qa/pocket"
+      }
+    },
+    {
+      "name": "house",
+      "exitCode": 0,
+      "seconds": 170.7,
+      "environment": {
+        "SANSU_HOUSE_GUIDE_URL": "http://127.0.0.1:5280",
+        "SANSU_HOUSE_GUIDE_OUTPUT": "/tmp/sansu-latest-qa/house"
+      }
+    },
+    {
+      "name": "balance",
+      "exitCode": 0,
+      "seconds": 301.7,
+      "environment": {
+        "SANSU_GROWING_URL": "http://127.0.0.1:5280",
+        "SANSU_GROWING_OUTPUT": "/tmp/sansu-latest-qa/balance"
+      }
+    },
+    {
+      "name": "guidance",
+      "exitCode": 0,
+      "seconds": 411.3,
+      "environment": {
+        "SANSU_GROWING_GUIDANCE_URL": "http://127.0.0.1:5280",
+        "SANSU_GROWING_GUIDANCE_OUTPUT": "/tmp/sansu-latest-qa/guidance"
+      }
+    },
+    {
+      "name": "production-guidance",
+      "exitCode": 0,
+      "seconds": 138.6,
+      "environment": {
+        "SANSU_GUIDANCE_PRODUCTION_URL": "http://127.0.0.1:5282",
+        "SANSU_GUIDANCE_PRODUCTION_OUTPUT": "/tmp/sansu-latest-qa/production-guidance"
+      }
+    },
+    {
+      "name": "production-balance",
+      "exitCode": 0,
+      "seconds": 69.4,
+      "environment": {
+        "SANSU_GROWING_PRODUCTION_URL": "http://127.0.0.1:5282",
+        "SANSU_GROWING_PRODUCTION_OUTPUT": "/tmp/sansu-latest-qa/production-balance"
+      }
+    },
+    {
+      "name": "finish",
+      "exitCode": 0,
+      "seconds": 171.0,
+      "environment": {
+        "SANSU_FINISH_AUDIT_URL": "http://127.0.0.1:5280",
+        "SANSU_FINISH_CLARITY_OUTPUT": "/tmp/sansu-latest-qa/finish",
+        "SANSU_FINISH_CLARITY_REVISION": "main-integration-0cf5deeb4688"
+      }
+    },
+    {
+      "name": "navigation",
+      "exitCode": 0,
+      "seconds": 159.7,
+      "environment": {
+        "SANSU_ISLAND_BASE_URL": "http://127.0.0.1:5281",
+        "SANSU_NAVIGATION_OUTPUT": "/tmp/sansu-latest-qa/navigation",
+        "SANSU_NAVIGATION_VIEWPORTS": "390x844,768x1024"
+      }
+    },
+    {
+      "name": "smoke",
+      "exitCode": 0,
+      "seconds": 135.3,
+      "environment": {}
+    }
+  ],
+  "core": {
+    "pass": true,
+    "files": 517,
+    "tests": 4593
+  },
+  "interruption": {
+    "stage": "balance first run",
+    "pass": false,
+    "cause": "active turn interrupted; all live tool sessions stopped; restarted same inputs",
+    "evidence": "balance-interrupted/"
+  },
+  "gates": {
+    "runtime": "PASS scoped checks",
+    "visual": "reviewed actual phone/menu/house/finish critical paths; no new art lineage",
+    "childComprehension": "not observed",
+    "physicalIOS": "not checked",
+    "deployedProduction": "not checked",
+    "twoBuildSWUpdate": "not checked"
+  },
+  "scope": "Fixed reviewed Git index; concurrent unstaged source edits excluded. DEV fixtures are distinct from real production acquisition. Functional checks; no dedicated GPU/FPS or child motivation claims."
+}

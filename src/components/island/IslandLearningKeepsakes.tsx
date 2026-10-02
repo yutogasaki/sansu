@@ -117,7 +117,7 @@ export function IslandLearningKeepsakes({ island, controls, disabled, onClose, o
                 <button className="island-secondary" data-keepsake-action="notices" disabled={disabled} onClick={() => choose(() => changeSection('notices'))}>
                     <IslandToyIcon kind="gift" /><strong>おしらせ</strong><small>{island.pendingRewards.length > 0 ? `おくりもの ${island.pendingRewards.length}こ` : 'けいじばんを みる'}</small></button>
             </nav>
-            {decor}
+            {decor && <div className="island-house-living">{decor}</div>}
             {challenge}
             <footer className="island-panel-footer">
                 {onPhoto && <button className="island-secondary" disabled={disabled} onClick={() => choose(onPhoto)}><Camera size={18} aria-hidden="true" />しゃしんに のこす</button>}

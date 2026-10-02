@@ -14,7 +14,7 @@ const HOUR = 3_600_000, T0 = Date.UTC(2026, 8, 29, 7);
  * A plain scripted child: two learning sessions of six completions a day, then plants
  * whatever the island seems to want. Buildings go on odd rows so even rows stay walkable.
  */
-function playDays(days: number, seed = 'pace-kid') {
+function playDays(days: number, seed = 'pace-kid', daily = 12, weekly = false, decorFirst = false) {
     let state = newIsland(seed, T0), n = 0, fact = 0;
     const act = (command: Command) => { state = applyIntent(state, { id: `pace-${n++}`, command }).state; };
     const spot = (blocking: boolean): Cell | undefined => {
@@ -29,13 +29,18 @@ function playDays(days: number, seed = 'pace-kid') {
         act({ type: 'plant', kind, cell }); return true;
     };
     act({ type: 'plant', kind: 'home', cell: spot(true)! });
-    const log: { day: number; villagers: number; level: number; land: number }[] = [];
+    const log: { day: number; villagers: number; level: number; land: number; drops: number; bank: number }[] = [];
     for (let day = 1; day <= days; day++) {
-        for (const session of [0, 1]) {
+        for (const session of (weekly ? [0] : [0, 1])) {
+            if (weekly && (day - 1) % 7 !== 0) continue;
             const at = T0 + ((day - 1) * 24 + session * 10) * HOUR;
             advanceNature(state, at);
-            state = ingestCompletions(state, Array.from({ length: 6 }, () => ({ id: `f${fact++}`, at }))).state;
+            state = ingestCompletions(state, Array.from({ length: weekly ? daily * 7 : session === 0 ? Math.ceil(daily / 2) : Math.floor(daily / 2) }, () => ({ id: `f${fact++}`, at }))).state;
             openTown(state);
+            if (decorFirst) {
+                const cell = spot(false);
+                if (cell && state.drops >= 2) act({ type: 'place', kind: 'flower', cell });
+            }
             for (let guard = 0; guard < 20; guard++) {
                 const reached = reachableFromHome(state), people = state.villagers.length;
                 const waiting = state.plots.filter(p => p.stage === 0 && p.cell && isReachable(p.cell, reached));
@@ -52,7 +57,7 @@ function playDays(days: number, seed = 'pace-kid') {
                 break;
             }
         }
-        log.push({ day, villagers: state.villagers.length, level: islandLevel(state), land: landCells(state).length });
+        log.push({ day, villagers: state.villagers.length, level: islandLevel(state), land: landCells(state).length, drops: state.drops, bank: state.town.bank });
     }
     return { state, log };
 }
@@ -78,5 +83,24 @@ describe('pacing (spec 52 §15, starting values)', () => {
     it('gives two children different islands from the same habits', () => {
         const a = playDays(10, 'kid-one').state, b = playDays(10, 'kid-two').state;
         expect(a.villagers.map(v => v.species)).not.toEqual(b.villagers.map(v => v.species));
+    });
+
+    it.each([false, true])('continues beyond the former land cap for a year (decor first: %s)', decor => {
+        const { state, log } = playDays(365, 'pace-kid', 12, false, decor);
+        console.table([90, 180, 365].map(day => ({ decor, ...log[day - 1] })));
+        expect(log[364].villagers).toBeGreaterThan(log[179].villagers);
+        expect(log[364].land).toBeGreaterThan(144);
+        expect(state.land.districts?.length).toBeGreaterThan(0);
+    }, 30000);
+
+    it('retains weekly batching throughput instead of losing all unused town hours', () => {
+        const daily = playDays(84).log[83], weekly = playDays(84, 'pace-kid', 12, true).log[83];
+        console.table([{ habit: 'daily', ...daily }, { habit: 'weekly', ...weekly }]);
+        expect(weekly.villagers).toBeGreaterThanOrEqual(daily.villagers - 4);
+    }, 30000);
+
+    it('still lets a small daily habit grow an island', () => {
+        const { log } = playDays(90, 'pace-kid', 1);
+        expect(log[89].villagers).toBeGreaterThan(log[29].villagers);
     });
 });

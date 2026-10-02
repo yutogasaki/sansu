@@ -1,0 +1,114 @@
+{
+  "candidate": {
+    "base": "5defcb1c58f763a638f6562f970d2edcbc4f2eb0",
+    "tree": "806d1dc17f5629f8a4ee84195ca7a02c6828c204",
+    "directory": "/tmp/sansu-final-main.1n0u2l8f"
+  },
+  "version": {
+    "version": "main-integration-806d1dc17f56:4ed6351b-2181-414f-b813-b0d439de6db2",
+    "revision": "main-integration-806d1dc17f56",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": true,
+        "fantasy": true,
+        "candidate": "living-fantasy-garden-v2",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "inputChecks": {
+    "app": {
+      "count": 1770,
+      "changed": []
+    },
+    "dist": {
+      "count": 214,
+      "changed": []
+    }
+  },
+  "runs": [
+    {
+      "name": "pocket",
+      "exitCode": 0,
+      "seconds": 100.4,
+      "environment": {
+        "SANSU_MENU_URL": "http://127.0.0.1:5283",
+        "SANSU_MENU_SOURCE": "/tmp/sansu-final-main.1n0u2l8f",
+        "SANSU_MENU_OUTPUT": "/tmp/sansu-final-qa/pocket"
+      }
+    },
+    {
+      "name": "house",
+      "exitCode": 0,
+      "seconds": 88.4,
+      "environment": {
+        "SANSU_HOUSE_GUIDE_URL": "http://127.0.0.1:5283",
+        "SANSU_HOUSE_GUIDE_OUTPUT": "/tmp/sansu-final-qa/house"
+      }
+    },
+    {
+      "name": "guidance",
+      "exitCode": 0,
+      "seconds": 235.0,
+      "environment": {
+        "SANSU_GROWING_GUIDANCE_URL": "http://127.0.0.1:5283",
+        "SANSU_GROWING_GUIDANCE_OUTPUT": "/tmp/sansu-final-qa/guidance"
+      }
+    },
+    {
+      "name": "production-guidance",
+      "exitCode": 0,
+      "seconds": 113.4,
+      "environment": {
+        "SANSU_GUIDANCE_PRODUCTION_URL": "http://127.0.0.1:5284",
+        "SANSU_GUIDANCE_PRODUCTION_OUTPUT": "/tmp/sansu-final-qa/production-guidance"
+      }
+    }
+  ],
+  "core": {
+    "pass": true,
+    "files": 518,
+    "tests": 4599
+  },
+  "changedRuntimeInputsFromPrevious": [
+    "src/components/island/growing/GrowingGuideBook.test.tsx",
+    "src/components/island/growing/GrowingGuideBook.tsx",
+    "src/components/island/growing/GrowingGuideCue.tsx",
+    "src/components/island/growing/GrowingIsland.tsx",
+    "src/components/island/growing/growingGuide.css",
+    "tools/e2e-growing-guidance-production.mjs",
+    "tools/e2e-growing-guidance.mjs",
+    "tools/e2e-growing-house-guide.mjs"
+  ],
+  "retainedPreviousEvidence": {
+    "path": "../latest/verification.json",
+    "finish": 14,
+    "balance": 4,
+    "productionBalance": 2,
+    "navigation": 2,
+    "classicSmoke": 31,
+    "reason": "Final delta is Island-only guidance rendering/entry handlers and its QA; no math/challenge, balance/storage/rules, shared route/layout or classic inputs changed. Final guidance/house/pocket/production journeys cover changed callback integration."
+  },
+  "gates": {
+    "runtime": "PASS scoped checks",
+    "visual": "reviewed critical runtime paths",
+    "childComprehension": "not observed",
+    "physicalIOS": "not checked",
+    "deployedProduction": "not checked",
+    "twoBuildSWUpdate": "not checked"
+  },
+  "scope": "Fixed reviewed index based on 5defcb1c; later working-tree miniature menu is excluded. Evidence-only final additions do not alter application inputs."
+}

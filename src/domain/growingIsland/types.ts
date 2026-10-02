@@ -138,6 +138,8 @@ export interface GrowingState {
     emblem?: { image: string; glyph: string };
     /** ふしぎの たね waiting to be planted; island levels 3, 5, 7 and 9 bring one each (§3.5). */
     wonderSeeds?: number;
+    /** Real-day draws and a durable result waiting to begin its presentation. */
+    surprise?: { day: number; pending?: { day: number; moment: Moment; cell?: Cell } };
     /** Pokomoko's room: wallpaper drawn with learned words, chosen shapes and rug (§13.1). */
     room?: RoomDecor;
     applied: string[];
@@ -162,6 +164,7 @@ export type Command =
     | { type: 'flag'; color?: number; pattern?: number }
     | { type: 'decorate'; pattern?: WallPatternId; rug?: number; hidden?: WordGroupId[] }
     | { type: 'emblem'; image: string; glyph: string }
+    | { type: 'ack-moment'; day: number }
     | { type: 'choose-goal'; id?: AchievementId }
     | { type: 'starter-guide'; automatic: boolean }
     | { type: 'ack-achievements'; ids: AchievementId[]; profileId: string; expectedRevision: number }
@@ -180,7 +183,7 @@ export type TownEvent =
     | { type: 'keepsake'; unitId: string }
     | { type: 'wonder-seed' }
     | { type: 'gift'; from: string; landmarkId?: string }
-    | { type: 'moment'; moment: Moment; cell?: Cell }
+    | { type: 'moment'; moment: Moment; cell?: Cell; day?: number }
     | { type: 'quiet' };
 
 /** Small surprises of the day (§11.2). Presentation only: none of them changes the island. */

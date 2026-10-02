@@ -1,5 +1,7 @@
 # 今進めていること
 
+10/2 学習・島・家のmain統合候補を固定確認：[最終結果と対象境界](../../docs/design/2026-10-02-learning-island-integration/final/README.md)。最終core4,599 testsと対象実操作/実SW offlineはPASS。検証中の後続の模型メニューは別作業、実機/子ども/公開URLは別確認。
+
 更新: 2026-09-29。実作業を4本に整理し、今回の一括実装を反映。次の残作業を下表へ分離。
 **9/29の実装・公開：[統合記録](../../docs/design/2026-09-29-island-community/README.md)。庭と家の接続、仲間の招待、保存21、30品の軽量化をmain `4002e67b` から本番へ反映。公開URLの両幅で学習→購入→入居→庭/家→offline再開を確認しました。**
 
@@ -9,7 +11,7 @@
 | 0・任意の導き | [スターターとアチーブメントv1](../../docs/tasks/active/2026-10-01-island-guidance.md) | 通知から記念へ直行、導入の次の一手、本人の記念を大きく表示。対象core4,576・両幅DEV/家/production offline PASS | [実画面と対象境界](../../docs/design/2026-10-02-guidance-ux/README.md)。実機・実two-build・子どもの理解/再訪は別 |
 | 1・体験の確認 | [学習・庭・家の一続きの体験](../../docs/tasks/active/2026-09-20-whole-app-ux-coherence.md) | 本番の学習→庭/室内→offlineを確認済み。起動/島/家の読み込み表示・描画再試行を実装し、4サイズの同じ学習への復帰と写真操作、本番両幅の遅延/再試行/offlineを確認 | 実機の音・読み上げと利用者の往復操作を確認 |
 | 2・性能 | [起動と物が増えた島の軽量化](../../docs/tasks/active/2026-09-23-island-performance.md) | raycast CPUを約84〜85%削減済み。頂点共有も本番反映し、同じ30品の形状bufferを20.5%削減。影の同じ姿勢の再利用も本番反映・両幅の操作確認済み。前回desktop P95は38.2/55.6msで33.3ms未達 | 実iPhoneの起動・描画/電池負荷と、残るフレーム時間を同じ端末で確認 |
-| 3・庭と家の美術 | [幻想の庭と既存画面を揃える](../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md) | 元のぽこもこを維持。「いえ」は既存の室内へ直接入る導線を復元。外観は庭で表示。10/1 [家のメニュー](../../docs/design/2026-10-01-house-atelier/README.md)と[島/共有メニュー](../../docs/design/2026-10-01-menu-atelier/README.md)を紙の素材・目的別入口へ整理。4サイズの実画面と学習往復を確認（ローカル） | メニューの公開判断、実画面の利用者評価と、棚/写真等を含む後続の美術調整。仕様51全体は継続 |
+| 3・庭と家の美術 | [幻想の庭と既存画面を揃える](../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md) | 元のぽこもこを維持。「いえ」は既存の室内へ直接入る導線を復元。外観は庭で表示。10/1 [家のメニュー](../../docs/design/2026-10-01-house-atelier/README.md)と[島/共有メニュー](../../docs/design/2026-10-01-menu-atelier/README.md)を紙の素材・目的別入口へ整理。4サイズの実画面と学習往復を確認。10/2 [島を残すメニュー](../../docs/design/2026-10-02-island-pocket-menu/README.md)へ再整理し、実住人の入口と小画面の密度を改善（ローカル） | メニューの公開判断、実画面の利用者評価と、棚/写真等を含む後続の美術調整。仕様51全体は継続 |
 | 4・自然の遊びの拡張 | [供給から来訪・入居・土地へ](../../docs/tasks/active/2026-09-22-island-nature-integration.md) | 好きな場所/共同食→来訪案内→明示入居を実装。既存住人・土地を保持し、同じ土地拡張へ接続 | 新しい経路の利用者確認。固定水源と成長/活動時計の導入設計は具体化済み。旧保存の復旧adapterから次期実装へ |
 
 読み込み表示と再試行: main `c1e3bebf` を本番へ反映。[待機・復旧と実画面](../../docs/design/2026-09-29-island-loading/README.md)。

@@ -69,19 +69,21 @@ describe('learning', () => {
 });
 
 describe('seeds and building', () => {
-    it('builds a seed six town hours after planting, only when the time is opened', () => {
+    it('uses banked time to build a newly planted seed after six town hours', () => {
         let state = learn(started(), 6);
-        state = act(state, { type: 'plant', kind: 'wild', cell: at(4, 2) }).state;
-        expect(waitingSeeds(state)).toBe(1);
-        const events = openTown(state);
+        const planted = act(state, { type: 'plant', kind: 'wild', cell: at(4, 2) });
+        state = planted.state;
+        expect(waitingSeeds(state)).toBe(0);
+        const events = planted.events;
         expect(events).toContainEqual({ type: 'built', plotId: state.plots[1].id });
         expect(state.plots[1].stage).toBe(1);
         expect(state.town).toEqual({ clock: 24, bank: 0 });
     });
 
     it('waits without a bank of town time', () => {
-        const state = act(learn(started(), 2), { type: 'plant', kind: 'wild', cell: at(4, 2) }).state;
-        state.town.bank = 0;
+        const prepared = learn(started(), 2);
+        prepared.town.bank = 0;
+        const state = act(prepared, { type: 'plant', kind: 'wild', cell: at(4, 2) }).state;
         openTown(state);
         expect(state.plots[1].stage).toBe(0);
     });
@@ -107,6 +109,7 @@ describe('seeds and building', () => {
 
     it('refunds an unbuilt seed and keeps a built home with people in it', () => {
         let state = learn(started(), 4);
+        state.town.bank = 0; // This test cancels a seed before any time is available.
         const before = state.drops;
         state = act(state, { type: 'plant', kind: 'wild', cell: at(4, 2) }).state;
         state = act(state, { type: 'store', id: state.plots[1].id }).state;

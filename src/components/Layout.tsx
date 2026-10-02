@@ -4,6 +4,7 @@ import { Footer } from "./Footer";
 import { cn } from "../utils/cn";
 import { islandEnabled } from "../domain/island/feature";
 import "./island/IslandShell.css";
+import "./ui/MenuAtelier.css";
 import { IslandNavigationContext, useIslandNavigationState } from './island/useIslandNavigation';
 import { Spinner } from './ui/Spinner';
 
@@ -40,6 +41,7 @@ export const Layout: React.FC = () => {
         <div
             className={cn("relative flex h-full min-h-0 flex-col overflow-hidden text-text-main", supportsIslandShell && "island-shell")}
             data-shell-candidate={supportsIslandShell ? "island-navigation-v1" : undefined}
+            data-menu-style-candidate={supportsIslandShell ? "shared-paper-atelier-v1" : undefined}
         >
             <main
                 className={cn(

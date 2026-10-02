@@ -1,0 +1,25 @@
+
+> pokko-fushigi-zukan-app@0.0.0 build
+> tsc -b && node tools/build-app.mjs && npm run assets:check
+
+vite v7.3.1 building client environment for production...
+transforming...
+Browserslist: browsers data (caniuse-lite) is 9 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+✓ 3690 modules transformed.
+✗ Build failed in 7.23s
+error during build:
+[vite-plugin-pwa:build] [plugin vite-plugin-pwa:build] src/components/island/life/LifeProductPreview.tsx: There was an error during the build:
+  Could not resolve "../../../../assets/island-planter-v1/home-runtime/catalog.png" from "src/components/island/life/LifeProductPreview.tsx"
+Additionally, handling the error in the 'buildEnd' hook caused the following error:
+  Could not resolve "../../../../assets/island-planter-v1/home-runtime/catalog.png" from "src/components/island/life/LifeProductPreview.tsx"
+file: /private/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-balance-build-1meykf2q/src/components/island/life/LifeProductPreview.tsx
+    at getRollupError (file:///Users/yutogasaki/Projects/sansu/node_modules/rollup/dist/es/shared/parseAst.js:402:41)
+    at file:///Users/yutogasaki/Projects/sansu/node_modules/rollup/dist/es/shared/node-entry.js:23444:39
+    at async catchUnfinishedHookActions (file:///Users/yutogasaki/Projects/sansu/node_modules/rollup/dist/es/shared/node-entry.js:22902:16)
+    at async rollupInternal (file:///Users/yutogasaki/Projects/sansu/node_modules/rollup/dist/es/shared/node-entry.js:23427:5)
+    at async buildEnvironment (file:///Users/yutogasaki/Projects/sansu/node_modules/vite/dist/node/chunks/config.js:33541:12)
+    at async Object.build (file:///Users/yutogasaki/Projects/sansu/node_modules/vite/dist/node/chunks/config.js:33900:19)
+    at async Object.buildApp (file:///Users/yutogasaki/Projects/sansu/node_modules/vite/dist/node/chunks/config.js:33897:153)
+    at async CAC.<anonymous> (file:///Users/yutogasaki/Projects/sansu/node_modules/vite/dist/node/cli.js:629:3)

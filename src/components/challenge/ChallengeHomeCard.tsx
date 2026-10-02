@@ -22,11 +22,13 @@ export function ChallengeHomeCard({ profileId, disabled, onStart, onLearn, onRes
         finally { setSaving(false); release(); }
     };
     return <article className="challenge-card" aria-label="がくしゅう チャレンジ">
+        <div className="challenge-card-main">
         <div className="challenge-card-heading"><Trophy size={40} aria-hidden="true" /><div><h3>10までの たしざん</h3><p>1ぷん チャレンジ</p></div></div>
-        <p>{summary?.best === null || !summary ? 'はじめての ちょうせん' : `じぶんの ベスト：${summary.best}もん`}</p>
+        <p className="challenge-card-best">{summary?.best === null || !summary ? 'はじめての ちょうせん' : `じぶんの ベスト：${summary.best}もん`}</p>
         {home?.value?.active ? <button className="island-primary" disabled={disabled || saving} onClick={onResult}>まえの きろくを ひらく</button> : home?.value?.eligible && challengeEnabled() ? <button className="island-primary" disabled={disabled || saving} onClick={onStart}>ちょうせん</button>
             : <><p>{challengeEnabled() ? 'たしざんを れんしゅうすると ちょうせんできるよ。' : 'いまは チャレンジを おやすみしているよ。'}</p>
                 <button className="island-secondary" disabled={disabled || saving} onClick={onLearn}>まなぶ</button></>}
+        </div>
         <details><summary>チャレンジの あそびかた・きねん</summary><p>1ぷんで なんもん できるかな。1ぷん おえると しょうじょう、10もん できると トロフィー。</p><p>こたえを いれて「こたえる」。まちがえても へらないよ。「わからない」で つぎへ いけるよ。</p>
             <p>ほかの がめんへ うつったり、とじたりすると おしまい。とちゅうの きろくは ベストに のこらないよ。</p>
             <p>はやさの きろくだよ。たしざんが みについたかは、いつもの まなびで たしかめるよ。</p></details>

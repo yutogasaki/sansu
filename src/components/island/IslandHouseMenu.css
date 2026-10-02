@@ -1,0 +1,99 @@
+/* A paper atelier: the same house objects, with space for their different roles. */
+.island-menu.island-house-menu {
+    pointer-events: auto; width: min(100%, 560px); border-radius: 28px 28px 0 0;
+    background: var(--pokomoko-paper); box-shadow: 0 -12px 64px #14233730;
+}
+.island-house-menu::backdrop { background: #14233780; }
+.island-house-menu .island-menu-heading { padding: 22px 20px 18px; gap: 8px; border-bottom: 1px solid color-mix(in srgb, var(--pokomoko-edge) 45%, transparent); }
+.island-house-menu-title { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.island-house-menu-title > div { min-width: 0; }
+.island-house-menu-patch {
+    display: grid; place-items: center; width: 48px; height: 48px; flex-shrink: 0;
+    border: 1px dashed var(--pokomoko-stitch); border-radius: 16px; background: var(--pokomoko-lavender);
+}
+.island-house-menu .island-menu-heading h2 { margin: 0; font-size: 19px; font-weight: 800; line-height: 1.5; letter-spacing: .02em; }
+.island-house-menu .island-menu-heading p { margin: 3px 0 0; font-size: 12px; color: var(--pokomoko-muted); }
+.island-house-menu .island-menu-heading > button {
+    flex-shrink: 0; padding: 10px; border: 1px solid var(--pokomoko-edge); border-radius: 14px;
+    background: var(--pokomoko-paper); color: var(--pokomoko-ink); font-size: 12px;
+}
+.island-house-menu .island-menu-scroll {
+    display: grid; gap: 14px; min-height: 0; padding: 18px 20px max(20px, env(safe-area-inset-bottom));
+    scrollbar-width: thin; scrollbar-color: var(--pokomoko-stitch) transparent;
+}
+.island-house-menu .island-house-destinations { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.island-page .island-panel.island-learning-keepsakes .island-house-menu[data-house-menu-candidate] .island-house-destinations > button[data-keepsake-action] {
+    grid-column: auto; grid-template-columns: minmax(0, 1fr); grid-template-rows: 36px auto auto;
+    align-content: start; min-height: 118px; gap: 5px; padding: 14px;
+    border: 1px solid color-mix(in srgb, var(--pokomoko-edge) 65%, var(--pokomoko-paper));
+    border-radius: 20px; background: var(--pokomoko-mint); box-shadow: 0 3px 0 #30364f0b;
+}
+.island-house-menu[data-house-menu-candidate] .island-house-destinations > button[data-keepsake-action] > .island-toy-icon { grid-row: auto; width: 32px; height: 36px; }
+.island-house-menu .island-house-destinations strong { font-size: 14px; line-height: 1.5; }
+.island-house-menu[data-house-menu-candidate] .island-house-destinations small { grid-column: 1; line-height: 1.55; }
+.island-house-menu .island-house-destinations > button::after { top: calc(50% - 3px); right: 12px; }
+.island-page .island-panel.island-learning-keepsakes .island-house-menu[data-house-menu-candidate] .island-house-destinations > button[data-keepsake-action=shared] {
+    grid-column: 1 / -1; grid-template-columns: 64px minmax(0, 1fr); grid-template-rows: auto auto; align-content: center;
+    min-height: 100px; padding: 15px 30px 15px 18px; gap: 3px 16px;
+    background: color-mix(in srgb, var(--pokomoko-lavender) 60%, var(--pokomoko-paper));
+}
+.island-house-menu[data-house-menu-candidate] .island-house-destinations > button[data-keepsake-action=shared] > .island-toy-icon { grid-row: span 2; width: 64px; height: 64px; padding: 8px; border-radius: 20px; background: var(--pokomoko-paper); box-shadow: 0 4px 0 #30364f0b; }
+.island-house-menu[data-house-menu-candidate] .island-house-destinations > button[data-keepsake-action=shared] small { grid-column: 2; }
+.island-house-menu [data-keepsake-action=shared] strong { font-size: 18px; }
+.island-page .island-panel.island-learning-keepsakes .island-house-menu[data-house-menu-candidate] .island-house-destinations > button[data-keepsake-action=notices] { background: color-mix(in srgb, var(--pokomoko-rose) 55%, var(--pokomoko-paper)); }
+.island-house-living { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; align-items: stretch; }
+.island-page .island-panel .island-house-menu .room-decor-open {
+    position: relative; display: grid; justify-items: start; align-content: start; gap: 6px; width: 100%; min-height: 145px;
+    padding: 14px; border: 1px solid var(--pokomoko-edge); border-radius: 20px; background: var(--pokomoko-paper);
+    color: var(--pokomoko-ink); text-align: left; box-shadow: 0 3px 0 #30364f0b; overflow-wrap: normal;
+}
+.island-house-menu .room-entry-icon { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 13px; background: var(--pokomoko-mint); color: var(--pokomoko-blue-deep); }
+.island-house-menu [data-room-entry=decor] .room-entry-icon { background: var(--pokomoko-rose); }
+.island-house-menu .room-decor-open strong { font-size: 14px; font-weight: 800; line-height: 1.5; }
+.island-house-menu .room-decor-open small { color: var(--pokomoko-muted); line-height: 1.6; }
+.island-house-menu .room-entry-badge { padding: 2px 7px; border-radius: 8px; background: var(--pokomoko-rose); color: var(--pokomoko-ink); font-size: 11px; font-weight: 700; }
+.island-house-living > .room-decor { grid-column: 1 / -1; padding: 16px; min-width: 0; }
+.island-house-menu .room-decor header { gap: 8px; }
+.island-house-menu .room-decor header > strong { font-size: 16px; }
+.island-house-menu .room-decor header > button { flex-shrink: 0; }
+.island-house-menu .room-decor-swatch { min-width: 44px; width: 44px; height: 44px; }
+.island-house-menu .room-decor-color[aria-pressed=false] { opacity: 1; border-style: dashed; }
+.island-house-menu .room-letters { max-height: none; overflow: visible; }
+.island-house-menu .room-letters button { min-height: 64px; color: var(--pokomoko-ink); }
+.island-house-menu .room-letters button[data-unread=true] { border-color: var(--pokomoko-blue); box-shadow: none; }
+.island-house-menu .challenge-card {
+    margin: 0; padding: 16px; border: 1px solid var(--pokomoko-edge); border-radius: 20px;
+    background: color-mix(in srgb, var(--pokomoko-mint) 18%, var(--pokomoko-paper));
+}
+.island-house-menu .challenge-card-main { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 12px; align-items: center; }
+.island-house-menu .challenge-card-heading { grid-column: 1; gap: 10px; }
+.island-house-menu .challenge-card-heading > svg { width: 28px; height: 32px; color: var(--pokomoko-blue-deep); }
+.island-house-menu .challenge-card h3 { margin: 0; color: var(--pokomoko-ink); font-size: 15px; font-weight: 800; }
+.island-house-menu .challenge-card-heading p { margin: 2px 0 0; }
+.island-house-menu .challenge-card-main > .challenge-card-best { grid-column: 1; margin: 0; color: var(--pokomoko-muted); }
+.island-house-menu .challenge-card-main > button { grid-column: 2; grid-row: 1 / 3; align-self: center; border-radius: 14px; }
+.island-house-menu .challenge-card-main > p:not(.challenge-card-best) { grid-column: 1 / -1; margin: 0; }
+.island-house-menu .challenge-card details { margin-top: 12px; border-top: 1px solid color-mix(in srgb, var(--pokomoko-edge) 55%, transparent); }
+.island-house-menu .challenge-card summary { font-size: 12px; color: var(--pokomoko-blue-deep); }
+.island-house-menu .island-panel-footer { display: flex; flex-wrap: wrap; margin: 0; padding-top: 4px; border: 0; gap: 8px; }
+.island-house-menu .island-panel-footer > button { flex: 1; border-radius: 14px; }
+.island-house-menu button:focus-visible, .island-house-menu summary:focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 3px; }
+.island-house-menu button:active:not(:disabled) { transform: translateY(1px); }
+@media (max-width: 359px) {
+    .island-house-menu .island-menu-heading { padding: 16px 14px; }
+    .island-house-menu-patch { display: none; }
+    .island-house-menu .island-menu-heading h2 { font-size: 18px; }
+    .island-house-menu .island-menu-scroll { padding: 14px; gap: 12px; }
+    .island-page .island-panel.island-learning-keepsakes .island-house-menu[data-house-menu-candidate] .island-house-destinations > button[data-keepsake-action]:not([data-keepsake-action=shared]) { grid-template-columns: minmax(0, 1fr); grid-template-rows: 36px auto auto; gap: 5px; }
+    .island-house-menu .island-house-destinations > button:not([data-keepsake-action=shared]) > .island-toy-icon { grid-row: auto; width: 32px; height: 36px; }
+    .island-house-menu .island-house-destinations > button:not([data-keepsake-action=shared]) small { grid-column: 1; }
+    .island-page .island-panel .island-house-menu .room-decor-open { padding: 12px; }
+    .island-house-menu .challenge-card-main { grid-template-columns: minmax(0, 1fr); }
+    .island-house-menu .challenge-card-main > button { grid-column: 1; grid-row: auto; }
+}
+@media (min-width: 600px) { .island-menu.island-house-menu { border-radius: 28px; } }
+@media (max-height: 500px) {
+    .island-menu.island-house-menu, .island-house-menu .island-menu-surface { max-height: 94dvh; }
+    .island-house-menu .island-menu-heading { padding-block: 10px; }
+}
+@media (prefers-reduced-motion: reduce) { .island-house-menu button:active:not(:disabled) { transform: none; } }

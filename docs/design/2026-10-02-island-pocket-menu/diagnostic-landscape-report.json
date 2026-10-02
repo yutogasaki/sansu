@@ -1,0 +1,186 @@
+{
+  "started": "2026-10-01T22:14:20.370Z",
+  "source": {
+    "src/components/Layout.tsx": "2b1e49d58a5e57174101e7e2c0bffd3b82383b25417d43a4022693113154387e",
+    "src/components/ui/MenuAtelier.css": "0c314f7350f8846bbbce9017b101c530a901014e798ba90c38617d96c8d26cf0",
+    "src/components/island/IslandHomeActions.tsx": "ebac05b7db13707692f854677a560d26015a7ff2b796eb4990071a2fcbece4c7",
+    "src/components/island/growing/GrowingIsland.tsx": "b4aac8a3b236d63510fc1ae66d350ea9cd3f7c06720a6866067745aee28cdc1b",
+    "src/components/island/growing/GrowingIslandMenu.tsx": "dc6b598f4ed62af54fc547be0990202dd4b646058e1d8a8b262263e8c7537e43",
+    "src/components/island/growing/growingIslandMenu.css": "c082a960608ae6e0b4a766262673f32a91e28177be66833eb9faf5779916c5da"
+  },
+  "fixture": "Disposable DEV profile with optional derived isWeak flags initialized to false; Growing preview fixture with two residents, 200 drops, stored bench, and unlocked seed catalogs. The existing guide action intentionally chooses the A3 goal to open its real flag detail sheet. These are display fixtures, not acquired progress or child observation.",
+  "cases": [
+    {
+      "tag": "growing-568",
+      "target": "http://127.0.0.1:5263",
+      "viewport": {
+        "width": 568,
+        "height": 320
+      },
+      "captures": [
+        {
+          "file": "growing-568-island.png",
+          "url": "http://127.0.0.1:5263/#/island",
+          "revision": "development-local",
+          "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 568,
+            "height": 320
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": true,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "menuStyleCandidate": "shared-paper-atelier-v1",
+          "worldIdentity": {
+            "growingWorld": "true",
+            "visualCandidate": "growing-island-v1",
+            "growingFeatureEnabled": "true",
+            "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}"
+          },
+          "menuCandidate": null
+        },
+        {
+          "file": "growing-568-menu.png",
+          "url": "http://127.0.0.1:5263/#/island",
+          "revision": "development-local",
+          "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 568,
+            "height": 320
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": true,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "menuStyleCandidate": "shared-paper-atelier-v1",
+          "worldIdentity": {
+            "growingWorld": "true",
+            "visualCandidate": "growing-island-v1",
+            "growingFeatureEnabled": "true",
+            "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}"
+          },
+          "menuCandidate": "island-pocket-v2"
+        }
+      ],
+      "errors": [],
+      "geometry": [
+        {
+          "name": "menu",
+          "width": 352.15625,
+          "scrollWidth": 350,
+          "buttons": [
+            {
+              "text": "",
+              "width": 44,
+              "height": 44
+            },
+            {
+              "text": "なかま\n2にん",
+              "width": 111.375,
+              "height": 44
+            },
+            {
+              "text": "たね",
+              "width": 111.390625,
+              "height": 44
+            },
+            {
+              "text": "なぞる",
+              "width": 111.375,
+              "height": 44
+            },
+            {
+              "text": "もちもの",
+              "width": 111.375,
+              "height": 44
+            },
+            {
+              "text": "いえ",
+              "width": 111.390625,
+              "height": 44
+            },
+            {
+              "text": "みせる",
+              "width": 111.375,
+              "height": 44
+            },
+            {
+              "text": "はなずかん",
+              "width": 111.375,
+              "height": 44
+            },
+            {
+              "text": "あそびかた",
+              "width": 111.390625,
+              "height": 44
+            },
+            {
+              "text": "",
+              "width": 33.125,
+              "height": 96
+            },
+            {
+              "text": "",
+              "width": 33.125,
+              "height": 96
+            },
+            {
+              "text": "",
+              "width": 33.125,
+              "height": 96
+            },
+            {
+              "text": "",
+              "width": 111.375,
+              "height": 57
+            },
+            {
+              "text": "",
+              "width": 111.375,
+              "height": 57
+            }
+          ]
+        }
+      ],
+      "pass": false,
+      "profileId": "f9016c16-f399-4322-8ef7-3b9aabbb60c8",
+      "error": "AssertionError [ERR_ASSERTION]: menu 44px target: [{\"text\":\"\",\"width\":33.125,\"height\":96},{\"text\":\"\",\"width\":33.125,\"height\":96},{\"text\":\"\",\"width\":33.125,\"height\":96}]\n    at geometry (file:///Users/yutogasaki/Projects/sansu/docs/design/2026-10-02-island-pocket-menu/ui.mjs:46:17)\n    at async file:///Users/yutogasaki/Projects/sansu/docs/design/2026-10-02-island-pocket-menu/ui.mjs:77:51"
+    }
+  ],
+  "sourceEnd": {
+    "src/components/Layout.tsx": "2b1e49d58a5e57174101e7e2c0bffd3b82383b25417d43a4022693113154387e",
+    "src/components/ui/MenuAtelier.css": "0c314f7350f8846bbbce9017b101c530a901014e798ba90c38617d96c8d26cf0",
+    "src/components/island/IslandHomeActions.tsx": "ebac05b7db13707692f854677a560d26015a7ff2b796eb4990071a2fcbece4c7",
+    "src/components/island/growing/GrowingIsland.tsx": "b4aac8a3b236d63510fc1ae66d350ea9cd3f7c06720a6866067745aee28cdc1b",
+    "src/components/island/growing/GrowingIslandMenu.tsx": "dc6b598f4ed62af54fc547be0990202dd4b646058e1d8a8b262263e8c7537e43",
+    "src/components/island/growing/growingIslandMenu.css": "c082a960608ae6e0b4a766262673f32a91e28177be66833eb9faf5779916c5da"
+  },
+  "stable": true,
+  "pass": false,
+  "finished": "2026-10-01T22:14:24.929Z"
+}

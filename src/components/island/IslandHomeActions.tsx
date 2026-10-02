@@ -40,11 +40,11 @@ export function IslandHomeActions({ comparisonDisabled, onOpenChange, active = t
     return <div className="island-home-actions">
         <button ref={trigger} type="button" className="island-menu-trigger" aria-haspopup="dialog" aria-expanded={open} disabled={comparisonDisabled}
             onClick={() => { dialog.current?.showModal(); setOpen(true); onOpenChange?.(true); }}><Menu size={21} aria-hidden="true" /><span>しまのメニュー</span></button>
-        <dialog ref={dialog} className="island-menu" aria-labelledby="island-menu-title"
+        <dialog ref={dialog} className="island-menu" aria-labelledby="island-menu-title" data-menu-candidate="island-paper-atelier-v1"
             onClose={() => { setOpen(false); onOpenChange?.(false); if (active) trigger.current?.focus({ preventScroll: true }); }}
             onClick={event => { if (event.target === event.currentTarget) close(); }}>
             <div className="island-menu-surface">
-                <header className="island-menu-heading"><h2 id="island-menu-title">しまのメニュー</h2>
+                <header className="island-menu-heading menu-atelier-heading"><span className="menu-atelier-patch"><IslandToyIcon kind="island" size={34} /></span><div><h2 id="island-menu-title">しまのメニュー</h2><p>あそぶ。みつける。じぶんの しま。</p></div>
                     <button type="button" className="island-text-button" onClick={close} aria-label="しまのメニューを とじる"><X size={20} />とじる</button></header>
                 <IslandHomeMenuContents {...contents} comparisonDisabled={comparisonDisabled} onChoose={choose} />
             </div>

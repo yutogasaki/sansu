@@ -34,6 +34,7 @@ export function GrowingTray({ state, onPick, onClose, initialTab = 'seeds' }: { 
             </div>
             <button className="growing-close" onClick={onClose} aria-label="とじる">×</button>
         </header>
+        {state.town.bank > 0 && <p className="growing-flower-note">まちの じかんが たまっているよ。たねを おくと そだつよ</p>}
         {tab === 'seeds' && <div className="growing-grid growing-grid-seeds">
             {seeds.map(kind => {
                 const cost = tutorial ? 0 : SEED_PRICE[kind];

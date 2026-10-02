@@ -27,6 +27,20 @@ export async function seedDev(page, { skill = 'add_1d_1', subject = 'math', fami
     }, { skill, subject, familiar, name });
 }
 
+/** Use the real optional tools disclosure before expanding the current Growing menu. */
+export async function expandGrowingIslandUI(page, side, price) {
+    const tools = page.locator('.growing-pocket-tools');
+    if (await tools.count() && await tools.getAttribute('open') === null) {
+        await tools.locator('summary').scrollIntoViewIfNeeded();
+        await tools.locator('summary').tap();
+    }
+    const name = { east: 'ひがし', west: 'にし', south: 'みなみ' }[side];
+    if (!name) throw new Error(`Unknown expansion side: ${side}`);
+    const action = page.getByRole('button', { name: new RegExp(`^${name}へ ひろげる\\s*💧\\s*${price}$`) });
+    await action.scrollIntoViewIfNeeded();
+    await action.tap();
+}
+
 export async function readNative(page, profileId) {
     return page.evaluate(async profileId => {
         const open = indexedDB.open('SansuDatabase');

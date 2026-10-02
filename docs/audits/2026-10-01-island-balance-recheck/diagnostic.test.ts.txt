@@ -1,0 +1,148 @@
+import { describe, expect, it } from 'vitest';
+import { applyIntent, canPlace, landQuote } from './commands';
+import { foodSupport, housing, islandLevel, playSupport } from './community';
+import { ingestCompletions, newIsland } from './island';
+import { advanceNature } from './nature';
+import { openTown } from './town';
+import { HOME_CELL, distance, isReachable, landCells, reachableFromHome } from './space';
+import { LANDMARK_PRICE, SEED_PRICE } from './rules';
+import type { Cell, Command, SeedKind, LandmarkKind } from './types';
+
+const HOUR = 3_600_000, T0 = Date.UTC(2026, 8, 29, 7);
+
+/**
+ * A plain scripted child: two learning sessions of six completions a day, then plants
+ * whatever the island seems to want. Buildings go on odd rows so even rows stay walkable.
+ */
+function playDays(days: number, seed = 'pace-kid', daily = 12, weekly = false, decorFirst = false, newItems = false) {
+    let state = newIsland(seed, T0), n = 0, fact = 0;
+    const act = (command: Command) => { state = applyIntent(state, { id: `pace-${n++}`, command }).state; };
+    const spot = (blocking: boolean): Cell | undefined => {
+        const reached = reachableFromHome(state);
+        // Buildings take odd rows; small things take even rows, so paths stay open.
+        return landCells(state).filter(c => (c.z % 2 === 1) === blocking && canPlace(state, c) && isReachable(c, reached))
+            .sort((a, b) => distance(a, HOME_CELL) - distance(b, HOME_CELL) || a.x - b.x || a.z - b.z)[0];
+    };
+    const plant = (kind: SeedKind, blocking: boolean) => {
+        const cell = spot(blocking);
+        if (!cell || state.drops < SEED_PRICE[kind] || !state.unlocked.includes(`seed:${kind}`)) return false;
+        act({ type: 'plant', kind, cell }); return true;
+    };
+    act({ type: 'plant', kind: 'home', cell: spot(true)! });
+    const log: { day: number; villagers: number; level: number; land: number; drops: number; homes: number }[] = [];
+    for (let day = 1; day <= days; day++) {
+        for (const session of (weekly ? [0] : [0, 1])) {
+            if (weekly && (day - 1) % 7 !== 0) continue;
+            const at = T0 + ((day - 1) * 24 + session * 10) * HOUR;
+            advanceNature(state, at);
+            state = ingestCompletions(state, Array.from({ length: weekly ? daily * 7 : session === 0 ? Math.ceil(daily / 2) : Math.floor(daily / 2) }, () => ({ id: `f${fact++}`, at }))).state;
+            openTown(state);
+            if (newItems) {
+                const kinds: LandmarkKind[] = ['slide', 'postbox', 'trampoline', 'fountain', 'bakery'];
+                for (const kind of kinds) {
+                    const cell = spot(true), price = LANDMARK_PRICE[kind]!;
+                    if (cell && state.drops >= price && state.unlocked.includes(`landmark:${kind}`)
+                        && !state.landmarks.some(l => l.kind === kind)) act({ type: 'place', kind, cell });
+                }
+                if ((state.wonderSeeds ?? 0) > 0) {
+                    const cell = spot(true);
+                    if (cell) act({ type: 'plant', kind: 'wonder', cell });
+                }
+            }
+            if (decorFirst) {
+                const c = spot(false);
+                if (c && state.drops >= 2) act({ type: 'place', kind: 'flower', cell: c });
+            }
+            for (let guard = 0; guard < 20; guard++) {
+                const reached = reachableFromHome(state), people = state.villagers.length;
+                const waiting = state.plots.filter(p => p.stage === 0 && p.cell && isReachable(p.cell, reached));
+                const quote = landQuote(state);
+                if (quote && (!spot(true) || !spot(false)) && state.drops >= quote.price) { act({ type: 'expand', side: quote.sides[0] }); continue; }
+                if (housing(state).vacancy + waiting.filter(p => p.kind === 'home').length < 1 && plant('home', true)) continue;
+                if (foodSupport(state) + waiting.filter(p => p.kind === 'farm').length * 2 <= people + 1 && plant('farm', false)) continue;
+                if (playSupport(state) <= people && plant('play', true)) continue;
+                // Decorate a little, and keep room for farms.
+                const flower = spot(false), flowers = state.landmarks.filter(l => l.kind === 'flower').length;
+                if (flower && flowers < landCells(state).length / 8 && state.drops >= LANDMARK_PRICE.flower! + 12) {
+                    act({ type: 'place', kind: 'flower', cell: flower }); continue;
+                }
+                break;
+            }
+        }
+        log.push({ day, villagers: state.villagers.length, level: islandLevel(state), land: landCells(state).length, drops: state.drops, homes: state.plots.filter(p => p.kind === 'home').length });
+    }
+    return { state, log };
+}
+
+
+describe('island balance audit diagnostics (observations, not acceptance gates)', () => {
+    it('measures several learning volumes and batching habits', () => {
+        const rows = [];
+        for (const daily of [1, 3, 6, 12, 24]) {
+            const { log } = playDays(90, 'pace-kid', daily);
+            for (const day of [1, 7, 30, 90]) rows.push({ daily, habit: 'daily', ...log[day - 1] });
+        }
+        for (const decor of [false, true]) {
+            const { log } = playDays(90, 'pace-kid', 12, !decor, decor);
+            for (const day of [1, 7, 30, 90]) rows.push({ daily: 12, habit: decor ? 'decor-first' : 'weekly', ...log[day - 1] });
+        }
+        console.table(rows);
+        expect(rows.length).toBe(28);
+    });
+    it('observes duplicate ids within one ingest batch', () => {
+        const state = newIsland('duplicate', T0);
+        const fact = { id: 'same-completion', at: T0 };
+        const result = ingestCompletions(state, [fact, fact]);
+        console.log('same-batch-duplicate', { added: result.added, drops: result.state.drops, hours: result.state.town.bank });
+        expect(result.added).toBe(2);
+    });
+    it('observes surprise opportunities from more learning and more openings', () => {
+        const initial = newIsland('batch', T0);
+        initial.landmarks = Array.from({ length: 6 }, (_, i) => ({ id: `flower${i}`, kind: 'flower' as const, cell: { x: i, z: 3 }, growth: 6 }));
+        const together = ingestCompletions(initial, Array.from({ length: 60 }, (_, i) => ({ id: `b${i}`, at: T0 }))).state;
+        const a = openTown(together);
+        let split = initial; const b = [];
+        for (let i = 0; i < 10; i++) {
+            split = ingestCompletions(split, Array.from({ length: 6 }, (_, j) => ({ id: `b${i * 6 + j}`, at: T0 }))).state;
+            b.push(...openTown(split));
+        }
+        console.log('opening-moments', { together: a.filter(e => e.type === 'moment').length, split: b.filter(e => e.type === 'moment').length, townHours: split.town.clock });
+        expect(together.town.clock).toBe(split.town.clock);
+        expect(b.filter(e => e.type === 'moment').length).toBeGreaterThan(a.filter(e => e.type === 'moment').length);
+    });
+    it('checks later growth and different island seeds', () => {
+        const rows = [];
+        for (const decor of [false, true]) {
+            const { log } = playDays(365, 'pace-kid', 12, false, decor);
+            for (const day of [90, 180, 365]) rows.push({ seed: 'pace-kid', decor, ...log[day - 1] });
+        }
+        for (const seed of ['kid-one', 'kid-two', 'kid-three']) {
+            for (const decor of [false, true]) rows.push({ seed, decor, ...playDays(90, seed, 12, false, decor).log[89] });
+        }
+        console.table(rows);
+        expect(rows.length).toBe(12);
+    });
+    it('measures a child also planting wonder seeds and buying all five new items', () => {
+        const rows = [];
+        for (const decor of [false, true]) {
+            const { state, log } = playDays(365, 'pace-kid', 12, false, decor, true);
+            for (const day of [7, 30, 90, 180, 365]) rows.push({ decor, ...log[day - 1] });
+            console.log('new-content-used', { decor, kinds: state.landmarks.filter(l => ['slide', 'postbox', 'trampoline', 'fountain', 'bakery'].includes(l.kind)).map(l => l.kind), wonders: state.plots.filter(p => p.kind === 'wonder').length });
+        }
+        console.table(rows);
+        expect(rows.length).toBe(10);
+    });
+    it('observes birthday points from an unreachable bench and vacant home', () => {
+        const state = newIsland('blocked', T0);
+        state.landmarks = [];
+        state.plots = [{ id: 'house', kind: 'home', cell: { x: 5, z: 4 }, stage: 1, plantedAt: 0, builtAt: 0, stagedAt: 0, growth: 0, origin: 'seed', paid: 4 }];
+        state.landmarks = [{ id: 'play', kind: 'bench', cell: { x: 5, z: 3 }, growth: 0 },
+            ...[0,1,2,3,4].map(z => ({ id: `wall${z}`, kind: 'fence' as const, cell: { x: 3, z }, growth: 0 }))];
+        const reachable = isReachable(state.plots[0].cell!, reachableFromHome(state));
+        state.town.bank = 6;
+        openTown(state);
+        console.log('unreachable-home', { reachable, vacancy: housing(state).vacancy, villagers: state.villagers.length });
+        expect(reachable).toBe(false);
+        expect(state.villagers.length).toBe(1);
+    });
+});

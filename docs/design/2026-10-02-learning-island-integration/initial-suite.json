@@ -1,0 +1,63 @@
+[
+  {
+    "name": "menu",
+    "command": [
+      "node",
+      "docs/design/2026-10-01-menu-atelier/ui.mjs"
+    ],
+    "environment": {
+      "SANSU_MENU_URL": "http://127.0.0.1:5276",
+      "SANSU_MENU_STANDARD_URL": "http://127.0.0.1:5277",
+      "SANSU_MENU_OUTPUT": "/tmp/sansu-integration-qa/menu"
+    },
+    "exitCode": 0
+  },
+  {
+    "name": "house",
+    "command": [
+      "node",
+      "tools/e2e-growing-house-guide.mjs"
+    ],
+    "environment": {
+      "SANSU_HOUSE_GUIDE_URL": "http://127.0.0.1:5276",
+      "SANSU_HOUSE_GUIDE_OUTPUT": "/tmp/sansu-integration-qa/house"
+    },
+    "exitCode": 0
+  },
+  {
+    "name": "balance",
+    "command": [
+      "node",
+      "tools/e2e-growing-balance.mjs"
+    ],
+    "environment": {
+      "SANSU_GROWING_URL": "http://127.0.0.1:5276",
+      "SANSU_GROWING_OUTPUT": "/tmp/sansu-integration-qa/balance"
+    },
+    "exitCode": 0
+  },
+  {
+    "name": "guidance",
+    "command": [
+      "node",
+      "tools/e2e-growing-guidance.mjs"
+    ],
+    "environment": {
+      "SANSU_GROWING_GUIDANCE_URL": "http://127.0.0.1:5276",
+      "SANSU_GROWING_GUIDANCE_OUTPUT": "/tmp/sansu-integration-qa/guidance"
+    },
+    "exitCode": 0
+  },
+  {
+    "name": "navigation",
+    "command": [
+      "node",
+      "tools/e2e-island-navigation.mjs"
+    ],
+    "environment": {
+      "SANSU_ISLAND_BASE_URL": "http://127.0.0.1:5277",
+      "SANSU_NAVIGATION_OUTPUT": "/tmp/sansu-integration-qa/navigation"
+    },
+    "exitCode": 1
+  }
+]

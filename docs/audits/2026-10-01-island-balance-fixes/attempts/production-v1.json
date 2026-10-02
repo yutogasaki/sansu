@@ -1,0 +1,65 @@
+{
+  "target": "http://127.0.0.1:5296",
+  "scenarios": [],
+  "captures": [
+    {
+      "file": "390-welcome.png",
+      "url": "http://127.0.0.1:5296/#/onboarding",
+      "revision": "008e0c8b-balance-working",
+      "version": "008e0c8b-balance-working:bb4454ab-34c5-42af-ba9b-6f3f85d979e0",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "not-applicable",
+      "islandFeatureEnabled": true,
+      "mode": "welcome",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "008e0c8b-balance-working",
+        "version": "008e0c8b-balance-working:bb4454ab-34c5-42af-ba9b-6f3f85d979e0",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": null
+    }
+  ],
+  "pass": false,
+  "version": {
+    "version": "008e0c8b-balance-working:bb4454ab-34c5-42af-ba9b-6f3f85d979e0",
+    "revision": "008e0c8b-balance-working",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": true,
+        "fantasy": true,
+        "candidate": "living-fantasy-garden-v2",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "error": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-input-ready=\"true\"]') to be visible\u001b[22m\n\n    at /Users/yutogasaki/Projects/sansu/tools/e2e-growing-balance-production.mjs:59:57"
+}

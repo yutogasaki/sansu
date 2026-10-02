@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Menu, X } from 'lucide-react';
 import { IslandToyIcon } from './IslandToyIcon';
+import './IslandHouseMenu.css';
 
 interface Props {
     active: boolean;
@@ -36,13 +37,13 @@ export function IslandHouseOverview({ active, disabled, comparisonDisabled, walk
             <button ref={trigger} type="button" data-house-menu-trigger aria-haspopup="dialog" aria-expanded={open} aria-label="いえの メニュー" disabled={comparisonDisabled}
                 onClick={() => setOpen(true)}><Menu size={28} aria-hidden="true" /><span>メニュー</span></button>
         </nav>
-        <dialog ref={dialog} className="island-menu island-house-menu" aria-labelledby="island-house-menu-title"
+        <dialog ref={dialog} className="island-menu island-house-menu" aria-labelledby="island-house-menu-title" data-house-menu-candidate="house-paper-atelier-v1"
             onClose={() => { setOpen(false); if (active) trigger.current?.focus({ preventScroll: true }); }}
             onClick={event => { if (event.target === event.currentTarget) close(); }}>
             <div className="island-menu-surface">
-                <header className="island-menu-heading"><h2 id="island-house-menu-title">いえの メニュー</h2>
+                <header className="island-menu-heading"><div className="island-house-menu-title"><span className="island-house-menu-patch"><IslandToyIcon kind="house" size={34} /></span><div><h2 id="island-house-menu-title">いえの メニュー</h2><p>たからものと、くらしの こと。</p></div></div>
                     <button type="button" className="island-text-button" onClick={close} aria-label="いえの メニューを とじる"><X size={20} aria-hidden="true" />とじる</button></header>
-                <div className="island-menu-scroll">{children(choose)}</div>
+                <div className="island-menu-scroll island-house-menu-content">{children(choose)}</div>
             </div>
         </dialog>
     </div>;

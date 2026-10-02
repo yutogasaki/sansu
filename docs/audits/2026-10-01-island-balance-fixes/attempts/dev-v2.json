@@ -1,0 +1,74 @@
+{
+  "target": "http://127.0.0.1:5260",
+  "source": "DEV preview, disposable profiles; real UI learning and explicit land fixture kept separate",
+  "scenarios": [],
+  "captures": [
+    {
+      "file": "390-initial.png",
+      "url": "http://127.0.0.1:5260/#/island",
+      "revision": "development-local",
+      "version": "development-local:908db916-8fff-487e-84f8-1ed39f67a922",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:908db916-8fff-487e-84f8-1ed39f67a922",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "growingFeatureEnabled": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}"
+      }
+    },
+    {
+      "file": "390-first-home.png",
+      "url": "http://127.0.0.1:5260/#/island",
+      "revision": "development-local",
+      "version": "development-local:908db916-8fff-487e-84f8-1ed39f67a922",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "islandFeatureEnabled": true,
+      "mode": "home",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:908db916-8fff-487e-84f8-1ed39f67a922",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "growingFeatureEnabled": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}"
+      }
+    }
+  ],
+  "pass": false,
+  "error": "locator.evaluate: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-growing-world]')\u001b[22m\n\n    at capture (/Users/yutogasaki/Projects/sansu/tools/e2e-growing-balance.mjs:30:116)\n    at async file:///Users/yutogasaki/Projects/sansu/tools/e2e-growing-balance.mjs:68:68",
+  "qaHash": "62b8b7d8f82fc3fb64beb043e826b6ca3454534d421c74b596a1f47e06a64ab8"
+}

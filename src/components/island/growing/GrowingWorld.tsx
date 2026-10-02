@@ -66,6 +66,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
 
         const rebuild = (next: GrowingState, nextGhost?: Ghost, selected?: string, nextHints?: readonly Cell[]) => {
             layout = world.layout(next);
+            node.dataset.growingBounds = JSON.stringify(layout.bounds);
             layer?.dispose();
             layer = buildObjectLayer(world.m, next, layout, nextGhost, selected, nextHints);
             world.scene.add(layer.root);
@@ -83,6 +84,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             known = new Set(layer.objects.keys());
             unopened = new Set(next.unopened);
             world.life.sync(next, layout, layer);
+            frameCamera(camera, layout, view, width / height);
         };
         const resize = () => {
             width = Math.max(1, node.clientWidth); height = Math.max(1, node.clientHeight);

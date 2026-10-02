@@ -1,0 +1,102 @@
+/* The house's paper and cloth palette across the current Island menus. */
+.island-shell .menu-atelier-heading {
+    display: flex; align-items: center; gap: 12px; padding: 18px 20px;
+    background: var(--pokomoko-paper); border-bottom: 1px solid color-mix(in srgb, var(--pokomoko-edge) 50%, transparent);
+}
+.island-shell .menu-atelier-heading > div { flex: 1; min-width: 0; }
+.island-shell .menu-atelier-heading h2 { margin: 0; font-size: 18px; font-weight: 800; line-height: 1.5; }
+.island-shell .menu-atelier-heading p { margin: 3px 0 0; font-size: 12px; line-height: 1.6; color: var(--pokomoko-muted); }
+.menu-atelier-patch {
+    display: grid; place-items: center; flex-shrink: 0; width: 48px; height: 48px;
+    border-radius: 16px; border: 1px dashed var(--pokomoko-stitch); background: var(--pokomoko-mint);
+}
+.island-shell .menu-atelier-heading > button {
+    display: flex; align-items: center; justify-content: center; gap: 4px; flex-shrink: 0;
+    min-width: 44px; min-height: 44px; margin: 0; padding: 8px;
+    border: 1px solid var(--pokomoko-edge); border-radius: 14px; background: var(--pokomoko-paper);
+    color: var(--pokomoko-ink); font-size: 12px;
+}
+/* The tray and detail panels retain their actual catalog, prices and action callbacks. */
+.island-shell :is(.growing-tray, .growing-sheet) {
+    padding: 0 18px max(18px, env(safe-area-inset-bottom)); border-radius: 26px 26px 0 0;
+    box-shadow: 0 -10px 40px #14233724; border-top: 1px solid var(--pokomoko-edge);
+}
+.island-shell :is(.growing-tray, .growing-sheet) > header {
+    position: sticky; z-index: 2; top: 0; align-items: center; margin: 0 -18px 16px; padding: 14px 18px;
+    background: var(--pokomoko-paper); border-bottom: 1px solid color-mix(in srgb, var(--pokomoko-edge) 50%, transparent);
+}
+.island-shell .growing-sheet > header strong { font-size: 18px; font-weight: 800; }
+.island-shell :is(.growing-tray, .growing-sheet) .growing-close { flex-shrink: 0; display: grid; place-items: center; border: 1px solid var(--pokomoko-edge); border-radius: 14px; background: var(--pokomoko-paper); }
+.island-shell .growing-tabs { flex: 1; min-width: 0; gap: 3px; padding: 4px; border: 1px solid var(--pokomoko-edge); border-radius: 16px; background: var(--pokomoko-canvas); }
+.island-shell .growing-tabs > button { flex: 1; min-width: 0; min-height: 44px; padding: 6px 8px; font-size: 13px; border-radius: 12px; }
+.island-shell .growing-tabs > button[aria-selected=true] { color: var(--pokomoko-blue-deep); background: var(--pokomoko-paper); box-shadow: 0 2px 0 #30364f12; outline: 1px solid var(--pokomoko-edge); }
+.island-shell .growing-grid { gap: 10px; padding-bottom: 4px; }
+.island-shell .growing-grid > .growing-card {
+    padding: 14px 10px; gap: 7px; border-radius: 20px; background: var(--pokomoko-paper);
+    border: 1px solid var(--pokomoko-edge); box-shadow: 0 3px 0 #30364f0b;
+}
+.island-shell .growing-card > .growing-card-icon:not(.growing-flower-dot) { display: grid; place-items: center; width: 48px; height: 48px; margin-bottom: 2px; border-radius: 16px; background: color-mix(in srgb, var(--pokomoko-mint) 55%, var(--pokomoko-paper)); font-size: 28px; }
+.island-shell .growing-card strong { font-size: 14px; line-height: 1.5; }
+.island-shell .growing-card small { font-size: 12px; line-height: 1.6; color: var(--pokomoko-muted); }
+.island-shell .growing-price { padding: 3px 9px; border-radius: 9px; background: var(--pokomoko-canvas); font-size: 13px; }
+.island-shell .growing-free { background: var(--pokomoko-mint); color: var(--pokomoko-ink); }
+.island-shell .growing-sheet .growing-row > button, .island-shell .growing-action { border-radius: 14px; background: var(--pokomoko-paper); }
+.island-shell .growing-friends li > button { padding: 14px; gap: 14px; border-radius: 20px; background: var(--pokomoko-paper); }
+.island-shell .growing-friends li strong { font-size: 16px; }
+/* The standard Island menu uses the same paper frame and existing object icons. */
+.island-shell .island-menu[data-menu-candidate] { width: min(100%, 560px); border-radius: 26px 26px 0 0; }
+.island-shell .island-menu[data-menu-candidate] .island-menu-scroll { padding-top: 16px; }
+.island-shell .island-menu[data-menu-candidate] .island-home-tile { border-radius: 20px; padding: 16px 12px; gap: 10px; min-height: 108px; font-size: 14px; font-weight: 800; }
+.island-shell .island-menu[data-menu-candidate] section[aria-label="しまを たのしむ"] .island-home-tile:first-child { background: var(--pokomoko-mint); }
+.island-shell .island-menu[data-menu-candidate] section[aria-label="しまを たのしむ"] .island-home-tile:last-child { background: color-mix(in srgb, var(--pokomoko-rose) 50%, var(--pokomoko-paper)); }
+.island-shell .island-menu[data-menu-candidate] .island-home-house { padding: 14px; border-radius: 20px; background: color-mix(in srgb, var(--pokomoko-lavender) 45%, var(--pokomoko-paper)); }
+.island-shell .island-menu[data-menu-candidate] .island-menu-group { border-radius: 20px; background: var(--pokomoko-paper); }
+.island-shell .island-menu[data-menu-candidate] .island-menu-group .island-home-tile { flex-direction: row; justify-content: flex-start; min-height: 52px; padding: 10px; }
+/* Settings: personal space first, everyday choices together, parent controls separate. */
+.island-shell .utility-layout-screen .settings-category-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; overflow: visible; padding: 0; border: 0; border-radius: 0; background: none; }
+.island-shell .utility-layout-screen .settings-category-list .pokomoko-setting-trigger {
+    position: relative; display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; justify-items: start; min-width: 0;
+    min-height: 148px; gap: 12px; padding: 18px; border: 1px solid var(--pokomoko-edge); border-radius: 22px;
+    background: var(--pokomoko-paper); box-shadow: 0 3px 0 #30364f0b;
+}
+.island-shell .settings-category-list .pokomoko-setting-trigger > svg { position: absolute; right: 16px; top: 24px; width: 16px; height: 16px; }
+.island-shell .settings-category-list .pokomoko-setting-trigger > div { width: 100%; }
+.island-shell .settings-category-list .pokomoko-setting-trigger > div > div:first-child { color: var(--pokomoko-ink); font-size: 16px; line-height: 1.5; }
+.island-shell .settings-category-list .pokomoko-setting-trigger > div > div:last-child { margin-top: 6px; font-size: 12px; line-height: 1.65; white-space: normal; overflow: visible; text-overflow: clip; }
+.island-shell .utility-layout-screen .settings-category-list .pokomoko-setting-trigger[data-setting-section=profile],
+.island-shell .utility-layout-screen .settings-category-list .pokomoko-setting-trigger[data-setting-section=parent] { grid-column: 1 / -1; grid-template-columns: 48px minmax(0, 1fr); align-content: center; align-items: center; min-height: 92px; gap: 16px; padding-right: 40px; }
+.island-shell .utility-layout-screen .settings-category-list .pokomoko-setting-trigger[data-setting-section=profile] { background: color-mix(in srgb, var(--pokomoko-lavender) 45%, var(--pokomoko-paper)); }
+.island-shell .settings-category-list .pokomoko-setting-trigger[data-setting-section=profile] > svg,
+.island-shell .settings-category-list .pokomoko-setting-trigger[data-setting-section=parent] > svg { top: calc(50% - 8px); }
+.island-shell .utility-layout-screen .settings-category-list .pokomoko-setting-patch { width: 48px; height: 48px; border-radius: 16px; border: 1px dashed var(--pokomoko-stitch); background: var(--pokomoko-mint); box-shadow: none; }
+.island-shell .utility-layout-screen .settings-category-list .pokomoko-setting-patch::after { display: none; }
+.island-shell .settings-category-list [data-setting-section=profile] .pokomoko-setting-patch { background: var(--pokomoko-paper); }
+.island-shell .settings-category-list [data-setting-section=display] .pokomoko-setting-patch { background: var(--pokomoko-rose); }
+.island-shell .settings-category-list [data-setting-section=parent] .pokomoko-setting-patch { background: var(--pokomoko-lavender); }
+.island-shell .utility-layout-screen .settings-category-list .pokomoko-setting-trigger[aria-current=page] { border-color: var(--pokomoko-blue); box-shadow: inset 0 0 0 1px var(--pokomoko-blue); }
+/* Existing five-tab contract, with a clear current page and a stable learning action. */
+.island-shell .island-shell-nav { gap: 4px; padding-inline: max(10px, env(safe-area-inset-left)); border-top-color: var(--pokomoko-edge); }
+.island-shell .island-shell-tab { border-radius: 14px; font-size: 11px; gap: 3px; }
+.island-shell .island-shell-tab svg { width: 23px; height: 23px; }
+.island-shell .island-shell-tab[aria-current=page]:not(.island-shell-tab--learn) { border-color: var(--pokomoko-edge); background: var(--pokomoko-mint); color: var(--pokomoko-blue-deep); }
+.island-shell .island-shell-tab--learn { min-height: 48px; border-radius: 16px; background: var(--pokomoko-blue); color: var(--pokomoko-paper); border-color: var(--pokomoko-blue); font-size: 12px; font-weight: 800; box-shadow: 0 3px 0 var(--pokomoko-blue-deep); }
+.island-shell .island-shell-tab--learn[aria-current=page] { background: var(--pokomoko-blue-deep); color: var(--pokomoko-paper); }
+@media (min-width: 760px) {
+    .island-shell .utility-layout-screen .settings-category-list { grid-template-columns: minmax(0, 1fr); }
+    .island-shell .utility-layout-screen .settings-category-list .pokomoko-setting-trigger { grid-column: 1; grid-template-columns: 40px minmax(0, 1fr); gap: 10px; align-items: center; align-content: center; min-height: 100px; padding: 14px; }
+    .island-shell .utility-layout-screen .settings-category-list .pokomoko-setting-patch { width: 40px; height: 44px; border-radius: 14px; }
+    .island-shell .settings-category-list .pokomoko-setting-trigger > div > div:first-child { font-size: 14px; }
+    .island-shell .island-menu[data-menu-candidate] { border-radius: 26px; }
+}
+@media (max-width: 359px) {
+    .island-shell .menu-atelier-patch { display: none; }
+    .island-shell .menu-atelier-heading { padding: 14px; gap: 8px; }
+    .island-shell .menu-atelier-heading h2 { font-size: 17px; }
+    .island-shell .utility-layout-screen .settings-category-list .pokomoko-setting-trigger { padding: 14px; }
+    .island-shell .settings-category-list :is([data-setting-section=learning], [data-setting-section=display]) > div > div:first-child { font-size: 14px; }
+    .island-shell .growing-tabs > button { padding-inline: 4px; font-size: 12px; }
+}
+@media (max-height: 500px) {
+    .island-shell :is(.growing-tray, .growing-sheet) { max-height: 85%; }
+}
+@media (prefers-reduced-motion: reduce) { .island-shell .island-shell-tab--learn:active { transform: none; } }

@@ -1,0 +1,94 @@
+{
+  "scope": "Frozen uncommitted integration snapshot only; excludes subsequent shared-working-tree edits. No new commit, push or deployment in this task.",
+  "baseCommit": "920e76e068088ff372d16cefd7be331e5888a043",
+  "snapshot": "/tmp/sansu-integration-20261002.0mbu8ebi",
+  "core": {
+    "pass": true,
+    "testFiles": 516,
+    "tests": 4587
+  },
+  "reports": {
+    "finish-dev": {
+      "pass": true,
+      "cases": 14,
+      "stable": true
+    },
+    "menu": {
+      "pass": true,
+      "cases": 6,
+      "stable": true
+    },
+    "house": {
+      "pass": true,
+      "cases": 2,
+      "stable": true
+    },
+    "balance": {
+      "pass": true,
+      "cases": 4,
+      "stable": null
+    },
+    "guidance": {
+      "pass": true,
+      "cases": 6,
+      "stable": true
+    },
+    "guidance-production-retry": {
+      "pass": true,
+      "cases": 2,
+      "stable": true
+    },
+    "navigation": {
+      "pass": true,
+      "cases": 2,
+      "stable": null
+    }
+  },
+  "classicSmoke": {
+    "pass": true,
+    "tests": 31
+  },
+  "sourceStable": {
+    "files": 13302,
+    "changed": []
+  },
+  "applicationAndDistStable": {
+    "files": 1706,
+    "changed": []
+  },
+  "diagnostics": [
+    {
+      "name": "core-first",
+      "reason": "Ignored original house/menu evidence logs excluded from portable snapshot. Fixed .gitignore exception paths."
+    },
+    {
+      "name": "production-first",
+      "reason": "Phone passed; tablet initial screenshot failed with Page.captureScreenshot protocol error. Same unchanged candidate rerun passed both sizes; no application fix inferred."
+    },
+    {
+      "name": "navigation-default-stopped",
+      "reason": "Manually stopped seven-viewport default and ran required phone/tablet scopes explicitly; not an application failure."
+    },
+    {
+      "name": "portable-docs-first",
+      "reason": "Concurrent island-pocket-menu evidence directory had 12 referenced logs excluded from Git. Added a narrow exception after verifying the original files exist; this does not verify its runtime changes."
+    }
+  ],
+  "limitations": [
+    "Real iPhone/Android hardware",
+    "Published production URL",
+    "Actual two-build SW migration from the older public writer",
+    "Independent child comprehension and next-day/one-week learning outcomes",
+    "Latest concurrent island pocket menu and live house-guide updates"
+  ],
+  "performanceScope": "Functional checks; no FPS, latency or exclusive GPU-budget verdict. Another fixed guidance review browser journey ran concurrently.",
+  "otherTaskObservedHead": "5987adee",
+  "portableDocuments": {
+    "scope": "git-visible working document snapshot, not a staged-commit verdict",
+    "directory": "/tmp/sansu-integration-docs-final.zlq4xasi",
+    "exitCode": 0,
+    "documentInputs": 2036,
+    "changedDuringExportAndCheck": [],
+    "pass": true
+  }
+}

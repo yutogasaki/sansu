@@ -3,7 +3,7 @@ import { promises as fs } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { chromium } from 'playwright';
-import { answerUI, readNative, runtimeMetadata, seedDev } from './island-e2e-helpers.mjs';
+import { answerUI, expandGrowingIslandUI, readNative, runtimeMetadata, seedDev } from './island-e2e-helpers.mjs';
 
 const base = process.env.SANSU_GROWING_GUIDANCE_URL || 'http://127.0.0.1:5260';
 const out = process.env.SANSU_GROWING_GUIDANCE_OUTPUT;
@@ -256,12 +256,12 @@ try {
         await capture(richPage, 'fixture-concert-started');
         await choose(richPage, 'A6');
         assert.equal((await read(richPage, richId)).state.guidance.achievements.A6, undefined, 'Choosing cannot expand land');
-        await btn(richPage, 'ひがしへ ひろげる 💧12').tap();
+        await expandGrowingIslandUI(richPage, 'east', 12);
         const expanded = await saved(richPage, richId, r => r.state.guidance.achievements.A6);
         const landMemory = expanded.state.guidance.achievements.A6;
         assert.equal(expanded.state.drops, 188); assert.equal(expanded.state.land.expanded, 'east');
         assert.equal(landMemory.snapshot.land.expanded, 'east');
-        await btn(richPage, 'メニュー').tap(); await btn(richPage, 'にしへ ひろげる 💧24').tap();
+        await btn(richPage, 'メニュー').tap(); await expandGrowingIslandUI(richPage, 'west', 24);
         await saved(richPage, richId, r => r.state.drops === 164);
         await richPage.reload(); await ready(richPage);
         assert.deepEqual((await read(richPage, richId)).state.guidance.achievements.A6, landMemory, 'Later land expansion keeps the first immutable memory');

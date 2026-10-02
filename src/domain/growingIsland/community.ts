@@ -10,11 +10,13 @@ export function homeCellOf(state: GrowingState, villager: Villager): Cell {
 }
 
 /** People who can live in plot homes. Friends sharing Pokomoko's house do not use a home slot. */
-export function housing(state: GrowingState) {
+export function housing(state: GrowingState, reached = reachableFromHome(state)) {
     const capacity = state.plots.filter(p => p.kind === 'home' && p.cell)
         .reduce((sum, p) => sum + RULES.homeCapacity[p.stage], 0);
     const housed = state.villagers.filter(v => v.home !== 'pokomoko').length;
-    return { capacity, housed, vacancy: capacity - housed };
+    const vacancy = state.plots.filter(p => p.kind === 'home' && p.cell && isReachable(p.cell, reached))
+        .reduce((sum, p) => sum + Math.max(0, RULES.homeCapacity[p.stage] - occupantsOf(state, p.id).length), 0);
+    return { capacity, housed, vacancy };
 }
 
 export function occupantsOf(state: GrowingState, plotId: string) {
@@ -37,11 +39,11 @@ export function foodSupport(state: GrowingState, reached = reachableFromHome(sta
     return support;
 }
 
-export function playSupport(state: GrowingState) {
+export function playSupport(state: GrowingState, reached = reachableFromHome(state)) {
     let support: number = RULES.basePlay;
-    for (const p of state.plots) if (p.cell && p.stage > 0) support += PLAY_SUPPORT[p.kind] ?? 0;
-    for (const l of state.landmarks) if (l.cell) support += PLAY_SUPPORT[l.kind] ?? 0;
-    return support + state.keepsakes.filter(k => k.cell).length * 2;
+    for (const p of state.plots) if (p.cell && p.stage > 0 && isReachable(p.cell, reached)) support += PLAY_SUPPORT[p.kind] ?? 0;
+    for (const l of state.landmarks) if (l.cell && isReachable(l.cell, reached)) support += PLAY_SUPPORT[l.kind] ?? 0;
+    return support + state.keepsakes.filter(k => k.cell && isReachable(k.cell, reached)).length * 2;
 }
 
 function playCells(state: GrowingState): Cell[] {
@@ -76,17 +78,19 @@ function likeCells(state: GrowingState, like: Like): Cell[] {
 const within = (cells: Cell[], home: Cell, radius: number) => cells.some(c => distance(c, home) <= radius);
 
 /** Comfort stars 0-3 (§7.4). Shown to children only through faces and one-line remarks. */
-export function comfort(state: GrowingState, villager: Villager, fed = foodSupport(state) >= state.villagers.length) {
+export function comfort(state: GrowingState, villager: Villager, fed = foodSupport(state) >= state.villagers.length, reached = reachableFromHome(state)) {
     const home = homeCellOf(state, villager), likes = likesOf(villager);
-    const quiet = !within(playPlotCells(state), home, RULES.quietRadius);
-    const liked = likes.some(like => like === 'food' ? fed : like === 'quiet' ? quiet : within(likeCells(state, like), home, RULES.likeRadius));
-    const played = likes.includes('quiet') ? quiet : within(playCells(state), home, RULES.likeRadius);
+    if (!isReachable(home, reached)) return 0;
+    const accessible = (cells: Cell[]) => cells.filter(cell => isReachable(cell, reached));
+    const quiet = !within(accessible(playPlotCells(state)), home, RULES.quietRadius);
+    const liked = likes.some(like => like === 'food' ? fed : like === 'quiet' ? quiet : within(accessible(likeCells(state, like)), home, RULES.likeRadius));
+    const played = likes.includes('quiet') ? quiet : within(accessible(playCells(state)), home, RULES.likeRadius);
     return (liked ? 1 : 0) + (fed ? 1 : 0) + (played ? 1 : 0);
 }
 
-export function genki(state: GrowingState) {
-    const fed = foodSupport(state) >= state.villagers.length;
-    return state.villagers.reduce((sum, v) => sum + comfort(state, v, fed), 0);
+export function genki(state: GrowingState, reached = reachableFromHome(state)) {
+    const fed = foodSupport(state, reached) >= state.villagers.length;
+    return state.villagers.reduce((sum, v) => sum + comfort(state, v, fed, reached), 0);
 }
 
 export function levelFor(points: number) {

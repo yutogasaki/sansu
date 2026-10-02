@@ -1,6 +1,7 @@
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { canPlace, landQuote, styleAt, waitingSeeds } from '../../../domain/growingIsland';
 import { HOME_CELL, landBounds, landCells } from '../../../domain/growingIsland/space';
+import { canReachHomePlacement } from '../../../domain/growingIsland/commands';
 import type { Cell, Command, FlowerColor, GrowingState, LandmarkKind, SeedKind, TownEvent } from '../../../domain/growingIsland';
 import { addMoment, flowerSentToday, listMoments, readGrowingIsland, sendFlower, type MomentRecord } from '../../../domain/growingIsland/repository';
 import { getAllProfiles } from '../../../domain/user/repository';
@@ -30,6 +31,7 @@ import { achievementCatalog, starterStep } from '../../../domain/growingIsland/g
 import type { AchievementId, GuidanceEvidence, StarterStepId } from '../../../domain/growingIsland/types';
 import { useNavigate } from 'react-router-dom';
 import './growing.css';
+import { GrowingIslandMenu } from './GrowingIslandMenu';
 
 const GrowingWorld = lazy(() => import('./GrowingWorld'));
 type Placing = { kind: SeedKind | LandmarkKind; seed: boolean; id?: string; mode: 'new' | 'move' | 'unstore'; cell?: Cell; keepsake?: string; color?: FlowerColor };
@@ -79,6 +81,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     const navigate = useNavigate();
     const [worldStep, setWorldStep] = useState<LoadingStep | 'ready'>('world');
     const camera = useRef<WorldCamera | undefined>(undefined), pendingPicture = useRef(false);
+    const menuTrigger = useRef<HTMLButtonElement>(null);
     const audio = useIslandWorkshopAudio(sound && active);
     useIslandAmbience(show ? 'shell-three-notes' : time === 'night' ? 'evening' : 'breeze', sound, active);
     const state = visit?.state ?? own;
@@ -91,8 +94,6 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         const changed = reveal.town.some(e => e.type !== 'quiet' && e.type !== 'boat');
         if (changed) { setDawn(reveal.id); pendingPicture.current = true; }
         if (reveal.town.some(e => e.type === 'level')) { setFestival(reveal.id); audio.play('discovery'); }
-        const shown = reveal.town.find(e => e.type === 'moment');
-        if (shown?.type === 'moment') window.setTimeout(() => setMoment({ id: reveal.id, moment: shown.moment, cell: shown.cell }), 2200);
         setHints(hintCells(own, reveal.town));
         const fresh = reveal.nature.filter(e => e.type === 'new-color');
         const town = revealLine(own, reveal.town);
@@ -103,6 +104,17 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         // The reveal is shown once per sync result.
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [island.reveal?.id]);
+    useEffect(() => {
+        const reveal = island.reveal, shown = reveal?.town.find(event => event.type === 'moment');
+        if (!active || visit || show || worldStep !== 'ready' || !reveal || shown?.type !== 'moment') return;
+        const timer = window.setTimeout(() => {
+            setMoment({ id: reveal.id, moment: shown.moment, cell: shown.cell });
+            if (shown.day !== undefined) void island.dispatch({ type: 'ack-moment', day: shown.day });
+        }, 2200);
+        return () => window.clearTimeout(timer);
+        // Keep an unseen moment until this island's rendered world can actually show it.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [island.reveal?.id, active, visit, show, worldStep]);
     useEffect(() => { if (!dawn) return; const id = window.setTimeout(() => setDawn(0), 1800); return () => clearTimeout(id); }, [dawn]);
     useEffect(() => { if (!hints.length) return; const id = window.setTimeout(() => setHints([]), 9000); return () => clearTimeout(id); }, [hints]);
 
@@ -126,7 +138,8 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     const ghost = useMemo<Ghost | undefined>(() => {
         if (!own || !placing) return undefined;
         const allowed = landCells(own).filter(cell => canPlace(own, cell, placing.id));
-        const valid = Boolean(placing.cell && allowed.some(c => c.x === placing.cell!.x && c.z === placing.cell!.z));
+        const valid = Boolean(placing.cell && allowed.some(c => c.x === placing.cell!.x && c.z === placing.cell!.z)
+            && (placing.kind !== 'home' || canReachHomePlacement(own, placing.cell, placing.id)));
         return { kind: placing.kind, seed: placing.seed, cell: placing.cell, valid, allowed, keepsake: placing.keepsake, color: placing.color,
             style: placing.cell && placing.seed ? styleAt(own, placing.cell) : 'plain' };
     }, [own, placing]);
@@ -312,31 +325,25 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
                 <button className="growing-chip" data-growing-character onClick={() => setNaming(own.islandName ?? '')}>
                     {own.islandName ? `${own.islandName}・` : ''}{CHARACTER_NAME[own.character]}</button>
                 <span className="growing-chip" aria-label={`しずく ${own.drops}`}>💧 {own.drops}</span>
-                <button className="growing-chip growing-menu-button" aria-expanded={menu} onClick={() => { if (!menu) loadFaces(3); setMenu(!menu); }}>メニュー</button>
+                <button ref={menuTrigger} className="growing-chip growing-menu-button" aria-expanded={menu} onClick={() => { if (!menu) loadFaces(3); setMenu(!menu); }}>メニュー</button>
             </>}
         </div>
         {naming !== undefined && <form className="growing-overlay" onSubmit={event => { event.preventDefault(); if (naming.trim()) void run({ type: 'name', target: 'island', name: naming }, () => setNaming(undefined)); }}>
             <div className="growing-overlay-body growing-name"><label>しまの なまえ<input value={naming} maxLength={12} onChange={e => setNaming(e.target.value)} autoFocus /></label>
                 <div className="growing-row"><button type="submit" className="growing-primary">きめる</button><button type="button" onClick={() => setNaming(undefined)}>やめる</button></div></div>
         </form>}
-        {menu && !visit && <section className="growing-menu" aria-label="メニュー">
-            <div className="growing-row">
-                <button onClick={() => { setMenu(false); setSelected(undefined); onHome(); }}>いえ</button>
-                <button onClick={() => { guide.pause(); setMenu(false); loadFaces(); setPanel('friends'); }}>なかま</button>
-                <button onClick={() => { guide.pause(); setMenu(false); setPanel('show'); }}>みせる</button>
-                <button onClick={() => { guide.pause(); setMenu(false); setPanel('flowers'); }}>はなずかん</button>
-                <button onClick={() => openBook()}>しまの あそびかた</button>
-            </div>
-            <div className="growing-row">
-                <button onClick={() => { guide.pause(); setMenu(false); setPanel('trace'); }}>なぞる</button>
-                <button onClick={() => { guide.pause(); setMenu(false); setPanel('stored'); }}>もちもの</button>
-                <button onClick={() => { setMenu(false); navigate('/settings'); }}>せってい</button>
-            </div>
-            <div className="growing-row"><button onClick={() => setTurn(turn - 1)}>⟲ まわす</button><button onClick={() => setTurn(turn + 1)}>まわす ⟳</button></div>
-            {quote && <div className="growing-row">{quote.sides.map(side => <button key={side} disabled={own.drops < quote.price}
-                onClick={() => void run({ type: 'expand', side }, () => { setMenu(false); audio.play('assemble'); })}>
-                {side === 'east' ? 'ひがし' : side === 'west' ? 'にし' : 'みなみ'}へ ひろげる 💧{quote.price}</button>)}</div>}
-        </section>}
+        {menu && !visit && <GrowingIslandMenu villagers={own.villagers} faces={faces} drops={own.drops} busy={island.busy} quote={quote}
+            onClose={() => { setMenu(false); menuTrigger.current?.focus({ preventScroll: true }); }}
+            onFriends={() => { guide.pause(); setMenu(false); loadFaces(); setPanel('friends'); }}
+            onSeeds={() => { void audio.unlock(); setMenu(false); setPanel('tray'); setSelected(undefined); }}
+            onTrace={() => { guide.pause(); setMenu(false); setPanel('trace'); }}
+            onStored={() => { guide.pause(); setMenu(false); setPanel('stored'); }}
+            onHome={() => { setMenu(false); setSelected(undefined); onHome(); }}
+            onShow={() => { guide.pause(); setMenu(false); setPanel('show'); }}
+            onFlowers={() => { guide.pause(); setMenu(false); setPanel('flowers'); }}
+            onGuide={() => openBook()} onSettings={() => { setMenu(false); navigate('/settings'); }}
+            onRotate={direction => setTurn(value => value + direction)}
+            onExpand={side => void run({ type: 'expand', side }, () => { setMenu(false); audio.play('assemble'); })} />}
         {!placing && !panel && !menu && !selected && !guide.cue && !guide.notice && <p className="growing-bubble" role="status"><span aria-hidden="true">ぽこもこ</span>{bubble}</p>}
         {guideSafe && <GrowingGuideCue state={own} cue={guide.cue} notice={guide.notice} selected={guide.selected} onAction={() => starterAction()}
             onClose={guide.notice ? guide.dismissNotice : guide.pause} onBook={openBook} />}
@@ -348,7 +355,8 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
             }}>{visit.sent ? 'おはなを おいたよ' : 'おはなを おいてくる 🌸'}</button>
             <button className="growing-seed-button" onClick={() => { setVisit(undefined); setLine(undefined); }}>かえる</button>
         </div> : placing ? <div className="growing-placing">
-            <p>{ghost?.cell ? ghost.valid ? 'ここで いい？' : 'ここには おけないよ' : 'おく ばしょを さわってね'}</p>
+            <p>{ghost?.cell ? ghost.valid ? 'ここで いい？' : placing.kind === 'home' && canPlace(own, ghost.cell, placing.id)
+                ? 'ここまで いけないみたい。まわりを あけてみよう' : 'ここには おけないよ' : 'おく ばしょを さわってね'}</p>
             <button className="growing-primary" disabled={!ghost?.valid || island.busy} onClick={confirm}>ここに おく</button>
             <button onClick={() => { setPlacing(undefined); setLine(undefined); }}>やめる</button>
         </div> : <div className="growing-hud-bottom">

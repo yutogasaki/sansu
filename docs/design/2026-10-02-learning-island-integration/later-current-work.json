@@ -1,0 +1,16 @@
+{
+  "scope": "Changes that arrived after the snapshot; excluded from this verification, not discarded or reverted",
+  "paths": [
+    "src/components/island/growing/GrowingHouseGuide.tsx",
+    "src/components/island/growing/GrowingIsland.tsx",
+    "src/components/island/growing/GrowingIslandMenu.test.tsx",
+    "src/components/island/growing/GrowingIslandMenu.tsx",
+    "src/components/island/growing/growingIslandMenu.css",
+    "src/components/ui/MenuAtelier.css",
+    "src/domain/growingIsland/guidance.repository.test.ts",
+    "src/domain/growingIsland/guidance.test.ts",
+    "src/domain/growingIsland/repository.ts",
+    "tools/e2e-growing-guidance-production.mjs",
+    "tools/e2e-growing-house-guide.mjs"
+  ]
+}

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Mail } from 'lucide-react';
 import type { Letter } from './letters';
 
 const readKey = (profileId: string) => `sansu-growing-letters-read:${profileId}`;
@@ -22,11 +23,13 @@ export function LettersPanel({ profileId, letters }: { profileId: string; letter
         const next = new Set(read).add(id); setRead(next);
         try { localStorage.setItem(readKey(profileId), JSON.stringify([...next].slice(-400))); } catch { /* Read marks are only a convenience. */ }
     };
-    if (!open) return <button className="island-secondary room-decor-open" onClick={() => setOpen(true)}>
-        <strong>✉️ なかまの てがみ{unread > 0 ? ` （あたらしい ${unread}つう）` : ''}</strong>
+    if (!open) return <button className="island-secondary room-decor-open" data-room-entry="letters" onClick={() => setOpen(true)}>
+        <span className="room-entry-icon" aria-hidden="true"><Mail size={28} /></span>
+        <strong>なかまの てがみ</strong>
+        {unread > 0 && <span className="room-entry-badge">あたらしい {unread}つう</span>}
         <small>{letters.length ? 'しまの なかまから てがみが とどいているよ' : 'なかまが すむと てがみが とどくよ'}</small>
     </button>;
-    return <section className="room-decor" aria-label="なかまの てがみ">
+    return <section className="room-decor" data-room-panel="letters" aria-label="なかまの てがみ">
         <header><strong>なかまの てがみ</strong><button className="island-secondary" onClick={() => setOpen(false)}>とじる</button></header>
         {!letters.length && <p className="room-decor-note">しまに なかまが すむと、てがみが とどくよ</p>}
         <ul className="room-letters">{letters.map(letter => <li key={letter.id}>

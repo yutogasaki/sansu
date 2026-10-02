@@ -71,7 +71,7 @@ describe('native home menu shell', () => {
         expect(trigger).toContain('aria-haspopup="dialog"');
         expect(trigger).toContain('aria-expanded="false"');
         expect(trigger?.includes('disabled=""')).toBe(comparisonDisabled);
-        expect(html).toContain('<dialog class="island-menu" aria-labelledby="island-menu-title">');
+        expect(html).toContain('<dialog class="island-menu" aria-labelledby="island-menu-title"');
         expect(html).toContain('<h2 id="island-menu-title">しまのメニュー</h2>');
         expect(html).toContain('aria-label="しまのメニューを とじる"');
     });

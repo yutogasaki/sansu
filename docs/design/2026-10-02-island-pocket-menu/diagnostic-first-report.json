@@ -1,0 +1,1148 @@
+{
+  "started": "2026-10-01T22:13:28.063Z",
+  "source": {
+    "src/components/Layout.tsx": "2b1e49d58a5e57174101e7e2c0bffd3b82383b25417d43a4022693113154387e",
+    "src/components/ui/MenuAtelier.css": "0c314f7350f8846bbbce9017b101c530a901014e798ba90c38617d96c8d26cf0",
+    "src/components/island/IslandHomeActions.tsx": "ebac05b7db13707692f854677a560d26015a7ff2b796eb4990071a2fcbece4c7",
+    "src/components/island/growing/GrowingIsland.tsx": "b4aac8a3b236d63510fc1ae66d350ea9cd3f7c06720a6866067745aee28cdc1b",
+    "src/components/island/growing/GrowingIslandMenu.tsx": "460675a349fe96334b1e0312cf1bcaa6006a62b9208ffb0474b296c81b393a3f",
+    "src/components/island/growing/growingIslandMenu.css": "c082a960608ae6e0b4a766262673f32a91e28177be66833eb9faf5779916c5da"
+  },
+  "fixture": "Disposable DEV profile with optional derived isWeak flags initialized to false; Growing preview fixture with two residents, 200 drops, stored bench, and unlocked seed catalogs. The existing guide action intentionally chooses the A3 goal to open its real flag detail sheet. These are display fixtures, not acquired progress or child observation.",
+  "cases": [
+    {
+      "tag": "growing-390",
+      "target": "http://127.0.0.1:5263",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "captures": [
+        {
+          "file": "growing-390-island.png",
+          "url": "http://127.0.0.1:5263/#/island",
+          "revision": "development-local",
+          "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "menuStyleCandidate": "shared-paper-atelier-v1",
+          "worldIdentity": {
+            "growingWorld": "true",
+            "visualCandidate": "growing-island-v1",
+            "growingFeatureEnabled": "true",
+            "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}"
+          },
+          "menuCandidate": null
+        },
+        {
+          "file": "growing-390-menu.png",
+          "url": "http://127.0.0.1:5263/#/island",
+          "revision": "development-local",
+          "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "menuStyleCandidate": "shared-paper-atelier-v1",
+          "worldIdentity": {
+            "growingWorld": "true",
+            "visualCandidate": "growing-island-v1",
+            "growingFeatureEnabled": "true",
+            "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}"
+          },
+          "menuCandidate": "island-pocket-v2"
+        },
+        {
+          "file": "growing-390-tools.png",
+          "url": "http://127.0.0.1:5263/#/island",
+          "revision": "development-local",
+          "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "menuStyleCandidate": "shared-paper-atelier-v1",
+          "worldIdentity": {
+            "growingWorld": "true",
+            "visualCandidate": "growing-island-v1",
+            "growingFeatureEnabled": "true",
+            "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}"
+          },
+          "menuCandidate": "island-pocket-v2"
+        },
+        {
+          "file": "growing-390-seeds.png",
+          "url": "http://127.0.0.1:5263/#/island",
+          "revision": "development-local",
+          "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "menuStyleCandidate": "shared-paper-atelier-v1",
+          "worldIdentity": {
+            "growingWorld": "true",
+            "visualCandidate": "growing-island-v1",
+            "growingFeatureEnabled": "true",
+            "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}"
+          },
+          "menuCandidate": null
+        },
+        {
+          "file": "growing-390-landmarks.png",
+          "url": "http://127.0.0.1:5263/#/island",
+          "revision": "development-local",
+          "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "menuStyleCandidate": "shared-paper-atelier-v1",
+          "worldIdentity": {
+            "growingWorld": "true",
+            "visualCandidate": "growing-island-v1",
+            "growingFeatureEnabled": "true",
+            "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}"
+          },
+          "menuCandidate": null
+        },
+        {
+          "file": "growing-390-stored.png",
+          "url": "http://127.0.0.1:5263/#/island",
+          "revision": "development-local",
+          "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "menuStyleCandidate": "shared-paper-atelier-v1",
+          "worldIdentity": {
+            "growingWorld": "true",
+            "visualCandidate": "growing-island-v1",
+            "growingFeatureEnabled": "true",
+            "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}"
+          },
+          "menuCandidate": null
+        },
+        {
+          "file": "growing-390-friends.png",
+          "url": "http://127.0.0.1:5263/#/island",
+          "revision": "development-local",
+          "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "menuStyleCandidate": "shared-paper-atelier-v1",
+          "worldIdentity": {
+            "growingWorld": "true",
+            "visualCandidate": "growing-island-v1",
+            "growingFeatureEnabled": "true",
+            "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}"
+          },
+          "menuCandidate": null
+        },
+        {
+          "file": "growing-390-show.png",
+          "url": "http://127.0.0.1:5263/#/island",
+          "revision": "development-local",
+          "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "menuStyleCandidate": "shared-paper-atelier-v1",
+          "worldIdentity": {
+            "growingWorld": "true",
+            "visualCandidate": "growing-island-v1",
+            "growingFeatureEnabled": "true",
+            "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}"
+          },
+          "menuCandidate": null
+        },
+        {
+          "file": "growing-390-flowers.png",
+          "url": "http://127.0.0.1:5263/#/island",
+          "revision": "development-local",
+          "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "menuStyleCandidate": "shared-paper-atelier-v1",
+          "worldIdentity": {
+            "growingWorld": "true",
+            "visualCandidate": "growing-island-v1",
+            "growingFeatureEnabled": "true",
+            "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}"
+          },
+          "menuCandidate": null
+        },
+        {
+          "file": "growing-390-inventory.png",
+          "url": "http://127.0.0.1:5263/#/island",
+          "revision": "development-local",
+          "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "menuStyleCandidate": "shared-paper-atelier-v1",
+          "worldIdentity": {
+            "growingWorld": "true",
+            "visualCandidate": "growing-island-v1",
+            "growingFeatureEnabled": "true",
+            "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}"
+          },
+          "menuCandidate": null
+        },
+        {
+          "file": "growing-390-trace.png",
+          "url": "http://127.0.0.1:5263/#/island",
+          "revision": "development-local",
+          "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "menuStyleCandidate": "shared-paper-atelier-v1",
+          "worldIdentity": {
+            "growingWorld": "true",
+            "visualCandidate": "growing-island-v1",
+            "growingFeatureEnabled": "true",
+            "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}"
+          },
+          "menuCandidate": null
+        },
+        {
+          "file": "growing-390-detail.png",
+          "url": "http://127.0.0.1:5263/#/island",
+          "revision": "development-local",
+          "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "menuStyleCandidate": "shared-paper-atelier-v1",
+          "worldIdentity": {
+            "growingWorld": "true",
+            "visualCandidate": "growing-island-v1",
+            "growingFeatureEnabled": "true",
+            "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}"
+          },
+          "menuCandidate": null
+        },
+        {
+          "file": "growing-390-settings.png",
+          "url": "http://127.0.0.1:5263/#/settings",
+          "candidate": "not-applicable: shared utility route",
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "menuStyleCandidate": "shared-paper-atelier-v1",
+          "worldIdentity": null,
+          "menuCandidate": null
+        },
+        {
+          "file": "growing-390-settings-profile.png",
+          "url": "http://127.0.0.1:5263/#/settings?section=profile",
+          "candidate": "not-applicable: shared utility route",
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "menuStyleCandidate": "shared-paper-atelier-v1",
+          "worldIdentity": null,
+          "menuCandidate": null
+        },
+        {
+          "file": "growing-390-settings-learning.png",
+          "url": "http://127.0.0.1:5263/#/settings?section=learning",
+          "candidate": "not-applicable: shared utility route",
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "menuStyleCandidate": "shared-paper-atelier-v1",
+          "worldIdentity": null,
+          "menuCandidate": null
+        },
+        {
+          "file": "growing-390-settings-display.png",
+          "url": "http://127.0.0.1:5263/#/settings?section=display",
+          "candidate": "not-applicable: shared utility route",
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "menuStyleCandidate": "shared-paper-atelier-v1",
+          "worldIdentity": null,
+          "menuCandidate": null
+        },
+        {
+          "file": "growing-390-settings-parent.png",
+          "url": "http://127.0.0.1:5263/#/settings?section=parent",
+          "candidate": "not-applicable: shared utility route",
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:dffc58c1-8919-46d2-b616-7ca1a2074967",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "menuStyleCandidate": "shared-paper-atelier-v1",
+          "worldIdentity": null,
+          "menuCandidate": null
+        }
+      ],
+      "errors": [
+        "Cannot read properties of null (reading 'useContext')",
+        "Cannot read properties of null (reading 'useContext')"
+      ],
+      "geometry": [
+        {
+          "name": "menu",
+          "width": 360,
+          "scrollWidth": 358,
+          "buttons": [
+            {
+              "text": "",
+              "width": 44,
+              "height": 44
+            },
+            {
+              "text": "なかま 2にん\nみんなの かおを みる",
+              "width": 337.984375,
+              "height": 64
+            },
+            {
+              "text": "たね",
+              "width": 108.65625,
+              "height": 63.5
+            },
+            {
+              "text": "なぞる",
+              "width": 108.671875,
+              "height": 63.5
+            },
+            {
+              "text": "もちもの",
+              "width": 108.65625,
+              "height": 63.5
+            },
+            {
+              "text": "いえ",
+              "width": 108.65625,
+              "height": 63.5
+            },
+            {
+              "text": "みせる",
+              "width": 108.671875,
+              "height": 63.5
+            },
+            {
+              "text": "はなずかん",
+              "width": 108.65625,
+              "height": 63.5
+            },
+            {
+              "text": "あそびかた",
+              "width": 337.984375,
+              "height": 46
+            },
+            {
+              "text": "",
+              "width": 108.65625,
+              "height": 44
+            },
+            {
+              "text": "",
+              "width": 108.65625,
+              "height": 44
+            },
+            {
+              "text": "",
+              "width": 108.671875,
+              "height": 44
+            },
+            {
+              "text": "",
+              "width": 337.984375,
+              "height": 44
+            },
+            {
+              "text": "",
+              "width": 337.984375,
+              "height": 44
+            }
+          ]
+        },
+        {
+          "name": "tools",
+          "width": 360,
+          "scrollWidth": 358,
+          "buttons": [
+            {
+              "text": "",
+              "width": 44,
+              "height": 44
+            },
+            {
+              "text": "なかま 2にん\nみんなの かおを みる",
+              "width": 337.984375,
+              "height": 64
+            },
+            {
+              "text": "たね",
+              "width": 108.65625,
+              "height": 63.5
+            },
+            {
+              "text": "なぞる",
+              "width": 108.671875,
+              "height": 63.5
+            },
+            {
+              "text": "もちもの",
+              "width": 108.65625,
+              "height": 63.5
+            },
+            {
+              "text": "いえ",
+              "width": 108.65625,
+              "height": 63.5
+            },
+            {
+              "text": "みせる",
+              "width": 108.671875,
+              "height": 63.5
+            },
+            {
+              "text": "はなずかん",
+              "width": 108.65625,
+              "height": 63.5
+            },
+            {
+              "text": "あそびかた",
+              "width": 337.984375,
+              "height": 46
+            },
+            {
+              "text": "ひだり",
+              "width": 108.65625,
+              "height": 44
+            },
+            {
+              "text": "みぎ",
+              "width": 108.65625,
+              "height": 44
+            },
+            {
+              "text": "せってい",
+              "width": 108.671875,
+              "height": 44
+            },
+            {
+              "text": "にしへ ひろげる\n💧 12",
+              "width": 337.984375,
+              "height": 44
+            },
+            {
+              "text": "ひがしへ ひろげる\n💧 12",
+              "width": 337.984375,
+              "height": 44
+            }
+          ]
+        },
+        {
+          "name": "seeds",
+          "width": 390,
+          "scrollWidth": 390,
+          "buttons": [
+            {
+              "text": "たね",
+              "width": 95.328125,
+              "height": 44
+            },
+            {
+              "text": "めじるし",
+              "width": 95.34375,
+              "height": 44
+            },
+            {
+              "text": "しまってある",
+              "width": 95.328125,
+              "height": 44
+            },
+            {
+              "text": "×",
+              "width": 44,
+              "height": 44
+            },
+            {
+              "text": "🏠\nすむ\nおうちが たつよ\n💧4",
+              "width": 172,
+              "height": 167.984375
+            },
+            {
+              "text": "🥕\nたべる\nはたけが できるよ\n💧4",
+              "width": 172,
+              "height": 167.984375
+            },
+            {
+              "text": "🎈\nあそぶ\nあそびばが できるよ\n💧6",
+              "width": 172,
+              "height": 167.984375
+            },
+            {
+              "text": "🌼\nしぜん\n花や 草が ひろがるよ\n💧1",
+              "width": 172,
+              "height": 167.984375
+            }
+          ]
+        },
+        {
+          "name": "landmarks",
+          "width": 390,
+          "scrollWidth": 390,
+          "buttons": [
+            {
+              "text": "たね",
+              "width": 95.328125,
+              "height": 44
+            },
+            {
+              "text": "めじるし",
+              "width": 95.34375,
+              "height": 44
+            },
+            {
+              "text": "しまってある",
+              "width": 95.328125,
+              "height": 44
+            },
+            {
+              "text": "×",
+              "width": 44,
+              "height": 44
+            },
+            {
+              "text": "あかの はな\n💧2",
+              "width": 111.328125,
+              "height": 131.796875
+            },
+            {
+              "text": "きいろの はな\n💧2",
+              "width": 111.328125,
+              "height": 131.796875
+            },
+            {
+              "text": "しろの はな\n💧2",
+              "width": 111.34375,
+              "height": 131.796875
+            },
+            {
+              "text": "あおの はな\n💧2",
+              "width": 111.328125,
+              "height": 141.796875
+            },
+            {
+              "text": "🪑\nベンチ\n💧4",
+              "width": 111.328125,
+              "height": 141.796875
+            },
+            {
+              "text": "💧\n水ばち\n💧4",
+              "width": 111.34375,
+              "height": 141.796875
+            },
+            {
+              "text": "🌱\n木の なえ\n💧4",
+              "width": 111.328125,
+              "height": 141.796875
+            },
+            {
+              "text": "〰️\nみずみち\n💧2",
+              "width": 111.328125,
+              "height": 141.796875
+            },
+            {
+              "text": "🍽️\nテーブル\n💧8",
+              "width": 111.34375,
+              "height": 141.796875
+            },
+            {
+              "text": "🪴\nうえ木ばち\n💧6",
+              "width": 111.328125,
+              "height": 162.796875
+            },
+            {
+              "text": "🎠\nブランコ\n💧6",
+              "width": 111.328125,
+              "height": 162.796875
+            },
+            {
+              "text": "🎵\nおんがくの ひろば\n💧6",
+              "width": 111.34375,
+              "height": 162.796875
+            },
+            {
+              "text": "🛝\nすべりだい\n💧8",
+              "width": 111.328125,
+              "height": 141.796875
+            }
+          ]
+        },
+        {
+          "name": "stored",
+          "width": 390,
+          "scrollWidth": 390,
+          "buttons": [
+            {
+              "text": "たね",
+              "width": 95.328125,
+              "height": 44
+            },
+            {
+              "text": "めじるし",
+              "width": 95.34375,
+              "height": 44
+            },
+            {
+              "text": "しまってある",
+              "width": 95.328125,
+              "height": 44
+            },
+            {
+              "text": "×",
+              "width": 44,
+              "height": 44
+            },
+            {
+              "text": "🪑\nベンチ",
+              "width": 111.328125,
+              "height": 108
+            }
+          ]
+        },
+        {
+          "name": "friends",
+          "width": 390,
+          "scrollWidth": 390,
+          "buttons": [
+            {
+              "text": "×",
+              "width": 44,
+              "height": 44
+            },
+            {
+              "text": "うさぎ\nうさぎ・のんびり・ぽこもこの いえ\nすき：おはな・あそび\n「この しま だいすき！」",
+              "width": 354,
+              "height": 120.765625
+            },
+            {
+              "text": "カワウソ\nカワウソ・のんびり・ぽこもこの いえ\nすき：みず・ごはん\n「この しま だいすき！」",
+              "width": 354,
+              "height": 120.765625
+            }
+          ]
+        },
+        {
+          "name": "show",
+          "width": 390,
+          "scrollWidth": 390,
+          "buttons": [
+            {
+              "text": "×",
+              "width": 44,
+              "height": 44
+            },
+            {
+              "text": "🎠\nみせる モード\nしまを ぐるっと みせるよ",
+              "width": 172,
+              "height": 134.1875
+            },
+            {
+              "text": "🖼️\nしまカード\nがぞうに して のこせるよ",
+              "width": 172,
+              "height": 134.1875
+            },
+            {
+              "text": "📖\nしまの あゆみ\nさいしょの ひから いままで",
+              "width": 172,
+              "height": 153.375
+            },
+            {
+              "text": "⛵\nきょうだいの しまへ\nみにいって おはなを おけるよ",
+              "width": 172,
+              "height": 153.375
+            }
+          ]
+        },
+        {
+          "name": "flowers",
+          "width": 390,
+          "scrollWidth": 390,
+          "buttons": [
+            {
+              "text": "×",
+              "width": 44,
+              "height": 44
+            }
+          ]
+        },
+        {
+          "name": "inventory",
+          "width": 390,
+          "scrollWidth": 390,
+          "buttons": [
+            {
+              "text": "たね",
+              "width": 95.328125,
+              "height": 44
+            },
+            {
+              "text": "めじるし",
+              "width": 95.34375,
+              "height": 44
+            },
+            {
+              "text": "しまってある",
+              "width": 95.328125,
+              "height": 44
+            },
+            {
+              "text": "×",
+              "width": 44,
+              "height": 44
+            },
+            {
+              "text": "🪑\nベンチ",
+              "width": 111.328125,
+              "height": 108
+            }
+          ]
+        },
+        {
+          "name": "trace",
+          "width": 390,
+          "scrollWidth": 390,
+          "buttons": [
+            {
+              "text": "G",
+              "width": 52,
+              "height": 49.1875
+            },
+            {
+              "text": "B",
+              "width": 52,
+              "height": 49.1875
+            },
+            {
+              "text": "S",
+              "width": 52,
+              "height": 49.1875
+            },
+            {
+              "text": "1",
+              "width": 52,
+              "height": 49.1875
+            },
+            {
+              "text": "はたに かざる",
+              "width": 124.703125,
+              "height": 44
+            },
+            {
+              "text": "けす",
+              "width": 60.203125,
+              "height": 44
+            },
+            {
+              "text": "とじる",
+              "width": 75.296875,
+              "height": 44
+            }
+          ]
+        },
+        {
+          "name": "detail",
+          "width": 390,
+          "scrollWidth": 390,
+          "buttons": [
+            {
+              "text": "×",
+              "width": 44,
+              "height": 44
+            },
+            {
+              "text": "",
+              "width": 44,
+              "height": 44
+            },
+            {
+              "text": "",
+              "width": 44,
+              "height": 44
+            },
+            {
+              "text": "",
+              "width": 44,
+              "height": 44
+            },
+            {
+              "text": "",
+              "width": 44,
+              "height": 44
+            },
+            {
+              "text": "",
+              "width": 44,
+              "height": 44
+            },
+            {
+              "text": "",
+              "width": 44,
+              "height": 44
+            },
+            {
+              "text": "",
+              "width": 44,
+              "height": 44
+            },
+            {
+              "text": "",
+              "width": 44,
+              "height": 44
+            }
+          ]
+        },
+        {
+          "name": "settings",
+          "width": 358,
+          "scrollWidth": 358,
+          "buttons": [
+            {
+              "text": "プロフィール\nYu · 小学2年生",
+              "width": 358,
+              "height": 92
+            },
+            {
+              "text": "学習\n算数 · 筆算ON · Lv.8/1",
+              "width": 174,
+              "height": 167.59375
+            },
+            {
+              "text": "表示とサウンド\nサウンドOFF · 標準 · ひらがな",
+              "width": 174,
+              "height": 167.59375
+            },
+            {
+              "text": "テスト・保護者\n定期テスト · データの管理",
+              "width": 358,
+              "height": 92
+            }
+          ]
+        },
+        {
+          "name": "navigation",
+          "width": 390,
+          "scrollWidth": 390,
+          "buttons": [
+            {
+              "text": "しま",
+              "width": 70.796875,
+              "height": 46.296875
+            },
+            {
+              "text": "いえ",
+              "width": 70.796875,
+              "height": 46.296875
+            },
+            {
+              "text": "まなぶ",
+              "width": 70.796875,
+              "height": 48
+            },
+            {
+              "text": "きろく",
+              "width": 70.796875,
+              "height": 46.296875
+            },
+            {
+              "text": "設定",
+              "width": 70.8125,
+              "height": 46.296875
+            }
+          ]
+        }
+      ],
+      "pass": false,
+      "profileId": "ef812835-f6c7-43f8-ae54-1eb44bc0b9a5",
+      "worldVisibility": {
+        "menu": {
+          "x": 18,
+          "y": 388,
+          "width": 360,
+          "height": 380,
+          "top": 388,
+          "right": 378,
+          "bottom": 768,
+          "left": 18
+        },
+        "world": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 780,
+          "top": 0,
+          "right": 390,
+          "bottom": 780,
+          "left": 0
+        }
+      },
+      "prices": [
+        {
+          "kind": "home",
+          "label": "しずく 4"
+        },
+        {
+          "kind": "farm",
+          "label": "しずく 4"
+        },
+        {
+          "kind": "play",
+          "label": "しずく 6"
+        },
+        {
+          "kind": "wild",
+          "label": "しずく 1"
+        }
+      ],
+      "error": "locator.evaluate: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.app-container')\u001b[22m\n\n    at appRootMetadata (/Users/yutogasaki/Projects/sansu/tools/island-e2e-helpers.mjs:81:43)\n    at shot (/Users/yutogasaki/Projects/sansu/docs/design/2026-10-02-island-pocket-menu/ui.mjs:26:36)\n    at async file:///Users/yutogasaki/Projects/sansu/docs/design/2026-10-02-island-pocket-menu/ui.mjs:141:84"
+    }
+  ],
+  "sourceEnd": {
+    "src/components/Layout.tsx": "2b1e49d58a5e57174101e7e2c0bffd3b82383b25417d43a4022693113154387e",
+    "src/components/ui/MenuAtelier.css": "0c314f7350f8846bbbce9017b101c530a901014e798ba90c38617d96c8d26cf0",
+    "src/components/island/IslandHomeActions.tsx": "ebac05b7db13707692f854677a560d26015a7ff2b796eb4990071a2fcbece4c7",
+    "src/components/island/growing/GrowingIsland.tsx": "b4aac8a3b236d63510fc1ae66d350ea9cd3f7c06720a6866067745aee28cdc1b",
+    "src/components/island/growing/GrowingIslandMenu.tsx": "dc6b598f4ed62af54fc547be0990202dd4b646058e1d8a8b262263e8c7537e43",
+    "src/components/island/growing/growingIslandMenu.css": "c082a960608ae6e0b4a766262673f32a91e28177be66833eb9faf5779916c5da"
+  },
+  "stable": false,
+  "pass": false,
+  "finished": "2026-10-01T22:14:21.667Z"
+}

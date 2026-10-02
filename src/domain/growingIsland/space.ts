@@ -17,10 +17,11 @@ type LandState = Pick<GrowingState, 'land'>;
 export function landBounds({ land }: LandState) {
     const sides = [land.expanded, ...land.extra];
     const west = sides.includes('west'), east = sides.includes('east');
+    const districts = land.districts ?? [];
     return {
-        minX: land.capes.includes('west') ? -6 : west ? -3 : 0,
-        maxX: land.capes.includes('east') ? 11 : east ? 8 : 5,
-        depth: sides.includes('south') ? 8 : 5,
+        minX: (land.capes.includes('west') ? -6 : west ? -3 : 0) - 3 * districts.filter(s => s === 'west').length,
+        maxX: (land.capes.includes('east') ? 11 : east ? 8 : 5) + 3 * districts.filter(s => s === 'east').length,
+        depth: (sides.includes('south') ? 8 : 5) + 3 * districts.filter(s => s === 'south').length,
     };
 }
 

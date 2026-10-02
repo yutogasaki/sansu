@@ -1,0 +1,13 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.click: Timeout 20000ms exceeded.
+Call log:
+[2m  - waiting for getByRole('button', { name: '変更', exact: true }).first()[22m
+
+    at /private/tmp/sansu-menu-atelier.XBc5IM/tools/e2e-island-navigation.mjs:730:46 {
+  name: 'TimeoutError'
+}
+
+Node.js v24.14.0

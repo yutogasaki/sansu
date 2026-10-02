@@ -1,0 +1,21 @@
+{
+  "fixedRoot": "/tmp/sansu-pocket-final.IlyFk6",
+  "checkedFiles": 1768,
+  "currentAppIdentical": false,
+  "menuFilesIdentical": true,
+  "menuFiles": {
+    "src/components/island/growing/GrowingIslandMenu.tsx": true,
+    "src/components/island/growing/growingIslandMenu.css": true,
+    "src/components/island/growing/GrowingIsland.tsx": true,
+    "src/components/ui/MenuAtelier.css": true,
+    "src/components/Layout.tsx": true
+  },
+  "differencesFromOtherWork": [
+    "src/components/island/growing/GrowingHouseGuide.tsx",
+    "src/domain/growingIsland/guidance.repository.test.ts",
+    "src/domain/growingIsland/repository.ts",
+    "tools/e2e-growing-guidance-production.mjs",
+    "tools/e2e-growing-house-guide.mjs"
+  ],
+  "qaOverride": "vite.pocket.config.ts only sets a dedicated dependency cache; original app config retained"
+}

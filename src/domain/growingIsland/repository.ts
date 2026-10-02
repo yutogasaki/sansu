@@ -8,6 +8,7 @@ import { deliverKeepsakes, receiveGifts, type FlowerGift, type LearningLevels } 
 import { fromLife, ingestCompletions, newIsland } from './island';
 import { advanceNature } from './nature';
 import { openTown } from './town';
+import { scheduleSurprise, surpriseDay } from './moments';
 import type { GrowingState, NatureEvent, TownEvent } from './types';
 
 export interface GrowingRecord {
@@ -77,10 +78,11 @@ function readable(record: GrowingRecord) {
 }
 
 /** Preserve all rights and clocks; no old learning or missed surprises are reissued. */
-function upgrade(record: GrowingRecord): GrowingRecord {
+function upgrade(record: GrowingRecord, now: number): GrowingRecord {
     readable(record);
     if (record.version === 3 && record.state.guidance) return record;
     const state = structuredClone(record.state);
+    if (record.version === 1) state.surprise = { day: Math.max(surpriseDay(state), Math.floor((now - state.enrolledAt) / 86_400_000)) };
     migrateGuidance(state);
     return { ...record, version: 3, state };
 }
@@ -109,16 +111,17 @@ export async function syncGrowingIsland(profileId: string, completions: readonly
     const created = existing ? undefined : await firstState(profileId, now, life);
     return database.transaction('rw', database.islands, database.gifts, async () => {
         const current = await database.islands.get(profileId);
-        let record: GrowingRecord = current ? upgrade(current) : { profileId, version: 3, revision: 0, createdAt: now, updatedAt: now,
+        let record: GrowingRecord = current ? upgrade(current, now) : { profileId, version: 3, revision: 0, createdAt: now, updatedAt: now,
             state: created!.state, ...(created?.migratedFrom ? { migratedFrom: created.migratedFrom } : {}) };
         const ingested = ingestCompletions(record.state, completions);
         const state = structuredClone(ingested.state);
         const mailbox = await database.gifts.where('to').equals(profileId).toArray();
         const received = [...receiveGifts(state, mailbox), ...deliverKeepsakes(state, levels)];
         const nature = advanceNature(state, now);
+        const beforeTown = JSON.stringify(state);
         const opened = state.town.bank > 0 ? openTown(state) : [];
         noteTownBuilds(state, opened);
-        const town = [...received, ...opened];
+        const town = [...received, ...(ingested.added > 0 || beforeTown !== JSON.stringify(state) ? opened : []), ...scheduleSurprise(state)];
         if (mailbox.length) await database.gifts.bulkDelete(mailbox.filter(g => state.gifts?.includes(g.id)).map(g => g.id));
         const changed = !current || current.version !== record.version || ingested.added > 0 || nature.length > 0
             || JSON.stringify(state) !== JSON.stringify(record.state);
@@ -143,7 +146,7 @@ export async function commandGrowingIsland(profileId: string, intent: Intent, no
     return database.transaction('rw', database.islands, async () => {
         const current = await database.islands.get(profileId);
         if (!current) throw new Error('しまを よみこんでから もういちど ためしてね。');
-        const upgraded = upgrade(current);
+        const upgraded = upgrade(current, now);
         if (current.state.applied.includes(intent.id) && current.version === upgraded.version) return { record: current, town: [] };
         const command = intent.command;
         if (command.type === 'concert-started' || command.type === 'learning-returned' || command.type === 'ack-achievements') {

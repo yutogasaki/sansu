@@ -16,6 +16,7 @@
 - 今の島とNature Townの関係は[統合方針](island-nature-integration.md)。別々の作品としては進めない。
 - 世界観・既定仕様も見直した次期の設計は[51 幻想の暮らし・包括仕様](51_living_fantasy_island_spec.md)。B方向の設計基準と8章があり、現行の実装・公開済みとは区別する。
 
+育つ島のしずく・地区拡張・時間の保存・出来事は[バランスと保存互換](growing-island-balance.md)を参照。
 
 導き方は[スターターとアチーブメントv1](island-starter-achievements-proposal.md)を参照。最初の一周と、今試せる遊び・本人の記念の採用済み仕様です。[実装・検証と公開の状態](../tasks/active/2026-10-01-island-guidance.md)は分けて管理します。
 

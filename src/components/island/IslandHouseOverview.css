@@ -53,6 +53,14 @@
     position: absolute; inset: auto 12px 12px; max-width: 390px; margin-inline: auto;
     display: flex; gap: 8px; pointer-events: auto;
 }
+.island-house-guide-book {
+    position: absolute; bottom: 114px; right: 16px; display: grid; justify-items: center;
+    min-width: 88px; min-height: 88px; padding: 8px; pointer-events: auto;
+    border: 0; background: transparent; color: var(--pokomoko-ink); font: inherit; font-weight: 800;
+}
+.island-house-guide-book span { padding: 3px 8px; border-radius: 12px; background: var(--pokomoko-paper); font-size: 13px; }
+.island-house-guide-book:focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 2px; border-radius: 16px; }
+.island-house-guide-book:disabled { opacity: .55; }
 .app-container .island-page[data-house-layout] .island-panel.island-learning-keepsakes .island-house-tools > button {
     display: flex; flex: 1; justify-content: center; align-items: center; gap: 3px;
     min-width: 0; min-height: 54px; padding: 3px 5px; border-radius: 18px;
@@ -64,19 +72,6 @@
 .app-container .island-page[data-house-layout] .island-panel.island-learning-keepsakes .island-house-tools > [data-keepsake-action=album] {
     background: var(--pokomoko-blue); border-color: var(--pokomoko-blue); color: var(--pokomoko-paper);
 }
-.island-house-menu { pointer-events: auto; }
-.island-house-menu .island-menu-heading { padding: 12px 16px 8px; }
-.island-house-menu .island-menu-heading h2 { font-size: 18px; }
-.island-house-menu .island-menu-scroll { padding-inline: 16px; }
-.island-house-menu .island-house-destinations { grid-template-columns: minmax(0, 1fr); gap: 8px; }
-.island-page .island-panel.island-learning-keepsakes .island-house-menu .island-house-destinations > button {
-    grid-column: auto; grid-template-columns: 36px minmax(0, 1fr); grid-template-rows: auto auto;
-    min-height: 68px; gap: 1px 12px; padding: 10px 32px 10px 12px;
-    border-radius: 16px; box-shadow: none; background: var(--pokomoko-paper);
-}
-.island-house-menu .island-house-destinations > button > .island-toy-icon { grid-row: span 2; width: 34px; height: 34px; }
-.island-house-menu .island-house-destinations > button::after { top: calc(50% - 3px); }
-.island-house-menu .island-panel-footer { flex-wrap: wrap; }
 @media (max-width: 359px) {
     .island-house-tools { gap: 6px; }
     .app-container .island-page[data-house-layout] .island-panel.island-learning-keepsakes .island-house-tools > button { font-size: 12px; padding-inline: 2px; }
@@ -101,12 +96,3 @@
         grid-column: 2; grid-row: 1; height: 100%; min-height: 0; border-radius: 20px 0 0 20px;
     }
 }
-
-.island-house-guide-book {
-    position: absolute; bottom: 114px; right: 16px; display: grid; justify-items: center;
-    min-width: 88px; min-height: 88px; padding: 8px; pointer-events: auto;
-    border: 0; background: transparent; color: var(--pokomoko-ink); font: inherit; font-weight: 800;
-}
-.island-house-guide-book span { padding: 3px 8px; border-radius: 12px; background: var(--pokomoko-paper); font-size: 13px; }
-.island-house-guide-book:focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 2px; border-radius: 16px; }
-.island-house-guide-book:disabled { opacity: .55; }

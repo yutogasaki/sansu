@@ -4,7 +4,7 @@ import { BLOOM_HOURS, TREE_MATURE_HOURS } from './environment';
 import { roll } from './random';
 import { likesOf } from './rules';
 import { distance, isReachable, landCells, key, reachableFromHome } from './space';
-import type { Cell, GrowingState, Moment, Villager } from './types';
+import type { Cell, GrowingState, Moment, TownEvent, Villager } from './types';
 
 const bloomedFlowers = (state: GrowingState): Cell[] => [
     ...state.landmarks.filter(l => l.kind === 'flower' && l.cell && growthStage({ kind: 'flower', growth: l.growth }) === 2).map(l => l.cell!),
@@ -55,10 +55,27 @@ export function momentCandidates(state: GrowingState): Candidate[] {
 const MOMENT_CHANCE = .6, GUEST_CHANCE = .3;
 const GUESTS: readonly Moment[] = ['guest-water', 'guest-grove', 'whale', 'rainbow-bird', 'moon-rabbit'];
 
-/** At most one surprise for a town day, from a deterministic draw: reopening never rerolls it. */
+/** A deterministic real-day draw. Its day must never come from learning or town time. */
 export function dayMoment(state: GrowingState, day: number): Candidate | undefined {
     const guests = roll(state.seed, 'moment-guest', 'day', day) < GUEST_CHANCE;
     const candidates = momentCandidates(state).filter(c => guests || !GUESTS.includes(c.moment));
     if (!candidates.length || roll(state.seed, 'moment', 'day', day) >= MOMENT_CHANCE) return undefined;
     return candidates[Math.floor(roll(state.seed, 'moment-pick', 'day', day) * candidates.length)];
+}
+
+export function surpriseDay(state: GrowingState) {
+    return Math.max(0, Math.floor((state.nature.realAt - state.enrolledAt) / 86_400_000));
+}
+
+/** Keep an unseen result across reloads and days; never draw missed days in a batch. */
+export function scheduleSurprise(state: GrowingState): TownEvent[] {
+    const day = surpriseDay(state);
+    state.surprise ??= { day: -1 };
+    if (!state.surprise.pending && day > state.surprise.day) {
+        state.surprise.day = day;
+        const result = dayMoment(state, day);
+        if (result) state.surprise.pending = { day, ...result };
+    }
+    const pending = state.surprise.pending;
+    return pending ? [{ type: 'moment', ...pending }] : [];
 }

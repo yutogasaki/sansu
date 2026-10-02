@@ -727,7 +727,7 @@ try {
             await page.reload(); await focus('learning'); await waitReady(page);
             assert.deepEqual((await readNative(page, id)).plan, saved.plan, 'Direct learning reload preserves the same reservation');
             await button(page, 'とじる').click(); await ordinary('#/settings?section=learning');
-            await button(page, '変更').first().click(); await ordinary('#/settings/curriculum');
+            await page.getByRole('button', { name: /のレベルを変更$/ }).first().click(); await ordinary('#/settings/curriculum');
             const curriculumHeading = page.getByRole('heading', { name: 'レベル いちらん', exact: true });
             await curriculumHeading.waitFor();
             const curriculumScroll = page.locator('.brand-utility-screen').filter({ has: curriculumHeading }).locator(':scope > .overflow-y-auto');

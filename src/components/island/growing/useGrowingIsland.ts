@@ -46,7 +46,8 @@ export function useGrowingIsland(profileId: string, active: boolean) {
                 const result = await syncGrowingIsland(profileId, facts, Date.now(), growingDb, lifeDb, levels);
                 setRecord(current => current?.profileId === result.record.profileId && current.revision > result.record.revision ? current : result.record); setError(undefined);
                 // Only meaningful changes are announced, so two open tabs never ping-pong refreshes.
-                if (result.learned > 0 || result.town.length) announce(profileId);
+                // A saved but unseen moment is returned again for presentation, not a new change.
+                if (result.learned > 0 || result.town.some(event => event.type !== 'moment')) announce(profileId);
                 const shown = result.town.some(e => e.type !== 'quiet') || result.nature.some(e => e.type === 'big-tree' || e.type === 'lord-tree' || e.type === 'spread' || e.type === 'mixed');
                 if (result.town.length || shown) setReveal({ id: ++revealId.current, town: result.town, nature: result.nature });
             } catch (e) { setError(message(e)); }

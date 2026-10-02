@@ -5,7 +5,7 @@ import { CAPE_LEVEL, isKid, FLAG_PATTERNS, HATS, LAND_PRICE, LANDMARK_PRICE, RUL
 import { isReachable, isVacant, occupant, onLand, reachableFromHome } from './space';
 import { DEFAULT_DECOR, patternOpen, RUG_COLORS, WORD_GROUPS } from './room';
 import { noteColor, PLANTED_COLORS } from './flowers';
-import { welcome } from './town';
+import { openTown, welcome } from './town';
 import type { Cell, Command, GrowingState, Side, TownEvent } from './types';
 
 export interface Intent { id: string; command: Command }
@@ -27,7 +27,7 @@ function pay(state: GrowingState, price: number) {
 }
 
 function landStep(state: GrowingState) {
-    return (state.land.expanded ? 1 : 0) + state.land.extra.length + state.land.capes.length;
+    return (state.land.expanded ? 1 : 0) + state.land.extra.length + state.land.capes.length + (state.land.districts?.length ?? 0);
 }
 
 /** Steps 1-3 keep the current contract; steps 4-5 are capes on already-opened sides. */
@@ -39,6 +39,7 @@ export function landQuote(state: GrowingState): { step: number; sides: Side[]; p
     if (step <= 5 && islandLevel(state) >= CAPE_LEVEL[step - 4]) {
         return { step, sides: (['east', 'west'] as const).filter(side => !state.land.capes.includes(side)), price: LAND_PRICE[step - 1] };
     }
+    if (step >= 6) return { step, sides: ['east', 'west', 'south'], price: 96 + 24 * (step - 5) };
 }
 
 function expand(state: GrowingState, side: Side) {
@@ -47,7 +48,8 @@ function expand(state: GrowingState, side: Side) {
     pay(state, quote.price);
     if (quote.step === 1) state.land.expanded = side as 'east' | 'west';
     else if (quote.step <= 3) state.land.extra.push(side);
-    else state.land.capes.push(side as 'east' | 'west');
+    else if (quote.step <= 5) state.land.capes.push(side as 'east' | 'west');
+    else (state.land.districts ??= []).push(side);
     syncSoil(state);
 }
 
@@ -76,6 +78,7 @@ function apply(state: GrowingState, command: Command): TownEvent[] {
                 if (!state.wonderSeeds) fail('ふしぎの たねが まだ ないよ。');
             } else if (!state.unlocked.includes(`seed:${command.kind}`)) fail('まだ えらべないよ。');
             const tutorial = state.tutorial === 'first-home' && command.kind === 'home';
+            if (command.kind === 'home' && !canReachHomePlacement(state, command.cell)) fail('ここまで いけないみたい。まわりを あけてみよう');
             claim(state, command.cell);
             const price = tutorial ? 0 : SEED_PRICE[command.kind];
             pay(state, price);
@@ -113,6 +116,8 @@ function apply(state: GrowingState, command: Command): TownEvent[] {
         case 'move': {
             const target = find(state, command.id);
             if (!target.cell) fail('しまってある ものは「おく」から えらんでね。');
+            if (state.plots.some(p => p.id === command.id && p.kind === 'home') && !canReachHomePlacement(state, command.cell, command.id))
+                fail('ここまで いけないみたい。まわりを あけてみよう');
             claim(state, command.cell, command.id);
             target.cell = { ...command.cell };
             break;
@@ -132,6 +137,8 @@ function apply(state: GrowingState, command: Command): TownEvent[] {
         case 'unstore': {
             const target = find(state, command.id);
             if (target.cell) fail('もう おいてあるよ。');
+            if (state.plots.some(p => p.id === command.id && p.kind === 'home') && !canReachHomePlacement(state, command.cell, command.id))
+                fail('ここまで いけないみたい。まわりを あけてみよう');
             claim(state, command.cell);
             target.cell = { ...command.cell };
             break;
@@ -208,6 +215,10 @@ function apply(state: GrowingState, command: Command): TownEvent[] {
             state.emblem = { image: command.image, glyph: command.glyph };
             break;
         }
+        case 'ack-moment': {
+            if (state.surprise?.pending?.day === command.day) delete state.surprise.pending;
+            break;
+        }
         case 'flag': {
             if (command.color !== undefined) {
                 if (!Number.isInteger(command.color) || command.color < 0 || command.color > 7) fail('いろを えらびなおしてね。');
@@ -232,6 +243,9 @@ export function applyIntent(previous: GrowingState, intent: Intent, at?: number)
     if (previous.applied.includes(intent.id)) return { state: previous, events: [] };
     const state = structuredClone(previous);
     const events = apply(state, intent.command);
+    // Previously earned time also works for the next seed or a restored route.
+    if (['plant', 'place', 'move', 'store', 'unstore', 'pluck', 'expand'].includes(intent.command.type) && state.town.bank > 0)
+        events.push(...openTown(state));
     noteTownBuilds(state, events);
     noteGuidanceIntent(previous, state, intent.command, intent.id, at);
     state.applied = [...state.applied, intent.id].slice(-RULES.appliedMemory);

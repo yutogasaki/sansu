@@ -1,0 +1,100 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+stdout | src/domain/growingIsland/balanceRecheck.diagnostic.test.ts > island balance audit diagnostics (observations, not acceptance gates) > measures several learning volumes and batching habits
+┌─────────┬───────┬───────────────┬─────┬───────────┬───────┬──────┬───────┬───────┐
+│ (index) │ daily │ habit         │ day │ villagers │ level │ land │ drops │ homes │
+├─────────┼───────┼───────────────┼─────┼───────────┼───────┼──────┼───────┼───────┤
+│ 0       │ 1     │ 'daily'       │ 1   │ 1         │ 1     │ 30   │ 2     │ 1     │
+│ 1       │ 1     │ 'daily'       │ 7   │ 1         │ 1     │ 30   │ 6     │ 2     │
+│ 2       │ 1     │ 'daily'       │ 30  │ 3         │ 3     │ 30   │ 22    │ 4     │
+│ 3       │ 1     │ 'daily'       │ 90  │ 8         │ 4     │ 30   │ 122   │ 6     │
+│ 4       │ 3     │ 'daily'       │ 1   │ 1         │ 1     │ 30   │ 2     │ 2     │
+│ 5       │ 3     │ 'daily'       │ 7   │ 3         │ 2     │ 30   │ 4     │ 4     │
+│ 6       │ 3     │ 'daily'       │ 30  │ 8         │ 4     │ 30   │ 122   │ 6     │
+│ 7       │ 3     │ 'daily'       │ 90  │ 20        │ 6     │ 120  │ 186   │ 11    │
+│ 8       │ 6     │ 'daily'       │ 1   │ 1         │ 1     │ 30   │ 4     │ 2     │
+│ 9       │ 6     │ 'daily'       │ 7   │ 4         │ 3     │ 30   │ 38    │ 5     │
+│ 10      │ 6     │ 'daily'       │ 30  │ 15        │ 5     │ 120  │ 14    │ 9     │
+│ 11      │ 6     │ 'daily'       │ 90  │ 32        │ 8     │ 120  │ 674   │ 18    │
+│ 12      │ 12    │ 'daily'       │ 1   │ 2         │ 1     │ 30   │ 12    │ 3     │
+│ 13      │ 12    │ 'daily'       │ 7   │ 8         │ 4     │ 30   │ 104   │ 6     │
+│ 14      │ 12    │ 'daily'       │ 30  │ 25        │ 7     │ 120  │ 328   │ 14    │
+│ 15      │ 12    │ 'daily'       │ 90  │ 51        │ 9     │ 120  │ 1644  │ 28    │
+│ 16      │ 24    │ 'daily'       │ 1   │ 2         │ 2     │ 30   │ 30    │ 3     │
+│ 17      │ 24    │ 'daily'       │ 7   │ 14        │ 5     │ 45   │ 222   │ 8     │
+│ 18      │ 24    │ 'daily'       │ 30  │ 39        │ 8     │ 120  │ 942   │ 22    │
+│ 19      │ 24    │ 'daily'       │ 90  │ 63        │ 10    │ 144  │ 3616  │ 35    │
+│ 20      │ 12    │ 'weekly'      │ 1   │ 1         │ 1     │ 30   │ 154   │ 2     │
+│ 21      │ 12    │ 'weekly'      │ 7   │ 1         │ 1     │ 30   │ 154   │ 2     │
+│ 22      │ 12    │ 'weekly'      │ 30  │ 5         │ 3     │ 96   │ 606   │ 6     │
+│ 23      │ 12    │ 'weekly'      │ 90  │ 20        │ 6     │ 120  │ 1820  │ 12    │
+│ 24      │ 12    │ 'decor-first' │ 1   │ 2         │ 1     │ 30   │ 4     │ 3     │
+│ 25      │ 12    │ 'decor-first' │ 7   │ 8         │ 4     │ 45   │ 80    │ 6     │
+│ 26      │ 12    │ 'decor-first' │ 30  │ 23        │ 7     │ 144  │ 180   │ 13    │
+│ 27      │ 12    │ 'decor-first' │ 90  │ 26        │ 7     │ 144  │ 1604  │ 14    │
+└─────────┴───────┴───────────────┴─────┴───────────┴───────┴──────┴───────┴───────┘
+
+stdout | src/domain/growingIsland/balanceRecheck.diagnostic.test.ts > island balance audit diagnostics (observations, not acceptance gates) > observes duplicate ids within one ingest batch
+same-batch-duplicate { added: 2, drops: 4, hours: 8 }
+
+stdout | src/domain/growingIsland/balanceRecheck.diagnostic.test.ts > island balance audit diagnostics (observations, not acceptance gates) > observes surprise opportunities from more learning and more openings
+opening-moments { together: 1, split: 9, townHours: 240 }
+
+stdout | src/domain/growingIsland/balanceRecheck.diagnostic.test.ts > island balance audit diagnostics (observations, not acceptance gates) > checks later growth and different island seeds
+┌─────────┬─────────────┬───────┬─────┬───────────┬───────┬──────┬───────┬───────┐
+│ (index) │ seed        │ decor │ day │ villagers │ level │ land │ drops │ homes │
+├─────────┼─────────────┼───────┼─────┼───────────┼───────┼──────┼───────┼───────┤
+│ 0       │ 'pace-kid'  │ false │ 90  │ 51        │ 9     │ 120  │ 1644  │ 28    │
+│ 1       │ 'pace-kid'  │ false │ 180 │ 67        │ 10    │ 144  │ 3604  │ 37    │
+│ 2       │ 'pace-kid'  │ false │ 365 │ 67        │ 10    │ 144  │ 8044  │ 37    │
+│ 3       │ 'pace-kid'  │ true  │ 90  │ 26        │ 7     │ 144  │ 1604  │ 14    │
+│ 4       │ 'pace-kid'  │ true  │ 180 │ 26        │ 7     │ 144  │ 3764  │ 14    │
+│ 5       │ 'pace-kid'  │ true  │ 365 │ 26        │ 7     │ 144  │ 8204  │ 14    │
+│ 6       │ 'kid-one'   │ false │ 90  │ 51        │ 9     │ 120  │ 1642  │ 27    │
+│ 7       │ 'kid-one'   │ true  │ 90  │ 26        │ 7     │ 144  │ 1604  │ 14    │
+│ 8       │ 'kid-two'   │ false │ 90  │ 51        │ 9     │ 120  │ 1668  │ 26    │
+│ 9       │ 'kid-two'   │ true  │ 90  │ 26        │ 7     │ 144  │ 1604  │ 14    │
+│ 10      │ 'kid-three' │ false │ 90  │ 51        │ 9     │ 120  │ 1646  │ 27    │
+│ 11      │ 'kid-three' │ true  │ 90  │ 26        │ 7     │ 144  │ 1600  │ 15    │
+└─────────┴─────────────┴───────┴─────┴───────────┴───────┴──────┴───────┴───────┘
+
+stdout | src/domain/growingIsland/balanceRecheck.diagnostic.test.ts > island balance audit diagnostics (observations, not acceptance gates) > measures a child also planting wonder seeds and buying all five new items
+new-content-used {
+  decor: false,
+  kinds: [ 'slide', 'postbox', 'trampoline', 'fountain', 'bakery' ],
+  wonders: 4
+}
+new-content-used {
+  decor: true,
+  kinds: [ 'slide', 'postbox', 'trampoline', 'fountain', 'bakery' ],
+  wonders: 3
+}
+┌─────────┬───────┬─────┬───────────┬───────┬──────┬───────┬───────┐
+│ (index) │ decor │ day │ villagers │ level │ land │ drops │ homes │
+├─────────┼───────┼─────┼───────────┼───────┼──────┼───────┼───────┤
+│ 0       │ false │ 7   │ 8         │ 4     │ 45   │ 70    │ 6     │
+│ 1       │ false │ 30  │ 25        │ 7     │ 120  │ 338   │ 14    │
+│ 2       │ false │ 90  │ 51        │ 9     │ 120  │ 1666  │ 26    │
+│ 3       │ false │ 180 │ 56        │ 10    │ 144  │ 3624  │ 29    │
+│ 4       │ false │ 365 │ 56        │ 10    │ 144  │ 8064  │ 29    │
+│ 5       │ true  │ 7   │ 8         │ 4     │ 45   │ 52    │ 6     │
+│ 6       │ true  │ 30  │ 25        │ 7     │ 144  │ 126   │ 14    │
+│ 7       │ true  │ 90  │ 27        │ 7     │ 144  │ 1562  │ 15    │
+│ 8       │ true  │ 180 │ 27        │ 7     │ 144  │ 3722  │ 15    │
+│ 9       │ true  │ 365 │ 27        │ 7     │ 144  │ 8162  │ 15    │
+└─────────┴───────┴─────┴───────────┴───────┴──────┴───────┴───────┘
+
+ ✓ src/domain/growingIsland/balanceRecheck.diagnostic.test.ts (6 tests) 8286ms
+   ✓ island balance audit diagnostics (observations, not acceptance gates) > measures several learning volumes and batching habits 1089ms
+   ✓ island balance audit diagnostics (observations, not acceptance gates) > checks later growth and different island seeds 3584ms
+   ✓ island balance audit diagnostics (observations, not acceptance gates) > measures a child also planting wonder seeds and buying all five new items 3611ms
+stdout | src/domain/growingIsland/balanceRecheck.diagnostic.test.ts > island balance audit diagnostics (observations, not acceptance gates) > observes birthday points from an unreachable bench and vacant home
+unreachable-home { reachable: false, vacancy: 0, villagers: 1 }
+
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  14:40:47
+   Duration  8.52s (transform 66ms, setup 0ms, collect 79ms, tests 8.29s, environment 0ms, prepare 38ms)
+

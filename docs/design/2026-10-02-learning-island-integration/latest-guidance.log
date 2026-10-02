@@ -1,0 +1,61 @@
+[guidance] 390: new real UI journey
+[guidance] 390: conservative old fixture
+[guidance] 390: rich concert/land fixture
+[guidance] 768: new real UI journey
+[guidance] 768: conservative old fixture
+[guidance] 768: rich concert/land fixture
+{
+  "target": "http://127.0.0.1:5280",
+  "pass": true,
+  "scenarios": [
+    {
+      "name": "new-island-real-UI-starter-color-move-free-and-paid-seeds-learning-reload",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pass": true
+    },
+    {
+      "name": "explicit-version2-owner-conservative-silent-migration-no-free-reissue",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pass": true
+    },
+    {
+      "name": "explicit-rich-fixture-real-concert-renderer-start-and-paid-land-expansion",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pass": true
+    },
+    {
+      "name": "new-island-real-UI-starter-color-move-free-and-paid-seeds-learning-reload",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "pass": true
+    },
+    {
+      "name": "explicit-version2-owner-conservative-silent-migration-no-free-reissue",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "pass": true
+    },
+    {
+      "name": "explicit-rich-fixture-real-concert-renderer-start-and-paid-land-expansion",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "pass": true
+    }
+  ],
+  "captures": 14
+}

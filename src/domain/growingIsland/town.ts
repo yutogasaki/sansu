@@ -1,11 +1,10 @@
 import { comfort, foodSupport, genki, housing, islandLevel, levelFor, occupantsOf, refreshUnlocks } from './community';
 import { features, islandCharacter, styleAt } from './environment';
-import { dayMoment } from './moments';
 import { arrivalName } from './names';
 import { advancePier, docked } from './pier';
 import { RULES, WONDER_LEVELS } from './rules';
 import { isReachable, reachableFromHome } from './space';
-import type { Cell, GrowingState, Moment, Plot, TownEvent, Villager } from './types';
+import type { GrowingState, Plot, TownEvent, Villager } from './types';
 
 const isDawn = (hour: number) => hour % 24 === RULES.dawnHour;
 
@@ -33,12 +32,12 @@ function build(state: GrowingState, hour: number, events: TownEvent[]) {
 }
 
 function growHomes(state: GrowingState, hour: number, events: TownEvent[]) {
-    const level = islandLevel(state), fed = foodSupport(state) >= state.villagers.length;
+    const reached = reachableFromHome(state), level = islandLevel(state), fed = foodSupport(state, reached) >= state.villagers.length;
     for (const plot of state.plots) {
-        if (plot.kind !== 'home' || !plot.cell || plot.stage < 1 || plot.stage > 3) continue;
+        if (plot.kind !== 'home' || !plot.cell || !isReachable(plot.cell, reached) || plot.stage < 1 || plot.stage > 3) continue;
         const rule = RULES.homeGrowth[plot.stage as 1 | 2 | 3], people = occupantsOf(state, plot.id);
         if (!people.length || hour - (plot.stagedAt ?? plot.builtAt ?? hour) < rule.hours || level < rule.level) continue;
-        const average = people.reduce((sum, v) => sum + comfort(state, v, fed), 0) / people.length;
+        const average = people.reduce((sum, v) => sum + comfort(state, v, fed, reached), 0) / people.length;
         if (average < rule.comfort) continue;
         plot.stage = (plot.stage + 1) as Plot['stage']; plot.stagedAt = hour;
         events.push({ type: 'grew', plotId: plot.id, stage: plot.stage });
@@ -60,7 +59,8 @@ function refreshCommunity(state: GrowingState, events: TownEvent[]) {
 
 /** The vacant home where the newcomer would feel best; ties go to the oldest home. */
 function chooseHome(state: GrowingState, villager: Villager) {
-    const homes = state.plots.filter(p => p.kind === 'home' && p.cell && p.stage > 0
+    const reached = reachableFromHome(state);
+    const homes = state.plots.filter(p => p.kind === 'home' && p.cell && isReachable(p.cell, reached) && p.stage > 0
         && occupantsOf(state, p.id).length < RULES.homeCapacity[p.stage]);
     let best: Plot | undefined, bestScore = -1;
     for (const home of homes.sort((a, b) => (a.builtAt! - b.builtAt!) || a.id.localeCompare(b.id))) {
@@ -89,29 +89,43 @@ function moveIn(state: GrowingState, hour: number, events: TownEvent[]): 'full' 
     events.push({ type: 'arrived', villagerId: welcome(state, hour, home).id });
 }
 
-/**
- * Opens the banked town time in one deterministic pass (§11). The result is saved at once,
- * so closing the app midway through the presentation cannot change what happened.
- */
+/** Is there a useful town job? Blocked seeds and impossible growth never drain the bank. */
+function hasTownWork(state: GrowingState) {
+    // A boat can finish its crossing even before a home is prepared. It then waits.
+    if (!docked(state)) return true;
+    const reached = reachableFromHome(state), people = state.villagers.length;
+    if (state.plots.some(p => p.cell && p.stage === 0 && isReachable(p.cell, reached))) return true;
+    if (housing(state, reached).vacancy > 0 && foodSupport(state, reached) > people) return true;
+    if (genki(state, reached) !== state.genki.current) return true;
+    const fed = foodSupport(state, reached) >= people, level = islandLevel(state);
+    return state.plots.some(p => {
+        if (p.kind !== 'home' || !p.cell || !isReachable(p.cell, reached) || p.stage < 1 || p.stage > 3) return false;
+        const rule = RULES.homeGrowth[p.stage as 1 | 2 | 3], occupants = occupantsOf(state, p.id);
+        return level >= rule.level && occupants.length > 0
+            && occupants.reduce((sum, v) => sum + comfort(state, v, fed, reached), 0) / occupants.length >= rule.comfort;
+    });
+}
+
+/** Open useful banked time once, retaining the rest for the next seed or restored route. */
 export function openTown(state: GrowingState): TownEvent[] {
-    const events: TownEvent[] = [], end = state.town.clock + state.town.bank;
-    let blocked: 'full' | 'food' | undefined, moment: { moment: Moment; cell?: Cell } | undefined;
-    for (let hour = state.town.clock + 1; hour <= end; hour++) {
+    const events: TownEvent[] = [], from = state.town.clock;
+    while (state.town.bank > 0 && hasTownWork(state)) {
+        state.town.clock += 1; state.town.bank -= 1;
+        const hour = state.town.clock;
         build(state, hour, events);
         if (!isDawn(hour)) continue;
         growHomes(state, hour, events);
         refreshCommunity(state, events);
-        blocked = moveIn(state, hour, events);
-        // One small surprise at most per opening: the latest dawn's (§11.2).
-        moment = dayMoment(state, Math.floor(hour / 24));
+        moveIn(state, hour, events);
     }
-    state.town.clock = end; state.town.bank = 0;
     const reached = reachableFromHome(state);
-    for (const plot of state.plots) if (plot.cell && plot.stage === 0 && plot.plantedAt + RULES.buildHours <= end
-        && !isReachable(plot.cell, reached)) events.push({ type: 'blocked', reason: 'unreachable', plotId: plot.id });
-    if (blocked && !events.some(e => e.type === 'arrived')) events.push({ type: 'blocked', reason: blocked });
-    if (!docked(state)) events.push({ type: 'boat', hoursLeft: state.pier.dockAt - state.town.clock });
-    if (moment) events.push({ type: 'moment', ...moment });
-    if (!events.length) events.push({ type: 'quiet' });
+    for (const plot of state.plots) if (plot.cell && plot.stage === 0 && !isReachable(plot.cell, reached))
+        events.push({ type: 'blocked', reason: 'unreachable', plotId: plot.id });
+    if (docked(state) && !events.some(e => e.type === 'arrived')) {
+        if (housing(state, reached).vacancy < 1) events.push({ type: 'blocked', reason: 'full' });
+        else if (foodSupport(state, reached) <= state.villagers.length) events.push({ type: 'blocked', reason: 'food' });
+    }
+    if (!docked(state) && state.town.clock > from) events.push({ type: 'boat', hoursLeft: state.pier.dockAt - state.town.clock });
+    if (!events.length && state.town.clock > from) events.push({ type: 'quiet' });
     return events;
 }

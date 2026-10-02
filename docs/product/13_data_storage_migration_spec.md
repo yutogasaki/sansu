@@ -295,6 +295,12 @@ Life worldデータ版4は既存の経済checkpointを保持し、`tourCutover` 
 
 招待資格はcutover以降の実履歴から再現する消去可能なprojectionで、参加の正本は `invite-friend` action。再送は元intent/commandを照合し、別内容・古いrevision・資格なし・未来版を拒否する。abortでは参加もactionも保存しない。版21非対応のbuildへの降格は行わず、復旧buildも版21を読む。新しい保存を既存版20へ戻す変換は実装しない。
 
+## 育つ島のバランス切替（2026-10-01）
+
+[仕様52](52_growing_island_game_spec.md)の保存2は、独立Growing DBのschema3へ同一upgrade transactionで旧 `islands` を新しい正本 `balancedIslands` へ一度だけ複製する。旧tableと既存写真/贈り物は保持する。新版のowner操作は正本だけを読み書きし、旧tableから再取り込みしない。Dexieは旧schemaでも接続するため、版番号の増加だけを旧writer拒否の証拠にしない。
+
+owner行の1→2は同一transactionで行い、既存所有・座標・住人・残高・clock/bank・完了IDを保持する。未知版はread/sync/commandで拒否する。profile削除は旧table・新正本・本人写真/贈り物をまとめて削除する。復旧buildも新正本と保存2を読む。詳細は[バランスと保存互換](growing-island-balance.md)。
+
 ## 学習監査後のoptional保存（2026-10-01）
 
 プロフィールに `evaluationContacts`（教科別・内容別の最新表示日時）、`finishRecovery`（元レベル・失敗内容/variant・失敗問題key・新しい独力正解key）、新規 `finishTestSets` に資格snapshotを追加する。RecentAttemptのoptionalなassistanceを実際の検証済み回答から保存する。既存のappData/profilesへの同一transactionで保存し、store/index/schema version追加や旧記録の一括書換えは行わない。欠損した旧assistanceを独力へ推定しない。既存予約は再生成せず、旧予約には資格snapshotを後付けしない。表示接触でログやmemory行を新設しない。

@@ -1,16 +1,25 @@
 # Shared Done Index
 
+- 2026-10-02: [学習・島・家のmain統合の最終確認](../../docs/design/2026-10-02-learning-island-integration/final/README.md)。最終core4,599 tests、両幅案内/家/実SW offline・メニュー4サイズPASS。変更なしの仕上げ14/保存バランス4/navigation両幅/classic31を入力照合して保持。実機/公開先/子どもは別 -> `docs/done/2026-10.md`
+
 - 2026-10-02: [本の次の一手と記念を改善](../../docs/design/2026-10-02-guidance-ux/README.md)。通知の対象へ直行・導入の主操作・本人の大きな記念。core4,576、両幅DEV/家/production offline PASS -> `docs/done/2026-10.md`
+
+- 2026-10-02: [学習と島の固定統合候補](../../docs/design/2026-10-02-learning-island-integration/README.md)を確認。core4,587 tests、仕上げ14ケース、家/メニュー/案内/保存/両幅SW offline、classic31件PASS。証拠logのGit除外を修正。実機・後続の並行変更・公開は別範囲 -> `docs/done/2026-10.md`
 
 - 2026-10-02: [家の本と案内の修正](../../docs/design/2026-10-01-island-guidance/fixes-checks.json)。直接入口・不足理由・あとでやる・別タブ同期。コミット対象core4,570、両幅DEV/production offline PASS -> `docs/done/2026-10.md`
 
+- 2026-10-02: [島を眺めながら選ぶメニュー](../../docs/design/2026-10-02-island-pocket-menu/README.md)。縦は小さな下側の紙、横は右側、実住人の入口・遊び優先・操作の折りたたみへ。4サイズの往復と0/8人を検査。ローカル実装、未公開 -> `docs/done/2026-10.md`
+
+- 2026-10-01: [島と共有メニューのデザイン](../../docs/design/2026-10-01-menu-atelier/README.md)。紙の素材を島/種/収納/仲間/設定/5タブへ展開。core4,586 tests、classic31件、Island navigation両幅、4サイズの実画面確認。ローカル実装、未公開 -> `docs/done/2026-10.md`
 
 - 2026-10-01: [あそびかたの家入口](../../docs/design/2026-10-01-island-guidance/house-entry.html)を追加。家で開閉、遊びを選ぶと島へ。読書の保存不変・両幅の実操作/学習予約再開・core4,586テストPASS。未公開 -> `docs/done/2026-10.md`
 - 2026-10-01: [育つ島のスターターとアチーブメント実装](../../docs/design/2026-10-01-island-guidance/README.md)。任意S1〜S5/A1〜A6・本・固定記念・保存3。core4,586テスト、固定両幅DEV/production/offline PASS。ローカル実装、未公開 -> `docs/done/2026-10.md`
 
+- 2026-10-01: [家のメニューのデザイン](../../docs/design/2026-10-01-house-atelier/README.md)を整理。基本検証・回帰31件・標準/育つ島の4サイズ計6ケースPASS。ローカル実装、未公開 -> `docs/done/2026-10.md`
 
 - 2026-10-01: [スターターとアチーブメントの仕様案](../../docs/product/island-starter-achievements-proposal.md)を検討。最初の一周・初期6件・任意目標・実達成/保存/受入を整理。文書検証済み、採用前・未実装 -> `docs/done/2026-10.md`
 
+- 2026-10-01: 育つ島のバランスB1〜B6を実装。反復地区・時間保持・実日の出来事・到達判定・重複防止・保存2。関連88 tests、両幅の実操作/production offline PASS、未公開 -> `docs/done/2026-10.md`
 
 - 2026-10-01: しあげの準備3条件を常時表示し、入口と保存済みの結果にレベルアップを明示。関連16テスト・固定両幅14ケースPASS。ローカル実装 -> `docs/done/2026-10.md`
 
