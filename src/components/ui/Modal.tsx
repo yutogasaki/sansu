@@ -60,7 +60,7 @@ export const Modal: React.FC<ModalProps> = ({
                 aria-labelledby={title ? titleId : undefined}
                 tabIndex={-1}
                 className={cn(
-                    "relative flex max-h-[calc(100dvh-2rem)] w-full flex-col overflow-hidden rounded-[28px] app-glass-strong app-shadow-strong",
+                    "atelier-dialog relative flex max-h-[calc(100dvh-2rem)] w-full flex-col overflow-hidden rounded-[28px] app-glass-strong app-shadow-strong",
                     sizeClasses[width]
                 )}
                 onClick={(event) => event.stopPropagation()}

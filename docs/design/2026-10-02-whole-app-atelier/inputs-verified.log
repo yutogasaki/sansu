@@ -1,0 +1,14 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.waitFor: Timeout 15000ms exceeded.
+Call log:
+[2m  - waiting for locator('.island-page[data-learning-candidate="mystic-island-learning-v2"]') to be visible[22m
+
+    at waitLearningReady (/Users/yutogasaki/Projects/sansu/tools/island-learning-checks.mjs:91:89)
+    at /Users/yutogasaki/Projects/sansu/docs/design/2026-10-02-whole-app-atelier/inputs.mjs:163:27 {
+  name: 'TimeoutError'
+}
+
+Node.js v24.18.0

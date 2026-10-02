@@ -1,6 +1,7 @@
 import type { SubjectKey, UserProfile } from '../types';
 import type { FinishReadiness } from '../finishCoverage';
 import { finishEligibility } from '../finishTest';
+import { needsProgressionResume } from '../user/resumeProgression';
 const mathTitles = [
     'かずと すうじ', 'かたち・いろ・もよう', 'かずと ばしょ', '10までの かず',
     'おおきさくらべ', 'かずを わける', 'かずと たしひき', '100までの かず',
@@ -16,6 +17,7 @@ export const learningLevelTitle = (subject: SubjectKey, level: number): string =
 export interface ProgressCondition {
     label: string;
     detail: string;
+    summary?: string;
     met: boolean;
     count?: number;
     target?: number;
@@ -27,6 +29,7 @@ export interface LearningProgressView {
     stage: 'unlock' | 'practice' | 'ready' | 'paused' | 'complete';
     message: string;
     conditions: ProgressCondition[];
+    pauseReason?: 'disabled' | 'inconsistent';
 }
 
 /** Read-only presentation of the same evidence as the progression services. */
@@ -35,25 +38,27 @@ export function learningProgressView(profile: UserProfile, subject: SubjectKey, 
     const { mainLevel: main, nextLevel: next, count, correct, status } = eligibility;
     if (status === 'complete') return { subject, main, next: null, stage: 'complete', conditions: [], message: 'ここまでの はんいを まなんだよ。ふくしゅうも つづけよう。' };
     const conditions: ProgressCondition[] = [
-        { label: 'いまの はんいの れんしゅう', detail: `${count} / 20問（さいきん7日間）`, count, target: 20, met: count >= 20 },
+        { label: 'いまの はんいの れんしゅう', summary: `${count} / 20`, detail: `${count} / 20問（さいきん7日間）`, count, target: 20, met: count >= 20 },
         { label: 'ひとりで 解けるか たしかめる', met: count >= 20 && correct >= 17,
+            summary: `${correct} / ${count}`,
             detail: `${count}問のうち ${correct}問 ひとりでできた（20問中17問以上が めやす）` },
     ];
     if (readiness) conditions.push({ label: subject === 'math' ? 'いろいろな 型を たしかめる' : 'いろいろな ことばを たしかめる',
+        summary: `${readiness.coveredCount} / ${readiness.requiredCount}`,
         detail: `${readiness.coveredCount} / ${readiness.requiredCount}${subject === 'math' ? 'つの 型' : '語'}`,
         count: readiness.coveredCount, target: readiness.requiredCount, met: eligibility.coverageReady === true });
     if (subject === 'math' && main === 11 && (!readiness || missingUnits > 0)) conditions.push({ label: 'いろいろな たしひきを たしかめる',
+        summary: `${7 - missingUnits} / 7`,
         detail: `${7 - missingUnits} / 7つの 単元`, count: 7 - missingUnits, target: 7, met: missingUnits === 0 });
     if (readiness && !eligibility.fresh && count >= 20) conditions.push({ label: 'さいきんの できたを あつめる',
         detail: 'さいきん7日間の れんしゅうで たしかめよう', met: false });
     if (eligibility.recovering) conditions.push({ label: 'しあげで むずかしかった 型を れんしゅうする',
         detail: 'べつの 問題で ひとりで できたら、もういちど ちょうせんできるよ', met: false });
     if (status === 'paused') {
-        const levels = subject === 'math' ? profile.mathLevels : profile.vocabLevels;
-        const target = levels?.find(level => level.level === next);
-        return { subject, main, next, stage: 'paused', conditions,
-            message: target?.unlocked && !target.enabled
-                ? `Lv${next}は 設定で おやすみ中。保護者の設定で 再開できるよ。`
+        const disabled = needsProgressionResume(profile, subject);
+        return { subject, main, next, stage: 'paused', conditions, pauseReason: disabled ? 'disabled' : 'inconsistent',
+            message: disabled
+                ? `Lv${next}は 現在オフです。メインレベルの選び直しでも、上のレベルがオフになります。学習設定で進級を再開できます。`
                 : 'レベルの設定を たしかめてね。いまの はんいの れんしゅうは つづけられるよ。' };
     }
     return { subject, main, next, stage: status === 'ready' ? 'ready' : 'unlock', conditions,

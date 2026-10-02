@@ -20,8 +20,8 @@ describe('Growing Island menu destinations and actual island identity', () => {
         const empty = renderToStaticMarkup(GrowingIslandMenuContents(props()));
         expect(empty).toContain('0にん'); expect(empty).toContain('これからの なかま'); expect(empty).not.toContain('<img');
         const villagers = Array.from({ length: 8 }, (_, i) => ({ id: `friend-${i}`, name: `なまえ${i}`, species: 'rabbit' as const, home: 'pokomoko', arrivedAt: i, trait: 'mellow' as const, variant: { color: 0, accessory: 0, sparkle: false } }));
-        const populated = renderToStaticMarkup(GrowingIslandMenuContents(props({ villagers, faces: Object.fromEntries(villagers.map(v => [v.id, `${v.id}.png`])) })));
-        expect(populated).toContain('8にん'); expect(populated.match(/<img /g)).toHaveLength(3);
+        const populated = renderToStaticMarkup(GrowingIslandMenuContents(props({ villagers, pictures: { friends: 'actual-first-three.png' } })));
+        expect(populated).toContain('8にん'); expect(populated.match(/<img /g)).toHaveLength(1); expect(populated).toContain('actual-first-three.png');
         expect(populated).not.toContain('friend-3.png');
         const fallback = renderToStaticMarkup(GrowingIslandMenuContents(props({ villagers })));
         expect(fallback).not.toContain('<img'); expect(fallback).toContain('8にん');

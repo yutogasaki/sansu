@@ -1,0 +1,12 @@
+PASS chromium-number
+PASS chromium-count
+PASS chromium-base10
+PASS chromium-decimal
+file:///Users/yutogasaki/Projects/sansu/docs/design/2026-10-02-whole-app-atelier/inputs.mjs:138
+                    assert.equal(await page.locator('.park-answer').getAttribute('data-input-type'), scenario.type === 'multi-number' ? integerFractionProblem(state.plan.slots[0].problem).inputConfig.type : scenario.type);
+                                                                                                                                                                                                       ^
+
+TypeError: Cannot read properties of undefined (reading 'type')
+    at file:///Users/yutogasaki/Projects/sansu/docs/design/2026-10-02-whole-app-atelier/inputs.mjs:138:200
+
+Node.js v24.18.0

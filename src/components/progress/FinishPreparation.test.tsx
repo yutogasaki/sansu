@@ -12,8 +12,12 @@ describe('visible, separate finish admission conditions', () => {
         expect(html).toContain('8 / 20問');
         expect(html).toContain('8問のうち 6問');
         expect(html).toContain('1 / 3つの 型');
-        expect(html).toContain('まず あと12問の きろく');
         expect(html).not.toContain('あと12問で');
+        const compact = renderToStaticMarkup(<FinishPreparation view={learningProgressView(profile(), 'math', undefined, readiness)} compact />);
+        expect(compact).toContain('8 / 20');
+        expect(compact).toContain('6 / 8');
+        expect(compact).toContain('1 / 3');
+        expect(compact).not.toContain('さいきん7日間');
     });
     it('keeps full recent progress separate from insufficient coverage', () => {
         const view = learningProgressView(profile(), 'math', undefined, { ...readiness, recentCount: 20, recentCorrect: 19, fresh: true });

@@ -1,88 +1,37 @@
-/* The same cloth palette and toy icons as the Island shell, kept around the data. */
-.learning-progress-card .progress-subject {
-    width: fit-content;
-    border-radius: 8px 8px 4px 4px;
-    padding: 3px 10px;
-    color: var(--pokomoko-ink);
-    background: var(--pokomoko-lavender);
-    font-size: 12px;
-    font-weight: 700;
-}
-.learning-progress-card .progress-path {
-    position: relative;
-    border: 1px solid var(--pokomoko-edge);
-    border-radius: 24px 20px 26px 18px;
-    background:
-        radial-gradient(circle at 95% 14%, var(--pokomoko-paper) 0 4px, transparent 4.5px),
-        radial-gradient(circle at 91% 8%, var(--pokomoko-paper) 0 2px, transparent 2.5px),
-        linear-gradient(110deg, var(--pokomoko-mint), var(--pokomoko-paper) 52%, var(--pokomoko-rose));
-}
-.learning-progress-card .progress-patch {
-    position: relative;
-    isolation: isolate;
-    border-radius: 45% 48% 42% 46%;
-}
-.learning-progress-card .progress-patch::after {
-    content: '';
-    position: absolute;
-    inset: 5px;
-    border: 1px dashed currentColor;
-    border-radius: inherit;
-    opacity: .6;
-    pointer-events: none;
-}
-.learning-progress-card .progress-patch-current {
-    background: var(--pokomoko-blue);
-    box-shadow: 0 3px 0 var(--pokomoko-blue-deep);
-}
-.learning-progress-card .progress-patch-next {
-    background: var(--pokomoko-paper);
-    border: 1px solid var(--pokomoko-stitch);
-    box-shadow: 0 3px 0 var(--pokomoko-edge);
-}
-.learning-progress-card [data-progress-stage=ready] .progress-patch-next {
-    background: var(--pokomoko-mint);
-    color: var(--pokomoko-ink);
-}
-.learning-progress-card .progress-companion {
-    position: absolute;
-    left: -34px;
-    bottom: -1px;
-    width: 56px;
-    height: 63px;
-    /* First complete 192×216 frame of the existing eight-pose atlas, feet included. */
-    background-size: 800% 100%;
-    background-position: left top;
-    background-repeat: no-repeat;
-    z-index: 1;
-    pointer-events: none;
-}
-.learning-progress-card .progress-level-title { text-wrap: balance; }
-.learning-progress-card .progress-preparation {
-    padding: 12px;
-    border-radius: 16px;
-    background: var(--pokomoko-paper);
-    border: 1px solid var(--pokomoko-edge);
-}
-.learning-progress-card .progress-route { color: var(--pokomoko-blue-deep); }
-.learning-progress-card .progress-path-arrow { stroke-dasharray: 2 4; }
-.learning-progress-card .progress-challenge {
-    border-color: var(--pokomoko-edge);
-    background: var(--pokomoko-paper);
-    box-shadow: 0 2px 0 var(--pokomoko-edge);
-}
-
-.learning-progress-card .progress-finish-ready { display: grid; gap: 10px; }
-.learning-progress-card .progress-finish-ready > p { color: var(--pokomoko-blue-deep); }
-.learning-progress-card .progress-challenge-ready {
-    background: var(--pokomoko-blue);
-    color: var(--pokomoko-paper);
-    border: 1px solid var(--pokomoko-blue-deep);
-    box-shadow: 0 4px 0 var(--pokomoko-blue-deep);
-}
-.learning-progress-card .progress-finish-locked {
-    color: var(--pokomoko-muted);
-    background: var(--pokomoko-paper);
-    border: 1px dashed var(--pokomoko-stitch);
-}
-.learning-progress-card [data-progress-stage=ready] .progress-path-arrow { stroke-dasharray: none; color: var(--pokomoko-blue); }
+.learning-progress-card { display: grid; gap: 16px; }
+.learning-progress-card > header { display: flex; align-items: center; gap: 8px; }
+.learning-progress-card > header h2 { font-size: 18px; font-weight: 700; }
+.learning-progress-card .progress-subjects { display: grid; gap: 24px; }
+.learning-progress-card .progress-subject { font-size: 13px; color: var(--pokomoko-muted); font-weight: 700; margin-bottom: 8px; }
+.learning-progress-card .progress-current { display: flex; align-items: center; gap: 18px; padding-left: 18px; }
+.learning-progress-card .progress-patch-current { position: relative; flex-shrink: 0; width: 60px; height: 64px; display: flex; align-items: center; justify-content: center; flex-direction: column; border-radius: 19px; background: var(--pokomoko-blue); color: var(--pokomoko-paper); box-shadow: 0 3px 0 var(--pokomoko-blue-deep); }
+.learning-progress-card .progress-patch-current > span:not(.progress-companion) { font-size: 11px; line-height: 1.2; }
+.learning-progress-card .progress-patch-current > strong { font-size: 30px; line-height: 1.1; }
+.learning-progress-card .progress-companion { position: absolute; left: -25px; bottom: -1px; width: 40px; height: 45px; background-size: 800% 100%; background-position: left top; background-repeat: no-repeat; pointer-events: none; }
+.learning-progress-card .progress-current-label { font-size: 12px; color: var(--pokomoko-muted); }
+.learning-progress-card .progress-level-title { font-size: 21px; line-height: 1.5; font-weight: 700; text-wrap: pretty; }
+.learning-progress-card .progress-next { display: flex; align-items: flex-start; gap: 7px; font-size: 13px; color: var(--pokomoko-muted); margin-top: 12px; }
+.learning-progress-card .progress-next svg { flex-shrink: 0; margin-top: 2px; }
+.learning-progress-card .progress-counts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 12px 0; margin-top: 12px; border-block: 1px solid var(--pokomoko-edge); }
+.learning-progress-card .progress-counts > div { min-width: 0; padding: 0 12px; border-right: 1px solid var(--pokomoko-edge); }
+.learning-progress-card .progress-counts > div:first-child { padding-left: 0; }
+.learning-progress-card .progress-counts > div:last-child { border: 0; padding-right: 0; }
+.learning-progress-card .progress-counts dt { font-size: 12px; color: var(--pokomoko-muted); }
+.learning-progress-card .progress-counts dd { font-size: 18px; font-weight: 700; margin-top: 3px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.learning-progress-card .progress-status { display: flex; align-items: flex-start; gap: 8px; margin-top: 12px; font-size: 14px; line-height: 1.6; }
+.learning-progress-card .progress-status svg { flex-shrink: 0; margin-top: 2px; }
+.learning-progress-card .progress-settings { display: inline-flex; align-items: center; gap: 5px; min-height: 44px; margin-top: 2px; color: var(--pokomoko-blue-deep); font-size: 14px; font-weight: 700; border-radius: 8px; }
+.learning-progress-card .progress-settings:focus-visible, .learning-progress-card summary:focus-visible { outline: 2px solid var(--pokomoko-blue); outline-offset: 3px; }
+.learning-progress-card .app-button.progress-challenge-ready { width: 100%; height: auto; min-height: 60px; padding-block: 10px; margin-top: 12px; justify-content: space-between; gap: 10px; text-align: left; }
+.learning-progress-card .progress-challenge-ready small { display: block; font-size: 12px; font-weight: 400; margin-top: 3px; }
+.learning-progress-card .progress-details { margin-top: 4px; }
+.learning-progress-card .progress-details summary { display: flex; justify-content: space-between; align-items: center; gap: 8px; cursor: pointer; list-style: none; min-height: 44px; font-size: 13px; font-weight: 700; color: var(--pokomoko-muted); border-radius: 8px; }
+.learning-progress-card .progress-details summary::-webkit-details-marker { display: none; }
+.learning-progress-card .progress-details[open] summary svg { transform: rotate(180deg); }
+.learning-progress-card .progress-details-body { display: grid; gap: 18px; padding: 14px 0; font-size: 14px; line-height: 1.7; }
+.learning-progress-card .progress-preparation { display: grid; gap: 12px; }
+.learning-progress-card .progress-preparation ul { display: grid; gap: 12px; }
+.learning-progress-card .progress-preparation li { display: flex; align-items: flex-start; gap: 8px; }
+.learning-progress-card .progress-preparation li svg { flex-shrink: 0; margin-top: 3px; }
+@media (min-width: 640px) { .learning-progress-card .progress-subjects[data-subject-count='2'] { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; } }
+@media (max-width: 359px) { .learning-progress-card .progress-counts dd { font-size: 16px; } .learning-progress-card .progress-current { gap: 14px; } .learning-progress-card .progress-level-title { font-size: 19px; } }

@@ -1,0 +1,14 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.waitFor: Error: strict mode violation: getByRole('button', { name: 'ぶんを きく', exact: true }) resolved to 2 elements:
+    1) <button disabled type="button" title="英文を読み上げ" aria-label="ぶんを きく" class="english-example-play">…</button> aka getByLabel('ぶんを きく')
+    2) <button type="button" class="english-listening-entry">…</button> aka getByRole('button', { name: 'ぶんを きく' }).nth(1)
+
+Call log:
+[2m  - waiting for getByRole('button', { name: 'ぶんを きく', exact: true }) to be visible[22m
+
+    at /Users/yutogasaki/Projects/sansu/docs/design/2026-10-02-whole-app-atelier/dialogs.mjs:10:776
+
+Node.js v24.18.0

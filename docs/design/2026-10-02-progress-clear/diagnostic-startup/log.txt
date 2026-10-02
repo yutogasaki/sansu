@@ -1,0 +1,18 @@
+FAIL 390 practice locator.waitFor: Timeout 15000ms exceeded.
+Call log:
+[2m  - waiting for locator('.island-welcome') to be visible[22m
+[2m    - waiting for" http://127.0.0.1:5278/" navigation to finish...[22m
+[2m    - navigated to "http://127.0.0.1:5278/#/onboarding"[22m
+
+FAIL 390 ready locator.waitFor: Timeout 15000ms exceeded.
+Call log:
+[2m  - waiting for locator('.island-welcome') to be visible[22m
+
+FAIL 390 paused locator.waitFor: Timeout 15000ms exceeded.
+Call log:
+[2m  - waiting for locator('.island-welcome') to be visible[22m
+
+FAIL 390 vocab-paused locator.waitFor: Target page, context or browser has been closed
+Call log:
+[2m  - waiting for locator('.island-welcome') to be visible[22m
+

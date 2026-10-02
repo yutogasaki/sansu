@@ -1,0 +1,145 @@
+
+> pokko-fushigi-zukan-app@0.0.0 benchmark:island-fixed-ten
+> node tools/e2e-island-throughput.mjs
+
+Island throughput phone 1/10 all-correct study
+Island throughput phone 1/10 all-correct island
+Island throughput phone 1/10 miss-at-q4-q8 island
+Island throughput phone 1/10 miss-at-q4-q8 study
+Island throughput phone 2/10 all-correct island
+Island throughput phone 2/10 all-correct study
+Island throughput phone 2/10 miss-at-q4-q8 study
+Island throughput phone 2/10 miss-at-q4-q8 island
+Island throughput phone 3/10 all-correct study
+Island throughput phone 3/10 all-correct island
+Island throughput phone 3/10 miss-at-q4-q8 island
+Island throughput phone 3/10 miss-at-q4-q8 study
+Island throughput phone 4/10 all-correct island
+Island throughput phone 4/10 all-correct study
+Island throughput phone 4/10 miss-at-q4-q8 study
+Island throughput phone 4/10 miss-at-q4-q8 island
+Island throughput phone 5/10 all-correct study
+Island throughput phone 5/10 all-correct island
+Island throughput phone 5/10 miss-at-q4-q8 island
+Island throughput phone 5/10 miss-at-q4-q8 study
+Island throughput phone 6/10 all-correct island
+Island throughput phone 6/10 all-correct study
+Island throughput phone 6/10 miss-at-q4-q8 study
+Island throughput phone 6/10 miss-at-q4-q8 island
+Island throughput phone 7/10 all-correct study
+Island throughput phone 7/10 all-correct island
+Island throughput phone 7/10 miss-at-q4-q8 island
+Island throughput phone 7/10 miss-at-q4-q8 study
+Island throughput phone 8/10 all-correct island
+Island throughput phone 8/10 all-correct study
+Island throughput phone 8/10 miss-at-q4-q8 study
+Island throughput phone 8/10 miss-at-q4-q8 island
+Island throughput phone 9/10 all-correct study
+Island throughput phone 9/10 all-correct island
+Island throughput phone 9/10 miss-at-q4-q8 island
+Island throughput phone 9/10 miss-at-q4-q8 study
+Island throughput phone 10/10 all-correct island
+Island throughput phone 10/10 all-correct study
+Island throughput phone 10/10 miss-at-q4-q8 study
+Island throughput phone 10/10 miss-at-q4-q8 island
+Island throughput tablet 1/10 all-correct study
+Island throughput tablet 1/10 all-correct island
+Island throughput tablet 1/10 miss-at-q4-q8 island
+Island throughput tablet 1/10 miss-at-q4-q8 study
+Island throughput tablet 2/10 all-correct island
+Island throughput tablet 2/10 all-correct study
+Island throughput tablet 2/10 miss-at-q4-q8 study
+Island throughput tablet 2/10 miss-at-q4-q8 island
+Island throughput tablet 3/10 all-correct study
+Island throughput tablet 3/10 all-correct island
+Island throughput tablet 3/10 miss-at-q4-q8 island
+Island throughput tablet 3/10 miss-at-q4-q8 study
+Island throughput tablet 4/10 all-correct island
+Island throughput tablet 4/10 all-correct study
+Island throughput tablet 4/10 miss-at-q4-q8 study
+Island throughput tablet 4/10 miss-at-q4-q8 island
+Island throughput tablet 5/10 all-correct study
+Island throughput tablet 5/10 all-correct island
+Island throughput tablet 5/10 miss-at-q4-q8 island
+Island throughput tablet 5/10 miss-at-q4-q8 study
+Island throughput tablet 6/10 all-correct island
+Island throughput tablet 6/10 all-correct study
+Island throughput tablet 6/10 miss-at-q4-q8 study
+Island throughput tablet 6/10 miss-at-q4-q8 island
+Island throughput tablet 7/10 all-correct study
+Island throughput tablet 7/10 all-correct island
+Island throughput tablet 7/10 miss-at-q4-q8 island
+Island throughput tablet 7/10 miss-at-q4-q8 study
+Island throughput tablet 8/10 all-correct island
+Island throughput tablet 8/10 all-correct study
+Island throughput tablet 8/10 miss-at-q4-q8 study
+Island throughput tablet 8/10 miss-at-q4-q8 island
+Island throughput tablet 9/10 all-correct study
+Island throughput tablet 9/10 all-correct island
+Island throughput tablet 9/10 miss-at-q4-q8 island
+Island throughput tablet 9/10 miss-at-q4-q8 study
+Island throughput tablet 10/10 all-correct island
+Island throughput tablet 10/10 all-correct study
+Island throughput tablet 10/10 miss-at-q4-q8 study
+Island throughput tablet 10/10 miss-at-q4-q8 island
+{
+  "output": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-02-whole-app-atelier/throughput.json",
+  "comparisons": [
+    {
+      "layout": "phone",
+      "studyMedianProblemsPerMinute": 125.30150785675275,
+      "islandMedianProblemsPerMinute": 289.5963032991636,
+      "allCorrectIslandToStudyRatio": 2.311195677152074,
+      "correctOperableP95Ms": 209.30000001192093,
+      "incorrectRetryP95Ms": 211.0999999642372,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 207.55000001192093,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 209.39999997615814,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4788.450000017881,
+      "rawIslandDurationMedianMs": 2071.8499999940395
+    },
+    {
+      "layout": "tablet",
+      "studyMedianProblemsPerMinute": 125.29497446485772,
+      "islandMedianProblemsPerMinute": 289.7012979041908,
+      "allCorrectIslandToStudyRatio": 2.3121541717177587,
+      "correctOperableP95Ms": 209.69999998807907,
+      "incorrectRetryP95Ms": 210.5,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 207.84999999403954,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 209.19999998807907,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4788.699999988079,
+      "rawIslandDurationMedianMs": 2071.0999999940395
+    }
+  ],
+  "gates": {
+    "tenAlternatingRepetitions": true,
+    "allCorrectIslandThroughputNotBelowStudy": true,
+    "correctP95AtMost650Ms": true,
+    "incorrectP95AtMost550Ms": true,
+    "sectionBoundaryP95AtMost650Ms": true,
+    "twentySameQuestionIncorrectSamplesPerLayout": true,
+    "noExtraOrdinaryQuestionActions": true,
+    "automaticSectionBoundaryIncluded": true,
+    "emptyInputAfterEveryTransition": true,
+    "initialIslandControlsUsable": true,
+    "exactFixtureAndAtomicReceipts": true,
+    "phoneAndTablet": true,
+    "noBrowserErrors": true,
+    "oneRenderedBuildAndCandidate": true,
+    "sourceFilesUnchangedDuringBenchmark": true
+  },
+  "evidence": {
+    "eligible": true,
+    "confidence": "formal repeated UI timing; automated keyboard throughput, not child behavior evidence",
+    "productionPlannerEvidence": false,
+    "userLearningStateTouched": false
+  },
+  "pass": true
+}

@@ -1,0 +1,89 @@
+[
+  {
+    "name": "A",
+    "css": "",
+    "url": "http://127.0.0.1:5274/#/island",
+    "revision": "development-local",
+    "version": "development-local:051c792b-e88e-4ea7-af52-21f4fdecb08a",
+    "delivery": "mystic-island-v1",
+    "candidate": "mystic-island-shore-garden-v18",
+    "learningCandidate": "pokomoko-pop-live-v8",
+    "islandFeatureEnabled": true,
+    "mode": "home",
+    "drawCalls": 0,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "serviceWorkerControlled": false,
+    "reducedMotion": false,
+    "appRoot": {
+      "revision": "development-local",
+      "version": "development-local:051c792b-e88e-4ea7-af52-21f4fdecb08a",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    },
+    "menuCandidate": "island-play-diorama-v3",
+    "evidence": "Actual runtime with explicit temporary CSS direction override; author comparison, not approved final UI or independent child observation"
+  },
+  {
+    "name": "B",
+    "css": ".growing-pocket-primary>button{background:transparent!important;box-shadow:none!important}.growing-pocket-primary>button::after{display:none}",
+    "url": "http://127.0.0.1:5274/#/island",
+    "revision": "development-local",
+    "version": "development-local:051c792b-e88e-4ea7-af52-21f4fdecb08a",
+    "delivery": "mystic-island-v1",
+    "candidate": "mystic-island-shore-garden-v18",
+    "learningCandidate": "pokomoko-pop-live-v8",
+    "islandFeatureEnabled": true,
+    "mode": "home",
+    "drawCalls": 0,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "serviceWorkerControlled": false,
+    "reducedMotion": false,
+    "appRoot": {
+      "revision": "development-local",
+      "version": "development-local:051c792b-e88e-4ea7-af52-21f4fdecb08a",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    },
+    "menuCandidate": "island-play-diorama-v3",
+    "evidence": "Actual runtime with explicit temporary CSS direction override; author comparison, not approved final UI or independent child observation"
+  },
+  {
+    "name": "C",
+    "css": ".growing-pocket-primary{grid-template-columns:1fr}.growing-pocket-primary>button{flex-direction:row;align-items:center;min-height:72px;padding:0}.growing-pocket-model{width:116px;height:72px}.growing-pocket-main-copy{text-align:left}",
+    "url": "http://127.0.0.1:5274/#/island",
+    "revision": "development-local",
+    "version": "development-local:051c792b-e88e-4ea7-af52-21f4fdecb08a",
+    "delivery": "mystic-island-v1",
+    "candidate": "mystic-island-shore-garden-v18",
+    "learningCandidate": "pokomoko-pop-live-v8",
+    "islandFeatureEnabled": true,
+    "mode": "home",
+    "drawCalls": 0,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "serviceWorkerControlled": false,
+    "reducedMotion": false,
+    "appRoot": {
+      "revision": "development-local",
+      "version": "development-local:051c792b-e88e-4ea7-af52-21f4fdecb08a",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    },
+    "menuCandidate": "island-play-diorama-v3",
+    "evidence": "Actual runtime with explicit temporary CSS direction override; author comparison, not approved final UI or independent child observation"
+  }
+]

@@ -1,0 +1,67 @@
+{
+  "finished": "2026-10-02T01:30:47.018Z",
+  "appInputs": 1777,
+  "sourceHash": "8f53e83473fc26fc04e248bd8812ad82060e37abf186daaaf3061c6c4d587e56",
+  "sourceMatchesFinalManifest": true,
+  "reports": [
+    {
+      "file": "current/report.json",
+      "pass": true,
+      "sha256": "83d69182336f66a3838dcd00dce7843ca236e82e4d6253c72a8b549a7c049346"
+    },
+    {
+      "file": "menu-current/report.json",
+      "pass": true,
+      "sha256": "6f91729371b1a9b1c8c82f60384247d59ce3115002dcf167886fb5e501c5c4f1"
+    },
+    {
+      "file": "finish-verified/report.json",
+      "pass": true,
+      "sha256": "7b02d0deea638c4829c62f0cf97afa5a77cd1858a0ab9e9b3011b53b1b9a7b76"
+    },
+    {
+      "file": "inputs-current-contract/report.json",
+      "pass": true,
+      "sha256": "949af610d835f5890de5dbb75a07d76a095923fead288202442f3c12ccdf2ae8"
+    },
+    {
+      "file": "dialogs-due-apple/report.json",
+      "pass": true,
+      "sha256": "e6d8839d4b66c29987c0b348288a7ce5e8dd2dca1a62aebde0c340306c4c5edf"
+    },
+    {
+      "file": "production-final-focus/report.json",
+      "pass": true,
+      "sha256": "9e777cf4182b46c98210a73d9dab53e721accd6760ac70cfd214efbd92772eaf"
+    },
+    {
+      "file": "battle-supported/report.json",
+      "pass": true,
+      "sha256": "76ef3209dd5f8b0396a9c58e4f55b6f82380c507800a5e0ee2e1ae327e45ad67"
+    },
+    {
+      "file": "navigation/report.json",
+      "pass": true,
+      "sha256": "c1b139ec5e30872b61abfb71f55df23451434443c8c0c2adc9737756ca44adab"
+    },
+    {
+      "file": "throughput.json",
+      "pass": true,
+      "sha256": "050cd8a6d8656883994bf0b3db0666a86ffd46a1b4d5b78cb84b392d3ee44234"
+    }
+  ],
+  "tests": {
+    "files": 519,
+    "total": 4603
+  },
+  "smoke": 31,
+  "localOnly": true,
+  "visualAuthorReview": "GO for scoped interface",
+  "silentComprehension": "HOLD; child observations N=0",
+  "physicalDeviceAndRelease": "not verified",
+  "ownedServersStopped": [
+    5275,
+    5277,
+    5276
+  ]
+}

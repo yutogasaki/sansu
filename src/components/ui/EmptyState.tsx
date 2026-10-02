@@ -1,6 +1,7 @@
 import React from "react";
 import { cn } from "../../utils/cn";
 import { Button } from "./Button";
+import { BookOpen } from 'lucide-react';
 
 interface EmptyStateProps {
     /** Main message */
@@ -27,13 +28,13 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
     return (
         <div
             className={cn(
-                "flex flex-col items-center justify-center gap-3 p-6",
+                "app-empty flex flex-col items-center justify-center gap-3 p-6",
                 fullScreen && "h-full",
                 className
             )}
         >
-            <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center">
-                <div className="w-6 h-1.5 rounded-full bg-slate-300" />
+            <div className="app-empty-symbol w-12 h-12 flex items-center justify-center" aria-hidden="true">
+                <BookOpen size={30} strokeWidth={1.5} />
             </div>
             <p className="text-pokomoko-muted font-bold text-center">{message}</p>
             {description && (

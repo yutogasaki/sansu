@@ -144,7 +144,8 @@
     }
 }
 /* A short landscape viewport needs a neighboring input column, not smaller keys. */
-@media (orientation: landscape) and (max-height: 540px) {
+@media (orientation: landscape) and (max-height: 540px),
+    (min-width: 900px) and (orientation: landscape) and (max-height: 680px) {
     .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v8'] {
         > .island-header { width: 100%; max-width: 850px; height: 44px; min-height: 44px; }
         > .island-workbench { --stage-height: 105px; flex: 1; max-width: 850px; width: 100%; display: grid; grid-template-columns: minmax(0,1fr) minmax(270px,1fr); grid-template-rows: 28px 105px minmax(0,1fr) 44px; gap: 0 18px; padding: 0 14px 4px; }
@@ -199,7 +200,8 @@
     .written-guidance { font-size: 16px; }
 }
 
-@media (orientation: landscape) and (max-height: 540px) {
+@media (orientation: landscape) and (max-height: 540px),
+    (min-width: 900px) and (orientation: landscape) and (max-height: 680px) {
     .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate='pokomoko-pop-live-v8'] {
         .island-answer .park-inputs[data-number-layout] { gap: 4px; padding: 2px 30px; }
         .island-answer .park-inputs .park-input { min-height: 44px; }

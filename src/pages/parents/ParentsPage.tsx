@@ -134,7 +134,8 @@ export const ParentsPage: React.FC = () => {
     return (
         <ScreenScaffold
             title="保護者メニュー"
-            contentClassName="px-[var(--screen-padding-x)] pt-1 space-y-5"
+            containerClassName="parents-screen"
+            contentClassName="parents-ledger px-[var(--screen-padding-x)] pt-1 space-y-5"
         >
             <SurfacePanel>
                 <SurfacePanelHeader

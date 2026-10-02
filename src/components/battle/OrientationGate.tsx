@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Tablet, MoveHorizontal } from 'lucide-react';
 
 const PHONE_TOO_SHORT_QUERY = "(max-width: 767px) and (max-height: 639px)";
 const SUPPORTED_QUERY = "(max-width: 767px) and (min-height: 640px), (min-width: 768px) and (orientation: landscape)";
@@ -37,19 +38,19 @@ export const OrientationGate: React.FC<{ children: React.ReactNode }> = ({ child
     const screenTooSmall = status === "screen-too-small";
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[color:var(--app-overlay)] p-8 backdrop-blur-lg">
-            <div className="w-full max-w-md rounded-[32px] border border-white/80 bg-white/14 px-8 py-10 text-center text-white shadow-[0_32px_70px_-40px_rgba(15,23,42,0.56)]">
-                <div className="mb-6 text-6xl">📱↔️</div>
+        <div className="battle-orientation-gate fixed inset-0 z-50 flex items-center justify-center p-6">
+            <div className="battle-orientation-card w-full max-w-md px-6 py-8 text-center">
+                <div className="battle-orientation-symbol" aria-hidden="true"><Tablet size={48} strokeWidth={1.5} /><MoveHorizontal size={32} strokeWidth={1.5} /></div>
                 <div className="mb-3 text-2xl font-black">
                     {screenTooSmall ? "もうすこし 大きな画面で あそんでね" : "タブレットを よこにしてね"}
                 </div>
-                <div className="text-sm text-white/74">
+                <div className="text-sm text-pokomoko-muted">
                     {screenTooSmall ? "このゲームは 画面の大きな端末で あそべるよ" : "タブレットは よこむきで あそんでね"}
                 </div>
                 <button
                     type="button"
                     onClick={() => navigate("/battle")}
-                    className="mt-6 inline-flex min-h-11 items-center justify-center whitespace-nowrap rounded-full border border-white/70 bg-white/80 px-3 font-black text-slate-700 transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-600"
+                    className="app-button app-button--secondary mt-6 inline-flex min-h-11 items-center justify-center rounded-xl border border-[var(--pokomoko-edge)] bg-[var(--pokomoko-paper)] px-4 py-2 font-bold text-[var(--pokomoko-ink)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--pokomoko-blue)]"
                 >
                     ほかの あそびへ もどる
                 </button>

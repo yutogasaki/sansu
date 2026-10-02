@@ -1,0 +1,27 @@
+{
+  "scope": "Current local working copy; no commit or deployment",
+  "runtime": true,
+  "currentCases": 35,
+  "currentCaptures": 65,
+  "faultCases": 2,
+  "faultCaptures": 10,
+  "sourceStable": true,
+  "sourceMatchesCloseout": true,
+  "supplementaryInputsMatch": true,
+  "core": {
+    "files": 520,
+    "tests": 4605,
+    "pass": true
+  },
+  "smoke": {
+    "cases": 31,
+    "pass": true,
+    "scope": "flag-off classic regression"
+  },
+  "visualAuthorGate": "GO for affected utility states",
+  "childComprehensionGate": {
+    "participants": 0,
+    "status": "HOLD"
+  },
+  "deploy": false
+}

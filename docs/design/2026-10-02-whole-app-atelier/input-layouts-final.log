@@ -1,0 +1,20 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Written automatic input omits confirmation; numeric and manual retry keep one real submit
+
+0 !== 1
+
+    at assertControls (file:///Users/yutogasaki/Projects/sansu/tools/island-learning-checks.mjs:138:16)
+    at async capture (file:///Users/yutogasaki/Projects/sansu/tools/e2e-island-landscape.mjs:49:17)
+    at async file:///Users/yutogasaki/Projects/sansu/tools/e2e-island-landscape.mjs:117:21 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: 1,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.18.0

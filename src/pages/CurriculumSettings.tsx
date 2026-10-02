@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { getActiveProfile, saveProfile } from "../domain/user/repository";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { getActiveProfile, saveProfile, updateProfileAtomically } from "../domain/user/repository";
 import { UserProfile } from "../domain/types";
 import { syncLevelState, syncUnlockLevel } from "../domain/user/profile";
+import { needsProgressionResume, resumeProgression } from "../domain/user/resumeProgression";
 import { ParentGuard } from "../components/domain/ParentGuard";
 import { ScreenScaffold } from "../components/ScreenScaffold";
 import { Badge } from "../components/ui/Badge";
@@ -69,11 +70,14 @@ const VOCAB_LEVELS: { level: number; title: string; desc: string }[] = [
 
 export const CurriculumSettings: React.FC = () => {
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
     const [profile, setProfile] = useState<UserProfile | null>(null);
-    const [activeTab, setActiveTab] = useState<"math" | "vocab">("math");
+    const [activeTab, setActiveTab] = useState<"math" | "vocab">(searchParams.get('subject') === 'vocab' ? 'vocab' : 'math');
     const [showGuard, setShowGuard] = useState(false);
     const [pendingLevel, setPendingLevel] = useState<number | null>(null);
-    const [pendingAction, setPendingAction] = useState<"main" | "unlock" | null>(null);
+    const [pendingAction, setPendingAction] = useState<"main" | "unlock" | "resume" | null>(null);
+    const [resumeTarget, setResumeTarget] = useState<{ profileId: string; mainLevel: number; subject: 'math' | 'vocab' } | null>(null);
+    const [resumeError, setResumeError] = useState(false);
 
     const persistProfileUpdate = useCallback(async (nextProfile: UserProfile) => {
         await saveProfile(nextProfile);
@@ -84,6 +88,7 @@ export const CurriculumSettings: React.FC = () => {
         setShowGuard(false);
         setPendingLevel(null);
         setPendingAction(null);
+        setResumeTarget(null);
     }, []);
 
     useEffect(() => {
@@ -117,6 +122,16 @@ export const CurriculumSettings: React.FC = () => {
 
     const handleConfirmLevel = async () => {
         if (!profile || pendingLevel === null || !pendingAction) return;
+
+        if (pendingAction === 'resume' && resumeTarget) {
+            try {
+                const updated = await updateProfileAtomically(resumeTarget.profileId, current => resumeProgression(current, resumeTarget.subject, resumeTarget));
+                if (updated) setProfile(updated);
+                else setResumeError(true);
+            } catch { setResumeError(true); }
+            closeGuard();
+            return;
+        }
 
         let updated: UserProfile;
         if (pendingAction === "main") {
@@ -165,6 +180,7 @@ export const CurriculumSettings: React.FC = () => {
     return (
         <ScreenScaffold
             title="がくしゅう せってい"
+            containerClassName="curriculum-screen"
             showBack
             onBack={() => navigate("/settings")}
             topSlot={tabs}
@@ -175,6 +191,19 @@ export const CurriculumSettings: React.FC = () => {
                 onSuccess={handleConfirmLevel}
                 onCancel={closeGuard}
             />
+            {profile && needsProgressionResume(profile, activeTab) && <SurfacePanel className="space-y-3" aria-label="進級の再開">
+                <SurfacePanelHeader title={`Lv.${currentLevel + 1}への進級`} />
+                <p className="text-sm text-pokomoko-muted">次のレベルは現在オフです。レベルを選び直すと、上のレベルがオフになることがあります。</p>
+                <Button className="w-full" onClick={() => {
+                    setResumeError(false);
+                    setResumeTarget({ profileId: profile.id, mainLevel: currentLevel, subject: activeTab });
+                    setPendingLevel(currentLevel + 1);
+                    setPendingAction('resume');
+                    setShowGuard(true);
+                }}>Lv.{currentLevel + 1}への進級を再開</Button>
+                <p className="text-xs text-pokomoko-muted">今のレベルと記録はそのまま。しあげをクリアすると、次へ進みます。</p>
+            </SurfacePanel>}
+            {resumeError && <p role="alert">保存できませんでした。もう一度お試しください。</p>}
             <SurfacePanel>
                 <SurfacePanelHeader
                     title={`${currentSubjectLabel} の いま`}
@@ -272,6 +301,7 @@ export const CurriculumSettings: React.FC = () => {
                                     <Button
                                         type="button"
                                         onClick={() => handleLevelSelect(item.level)}
+                                        disabled={isSelected}
                                         variant={isSelected ? "secondary" : "primary"}
                                         className="min-w-[152px] flex-1"
                                     >

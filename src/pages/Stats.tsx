@@ -371,10 +371,7 @@ export const Stats: React.FC = () => {
             contentClassName={navigation ? "utility-layout-scroll" : "px-6 pt-2"}
         >
             <div className={navigation ? "utility-layout-content stats-layout" : "island-utility-content mx-auto w-full max-w-[22rem] space-y-8 pb-2"}>
-                <LearningProgressCards profile={profile} refreshKey={learningOverlay}
-                    onLearn={() => { warmUpTTS(); if (navigation) navigation.startLearning(); else navigate('/study'); }}
-                    onFinish={subject => { warmUpTTS(); const path = `/study?session=finish-test&focus_subject=${subject}`; if (navigation) navigation.open(path); else navigate(path); }}
-                    onTest={subject => { warmUpTTS(); const path = `/study?session=periodic-test&focus_subject=${subject}`; if (navigation) navigation.open(path); else navigate(path); }} />
+
                 <div className={navigation ? "stats-overview" : "space-y-8"}>
                 {totalStats.count === 0 ? (
                     <SurfacePanel className="stats-first-record space-y-4 p-5">
@@ -382,7 +379,7 @@ export const Stats: React.FC = () => {
                         <Button onClick={() => { if (navigation) navigation.startLearning(); else { warmUpTTS(); navigate("/study"); } }}>まなぶ</Button>
                     </SurfacePanel>
                 ) : (
-                    <SurfacePanel className="space-y-4 rounded-[28px] p-5">
+                    <SurfacePanel className="stats-today space-y-4 rounded-[28px] p-5">
                         <SurfacePanelHeader
                             title="きょう の まとめ"
                             description={t("いちにち の まなび を 4つで ふりかえる", "今日の学習をざっくり振り返る")}
@@ -396,7 +393,7 @@ export const Stats: React.FC = () => {
                     </SurfacePanel>
                 )}
 
-                    <SurfacePanel className="space-y-4 rounded-[28px] p-5">
+                    <SurfacePanel className="stats-week space-y-4 rounded-[28px] p-5">
                         <SurfacePanelHeader
                             title="1しゅうかん カレンダー"
                             description={t("ひび の ペース が ひとめで わかる", "1週間の学習量を色で確認")}
@@ -422,6 +419,12 @@ export const Stats: React.FC = () => {
                     </SurfacePanel>
 
                 </div>
+
+                <LearningProgressCards profile={profile} refreshKey={learningOverlay}
+                    onSettings={subject => { const path = `/settings/curriculum?subject=${subject}`; if (navigation) navigation.open(path); else navigate(path); }}
+                    onLearn={() => { warmUpTTS(); if (navigation) navigation.startLearning(); else navigate('/study'); }}
+                    onFinish={subject => { warmUpTTS(); const path = `/study?session=finish-test&focus_subject=${subject}`; if (navigation) navigation.open(path); else navigate(path); }}
+                    onTest={subject => { warmUpTTS(); const path = `/study?session=periodic-test&focus_subject=${subject}`; if (navigation) navigation.open(path); else navigate(path); }} />
 
                 <div id="stats-learning-details" className={navigation ? "stats-details-grid" : "space-y-8"}>
                     <SurfacePanel className="space-y-5 rounded-[28px] p-5">

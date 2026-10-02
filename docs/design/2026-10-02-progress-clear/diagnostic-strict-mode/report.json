@@ -1,0 +1,74 @@
+{
+  "base": "http://127.0.0.1:5278",
+  "sourceStart": {
+    "src/components/progress/LearningProgressCards.tsx": "a52bacb0bcc38f90d65447ddea9c389960cd501d924091d6123a37bdeb71d3b9",
+    "src/components/progress/LearningProgressCards.css": "ed20de08cc2ac049b43c70382f7e4161792a893c4cb53500cf9e864ccec25beb",
+    "src/components/progress/FinishPreparation.tsx": "a90c00ddab7cb1cecd0ff21d5846726e76c2973b8f74b3f27d483c0abaf7df6d",
+    "src/domain/learning/progressView.ts": "35d17e308a238a83ae7a9db7824dc6c5410f36dd310fdf0890e2d21e7026dccd",
+    "src/domain/user/resumeProgression.ts": "832da27ab15e3de81c104a3d826fd220d794198c6fb2a602fee781e444ad5253",
+    "src/pages/CurriculumSettings.tsx": "3645548168cc50e7099a3547668ee7d6fe552d4b7cd8a3b7ff680381e1f57a07",
+    "src/pages/Stats.tsx": "d0741c147a26b022b5f33d74b40047b9600c20ddb69411d57791b724a2bb7743",
+    "docs/design/2026-10-02-progress-clear/faults.mjs": "e7cf5a9b7c9592696c4153e1ab09b7c02c2886e45928cbdbc2068204b4b6d92a"
+  },
+  "scope": "Explicit native appData get completion delay and one-shot IndexedDB read/transaction failure in disposable DEV profiles, real error/retry UI and all-store comparisons. No actual user data or ordinary failure-rate claim.",
+  "cases": [
+    {
+      "width": 390,
+      "pass": false,
+      "loading": true,
+      "error": "locator.waitFor: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('つぎへの道', { exact: true }).getByRole('alert') to be visible\u001b[22m\n\n    at /Users/yutogasaki/Projects/sansu/docs/design/2026-10-02-progress-clear/faults.mjs:14:712"
+    },
+    {
+      "width": 768,
+      "pass": false,
+      "loading": true,
+      "error": "locator.waitFor: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('つぎへの道', { exact: true }).getByRole('alert') to be visible\u001b[22m\n\n    at /Users/yutogasaki/Projects/sansu/docs/design/2026-10-02-progress-clear/faults.mjs:14:712"
+    }
+  ],
+  "captures": [
+    {
+      "file": "390-loading.png",
+      "root": {
+        "revision": "development-local",
+        "version": "development-local:4f08be1d-46b5-4188-a68c-d250bc607c38",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "url": "http://127.0.0.1:5278/#/stats",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "768-loading.png",
+      "root": {
+        "revision": "development-local",
+        "version": "development-local:4f08be1d-46b5-4188-a68c-d250bc607c38",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "url": "http://127.0.0.1:5278/#/stats",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    }
+  ],
+  "sourceEnd": {
+    "src/components/progress/LearningProgressCards.tsx": "a52bacb0bcc38f90d65447ddea9c389960cd501d924091d6123a37bdeb71d3b9",
+    "src/components/progress/LearningProgressCards.css": "ed20de08cc2ac049b43c70382f7e4161792a893c4cb53500cf9e864ccec25beb",
+    "src/components/progress/FinishPreparation.tsx": "a90c00ddab7cb1cecd0ff21d5846726e76c2973b8f74b3f27d483c0abaf7df6d",
+    "src/domain/learning/progressView.ts": "35d17e308a238a83ae7a9db7824dc6c5410f36dd310fdf0890e2d21e7026dccd",
+    "src/domain/user/resumeProgression.ts": "832da27ab15e3de81c104a3d826fd220d794198c6fb2a602fee781e444ad5253",
+    "src/pages/CurriculumSettings.tsx": "3645548168cc50e7099a3547668ee7d6fe552d4b7cd8a3b7ff680381e1f57a07",
+    "src/pages/Stats.tsx": "d0741c147a26b022b5f33d74b40047b9600c20ddb69411d57791b724a2bb7743",
+    "docs/design/2026-10-02-progress-clear/faults.mjs": "e7cf5a9b7c9592696c4153e1ab09b7c02c2886e45928cbdbc2068204b4b6d92a"
+  },
+  "stable": true,
+  "pass": false
+}

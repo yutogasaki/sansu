@@ -1,0 +1,34 @@
+PASS chromium-number
+PASS chromium-count
+PASS chromium-base10
+PASS chromium-decimal
+PASS chromium-fraction
+PASS chromium-hissan
+PASS chromium-multiply
+PASS chromium-divide
+PASS chromium-choice
+PASS chromium-vocab
+PASS webkit-number
+PASS webkit-count
+PASS webkit-base10
+PASS webkit-decimal
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'number'
+- 'multi-number'
+
+    at file:///Users/yutogasaki/Projects/sansu/docs/design/2026-10-02-whole-app-atelier/inputs.mjs:135:28 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'number',
+  expected: 'multi-number',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.18.0

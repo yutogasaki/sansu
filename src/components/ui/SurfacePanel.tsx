@@ -51,7 +51,7 @@ export const SurfacePanelHeader: React.FC<SurfacePanelHeaderProps> = ({
     action,
     ...props
 }) => (
-    <div className={cn("flex flex-wrap items-start justify-between gap-3", className)} {...props}>
+    <div className={cn("surface-panel-heading flex flex-wrap items-start justify-between gap-3", className)} {...props}>
         <div className="min-w-0 flex-1 basis-[12rem]">
             <h3 className="text-[15px] font-black tracking-[-0.01em] text-slate-800">{title}</h3>
             {description ? (
@@ -69,7 +69,7 @@ export const InsetPanel = React.forwardRef<HTMLDivElement, InsetPanelProps>(
         <div
             ref={ref}
             className={cn(
-                "rounded-[18px] border border-white/80 bg-white/58 px-3 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.42)]",
+                "inset-panel rounded-[18px] border border-white/80 bg-white/58 px-3 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.42)]",
                 className
             )}
             {...props}

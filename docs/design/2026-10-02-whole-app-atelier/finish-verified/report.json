@@ -1,0 +1,1494 @@
+{
+  "revision": "893aef9920db8403b4b3c79abc212c27b83a7e96",
+  "target": "http://127.0.0.1:5275",
+  "flags": {
+    "island": true,
+    "growing": true
+  },
+  "startedAt": "2026-10-02T01:01:51.806Z",
+  "sourceStart": {
+    "src/App.tsx": "a6ddc69eba4d3c6a02be3d30fdfc91f35042842d5caa6c4622ea38cadc4be1f1",
+    "src/components/ui/WholeAppAtelier.css": "09b3337705e9859b4bf1aa4fd1dd8b52d84b389056b81c4a44098729440a4966",
+    "src/components/ui/Button.tsx": "e3cf94a9c9ebf7ce8872ea4373cd71427904f65b63bbd9e714fd4c0393c7e885",
+    "src/components/ui/SurfacePanel.tsx": "e18628073a206f15d927a3ad9468594757107551b9927bc3f1739f90f3038ea1",
+    "src/components/ui/Modal.tsx": "cf2b1cf492840e4ca6370a83b82567b210dd139d5f09fe19158ad82c0f6ca1cf",
+    "src/pages/Study.tsx": "31f37bd4992f769f04aa70a6f7304aaf734c70edb617394e8354b27a41f2c6ea",
+    "src/hooks/useStudySession.ts": "523ff3ffcdf91d54f83617f29d0246aeb95b2c665b15c89a28ff94f764ff4f95",
+    "src/domain/math/studyPresentation.ts": "4d7962185ba203ec7e604b9ef3da894f0f61db3277d1fc67cb6d15b783dd8392",
+    "src/domain/test/testSet.ts": "eb9ca37145330e8f632758a23e52406bc2aa493167dca8c63ca5ca06554efaf0",
+    "src/domain/finishCoverage.ts": "4460b2cc2ba21a7f4bc3b56b4f7db2156eb3f6e6d27efc78940e403563cc11d9",
+    "src/domain/finishRecovery.ts": "293b5bf38a78e02cd4e487177aac1452b7e3bd273f0c507a9332cccef64f9546",
+    "src/domain/finishTest.ts": "db378e233fd703cba2c3335b40770206fc1f96f8c9792825d2b4dbb253633d62",
+    "src/domain/finishTestRepository.ts": "a5f43405a5461c3af20b99857700d262e643bb5ab759e491f968681163ca1b55",
+    "src/domain/learningAttemptWriter.ts": "288d21705859381bda93df00fe3516fa8cd042738b78a267f257e918dda26811",
+    "src/pages/StudyLayout.tsx": "d9013386bca53d5b2586713d7922a9d212cbd51e749f780884c80998a7b7bb8a",
+    "src/components/finish/FinishChallenge.tsx": "f27b107dc6acc046d36aa29bd67980eb157c07dfff826e4c01dd4c163c895e9c",
+    "src/components/finish/FinishChallenge.css": "9efbfa2f6272c67a62acdac1e967506390a14ba06bde54122413cbdb55f92bf2",
+    "src/domain/learning/evaluationContacts.ts": "eec5bb0091998b4829538da90e9c3164a443be2b8d9850a235fe0d5fa199d162",
+    "src/domain/learning/pilotRepository.ts": "1747d41613a74dd83e587bf1ee60764abdd1236fea24a0c58d67021afe78c310",
+    "src/domain/learning/progressRepository.ts": "c8ebd0f8fe62a49b865ec813b3cd55551a94e30e550a709f612e94ea4d0e2322",
+    "src/domain/learning/progressView.ts": "75230aabda63ef732de7e2d0f696aed6699a6d7a141f16927b4ad859e1b46136",
+    "src/domain/types.ts": "55e4e10e50a58788ab2a053ba66f83186a746dc37a0c4c05c13f577d03350f81",
+    "src/components/finish/finishNavigation.ts": "05b01787a23530e35166b4fec65b2e29763836a4e4d9de7ebfa9e08f972d808d",
+    "src/domain/learning/attemptContext.ts": "0304947ac0f7be95ad9c31eac39b1e3d5f6c5c52d1a97c08de36f4831fe6c0fd",
+    "src/hooks/useHissanSession.ts": "8b1a57e183c41af1d7fe9dc44175857998e5e76f849d6f6b05fa83af2208dcfe",
+    "src/domain/finishRecoveryPractice.ts": "3e97b00d6510a1a72d8f3a0f769d64c1ce470590ae43d8213d4748863ccf72ac"
+  },
+  "cases": [
+    {
+      "name": "phone-written",
+      "width": 390,
+      "level": 16,
+      "written": true,
+      "resume": true,
+      "pass": true,
+      "errors": [],
+      "integerFractionCount": 0,
+      "readiness": {
+        "coverageReady": true,
+        "missingUnitIds": [],
+        "coveredCount": 2,
+        "requiredCount": 2,
+        "recentCount": 20,
+        "recentCorrect": 20,
+        "fresh": true
+      },
+      "profileId": "3db546ac-6489-4423-a64d-b91a058d25ce",
+      "beforeFinishLogCount": 20,
+      "beforeFinishMemory": [
+        {
+          "profileId": "3db546ac-6489-4423-a64d-b91a058d25ce",
+          "id": "div_2d1d_exact",
+          "strength": 2,
+          "nextReview": "2099-01-01",
+          "updatedAt": "2026-10-02T01:01:54.052Z",
+          "status": "active",
+          "totalAnswers": 20,
+          "correctAnswers": 20,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0
+        },
+        {
+          "profileId": "3db546ac-6489-4423-a64d-b91a058d25ce",
+          "id": "div_99_rev",
+          "strength": 2,
+          "nextReview": "2099-01-01",
+          "updatedAt": "2026-10-02T01:01:54.052Z",
+          "status": "active",
+          "totalAnswers": 20,
+          "correctAnswers": 20,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0
+        }
+      ],
+      "reservationId": "bdae1563-b53c-484e-b2ad-32c3415743e8",
+      "questions": [
+        {
+          "item": "div_99_rev",
+          "question": "27 ÷ 3 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "24 ÷ 4 =",
+          "input": "hissan",
+          "presentation": {
+            "version": 1,
+            "hissan": true
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "72 ÷ 9 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "45 ÷ 5 =",
+          "input": "hissan",
+          "presentation": {
+            "version": 1,
+            "hissan": true
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "42 ÷ 7 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "48 ÷ 6 =",
+          "input": "hissan",
+          "presentation": {
+            "version": 1,
+            "hissan": true
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "14 ÷ 2 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "36 ÷ 9 =",
+          "input": "hissan",
+          "presentation": {
+            "version": 1,
+            "hissan": true
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "20 ÷ 5 =",
+          "input": "hissan",
+          "presentation": {
+            "version": 1,
+            "hissan": true
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "15 ÷ 5 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "18 ÷ 6 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "77 ÷ 7 =",
+          "input": "hissan",
+          "presentation": {
+            "version": 1,
+            "hissan": true
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "42 ÷ 6 =",
+          "input": "hissan",
+          "presentation": {
+            "version": 1,
+            "hissan": true
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "72 ÷ 8 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "48 ÷ 8 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "18 ÷ 2 =",
+          "input": "hissan",
+          "presentation": {
+            "version": 1,
+            "hissan": true
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "28 ÷ 4 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "40 ÷ 4 =",
+          "input": "hissan",
+          "presentation": {
+            "version": 1,
+            "hissan": true
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "28 ÷ 7 =",
+          "input": "hissan",
+          "presentation": {
+            "version": 1,
+            "hissan": true
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "3 ÷ 1 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        }
+      ],
+      "writtenCapture": true,
+      "resumeUnchanged": true,
+      "challengeContactCount": 0,
+      "evaluationContacts": {
+        "math": {
+          "div_99_rev": "2026-10-02T01:02:12.248Z",
+          "div_2d1d_exact": "2026-10-02T01:02:11.440Z"
+        }
+      },
+      "history": {
+        "passed": true,
+        "subject": "math",
+        "level": 16,
+        "newLevel": 17,
+        "correctCount": 20,
+        "totalQuestions": 20,
+        "id": "bdae1563-b53c-484e-b2ad-32c3415743e8",
+        "timestamp": 1790902932772,
+        "kind": "finish",
+        "mode": "manual",
+        "method": "online",
+        "score": 100,
+        "durationSeconds": 14
+      }
+    },
+    {
+      "name": "tablet-mental-recovery",
+      "width": 768,
+      "level": 16,
+      "written": false,
+      "fail": true,
+      "pass": true,
+      "errors": [],
+      "integerFractionCount": 0,
+      "readiness": {
+        "coverageReady": true,
+        "missingUnitIds": [],
+        "coveredCount": 2,
+        "requiredCount": 2,
+        "recentCount": 20,
+        "recentCorrect": 20,
+        "fresh": true
+      },
+      "profileId": "76e98dae-2612-40f8-98ff-7770409cdd12",
+      "beforeFinishLogCount": 20,
+      "beforeFinishMemory": [
+        {
+          "profileId": "76e98dae-2612-40f8-98ff-7770409cdd12",
+          "id": "div_2d1d_exact",
+          "strength": 2,
+          "nextReview": "2099-01-01",
+          "updatedAt": "2026-10-02T01:02:14.954Z",
+          "status": "active",
+          "totalAnswers": 20,
+          "correctAnswers": 20,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0
+        },
+        {
+          "profileId": "76e98dae-2612-40f8-98ff-7770409cdd12",
+          "id": "div_99_rev",
+          "strength": 2,
+          "nextReview": "2099-01-01",
+          "updatedAt": "2026-10-02T01:02:14.954Z",
+          "status": "active",
+          "totalAnswers": 20,
+          "correctAnswers": 20,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0
+        }
+      ],
+      "reservationId": "71d67847-6cbc-4f21-8515-4416d1264028",
+      "questions": [
+        {
+          "item": "div_99_rev",
+          "question": "16 ÷ 2 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "15 ÷ 5 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "10 ÷ 5 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "45 ÷ 5 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "30 ÷ 6 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "12 ÷ 6 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "18 ÷ 6 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "16 ÷ 8 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "16 ÷ 2 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "16 ÷ 8 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "36 ÷ 6 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "44 ÷ 4 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "27 ÷ 3 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "12 ÷ 3 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "21 ÷ 3 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "88 ÷ 8 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "14 ÷ 2 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "6 ÷ 6 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_2d1d_exact",
+          "question": "35 ÷ 5 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "div_99_rev",
+          "question": "54 ÷ 9 =",
+          "input": "number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        }
+      ],
+      "challengeContactCount": 0,
+      "evaluationContacts": {
+        "math": {
+          "div_99_rev": "2026-10-02T01:02:32.055Z",
+          "div_2d1d_exact": "2026-10-02T01:02:31.212Z"
+        }
+      },
+      "history": {
+        "passed": false,
+        "subject": "math",
+        "level": 16,
+        "correctCount": 19,
+        "totalQuestions": 20,
+        "recoveryItemIds": [
+          "div_99_rev"
+        ],
+        "id": "71d67847-6cbc-4f21-8515-4416d1264028",
+        "timestamp": 1790902952996,
+        "kind": "finish",
+        "mode": "manual",
+        "method": "online",
+        "score": 95,
+        "durationSeconds": 17
+      },
+      "recoveryAnswers": 2,
+      "recovery": {
+        "subject": "math",
+        "level": 16,
+        "items": [
+          {
+            "itemId": "div_99_rev",
+            "variant": "default",
+            "failedProblemKey": "math:div_99_rev:{\"question\":\"54÷9=\",\"answer\":\"6\"}",
+            "correctProblemKeys": [
+              "math:div_99_rev:{\"question\":\"15÷5=\",\"answer\":\"3\"}",
+              "math:div_99_rev:{\"question\":\"6÷2=\",\"answer\":\"3\"}"
+            ]
+          }
+        ]
+      },
+      "freshRetry": true
+    },
+    {
+      "name": "phone-fraction",
+      "width": 390,
+      "level": 21,
+      "written": false,
+      "pass": true,
+      "errors": [],
+      "integerFractionCount": 4,
+      "readiness": {
+        "coverageReady": true,
+        "missingUnitIds": [],
+        "coveredCount": 2,
+        "requiredCount": 2,
+        "recentCount": 20,
+        "recentCorrect": 20,
+        "fresh": true
+      },
+      "profileId": "179745c2-6856-46c4-b5f1-982946367e64",
+      "beforeFinishLogCount": 20,
+      "beforeFinishMemory": [
+        {
+          "profileId": "179745c2-6856-46c4-b5f1-982946367e64",
+          "id": "frac_add_same",
+          "strength": 2,
+          "nextReview": "2099-01-01",
+          "updatedAt": "2026-10-02T01:02:37.425Z",
+          "status": "active",
+          "totalAnswers": 20,
+          "correctAnswers": 20,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0
+        },
+        {
+          "profileId": "179745c2-6856-46c4-b5f1-982946367e64",
+          "id": "frac_sub_same",
+          "strength": 2,
+          "nextReview": "2099-01-01",
+          "updatedAt": "2026-10-02T01:02:37.425Z",
+          "status": "active",
+          "totalAnswers": 20,
+          "correctAnswers": 20,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0
+        }
+      ],
+      "reservationId": "6d6dd9d9-ec81-4c95-9dbc-ce0dc7c4c524",
+      "questions": [
+        {
+          "item": "frac_add_same",
+          "question": "1/2 + 1/2 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_same",
+          "question": "3/4 - 2/4 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_same",
+          "question": "6/12 - 2/12 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_add_same",
+          "question": "3/6 + 3/6 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_same",
+          "question": "2/3 - 1/3 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_add_same",
+          "question": "3/11 + 7/11 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_same",
+          "question": "2/8 - 1/8 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_add_same",
+          "question": "7/9 + 1/9 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_same",
+          "question": "9/11 - 4/11 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_add_same",
+          "question": "5/8 + 2/8 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_same",
+          "question": "3/4 - 1/4 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_add_same",
+          "question": "2/5 + 1/5 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_add_same",
+          "question": "1/5 + 4/5 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_same",
+          "question": "3/7 - 2/7 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_same",
+          "question": "8/12 - 7/12 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_add_same",
+          "question": "1/4 + 2/4 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_add_same",
+          "question": "1/3 + 2/3 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_same",
+          "question": "2/4 - 1/4 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_add_same",
+          "question": "2/9 + 3/9 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_same",
+          "question": "4/5 - 3/5 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        }
+      ],
+      "challengeContactCount": 0,
+      "evaluationContacts": {
+        "math": {
+          "frac_add_same": "2026-10-02T01:02:56.901Z",
+          "frac_sub_same": "2026-10-02T01:02:57.754Z"
+        }
+      },
+      "history": {
+        "passed": true,
+        "subject": "math",
+        "level": 21,
+        "newLevel": 22,
+        "correctCount": 20,
+        "totalQuestions": 20,
+        "id": "6d6dd9d9-ec81-4c95-9dbc-ce0dc7c4c524",
+        "timestamp": 1790902978279,
+        "kind": "finish",
+        "mode": "manual",
+        "method": "online",
+        "score": 100,
+        "durationSeconds": 19
+      }
+    },
+    {
+      "name": "tablet-mixed-fraction",
+      "width": 768,
+      "level": 22,
+      "written": false,
+      "pass": true,
+      "errors": [],
+      "integerFractionCount": 1,
+      "readiness": {
+        "coverageReady": true,
+        "missingUnitIds": [],
+        "coveredCount": 4,
+        "requiredCount": 4,
+        "recentCount": 20,
+        "recentCorrect": 20,
+        "fresh": true
+      },
+      "profileId": "388e6dd8-b070-4b0b-aecd-ad3a9e42610e",
+      "beforeFinishLogCount": 20,
+      "beforeFinishMemory": [
+        {
+          "profileId": "388e6dd8-b070-4b0b-aecd-ad3a9e42610e",
+          "id": "frac_add_diff",
+          "strength": 2,
+          "nextReview": "2099-01-01",
+          "updatedAt": "2026-10-02T01:03:00.184Z",
+          "status": "active",
+          "totalAnswers": 20,
+          "correctAnswers": 20,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0
+        },
+        {
+          "profileId": "388e6dd8-b070-4b0b-aecd-ad3a9e42610e",
+          "id": "frac_mixed",
+          "strength": 2,
+          "nextReview": "2099-01-01",
+          "updatedAt": "2026-10-02T01:03:00.184Z",
+          "status": "active",
+          "totalAnswers": 20,
+          "correctAnswers": 20,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0
+        },
+        {
+          "profileId": "388e6dd8-b070-4b0b-aecd-ad3a9e42610e",
+          "id": "frac_mixed_sub",
+          "strength": 2,
+          "nextReview": "2099-01-01",
+          "updatedAt": "2026-10-02T01:03:00.184Z",
+          "status": "active",
+          "totalAnswers": 20,
+          "correctAnswers": 20,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0
+        },
+        {
+          "profileId": "388e6dd8-b070-4b0b-aecd-ad3a9e42610e",
+          "id": "frac_sub_diff",
+          "strength": 2,
+          "nextReview": "2099-01-01",
+          "updatedAt": "2026-10-02T01:03:00.184Z",
+          "status": "active",
+          "totalAnswers": 20,
+          "correctAnswers": 20,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0
+        }
+      ],
+      "reservationId": "64d610b9-b10c-4947-8e9d-284bee2e0225",
+      "questions": [
+        {
+          "item": "frac_add_diff",
+          "question": "3/6 + 3/4 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_diff",
+          "question": "2/3 - 1/2 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_mixed",
+          "question": "1 9/10 + 3 9/10 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_mixed_sub",
+          "question": "5 4/10 - 1 3/10 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_mixed_sub",
+          "question": "2 3/7 - 1 2/7 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_add_diff",
+          "question": "3/6 + 2/3 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_mixed",
+          "question": "1 9/11 + 3 4/11 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_diff",
+          "question": "1/2 - 1/5 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_add_diff",
+          "question": "3/4 + 1/2 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_mixed_sub",
+          "question": "2 8/10 - 1 4/10 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_mixed",
+          "question": "3 5/9 + 2 1/9 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_diff",
+          "question": "1/2 - 1/3 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_mixed",
+          "question": "1 2/10 + 2 3/10 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_mixed_sub",
+          "question": "3 6/7 - 1 1/7 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_diff",
+          "question": "1/3 - 1/4 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_add_diff",
+          "question": "2/6 + 2/3 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_mixed",
+          "question": "2 2/7 + 2 3/7 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_add_diff",
+          "question": "2/3 + 2/4 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_mixed_sub",
+          "question": "5 2/6 - 1 4/6 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        },
+        {
+          "item": "frac_sub_diff",
+          "question": "1/2 - 2/6 =",
+          "input": "multi-number",
+          "presentation": {
+            "version": 1,
+            "hissan": false
+          }
+        }
+      ],
+      "challengeContactCount": 0,
+      "evaluationContacts": {
+        "math": {
+          "frac_add_diff": "2026-10-02T01:03:20.823Z",
+          "frac_sub_diff": "2026-10-02T01:03:23.206Z",
+          "frac_mixed": "2026-10-02T01:03:19.757Z",
+          "frac_mixed_sub": "2026-10-02T01:03:22.152Z"
+        }
+      },
+      "history": {
+        "passed": true,
+        "subject": "math",
+        "level": 22,
+        "newLevel": 23,
+        "correctCount": 20,
+        "totalQuestions": 20,
+        "id": "64d610b9-b10c-4947-8e9d-284bee2e0225",
+        "timestamp": 1790903003733,
+        "kind": "finish",
+        "mode": "manual",
+        "method": "online",
+        "score": 100,
+        "durationSeconds": 22
+      }
+    }
+  ],
+  "errors": [],
+  "appTarget": "Island enabled finish-test routes; existing generated readiness fixtures",
+  "runtime": "Vite development; current app root is asserted in each capture",
+  "scope": "Native isolated profile/memory/log fixtures generated by real pure domain generators in Node. Actual Learn/Study,20 UI answers, reservation/writer/finish/recovery. No browser app imports, route interception, problem or progress injection.",
+  "pass": true,
+  "distStart": {},
+  "delivery": null,
+  "fixtureModuleHash": "0a2d2736eaf2a4684a14d9a7429ff341b945032cbaa7a8542528c60597812d1b",
+  "captures": [
+    {
+      "name": "phone-written-ready",
+      "url": "http://127.0.0.1:5275/#/learn",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "root": {
+        "uiStyleCandidate": "whole-app-atelier-v1",
+        "buildRevision": "development-local",
+        "buildVersion": "development-local:2c87c44b-1da7-4f3d-8962-4cd17860ea4a",
+        "deliveryId": "snap-root-v1",
+        "configuredDeliveryId": "snap-root-v1",
+        "visualLineageId": "pokko-field-v1",
+        "islandFeatureEnabled": "true",
+        "natureTownFeatureEnabled": "false"
+      }
+    },
+    {
+      "name": "phone-written-test",
+      "url": "http://127.0.0.1:5275/#/study?session=finish-test&focus_subject=math&back_to=%2Flearn",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "root": {
+        "uiStyleCandidate": "whole-app-atelier-v1",
+        "buildRevision": "development-local",
+        "buildVersion": "development-local:2c87c44b-1da7-4f3d-8962-4cd17860ea4a",
+        "deliveryId": "snap-root-v1",
+        "configuredDeliveryId": "snap-root-v1",
+        "visualLineageId": "pokko-field-v1",
+        "islandFeatureEnabled": "true",
+        "natureTownFeatureEnabled": "false"
+      }
+    },
+    {
+      "name": "phone-written-written-question",
+      "url": "http://127.0.0.1:5275/#/study?session=finish-test&focus_subject=math&back_to=%2Flearn",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "root": {
+        "uiStyleCandidate": "whole-app-atelier-v1",
+        "buildRevision": "development-local",
+        "buildVersion": "development-local:2c87c44b-1da7-4f3d-8962-4cd17860ea4a",
+        "deliveryId": "snap-root-v1",
+        "configuredDeliveryId": "snap-root-v1",
+        "visualLineageId": "pokko-field-v1",
+        "islandFeatureEnabled": "true",
+        "natureTownFeatureEnabled": "false"
+      }
+    },
+    {
+      "name": "phone-written-clear",
+      "url": "http://127.0.0.1:5275/#/study?session=finish-test&focus_subject=math&back_to=%2Flearn",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "root": {
+        "uiStyleCandidate": "whole-app-atelier-v1",
+        "buildRevision": "development-local",
+        "buildVersion": "development-local:2c87c44b-1da7-4f3d-8962-4cd17860ea4a",
+        "deliveryId": "snap-root-v1",
+        "configuredDeliveryId": "snap-root-v1",
+        "visualLineageId": "pokko-field-v1",
+        "islandFeatureEnabled": "true",
+        "natureTownFeatureEnabled": "false"
+      }
+    },
+    {
+      "name": "tablet-mental-recovery-ready",
+      "url": "http://127.0.0.1:5275/#/learn",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "root": {
+        "uiStyleCandidate": "whole-app-atelier-v1",
+        "buildRevision": "development-local",
+        "buildVersion": "development-local:2c87c44b-1da7-4f3d-8962-4cd17860ea4a",
+        "deliveryId": "snap-root-v1",
+        "configuredDeliveryId": "snap-root-v1",
+        "visualLineageId": "pokko-field-v1",
+        "islandFeatureEnabled": "true",
+        "natureTownFeatureEnabled": "false"
+      }
+    },
+    {
+      "name": "tablet-mental-recovery-test",
+      "url": "http://127.0.0.1:5275/#/study?session=finish-test&focus_subject=math&back_to=%2Flearn",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "root": {
+        "uiStyleCandidate": "whole-app-atelier-v1",
+        "buildRevision": "development-local",
+        "buildVersion": "development-local:2c87c44b-1da7-4f3d-8962-4cd17860ea4a",
+        "deliveryId": "snap-root-v1",
+        "configuredDeliveryId": "snap-root-v1",
+        "visualLineageId": "pokko-field-v1",
+        "islandFeatureEnabled": "true",
+        "natureTownFeatureEnabled": "false"
+      }
+    },
+    {
+      "name": "tablet-mental-recovery-failure",
+      "url": "http://127.0.0.1:5275/#/study?session=finish-test&focus_subject=math&back_to=%2Flearn",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "root": {
+        "uiStyleCandidate": "whole-app-atelier-v1",
+        "buildRevision": "development-local",
+        "buildVersion": "development-local:2c87c44b-1da7-4f3d-8962-4cd17860ea4a",
+        "deliveryId": "snap-root-v1",
+        "configuredDeliveryId": "snap-root-v1",
+        "visualLineageId": "pokko-field-v1",
+        "islandFeatureEnabled": "true",
+        "natureTownFeatureEnabled": "false"
+      }
+    },
+    {
+      "name": "tablet-mental-recovery-recovery",
+      "url": "http://127.0.0.1:5275/#/study?session=review&focus_subject=math&focus_ids=div_99_rev&force_review=1&back_to=%2Flearn",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "root": {
+        "uiStyleCandidate": "whole-app-atelier-v1",
+        "buildRevision": "development-local",
+        "buildVersion": "development-local:2c87c44b-1da7-4f3d-8962-4cd17860ea4a",
+        "deliveryId": "snap-root-v1",
+        "configuredDeliveryId": "snap-root-v1",
+        "visualLineageId": "pokko-field-v1",
+        "islandFeatureEnabled": "true",
+        "natureTownFeatureEnabled": "false"
+      }
+    },
+    {
+      "name": "tablet-mental-recovery-retry-ready",
+      "url": "http://127.0.0.1:5275/#/learn",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "root": {
+        "uiStyleCandidate": "whole-app-atelier-v1",
+        "buildRevision": "development-local",
+        "buildVersion": "development-local:2c87c44b-1da7-4f3d-8962-4cd17860ea4a",
+        "deliveryId": "snap-root-v1",
+        "configuredDeliveryId": "snap-root-v1",
+        "visualLineageId": "pokko-field-v1",
+        "islandFeatureEnabled": "true",
+        "natureTownFeatureEnabled": "false"
+      }
+    },
+    {
+      "name": "phone-fraction-ready",
+      "url": "http://127.0.0.1:5275/#/learn",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "root": {
+        "uiStyleCandidate": "whole-app-atelier-v1",
+        "buildRevision": "development-local",
+        "buildVersion": "development-local:2c87c44b-1da7-4f3d-8962-4cd17860ea4a",
+        "deliveryId": "snap-root-v1",
+        "configuredDeliveryId": "snap-root-v1",
+        "visualLineageId": "pokko-field-v1",
+        "islandFeatureEnabled": "true",
+        "natureTownFeatureEnabled": "false"
+      }
+    },
+    {
+      "name": "phone-fraction-test",
+      "url": "http://127.0.0.1:5275/#/study?session=finish-test&focus_subject=math&back_to=%2Flearn",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "root": {
+        "uiStyleCandidate": "whole-app-atelier-v1",
+        "buildRevision": "development-local",
+        "buildVersion": "development-local:2c87c44b-1da7-4f3d-8962-4cd17860ea4a",
+        "deliveryId": "snap-root-v1",
+        "configuredDeliveryId": "snap-root-v1",
+        "visualLineageId": "pokko-field-v1",
+        "islandFeatureEnabled": "true",
+        "natureTownFeatureEnabled": "false"
+      }
+    },
+    {
+      "name": "phone-fraction-integer-fraction-0",
+      "url": "http://127.0.0.1:5275/#/study?session=finish-test&focus_subject=math&back_to=%2Flearn",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "root": {
+        "uiStyleCandidate": "whole-app-atelier-v1",
+        "buildRevision": "development-local",
+        "buildVersion": "development-local:2c87c44b-1da7-4f3d-8962-4cd17860ea4a",
+        "deliveryId": "snap-root-v1",
+        "configuredDeliveryId": "snap-root-v1",
+        "visualLineageId": "pokko-field-v1",
+        "islandFeatureEnabled": "true",
+        "natureTownFeatureEnabled": "false"
+      }
+    },
+    {
+      "name": "phone-fraction-integer-fraction-3",
+      "url": "http://127.0.0.1:5275/#/study?session=finish-test&focus_subject=math&back_to=%2Flearn",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "root": {
+        "uiStyleCandidate": "whole-app-atelier-v1",
+        "buildRevision": "development-local",
+        "buildVersion": "development-local:2c87c44b-1da7-4f3d-8962-4cd17860ea4a",
+        "deliveryId": "snap-root-v1",
+        "configuredDeliveryId": "snap-root-v1",
+        "visualLineageId": "pokko-field-v1",
+        "islandFeatureEnabled": "true",
+        "natureTownFeatureEnabled": "false"
+      }
+    },
+    {
+      "name": "phone-fraction-integer-fraction-12",
+      "url": "http://127.0.0.1:5275/#/study?session=finish-test&focus_subject=math&back_to=%2Flearn",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "root": {
+        "uiStyleCandidate": "whole-app-atelier-v1",
+        "buildRevision": "development-local",
+        "buildVersion": "development-local:2c87c44b-1da7-4f3d-8962-4cd17860ea4a",
+        "deliveryId": "snap-root-v1",
+        "configuredDeliveryId": "snap-root-v1",
+        "visualLineageId": "pokko-field-v1",
+        "islandFeatureEnabled": "true",
+        "natureTownFeatureEnabled": "false"
+      }
+    },
+    {
+      "name": "phone-fraction-integer-fraction-16",
+      "url": "http://127.0.0.1:5275/#/study?session=finish-test&focus_subject=math&back_to=%2Flearn",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "root": {
+        "uiStyleCandidate": "whole-app-atelier-v1",
+        "buildRevision": "development-local",
+        "buildVersion": "development-local:2c87c44b-1da7-4f3d-8962-4cd17860ea4a",
+        "deliveryId": "snap-root-v1",
+        "configuredDeliveryId": "snap-root-v1",
+        "visualLineageId": "pokko-field-v1",
+        "islandFeatureEnabled": "true",
+        "natureTownFeatureEnabled": "false"
+      }
+    },
+    {
+      "name": "phone-fraction-clear",
+      "url": "http://127.0.0.1:5275/#/study?session=finish-test&focus_subject=math&back_to=%2Flearn",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "root": {
+        "uiStyleCandidate": "whole-app-atelier-v1",
+        "buildRevision": "development-local",
+        "buildVersion": "development-local:2c87c44b-1da7-4f3d-8962-4cd17860ea4a",
+        "deliveryId": "snap-root-v1",
+        "configuredDeliveryId": "snap-root-v1",
+        "visualLineageId": "pokko-field-v1",
+        "islandFeatureEnabled": "true",
+        "natureTownFeatureEnabled": "false"
+      }
+    },
+    {
+      "name": "tablet-mixed-fraction-ready",
+      "url": "http://127.0.0.1:5275/#/learn",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "root": {
+        "uiStyleCandidate": "whole-app-atelier-v1",
+        "buildRevision": "development-local",
+        "buildVersion": "development-local:2c87c44b-1da7-4f3d-8962-4cd17860ea4a",
+        "deliveryId": "snap-root-v1",
+        "configuredDeliveryId": "snap-root-v1",
+        "visualLineageId": "pokko-field-v1",
+        "islandFeatureEnabled": "true",
+        "natureTownFeatureEnabled": "false"
+      }
+    },
+    {
+      "name": "tablet-mixed-fraction-test",
+      "url": "http://127.0.0.1:5275/#/study?session=finish-test&focus_subject=math&back_to=%2Flearn",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "root": {
+        "uiStyleCandidate": "whole-app-atelier-v1",
+        "buildRevision": "development-local",
+        "buildVersion": "development-local:2c87c44b-1da7-4f3d-8962-4cd17860ea4a",
+        "deliveryId": "snap-root-v1",
+        "configuredDeliveryId": "snap-root-v1",
+        "visualLineageId": "pokko-field-v1",
+        "islandFeatureEnabled": "true",
+        "natureTownFeatureEnabled": "false"
+      }
+    },
+    {
+      "name": "tablet-mixed-fraction-integer-fraction-15",
+      "url": "http://127.0.0.1:5275/#/study?session=finish-test&focus_subject=math&back_to=%2Flearn",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "root": {
+        "uiStyleCandidate": "whole-app-atelier-v1",
+        "buildRevision": "development-local",
+        "buildVersion": "development-local:2c87c44b-1da7-4f3d-8962-4cd17860ea4a",
+        "deliveryId": "snap-root-v1",
+        "configuredDeliveryId": "snap-root-v1",
+        "visualLineageId": "pokko-field-v1",
+        "islandFeatureEnabled": "true",
+        "natureTownFeatureEnabled": "false"
+      }
+    },
+    {
+      "name": "tablet-mixed-fraction-clear",
+      "url": "http://127.0.0.1:5275/#/study?session=finish-test&focus_subject=math&back_to=%2Flearn",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "root": {
+        "uiStyleCandidate": "whole-app-atelier-v1",
+        "buildRevision": "development-local",
+        "buildVersion": "development-local:2c87c44b-1da7-4f3d-8962-4cd17860ea4a",
+        "deliveryId": "snap-root-v1",
+        "configuredDeliveryId": "snap-root-v1",
+        "visualLineageId": "pokko-field-v1",
+        "islandFeatureEnabled": "true",
+        "natureTownFeatureEnabled": "false"
+      }
+    }
+  ],
+  "sourceEnd": {
+    "src/App.tsx": "a6ddc69eba4d3c6a02be3d30fdfc91f35042842d5caa6c4622ea38cadc4be1f1",
+    "src/components/ui/WholeAppAtelier.css": "09b3337705e9859b4bf1aa4fd1dd8b52d84b389056b81c4a44098729440a4966",
+    "src/components/ui/Button.tsx": "e3cf94a9c9ebf7ce8872ea4373cd71427904f65b63bbd9e714fd4c0393c7e885",
+    "src/components/ui/SurfacePanel.tsx": "e18628073a206f15d927a3ad9468594757107551b9927bc3f1739f90f3038ea1",
+    "src/components/ui/Modal.tsx": "cf2b1cf492840e4ca6370a83b82567b210dd139d5f09fe19158ad82c0f6ca1cf",
+    "src/pages/Study.tsx": "31f37bd4992f769f04aa70a6f7304aaf734c70edb617394e8354b27a41f2c6ea",
+    "src/hooks/useStudySession.ts": "523ff3ffcdf91d54f83617f29d0246aeb95b2c665b15c89a28ff94f764ff4f95",
+    "src/domain/math/studyPresentation.ts": "4d7962185ba203ec7e604b9ef3da894f0f61db3277d1fc67cb6d15b783dd8392",
+    "src/domain/test/testSet.ts": "eb9ca37145330e8f632758a23e52406bc2aa493167dca8c63ca5ca06554efaf0",
+    "src/domain/finishCoverage.ts": "4460b2cc2ba21a7f4bc3b56b4f7db2156eb3f6e6d27efc78940e403563cc11d9",
+    "src/domain/finishRecovery.ts": "293b5bf38a78e02cd4e487177aac1452b7e3bd273f0c507a9332cccef64f9546",
+    "src/domain/finishTest.ts": "db378e233fd703cba2c3335b40770206fc1f96f8c9792825d2b4dbb253633d62",
+    "src/domain/finishTestRepository.ts": "a5f43405a5461c3af20b99857700d262e643bb5ab759e491f968681163ca1b55",
+    "src/domain/learningAttemptWriter.ts": "288d21705859381bda93df00fe3516fa8cd042738b78a267f257e918dda26811",
+    "src/pages/StudyLayout.tsx": "d9013386bca53d5b2586713d7922a9d212cbd51e749f780884c80998a7b7bb8a",
+    "src/components/finish/FinishChallenge.tsx": "f27b107dc6acc046d36aa29bd67980eb157c07dfff826e4c01dd4c163c895e9c",
+    "src/components/finish/FinishChallenge.css": "9efbfa2f6272c67a62acdac1e967506390a14ba06bde54122413cbdb55f92bf2",
+    "src/domain/learning/evaluationContacts.ts": "eec5bb0091998b4829538da90e9c3164a443be2b8d9850a235fe0d5fa199d162",
+    "src/domain/learning/pilotRepository.ts": "1747d41613a74dd83e587bf1ee60764abdd1236fea24a0c58d67021afe78c310",
+    "src/domain/learning/progressRepository.ts": "c8ebd0f8fe62a49b865ec813b3cd55551a94e30e550a709f612e94ea4d0e2322",
+    "src/domain/learning/progressView.ts": "75230aabda63ef732de7e2d0f696aed6699a6d7a141f16927b4ad859e1b46136",
+    "src/domain/types.ts": "55e4e10e50a58788ab2a053ba66f83186a746dc37a0c4c05c13f577d03350f81",
+    "src/components/finish/finishNavigation.ts": "05b01787a23530e35166b4fec65b2e29763836a4e4d9de7ebfa9e08f972d808d",
+    "src/domain/learning/attemptContext.ts": "0304947ac0f7be95ad9c31eac39b1e3d5f6c5c52d1a97c08de36f4831fe6c0fd",
+    "src/hooks/useHissanSession.ts": "8b1a57e183c41af1d7fe9dc44175857998e5e76f849d6f6b05fa83af2208dcfe",
+    "src/domain/finishRecoveryPractice.ts": "3e97b00d6510a1a72d8f3a0f769d64c1ce470590ae43d8213d4748863ccf72ac"
+  },
+  "distEnd": {},
+  "distStable": true,
+  "stable": true,
+  "finishedAt": "2026-10-02T01:03:24.552Z"
+}

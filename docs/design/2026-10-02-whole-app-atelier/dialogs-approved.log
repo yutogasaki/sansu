@@ -1,0 +1,13 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.evaluate: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for locator('.english-listening-entry')[22m
+
+    at /Users/yutogasaki/Projects/sansu/docs/design/2026-10-02-whole-app-atelier/dialogs.mjs:10:1563 {
+  name: 'TimeoutError'
+}
+
+Node.js v24.18.0

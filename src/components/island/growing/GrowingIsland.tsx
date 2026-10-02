@@ -32,6 +32,7 @@ import type { AchievementId, GuidanceEvidence, StarterStepId } from '../../../do
 import { useNavigate } from 'react-router-dom';
 import './growing.css';
 import { GrowingIslandMenu } from './GrowingIslandMenu';
+import type { MenuPictures } from './menuMiniatures';
 
 const GrowingWorld = lazy(() => import('./GrowingWorld'));
 type Placing = { kind: SeedKind | LandmarkKind; seed: boolean; id?: string; mode: 'new' | 'move' | 'unstore'; cell?: Cell; keepsake?: string; color?: FlowerColor };
@@ -75,6 +76,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     const [show, setShow] = useState(false), [focus, setFocus] = useState<{ id: string; n: number }>();
     const [card, setCard] = useState<{ url?: string; blob?: Blob; frame?: CardFrame }>(), [story, setStory] = useState<MomentRecord[]>();
     const [faces, setFaces] = useState<Record<string, string>>({});
+    const [menuPictures, setMenuPictures] = useState<MenuPictures>({});
     const [visit, setVisit] = useState<Visit>(), [siblings, setSiblings] = useState<{ id: string; name: string }[]>([]);
     const [naming, setNaming] = useState<string>();
     const [concert, setConcert] = useState<{ cell: Cell; n: number; until: number; targetId: string; ownerId: string }>(), [song, setSong] = useState(0);
@@ -325,14 +327,14 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
                 <button className="growing-chip" data-growing-character onClick={() => setNaming(own.islandName ?? '')}>
                     {own.islandName ? `${own.islandName}・` : ''}{CHARACTER_NAME[own.character]}</button>
                 <span className="growing-chip" aria-label={`しずく ${own.drops}`}>💧 {own.drops}</span>
-                <button ref={menuTrigger} className="growing-chip growing-menu-button" aria-expanded={menu} onClick={() => { if (!menu) loadFaces(3); setMenu(!menu); }}>メニュー</button>
+                <button ref={menuTrigger} className="growing-chip growing-menu-button" aria-expanded={menu} onClick={() => { if (!menu) setMenuPictures(camera.current?.menuPictures(own.villagers) ?? {}); setMenu(!menu); }}>メニュー</button>
             </>}
         </div>
         {naming !== undefined && <form className="growing-overlay" onSubmit={event => { event.preventDefault(); if (naming.trim()) void run({ type: 'name', target: 'island', name: naming }, () => setNaming(undefined)); }}>
             <div className="growing-overlay-body growing-name"><label>しまの なまえ<input value={naming} maxLength={12} onChange={e => setNaming(e.target.value)} autoFocus /></label>
                 <div className="growing-row"><button type="submit" className="growing-primary">きめる</button><button type="button" onClick={() => setNaming(undefined)}>やめる</button></div></div>
         </form>}
-        {menu && !visit && <GrowingIslandMenu villagers={own.villagers} faces={faces} drops={own.drops} busy={island.busy} quote={quote}
+        {menu && !visit && <GrowingIslandMenu villagers={own.villagers} faces={faces} pictures={menuPictures} drops={own.drops} busy={island.busy} quote={quote}
             onClose={() => { setMenu(false); menuTrigger.current?.focus({ preventScroll: true }); }}
             onFriends={() => { guide.pause(); setMenu(false); loadFaces(); setPanel('friends'); }}
             onSeeds={() => { void audio.unlock(); setMenu(false); setPanel('tray'); setSelected(undefined); }}

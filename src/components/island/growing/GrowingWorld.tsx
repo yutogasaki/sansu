@@ -10,6 +10,7 @@ import { frameCamera, initialView, panFromDrag } from './growingCamera';
 import { createWorldScene } from './worldScene';
 import { WorldEffects } from './worldEffects';
 import type { SceneLayout } from './sceneLayout';
+import { menuPictureMaker, type MenuPictures } from './menuMiniatures';
 
 export interface WorldHandlers {
     onCell: (cell: Cell) => void;
@@ -26,6 +27,7 @@ export interface WorldHandlers {
 export interface WorldCamera {
     capture: (width: number, height: number) => HTMLCanvasElement | undefined;
     portraits: (villagers: readonly Villager[], size: number) => Record<string, string>;
+    menuPictures: (villagers: readonly Villager[]) => MenuPictures;
 }
 export interface ShownMoment { id: number; moment: Moment; cell?: Cell }
 /** `cheer` makes the waiting friend jump (a home seed was planted); `festival` celebrates a new level. */
@@ -126,6 +128,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             return canvas;
         };
         cameraRef.current?.({
+            menuPictures: menuPictureMaker(renderer, world.m),
             capture: (w, h) => {
                 const shot = new T.OrthographicCamera(-5, 5, 5, -5, .1, 100);
                 frameCamera(shot, layout, initialView(), w / h);

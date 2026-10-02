@@ -41,6 +41,7 @@ export const Layout: React.FC = () => {
         <div
             className={cn("relative flex h-full min-h-0 flex-col overflow-hidden text-text-main", supportsIslandShell && "island-shell")}
             data-shell-candidate={supportsIslandShell ? "island-navigation-v1" : undefined}
+            data-ui-route={location.pathname}
             data-menu-style-candidate={supportsIslandShell ? "shared-paper-atelier-v1" : undefined}
         >
             <main

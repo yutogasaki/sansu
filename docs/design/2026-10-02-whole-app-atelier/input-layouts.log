@@ -1,0 +1,18 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The current question stays fully visible: {"viewport":{"width":1024,"height":640},"pageHeight":640,"contentHeight":640,"scrollTop":0,"width":1024,"contentWidth":1024,"question":{"x":286,"y":239.1875,"width":452,"height":70.8125,"top":239.1875,"right":738,"bottom":310,"left":286},"prompt":{"x":298,"y":255.1875,"width":428,"height":52,"top":255.1875,"right":726,"bottom":307.1875,"left":298},"questionOverflow":5,"actions":{"x":286,"y":592,"width":452,"height":44,"top":592,"right":738,"bottom":636,"left":286}}
+    at capture (file:///Users/yutogasaki/Projects/sansu/tools/e2e-island-landscape.mjs:47:21)
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at process.processImmediate (node:internal/timers:472:9)
+    at async file:///Users/yutogasaki/Projects/sansu/tools/e2e-island-landscape.mjs:117:21 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.18.0

@@ -1,0 +1,39 @@
+PASS 390 practice
+PASS 390 ready
+PASS 390 paused
+PASS 390 vocab-paused
+PASS 390 inconsistent
+PASS 390 complete
+PASS 390 mix
+PASS 768 practice
+PASS 768 ready
+FAIL 768 paused locator.waitFor: Timeout 15000ms exceeded.
+Call log:
+[2m  - waiting for getByRole('dialog') to be hidden[22m
+[2m    35 × locator resolved to visible <div role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="_r_3_" class="atelier-dialog relative flex max-h-[calc(100dvh-2rem)] w-full flex-col overflow-hidden rounded-[28px] app-glass-strong app-shadow-strong max-w-sm">…</div>[22m
+
+PASS 768 vocab-paused
+PASS 768 inconsistent
+PASS 768 complete
+PASS 768 mix
+PASS 320 practice
+PASS 320 ready
+PASS 320 paused
+PASS 320 vocab-paused
+PASS 320 inconsistent
+PASS 320 complete
+PASS 320 mix
+PASS 568 practice
+PASS 568 ready
+PASS 568 paused
+PASS 568 vocab-paused
+PASS 568 inconsistent
+PASS 568 complete
+PASS 568 mix
+PASS 1024 practice
+PASS 1024 ready
+PASS 1024 paused
+PASS 1024 vocab-paused
+PASS 1024 inconsistent
+PASS 1024 complete
+PASS 1024 mix

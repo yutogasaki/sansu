@@ -1,8 +1,14 @@
 # Shared Done Index
 
+- 2026-10-02: [記録の文字量と進級停止の説明を修正](../../docs/design/2026-10-02-progress-clear/README.md)。メイン再選択による上位offを再現、選択済み操作を無効化、隣接次範囲だけの保護者確認付き再開を追加。core4,605・classic31・5サイズ35ケース/65撮影・両幅の読込/保存retry PASS。ローカル、本人の操作履歴/実機/公開は別 -> `docs/done/2026-10.md`
+
+- 2026-10-02: [島以外を含む全画面の仕上げ](../../docs/design/2026-10-02-whole-app-atelier/README.md)。初期設定/学習/記録/設定/保護者/しあげ/副モード、短横入力と確認/英文focusを整備。519 files/4,603 tests、smoke31、実画面と保存/offlineを確認。ローカル、公開と利用者評価は別 -> `docs/done/2026-10.md`
+
 - 2026-10-02: [学習・島・家のmain統合の最終確認](../../docs/design/2026-10-02-learning-island-integration/final/README.md)。最終core4,599 tests、両幅案内/家/実SW offline・メニュー4サイズPASS。変更なしの仕上げ14/保存バランス4/navigation両幅/classic31を入力照合して保持。実機/公開先/子どもは別 -> `docs/done/2026-10.md`
 
 - 2026-10-02: [本の次の一手と記念を改善](../../docs/design/2026-10-02-guidance-ux/README.md)。通知の対象へ直行・導入の主操作・本人の大きな記念。core4,576、両幅DEV/家/production offline PASS -> `docs/done/2026-10.md`
+
+- 2026-10-02: [2つの模型で選ぶ島メニュー](../../docs/design/2026-10-02-island-play-menu/README.md)。実住人と建築前の模型、主入口/補助列へ再設計。core4,603 tests、関連9、4サイズの全旅程・記録不変PASS。ローカル実装、子どもの無説明理解は未観察 -> `docs/done/2026-10.md`
 
 - 2026-10-02: [学習と島の固定統合候補](../../docs/design/2026-10-02-learning-island-integration/README.md)を確認。core4,587 tests、仕上げ14ケース、家/メニュー/案内/保存/両幅SW offline、classic31件PASS。証拠logのGit除外を修正。実機・後続の並行変更・公開は別範囲 -> `docs/done/2026-10.md`
 

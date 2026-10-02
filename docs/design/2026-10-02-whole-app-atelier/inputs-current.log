@@ -1,0 +1,18 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The current question stays fully visible: {"viewport":{"width":1024,"height":600},"pageHeight":600,"contentHeight":600,"scrollTop":0,"width":1024,"contentWidth":1024,"question":{"x":286,"y":239.1875,"width":452,"height":30.8125,"top":239.1875,"right":738,"bottom":270,"left":286},"prompt":{"x":298,"y":251.1875,"width":428,"height":52,"top":251.1875,"right":726,"bottom":303.1875,"left":298},"questionOverflow":39,"actions":{"x":286,"y":552,"width":452,"height":44,"top":552,"right":738,"bottom":596,"left":286}}
+    at capture (file:///Users/yutogasaki/Projects/sansu/docs/design/2026-10-02-whole-app-atelier/inputs.mjs:63:21)
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at process.processImmediate (node:internal/timers:472:9)
+    at async file:///Users/yutogasaki/Projects/sansu/docs/design/2026-10-02-whole-app-atelier/inputs.mjs:143:29 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.18.0

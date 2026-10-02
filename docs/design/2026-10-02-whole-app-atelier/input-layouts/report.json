@@ -1,0 +1,64 @@
+{
+  "target": "http://127.0.0.1:5277",
+  "startedAt": "2026-10-02T00:51:59.977Z",
+  "scenarios": [
+    {
+      "name": "chromium-number",
+      "captures": [
+        "chromium-number-home.png"
+      ],
+      "geometry": [
+        {
+          "state": "ready-1024x640",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 286,
+            "y": 239.1875,
+            "width": 452,
+            "height": 70.8125,
+            "top": 239.1875,
+            "right": 738,
+            "bottom": 310,
+            "left": 286
+          },
+          "prompt": {
+            "x": 298,
+            "y": 255.1875,
+            "width": 428,
+            "height": 52,
+            "top": 255.1875,
+            "right": 726,
+            "bottom": 307.1875,
+            "left": 298
+          },
+          "questionOverflow": 5,
+          "actions": {
+            "x": 286,
+            "y": 592,
+            "width": 452,
+            "height": 44,
+            "top": 592,
+            "right": 738,
+            "bottom": 636,
+            "left": 286
+          }
+        }
+      ],
+      "errors": [],
+      "pass": false,
+      "error": "AssertionError [ERR_ASSERTION]: The current question stays fully visible: {\"viewport\":{\"width\":1024,\"height\":640},\"pageHeight\":640,\"contentHeight\":640,\"scrollTop\":0,\"width\":1024,\"contentWidth\":1024,\"question\":{\"x\":286,\"y\":239.1875,\"width\":452,\"height\":70.8125,\"top\":239.1875,\"right\":738,\"bottom\":310,\"left\":286},\"prompt\":{\"x\":298,\"y\":255.1875,\"width\":428,\"height\":52,\"top\":255.1875,\"right\":726,\"bottom\":307.1875,\"left\":298},\"questionOverflow\":5,\"actions\":{\"x\":286,\"y\":592,\"width\":452,\"height\":44,\"top\":592,\"right\":738,\"bottom\":636,\"left\":286}}\n    at capture (file:///Users/yutogasaki/Projects/sansu/tools/e2e-island-landscape.mjs:47:21)\n    at runNextTicks (node:internal/process/task_queues:65:5)\n    at process.processImmediate (node:internal/timers:472:9)\n    at async file:///Users/yutogasaki/Projects/sansu/tools/e2e-island-landscape.mjs:117:21"
+    }
+  ],
+  "pass": false,
+  "scope": "Disposable native profile/memory fixtures, real planner and input. Chromium/WebKit viewport checks are not physical iPad Safari or installed-PWA verification.",
+  "filteredDiagnostic": false,
+  "completedAt": "2026-10-02T00:52:03.812Z"
+}

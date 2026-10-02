@@ -436,7 +436,7 @@ export const Settings: React.FC = () => {
                 footer={(
                     <div className="flex gap-2">
                         <Button variant="secondary" className="flex-1" onClick={() => setRenameTarget(null)}>やめる</Button>
-                        <Button className="flex-1 bg-primary text-white" onClick={handleRenameSubmit} disabled={!newName.trim()}>OK</Button>
+                        <Button className="flex-1" onClick={handleRenameSubmit} disabled={!newName.trim()}>OK</Button>
                     </div>
                 )}
             >

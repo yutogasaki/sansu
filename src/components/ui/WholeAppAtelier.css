@@ -1,0 +1,169 @@
+/* Shared paper, ink and restrained depth. Live worlds keep their own material language. */
+.app-container .atelier-screen,
+.app-container .brand-study-screen,
+.app-container .island-first-setup,
+.app-container .island-onboarding-setup {
+    --app-surface: var(--pokomoko-paper);
+    --app-surface-strong: var(--pokomoko-paper);
+    --app-surface-soft: var(--pokomoko-canvas);
+    --card-bg: var(--pokomoko-paper);
+    --brand-paper-edge: var(--pokomoko-edge);
+    --brand-ink: var(--pokomoko-ink);
+    --app-border: var(--pokomoko-edge);
+    --app-border-soft: color-mix(in srgb, var(--pokomoko-edge) 60%, var(--pokomoko-paper));
+    --card-shadow: 0 2px 0 color-mix(in srgb, var(--pokomoko-ink) 6%, transparent);
+    color: var(--pokomoko-ink);
+    background: var(--pokomoko-canvas);
+}
+.app-container .atelier-screen > header {
+    max-width: 980px; min-height: 80px; padding-block: max(16px, env(safe-area-inset-top)) 16px;
+    background: transparent;
+}
+.app-container .atelier-screen > header h1 { font-size: clamp(23px, 4vw, 28px); line-height: 1.4; letter-spacing: -.035em; }
+.app-container .atelier-screen > header .island-shell-eyebrow { font-size: 10px; letter-spacing: .03em; }
+.app-container .atelier-screen .card-surface,
+.app-container .atelier-screen .glass-light {
+    border: 1px solid var(--app-border-soft); border-radius: 22px; background: var(--pokomoko-paper);
+    box-shadow: var(--card-shadow); backdrop-filter: none; -webkit-backdrop-filter: none;
+}
+.app-container .atelier-screen .surface-panel-heading { gap: 10px; margin-bottom: 18px; }
+.app-container .atelier-screen .surface-panel-heading h3 { color: var(--pokomoko-ink); font-size: 16px; line-height: 1.55; }
+.app-container .atelier-screen .surface-panel-heading p { font-size: 12px; line-height: 1.8; }
+.app-container .atelier-screen .inset-panel { border-color: var(--app-border-soft); background: var(--pokomoko-canvas); box-shadow: none; }
+.app-container .atelier-screen :is(input:not([type=checkbox]):not([type=range]), select),
+.app-container .island-onboarding-setup input {
+    min-height: 48px; background: var(--pokomoko-paper); border-color: var(--pokomoko-edge); color: var(--pokomoko-ink);
+    border-radius: 14px; box-shadow: inset 0 2px 0 var(--pokomoko-canvas);
+}
+.app-container .atelier-screen :is(button, input, select):focus-visible,
+.app-container .island-first-setup :is(button, input):focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 2px; }
+.app-container .atelier-screen button { min-height: 44px; }
+.app-container .atelier-screen .app-pill:not(button) { border-radius: 8px; box-shadow: none; letter-spacing: .025em; }
+.app-container .atelier-screen .utility-layout-scroll { padding-top: 2px; }
+
+/* Settings are a small table of contents and one readable sheet. */
+.app-container .atelier-screen .settings-category-list {
+    display: flex; flex-direction: column; gap: 0; padding: 0; border: 1px solid var(--pokomoko-edge);
+    border-radius: 22px; overflow: hidden; background: var(--pokomoko-paper);
+}
+.app-container .atelier-screen .settings-category-list .pokomoko-setting-trigger {
+    display: flex; flex-direction: row; align-items: center; gap: 16px; min-height: 92px; padding: 20px;
+    border-radius: 0; border: 0; box-shadow: none; background: transparent;
+}
+.app-container .atelier-screen .settings-category-list .pokomoko-setting-trigger + button { border-top: 1px solid var(--app-border-soft); }
+.app-container .atelier-screen .settings-category-list .pokomoko-setting-trigger[aria-current=page] { background: var(--pokomoko-mint); box-shadow: inset 3px 0 0 var(--pokomoko-blue); }
+.app-container .atelier-screen .settings-category-list .pokomoko-setting-patch { width: 44px; height: 44px; border-radius: 15px; background: var(--pokomoko-canvas); box-shadow: none; border: 1px solid var(--app-border-soft); }
+.app-container .atelier-screen .settings-category-list .pokomoko-setting-patch::after { display: none; }
+.app-container .atelier-screen .settings-category-list [data-setting-section=profile] .pokomoko-setting-patch { background: var(--pokomoko-mint); }
+.app-container .atelier-screen .settings-category-list .pokomoko-setting-trigger > div > div:first-child { font-size: 16px; }
+.app-container .atelier-screen .settings-category-list .truncate { white-space: normal; font-size: 12px; }
+.app-container .atelier-screen .settings-category-list .pokomoko-setting-trigger > svg { display: block; }
+.app-container .atelier-screen .settings-layout.has-selection .settings-category-list { display: none; }
+.app-container .atelier-screen .settings-empty-selection { min-height: 350px; background: var(--pokomoko-paper); border-radius: 22px; border: 1px solid var(--app-border-soft); }
+
+/* Records have a large count, quiet supporting metrics, and a separate weekly rhythm. */
+.app-container .atelier-screen .stats-today { border-top: 4px solid var(--pokomoko-mint); }
+.app-container .atelier-screen .stats-today > .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.app-container .atelier-screen .stats-today .stats-metric { min-width: 0; padding: 14px 5px; background: transparent; border: 0; }
+.app-container .atelier-screen .stats-today .stats-metric:first-child { grid-column: 1 / -1; padding: 12px 0 20px; border-bottom: 1px solid var(--app-border-soft); border-radius: 0; }
+.app-container .atelier-screen .stats-today .stats-metric:first-child > div:first-child { font-size: 58px; line-height: 1.05; color: var(--pokomoko-blue-deep); font-variant-numeric: tabular-nums; }
+.app-container .atelier-screen .stats-today .stats-metric:not(:first-child) > div:first-child { font-size: 23px; }
+.app-container .atelier-screen .stats-week { align-self: start; }
+.app-container .atelier-screen .learning-progress-card { padding: 20px; }
+.app-container .atelier-screen .learning-progress-card .progress-preparation { border: 0; padding: 8px 0; background: transparent; }
+.app-container .atelier-screen .stats-details-grid > .card-surface { align-self: start; }
+
+/* Parent reports and curriculum are ledgers: clear headings and quieter rows. */
+.app-container .parents-ledger { width: 100%; max-width: 980px; margin-inline: auto; }
+.app-container .parents-ledger > .card-surface:first-child { border-top: 4px solid var(--pokomoko-lavender); }
+.app-container .parents-ledger > .card-surface:first-child .inset-panel { padding-block: 20px; background: transparent; border: 0; }
+.app-container .parents-ledger > .card-surface:first-child .inset-panel > div:nth-child(2) { font-size: 42px; line-height: 1.2; }
+.app-container .curriculum-screen > div { width: 100%; max-width: 980px; margin-inline: auto; }
+.app-container .curriculum-screen .card-surface { border-radius: 18px; }
+.app-container .curriculum-screen .inset-panel { border-radius: 12px; }
+.app-container .island-other-games-list { gap: 12px; padding-top: 8px; }
+.app-container .island-other-game-choice { background: var(--pokomoko-paper); border-color: var(--pokomoko-edge); border-radius: 20px; box-shadow: 0 2px 0 var(--app-border-soft); }
+.app-container .island-other-game-choice > svg:first-child { width: 40px; height: 40px; padding: 8px; background: var(--pokomoko-mint); border-radius: 13px; }
+
+/* First setup keeps one choice and an unobtrusive way back. */
+.app-container .island-first-setup { overflow-y: auto; overscroll-behavior: contain; }
+.app-container .island-first-setup .island-setup-sheet { border-color: var(--pokomoko-edge); border-top: 5px solid var(--pokomoko-mint); background: var(--pokomoko-paper); border-radius: 26px; box-shadow: 0 3px 0 var(--app-border-soft); }
+.app-container .island-first-setup .island-setup-sheet h1 { font-size: clamp(24px, 5vw, 30px); letter-spacing: -.025em; }
+.app-container .island-first-setup .island-setup-name input { border-radius: 14px; border-color: var(--pokomoko-edge); color: var(--pokomoko-ink); }
+.app-container .island-first-setup .island-setup-options button { background: var(--pokomoko-paper); border-color: var(--pokomoko-edge); border-bottom-width: 2px; min-height: 56px; padding: 14px 16px; border-radius: 15px; color: var(--pokomoko-ink); }
+.app-container .island-first-setup .island-setup-options button:hover { background: var(--pokomoko-mint); }
+.app-container .island-first-setup .island-setup-status { color: var(--pokomoko-muted); }
+.app-container .island-onboarding-setup .card-surface { background: var(--pokomoko-paper); border-color: var(--pokomoko-edge); box-shadow: 0 3px 0 var(--app-border-soft); }
+.app-container .island-welcome .island-start { background: var(--pokomoko-blue); color: var(--pokomoko-paper); border-color: var(--pokomoko-blue-deep); box-shadow: 0 3px 0 var(--pokomoko-blue-deep); }
+.app-container .island-welcome .island-welcome-play button { border-color: var(--pokomoko-edge); background: var(--pokomoko-paper); color: var(--pokomoko-ink); }
+
+.app-container .battle-setup-screen { background: var(--pokomoko-canvas); color: var(--pokomoko-ink); }
+.app-container .battle-setup-screen .card-surface { border-color: var(--pokomoko-edge); background: var(--pokomoko-paper); backdrop-filter: none; box-shadow: 0 2px 0 var(--pokomoko-edge); }
+.app-container .battle-setup-screen .inset-panel { background: var(--pokomoko-canvas); border-color: var(--pokomoko-edge); box-shadow: none; }
+.battle-orientation-gate { background: var(--pokomoko-canvas); color: var(--pokomoko-ink); }
+.battle-orientation-card { border-radius: 24px; background: var(--pokomoko-paper); border: 1px solid var(--pokomoko-edge); box-shadow: 0 3px 0 var(--pokomoko-edge); }
+.battle-orientation-symbol { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 24px; color: var(--pokomoko-blue); }
+
+/* Preparation and results use earned stamps, surrounded by clean paper. */
+.app-container .finish-page { padding-top: max(24px, env(safe-area-inset-top)); }
+.app-container .finish-card { border-radius: 24px; box-shadow: 0 3px 0 color-mix(in srgb, var(--pokomoko-edge) 55%, transparent); }
+.app-container .finish-path { background: var(--pokomoko-mint); border-color: transparent; }
+.app-container .finish-practice { border-top: 1px solid var(--pokomoko-edge); padding-top: 20px; }
+.app-container .finish-practice .app-button { height: auto; min-height: 56px; }
+.app-container .brand-study-screen { background: var(--pokomoko-canvas); }
+.app-container .brand-study-screen :is(.app-glass-strong, .card-surface) { background: var(--pokomoko-paper); backdrop-filter: none; border-color: var(--pokomoko-edge); box-shadow: 0 2px 0 var(--pokomoko-edge); }
+
+/* The learning stage keeps its actual acting. Ink, paper and input controls
+   join the rest of the product without touching their sizes or timing. */
+.app-container[data-ui-style-candidate=whole-app-atelier-v1] .island-page[data-layout-version][data-mode=learning][data-learning-candidate] {
+    --pop-ink: var(--pokomoko-ink);
+    --pop-blue: var(--pokomoko-blue);
+    background: var(--pokomoko-canvas);
+}
+.app-container[data-ui-style-candidate=whole-app-atelier-v1] .island-page[data-layout-version][data-mode=learning][data-learning-candidate] > .island-header,
+.app-container[data-ui-style-candidate=whole-app-atelier-v1] .island-page[data-layout-version][data-mode=learning][data-learning-candidate] > .island-workbench { background: var(--pokomoko-paper); }
+.app-container[data-ui-style-candidate=whole-app-atelier-v1] .island-page[data-layout-version][data-mode=learning][data-learning-candidate] .island-answer :is(.park-question, .park-inputs) { border-color: var(--pokomoko-stitch); background: var(--pokomoko-paper); }
+.app-container[data-ui-style-candidate=whole-app-atelier-v1] .island-page[data-layout-version][data-mode=learning][data-learning-candidate] .island-answer .park-inputs { box-shadow: 0 3px 0 var(--pokomoko-edge); }
+.app-container[data-ui-style-candidate=whole-app-atelier-v1] .island-page[data-layout-version][data-mode=learning][data-learning-candidate] .island-answer .park-keypad button { border-color: var(--pokomoko-stitch); background: var(--pokomoko-paper); box-shadow: 0 3px 0 var(--pokomoko-edge); }
+.app-container[data-ui-style-candidate=whole-app-atelier-v1] .island-page[data-layout-version][data-mode=learning][data-learning-candidate] .island-answer .park-keypad button:is([aria-label='こたえを けす'], [aria-label='ひとつ もどす']) { background: var(--pokomoko-lavender); }
+.app-container[data-ui-style-candidate=whole-app-atelier-v1] .island-page[data-layout-version][data-mode=learning][data-learning-candidate] .island-answer .park-keypad button[data-keypad-submit] { background: var(--pokomoko-blue); color: white; }
+.app-container[data-ui-style-candidate=whole-app-atelier-v1] .island-page[data-layout-version][data-mode=learning][data-learning-candidate] .island-answer .park-keypad button:active:not(:disabled) { background: var(--pokomoko-mint); color: var(--pokomoko-ink); box-shadow: 0 1px 0 var(--pokomoko-edge); }
+
+@media (min-width: 900px) and (orientation: landscape) and (max-height: 680px) {
+    .app-container[data-ui-style-candidate=whole-app-atelier-v1] .island-page[data-layout-version][data-mode=learning][data-learning-candidate] > .island-header { height: 64px; min-height: 64px; }
+}
+
+
+/* Portaled sheets deliberately share the same controls as ordinary pages. */
+.atelier-dialog { --app-accent: var(--pokomoko-blue); background: var(--pokomoko-paper); color: var(--pokomoko-ink); border: 1px solid var(--pokomoko-edge); border-radius: 24px; box-shadow: 0 12px 40px #30364f26; backdrop-filter: none; -webkit-backdrop-filter: none; }
+.atelier-dialog > div { background: transparent; border-color: var(--pokomoko-edge); }
+.atelier-dialog input { min-height: 52px; border-color: var(--pokomoko-edge); background: var(--pokomoko-canvas); color: var(--pokomoko-ink); box-shadow: none; }
+.atelier-dialog :is(input, button):focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 2px; }
+.atelier-dialog .app-glass { background: var(--pokomoko-canvas); backdrop-filter: none; box-shadow: none; }
+.app-empty-symbol { background: var(--pokomoko-mint); color: var(--pokomoko-ink); border-radius: 17px 21px 18px 19px; }
+.app-empty > p { max-width: 28ch; line-height: 1.8; }
+
+@media (min-width: 760px) {
+    .app-container .atelier-screen .settings-layout.has-selection .settings-category-list { display: flex; }
+    .app-container .atelier-screen .settings-layout { grid-template-columns: 248px minmax(0, 1fr); gap: 24px; }
+    .app-container .atelier-screen .settings-category-list .pokomoko-setting-trigger { min-height: 88px; gap: 12px; padding: 16px; }
+    .app-container .atelier-screen .settings-category-list .pokomoko-setting-trigger > svg { display: none; }
+    .app-container .parents-ledger { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+    .app-container .parents-ledger > * { margin-top: 0; min-width: 0; }
+    .app-container .parents-ledger > .card-surface:first-child,
+    .app-container .parents-ledger > div:last-child { grid-column: 1 / -1; }
+}
+@media (max-width: 359px) {
+    .app-container .atelier-screen > header { padding-inline: 14px; }
+    .app-container .atelier-screen .settings-category-list .pokomoko-setting-trigger { gap: 12px; padding: 16px; }
+    .app-container .atelier-screen .learning-progress-card { padding: 16px; }
+    .app-container .island-first-setup { padding-inline: 12px; }
+}
+@media (max-height: 500px) {
+    .app-container .atelier-screen > header { min-height: 60px; padding-block: max(6px, env(safe-area-inset-top)) 6px; }
+    .app-container .island-first-setup .island-setup-sheet { margin-block: 0 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .app-button, .atelier-screen :is(button, input) { transition: none; }
+    .app-button:active, .atelier-screen button:active { transform: none; }
+}

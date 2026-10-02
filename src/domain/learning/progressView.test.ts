@@ -45,7 +45,9 @@ describe('honest learning progress presentation', () => {
         expect(paused.conditions[0].count).toBe(8);
         expect(paused.conditions[1].detail).toContain('6問 ひとりでできた');
         expect(paused.conditions[2].count).toBe(0);
-        expect(paused.message).toContain('設定で おやすみ中');
+        expect(paused.message).toContain('現在オフ');
+        expect(paused.message).toContain('選び直し');
+        expect(paused.pauseReason).toBe('disabled');
         p.mathLevels = p.mathLevels!.filter(level => level.level !== 9);
         expect(learningProgressView(p, 'math', undefined, ready).message).toContain('設定を たしかめて');
         p.mathMainLevel = 28; p.mathMaxUnlocked = 28;

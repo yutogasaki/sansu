@@ -34,7 +34,12 @@ export function EnglishListening({ sentence, easy, onClose }: { sentence: Listen
             cancel.current();
             window.removeEventListener('keydown', keys, true);
             document.removeEventListener('visibilitychange', hide);
-            previous?.focus();
+            // Closing retires the one-time entry. Return to the answer when
+            // that trigger has left the document.
+            const target = previous?.isConnected ? previous : document.querySelector<HTMLElement>(
+                '.park-answer .park-choices button, .park-answer .park-input, [data-study-index] button:not(:disabled)',
+            );
+            target?.focus();
         };
     }, [onClose, stop]);
     useEffect(() => { if (sound === 'off') stop(); }, [sound, stop]);

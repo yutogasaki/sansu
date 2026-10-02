@@ -1,0 +1,326 @@
+CAPTURE 390 welcome
+CAPTURE 390 setup-grade
+CAPTURE 390 setup-subject
+CAPTURE 390 setup-range
+CAPTURE 390 records
+CAPTURE 390 settings
+CAPTURE 390 settings-profile
+CAPTURE 390 settings-learning
+CAPTURE 390 settings-display
+CAPTURE 390 settings-parent
+CAPTURE 390 curriculum
+CAPTURE 390 learn-entry
+CAPTURE 390 other-games
+CAPTURE 390 battle-guidance
+CAPTURE 390 parent-gate
+CAPTURE 390 parents
+CAPTURE 390 add-profile
+FAIL { width: 390, height: 844 } Browsing utility pages preserves seven canonical stores
++ actual - expected
+
+  {
+    exploreRuns: [],
++   island: {
++     completedSets: 0,
++     growth: {
++       discoveries: [],
++       expansionLevel: 0,
++       focus: 'garden',
++       memories: [
++         {
++           capturedAt: 1790900973191,
++           completedSets: 0,
++           cosmetics: {
++             accentId: null,
++             appearance: {
++               slots: {
++                 bridge: 'legacy-v1:moon-garden:bridge',
++                 flower: 'legacy-v1:moon-garden:flower',
++                 ground: 'legacy-v1:moon-garden:ground',
++                 houseBody: 'legacy-v1:moon-garden:houseBody',
++                 houseRoof: 'legacy-v1:moon-garden:houseRoof',
++                 houseWindows: 'legacy-v1:moon-garden:houseWindows',
++                 mushroom: 'legacy-v1:moon-garden:mushroom',
++                 path: 'legacy-v1:moon-garden:path',
++                 shore: 'legacy-v1:moon-garden:shore',
++                 sky: 'legacy-v1:moon-garden:sky',
++                 tree: 'legacy-v1:moon-garden:tree',
++                 water: 'legacy-v1:moon-garden:water'
++               },
++               version: 1
++             },
++             themeId: 'moon-garden'
++           },
++           expansionLevel: 0,
++           focus: 'garden',
++           habitatId: undefined,
++           id: 'island-growth-initial',
++           items: [
++             {
++               growthLevel: 0,
++               habitatId: 'garden',
++               id: 'starter-flower',
++               kind: 'flower',
++               position: {
++                 x: 1.5,
++                 z: 0.8
++               },
++               rotation: 0
++             },
++             {
++               growthLevel: 0,
++               habitatId: 'village',
++               id: 'starter-lantern',
++               kind: 'lantern',
++               position: {
++                 x: -1,
++                 z: 0.25
++               },
++               rotation: 0
++             }
++           ],
++           kind: 'initial',
++           progress: {
++             garden: 0,
++             grove: 0,
++             village: 0,
++             waterside: 0
++           },
++           sceneStyle: {
++             ambience: 'off',
++             emblem: 'leaf',
++             expression: {
++               album: {
++                 cover: null,
++                 stamp: null
++               },
++               environment: {
++                 period: null,
++                 season: null
++               },
++               flagTrim: null,
++               residents: {
++                 fox: {
++                   outfit: null,
++                   pattern: null,
++                   trail: null
++                 },
++                 otter: {
++                   outfit: null,
++                   pattern: null,
++                   trail: null
++                 },
++                 rabbit: {
++                   outfit: null,
++                   pattern: null,
++                   trail: null
++                 }
++               },
++               soundscape: null,
++               version: 1
++             },
++             residentLooks: {
++               fox: 'original',
++               otter: 'original',
++               rabbit: 'original'
++             },
++             version: 2
++           }
++         }
++       ],
++       progress: {
++         garden: 0,
++         grove: 0,
++         village: 0,
++         waterside: 0
++       },
++       version: 1
++     },
++     items: [
++       {
++         growthLevel: 0,
++         habitatId: 'garden',
++         id: 'starter-flower',
++         kind: 'flower',
++         position: {
++           x: 1.5,
++           z: 0.8
++         },
++         rotation: 0
++       },
++       {
++         growthLevel: 0,
++         habitatId: 'village',
++         id: 'starter-lantern',
++         kind: 'lantern',
++         position: {
++           x: -1,
++           z: 0.25
++         },
++         rotation: 0
++       }
++     ],
++     pendingRewards: [],
++     profileId: '144cd5bd-f0a0-4b37-b0e2-b71c7b385829',
++     revision: 0,
++     schemaVersion: 1,
++     updatedAt: 1790900973191
++   },
+-   island: undefined,
+    islandEvents: [],
+    islandPlans: [],
++   islands: [
++     {
++       completedSets: 0,
++       growth: {
++         discoveries: [],
++         expansionLevel: 0,
++         focus: 'garden',
++         memories: [
++           {
++             capturedAt: 1790900973191,
++             completedSets: 0,
++             cosmetics: {
++               accentId: null,
++               appearance: {
++                 slots: {
++                   bridge: 'legacy-v1:moon-garden:bridge',
++                   flower: 'legacy-v1:moon-garden:flower',
++                   ground: 'legacy-v1:moon-garden:ground',
++                   houseBody: 'legacy-v1:moon-garden:houseBody',
++                   houseRoof: 'legacy-v1:moon-garden:houseRoof',
++                   houseWindows: 'legacy-v1:moon-garden:houseWindows',
++                   mushroom: 'legacy-v1:moon-garden:mushroom',
++                   path: 'legacy-v1:moon-garden:path',
++                   shore: 'legacy-v1:moon-garden:shore',
++                   sky: 'legacy-v1:moon-garden:sky',
++                   tree: 'legacy-v1:moon-garden:tree',
++                   water: 'legacy-v1:moon-garden:water'
++                 },
++                 version: 1
++               },
++               themeId: 'moon-garden'
++             },
++             expansionLevel: 0,
++             focus: 'garden',
++             habitatId: undefined,
++             id: 'island-growth-initial',
++             items: [
++               {
++                 growthLevel: 0,
++                 habitatId: 'garden',
++                 id: 'starter-flower',
++                 kind: 'flower',
++                 position: {
++                   x: 1.5,
++                   z: 0.8
++                 },
++                 rotation: 0
++               },
++               {
++                 growthLevel: 0,
++                 habitatId: 'village',
++                 id: 'starter-lantern',
++                 kind: 'lantern',
++                 position: {
++                   x: -1,
++                   z: 0.25
++                 },
++                 rotation: 0
++               }
++             ],
++             kind: 'initial',
++             progress: {
++               garden: 0,
++               grove: 0,
++               village: 0,
++               waterside: 0
++             },
++             sceneStyle: {
++               ambience: 'off',
++               emblem: 'leaf',
++               expression: {
++                 album: {
++                   cover: null,
++                   stamp: null
++                 },
++                 environment: {
++                   period: null,
++                   season: null
++                 },
++                 flagTrim: null,
++                 residents: {
++                   fox: {
++                     outfit: null,
++                     pattern: null,
++                     trail: null
++                   },
++                   otter: {
++                     outfit: null,
++                     pattern: null,
++                     trail: null
++                   },
++                   rabbit: {
++                     outfit: null,
++                     pattern: null,
++                     trail: null
++                   }
++                 },
++                 soundscape: null,
++                 version: 1
++               },
++               residentLooks: {
++                 fox: 'original',
++                 otter: 'original',
++                 rabbit: 'original'
++               },
++               version: 2
++             }
++           }
++         ],
++         progress: {
++           garden: 0,
++           grove: 0,
++           village: 0,
++           waterside: 0
++         },
++         version: 1
++       },
++       items: [
++         {
++           growthLevel: 0,
++           habitatId: 'garden',
++           id: 'starter-flower',
++           kind: 'flower',
++           position: {
++             x: 1.5,
++             z: 0.8
++           },
++           rotation: 0
++         },
++         {
++           growthLevel: 0,
++           habitatId: 'village',
++           id: 'starter-lantern',
++           kind: 'lantern',
++           position: {
++             x: -1,
++             z: 0.25
++           },
++           rotation: 0
++         }
++       ],
++       pendingRewards: [],
++       profileId: '144cd5bd-f0a0-4b37-b0e2-b71c7b385829',
++       revision: 0,
++       schemaVersion: 1,
++       updatedAt: 1790900973191
++     }
++   ],
+-   islands: [],
+    logs: [],
+    memoryMath: [
+      {
+        correctAnswers: 18,
+        id: 'add_1d_1',
+

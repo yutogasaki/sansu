@@ -1,0 +1,20 @@
+CAPTURE 390 welcome
+CAPTURE 390 setup-grade
+CAPTURE 390 setup-subject
+CAPTURE 390 setup-range
+CAPTURE 390 records
+CAPTURE 390 settings
+CAPTURE 390 settings-profile
+CAPTURE 390 settings-learning
+CAPTURE 390 settings-display
+CAPTURE 390 settings-parent
+CAPTURE 390 curriculum
+CAPTURE 390 learn-entry
+CAPTURE 390 other-games
+CAPTURE 390 battle-guidance
+CAPTURE 390 parent-gate
+FAIL { width: 390, height: 844 } locator.waitFor: Timeout 25000ms exceeded.
+Call log:
+[2m  - waiting for getByRole('dialog') to be hidden[22m
+[2m    55 × locator resolved to visible <div role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="_r_8_" class="relative flex max-h-[calc(100dvh-2rem)] w-full flex-col overflow-hidden rounded-[28px] app-glass-strong app-shadow-strong max-w-sm">…</div>[22m
+

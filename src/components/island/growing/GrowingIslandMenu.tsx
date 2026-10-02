@@ -1,13 +1,14 @@
 import { useEffect, useRef } from 'react';
-import { ChevronDown, ChevronRight, RotateCcw, RotateCw, Settings2, X } from 'lucide-react';
+import { Archive, BookOpen, Camera, ChevronDown, Flower2, House, PawPrint, Pencil, RotateCcw, RotateCw, Settings2, Sprout, X } from 'lucide-react';
 import type { Side, Villager } from '../../../domain/growingIsland/types';
-import { IslandToyIcon } from '../IslandToyIcon';
 import { villagerName } from './growingCopy';
+import type { MenuPictures } from './menuMiniatures';
 import './growingIslandMenu.css';
 
 export interface GrowingIslandMenuProps {
     villagers: Villager[];
     faces: Record<string, string>;
+    pictures?: MenuPictures;
     drops: number;
     busy: boolean;
     quote?: { sides: Side[]; price: number };
@@ -27,31 +28,31 @@ export interface GrowingIslandMenuProps {
 
 /** A small, optional paper beside the live island; every entry opens its real destination. */
 export function GrowingIslandMenuContents(props: GrowingIslandMenuProps) {
-    const { villagers, faces, quote } = props;
-    const entries = [
-        { label: 'たね', icon: 'island', action: props.onSeeds },
-        { label: 'なぞる', icon: 'palette', action: props.onTrace },
-        { label: 'もちもの', icon: 'box', action: props.onStored },
-        { label: 'いえ', icon: 'house', action: props.onHome },
-        { label: 'みせる', icon: 'camera', action: props.onShow },
-        { label: 'はなずかん', icon: 'display', action: props.onFlowers },
-    ] as const;
+    const { villagers, quote, pictures } = props;
     return <div className="growing-pocket-entries">
-        <button className="growing-pocket-friends" aria-label="なかま" onClick={props.onFriends}>
-            <span className="growing-pocket-faces" aria-hidden="true">
-                {villagers.length ? villagers.slice(0, 3).map(v => <span key={v.id}>
-                    {faces[v.id] ? <img src={faces[v.id]} alt="" /> : <span>{villagerName(v).slice(0, 1)}</span>}
-                </span>) : <IslandToyIcon kind="play" size={36} />}
-            </span>
-            <span><strong>なかま <small>{villagers.length}にん</small></strong><span className="growing-pocket-note">{villagers.length ? 'みんなの かおを みる' : 'これからの なかま'}</span></span>
-            <ChevronRight className="growing-pocket-arrow" size={18} aria-hidden="true" />
-        </button>
-        {entries.map(entry => <button key={entry.label} className="growing-pocket-action" onClick={entry.action}>
-            <IslandToyIcon kind={entry.icon} size={28} /><span>{entry.label}</span>
-        </button>)}
-        <button className="growing-pocket-guide" aria-label="しまの あそびかた" onClick={props.onGuide}>
-            <IslandToyIcon kind="book" size={28} /><span>あそびかた</span><ChevronRight className="growing-pocket-arrow" size={18} aria-hidden="true" />
-        </button>
+        <div className="growing-pocket-primary">
+            <button className="growing-pocket-friends" aria-label="なかま" aria-describedby="growing-menu-population" onClick={props.onFriends}>
+                <span className="growing-pocket-model" aria-hidden="true">
+                    {pictures?.friends && villagers.length ? <img src={pictures.friends} alt="" /> : <PawPrint size={48} strokeWidth={1.5} />}
+                </span>
+                <span className="growing-pocket-main-copy"><strong>{villagers.length ? 'なかまに あう' : 'なかま'}</strong><small id="growing-menu-population">{villagers.length}にん<span className="growing-pocket-names"> · {villagers.length ? villagers.slice(0, 2).map(villagerName).join('・') : 'これからの なかま'}</span></small></span>
+            </button>
+            <button className="growing-pocket-seeds" aria-label="たね" onClick={props.onSeeds}>
+                <span className="growing-pocket-model" aria-hidden="true">{pictures?.seeds ? <img src={pictures.seeds} alt="" /> : <Sprout size={48} strokeWidth={1.5} />}</span>
+                <span className="growing-pocket-main-copy"><strong>たねを おく</strong><small>すきな ばしょに</small></span>
+            </button>
+        </div>
+        <div className="growing-pocket-shortcuts">
+            <button onClick={props.onHome}><House size={21} aria-hidden="true" /><span>いえ</span></button>
+            <button onClick={props.onStored}><Archive size={21} aria-hidden="true" /><span>もちもの</span></button>
+            <button onClick={props.onTrace}><Pencil size={21} aria-hidden="true" /><span>なぞる</span></button>
+        </div>
+        <div className="growing-pocket-memories">
+            <button onClick={props.onShow}><Camera size={20} aria-hidden="true" /><span>みせる</span></button>
+            <button onClick={props.onFlowers}><Flower2 size={20} aria-hidden="true" /><span>はなずかん</span></button>
+        </div>
+        <div className="growing-pocket-footer">
+            <button className="growing-pocket-guide" aria-label="しまの あそびかた" onClick={props.onGuide}><BookOpen size={20} aria-hidden="true" /><span>あそびかた</span></button>
         <details className="growing-pocket-tools" onToggle={event => {
             if (event.currentTarget.open) event.currentTarget.querySelector('.growing-pocket-tool-buttons')?.scrollIntoView({ block: 'nearest', behavior: 'instant' });
         }}>
@@ -67,6 +68,7 @@ export function GrowingIslandMenuContents(props: GrowingIslandMenuProps) {
                 </button>)}
             </div>}
         </details>
+        </div>
     </div>;
 }
 
@@ -79,7 +81,7 @@ export function GrowingIslandMenu(props: GrowingIslandMenuProps) {
         window.addEventListener('keydown', escape);
         return () => window.removeEventListener('keydown', escape);
     }, [onClose]);
-    return <section className="growing-menu growing-pocket-menu" aria-label="メニュー" data-menu-candidate="island-pocket-v2">
+    return <section className="growing-menu growing-pocket-menu" aria-label="メニュー" data-menu-candidate="island-play-diorama-v3">
         <header className="growing-pocket-heading"><h2>しまのメニュー</h2><button ref={close} className="growing-close" aria-label="メニューを とじる" onClick={props.onClose}><X size={20} aria-hidden="true" /></button></header>
         <GrowingIslandMenuContents {...props} />
     </section>;

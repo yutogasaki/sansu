@@ -1,0 +1,17 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: {"name":"とじる","w":56.96875,"h":55.1875,"visible":false,"hit":true,"disabled":false}
+    at assertControls (file:///Users/yutogasaki/Projects/sansu/docs/design/2026-10-02-whole-app-atelier/inputs.mjs:15:50)
+    at async capture (file:///Users/yutogasaki/Projects/sansu/docs/design/2026-10-02-whole-app-atelier/inputs.mjs:65:17)
+    at async file:///Users/yutogasaki/Projects/sansu/docs/design/2026-10-02-whole-app-atelier/inputs.mjs:134:21 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.18.0

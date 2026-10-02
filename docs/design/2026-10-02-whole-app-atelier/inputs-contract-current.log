@@ -1,0 +1,23 @@
+PASS chromium-number
+PASS chromium-count
+PASS chromium-base10
+PASS chromium-decimal
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+1 !== 2
+
+    at assertProblemMeaning (file:///Users/yutogasaki/Projects/sansu/tools/island-learning-checks.mjs:280:16)
+    at async file:///Users/yutogasaki/Projects/sansu/docs/design/2026-10-02-whole-app-atelier/inputs.mjs:140:21 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 2,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.18.0

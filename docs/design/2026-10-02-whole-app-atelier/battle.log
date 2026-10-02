@@ -1,0 +1,16 @@
+PASS battle runtime 390x844
+PASS battle runtime 768x1024
+PASS battle runtime 1024x768
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.waitFor: Timeout 20000ms exceeded.
+Call log:
+[2m  - waiting for locator('.battle-setup-screen') to be visible[22m
+
+    at /Users/yutogasaki/Projects/sansu/tools/e2e-battle-runtime.mjs:448:60 {
+  name: 'TimeoutError'
+}
+
+Node.js v24.18.0

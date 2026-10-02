@@ -17,6 +17,7 @@ import { notifyPwaRouteNavigation } from "./pwa";
 import { LaunchRoute } from "./components/LaunchRoute";
 import { islandAvailable, islandEnabled } from "./domain/island/feature";
 import { islandStudyDestination } from "./domain/island/studyRoute";
+import './components/ui/WholeAppAtelier.css';
 
 const Learn = lazy(() => import('./pages/Learn'));
 const NatureTown = lazy(() => import('./pages/NatureTown'));
@@ -162,6 +163,7 @@ function App() {
     return (
         <div
             className="app-container"
+            data-ui-style-candidate="whole-app-atelier-v1"
             data-build-revision={__BUILD_REVISION__}
             data-build-version={__APP_VERSION__}
             data-delivery-id={__DELIVERY_ID__}

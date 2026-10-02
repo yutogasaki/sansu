@@ -1,0 +1,30 @@
+PASS 390 practice
+FAIL 390 ready compact 489.375
+FAIL 390 paused compact 513.765625
+FAIL 390 vocab-paused compact 513.765625
+FAIL 390 inconsistent compact 513.765625
+PASS 390 complete
+PASS 390 mix
+PASS 768 practice
+FAIL 768 ready compact 489.375
+FAIL 768 paused compact 513.765625
+FAIL 768 vocab-paused compact 513.765625
+FAIL 768 inconsistent compact 513.765625
+PASS 768 complete
+PASS 768 mix
+PASS 320 practice
+PASS 320 ready
+PASS 320 paused
+PASS 320 vocab-paused
+PASS 320 inconsistent
+PASS 320 complete
+PASS 320 mix
+PASS 568 practice
+PASS 568 ready
+PASS 568 paused
+PASS 568 vocab-paused
+PASS 568 inconsistent
+FAIL 568 complete locator.waitFor: Target page, context or browser has been closed
+Call log:
+[2m  - waiting for locator('.island-welcome') to be visible[22m
+

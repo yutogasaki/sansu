@@ -38,7 +38,7 @@ export const ScreenScaffold: React.FC<ScreenScaffoldProps> = ({
     footerSpacing = "nav",
 }) => {
     return (
-        <div className={cn("brand-utility-screen flex h-full min-h-0 flex-col", containerClassName)}>
+        <div className={cn("brand-utility-screen atelier-screen flex h-full min-h-0 flex-col", containerClassName)}>
             <Header
                 title={title}
                 subtitle={subtitle}
