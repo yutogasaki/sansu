@@ -69,3 +69,5 @@ closeout時のdocs再checkは、別作業の `docs/design/2026-10-01-menu-atelie
 - 固定コピーの初回coreは、コピーに含めなかった `.github` / `assets` / `art` の文書リンクで失敗した。参照を補った後の出力を保存している。
 
 今回のcommit・push・公開は未実施。別作業のdirty変更を保持した。
+
+2026-10-02 UX追加: [通知の対象へ直行・次の一手・本人の大きな記念](../2026-10-02-guidance-ux/README.md)。

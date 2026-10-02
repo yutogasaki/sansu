@@ -1,5 +1,7 @@
 # Shared Done Index
 
+- 2026-10-02: [本の次の一手と記念を改善](../../docs/design/2026-10-02-guidance-ux/README.md)。通知の対象へ直行・導入の主操作・本人の大きな記念。core4,576、両幅DEV/家/production offline PASS -> `docs/done/2026-10.md`
+
 - 2026-10-02: [家の本と案内の修正](../../docs/design/2026-10-01-island-guidance/fixes-checks.json)。直接入口・不足理由・あとでやる・別タブ同期。コミット対象core4,570、両幅DEV/production offline PASS -> `docs/done/2026-10.md`
 
 

@@ -65,6 +65,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     const own = island.record?.state;
     const time = useGardenTime(active);
     const [panel, setPanel] = useState<Panel>(), [menu, setMenu] = useState(false), [turn, setTurn] = useState(0);
+    const [guideMemory, setGuideMemory] = useState<AchievementId>();
     const [placing, setPlacing] = useState<Placing>(), [selected, setSelected] = useState<string>();
     const [line, setLine] = useState<string>(), [dawn, setDawn] = useState(0);
     const [cheer, setCheer] = useState(0), [festival, setFestival] = useState(0);
@@ -183,7 +184,10 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     const disembark = async () => { for (const id of own.arrivals) await island.dispatch({ type: 'disembark', id }); audio.play('discovery'); setLine(undefined); };
     const quote = landQuote(own), gifts = own.unopened.length + own.arrivals.length;
 
-    const openBook = () => { setMenu(false); setSelected(undefined); setPanel('guide'); setLine(undefined); };
+    const openBook = (memory?: AchievementId) => {
+        setGuideMemory(memory); if (memory) guide.dismissNotice();
+        setMenu(false); setSelected(undefined); setPanel('guide'); setLine(undefined);
+    };
     const goalAction = (id: AchievementId) => {
         setPanel(undefined); setSelected(undefined); setLine(undefined);
         const action = achievementCatalog.find(item => item.id === id)?.action;
@@ -321,7 +325,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
                 <button onClick={() => { guide.pause(); setMenu(false); loadFaces(); setPanel('friends'); }}>なかま</button>
                 <button onClick={() => { guide.pause(); setMenu(false); setPanel('show'); }}>みせる</button>
                 <button onClick={() => { guide.pause(); setMenu(false); setPanel('flowers'); }}>はなずかん</button>
-                <button onClick={openBook}>しまの あそびかた</button>
+                <button onClick={() => openBook()}>しまの あそびかた</button>
             </div>
             <div className="growing-row">
                 <button onClick={() => { guide.pause(); setMenu(false); setPanel('trace'); }}>なぞる</button>
@@ -359,7 +363,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
             onFocus={id => { setPanel(undefined); setFocus({ id, n: Date.now() }); setLine(actorLine(own, id)); }} />}
         {!visit && panel === 'show' && <ShowPanel onPick={choice => void showChoice(choice)} onClose={() => setPanel(undefined)} />}
         {!visit && panel === 'flowers' && <FlowerBook state={own} onClose={() => setPanel(undefined)} />}
-        {!visit && panel === 'guide' && <GrowingGuideBook state={own} busy={island.busy} onClose={() => setPanel(undefined)}
+        {!visit && panel === 'guide' && <GrowingGuideBook state={own} busy={island.busy} initialMemory={guideMemory} onClose={() => setPanel(undefined)}
             onChoose={(id, play) => void run({ type: 'choose-goal', id }, () => { guide.pause(); if (play) goalAction(id); })}
             onClear={() => void run({ type: 'choose-goal' })} onTry={goalAction} onResumeStarter={() => void guide.resume().then(() => setPanel(undefined))}
             onStarterAction={() => starterAction()} onTarget={memoryTarget} />}

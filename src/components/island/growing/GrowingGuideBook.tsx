@@ -12,6 +12,7 @@ const STARTER_ART: Record<StarterStepId, AchievementId> = { S1: 'A1', S2: 'A2', 
 export interface GrowingGuideBookProps {
     state: GrowingState;
     busy: boolean;
+    initialMemory?: AchievementId;
     onClose: () => void;
     onChoose: (id: AchievementId, play: boolean) => void;
     onClear: () => void;
@@ -22,9 +23,9 @@ export interface GrowingGuideBookProps {
 }
 
 /** An optional, illustrated book leaves the actual island visible above the page. */
-export function GrowingGuideBook({ state, busy, onClose, onChoose, onClear, onTry, onResumeStarter, onStarterAction, onTarget }: GrowingGuideBookProps) {
-    const [tab, setTab] = useState<'try' | 'done'>('try');
-    const [detail, setDetail] = useState<AchievementId | undefined>(state.guidance?.selected);
+export function GrowingGuideBook({ state, busy, initialMemory, onClose, onChoose, onClear, onTry, onResumeStarter, onStarterAction, onTarget }: GrowingGuideBookProps) {
+    const [tab, setTab] = useState<'try' | 'done'>(initialMemory ? 'done' : 'try');
+    const [detail, setDetail] = useState<AchievementId | undefined>(initialMemory ?? state.guidance?.selected);
     const uid = useId(), heading = useRef<HTMLHeadingElement>(null);
     const callbacks = useRef({ onClose });
     useEffect(() => { callbacks.current = { onClose }; }, [onClose]);
@@ -48,11 +49,14 @@ export function GrowingGuideBook({ state, busy, onClose, onChoose, onClear, onTr
         ? { hint: state.unopened.length ? 'そだった つぼみを さわってみよう' : 'たねが まってるよ。いまは しまを ながめてみよう', action: 'たねを みる' }
         : step === 'S5' && state.drops < 4 ? { hint: 'いまは ベンチで あそべるよ', action: 'しまへ もどる' } : {}) } : undefined;
     const selected = state.guidance?.selected;
-    const opened = detail ?? selected;
+    const achieved = achievementCatalog.filter(item => state.guidance?.achievements[item.id])
+        .sort((a, b) => (state.guidance!.achievements[b.id]!.at ?? 0) - (state.guidance!.achievements[a.id]!.at ?? 0));
+    const tryDetail = detail ?? selected;
+    const opened = tab === 'done' ? (detail && state.guidance?.achievements[detail] ? detail : achieved[0]?.id)
+        : tryDetail && !state.guidance?.achievements[tryDetail] ? tryDetail : undefined;
     const entry = achievementCatalog.find(item => item.id === opened);
     const proof = opened ? state.guidance?.achievements[opened] : undefined;
     const suggestion = suggestions.find(item => item.id === opened);
-    const achieved = achievementCatalog.filter(item => state.guidance?.achievements[item.id]);
     const switchTab = (next: 'try' | 'done') => { setTab(next); setDetail(next === 'try' ? selected : undefined); };
     const tabKey = (event: KeyboardEvent<HTMLButtonElement>) => {
         if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
@@ -72,7 +76,7 @@ export function GrowingGuideBook({ state, busy, onClose, onChoose, onClear, onTr
             {record && <span className="growing-guide-memory">{record.snapshot.legacy ? 'これまでの しま' : 'しまの おもいで'}</span>}
         </button>;
     };
-    return <section className="growing-guide-book" aria-label="しまの あそびかた" aria-labelledby={`${uid}-heading`} data-visual-candidate="growing-guidance-v1">
+    return <section className="growing-guide-book" aria-label="しまの あそびかた" aria-labelledby={`${uid}-heading`} data-visual-candidate="growing-guidance-v2">
         <header className="growing-guide-header">
             <div><span className="growing-guide-kicker">ぽこもこと</span><h2 ref={heading} tabIndex={-1} id={`${uid}-heading`}>しまの あそびかた</h2></div>
             <button className="growing-guide-close" onClick={onClose}>とじる <span aria-hidden="true">×</span></button>
@@ -84,7 +88,7 @@ export function GrowingGuideBook({ state, busy, onClose, onChoose, onClear, onTr
         </div>
         <div className="growing-guide-page" id={`${uid}-${tab}-page`} role="tabpanel" aria-labelledby={`${uid}-${tab}-tab`}>
             {tab === 'try' && <>
-                {step && starter && <article className="growing-guide-starter" data-guidance-starter={step}>
+                {step && starter && !opened && <article className="growing-guide-starter" data-guidance-starter={step}>
                     <GrowingGuideArt id={STARTER_ART[step]} />
                     <div><span className="growing-guide-kicker">はじめの あそび</span><h3>{starter.title}</h3><p>{starter.hint}</p>
                         <div className="growing-guide-actions"><button className="growing-guide-primary" disabled={busy} onClick={onStarterAction}>{starter.action}</button>
@@ -101,13 +105,13 @@ export function GrowingGuideBook({ state, busy, onClose, onChoose, onClear, onTr
                         </div>
                     </div>
                 </article>}
-                {available.length > 0 && <><h3 className="growing-guide-section-title">どれで あそぶ？</h3><div className="growing-guide-candidates">{available.map(item => goal(item.id))}</div></>}
+                {!step && !opened && available.length > 0 && <><h3 className="growing-guide-section-title">どれで あそぶ？</h3><div className="growing-guide-candidates">{available.map(item => goal(item.id))}</div></>}
                 {suggestions.length > 0 && <details className="growing-guide-all"><summary>ほかの あそびも みる</summary><div className="growing-guide-grid">{suggestions.map(item => goal(item.id, true))}</div></details>}
                 {!suggestions.length && <p className="growing-guide-note">しまには いろいろな あそびが あるよ。すきな ばしょを かえてみよう</p>}
             </>}
             {tab === 'done' && <>
                 {!achieved.length && <div className="growing-guide-empty"><GrowingGuideArt id="A1" /><h3>ここに おもいでが ふえていくよ</h3><p>しまに もどって、すきな あそびを ためしてみよう</p><button onClick={() => switchTab('try')}>ためしてみる</button></div>}
-                {entry && proof && <article className="growing-guide-detail growing-guide-detail-memory">
+                {entry && proof && <article className="growing-guide-detail growing-guide-detail-memory" data-guidance-memory={entry.id}>
                     <GrowingGuideArt id={entry.id} evidence={proof} />
                     <div><span className="growing-guide-kicker">{proof.snapshot.legacy ? 'これまでの しま' : 'あのときの おもいで'}</span><h3>{entry.title}</h3>
                         <p>{memoryLine(proof)}</p>
@@ -115,7 +119,8 @@ export function GrowingGuideBook({ state, busy, onClose, onChoose, onClear, onTr
                             {targetStatus(state, proof) === 'missing' && <span className="growing-guide-note">ほんの なかに おもいでが のこっているよ</span>}</div>
                     </div>
                 </article>}
-                <div className="growing-guide-memories">{achieved.map(item => goal(item.id))}</div>
+                {achieved.length > 1 && <><h3 className="growing-guide-section-title">ほかの おもいで</h3>
+                    <div className="growing-guide-memories">{achieved.filter(item => item.id !== opened).map(item => goal(item.id, true))}</div></>}
             </>}
         </div>
     </section>;

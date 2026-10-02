@@ -1,0 +1,47 @@
+{
+  "baseCommit": "5987adee0b4789b16ff419d4e4dfa7a3df0f4e22",
+  "visualCandidate": "growing-guidance-v2",
+  "scope": "Only notification/book UI and its QA. No learning/domain/storage/economy changes.",
+  "core": {
+    "pass": true,
+    "files": 515,
+    "tests": 4576
+  },
+  "classicSmoke": {
+    "pass": true,
+    "scenarios": 31
+  },
+  "journeys": {
+    "final-dev": {
+      "pass": true,
+      "target": "http://127.0.0.1:5268",
+      "scenarios": 6,
+      "captures": 18,
+      "sourceStable": true
+    },
+    "final-house": {
+      "pass": true,
+      "target": "http://127.0.0.1:5268",
+      "scenarios": 2,
+      "captures": 16,
+      "sourceStable": true
+    },
+    "production": {
+      "pass": true,
+      "target": "http://127.0.0.1:5269",
+      "scenarios": 2,
+      "captures": 20,
+      "sourceStable": true
+    }
+  },
+  "gates": {
+    "visualAppeal": "Author comparison: hierarchy and personal memory prominence improved; independent child evaluation pending.",
+    "silentComprehensionAndSafety": "HOLD: independent child evaluation pending.",
+    "runtimeIntegrity": "GO for the recorded local DEV/production journeys."
+  },
+  "unverified": [
+    "Physical iPhone relaunch",
+    "Real two-build update",
+    "Child comprehension and voluntary next-day return"
+  ]
+}

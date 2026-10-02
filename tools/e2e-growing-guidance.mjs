@@ -110,6 +110,11 @@ try {
         const id = await seedDev(page, { familiar: false, name: 'しまの あんない' });
         await page.reload(); await ready(page);
         await page.locator('[data-guidance-starter="S1"]').waitFor(); await capture(page, 'starter-S1');
+        await openBook(page);
+        assert.equal(await book(page).locator('.growing-guide-candidates').count(), 0);
+        assert.equal(await book(page).locator('details[open]').count(), 0);
+        await book(page).locator('[data-guidance-starter="S1"]').waitFor();
+        await capture(page, 'first-book-one-action'); await closeBook(page);
         const first = await read(page, id); assert.equal(first.state.guidance.starter.automatic, true); assert.equal(first.state.plots.length, 0);
         await page.locator('[data-guidance-starter="S1"]').getByRole('button', { name: 'しまの ヒントを とじる', exact: true }).tap();
         await saved(page, id, r => !r.state.guidance.starter.automatic);
@@ -126,6 +131,12 @@ try {
         await btn(page, 'いろ 3').tap(); await saved(page, id, r => r.state.flagColor === 2);
         assert.deepEqual((await read(page, id)).state.guidance.achievements.A3, a3, 'Later paint keeps original earned snapshot');
         await page.locator('.growing-sheet').getByRole('button', { name: 'とじる', exact: true }).tap();
+        await page.locator('[data-guidance-notice]').getByRole('button', { name: 'できごとを みる', exact: true }).tap();
+        assert.equal(await book(page).getByRole('tab', { name: 'できたこと', exact: true }).getAttribute('aria-selected'), 'true');
+        await book(page).locator('[data-guidance-memory="A3"]').waitFor();
+        assert.equal(await book(page).locator('[data-guidance-starter]').count(), 0);
+        assert.deepEqual((await read(page, id)).state.guidance.achievements.A3, a3);
+        await capture(page, 'notice-direct-memory'); await closeBook(page);
         await choose(page, 'A4');
         await page.locator('.growing-sheet').getByRole('button', { name: 'うごかす', exact: true }).tap();
         await cellTap(page, id, { x: 4, z: 3 }); await btn(page, 'ここに おく').tap();
@@ -173,7 +184,7 @@ try {
         if (process.env.SANSU_GROWING_GUIDANCE_OFFLINE === '1') {
             await context.setOffline(true);
             await openBook(page); await book(page).getByRole('tab', { name: 'できたこと', exact: true }).tap();
-            await book(page).locator('[data-guidance-goal="A3"]').tap();
+            if (!await book(page).locator('[data-guidance-memory="A3"]').count()) await book(page).locator('[data-guidance-goal="A3"]').tap();
             await book(page).getByRole('button', { name: 'この場所へ', exact: true }).tap();
             await page.locator('.growing-sheet[aria-label="しまの はた"]').waitFor(); await btn(page, 'いろ 4').tap(); await saved(page, id, r => r.state.flagColor === 3);
             await page.locator('.growing-sheet').getByRole('button', { name: 'とじる', exact: true }).tap();

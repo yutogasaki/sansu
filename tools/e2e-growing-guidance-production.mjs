@@ -33,14 +33,22 @@ async function until(page, id, predicate) {
     throw Error('Growing record did not reach its expected state');
 }
 async function capture(page, label) {
-    const file = `${page.viewportSize().width}-${label}.png`; await page.screenshot({ path: `${out}/${file}` });
+    const file = `${page.viewportSize().width}-${label}.png`;
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    try { await page.screenshot({ path: `${out}/${file}` }); }
+    catch (error) {
+        if (!String(error).includes('Page.captureScreenshot')) throw error;
+        (report.captureRetries ??= []).push({ file, error: error.stack || String(error) });
+        await page.waitForTimeout(250);
+        await page.screenshot({ path: `${out}/${file}` });
+    }
     const metadata = await runtimeMetadata(page), world = await page.locator('[data-growing-world]').count()
         ? await page.locator('[data-growing-world]').evaluate(e => ({ ...e.dataset })) : null;
     const identity = await page.locator('.app-container').evaluate(e => ({ ...e.dataset }));
     assert.equal(metadata.appRoot.islandFeatureEnabled, true);
     if (world) { assert.equal(world.visualCandidate, 'growing-island-v1'); assert.equal(world.growingFeatureEnabled, 'true'); }
     report.captures.push({ file, ...metadata, identity, world,
-        guidanceCandidate: await page.locator('[data-visual-candidate="growing-guidance-v1"]').count() ? 'growing-guidance-v1' : null,
+        guidanceCandidate: await page.locator('[data-visual-candidate="growing-guidance-v2"]').count() ? 'growing-guidance-v2' : null,
         cacheState: await page.evaluate(() => ({ controller: Boolean(navigator.serviceWorker.controller), online: navigator.onLine })) });
 }
 async function plant(page, kind, cell) {
@@ -88,7 +96,7 @@ try {
         await page.getByRole('button', { name: 'メニュー', exact: true }).tap();
         await page.getByRole('button', { name: 'しまの あそびかた', exact: true }).tap();
         await capture(page, 'book');
-        await page.locator('[data-guidance-goal="A3"]').first().tap();
+        await page.locator('.growing-guide-all summary').tap(); await page.locator('[data-guidance-goal="A3"]').first().tap();
         await page.getByRole('button', { name: 'これを やってみる', exact: true }).tap();
         await page.getByRole('button', { name: 'いろ 2', exact: true }).tap();
         const colored = await until(page, id, r => Boolean(r.state.guidance?.achievements.A3));

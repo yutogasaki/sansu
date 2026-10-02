@@ -43,6 +43,13 @@
 .growing-guide-starter .growing-guide-art { align-self: start; margin-top: 12px; }
 .growing-guide-detail { background: var(--pokomoko-rose); }
 .growing-guide-detail-memory { background: var(--pokomoko-mint); }
+.growing-guide-book .growing-guide-detail-memory {
+    display: flex; flex-direction: column; gap: 6px; text-align: center; padding: 12px 16px 18px;
+}
+.growing-guide-detail-memory > .growing-guide-art { width: min(100%, 280px); }
+.growing-guide-detail-memory > div { width: 100%; }
+.growing-guide-detail-memory .growing-guide-actions { justify-content: center; }
+.growing-guide-detail-memory h3 { font-size: 19px; }
 .growing-guide-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
 .growing-guide-actions button { font-size: 13px; }
 .growing-guide-book button.growing-guide-primary { background: var(--pokomoko-blue); color: var(--pokomoko-paper); border-color: var(--pokomoko-blue-deep); box-shadow: 0 3px 0 var(--pokomoko-blue-deep); }
