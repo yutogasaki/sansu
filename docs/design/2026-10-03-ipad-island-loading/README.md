@@ -32,3 +32,9 @@
 - runtime：対象の移行・保存・再試行とChromium SW offlineはPASS。実iPadのホーム画面からの再起動は利用者確認が残る。
 
 公開後は公開URLのrevisionと旧→新SW更新・同じ学習予約を別に確認する。データ消去や旧writerへのロールバックを復旧手段にしない。
+
+## 公開と実SW更新の確認
+
+main修正 `3dc3051a37a3fe1436452ddee4eae1bcb973b32d` を本番へ反映し、Vercel成功と[公開version](public-version.json)を照合した。Gitに含めたapp入力は隔離候補の全hashと一致し、他の未確定変更を公開していない。
+
+公開URLの768幅Chromiumで、旧版 `2a330fad` の実初回設定と1回答をSW制御のofflineへ保持してから、新版へ再接続・自動更新した。全7学習storeの不変、同じ予約/次問への復帰、新版のoffline起動・追加回答保存をPASS。[公開の更新記録](public-report.json)、[新版の島](public-new-online.png)、[新版のoffline学習](public-new-offline-learning.png)。実iPadのホーム画面での確認とは分ける。
