@@ -1,5 +1,7 @@
 # 今進めていること
 
+10/2 本の6種類の挿絵をポップなデフォルメへ変更：[実画面と検証](../../docs/design/2026-10-02-guide-picturebook/README.md)。[自己レビュー後のv6](../../docs/design/2026-10-02-guide-picturebook/review-v6/README.md)では模型の重なりと小画面のボタン見切れを修正。core4,606・3サイズ48撮影・家両幅PASS。SW結果はv5履歴。ローカル実装、本番公開と利用者の見た目/理解の確認は別。
+
 10/2 学習・島・家のmain統合候補を固定確認：[最終結果と対象境界](../../docs/design/2026-10-02-learning-island-integration/final/README.md)。最終core4,599 testsと対象実操作/実SW offlineはPASS。検証中の後続の模型メニューは別作業、実機/子ども/公開URLは別確認。
 
 更新: 2026-09-29。実作業を4本に整理し、今回の一括実装を反映。次の残作業を下表へ分離。

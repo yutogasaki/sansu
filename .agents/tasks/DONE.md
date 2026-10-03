@@ -1,5 +1,9 @@
 # Shared Done Index
 
+- 2026-10-02: [本の自己レビューと修正v6](../../docs/design/2026-10-02-guide-picturebook/review-v6/README.md)。挿絵と本人の模型を分離し、320幅の主操作を初期表示へ。core4,606、3サイズ48撮影・家両幅PASS。未公開 -> `docs/done/2026-10.md`
+
+- 2026-10-02: [あそびかた6点のポップなデフォルメ](../../docs/design/2026-10-02-guide-picturebook/README.md)。全6種類の挿絵と固定snapshot模型、本/一覧/案内を統一。core4,606、3サイズ48撮影、家と実SW offline両幅PASS。ローカル、未公開 -> `docs/done/2026-10.md`
+
 - 2026-10-02: [記録の文字量と進級停止の説明を修正](../../docs/design/2026-10-02-progress-clear/README.md)。メイン再選択による上位offを再現、選択済み操作を無効化、隣接次範囲だけの保護者確認付き再開を追加。core4,605・classic31・5サイズ35ケース/65撮影・両幅の読込/保存retry PASS。ローカル、本人の操作履歴/実機/公開は別 -> `docs/done/2026-10.md`
 
 - 2026-10-02: [島以外を含む全画面の仕上げ](../../docs/design/2026-10-02-whole-app-atelier/README.md)。初期設定/学習/記録/設定/保護者/しあげ/副モード、短横入力と確認/英文focusを整備。519 files/4,603 tests、smoke31、実画面と保存/offlineを確認。ローカル、公開と利用者評価は別 -> `docs/done/2026-10.md`

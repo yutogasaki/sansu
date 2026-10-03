@@ -48,7 +48,7 @@ async function capture(page, label) {
     assert.equal(metadata.appRoot.islandFeatureEnabled, true);
     if (world) { assert.equal(world.visualCandidate, 'growing-island-v1'); assert.equal(world.growingFeatureEnabled, 'true'); }
     report.captures.push({ file, ...metadata, identity, world,
-        guidanceCandidate: await page.locator('[data-visual-candidate="growing-guidance-v2"]').count() ? 'growing-guidance-v2' : null,
+        guidanceCandidate: await page.locator('.growing-guide-book').count() ? await page.locator('.growing-guide-book').getAttribute('data-visual-candidate') : null,
         cacheState: await page.evaluate(() => ({ controller: Boolean(navigator.serviceWorker.controller), online: navigator.onLine })) });
 }
 async function plant(page, kind, cell) {

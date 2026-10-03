@@ -16,7 +16,8 @@ async function sources() {
 const report = { target: base, source: 'DEV; disposable profile only. Actual house/book/world actions and ordinary UI answers.',
     initialSources: await sources(), scenarios: [], captures: [], exceptions: [], pass: false };
 const browser = await chromium.launch(); let activePage;
-const book = page => page.locator('section[aria-label="しまの あそびかた"]');
+// The loading overlay uses the same accessible name. Wait for the actual reader and its Escape handler.
+const book = page => page.locator('.growing-guide-book');
 const read = (page, id) => page.evaluate(async id => {
     const { growingDb } = await import('/src/domain/growingIsland/repository.ts');
     assertPreview(growingDb.name); function assertPreview(name) { if (name !== 'SansuGrowingIslandPreviewV1') throw Error('Preview only'); }
@@ -53,6 +54,7 @@ try {
         const direct = page.locator('[data-house-guide-book]');
         const hit = await direct.boundingBox(); assert(hit.width >= 44 && hit.height >= 44);
         await capture(page, 'house-direct-book'); await direct.tap(); await book(page).waitFor();
+        await page.waitForFunction(() => document.activeElement?.closest('.growing-guide-book'));
         await page.keyboard.press('Escape'); await book(page).waitFor({ state: 'hidden' });
         await page.locator('[data-house-menu-trigger]').tap(); await capture(page, 'house-menu');
         await page.locator('[data-keepsake-action="growing-guide"]').tap(); await book(page).waitFor(); await capture(page, 'house-book');

@@ -30,7 +30,7 @@ describe('growing book entry and attention', () => {
         const html = render({ state: remembered(), initialMemory: 'A3' });
         expect(html).toMatch(/aria-selected="true"[^>]*data-guide-tab="done"/);
         expect(html).toContain('data-guidance-memory="A3"');
-        expect(html).toContain('fill="#e0b454"');
+        expect(html).toContain('data-memory-flag="2"');
         expect(html).toContain('data-guidance-goal="A4"');
         expect(html).not.toContain('data-guidance-goal="A3"');
     });

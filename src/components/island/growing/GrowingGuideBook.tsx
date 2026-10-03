@@ -70,13 +70,13 @@ export function GrowingGuideBook({ state, busy, initialMemory, onClose, onChoose
         const record = state.guidance?.achievements[id];
         return <button key={id} className={`growing-guide-card${compact ? ' growing-guide-card-small' : ''}`}
             data-guidance-goal={id} aria-pressed={opened === id} onClick={() => setDetail(id)}>
-            <GrowingGuideArt id={id} evidence={record} />
+            <GrowingGuideArt id={id} />
             <strong>{item.title}</strong>
             {selected === id && !record && <span className="growing-guide-bookmark">えらんでいる あそび</span>}
             {record && <span className="growing-guide-memory">{record.snapshot.legacy ? 'これまでの しま' : 'しまの おもいで'}</span>}
         </button>;
     };
-    return <section className="growing-guide-book" aria-label="しまの あそびかた" aria-labelledby={`${uid}-heading`} data-visual-candidate="growing-guidance-v2">
+    return <section className="growing-guide-book" aria-label="しまの あそびかた" aria-labelledby={`${uid}-heading`} data-visual-candidate="guide-pop-toys-v6">
         <header className="growing-guide-header">
             <div><span className="growing-guide-kicker">ぽこもこと</span><h2 ref={heading} tabIndex={-1} id={`${uid}-heading`}>しまの あそびかた</h2></div>
             <button className="growing-guide-close" onClick={onClose}>とじる <span aria-hidden="true">×</span></button>
