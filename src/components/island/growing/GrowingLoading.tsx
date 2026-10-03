@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { reopenPwaFromNetwork } from '../../../pwa';
 import { IslandToyIcon } from '../IslandToyIcon';
 import './growingLoading.css';
 
@@ -18,13 +20,27 @@ export type LoadingStep = keyof typeof LOADING_STEPS;
 
 export function GrowingLoading({ step, overlay = false }: { step: LoadingStep; overlay?: boolean }) {
     const { percent, label } = LOADING_STEPS[step];
-    return <div className={`growing-loading${overlay ? ' growing-loading--overlay' : ''}`} role="progressbar"
-        aria-valuemin={0} aria-valuemax={100} aria-valuenow={percent} aria-label={`しまを ひらいているよ ${percent}%`} data-loading-step={step}>
+    const [slow, setSlow] = useState(false), [retrying, setRetrying] = useState(false), [notice, setNotice] = useState<string>();
+    useEffect(() => {
+        setSlow(false); setNotice(undefined);
+        if (overlay || step !== 'saving') return;
+        const timer = window.setTimeout(() => setSlow(true), 15_000);
+        return () => window.clearTimeout(timer);
+    }, [step, overlay]);
+    const reopen = async () => {
+        setRetrying(true); setNotice(undefined);
+        try { if (!await reopenPwaFromNetwork()) setNotice('ネットにつないで、すこし まってから ためしてね。'); }
+        finally { setRetrying(false); }
+    };
+    return <div className={`growing-loading${overlay ? ' growing-loading--overlay' : ''}`} data-loading-step={step}>
         <div className="growing-loading-card">
             <IslandToyIcon kind="island" size={54} />
             <p className="growing-loading-title">しまを ひらいているよ <strong>{percent}%</strong></p>
-            <div className="growing-loading-bar" aria-hidden="true"><span style={{ width: `${percent}%` }} /></div>
+            <div className="growing-loading-bar" role="progressbar" aria-valuemin={0} aria-valuemax={100}
+                aria-valuenow={percent} aria-label={`しまを ひらいているよ ${percent}%`}><span style={{ width: `${percent}%` }} /></div>
             <p className="growing-loading-label">{label}</p>
+            {slow && <><button className="island-primary" disabled={retrying} onClick={() => void reopen()}>もういちど ひらく</button>
+                {notice && <p className="growing-loading-label" role="status">{notice}</p>}</>}
         </div>
     </div>;
 }

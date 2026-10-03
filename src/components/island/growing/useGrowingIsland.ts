@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { holdPwaUpdateForCriticalPersistence } from '../../../pwa';
+import { allowPwaUpdateDuringReadOnlyOpening, holdPwaUpdateForCriticalPersistence } from '../../../pwa';
 import { lifeDb, terminalFacts } from '../../../domain/islandLife/repository';
 import { getProfile } from '../../../domain/user/repository';
 import { commandGrowingIsland, growingDb, GuidanceReceiptConflict, readGrowingIsland, syncGrowingIsland, type GrowingRecord } from '../../../domain/growingIsland/repository';
@@ -29,6 +29,12 @@ export function useGrowingIsland(profileId: string, active: boolean) {
     const running = useRef<Promise<void> | undefined>(undefined), revealId = useRef(0);
     const caller = useRef({ profileId, active });
     useEffect(() => { caller.current = { profileId, active }; return () => { caller.current.active = false; }; }, [profileId, active]);
+    // A failed opening is still not a playable session. Keep update recovery available
+    // until a saved island appears or the child leaves this screen.
+    const hasRecord = Boolean(record);
+    useEffect(() => {
+        if (active && !hasRecord) return allowPwaUpdateDuringReadOnlyOpening();
+    }, [active, hasRecord]);
 
     /**
      * `full` reads every learning completion and the learning levels; the periodic refresh only
@@ -37,7 +43,6 @@ export function useGrowingIsland(profileId: string, active: boolean) {
     const sync = useCallback((full = true) => {
         if (running.current) return running.current;
         setSyncing(true);
-        const release = holdPwaUpdateForCriticalPersistence();
         running.current = (async () => {
             try {
                 const [profile, facts] = full ? await Promise.all([getProfile(profileId), terminalFacts(profileId)]) : [undefined, []];
@@ -51,7 +56,7 @@ export function useGrowingIsland(profileId: string, active: boolean) {
                 const shown = result.town.some(e => e.type !== 'quiet') || result.nature.some(e => e.type === 'big-tree' || e.type === 'lord-tree' || e.type === 'spread' || e.type === 'mixed');
                 if (result.town.length || shown) setReveal({ id: ++revealId.current, town: result.town, nature: result.nature });
             } catch (e) { setError(message(e)); }
-            finally { release(); running.current = undefined; setSyncing(false); }
+            finally { running.current = undefined; setSyncing(false); }
         })();
         return running.current;
     }, [profileId]);

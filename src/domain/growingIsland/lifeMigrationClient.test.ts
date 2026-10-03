@@ -47,3 +47,13 @@ it('fails recoverably when a worker cannot be constructed', async () => {
     await expect(runner(newLife('kid', 1000), 2000)).rejects.toThrow('もういちど');
     expect(mocks.replay).not.toHaveBeenCalled();
 });
+it('cancels an abandoned opening and ignores late worker messages', async () => {
+    vi.useFakeTimers();
+    const worker = new FakeWorker(), controller = new AbortController();
+    const result = createLifeMigrationRunner(() => worker as unknown as Worker)(newLife('kid', 1000), 2000, controller.signal);
+    const rejected = expect(result).rejects.toThrow('もういちど');
+    controller.abort(); await rejected;
+    worker.reply({ state: { now: 2000 } as LifeState });
+    expect(worker.terminate).toHaveBeenCalledOnce();
+    expect(vi.getTimerCount()).toBe(0);
+});

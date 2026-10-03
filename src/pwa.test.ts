@@ -70,6 +70,68 @@ const detectUpdate = async () => {
 }
 
 describe('PWA update lifecycle', () => {
+    it('allows recovery taps on an unplayable island opening while still protecting real saves', async () => {
+        win.location.href = 'https://example.com/#/island'; win.location.hash = '#/island'
+        const pwa = await start()
+        win.dispatchEvent(new Event('pointerdown'))
+        expect(await pwa.reopenPwaFromNetwork()).toBe(false)
+        const releaseOpening = pwa.allowPwaUpdateDuringReadOnlyOpening()
+        const releaseSave = pwa.holdPwaUpdateForCriticalPersistence()
+        expect(await pwa.reopenPwaFromNetwork()).toBe(false)
+        releaseSave()
+        win.dispatchEvent(new Event('pointerdown'))
+        expect(await pwa.reopenPwaFromNetwork()).toBe(true)
+        releaseOpening(); releaseOpening()
+    })
+
+    it('restores normal route protection when the loading screen leaves', async () => {
+        win.location.href = 'https://example.com/#/island'; win.location.hash = '#/island'
+        const pwa = await start(), releaseOpening = pwa.allowPwaUpdateDuringReadOnlyOpening()
+        win.dispatchEvent(new Event('pointerdown'))
+        releaseOpening()
+        expect(await pwa.reopenPwaFromNetwork()).toBe(false)
+        await detectUpdate(); await vi.advanceTimersByTimeAsync(4000)
+        expect(win.location.replace).not.toHaveBeenCalled()
+    })
+
+    it('reopens a stalled reader from network even at the same version without deleting storage', async () => {
+        const pwa = await start()
+        expect(await pwa.reopenPwaFromNetwork()).toBe(true)
+        expect(win.location.replace).toHaveBeenCalledWith(expect.stringContaining('__app-update='))
+        expect(request).toHaveBeenCalledWith(expect.stringContaining('__app-update='), expect.objectContaining({ cache: 'no-store' }))
+        expect(caches.delete).not.toHaveBeenCalled()
+    })
+
+    it('does not interrupt a real save, including one begun during recovery preflight', async () => {
+        const pwa = await start(), release = pwa.holdPwaUpdateForCriticalPersistence()
+        expect(await pwa.reopenPwaFromNetwork()).toBe(false)
+        release()
+        let deliver!: (response: Response) => void
+        const original = request.getMockImplementation()!
+        request.mockImplementation((url: string) => url.includes('__app-update=')
+            ? new Promise<Response>(resolve => { deliver = resolve }) : original(url))
+        const recovery = pwa.reopenPwaFromNetwork()
+        await vi.advanceTimersByTimeAsync(0)
+        const releaseNext = pwa.holdPwaUpdateForCriticalPersistence()
+        deliver(new Response('<html>new</html>', { headers: { 'content-type': 'text/html' } }))
+        expect(await recovery).toBe(false)
+        expect(win.location.replace).not.toHaveBeenCalled()
+        releaseNext()
+    })
+
+    it('keeps an offline or unavailable app open on a manual retry', async () => {
+        const pwa = await start()
+        nav.onLine = false
+        expect(await pwa.reopenPwaFromNetwork()).toBe(false)
+        nav.onLine = true
+        const original = request.getMockImplementation()!
+        request.mockImplementation((url: string) => url.includes('__app-update=')
+            ? new Response('offline', { status: 503 }) : original(url))
+        expect(await pwa.reopenPwaFromNetwork()).toBe(false)
+        expect(win.location.replace).not.toHaveBeenCalled()
+        expect(caches.delete).not.toHaveBeenCalled()
+    })
+
     it('checks version drift even when the worker update never resolves', async () => {
         worker.update.mockImplementation(() => new Promise(() => {}))
         await start()

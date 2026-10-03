@@ -25,6 +25,7 @@ let deferredReloadVersion: string | null = null
 let deferredRecoveryVersion: string | null = null
 let updateSessionSequence = 0
 let criticalPersistenceCount = 0
+let readOnlyOpeningCount = 0
 let triggerUpdateCheck: () => void = () => undefined
 let updateProtectionState = createAppUpdateProtectionState(
     '',
@@ -51,7 +52,7 @@ const clearReloadMarkerFromUrl = () => {
 
 const isCurrentUpdateProtected = () => (
     criticalPersistenceCount > 0
-    || shouldDeferAppUpdateForState(updateProtectionState)
+    || (readOnlyOpeningCount === 0 && shouldDeferAppUpdateForState(updateProtectionState))
 )
 
 const reloadForUpdate = (version = Date.now().toString()): boolean => {
@@ -151,6 +152,7 @@ const scheduleRecoveryReload = (version: string) => {
 }
 
 const resumeDeferredUpdate = (): boolean => {
+    if (!deferredReloadVersion && !deferredRecoveryVersion) return false
     if (hasTriggeredReload || isCurrentUpdateProtected() || !shouldCheckForUpdates()) {
         return false
     }
@@ -184,6 +186,28 @@ export const holdPwaUpdateForCriticalPersistence = (): (() => void) => {
             resumeDeferredUpdate()
         }
     }
+}
+
+/** Only a loading screen with no playable island can waive route interaction protection. */
+export const allowPwaUpdateDuringReadOnlyOpening = (): (() => void) => {
+    readOnlyOpeningCount += 1
+    resumeDeferredUpdate()
+    let released = false
+    return () => {
+        if (released) return
+        released = true
+        readOnlyOpeningCount = Math.max(0, readOnlyOpeningCount - 1)
+    }
+}
+
+/** Retry a stuck read-only opening without clearing any saves or offline resources. */
+export const reopenPwaFromNetwork = async (): Promise<boolean> => {
+    if (isCurrentUpdateProtected() || !shouldCheckForUpdates()) return false
+    const version = await checkForAppVersionUpdate() || __APP_VERSION__
+    if (isCurrentUpdateProtected() || !shouldCheckForUpdates()) return false
+    const html = await fetchUpdateResource(buildReloadUrl(window.location.href, version), 'text/html')
+    if (!html || isCurrentUpdateProtected() || !shouldCheckForUpdates()) return false
+    return reloadForUpdate(version)
 }
 
 export const notifyPwaRouteNavigation = (

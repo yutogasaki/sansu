@@ -1,14 +1,14 @@
-import { migrateGuidance, noteTownBuilds, validateGuidance } from './guidance';
+import { readable, upgrade } from './syncProjection';
+import { projectGrowingSyncResponsive } from './syncProjectionClient';
 import Dexie, { liveQuery, type Table } from 'dexie';
+import { holdPwaUpdateForCriticalPersistence } from '../../pwa';
 import { lifeDb, type IslandLifeDatabase } from '../islandLife/repository';
 import { replayLifeMigrationResponsive } from './lifeMigrationClient';
+import { prepareIslandOpening } from './openingPreparation';
 import { readableLifeVersion } from '../islandLife/model';
 import { applyIntent, type Intent } from './commands';
-import { deliverKeepsakes, receiveGifts, type FlowerGift, type LearningLevels } from './gifts';
-import { fromLife, ingestCompletions, newIsland } from './island';
-import { advanceNature } from './nature';
-import { openTown } from './town';
-import { scheduleSurprise, surpriseDay } from './moments';
+import type { FlowerGift, LearningLevels } from './gifts';
+import { fromLife, newIsland } from './island';
 import type { GrowingState, NatureEvent, TownEvent } from './types';
 
 export interface GrowingRecord {
@@ -71,27 +71,12 @@ export async function deleteGrowingOwner(profileId: string, database = growingDb
 export interface Completion { id: string; at: number }
 export interface SyncResult { record: GrowingRecord; town: TownEvent[]; nature: NatureEvent[]; learned: number }
 
-function readable(record: GrowingRecord) {
-    if (record.version !== 1 && record.version !== 2 && record.version !== 3) throw new Error('この島のデータは新しい版で開いてください。');
-    if (record.version === 3 && !record.state.guidance) throw new Error('この島のあそびかたは新しい版で開いてください。');
-    if (record.state.guidance) validateGuidance(record.state.guidance);
-}
-
-/** Preserve all rights and clocks; no old learning or missed surprises are reissued. */
-function upgrade(record: GrowingRecord, now: number): GrowingRecord {
-    readable(record);
-    if (record.version === 3 && record.state.guidance) return record;
-    const state = structuredClone(record.state);
-    if (record.version === 1) state.surprise = { day: Math.max(surpriseDay(state), Math.floor((now - state.enrolledAt) / 86_400_000)) };
-    migrateGuidance(state);
-    return { ...record, version: 3, state };
-}
-
-async function firstState(profileId: string, now: number, life: IslandLifeDatabase) {
+async function firstState(profileId: string, now: number, life: IslandLifeDatabase, signal: AbortSignal) {
     const old = await Dexie.exists(life.name) ? await life.worlds.get(profileId) : undefined;
+    signal.throwIfAborted();
     if (!old) return { state: newIsland(profileId, now) };
     if (!readableLifeVersion(old.version)) throw new Error('この島のデータは新しい版で開いてください。');
-    const current = await replayLifeMigrationResponsive(old, now);
+    const current = await replayLifeMigrationResponsive(old, now, signal);
     // An untouched current island (created in the background, nothing owned or earned) is not a
     // child's island yet: start fresh so the first-home walkthrough still happens.
     if (!current.items.length && !current.drops && !current.light && current.residents.every(r => r.id === 'pokomoko') && !current.expanded)
@@ -107,30 +92,31 @@ async function firstState(profileId: string, now: number, life: IslandLifeDataba
  */
 export async function syncGrowingIsland(profileId: string, completions: readonly Completion[], now = Date.now(),
     database = growingDb, life: IslandLifeDatabase = lifeDb, levels?: LearningLevels): Promise<SyncResult> {
-    const existing = await database.islands.get(profileId);
-    const created = existing ? undefined : await firstState(profileId, now, life);
-    return database.transaction('rw', database.islands, database.gifts, async () => {
-        const current = await database.islands.get(profileId);
-        let record: GrowingRecord = current ? upgrade(current, now) : { profileId, version: 3, revision: 0, createdAt: now, updatedAt: now,
-            state: created!.state, ...(created?.migratedFrom ? { migratedFrom: created.migratedFrom } : {}) };
-        const ingested = ingestCompletions(record.state, completions);
-        const state = structuredClone(ingested.state);
-        const mailbox = await database.gifts.where('to').equals(profileId).toArray();
-        const received = [...receiveGifts(state, mailbox), ...deliverKeepsakes(state, levels)];
-        const nature = advanceNature(state, now);
-        const beforeTown = JSON.stringify(state);
-        const opened = state.town.bank > 0 ? openTown(state) : [];
-        noteTownBuilds(state, opened);
-        const town = [...received, ...(ingested.added > 0 || beforeTown !== JSON.stringify(state) ? opened : []), ...scheduleSurprise(state)];
-        if (mailbox.length) await database.gifts.bulkDelete(mailbox.filter(g => state.gifts?.includes(g.id)).map(g => g.id));
-        const changed = !current || current.version !== record.version || ingested.added > 0 || nature.length > 0
-            || JSON.stringify(state) !== JSON.stringify(record.state);
-        if (changed) {
-            record = { ...record, revision: record.revision + (current ? 1 : 0), updatedAt: now, state };
-            await database.islands.put(record);
-        }
-        return { record, town, nature, learned: ingested.added };
-    });
+    for (let attempt = 0; attempt < 3; attempt++) {
+        const prepared = await prepareIslandOpening(async signal => {
+            const [current, mailbox] = await Promise.all([database.islands.get(profileId), database.gifts.where('to').equals(profileId).toArray()]);
+            signal.throwIfAborted();
+            const created = current ? undefined : await firstState(profileId, now, life, signal);
+            const projection = await projectGrowingSyncResponsive({ profileId, current, created, completions, mailbox, now, levels }, signal);
+            return { current, mailbox, projection };
+        });
+        // Only the short compare-and-save phase can hold app updates.
+        const release = holdPwaUpdateForCriticalPersistence();
+        try {
+            const saved = await database.transaction('rw', database.islands, database.gifts, async () => {
+                const current = await database.islands.get(profileId);
+                const mailbox = await database.gifts.where('to').equals(profileId).toArray();
+                if (JSON.stringify(current) !== JSON.stringify(prepared.current)
+                    || JSON.stringify(mailbox) !== JSON.stringify(prepared.mailbox)) return undefined;
+                const { result, changed, receivedGiftIds } = prepared.projection;
+                if (receivedGiftIds.length) await database.gifts.bulkDelete(receivedGiftIds);
+                if (changed) await database.islands.put(result.record);
+                return result;
+            });
+            if (saved) return saved;
+        } finally { release(); }
+    }
+    throw new Error('しまが かわったよ。もういちど ひらいてね。');
 }
 
 export class GuidanceReceiptConflict extends Error {

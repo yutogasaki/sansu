@@ -1127,6 +1127,7 @@ interface MemoryState {
 - 更新を進行中セッションで検出した場合は即時reloadせず、保護対象外の画面へ移る、別の保護対象セッションを開く、または同一画面の結果・休憩を確認して「もう一回」「続ける」「cancel」を選んだ安全なcheckpointで一度だけreloadする。結果・報酬画面が表示されただけではreloadしない。React RouterのSPA遷移はnative `hashchange` に依存せず観測する。
 - 安全なcheckpointは、そのrun・テスト・プロフィール更新など中断できない保存が完了した後にだけ公開する。reload後はcheckpointの行き先または同一画面を保ち、子どもに終えた操作を繰り返させない。
 - 回答、テスト結果、探索runなどのcritical persistenceが1件でも進行中なら、保護対象外または別routeへ移っても更新reloadを解禁しない。必要な保存がすべてsettleした後に更新判定を再開する。
+- 島がまだ表示できない読み込み・失敗画面は、操作済みの島遊びとして更新を保留しない。読み取りとWorker計算は中断して修正版を読み込める。実際の書き込みは引き続きcritical persistenceで守り、島が表示された、または別の画面へ移ったら通常のセッション保護へ戻す。具体の同期・再試行は[52 §18.2](52_growing_island_game_spec.md#182-今の島からの引き継ぎ)に従う。
 - PWA更新処理はIndexedDB、localStorage、ユーザーデータ用cacheを削除しない。回復処理で削除できるのはアプリが管理するService Worker cacheだけとする。
 
 
