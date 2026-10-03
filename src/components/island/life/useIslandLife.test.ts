@@ -109,3 +109,30 @@ describe('island life background refresh and explicit choices', () => {
         expect(await save).toBe(false); expect((await h.d.worlds.get('a'))!.actions).toHaveLength(1);
     });
 });
+
+// A hidden legacy garden may still serve its house; an unselected engine must not write.
+function RenderEnabledLife(enabled: boolean) {
+    hooks.begin(); const api = useIslandLife('a', false, enabled); hooks.commit(); return api;
+}
+describe('legacy controller selection', () => {
+    beforeEach(() => {
+        vi.stubGlobal('document', Object.assign(new EventTarget(), { visibilityState: 'visible' }));
+        vi.stubGlobal('window', { setInterval: vi.fn(() => 1), clearInterval: vi.fn() });
+        hooks.update.mockResolvedValue({ profileId: 'a', revision: 1 });
+    });
+    it('leaves the legacy database and PWA holds untouched when Growing owns the island', async () => {
+        const api = RenderEnabledLife(false); await api.refresh(); await api.retry(); api.clearError();
+        await Promise.resolve();
+        expect(hooks.facts).not.toHaveBeenCalled(); expect(hooks.update).not.toHaveBeenCalled(); expect(persistence.count).toBe(0);
+    });
+    it('preserves initial restoration for the legacy house even when its garden is hidden', async () => {
+        RenderEnabledLife(true); await vi.waitFor(() => expect(hooks.update).toHaveBeenCalledOnce());
+        expect(hooks.facts).toHaveBeenCalledWith('a'); expect(persistence.count).toBe(0);
+    });
+    it('cancels a pending legacy read when the Growing controller takes over', async () => {
+        const held = deferred<[]>(); hooks.facts.mockReturnValueOnce(held.promise);
+        RenderEnabledLife(true); RenderEnabledLife(false); held.resolve([]);
+        await Promise.resolve(); await Promise.resolve();
+        expect(hooks.update).not.toHaveBeenCalled(); expect(persistence.count).toBe(0);
+    });
+});

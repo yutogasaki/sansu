@@ -1,7 +1,7 @@
 import { migrateGuidance, noteTownBuilds, validateGuidance } from './guidance';
 import Dexie, { liveQuery, type Table } from 'dexie';
 import { lifeDb, type IslandLifeDatabase } from '../islandLife/repository';
-import { replayLife } from '../islandLife/simulation';
+import { replayLifeMigrationResponsive } from './lifeMigrationClient';
 import { readableLifeVersion } from '../islandLife/model';
 import { applyIntent, type Intent } from './commands';
 import { deliverKeepsakes, receiveGifts, type FlowerGift, type LearningLevels } from './gifts';
@@ -91,7 +91,7 @@ async function firstState(profileId: string, now: number, life: IslandLifeDataba
     const old = await Dexie.exists(life.name) ? await life.worlds.get(profileId) : undefined;
     if (!old) return { state: newIsland(profileId, now) };
     if (!readableLifeVersion(old.version)) throw new Error('この島のデータは新しい版で開いてください。');
-    const current = replayLife(old, now);
+    const current = await replayLifeMigrationResponsive(old, now);
     // An untouched current island (created in the background, nothing owned or earned) is not a
     // child's island yet: start fresh so the first-home walkthrough still happens.
     if (!current.items.length && !current.drops && !current.light && current.residents.every(r => r.id === 'pokomoko') && !current.expanded)

@@ -1,0 +1,16 @@
+{
+  "target": "http://127.0.0.1:5277",
+  "cases": [],
+  "pass": false,
+  "migrationPass": [
+    {
+      "engine": "webkit",
+      "tookMs": 1341,
+      "frames": 1,
+      "legacyPreserved": true,
+      "clockCap": true,
+      "retry": true
+    }
+  ],
+  "failure": "page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5277/#/island\", waiting until \"domcontentloaded\"\u001b[22m\n\n    at /private/tmp/sansu-ipad-migration-check.mjs:63:40"
+}

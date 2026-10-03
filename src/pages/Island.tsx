@@ -13,6 +13,8 @@ import { noteFor, playNote } from '../components/island/growing/notes';
 import { villagerName } from '../components/island/growing/growingCopy';
 import { lifeEnabled } from '../domain/islandLife/model';
 import { replayLife } from '../domain/islandLife/simulation';
+import { lifeDb } from '../domain/islandLife/repository';
+import { savedHeroStyle } from '../domain/islandLife/savedHeroStyle';
 import { IslandDirectActions } from '../components/island/IslandDirectActions';
 import type { IslandDirectTarget } from '../components/island/islandDirectTargets';
 import { IslandHelp, IslandTutorial, TUTORIAL_TOPICS } from '../components/island/tutorial/IslandTutorial';
@@ -176,8 +178,10 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     const [roomWord, setRoomWord] = useState<{ text: string; japanese?: string; at: number }>();
     useEffect(() => { if (!roomWord) return; const id = window.setTimeout(() => setRoomWord(undefined), 2600); return () => clearTimeout(id); }, [roomWord]);
     const growingRoom = useGrowingRoom(profile.id, profile.vocabWords, growingIslandEnabled() && screen === 'keepsakes', profile.mathSkills);
-    const lifeControls = useIslandLife(profile.id, active && screen === 'home' && !growingIslandEnabled());
-    const learningHeroStyle = useMemo(() => lifeControls.record ? replayLife(lifeControls.record).heroStyle : 'original', [lifeControls.record]);
+    const lifeControls = useIslandLife(profile.id, active && screen === 'home' && !growingIslandEnabled(), !growingIslandEnabled());
+    const savedLife = useLiveQuery(() => growingIslandEnabled() ? lifeDb.worlds.get(profile.id) : undefined, [profile.id]);
+    const learningHeroStyle = useMemo(() => growingIslandEnabled() ? savedHeroStyle(savedLife)
+        : lifeControls.record ? replayLife(lifeControls.record).heroStyle : 'original', [savedLife, lifeControls.record]);
     const setScreen = navigation?.setView ?? setLocalScreen;
     const [directSelection, setDirectSelection] = useState<{ target: IslandDirectTarget; entry: string; preview: boolean }>();
     useEffect(() => { if (screen !== 'home' || !active) setDirectSelection(undefined); }, [screen, active]);

@@ -6,7 +6,7 @@ import { terminalFacts, type LifeIntent } from '../../../domain/islandLife/repos
 import { updateLifeResponsive } from './lifeUpdateClient';
 import { startLifeTiming } from './startupTiming';
 
-export function useIslandLife(profileId: string, active: boolean) {
+export function useIslandLife(profileId: string, active: boolean, enabled = true) {
     const [record, setRecord] = useState<LifeRecord>();
     const [error, setError] = useState<string>();
     // Background reads must not disable a button between pointerdown and click.
@@ -18,7 +18,7 @@ export function useIslandLife(profileId: string, active: boolean) {
     const retryIntent = useRef<LifeIntent | undefined>(undefined);
     useEffect(() => { visible.current = active; if (!active) screenGeneration.current++; }, [active]);
     const refresh = useCallback(async (intent?: LifeIntent) => {
-        if (!lifeEnabled() || requested.current || (!intent && (running.current || retryIntent.current))) return false;
+        if (!enabled || !lifeEnabled() || requested.current || (!intent && (running.current || retryIntent.current))) return false;
         if (intent && !visible.current) return false;
         const token = generation.current, screenToken = screenGeneration.current, preceding = running.current;
         const request = intent ? structuredClone(intent) : undefined;
@@ -71,7 +71,7 @@ export function useIslandLife(profileId: string, active: boolean) {
                 if (request) { requested.current = false; setBusy(false); }
             }
         }
-    }, [profileId]);
+    }, [profileId, enabled]);
     useEffect(() => {
         const epoch = ++generation.current;
         running.current = undefined; requested.current = false; latest.current = undefined;
@@ -81,13 +81,13 @@ export function useIslandLife(profileId: string, active: boolean) {
         return () => { generation.current = epoch + 1; };
     }, [refresh]);
     useEffect(() => {
-        if (!active || !lifeEnabled()) return;
+        if (!enabled || !active || !lifeEnabled()) return;
         void refresh();
         const refreshVisible = () => { if (document.visibilityState === 'visible' && !retryIntent.current) void refresh(); };
         const id = window.setInterval(refreshVisible, 15_000);
         document.addEventListener('visibilitychange', refreshVisible);
         return () => { clearInterval(id); document.removeEventListener('visibilitychange', refreshVisible); };
-    }, [active, refresh]);
+    }, [active, enabled, refresh]);
     return { currentRecord: () => latest.current, record: record?.profileId === profileId ? record : undefined, busy, error, refresh,
         retry: () => refresh(retryIntent.current), clearError: () => { retryIntent.current = undefined; void refresh(); } };
 }
