@@ -1,0 +1,546 @@
+[
+  {
+    "name": "ready-390",
+    "url": "http://127.0.0.1:5291/#/stats",
+    "root": {
+      "revision": "learning-flow-20261003-r2",
+      "version": "learning-flow-20261003-r2:67974674-747e-454a-a030-681f2ca96527",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    },
+    "layout": null,
+    "candidate": {
+      "progress": "progress-level-up-v4",
+      "learning": null,
+      "parents": null
+    },
+    "file": "verified/ready-390.png",
+    "sha256": "26e6f36cd078c0b3f2ff9e87082d74c9bc188dd9137b376d164fdc29e85c211f",
+    "label": "記録：次への準備",
+    "viewport": 390,
+    "sourceCase": {
+      "mode": "ready",
+      "pass": true
+    }
+  },
+  {
+    "name": "practice-390",
+    "url": "http://127.0.0.1:5291/#/stats?learn=1",
+    "root": {
+      "revision": "learning-flow-20261003-r2",
+      "version": "learning-flow-20261003-r2:67974674-747e-454a-a030-681f2ca96527",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    },
+    "layout": null,
+    "candidate": {
+      "progress": "progress-level-up-v4",
+      "learning": null,
+      "parents": null
+    },
+    "file": "recovery-next-verified/practice-390.png",
+    "sha256": "fc27a17be4f614e8bed10deb05cbb03a48353320a360484af12ba25592028d1e",
+    "label": "練習：任意の挑戦",
+    "viewport": 390,
+    "sourceCase": {
+      "mode": "recovery",
+      "pass": true
+    }
+  },
+  {
+    "name": "entry-390",
+    "url": "http://127.0.0.1:5291/#/learn?challenge=math",
+    "root": {
+      "revision": "learning-flow-20261003-r2",
+      "version": "learning-flow-20261003-r2:67974674-747e-454a-a030-681f2ca96527",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    },
+    "layout": {
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 80.1875,
+        "top": 0,
+        "right": 390,
+        "bottom": 80.1875,
+        "left": 0
+      },
+      "scroll": []
+    },
+    "candidate": {
+      "progress": null,
+      "learning": "learning-flow-v5",
+      "parents": null
+    },
+    "file": "recovery-next-verified/entry-390.png",
+    "sha256": "93523301c549acce3c33e324780f0eb40e752b0f807fdf93c7bc0727db599785",
+    "label": "共通の挑戦確認",
+    "viewport": 390,
+    "sourceCase": {
+      "mode": "recovery",
+      "pass": true
+    }
+  },
+  {
+    "name": "test-390",
+    "url": "http://127.0.0.1:5291/#/study?session=finish-test&focus_subject=math&back_to=%2Flearn",
+    "root": {
+      "revision": "learning-flow-20261003-r2",
+      "version": "learning-flow-20261003-r2:67974674-747e-454a-a030-681f2ca96527",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    },
+    "layout": null,
+    "candidate": {
+      "progress": null,
+      "learning": null,
+      "parents": null
+    },
+    "file": "recovery-next-verified/test-390.png",
+    "sha256": "6aa58303d52a0dde0926db61624e1ccf1986ad023f41524352ce3c3da837dad7",
+    "label": "実際の20問",
+    "viewport": 390,
+    "sourceCase": {
+      "mode": "recovery",
+      "pass": true
+    }
+  },
+  {
+    "name": "clear-390",
+    "url": "http://127.0.0.1:5291/#/study?session=finish-test&focus_subject=math&back_to=%2Flearn",
+    "root": {
+      "revision": "learning-flow-20261003-r2",
+      "version": "learning-flow-20261003-r2:67974674-747e-454a-a030-681f2ca96527",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    },
+    "layout": null,
+    "candidate": {
+      "progress": null,
+      "learning": null,
+      "parents": null
+    },
+    "file": "verified/clear-390.png",
+    "sha256": "6b1fd03f3ef052cdcb6fc312375a44c4cb068381a9266290e468e0299a014b32",
+    "label": "保存されたLv17",
+    "viewport": 390,
+    "sourceCase": {
+      "mode": "ready",
+      "pass": true
+    }
+  },
+  {
+    "name": "offline-390",
+    "url": "http://127.0.0.1:5291/#/island?start=learn",
+    "root": {
+      "revision": "learning-flow-20261003-r2",
+      "version": "learning-flow-20261003-r2:67974674-747e-454a-a030-681f2ca96527",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    },
+    "layout": null,
+    "candidate": {
+      "progress": null,
+      "learning": null,
+      "parents": null
+    },
+    "file": "verified/offline-390.png",
+    "sha256": "694c0fe009d6ea69cbdf19966ad5e0fe80b1602626c1e0bfd0c783c60d81d658",
+    "label": "オフラインで同じ練習",
+    "viewport": 390,
+    "sourceCase": {
+      "mode": "ready",
+      "pass": true
+    }
+  },
+  {
+    "name": "parent-overview-390",
+    "url": "http://127.0.0.1:5291/#/parents",
+    "root": {
+      "revision": "learning-flow-20261003-r2",
+      "version": "learning-flow-20261003-r2:67974674-747e-454a-a030-681f2ca96527",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    },
+    "layout": null,
+    "candidate": {
+      "progress": null,
+      "learning": null,
+      "parents": "parent-learning-hub-v1"
+    },
+    "file": "verified/parent-overview-390.png",
+    "sha256": "2723e90e9f89e544ea39f50974cb7f9ce0f07c765e6fc2d3edf0bc0e621b2465",
+    "label": "保護者：学習状況が先頭",
+    "viewport": 390,
+    "sourceCase": {
+      "mode": "paused",
+      "pass": true
+    }
+  },
+  {
+    "name": "parent-timer-390",
+    "url": "http://127.0.0.1:5291/#/parents",
+    "root": {
+      "revision": "learning-flow-20261003-r2",
+      "version": "learning-flow-20261003-r2:67974674-747e-454a-a030-681f2ca96527",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    },
+    "layout": null,
+    "candidate": {
+      "progress": null,
+      "learning": null,
+      "parents": "parent-learning-hub-v1"
+    },
+    "file": "verified/parent-timer-390.png",
+    "sha256": "ee204bbb9a7dca79be40e9367a4437df6a600a1f6056515d60eb7920547b2703",
+    "label": "保護者：任意の確認と時間",
+    "viewport": 390,
+    "sourceCase": {
+      "mode": "paused",
+      "pass": true
+    }
+  },
+  {
+    "name": "parent-refreshed-390",
+    "url": "http://127.0.0.1:5291/#/parents",
+    "root": {
+      "revision": "learning-flow-20261003-r2",
+      "version": "learning-flow-20261003-r2:67974674-747e-454a-a030-681f2ca96527",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    },
+    "layout": null,
+    "candidate": {
+      "progress": null,
+      "learning": null,
+      "parents": "parent-learning-hub-v1"
+    },
+    "file": "verified/parent-refreshed-390.png",
+    "sha256": "aa375c8787abfd467f166f7348d808929fcfbb25224c9493b8a35447e0c7f939",
+    "label": "学習後の記録更新",
+    "viewport": 390,
+    "sourceCase": {
+      "mode": "paused",
+      "pass": true
+    }
+  },
+  {
+    "name": "parent-range-return-390",
+    "url": "http://127.0.0.1:5291/#/parents",
+    "root": {
+      "revision": "learning-flow-20261003-r2",
+      "version": "learning-flow-20261003-r2:67974674-747e-454a-a030-681f2ca96527",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    },
+    "layout": null,
+    "candidate": {
+      "progress": null,
+      "learning": null,
+      "parents": "parent-learning-hub-v1"
+    },
+    "file": "verified/parent-range-return-390.png",
+    "sha256": "aa375c8787abfd467f166f7348d808929fcfbb25224c9493b8a35447e0c7f939",
+    "label": "範囲調整から戻る",
+    "viewport": 390,
+    "sourceCase": {
+      "mode": "paused",
+      "pass": true
+    }
+  },
+  {
+    "name": "recovery-390",
+    "url": "http://127.0.0.1:5291/#/stats",
+    "root": {
+      "revision": "learning-flow-20261003-r2",
+      "version": "learning-flow-20261003-r2:67974674-747e-454a-a030-681f2ca96527",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    },
+    "layout": null,
+    "candidate": {
+      "progress": "progress-level-up-v4",
+      "learning": null,
+      "parents": null
+    },
+    "file": "recovery-next-verified/recovery-390.png",
+    "sha256": "a02357908bf8d1d0fe508e220a32fdbe2331d694d9f7052c38bb775f6f60bc2d",
+    "label": "19/20：Lv16を維持",
+    "viewport": 390,
+    "sourceCase": {
+      "mode": "recovery",
+      "pass": true
+    }
+  },
+  {
+    "name": "targeted-review-390",
+    "url": "http://127.0.0.1:5291/#/study?session=review&focus_subject=math&focus_ids=div_2d1d_exact&force_review=1&back_to=%2Flearn",
+    "root": {
+      "revision": "learning-flow-20261003-r2",
+      "version": "learning-flow-20261003-r2:67974674-747e-454a-a030-681f2ca96527",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    },
+    "layout": null,
+    "candidate": {
+      "progress": null,
+      "learning": null,
+      "parents": null
+    },
+    "file": "recovery-next-verified/targeted-review-390.png",
+    "sha256": "ba159461e7b07b14e820e5c1ef65dd8e8a6557aa0a23cb63f9a4bd1587579d7c",
+    "label": "必要な問題を復習",
+    "viewport": 390,
+    "sourceCase": {
+      "mode": "recovery",
+      "pass": true
+    }
+  },
+  {
+    "name": "ready-768",
+    "url": "http://127.0.0.1:5291/#/stats",
+    "root": {
+      "revision": "learning-flow-20261003-r2",
+      "version": "learning-flow-20261003-r2:67974674-747e-454a-a030-681f2ca96527",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    },
+    "layout": null,
+    "candidate": {
+      "progress": "progress-level-up-v4",
+      "learning": null,
+      "parents": null
+    },
+    "file": "verified/ready-768.png",
+    "sha256": "66f4028ea244cf8224d9d28e4b9c970e0a4d087aa3a3a6516053084f7b48e7b6",
+    "label": "記録：次への準備",
+    "viewport": 768,
+    "sourceCase": {
+      "mode": "ready",
+      "pass": true
+    }
+  },
+  {
+    "name": "practice-768",
+    "url": "http://127.0.0.1:5291/#/stats?learn=1",
+    "root": {
+      "revision": "learning-flow-20261003-r2",
+      "version": "learning-flow-20261003-r2:67974674-747e-454a-a030-681f2ca96527",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    },
+    "layout": null,
+    "candidate": {
+      "progress": "progress-level-up-v4",
+      "learning": null,
+      "parents": null
+    },
+    "file": "recovery-next-verified/practice-768.png",
+    "sha256": "c2a4f426985f11b93364e0230b2232d40324bcb1e12858e527f95f24e7f9e884",
+    "label": "練習：任意の挑戦",
+    "viewport": 768,
+    "sourceCase": {
+      "mode": "recovery",
+      "pass": true
+    }
+  },
+  {
+    "name": "entry-768",
+    "url": "http://127.0.0.1:5291/#/learn?challenge=math",
+    "root": {
+      "revision": "learning-flow-20261003-r2",
+      "version": "learning-flow-20261003-r2:67974674-747e-454a-a030-681f2ca96527",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    },
+    "layout": {
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 87.1875,
+        "top": 0,
+        "right": 768,
+        "bottom": 87.1875,
+        "left": 0
+      },
+      "scroll": []
+    },
+    "candidate": {
+      "progress": null,
+      "learning": "learning-flow-v5",
+      "parents": null
+    },
+    "file": "recovery-next-verified/entry-768.png",
+    "sha256": "05a5534c6a5eaa870fa70de927cf39cb107c5bf3d21895ca61defffbe9863e8d",
+    "label": "共通の挑戦確認",
+    "viewport": 768,
+    "sourceCase": {
+      "mode": "recovery",
+      "pass": true
+    }
+  },
+  {
+    "name": "clear-768",
+    "url": "http://127.0.0.1:5291/#/study?session=finish-test&focus_subject=math&back_to=%2Flearn",
+    "root": {
+      "revision": "learning-flow-20261003-r2",
+      "version": "learning-flow-20261003-r2:67974674-747e-454a-a030-681f2ca96527",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    },
+    "layout": null,
+    "candidate": {
+      "progress": null,
+      "learning": null,
+      "parents": null
+    },
+    "file": "verified/clear-768.png",
+    "sha256": "637f20d0d49b4c0e06c152efccbfb989e981ed515856ba21ab98fc8d6ac8a039",
+    "label": "保存されたLv17",
+    "viewport": 768,
+    "sourceCase": {
+      "mode": "ready",
+      "pass": true
+    }
+  },
+  {
+    "name": "parent-overview-768",
+    "url": "http://127.0.0.1:5291/#/parents",
+    "root": {
+      "revision": "learning-flow-20261003-r2",
+      "version": "learning-flow-20261003-r2:67974674-747e-454a-a030-681f2ca96527",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    },
+    "layout": null,
+    "candidate": {
+      "progress": null,
+      "learning": null,
+      "parents": "parent-learning-hub-v1"
+    },
+    "file": "verified/parent-overview-768.png",
+    "sha256": "076c5afaa491b203b52c8c37bcee4d3ee9d838ba5577b4dbfe1abe4f4b5005f3",
+    "label": "保護者：学習状況が先頭",
+    "viewport": 768,
+    "sourceCase": {
+      "mode": "paused",
+      "pass": true
+    }
+  },
+  {
+    "name": "parent-timer-768",
+    "url": "http://127.0.0.1:5291/#/parents",
+    "root": {
+      "revision": "learning-flow-20261003-r2",
+      "version": "learning-flow-20261003-r2:67974674-747e-454a-a030-681f2ca96527",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    },
+    "layout": null,
+    "candidate": {
+      "progress": null,
+      "learning": null,
+      "parents": "parent-learning-hub-v1"
+    },
+    "file": "verified/parent-timer-768.png",
+    "sha256": "18323448bf95367741722c32c8aa4c971afa2c19607b255d0946cbd9860bbfcd",
+    "label": "保護者：任意の確認と時間",
+    "viewport": 768,
+    "sourceCase": {
+      "mode": "paused",
+      "pass": true
+    }
+  },
+  {
+    "name": "recovery-768",
+    "url": "http://127.0.0.1:5291/#/stats",
+    "root": {
+      "revision": "learning-flow-20261003-r2",
+      "version": "learning-flow-20261003-r2:67974674-747e-454a-a030-681f2ca96527",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    },
+    "layout": null,
+    "candidate": {
+      "progress": "progress-level-up-v4",
+      "learning": null,
+      "parents": null
+    },
+    "file": "recovery-next-verified/recovery-768.png",
+    "sha256": "2eac9525e11f610fbbcda69d9a20faf7a1f3cb8f57cc4560b7a3919d742ec377",
+    "label": "19/20：Lv16を維持",
+    "viewport": 768,
+    "sourceCase": {
+      "mode": "recovery",
+      "pass": true
+    }
+  },
+  {
+    "name": "targeted-review-768",
+    "url": "http://127.0.0.1:5291/#/study?session=review&focus_subject=math&focus_ids=div_2d1d_exact&force_review=1&back_to=%2Flearn",
+    "root": {
+      "revision": "learning-flow-20261003-r2",
+      "version": "learning-flow-20261003-r2:67974674-747e-454a-a030-681f2ca96527",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    },
+    "layout": null,
+    "candidate": {
+      "progress": null,
+      "learning": null,
+      "parents": null
+    },
+    "file": "recovery-next-verified/targeted-review-768.png",
+    "sha256": "5aa348d5b07762bada9706e8b3036f6cec453303d0694cbc5232249b0e73bce0",
+    "label": "必要な問題を復習",
+    "viewport": 768,
+    "sourceCase": {
+      "mode": "recovery",
+      "pass": true
+    }
+  }
+]

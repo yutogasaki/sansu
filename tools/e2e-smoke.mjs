@@ -675,15 +675,16 @@ const scenarioStatsToPeriodicTest = async (browser) => {
   assert(await mathProgress.getByRole('button', { name: /かくにんテスト|確認テスト/ }).count() === 0, 'confirmation test starts only from parent settings');
   await navigateHash(page, "/settings", /#\/settings/);
   await page.getByRole('button', { name: /ほごしゃ|保護者/ }).first().click();
-  await page.getByRole('button', { name: /アプリで確認|アプリで うける/ }).first().click();
   const gate = page.getByRole('dialog');
   const factors = (await gate.innerText()).match(/(\d+)\s*×\s*(\d+)\s*=/);
   assert(factors, 'parent gate should show its real multiplication question');
   await gate.getByPlaceholder('答え', { exact: true }).fill(String(Number(factors[1]) * Number(factors[2])));
   await Promise.all([
-    waitForHash(page, /#\/study\?session=periodic-test/),
+    waitForHash(page, /#\/parents/),
     gate.getByRole('button', { name: 'OK', exact: true }).click(),
   ]);
+  await page.locator('.parent-check-entry > summary').click();
+  await page.getByRole('button', { name: 'アプリで確認', exact: true }).click();
   await waitForStudyReady(page);
   await completeSessionBySkipping(page, 20);
   await page.getByRole("button", { name: /記録を見る|きろく を みる/ }).waitFor({ timeout: STEP_TIMEOUT_MS });

@@ -1,0 +1,25 @@
+PASS phone-count: 8 pages
+PASS tablet-count: 7 pages, 9 pages
+PASS phone-spatial: 7 pages
+PASS tablet-spatial: 8 pages, 10 pages
+PASS phone-number-line: 9 pages
+PASS tablet-number-line: 9 pages, 11 pages
+PASS phone-hissan: 8 pages
+PASS tablet-hissan: 8 pages, 10 pages
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Actual level generates multi-number
+    at file:///Users/yutogasaki/Projects/sansu/tools/e2e-print-tests.mjs:187:33
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at process.processImmediate (node:internal/timers:472:9) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.18.0

@@ -4,16 +4,21 @@ import { getWeakMathSkillIds, getWeakVocabIds } from '../../domain/learningRepos
 import { ENGLISH_WORDS } from '../../domain/english/words';
 import type { RecentAttempt, UserProfile } from '../../domain/types';
 import { getActiveProfile } from '../../domain/user/repository';
-import { islandParentUrl } from '../../domain/island/navigation';
 import { getParentAttemptLabel, getParentMathSkillLabel, getParentVocabWordLabel } from './parentAttemptLabel';
 import { PARENT_REVIEW_COPY } from './parentReviewCopy';
 import { ParentGateModal } from '../../components/gate/ParentGateModal';
 import { Spinner } from '../../components/ui/Spinner';
 import { Badge } from '../../components/ui/Badge';
-import { Button } from '../../components/ui/Button';
 import { InsetPanel, SectionLabel, SurfacePanel, SurfacePanelHeader } from '../../components/ui/SurfacePanel';
 import { ScreenScaffold } from '../../components/ScreenScaffold';
+import { Button } from '../../components/ui/Button';
 import { logInDev } from '../../utils/debug';
+import { ChevronDown, ArrowRight, ClipboardCheck, SlidersHorizontal } from 'lucide-react';
+import { ParentAssessment } from './ParentAssessment';
+import { ParentTools } from './ParentTools';
+import { learningLevelTitle } from '../../domain/learning/progressView';
+import './Parents.css';
+import { useIslandNavigation } from '../../components/island/useIslandNavigation';
 
 type ParentsRouteState = {
     parentGatePassed?: boolean;
@@ -21,13 +26,17 @@ type ParentsRouteState = {
 
 export const ParentsPage: React.FC = () => {
     const navigate = useNavigate();
+    const navigation = useIslandNavigation();
+    const learningOverlay = navigation?.learning ?? false;
     const location = useLocation();
-    const settingsReturnUrl = islandParentUrl(location.pathname, location.search);
+    const settingsReturnUrl = '/settings';
     const routeState = location.state as ParentsRouteState | null;
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [weakMathIds, setWeakMathIds] = useState<string[]>([]);
     const [weakVocabIds, setWeakVocabIds] = useState<string[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [loadError, setLoadError] = useState(false);
+    const [retry, setRetry] = useState(0);
     const [isGatePassed, setIsGatePassed] = useState(Boolean(routeState?.parentGatePassed));
     const vocabWordMap = useMemo(
         () => new Map(ENGLISH_WORDS.map(word => [word.id, word])),
@@ -35,6 +44,7 @@ export const ParentsPage: React.FC = () => {
     );
 
     useEffect(() => {
+        if (learningOverlay) return;
         if (!isGatePassed) {
             setIsLoading(false);
             return;
@@ -46,6 +56,7 @@ export const ParentsPage: React.FC = () => {
             try {
                 if (!cancelled) {
                     setIsLoading(true);
+                    setLoadError(false);
                 }
                 const active = await getActiveProfile();
                 if (cancelled) return;
@@ -68,6 +79,7 @@ export const ParentsPage: React.FC = () => {
                 }
             } catch (e) {
                 logInDev("ParentsPage: Error loading data", e);
+                if (!cancelled) setLoadError(true);
             } finally {
                 if (!cancelled) {
                     setIsLoading(false);
@@ -80,11 +92,11 @@ export const ParentsPage: React.FC = () => {
         return () => {
             cancelled = true;
         };
-    }, [isGatePassed]);
+    }, [isGatePassed, retry, learningOverlay]);
 
     if (!isGatePassed) {
         return (
-            <ScreenScaffold title="保護者メニュー" footerSpacing="none" scroll={false}>
+            <ScreenScaffold title="保護者" footerSpacing="none" scroll={false}>
                 <ParentGateModal
                     isOpen
                     onClose={() => navigate(settingsReturnUrl)}
@@ -96,20 +108,21 @@ export const ParentsPage: React.FC = () => {
 
     if (isLoading) {
         return (
-            <ScreenScaffold title="保護者メニュー" footerSpacing="none" scroll={false}>
+            <ScreenScaffold title="保護者" footerSpacing="none" scroll={false}>
                 <Spinner fullScreen />
             </ScreenScaffold>
         );
     }
 
-    if (!profile) {
+    if (loadError || !profile) {
         return (
             <ScreenScaffold
-                title="保護者メニュー"
+                title="保護者"
                 footerSpacing="base"
                 contentClassName="px-[var(--screen-padding-x)]"
             >
-                学習データが見つかりません。
+                <p role="alert">{loadError ? '学習データを読み込めませんでした。' : '学習データが見つかりません。'}</p>
+                <Button onClick={() => setRetry(value => value + 1)}>もう一度読み込む</Button>
             </ScreenScaffold>
         );
     }
@@ -133,33 +146,42 @@ export const ParentsPage: React.FC = () => {
 
     return (
         <ScreenScaffold
-            title="保護者メニュー"
+            title="保護者"
+            showBack onBack={() => navigate(settingsReturnUrl)}
             containerClassName="parents-screen"
             contentClassName="parents-ledger px-[var(--screen-padding-x)] pt-1 space-y-5"
         >
-            <SurfacePanel>
+            <SurfacePanel className="parent-overview" data-parent-candidate="parent-learning-hub-v1">
                 <SurfacePanelHeader
-                    title={`${profile.name}さん の ようす`}
-                    description="いまのペースと 気になるところを ひと目で見られます"
+                    title={`${profile.name}さんの学び`}
+                    description="今の範囲と、積み重ねた記録"
                 />
-                <div className="grid grid-cols-2 gap-3">
-                    <InsetPanel className="space-y-1 py-4 text-center">
-                        <div className="text-[11px] font-black uppercase tracking-[0.18em] text-pokomoko-muted">連続学習</div>
-                        <div className="text-3xl font-black tracking-[-0.04em] text-slate-800">{profile.streak || 0}</div>
-                        <div className="text-xs text-pokomoko-muted">日</div>
-                    </InsetPanel>
-                    <InsetPanel className="space-y-1 py-4 text-center">
-                        <div className="text-[11px] font-black uppercase tracking-[0.18em] text-pokomoko-muted">本日の学習</div>
-                        <div className="text-3xl font-black tracking-[-0.04em] text-slate-800">{profile.todayCount || 0}</div>
-                        <div className="text-xs text-pokomoko-muted">回</div>
-                    </InsetPanel>
+                <div className="parent-current-ranges">
+                    {(['math', 'vocab'] as const).map(subject => {
+                        const level = subject === 'math' ? profile.mathMainLevel : profile.vocabMainLevel;
+                        return <div key={subject}><span>{subject === 'math' ? '算数' : '英語'} · Lv{level}</span><strong>{learningLevelTitle(subject, level)}</strong></div>;
+                    })}
                 </div>
-                <div className="text-center text-xs leading-5 text-pokomoko-muted">
-                    {PARENT_REVIEW_COPY.summary(weakTotal)}
+                <div className="parent-activity">
+                    <span>今日の学習 <strong>{profile.todayCount || 0}回</strong></span>
+                    <span>連続学習 <strong>{profile.streak || 0}日</strong></span>
                 </div>
+                <p className="parent-purpose">{PARENT_REVIEW_COPY.summary(weakTotal)}</p>
+            </SurfacePanel>
+
+            <SurfacePanel className="parent-actions">
+                <details className="parent-details parent-check-entry">
+                    <summary><span><ClipboardCheck size={22} aria-hidden="true" /><span><strong>理解度を確認</strong><small>必要なときに · アプリ / 紙</small></span></span><ChevronDown size={20} aria-hidden="true" /></summary>
+                    <ParentAssessment key={profile.id} profile={profile} onUpdate={setProfile} />
+                </details>
+                <button className="parent-range-action" type="button" onClick={() => navigation ? navigation.open('/settings/curriculum') : navigate('/settings/curriculum')}>
+                    <span><SlidersHorizontal size={22} aria-hidden="true" /><span><strong>学習範囲を調整</strong><small>レベル・進級の設定</small></span></span><ArrowRight size={20} aria-hidden="true" />
+                </button>
             </SurfacePanel>
 
             <SurfacePanel>
+                <details className="parent-details">
+                <summary>復習の候補<ChevronDown size={18} aria-hidden="true" /></summary>
                 <SurfacePanelHeader
                     title={PARENT_REVIEW_COPY.title}
                     description={PARENT_REVIEW_COPY.description}
@@ -202,9 +224,20 @@ export const ParentsPage: React.FC = () => {
                         )}
                     </InsetPanel>
                 </div>
+                </details>
             </SurfacePanel>
 
             <SurfacePanel>
+                <details className="parent-details">
+                <summary>最近の学習・確認結果<ChevronDown size={18} aria-hidden="true" /></summary>
+                <div className="parent-test-history">
+                    <h3>確認テストの記録</h3>
+                    {(profile.testHistory ?? []).filter(item => item.kind !== 'finish').slice(-3).reverse().map(item => <InsetPanel key={item.id}>
+                        <p>{item.subject === 'math' ? '算数' : '英語'} Lv{item.level} · {item.correctCount} / {item.totalQuestions}問</p>
+                        <p className="parent-purpose">{new Date(item.timestamp).toLocaleDateString('ja-JP')} · {item.method === 'paper' ? '紙' : 'アプリ'}</p>
+                    </InsetPanel>)}
+                    {!(profile.testHistory ?? []).some(item => item.kind !== 'finish') && <p className="parent-purpose">確認テストの記録はまだありません。</p>}
+                </div>
                 <SurfacePanelHeader
                     title="学習履歴"
                     description="直近 5 件の回答を ふり返れます"
@@ -239,13 +272,10 @@ export const ParentsPage: React.FC = () => {
                 ) : (
                     <InsetPanel className="text-sm text-pokomoko-muted">履歴はありません。</InsetPanel>
                 )}
+                </details>
             </SurfacePanel>
 
-            <div className="pb-8 text-center">
-                <Button variant="secondary" className="min-w-[180px]" onClick={() => navigate(settingsReturnUrl)}>
-                    設定に戻る
-                </Button>
-            </div>
+            <ParentTools />
         </ScreenScaffold>
     );
 };

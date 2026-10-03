@@ -14,7 +14,7 @@ const scenarios = [
     { name: 'spatial', level: 2, skill: 'spatial_words' },
     { name: 'number-line', level: 7, visual: 'number-line' },
     { name: 'hissan', level: 11, skill: 'add_2d1d_hissan_c', workingSpace: true },
-    { name: 'remainder', level: 17, input: 'multi-number' },
+    { name: 'remainder', level: 17, input: 'hissan', remainder: true },
     { name: 'fraction', level: 22, input: 'multi-number' },
     { name: 'vocabulary', level: 1, subject: 'vocab', input: 'choice' },
 ].flatMap(scenario => [
@@ -29,7 +29,7 @@ await fs.mkdir(out, { recursive: true });
 const compiled = await build({ stdin: { contents: "export { createInitialProfile } from './src/domain/user/profile.ts';", resolveDir: process.cwd() },
     bundle: true, platform: 'node', format: 'esm', write: false, logLevel: 'silent' });
 const { createInitialProfile } = await import(`data:text/javascript;base64,${Buffer.from(compiled.outputFiles[0].text).toString('base64')}`);
-const sourcePaths = ['src/pages/Settings.tsx', 'src/components/domain/PrintableTestPreview.tsx', 'src/components/domain/PrintableTestPreview.css',
+const sourcePaths = ['src/pages/Settings.tsx', 'src/pages/parents/ParentsPage.tsx', 'src/pages/parents/ParentAssessment.tsx', 'src/pages/parents/Parents.css', 'src/components/domain/PrintableTestPreview.tsx', 'src/components/domain/PrintableTestPreview.css',
     'src/components/domain/MathProblemPrompt.tsx', 'src/domain/test/paperTest.ts', 'src/domain/test/paperTestRepository.ts', 'src/domain/test/testSet.ts'];
 const sourceSnapshot = async () => Promise.all(sourcePaths.map(async file => ({ file, sha256: createHash('sha256').update(await fs.readFile(file)).digest('hex') })));
 const report = { target: base, startedAt: new Date().toISOString(), fixtureHash: createHash('sha256').update(compiled.outputFiles[0].text).digest('hex'),
@@ -72,14 +72,19 @@ async function readState(page, profileId) {
     }, profileId);
 }
 
-async function openSettings(page) {
+async function openSettings(page, subject = 'math') {
     await page.goto(`${base}/#/settings`);
-    await page.getByRole('button', { name: /テスト・保護者/ }).click();
-    await page.getByRole('heading', { name: '定期テスト（20問）' }).waitFor();
+    await page.getByRole('button', { name: /ほごしゃ|保護者/ }).first().click();
+    const gate = page.getByRole('dialog');
+    const factors = (await gate.innerText()).match(/(\d+)\s*×\s*(\d+)\s*=/);
+    assert(factors, 'Real guardian question is visible');
+    await gate.getByPlaceholder('答え', { exact: true }).fill(String(Number(factors[1]) * Number(factors[2])));
+    await gate.getByRole('button', { name: 'OK', exact: true }).click();
+    await page.locator('.parent-check-entry > summary').click();
+    await page.getByRole('group', { name: '確認する科目', exact: true }).getByRole('button', { name: subject === 'math' ? '算数' : '英語', exact: true }).click();
 }
 
-const subjectPanel = (page, subject = 'math') => page.locator('div').filter({ has: page.getByText(new RegExp(`^${subject === 'math' ? '算数' : '英語'} Lv\\.`)) })
-    .filter({ has: page.getByRole('button', { name: 'アプリ受験', exact: true }) }).last();
+const subjectPanel = page => page.locator('[data-parent-assessment]');
 
 async function capture(page, name) {
     const file = `${name}.png`;
@@ -154,7 +159,7 @@ print(json.dumps({'plain':'\\n'.join(page.get_text() for page in document),'page
 
 try {
     for (const scenario of scenarios) {
-        const context = await browser.newContext({ viewport: { width: scenario.width, height: scenario.height }, serviceWorkers: 'block', reducedMotion: 'reduce' });
+        const context = await browser.newContext({ viewport: { width: scenario.width, height: scenario.height }, serviceWorkers: 'allow', reducedMotion: 'reduce' });
         const page = await context.newPage();
         page.setDefaultTimeout(15_000);
         const errors = [];
@@ -165,7 +170,7 @@ try {
             await page.goto(`${base}/#/settings`);
             await page.waitForURL('**/#/onboarding');
             const profileId = await seed(page, scenario);
-            await openSettings(page);
+            await openSettings(page, scenario.subject);
             const before = await readState(page, profileId);
             await subjectPanel(page, scenario.subject).getByRole('button', { name: '印刷・PDF', exact: true }).click();
             await page.getByTestId('printable-test-preview').waitFor();
@@ -180,6 +185,7 @@ try {
             if (scenario.visual) assert(paper.testSet.problems.some(problem => problem.questionVisual?.kind === scenario.visual), `Actual level generates ${scenario.visual}`);
             if (scenario.skill) assert(paper.testSet.problems.some(problem => problem.categoryId === scenario.skill), `Actual level generates ${scenario.skill}`);
             if (scenario.input) assert(paper.testSet.problems.some(problem => problem.inputType === scenario.input), `Actual level generates ${scenario.input}`);
+            if (scenario.remainder) assert(paper.testSet.problems.every(problem => Array.isArray(problem.correctAnswer) && problem.correctAnswer.length === 2), 'Written division preserves quotient and remainder');
             if (scenario.workingSpace) assert(await page.getByLabel('筆算を書く場所').count() > 0, 'Explicit Hissan skills include a writing area');
             assert.equal(await page.locator('[data-print-question]').count(), 20);
             assert.equal(await page.locator('[data-print-answer]').count(), 0);
@@ -213,7 +219,7 @@ try {
             assert.equal(await page.locator('#root').evaluate(root => root.inert), false);
             assert.match(await page.locator(':focus').innerText(), /同じ問題を印刷/);
             await page.reload();
-            await openSettings(page);
+            await openSettings(page, scenario.subject);
             await subjectPanel(page, scenario.subject).getByRole('button', { name: '同じ問題を印刷', exact: true }).click();
             await page.getByTestId('printable-test-preview').waitFor();
             assert.deepEqual((await readState(page, profileId)).profile.pendingPaperTests.find(item => item.id === paper.id), paper, 'Reload/reprint preserves exact snapshot and ID');
@@ -239,7 +245,7 @@ try {
             console.log(`PASS ${scenario.name}: ${row.pdfs.map(pdf => `${pdf.pages} pages`).join(', ')}`);
         } finally { await context.close(); }
     }
-    const context = await browser.newContext({ viewport: { width: 390, height: 844 }, serviceWorkers: 'block' });
+    const context = await browser.newContext({ viewport: { width: 390, height: 844 }, serviceWorkers: 'allow' });
     try {
         const page = await context.newPage();
         await page.goto(`${base}/#/settings`);

@@ -1,7 +1,16 @@
 import { describe, expect, it } from 'vitest';
-import { islandFocusScreen, islandHouseSectionFromSearch, islandHouseUrl, islandLearningRequested, islandParentUrl, islandScreenFromSearch, withoutIslandLearning } from './navigation';
+import { islandFocusScreen, islandHouseSectionFromSearch, islandHouseUrl, islandLearningRequested, islandLearningRoute, islandParentUrl, islandScreenFromSearch, withoutIslandLearning } from './navigation';
 
 describe('island navigation contract', () => {
+    it('opens ordinary learning directly and isolates explicit challenge confirmation', () => {
+        expect(islandLearningRoute('/learn', '')).toBe(true);
+        expect(islandLearningRoute('/learn', '?challenge=unknown')).toBe(true);
+        for (const subject of ['math', 'vocab']) expect(islandLearningRoute('/learn', `?challenge=${subject}`)).toBe(false);
+        expect(islandLearningRoute('/stats', '?learn=1')).toBe(true);
+        expect(islandLearningRoute('/stats', '')).toBe(false);
+        expect(withoutIslandLearning('/learn', '')).toBe('/island');
+        expect(withoutIslandLearning('/learn', '?challenge=math&learn=1')).toBe('/learn?challenge=math');
+    });
     it('opens home independently of reserved learning and rejects unknown views', () => {
         expect(islandScreenFromSearch('')).toBe('home');
         expect(islandScreenFromSearch('?view=invalid')).toBe('home');
@@ -39,8 +48,8 @@ describe('island navigation contract', () => {
         ['/settings', '?section=profile', '/settings'],
         ['/settings/curriculum', '', '/settings?section=learning'],
         ['/settings', '?section=learning&learn=1', '/settings?section=learning'],
-        ['/parents', '', '/settings?section=parent'],
-        ['/dev', '', '/settings?section=parent'],
+        ['/parents', '', '/settings'],
+        ['/dev', '', '/settings'],
         ['/island', '?learn=1', '/island'],
         ['/island', '?view=challenge', '/island?view=keepsakes'],
         ['/island', '?view=placement', '/island?view=inventory'],

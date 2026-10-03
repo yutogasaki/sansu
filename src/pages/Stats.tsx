@@ -5,6 +5,7 @@ import { Button } from "../components/ui/Button";
 import { Badge } from "../components/ui/Badge";
 import { Spinner } from "../components/ui/Spinner";
 import { LearningProgressCards } from "../components/progress/LearningProgressCards";
+import { finishEntryPath } from '../components/finish/finishNavigation';
 import {
     InsetPanel,
     PanelDivider,
@@ -375,7 +376,7 @@ export const Stats: React.FC = () => {
                 <LearningProgressCards profile={profile} refreshKey={learningOverlay}
                     onSettings={subject => { const path = `/settings/curriculum?subject=${subject}`; if (navigation) navigation.open(path); else navigate(path); }}
                     onLearn={() => { warmUpTTS(); if (navigation) navigation.startLearning(); else navigate('/study'); }}
-                    onFinish={subject => { warmUpTTS(); const path = `/study?session=finish-test&focus_subject=${subject}`; if (navigation) navigation.open(path); else navigate(path); }} />
+                    onFinish={subject => { warmUpTTS(); const path = finishEntryPath(subject); if (navigation) navigation.open(path); else navigate(path); }} />
 
                 <div className={navigation ? "stats-overview" : "space-y-8"}>
                 {totalStats.count === 0 ? (
@@ -518,7 +519,7 @@ export const Stats: React.FC = () => {
 
                         {totalStats.count > 0 && <InsetPanel className="flex flex-col gap-3 px-4 py-4 land:flex-row land:items-center land:justify-between">
                             <div>
-                                <div className="font-bold text-slate-700">{t("テストの じゅんび (10もん)", "テスト準備 (10問)")}</div>
+                                <div className="font-bold text-slate-700">{t("まとめて ふくしゅう (10もん)", "まとめて復習 (10問)")}</div>
                                 <div className="mt-1 text-xs text-pokomoko-muted">{t("にがてを さきに かためる", "苦手を先に固める")}</div>
                             </div>
                             <Button
@@ -572,12 +573,12 @@ export const Stats: React.FC = () => {
 
                     <SurfacePanel className="space-y-4 rounded-[28px] p-5">
                         <SurfacePanelHeader
-                            title={t("テストの きろく", "テストの記録")}
+                            title={t("レベルアップ・かくにんの きろく", "レベルアップ・確認の記録")}
                             description={t("さいきん の テストけっか を のこしておく", "最近のテスト結果を確認")}
                         />
                         {periodicTestHistory.length === 0 ? (
                             <InsetPanel className="px-4 py-4 text-xs text-pokomoko-muted">{t("テストを うけると、ここに けっかが のこるよ。", "テストを受けると、ここに結果が残ります。")}
-                                <Button size="sm" variant="secondary" className="mt-3 min-h-11" onClick={() => navigation ? navigation.open("/settings?section=parent") : navigate("/settings")}>{t("テストの せってい", "テストの設定")}</Button></InsetPanel>
+                                <Button size="sm" variant="secondary" className="mt-3 min-h-11" onClick={() => navigation ? navigation.open("/parents") : navigate("/parents")}>{t("ほごしゃの かくにん", "保護者の確認")}</Button></InsetPanel>
                         ) : (
                             <div className="space-y-2">
                                 {periodicTestHistory.map((test) => (

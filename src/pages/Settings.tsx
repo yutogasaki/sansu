@@ -1,4 +1,4 @@
-import { BookOpen, Check, ShieldCheck, UserRound, Volume2 } from "lucide-react";
+import { BookOpen, ShieldCheck, UserRound, Volume2 } from "lucide-react";
 import { islandEnabled } from "../domain/island/feature";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -14,16 +14,12 @@ import {
     SurfacePanelHeader,
 } from "../components/ui/SurfacePanel";
 import { Icons } from "../components/icons";
-import { PaperTestScoreModal } from "../components/domain/PaperTestScoreModal";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useIslandNavigation } from '../components/island/useIslandNavigation';
 import { UserProfile } from "../domain/types";
 import { getActiveProfile, deleteProfile, getAllProfiles, updateProfileAtomically, setActiveProfileId } from "../domain/user/repository";
 import { setSoundEnabled } from "../utils/audio";
 import { ParentGateModal } from "../components/gate/ParentGateModal";
-import { preparePaperTest, savePaperTestScore, cancelPaperTest, type PendingPaperTest } from "../domain/test/paperTestRepository";
-import { PrintableTestPreview } from "../components/domain/PrintableTestPreview";
-import { holdPwaUpdateForCriticalPersistence } from "../pwa";
 import { activateVocabNextLevel, needsVocabNextLevelActivation } from "../hooks/useStudySession.logic";
 import { ScreenScaffold } from "../components/ScreenScaffold";
 import storage from "../utils/storage";
@@ -41,13 +37,7 @@ export const Settings: React.FC = () => {
     // 保護者ガードの状態
     const [showParentGuard, setShowParentGuard] = useState(false);
     const [guardCallback, setGuardCallback] = useState<(() => void) | null>(null);
-    const [isPrinting, setIsPrinting] = useState(false);
-    const paperBusyRef = useRef(false);
     const profileIdRef = useRef<string | null>(null);
-    const [paperError, setPaperError] = useState<string | null>(null);
-    const [printPreview, setPrintPreview] = useState<{ paper: PendingPaperTest; profileName: string } | null>(null);
-    const printTriggerRef = useRef<HTMLElement | null>(null);
-    const [cancelTarget, setCancelTarget] = useState<PendingPaperTest | null>(null);
     const [activationError, setActivationError] = useState(false);
     const [isActivating, setIsActivating] = useState(false);
 
@@ -55,14 +45,11 @@ export const Settings: React.FC = () => {
     const [renameTarget, setRenameTarget] = useState<UserProfile | null>(null);
     const [newName, setNewName] = useState("");
     const [deleteTarget, setDeleteTarget] = useState<UserProfile | null>(null);
-    const [showPaperTestModal, setShowPaperTestModal] = useState(false);
-    const [pendingPaperTest, setPendingPaperTest] = useState<{ id: string; subject: "math" | "vocab"; level: number } | null>(null);
     const [legacySection, setOpenSection] = useState<string | null>(null);
     const section = new URLSearchParams(location.search).get('section');
     const openSection = navigation ? ['profile', 'learning', 'display', 'parent'].includes(section ?? '') ? section : null : legacySection;
     const isEasy = profile?.uiTextMode === "easy";
     const t = (easy: string, standard: string) => (isEasy ? easy : standard);
-    const TEST_TIMER_OPTIONS = [0, 5, 10, 15, 20] as const;
     const toggleSection = (key: string) => {
         if (navigation) {
             if (openSection !== key) navigation.open(`/settings?section=${key}`);
@@ -71,13 +58,6 @@ export const Settings: React.FC = () => {
     };
 
     const syncProfileState = useCallback((nextProfile: UserProfile | null) => {
-        if (profileIdRef.current !== (nextProfile?.id ?? null)) {
-            setPrintPreview(null);
-            setPendingPaperTest(null);
-            setShowPaperTestModal(false);
-            setCancelTarget(null);
-            setPaperError(null);
-        }
         profileIdRef.current = nextProfile?.id ?? null;
         setProfile(nextProfile);
 
@@ -233,111 +213,6 @@ export const Settings: React.FC = () => {
 
 
 
-    const handleReset = async () => {
-        if (confirm("ほんとうに 全部消しますか？")) {
-            const allProfiles = await getAllProfiles();
-            for (const storedProfile of allProfiles) {
-                await deleteProfile(storedProfile.id);
-            }
-            syncProfileState(null);
-            storage.clearAll();
-            navigate("/onboarding");
-        }
-    };
-
-    const runPaperJob = async (job: (profileId: string) => Promise<void>) => {
-        const ownerId = profileIdRef.current;
-        if (!ownerId || paperBusyRef.current) return;
-        paperBusyRef.current = true;
-        setIsPrinting(true);
-        setPaperError(null);
-        const release = holdPwaUpdateForCriticalPersistence();
-        try {
-            await job(ownerId);
-        } catch (error) {
-            console.error("Paper test operation failed:", error);
-            if (profileIdRef.current === ownerId) {
-                setPaperError(error instanceof Error ? error.message : "保存できませんでした。もう一度お試しください。");
-            }
-        } finally {
-            release();
-            paperBusyRef.current = false;
-            setIsPrinting(false);
-        }
-    };
-
-    const handlePrint = (subject: "math" | "vocab") => runPaperJob(async ownerId => {
-        const result = await preparePaperTest(ownerId, subject);
-        if (profileIdRef.current !== ownerId) return;
-        syncProfileState(result.profile);
-        if (!result.paper.testSet || result.paper.testSet.problems.length !== 20) {
-            setPaperError("以前の紙テストには問題が保存されていません。点数を入力するか、採点待ちを取り消して新しく作成してください。");
-            return;
-        }
-        setPrintPreview({ paper: result.paper, profileName: result.profile.name });
-    });
-
-    const getTestStatus = (subject: "math" | "vocab") => {
-        const pendingOnline = profile?.periodicTestState?.[subject]?.isPending;
-        const pendingPaper = (profile?.pendingPaperTests || []).some(t => t.subject === subject);
-        if (pendingPaper) return { label: isEasy ? "さいてん まち" : "採点待ち", variant: "warning" as const };
-        if (pendingOnline) return { label: isEasy ? "じゅんび OK" : "受験可能", variant: "success" as const };
-        return { label: isEasy ? "つうじょう" : "通常", variant: "neutral" as const };
-    };
-
-    const getPendingPaperTest = (subject: "math" | "vocab") => {
-        const pending = (profile?.pendingPaperTests || [])
-            .filter(t => t.subject === subject)
-            .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
-        return pending[0] || null;
-    };
-
-    const handleOpenPaperScoreModal = (subject: "math" | "vocab") => {
-        const target = getPendingPaperTest(subject);
-        if (!target) return;
-        setPendingPaperTest({ id: target.id, subject: target.subject, level: target.level });
-        setShowPaperTestModal(true);
-    };
-
-    const handlePaperTestSubmit = async (correctCount: number) => {
-        if (!pendingPaperTest) return;
-        await runPaperJob(async ownerId => {
-            const updated = await savePaperTestScore(ownerId, pendingPaperTest, correctCount);
-            if (!updated) throw new Error("プロフィールが見つかりません。設定を開き直してください。");
-            if (profileIdRef.current !== ownerId) return;
-            syncProfileState(updated);
-            setShowPaperTestModal(false);
-            setPendingPaperTest(null);
-        });
-    };
-
-    const handlePaperTestDismiss = () => {
-        if (paperBusyRef.current) return;
-        setShowPaperTestModal(false);
-        setPendingPaperTest(null);
-        setPaperError(null);
-    };
-
-    const handleCancelPaperTest = () => {
-        if (!cancelTarget) return;
-        void runPaperJob(async ownerId => {
-            const updated = await cancelPaperTest(ownerId, cancelTarget.id);
-            if (!updated) throw new Error("プロフィールが見つかりません。設定を開き直してください。");
-            if (profileIdRef.current !== ownerId) return;
-            syncProfileState(updated);
-            setCancelTarget(null);
-        });
-    };
-
-    const handleTestTimerChange = async (minutes: number) => {
-        if (!profile) return;
-        const updated = {
-            ...profile,
-            periodicTestTimeLimitSeconds: minutes > 0 ? minutes * 60 : undefined,
-        };
-        await persistProfileUpdate(updated);
-    };
-
     const handleActivateVocab = async () => {
         if (!profile || isActivating) return;
         const expected = { profileId: profile.id, mainLevel: profile.vocabMainLevel };
@@ -354,13 +229,6 @@ export const Settings: React.FC = () => {
         }
     };
 
-    const formatPendingPaperMeta = (createdAt: string) => {
-        const createdMs = new Date(createdAt).getTime();
-        const elapsedDays = Math.max(0, Math.floor((Date.now() - createdMs) / (1000 * 60 * 60 * 24)));
-        const createdText = new Date(createdAt).toLocaleDateString("ja-JP");
-        return t(`${createdText} / ${elapsedDays}にち けいか`, `${createdText} / ${elapsedDays}日経過`);
-    };
-
     const subjectLabel = profile?.subjectMode === "math" ? t("さんすう", "算数") : profile?.subjectMode === "vocab" ? t("えいご", "英語") : t("さんすう+えいご", "算数+英語");
     const hissanLabel = profile?.hissanModeEnabled !== false ? t("ひっさんON", "筆算ON") : t("ひっさんOFF", "筆算OFF");
     const soundLabel = sound ? t("おとON", "サウンドON") : t("おとOFF", "サウンドOFF");
@@ -374,9 +242,9 @@ export const Settings: React.FC = () => {
         return (
         <button
             type="button"
-            onClick={() => toggleSection(key)}
+            onClick={() => key === 'parent' ? withParentGuard(() => navigate('/parents', { state: { parentGatePassed: true } })) : toggleSection(key)}
             aria-expanded={openSection === key}
-            aria-controls={navigation ? sectionId : undefined}
+            aria-controls={navigation && key !== 'parent' ? sectionId : undefined}
             aria-current={navigation && openSection === key ? "page" : undefined}
             data-setting-section={key}
             className="pokomoko-setting-trigger flex w-full items-center justify-between gap-3 rounded-[20px] px-5 py-4 text-left transition-colors hover:bg-white/30 active:scale-[0.99]"
@@ -393,6 +261,8 @@ export const Settings: React.FC = () => {
         );
     };
 
+    if (section === 'parent') return <Navigate to="/parents" replace />;
+
     return (
         <ScreenScaffold
             title={navigation && openSection ? ({ profile: 'プロフィール', learning: t('がくしゅう', '学習'), display: t('ひょうじと おと', '表示とサウンド'), parent: t('ほごしゃ', '保護者') }[openSection] ?? t('せってい', '設定')) : t("せってい", "設定")}
@@ -406,29 +276,6 @@ export const Settings: React.FC = () => {
                 onClose={() => setShowParentGuard(false)}
                 onSuccess={handleGuardSuccess}
             />
-            {printPreview?.paper.testSet && <PrintableTestPreview
-                testSet={printPreview.paper.testSet}
-                paperId={printPreview.paper.id}
-                profileName={printPreview.profileName}
-                onClose={() => setPrintPreview(null)}
-                returnFocusTo={printTriggerRef.current}
-            />}
-            <Modal isOpen={!!cancelTarget} onClose={() => { if (!isPrinting) setCancelTarget(null); }} title="採点待ちを取り消しますか？" initialFocus="dialog"
-                footer={<Button disabled={isPrinting} onClick={handleCancelPaperTest}>採点待ちを取り消す</Button>}>
-                <p className="text-sm text-slate-600">この用紙の点数入力と再印刷を終了します。学習の記録やレベルは変わりません。</p>
-                {paperError && <p role="alert" className="mt-3 text-sm">{paperError}</p>}
-            </Modal>
-            {pendingPaperTest && (
-                <PaperTestScoreModal
-                    isOpen={showPaperTestModal}
-                    subject={pendingPaperTest.subject}
-                    level={pendingPaperTest.level}
-                    onSubmit={handlePaperTestSubmit}
-                    onDismiss={handlePaperTestDismiss}
-                    isSaving={isPrinting}
-                    error={paperError}
-                />
-            )}
             <Modal
                 isOpen={!!renameTarget}
                 onClose={() => setRenameTarget(null)}
@@ -475,7 +322,7 @@ export const Settings: React.FC = () => {
                     {sectionButton("profile", "プロフィール", `${profile?.name || "ゲスト"} · ${GRADES[profile?.grade ?? 1] || "???"}`)}
                     {sectionButton("learning", t("べんきょう", "学習"), `${subjectLabel} · ${hissanLabel} · Lv.${profile?.mathMainLevel ?? 1}/${profile?.vocabMainLevel ?? 1}`)}
                     {sectionButton("display", t("みため と おと", "表示とサウンド"), `${soundLabel} · ${textLabel} · ${kanjiLabel}`)}
-                    {sectionButton("parent", t("ほごしゃ", "保護者"), t("かくにんテスト · データの かんり", "確認テスト · データの管理"))}
+                    {sectionButton("parent", t("ほごしゃ", "保護者"), t("きろく · はんい · かくにん", "学習状況 · 範囲調整 · 理解度の確認"))}
                 </nav>}
                 <div className={navigation ? "settings-panels" : "space-y-3"}>
                 {navigation && !openSection && <div className="settings-empty-selection">
@@ -606,77 +453,9 @@ export const Settings: React.FC = () => {
                 </SurfacePanel>
 
                 {/* ── 保護者 ── */}
-                <SurfacePanel id="settings-panel-parent" hidden={Boolean(navigation && openSection !== "parent")} className="overflow-hidden rounded-[28px] p-0">
-                    {!navigation && sectionButton("parent", t("ほごしゃ", "保護者"), t("かくにんテスト · ほごしゃメニュー", "確認テスト · 保護者メニュー"))}
-                    <AnimatePresence>
-                        {openSection === "parent" && (
-                            <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }} className="overflow-hidden">
-                                <div className="space-y-4 px-5 pb-5">
-                                    <SurfacePanelHeader title={t("かくにんテスト", "確認テスト（20問）")} description={t("レベルは かわらないよ。アプリでも かみでも。", "レベルを変えずに、できることを確認します。")} />
-                                    {paperError && !showPaperTestModal && !cancelTarget && <p role="alert" className="text-sm text-slate-700">{paperError}</p>}
-                                    {isPrinting && <p role="status" className="text-sm text-slate-600">テストを保存しています…</p>}
-                                    <InsetPanel className="space-y-3 px-4 py-4">
-                                        <div className="text-xs font-bold uppercase tracking-[0.18em] text-pokomoko-muted">{t("せいげん じかん", "制限時間")}</div>
-                                        <div role="group" aria-label={t("せいげん じかん", "制限時間")} className="flex flex-wrap gap-2">
-                                            {TEST_TIMER_OPTIONS.map(minutes => {
-                                                const selectedMinutes = profile?.periodicTestTimeLimitSeconds ? Math.floor(profile.periodicTestTimeLimitSeconds / 60) : 0;
-                                                const isSelected = selectedMinutes === minutes;
-                                                return (
-                                                    <button key={minutes} type="button" aria-pressed={isSelected} onClick={() => handleTestTimerChange(minutes)} className={`inline-flex min-h-11 min-w-11 items-center justify-center gap-1 rounded-full border-2 px-3 py-1 text-xs font-black tracking-[0.08em] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--pokomoko-blue-deep)] ${isSelected ? "border-[color:var(--pokomoko-blue)] bg-[#e8f0ff] text-[color:var(--pokomoko-blue-deep)]" : "border-[color:var(--pokomoko-edge)] bg-white text-pokomoko-muted"}`}>
-                                                        {isSelected && <Check size={14} strokeWidth={3} aria-hidden="true" />}
-                                                        {minutes === 0 ? t("なし", "なし") : t(`${minutes}ふん`, `${minutes}分`)}
-                                                    </button>
-                                                );
-                                            })}
-                                        </div>
-                                    </InsetPanel>
-                                    <div className="grid grid-cols-1 gap-3 land:grid-cols-2">
-                                        {([
-                                            { subject: "math" as const, title: t("さんすう", "算数"), level: profile?.mathMainLevel ?? 1,  startPath: "/study?session=periodic-test&focus_subject=math" },
-                                            { subject: "vocab" as const, title: t("えいご", "英語"), level: profile?.vocabMainLevel ?? 1,  startPath: "/study?session=periodic-test&focus_subject=vocab" },
-                                        ]).map(item => {
-                                            const status = getTestStatus(item.subject);
-                                            const pendingPaper = getPendingPaperTest(item.subject);
-                                            const hasPendingPaper = !!pendingPaper;
-                                            return (
-                                                <InsetPanel key={item.subject} className="space-y-3 px-4 py-4">
-                                                    <div className="flex flex-wrap items-start justify-between gap-2">
-                                                        <div>
-                                                            <div className="font-bold text-slate-700">{item.title} Lv.{pendingPaper?.level ?? item.level}</div>
-                                                            {pendingPaper ? <div className="mt-1 text-[11px] text-pokomoko-muted">{formatPendingPaperMeta(pendingPaper.createdAt)}</div> : null}
-                                                        </div>
-                                                        <Badge variant={status.variant}>{status.label}</Badge>
-                                                    </div>
-                                                    <div className="grid grid-cols-1 gap-2">
-                                                        <Button size="sm" className="h-10 w-full" onClick={() => withParentGuard(() => navigate(item.startPath))}>{t("アプリで うける", "アプリで確認")}</Button>
-                                                        <Button size="sm" variant="secondary" className="min-h-11 w-full text-xs" disabled={isPrinting} onClick={event => { printTriggerRef.current = event.currentTarget; void handlePrint(item.subject); }}>{hasPendingPaper ? t("おなじ もんだいを いんさつ", "同じ問題を印刷") : t("いんさつ・PDF", "印刷・PDF")}</Button>
-                                                        {hasPendingPaper && <>
-                                                            <Button size="sm" variant="secondary" className="min-h-11 w-full" disabled={isPrinting} onClick={() => handleOpenPaperScoreModal(item.subject)}>{t("てんすう いれる", "点数入力")}</Button>
-                                                            <button type="button" className="min-h-11 text-xs text-slate-600 underline" disabled={isPrinting} onClick={() => setCancelTarget(pendingPaper)}>{t("さいてん まちを とりけす", "採点待ちを取り消す")}</button>
-                                                        </>}
-                                                    </div>
-                                                </InsetPanel>
-                                            );
-                                        })}
-                                    </div>
-                                    <PanelDivider />
-                                    <SettingRow title={t("ほごしゃ メニュー", "保護者メニュー")} description={t("おとなの ひとが みる ページ", "大人向けページ")} action={<Button size="sm" variant="secondary" onClick={() => withParentGuard(() => navigate('/parents', { state: { parentGatePassed: true } }))}>{t("ひらく", "開く")}</Button>} />
-                                    <PanelDivider />
-                                    <SettingRow title="開発者モード" description="内部状態や検証用の画面を開く" action={<Button size="sm" variant="secondary" onClick={() => navigation ? navigation.open("/dev") : navigate("/dev")}>{t("ひらく", "開く")}</Button>} />
-                                    <PanelDivider />
-                                    <div className="settings-data-management">
-                                        <SurfacePanelHeader title={t("データの かんり", "データの管理")} description={t("この たんまつの きろくを けす とき", "この端末のすべてのプロフィールと記録が対象です")} />
-                                        <button type="button" onClick={handleReset} className="settings-reset-action">
-                                            {t("データをすべてリセット", "全データをリセット")}
-                                        </button>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-                </SurfacePanel>
 
                 </div>
+                {!navigation && sectionButton("parent", t("ほごしゃ", "保護者"), t("きろく · はんい · かくにん", "学習状況 · 範囲調整 · 理解度の確認"))}
             </div>
         </ScreenScaffold>
     );

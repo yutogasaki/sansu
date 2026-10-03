@@ -24,7 +24,7 @@ function FinishPath({ subject, level, nextLevel, cleared = false }: { subject: S
         </div>
         <ArrowRight className="finish-path-arrow" size={26} aria-hidden="true" />
         <div className="finish-milestone">
-            <span className="finish-milestone-label">{cleared ? 'レベルアップ！' : 'クリアで レベルアップ'}</span>
+            <span className="finish-milestone-label">{cleared ? 'レベルアップ！' : 'クリアで つぎへ'}</span>
             <div className="finish-stamp finish-stamp--next"><span>Lv</span><strong>{nextLevel ?? level + 1}</strong></div>
             <span className="finish-level-title">{learningLevelTitle(subject, nextLevel ?? level + 1)}</span>
         </div>

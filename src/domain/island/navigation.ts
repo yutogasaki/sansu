@@ -22,9 +22,17 @@ export function islandLearningRequested(search: string) {
     return query.get('learn') === '1' || query.get('start') === 'learn';
 }
 
+/** Keep ordinary /learn in the same live learning host; a redirect would release
+ * and immediately reacquire its Web Lock when returning from a checkpoint. */
+export function islandLearningRoute(pathname: string, search: string) {
+    const challenge = new URLSearchParams(search).get('challenge');
+    return islandLearningRequested(search) || pathname === '/learn' && challenge !== 'math' && challenge !== 'vocab';
+}
+
 export function withoutIslandLearning(pathname: string, search: string) {
     const query = new URLSearchParams(search);
     query.delete('learn'); query.delete('start'); query.delete('profile');
+    if (pathname === '/learn' && !['math', 'vocab'].includes(query.get('challenge') ?? '')) return '/island';
     return pathname + (query.size ? `?${query}` : '');
 }
 
@@ -42,7 +50,7 @@ export function islandParentUrl(pathname: string, search: string) {
     const query = new URLSearchParams(search);
     if (pathname === '/settings' && query.has('section')) return '/settings';
     if (pathname === '/settings/curriculum') return '/settings?section=learning';
-    if (pathname === '/parents' || pathname === '/dev') return '/settings?section=parent';
+    if (pathname === '/parents' || pathname === '/dev') return '/settings';
     if (pathname === '/island') {
         if (islandHouseSectionFromSearch(search) !== 'home') return islandHouseUrl('home');
         if (query.get('view') === 'challenge') return islandViewUrl('keepsakes');

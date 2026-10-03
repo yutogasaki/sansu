@@ -1,5 +1,4 @@
-import React, { useRef, useState } from "react";
-import { readReadyFinishChallenges } from "../hooks/useFinishChallenge";
+import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Icons } from "./icons";
 import { warmUpTTS } from "../utils/tts";
@@ -24,23 +23,10 @@ export const Footer: React.FC = () => {
     const islandHome = islandEnabled();
     const navigation = useIslandNavigation();
     const seeds = useWaitingSeeds();
-    const [checkingFinish, setCheckingFinish] = useState(false);
-    const locationRef = useRef(location.key);
-    locationRef.current = location.key;
-    const startLearning = async () => {
-        if (checkingFinish) return;
-        const entryKey = locationRef.current;
+    const startLearning = () => {
         warmUpTTS();
-        setCheckingFinish(true);
-        try {
-            const challenges = await readReadyFinishChallenges();
-            if (locationRef.current !== entryKey) return;
-            if (challenges.length > 0) navigate('/learn');
-            else if (navigation) navigation.startLearning();
-            else navigate('/study');
-        } catch {
-            if (locationRef.current === entryKey) navigate('/learn');
-        } finally { setCheckingFinish(false); }
+        if (navigation) navigation.startLearning();
+        else navigate('/study');
     };
 
     if (islandHome) {
@@ -66,7 +52,7 @@ export const Footer: React.FC = () => {
                             className={`island-shell-tab${primary ? " island-shell-tab--learn island-start" : ""}`}
                             aria-label={waiting ? `${item.label}（たねが ${waiting}こ まってるよ）` : item.label}
                             aria-current={active ? "page" : undefined}
-                            disabled={navigation?.blocked || (primary && (navigation?.learningBlocked || checkingFinish))}
+                            disabled={navigation?.blocked || (primary && navigation?.learningBlocked)}
                             onClick={() => {
                                 if (navigation) {
                                     if (primary) void startLearning();
@@ -136,7 +122,6 @@ export const Footer: React.FC = () => {
                 className="fab"
                 type="button"
                 aria-label="まなぶ"
-                disabled={checkingFinish}
                 onClick={() => {
                     void startLearning();
                 }}

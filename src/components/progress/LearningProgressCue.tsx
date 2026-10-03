@@ -9,6 +9,7 @@ import { MATH_SKILL_LABELS } from '../../domain/math/labels';
 import { getLevelForSkill } from '../../domain/math/curriculum';
 import { getWordLevel } from '../../domain/english/words';
 import './LearningProgressCue.css';
+import { finishEntryPath } from '../finish/finishNavigation';
 
 /** No DB reads or write on the answer path; only committed profile changes. */
 export function LearningProgressCue({ profile, plan, active, busy = false }: { profile: UserProfile; plan: IslandPlan; active: boolean; busy?: boolean }) {
@@ -49,8 +50,9 @@ export function LearningProgressCue({ profile, plan, active, busy = false }: { p
     const message = notice?.owner === profile.id && notice.subject === plan.subject && active ? notice.text : undefined;
     return <div className="learning-progress-cue" data-learning-progress="true">
         {ready && plan.cursor === 0 && <button type="button" className="learning-progress-finish-link" disabled={busy} onClick={() => {
-            if (navigation) navigation.open('/stats'); else window.location.hash = '/stats';
-        }}>レベルアップに ちょうせんできるよ！ <span aria-hidden="true">→</span></button>}
+            const path = finishEntryPath(plan.subject);
+            if (navigation) navigation.open(path); else window.location.hash = path;
+        }}>Lv{main + 1}へ ちょうせん <span aria-hidden="true">→</span></button>}
         <span className="learning-progress-cue-label" title={`${title} · ${status}`}>{title} · {status}</span>
         <span className="learning-progress-cue-notice" role="status" aria-live="polite">{message}</span>
     </div>;

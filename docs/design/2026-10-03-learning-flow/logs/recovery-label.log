@@ -1,0 +1,11 @@
+FAIL 390 recovery locator.waitFor: Timeout 15000ms exceeded.
+Call log:
+[2m  - waiting for locator('[data-finish-state="practice"]') to be visible[22m
+
+    at /Users/yutogasaki/Projects/sansu/docs/design/2026-10-03-learning-flow/ui.mjs:42:794
+FAIL 768 recovery locator.waitFor: Timeout 15000ms exceeded.
+Call log:
+[2m  - waiting for locator('[data-finish-state="practice"]') to be visible[22m
+
+    at /Users/yutogasaki/Projects/sansu/docs/design/2026-10-03-learning-flow/ui.mjs:42:794
+REPORT false

@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { islandFocusScreen, islandHouseSectionFromSearch, islandHouseUrl, islandLearningRequested, islandParentUrl, islandScreenFromSearch, islandViewUrl, withoutIslandLearning, type IslandScreen, type IslandHouseSection } from '../../domain/island/navigation';
+import { islandFocusScreen, islandHouseSectionFromSearch, islandHouseUrl, islandLearningRoute, islandParentUrl, islandScreenFromSearch, islandViewUrl, withoutIslandLearning, type IslandScreen, type IslandHouseSection } from '../../domain/island/navigation';
 import { warmUpTTS } from '../../utils/tts';
 
 export type IslandTab = 'island' | 'house' | 'stats' | 'settings';
@@ -15,7 +15,7 @@ export function useIslandNavigationState(enabled: boolean) {
     const query = new URLSearchParams(location.search);
     const targetProfile = query.get('profile');
     const isIsland = location.pathname === '/island';
-    const learning = enabled && islandLearningRequested(location.search);
+    const learning = enabled && islandLearningRoute(location.pathname, location.search);
     const active = enabled && (isIsland || learning);
     const view = isIsland ? islandScreenFromSearch(location.search) : 'home';
     const houseSection = isIsland ? islandHouseSectionFromSearch(location.search) : 'home';

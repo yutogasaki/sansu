@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
-import { finishStudyPath, finishRecoveryStudyPath } from './finishNavigation';
+import { finishEntryPath, finishStudyPath, finishRecoveryStudyPath } from './finishNavigation';
 import { FinishChallengeEntry, FinishChallengeResultView } from './FinishChallenge';
 
 describe('finish challenge meaning and payoff', () => {
@@ -11,6 +11,8 @@ describe('finish challenge meaning and payoff', () => {
         expect(html).toContain('ひとりで ぜんもんできたら クリア');
         expect(finishStudyPath('math')).toContain('session=finish-test');
         expect(finishStudyPath('vocab')).toContain('focus_subject=vocab');
+        expect(finishEntryPath('math')).toBe('/learn?challenge=math');
+        expect(finishEntryPath('vocab')).toBe('/learn?challenge=vocab');
     });
     it('shows saved progression separately from the answer count', () => {
         const html = renderToStaticMarkup(<FinishChallengeResultView continuation="fresh" result={{ passed: true, subject: 'math', level: 16, newLevel: 17, correctCount: 20, totalQuestions: 20 }} onNavigate={() => {}} />);

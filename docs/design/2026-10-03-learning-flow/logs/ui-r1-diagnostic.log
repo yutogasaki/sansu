@@ -1,0 +1,37 @@
+PASS 390 empty
+PASS 390 partial
+PASS 390 coverage
+PASS 390 paused
+FAIL 390 ready locator.waitFor: Timeout 15000ms exceeded.
+Call log:
+[2m  - waiting for locator('[data-input-ready="true"]') to be visible[22m
+[2m    35 × locator resolved to hidden <section inert="" hidden="" data-intro="true" data-party-peak="" data-show-level="0" data-show-completed="0" data-input-ready="true" data-party-riding="false" aria-label="しまへ ひかりを とどけよう" data-learning-reaction-id="" data-island-plan-revision="0" data-learning-feedback="ready" class="island-learning island-workbench" data-learning-candidate="pokomoko-pop-live-v8" data-island-plan-id="["island-plan-v1","bcc6d83f-f3b8-4a27-a65a-4e4f967d7474",0]">…</section>[22m
+
+    at /Users/yutogasaki/Projects/sansu/docs/design/2026-10-03-learning-flow/ui.mjs:41:106
+FAIL 390 recovery locator.waitFor: Timeout 15000ms exceeded.
+Call log:
+[2m  - waiting for locator('[data-input-ready="true"]') to be visible[22m
+[2m    35 × locator resolved to hidden <section inert="" hidden="" data-intro="true" data-party-peak="" data-show-level="0" data-show-completed="0" data-input-ready="true" data-party-riding="false" aria-label="しまへ ひかりを とどけよう" data-learning-reaction-id="" data-island-plan-revision="0" data-learning-feedback="ready" class="island-learning island-workbench" data-learning-candidate="pokomoko-pop-live-v8" data-island-plan-id="["island-plan-v1","069b9b75-2ac6-44a1-b203-85d1ba863c25",0]">…</section>[22m
+
+    at /Users/yutogasaki/Projects/sansu/docs/design/2026-10-03-learning-flow/ui.mjs:41:106
+PASS 390 vocab
+PASS 390 complete
+PASS 768 empty
+PASS 768 partial
+PASS 768 coverage
+PASS 768 paused
+FAIL 768 ready locator.waitFor: Timeout 15000ms exceeded.
+Call log:
+[2m  - waiting for locator('[data-input-ready="true"]') to be visible[22m
+[2m    34 × locator resolved to hidden <section inert="" hidden="" data-intro="true" data-party-peak="" data-show-level="0" data-show-completed="0" data-input-ready="true" data-party-riding="false" aria-label="しまへ ひかりを とどけよう" data-learning-reaction-id="" data-island-plan-revision="0" data-learning-feedback="ready" class="island-learning island-workbench" data-learning-candidate="pokomoko-pop-live-v8" data-island-plan-id="["island-plan-v1","8eb4d7cc-7286-43f7-a234-54e2e12ae625",0]">…</section>[22m
+
+    at /Users/yutogasaki/Projects/sansu/docs/design/2026-10-03-learning-flow/ui.mjs:41:106
+FAIL 768 recovery locator.waitFor: Timeout 15000ms exceeded.
+Call log:
+[2m  - waiting for locator('[data-input-ready="true"]') to be visible[22m
+[2m    35 × locator resolved to hidden <section inert="" hidden="" data-intro="true" data-party-peak="" data-show-level="0" data-show-completed="0" data-input-ready="true" data-party-riding="false" aria-label="しまへ ひかりを とどけよう" data-learning-reaction-id="" data-island-plan-revision="0" data-learning-feedback="ready" class="island-learning island-workbench" data-learning-candidate="pokomoko-pop-live-v8" data-island-plan-id="["island-plan-v1","78871a9f-a292-48e2-b3df-ce1df78e9049",0]">…</section>[22m
+
+    at /Users/yutogasaki/Projects/sansu/docs/design/2026-10-03-learning-flow/ui.mjs:41:106
+PASS 768 vocab
+PASS 768 complete
+REPORT false
