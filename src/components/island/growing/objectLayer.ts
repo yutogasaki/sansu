@@ -4,7 +4,7 @@ import type { IslandMaterials } from '../three/primitives';
 import type { ItemKind, LifeItem } from '../../../domain/islandLife/model';
 import { connectedWaterChannels, waterChannelConnections } from '../../../domain/islandLife/waterChannels';
 import { waterLayout } from '../../../domain/growingIsland/environment';
-import { key } from '../../../domain/growingIsland/space';
+import { HOME_CELL, key } from '../../../domain/growingIsland/space';
 import type { Cell, FlowerColor, GrowingState, Landmark, LandmarkKind, PlotStyle, SeedKind } from '../../../domain/growingIsland';
 import { keepsakeKind, treeAge } from '../../../domain/growingIsland';
 import { buildBud, buildLighthouse, buildPlot } from './plotGeometry';
@@ -113,7 +113,14 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
             holder.traverse(o => { o.userData.budId = p.id; });
             continue;
         }
-        add(p.id, buildPlot(m, p.kind, p.stage, p.style ?? 'plain', p.growth, p.roof), p.cell);
+        const model = buildPlot(m, p.kind, p.stage, p.style ?? 'plain', p.growth, p.roof);
+        if (p.stage === 0) {
+            // A new seed can be just a few narrow stakes. Keep its refund/move sheet
+            // reachable with a finger without changing the visible model.
+            const hit = new T.Mesh(new T.BoxGeometry(.7, .65, .7), new T.MeshBasicMaterial({ colorWrite: false, depthWrite: false }));
+            hit.position.y = .32; hit.userData.ownMaterial = true; hit.userData.placementHitOnly = true; model.add(hit);
+        }
+        add(p.id, model, p.cell);
         // Friends stop by built fields to tend them.
         if ((p.kind === 'farm' || p.kind === 'market') && p.stage > 0 && !seats.has(key(p.cell))) seats.set(key(p.cell), 'tend');
     }
@@ -123,6 +130,14 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
     flag.position.copy(layout.pierRoot).add(new T.Vector3(-.36, .02, .1));
     flag.traverse(o => { o.userData.objectId = 'flag'; }); root.add(flag);
     if (selectedId === 'flag') { const r = ring('#fff5ac', .3); r.position.copy(flag.position); root.add(r); }
+    if (selectedId === 'house' && !ghost) {
+        // The cottage belongs to the persistent world scene, outside this layer's usual add().
+        // Outline its footprint so selecting it has the same quiet ground cue as placed objects.
+        const r = ring('#fff5ac', .95);
+        r.name = 'growing-house-selection';
+        r.position.copy(layout.point({ x: HOME_CELL.x + .5, z: HOME_CELL.z - .5 }, .08));
+        root.add(r);
+    }
     // A few dotted wonder mushrooms on the shore from the first day: "ふしぎ" here and there.
     for (const [x, z, size] of [[layout.bounds.minX - .55, .2, 1.5], [layout.bounds.maxX + .5, 1.4, 1.2], [layout.bounds.minX - .45, layout.depth - 1.3, 1.05]] as const) {
         const shroom = new T.Group(); shroom.position.copy(layout.point({ x, z }));

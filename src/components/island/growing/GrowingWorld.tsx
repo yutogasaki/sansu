@@ -11,6 +11,7 @@ import { createWorldScene } from './worldScene';
 import { WorldEffects } from './worldEffects';
 import type { SceneLayout } from './sceneLayout';
 import { menuPictureMaker, type MenuPictures } from './menuMiniatures';
+import { growingHitTarget } from './growingHitTarget';
 
 export interface WorldHandlers {
     onCell: (cell: Cell) => void;
@@ -251,7 +252,11 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
                 const point = ground(event); if (point) h.onCell(layout.cellAt(point)); return;
             }
             const hits = cast(event).intersectObjects([...(layer ? [layer.root] : []), ...world.life.objects(), world.scene], true);
-            for (const hit of hits) {
+            // The invisible finger target of a tiny seed must never steal a visible
+            // neighboring flower, bench, home, friend, or bud at an oblique angle.
+            const target = growingHitTarget(hits, Boolean(layer?.arrivalBoat.visible));
+            if (target) {
+                const hit = target;
                 const data = hit.object.userData;
                 if (data.budId) { h.onOpen(data.budId); return; }
                 if (data.boat === 'arrival' && layer?.arrivalBoat.visible) { h.onDisembark(); return; }

@@ -1041,7 +1041,10 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                     .then(updated => { if (updated) setSnapshot(updated); }); },
             } : undefined} />}
         {active && growingIslandEnabled() && screen === 'keepsakes' && houseSection === 'home' && houseGuideAt === location.key
-            && <Suspense fallback={null}><GrowingHouseGuide key={profile.id} profileId={profile.id} onClose={() => setHouseGuideAt(undefined)}
+            && <Suspense fallback={null}><GrowingHouseGuide key={profile.id} profileId={profile.id} onClose={() => {
+                setHouseGuideAt(undefined);
+                window.requestAnimationFrame(() => document.querySelector<HTMLButtonElement>('[data-house-guide-book]')?.focus({ preventScroll: true }));
+            }}
                 onLearn={() => { setHouseGuideAt(undefined); void begin(); }}
                 onIslandAction={action => {
                     setHouseGuideAt(undefined); setGrowingGuideRequest({ id: crypto.randomUUID(), action }); setScreen('home');

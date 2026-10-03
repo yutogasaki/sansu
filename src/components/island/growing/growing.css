@@ -11,6 +11,10 @@
     font-size: 14px; font-weight: 800; white-space: nowrap;
 }
 .growing-hud-top { position: absolute; z-index: 5; top: calc(56px + env(safe-area-inset-top)); left: 12px; right: 12px; display: flex; gap: 8px; align-items: center; }
+.growing-hud-top [data-growing-character] {
+    display: block; min-width: 0; flex: 0 1 auto; overflow: hidden; text-overflow: ellipsis;
+}
+.growing-hud-top > :not([data-growing-character]) { flex-shrink: 0; }
 .growing-menu-button { margin-left: auto; }
 .growing-menu {
     position: absolute; z-index: 8; top: calc(100px + env(safe-area-inset-top)); right: 12px; display: grid; gap: 8px; padding: 10px;
@@ -43,10 +47,11 @@
 .growing-seeds { font-size: 15px; }
 
 .growing-placing {
-    position: absolute; z-index: 6; left: 12px; right: 12px; bottom: 12px; display: flex; gap: 8px; align-items: center;
+    position: absolute; z-index: 6; left: 12px; right: 12px; bottom: 12px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; align-items: center;
     padding: 8px 10px; background: var(--pokomoko-paper); border-radius: 18px; box-shadow: 0 4px 16px rgb(30 40 60 / 18%);
 }
-.growing-placing p { flex: 1; margin: 0; font-weight: 800; }
+.growing-placing p { grid-column: 1 / -1; margin: 0; font-weight: 800; line-height: 1.5; overflow-wrap: anywhere; }
+.growing-placing button { min-width: 0; }
 .growing-placing .growing-primary { background: var(--pokomoko-blue); color: #fff !important; border-color: transparent; }
 
 .growing-tray, .growing-sheet {
