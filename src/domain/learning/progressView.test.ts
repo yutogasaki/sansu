@@ -43,10 +43,10 @@ describe('honest learning progress presentation', () => {
         expect(learningProgressView(p, 'math').stage).toBe('paused');
         const paused = learningProgressView(p, 'math', undefined, { ...ready, recentCount: 8, recentCorrect: 6, coveredCount: 0, coverageReady: false, fresh: false });
         expect(paused.conditions[0].count).toBe(8);
-        expect(paused.conditions[1].detail).toContain('6問 ひとりでできた');
+        expect(paused.conditions[1].detail).toContain('6 / 8もん');
         expect(paused.conditions[2].count).toBe(0);
-        expect(paused.message).toContain('現在オフ');
-        expect(paused.message).toContain('選び直し');
+        expect(paused.message).toContain('オフ');
+        expect(paused.message).toContain('設定から 再開');
         expect(paused.pauseReason).toBe('disabled');
         p.mathLevels = p.mathLevels!.filter(level => level.level !== 9);
         expect(learningProgressView(p, 'math', undefined, ready).message).toContain('設定を たしかめて');
@@ -59,7 +59,7 @@ describe('honest learning progress presentation', () => {
         after.mathLevels!.find(l => l.level === 8)!.recentIndependentAnswersNonReview = Array(20).fill(true);
         expect(learningProgressNotice(p, after, 'math')).toBeNull();
         after.recentAttempts = [{ id: 'ready', timestamp: new Date().toISOString(), subject: 'math', skillId: 'add_1d_1', result: 'correct' }];
-        expect(learningProgressNotice(p, after, 'math', { beforeReady: false, afterReady: true })).toContain('しあげ');
+        expect(learningProgressNotice(p, after, 'math', { beforeReady: false, afterReady: true })).toContain('レベルアップ');
         expect(learningProgressNotice(after, after, 'math')).toBeNull();
     });
     it('announces only a newly saved learning transition in the same profile and subject', () => {

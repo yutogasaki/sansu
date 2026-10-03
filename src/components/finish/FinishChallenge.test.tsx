@@ -30,7 +30,7 @@ describe('finish challenge meaning and payoff', () => {
         const html = renderToStaticMarkup(<FinishChallengeResultView continuation="fresh" result={{ passed: false, subject: 'math', level: 16, correctCount: 19, totalQuestions: 20, recoveryItemIds: ['div_2d1d'] }} onNavigate={() => {}} />);
         expect(html).toContain('できたところを ふやそう');
         expect(html).toContain('ここを れんしゅうする');
-        expect(html).not.toContain('もういちど しあげに ちょうせん');
+        expect(html).not.toContain('もういちど レベルアップに ちょうせん');
         const recovery = new URL(finishRecoveryStudyPath('math', ['div_2d1d', 'div_2d1d', 'div_1d1d']), 'https://example.test');
         expect(recovery.searchParams.get('session')).toBe('review');
         expect(recovery.searchParams.get('focus_ids')).toBe('div_2d1d,div_1d1d');

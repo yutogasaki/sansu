@@ -395,7 +395,7 @@ export const Settings: React.FC = () => {
 
     return (
         <ScreenScaffold
-            title={navigation && openSection ? ({ profile: 'プロフィール', learning: t('がくしゅう', '学習'), display: t('ひょうじと おと', '表示とサウンド'), parent: t('ほごしゃ', 'テスト・保護者') }[openSection] ?? t('せってい', '設定')) : t("せってい", "設定")}
+            title={navigation && openSection ? ({ profile: 'プロフィール', learning: t('がくしゅう', '学習'), display: t('ひょうじと おと', '表示とサウンド'), parent: t('ほごしゃ', '保護者') }[openSection] ?? t('せってい', '設定')) : t("せってい", "設定")}
             showBack={Boolean(navigation)}
             onBack={navigation?.back}
             containerClassName={navigation ? "utility-layout-screen" : undefined}
@@ -475,7 +475,7 @@ export const Settings: React.FC = () => {
                     {sectionButton("profile", "プロフィール", `${profile?.name || "ゲスト"} · ${GRADES[profile?.grade ?? 1] || "???"}`)}
                     {sectionButton("learning", t("べんきょう", "学習"), `${subjectLabel} · ${hissanLabel} · Lv.${profile?.mathMainLevel ?? 1}/${profile?.vocabMainLevel ?? 1}`)}
                     {sectionButton("display", t("みため と おと", "表示とサウンド"), `${soundLabel} · ${textLabel} · ${kanjiLabel}`)}
-                    {sectionButton("parent", t("テスト・おとなむけ", "テスト・保護者"), t("ていきテスト · データの かんり", "定期テスト · データの管理"))}
+                    {sectionButton("parent", t("ほごしゃ", "保護者"), t("かくにんテスト · データの かんり", "確認テスト · データの管理"))}
                 </nav>}
                 <div className={navigation ? "settings-panels" : "space-y-3"}>
                 {navigation && !openSection && <div className="settings-empty-selection">
@@ -605,14 +605,14 @@ export const Settings: React.FC = () => {
                     </AnimatePresence>
                 </SurfacePanel>
 
-                {/* ── テスト・保護者 ── */}
+                {/* ── 保護者 ── */}
                 <SurfacePanel id="settings-panel-parent" hidden={Boolean(navigation && openSection !== "parent")} className="overflow-hidden rounded-[28px] p-0">
-                    {!navigation && sectionButton("parent", t("テスト・おとなむけ", "テスト・保護者"), t("ていきテスト · ほごしゃメニュー", "定期テスト · 保護者メニュー"))}
+                    {!navigation && sectionButton("parent", t("ほごしゃ", "保護者"), t("かくにんテスト · ほごしゃメニュー", "確認テスト · 保護者メニュー"))}
                     <AnimatePresence>
                         {openSection === "parent" && (
                             <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }} className="overflow-hidden">
                                 <div className="space-y-4 px-5 pb-5">
-                                    <SurfacePanelHeader title={t("ていき テスト", "定期テスト（20問）")} description={t("アプリ と かみ で テスト できるよ", "アプリ受験と紙テストをここから開始できます")} />
+                                    <SurfacePanelHeader title={t("かくにんテスト", "確認テスト（20問）")} description={t("レベルは かわらないよ。アプリでも かみでも。", "レベルを変えずに、できることを確認します。")} />
                                     {paperError && !showPaperTestModal && !cancelTarget && <p role="alert" className="text-sm text-slate-700">{paperError}</p>}
                                     {isPrinting && <p role="status" className="text-sm text-slate-600">テストを保存しています…</p>}
                                     <InsetPanel className="space-y-3 px-4 py-4">
@@ -648,7 +648,7 @@ export const Settings: React.FC = () => {
                                                         <Badge variant={status.variant}>{status.label}</Badge>
                                                     </div>
                                                     <div className="grid grid-cols-1 gap-2">
-                                                        <Button size="sm" className="h-10 w-full" onClick={() => withParentGuard(() => navigate(item.startPath))}>{t("アプリで うける", "アプリ受験")}</Button>
+                                                        <Button size="sm" className="h-10 w-full" onClick={() => withParentGuard(() => navigate(item.startPath))}>{t("アプリで うける", "アプリで確認")}</Button>
                                                         <Button size="sm" variant="secondary" className="min-h-11 w-full text-xs" disabled={isPrinting} onClick={event => { printTriggerRef.current = event.currentTarget; void handlePrint(item.subject); }}>{hasPendingPaper ? t("おなじ もんだいを いんさつ", "同じ問題を印刷") : t("いんさつ・PDF", "印刷・PDF")}</Button>
                                                         {hasPendingPaper && <>
                                                             <Button size="sm" variant="secondary" className="min-h-11 w-full" disabled={isPrinting} onClick={() => handleOpenPaperScoreModal(item.subject)}>{t("てんすう いれる", "点数入力")}</Button>

@@ -201,7 +201,7 @@ export const CurriculumSettings: React.FC = () => {
                     setPendingAction('resume');
                     setShowGuard(true);
                 }}>Lv.{currentLevel + 1}への進級を再開</Button>
-                <p className="text-xs text-pokomoko-muted">今のレベルと記録はそのまま。しあげをクリアすると、次へ進みます。</p>
+                <p className="text-xs text-pokomoko-muted">今のレベルと記録はそのまま。レベルアップをクリアすると、次へ進みます。</p>
             </SurfacePanel>}
             {resumeError && <p role="alert">保存できませんでした。もう一度お試しください。</p>}
             <SurfacePanel>

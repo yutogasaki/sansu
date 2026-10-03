@@ -38,31 +38,31 @@ export function learningProgressView(profile: UserProfile, subject: SubjectKey, 
     const { mainLevel: main, nextLevel: next, count, correct, status } = eligibility;
     if (status === 'complete') return { subject, main, next: null, stage: 'complete', conditions: [], message: 'ここまでの はんいを まなんだよ。ふくしゅうも つづけよう。' };
     const conditions: ProgressCondition[] = [
-        { label: 'いまの はんいの れんしゅう', summary: `${count} / 20`, detail: `${count} / 20問（さいきん7日間）`, count, target: 20, met: count >= 20 },
-        { label: 'ひとりで 解けるか たしかめる', met: count >= 20 && correct >= 17,
+        { label: 'れんしゅう', summary: `${count} / 20`, detail: `${count} / 20もん · さいきん7日間`, count, target: 20, met: count >= 20 },
+        { label: 'ひとりで', met: count >= 20 && correct >= 17,
             summary: `${correct} / ${count}`,
-            detail: `${count}問のうち ${correct}問 ひとりでできた（20問中17問以上が めやす）` },
+            detail: `${correct} / ${count}もん · 20もん中17もん以上` },
     ];
-    if (readiness) conditions.push({ label: subject === 'math' ? 'いろいろな 型を たしかめる' : 'いろいろな ことばを たしかめる',
+    if (readiness) conditions.push({ label: subject === 'math' ? 'もんだいの しゅるい' : 'ことば',
         summary: `${readiness.coveredCount} / ${readiness.requiredCount}`,
-        detail: `${readiness.coveredCount} / ${readiness.requiredCount}${subject === 'math' ? 'つの 型' : '語'}`,
+        detail: `${readiness.coveredCount} / ${readiness.requiredCount}${subject === 'math' ? 'しゅるい' : '語'}`,
         count: readiness.coveredCount, target: readiness.requiredCount, met: eligibility.coverageReady === true });
     if (subject === 'math' && main === 11 && (!readiness || missingUnits > 0)) conditions.push({ label: 'いろいろな たしひきを たしかめる',
         summary: `${7 - missingUnits} / 7`,
         detail: `${7 - missingUnits} / 7つの 単元`, count: 7 - missingUnits, target: 7, met: missingUnits === 0 });
     if (readiness && !eligibility.fresh && count >= 20) conditions.push({ label: 'さいきんの できたを あつめる',
         detail: 'さいきん7日間の れんしゅうで たしかめよう', met: false });
-    if (eligibility.recovering) conditions.push({ label: 'しあげで むずかしかった 型を れんしゅうする',
+    if (eligibility.recovering) conditions.push({ label: 'レベルアップで むずかしかった 型を れんしゅうする',
         detail: 'べつの 問題で ひとりで できたら、もういちど ちょうせんできるよ', met: false });
     if (status === 'paused') {
         const disabled = needsProgressionResume(profile, subject);
         return { subject, main, next, stage: 'paused', conditions, pauseReason: disabled ? 'disabled' : 'inconsistent',
             message: disabled
-                ? `Lv${next}は 現在オフです。メインレベルの選び直しでも、上のレベルがオフになります。学習設定で進級を再開できます。`
-                : 'レベルの設定を たしかめてね。いまの はんいの れんしゅうは つづけられるよ。' };
+                ? `Lv${next}は オフです。学習設定から 再開できます。`
+                : 'レベルの設定を たしかめてね。れんしゅうは つづけられるよ。' };
     }
     return { subject, main, next, stage: status === 'ready' ? 'ready' : 'unlock', conditions,
-        message: status === 'ready' ? 'しあげに ちょうせんできるよ！クリアすると つぎの はんいへ。' : 'いまの はんいを れんしゅうして、しあげに そなえよう。' };
+        message: status === 'ready' ? 'レベルアップに ちょうせんできるよ！' : 'つぎへ むけて れんしゅう中' };
 }
 
 /** Changes to settings without new learning must not masquerade as earned progress. */
@@ -73,6 +73,6 @@ export function learningProgressNotice(before: UserProfile, after: UserProfile, 
     const maxKey = subject === 'math' ? 'mathMaxUnlocked' : 'vocabMaxUnlocked';
     if (after[mainKey] > before[mainKey]) return `${learningLevelTitle(subject, after[mainKey])}へ すすんだよ`;
     if (after[maxKey] > before[maxKey]) return 'あたらしい はんいが ひらいたよ';
-    if (readiness?.beforeReady === false && readiness.afterReady === true) return 'しあげに ちょうせんできるよ！';
+    if (readiness?.beforeReady === false && readiness.afterReady === true) return 'レベルアップに ちょうせんできるよ！';
     return null;
 }

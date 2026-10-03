@@ -32,13 +32,12 @@ function FinishPath({ subject, level, nextLevel, cleared = false }: { subject: S
 }
 
 export function FinishChallengeEntry({ subject, level, nextLevel, onStart }: { subject: SubjectKey; level: number; nextLevel?: number | null; onStart: () => void }) {
-    return <section className="finish-card" aria-label={`${subject === 'math' ? 'さんすう' : 'えいご'}の しあげ`}>
-        <div className="finish-card-heading"><IslandToyIcon kind="album" size={38} /><span>{subject === 'math' ? 'さんすう' : 'えいご'}の しあげ</span></div>
+    return <section className="finish-card" aria-label={`${subject === 'math' ? 'さんすう' : 'えいご'}の レベルアップ`}>
+        <div className="finish-card-heading"><IslandToyIcon kind="album" size={38} /><span>{subject === 'math' ? 'さんすう' : 'えいご'}の レベルアップ</span></div>
         <h2>クリアで Lv{nextLevel ?? level + 1}へ！</h2>
-        <p className="finish-description">しあげは レベルアップの チャレンジ。<br />20もん ぜんぶ ひとりで できたら つぎへ。</p>
         <FinishPath subject={subject} level={level} nextLevel={nextLevel} />
         <p className="finish-rule">20もん · ひとりで ぜんもんできたら クリア</p>
-        <Button size="xl" className="finish-primary" onClick={onStart}>しあげに ちょうせん<ArrowRight size={18} aria-hidden="true" /></Button>
+        <Button size="xl" className="finish-primary" onClick={onStart}>ちょうせんする<ArrowRight size={18} aria-hidden="true" /></Button>
     </section>;
 }
 
@@ -52,14 +51,14 @@ export function FinishChallengeResultView({ result, onNavigate, continuation }: 
     return <main className="finish-page finish-result" data-finish-state={opened ? 'cleared' : result.passed ? 'passed' : 'practice'}>
         <section className="finish-card" aria-labelledby="finish-result-title">
             <div className="finish-result-icon"><IslandToyIcon kind={result.passed ? 'keepsake' : 'album'} size={58} /></div>
-            <p className="finish-eyebrow">しあげの きろく</p>
+            <p className="finish-eyebrow">レベルアップの きろく</p>
             <h1 id="finish-result-title">{opened ? `Lv${result.newLevel}へ レベルアップ！` : result.passed ? `${learningLevelTitle(result.subject, result.level)} クリア！` : 'できたところを ふやそう'}</h1>
-            <p className="finish-description">{opened ? `${learningLevelTitle(result.subject, result.level)} クリア！あたらしい はんいが ひらいたよ。` : result.passed ? 'ひとりで 解けた きろくが のこったよ。' : 'できた きろくは のこっているよ。\nれんしゅうしてから、あたらしい もんだいで ちょうせんしよう。'}</p>
+            <p className="finish-description">{opened ? `${learningLevelTitle(result.subject, result.level)} クリア！あたらしい はんいが ひらいたよ。` : result.passed ? 'ひとりで 解けた きろくが のこったよ。' : 'できた きろくは のこっているよ。'}</p>
             {opened && <FinishPath subject={result.subject} level={result.level} nextLevel={result.newLevel} cleared />}
             <div className="finish-score"><strong>{result.correctCount}<span> / {result.totalQuestions}もん</span></strong><span>ひとりで できた</span></div>
             {opened && continuation === 'pending' && <p className="finish-description">とちゅうの れんしゅうを つづけるよ。<br />あたらしい はんいは つぎの くぎりから。</p>}
             <Button size="xl" className="finish-primary" onClick={() => onNavigate(result.passed ? islandEnabled() ? '/island?start=learn' : '/study' : finishRecoveryStudyPath(result.subject, result.recoveryItemIds ?? []))}>{opened ? continuation === 'fresh' ? 'つぎを はじめる' : 'つづけて まなぶ' : 'ここを れんしゅうする'}<ArrowRight size={18} aria-hidden="true" /></Button>
-            {!result.passed && <p className="finish-description">ちがう もんだいで ひとりで 解けたら、<br />また しあげに ちょうせんできるよ。</p>}
+            {!result.passed && <p className="finish-description">ちがう もんだいで ひとりで 解けたら、<br />また レベルアップに ちょうせんできるよ。</p>}
             <Button size="lg" variant="ghost" onClick={() => onNavigate('/stats')}>きろくを みる</Button>
         </section>
     </main>;

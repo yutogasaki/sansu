@@ -672,10 +672,17 @@ const scenarioStatsToPeriodicTest = async (browser) => {
   await navigateHash(page, "/stats", /#\/stats/);
 
   const mathProgress = page.getByRole('region', { name: 'さんすうの進みぐあい', exact: true });
-  await mathProgress.locator('summary').click();
+  assert(await mathProgress.getByRole('button', { name: /かくにんテスト|確認テスト/ }).count() === 0, 'confirmation test starts only from parent settings');
+  await navigateHash(page, "/settings", /#\/settings/);
+  await page.getByRole('button', { name: /ほごしゃ|保護者/ }).first().click();
+  await page.getByRole('button', { name: /アプリで確認|アプリで うける/ }).first().click();
+  const gate = page.getByRole('dialog');
+  const factors = (await gate.innerText()).match(/(\d+)\s*×\s*(\d+)\s*=/);
+  assert(factors, 'parent gate should show its real multiplication question');
+  await gate.getByPlaceholder('答え', { exact: true }).fill(String(Number(factors[1]) * Number(factors[2])));
   await Promise.all([
     waitForHash(page, /#\/study\?session=periodic-test/),
-    mathProgress.getByRole('button', { name: /かくにんテスト|確認テスト/ }).click(),
+    gate.getByRole('button', { name: 'OK', exact: true }).click(),
   ]);
   await waitForStudyReady(page);
   await completeSessionBySkipping(page, 20);
@@ -6569,7 +6576,7 @@ const main = async () => {
     results.push(await runScenario("keeps the direct review route working", () => scenarioReviewRoute(browser)));
     results.push(await runScenario("keeps the direct settings route working", () => scenarioSettingsRoute(browser)));
     results.push(await runScenario("keeps legacy fuwafuwa album out of child records", () => scenarioLegacyAlbumHidden(browser)));
-    results.push(await runScenario("completes periodic test from stats and opens results", () => scenarioStatsToPeriodicTest(browser)));
+    results.push(await runScenario("completes confirmation test from parent settings and opens results", () => scenarioStatsToPeriodicTest(browser)));
     results.push(await runScenario("launches explore immediately and safely returns at a route break", () => scenarioExploreLaunchAndReturn(browser)));
     results.push(await runScenario("keeps the 390x800 route boundary fully visible", () => scenarioExploreLaunchAndReturn(
       browser,

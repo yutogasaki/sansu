@@ -13,8 +13,8 @@ import { IslandToyIcon } from '../island/IslandToyIcon';
 import pokomoko from '../../assets/pokomoko-learning-poses.webp';
 import './LearningProgressCards.css';
 
-export function LearningProgressCards({ profile, refreshKey, onLearn, onTest, onFinish, onSettings }: {
-    profile: UserProfile; refreshKey: boolean; onLearn: () => void; onTest: (subject: SubjectKey) => void;
+export function LearningProgressCards({ profile, refreshKey, onLearn, onFinish, onSettings }: {
+    profile: UserProfile; refreshKey: boolean; onLearn: () => void;
     onFinish: (subject: SubjectKey) => void; onSettings: (subject: SubjectKey) => void;
 }) {
     const [result, setResult] = useState<{ owner: string; data?: Awaited<ReturnType<typeof readLearningProgress>>; error?: boolean }>();
@@ -28,15 +28,12 @@ export function LearningProgressCards({ profile, refreshKey, onLearn, onTest, on
     }, [profile, refreshKey, retry]);
     const data = result?.owner === profile.id ? result.data : undefined;
     const subjects: SubjectKey[] = profile.subjectMode === 'mix' ? ['math', 'vocab'] : [profile.subjectMode];
-    return <SurfacePanel className="learning-progress-card space-y-0 rounded-[28px] p-5" aria-label="つぎへの道" data-progress-candidate="progress-clear-v3">
+    return <SurfacePanel className="learning-progress-card space-y-0 rounded-[28px] p-5" aria-label="つぎへの道" data-progress-candidate="progress-level-up-v4">
         <header><IslandToyIcon kind="island" size={28} /><h2>つぎへの 道</h2></header>
         {result?.owner === profile.id && result.error ? <div role="alert">きろくを 読みこめなかったよ。
             <Button variant="secondary" onClick={() => setRetry(value => value + 1)}>もういちど 読みこむ</Button></div>
             : !data ? <p role="status">きろくを 読みこんでいるよ…</p> : <div className="progress-subjects" data-subject-count={subjects.length}>{subjects.map(subject => {
                 const view = data[subject];
-                const existing = profile.periodicTestSets?.[subject];
-                const testLevel = existing?.subject === subject && existing.problems.length === 20
-                    && (existing.level === view.main || profile.periodicTestState?.[subject]?.isPending) ? existing.level : view.main;
                 const successes = data.memories[subject].filter(memory => independentCorrectCount(memory) > 0 && memory.lastIndependentCorrectAt)
                     .sort((a, b) => b.lastIndependentCorrectAt!.localeCompare(a.lastIndependentCorrectAt!)).slice(0, 3);
                 const subjectLabel = subject === 'math' ? 'さんすう' : 'えいたんご';
@@ -48,21 +45,20 @@ export function LearningProgressCards({ profile, refreshKey, onLearn, onTest, on
                             <span className="progress-companion" style={{ backgroundImage: `url(${pokomoko})` }} aria-hidden="true" />
                             <span>Lv</span><strong>{view.main}</strong>
                         </div>
-                        <div><p className="progress-current-label">いま といている ところ</p><h3 className="progress-level-title">{learningLevelTitle(subject, view.main)}</h3></div>
+                        <div><p className="progress-current-label">いまの レベル</p><h3 className="progress-level-title">{learningLevelTitle(subject, view.main)}</h3></div>
                     </div>
                     <p className="progress-next">{view.next === null ? <><Flag size={16} aria-hidden="true" />ここまで 到着 · ふくしゅうへ</> : <><ArrowRight size={16} aria-hidden="true" /><span>つぎ Lv{view.next} · {learningLevelTitle(subject, view.next)}</span></>}</p>
                     <FinishPreparation view={view} compact />
-                    {view.stage === 'ready' ? <Button className="progress-challenge-ready" onClick={() => onFinish(subject)} aria-label={`${subjectLabel}の しあげに ちょうせん`}>
-                        <span>しあげに ちょうせん<small>20もん ぜんぶ ひとりでできたら Lv{view.next}へ</small></span><ArrowRight size={20} aria-hidden="true" />
+                    {view.stage === 'ready' ? <Button className="progress-challenge-ready" onClick={() => onFinish(subject)} aria-label={`${subjectLabel}の レベルアップに ちょうせん`}>
+                        <span>Lv{view.next}へ ちょうせん<small>20もん ぜんぶ ひとりでできたら レベルアップ</small></span><ArrowRight size={20} aria-hidden="true" />
                     </Button> : view.stage === 'paused' ? <button type="button" className="progress-settings" onClick={() => onSettings(subject)} aria-label="がくしゅう設定を ひらく">
-                        <Settings2 size={18} aria-hidden="true" /><span>{view.pauseReason === 'disabled' ? `Lv${view.next}への 進級 · 設定を確認` : 'レベルの 設定を確認'}</span><ArrowRight size={16} aria-hidden="true" />
-                    </button> : <p className="progress-status">{view.stage === 'complete' ? '覚えたことを また といてみよう' : 'れんしゅうしながら しあげの じゅんび'}</p>}
+                        <Settings2 size={18} aria-hidden="true" /><span>{view.pauseReason === 'disabled' ? `Lv${view.next}は オフ · 設定` : 'レベルの 設定を確認'}</span><ArrowRight size={16} aria-hidden="true" />
+                    </button> : <p className="progress-status">{view.stage === 'complete' ? '覚えたことを また といてみよう' : 'つぎへ むけて れんしゅう中'}</p>}
                     <details className="progress-details">
-                        <summary>{view.stage === 'complete' ? 'きろく・かくにんテスト' : 'しあげの条件・きろく'}<ChevronDown size={16} aria-hidden="true" /></summary>
+                        <summary>{view.stage === 'complete' ? 'きろく' : 'くわしく・きろく'}<ChevronDown size={16} aria-hidden="true" /></summary>
                         <div className="progress-details-body">
                             {view.stage === 'paused' && <p>{view.message}</p>}
                             <FinishPreparation view={view} />
-                            {view.next !== null && <p>しあげは20もん。ぜんぶ ひとりで できると Lv{view.next}へ すすむよ。</p>}
                             {successes.length > 0 && <div className="space-y-2">
                                 <h4 className="font-bold">ひとりで できた きろく</h4>
                                 {successes.map(memory => <div key={memory.id}>
@@ -70,8 +66,6 @@ export function LearningProgressCards({ profile, refreshKey, onLearn, onTest, on
                                     <p className="text-pokomoko-muted">{new Date(memory.lastIndependentCorrectAt!).toLocaleDateString('ja-JP')} にできた · {memory.needsRelearning ? 'もういちど れんしゅう中' : Date.parse(memory.nextReview) <= Date.now() ? 'ふくしゅうの ころだよ' : `つぎの ふくしゅう ${new Date(memory.nextReview).toLocaleDateString('ja-JP')}`}</p>
                                 </div>)}
                             </div>}
-                            <Button variant="secondary" className="h-auto min-h-11 w-full py-2" onClick={() => onTest(subject)}>かくにんテスト · Lv{testLevel} · 20もん</Button>
-                            <p className="text-pokomoko-muted">かくにんテストは、できることの きろく。レベルは かわらないよ。</p>
                         </div>
                     </details>
                 </section>;

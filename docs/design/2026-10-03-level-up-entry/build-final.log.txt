@@ -1,0 +1,193 @@
+
+> pokko-fushigi-zukan-app@0.0.0 build
+> tsc -b && node tools/build-app.mjs && npm run assets:check
+
+vite v7.3.1 building client environment for production...
+transforming...
+Browserslist: browsers data (caniuse-lite) is 9 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+✓ 3963 modules transformed.
+Generated an empty chunk: "pdf".
+rendering chunks...
+computing gzip size...
+dist/version.json                                      0.54 kB │ gzip:   0.31 kB
+dist/index.html                                        3.89 kB │ gzip:   1.72 kB
+dist/assets/town-prop-bench-FdKjOSai.png               9.13 kB
+dist/assets/NotoSansJP-C_ziqpoc.woff2                 13.06 kB
+dist/assets/town-prop-flowers-BOUxk4Bw.png            13.80 kB
+dist/assets/town-rabbit-carrying-RfQ1w-aH.png         14.24 kB
+dist/assets/town-rabbit-giving-CnJ9JmwQ.png           14.58 kB
+dist/assets/town-rabbit-receiving-DUoJoWgV.png        14.72 kB
+dist/assets/town-rabbit-idle-Bh01hjGD.png             14.90 kB
+dist/assets/catalog-MsWF2Ofo.png                      18.20 kB
+dist/assets/town-prop-home-B1P8AAtr.png               19.39 kB
+dist/assets/town-prop-tree-Yw3JP1Jo.png               20.27 kB
+dist/assets/town-otter-carrying-CNTvBDdk.png          21.45 kB
+dist/assets/town-otter-giving-C4wtqVhT.png            21.71 kB
+dist/assets/town-otter-receiving-hjH-v6Y1.png         21.99 kB
+dist/assets/town-otter-idle-BshfulWh.png              22.12 kB
+dist/assets/town-pokomoko-carrying-B6igduKw.png       25.49 kB
+dist/assets/town-pokomoko-giving-BOi7RcKv.png         26.51 kB
+dist/assets/town-pokomoko-idle-hYR2u8GP.png           26.67 kB
+dist/assets/flower-bloom-original-Bhc8ZRS8.png        27.17 kB
+dist/assets/town-pokomoko-receiving-CKZT-N1L.png      27.25 kB
+dist/assets/pokomoko-original-8wLdjUXI.png            31.15 kB
+dist/assets/catalog-C9jTiRjH.png                      32.80 kB
+dist/assets/dela-gothic-one-tzEOUe9y.woff2            39.87 kB
+dist/assets/zen-maru-gothic-black-DnteofP1.woff2      51.44 kB
+dist/assets/basis_transcoder-o4Hde_L7.js              57.53 kB
+dist/assets/far-geometry-Di-gBAev.glb                 62.40 kB
+dist/assets/pokomoko-learning-poses-B-Jfr41M.webp     70.07 kB
+dist/assets/far-CbQUffpN.glb                          70.37 kB
+dist/assets/far-geometry-C2nCL94K.glb                 90.88 kB
+dist/assets/far-geometry-DTfZ_trK.glb                127.57 kB
+dist/assets/far-iUTsXLLh.glb                         130.80 kB
+dist/assets/far-geometry-BV4Tmqez.glb                136.54 kB
+dist/assets/far-BNsdfYHM.glb                         147.90 kB
+dist/assets/lifeUpdate.worker-BEyKIBHg.js            189.06 kB
+dist/assets/near-Bt9PwG61.glb                        209.47 kB
+dist/assets/far-geometry-B5GXTTw0.glb                226.28 kB
+dist/assets/near-3yaftuce.glb                        293.84 kB
+dist/assets/near-B8znkHvM.glb                        306.04 kB
+dist/assets/far-Zj6wZqfp.glb                         309.89 kB
+dist/assets/far-geometry-CUf7iENq.glb                325.53 kB
+dist/assets/near-CuR2H6Uc.glb                        443.91 kB
+dist/assets/basis_transcoder-VXdx5NbI.wasm           527.33 kB │ gzip: 247.62 kB
+dist/assets/near-CMx7NApC.glb                      1,568.14 kB
+dist/assets/near-B3PvBOT3.glb                      1,642.36 kB
+dist/assets/near-C_b32qsb.glb                      1,706.40 kB
+dist/assets/near-l6ZZxCWq.glb                      1,759.80 kB
+dist/assets/near-DoEuBhay.glb                      1,924.85 kB
+dist/assets/near-7GK7mDBY.glb                      1,983.43 kB
+dist/assets/IslandSharedMemories-CxXlpls3.css          1.54 kB │ gzip:   0.57 kB
+dist/assets/IslandFurniture-7NZ9dhCz.css               1.57 kB │ gzip:   0.55 kB
+dist/assets/LifeMemories-Cia3-2wk.css                  1.58 kB │ gzip:   0.56 kB
+dist/assets/IslandDiscoveryGuide-DpYKYTkf.css          2.05 kB │ gzip:   0.75 kB
+dist/assets/IslandWelcome-BJp8Sa-m.css                 2.05 kB │ gzip:   0.72 kB
+dist/assets/IslandExpression-BAzaKUz5.css              2.18 kB │ gzip:   0.68 kB
+dist/assets/life-observation-DvQvywiD.css              2.49 kB │ gzip:   0.83 kB
+dist/assets/Stats-Dbi260P-.css                         4.39 kB │ gzip:   1.12 kB
+dist/assets/IslandWorkshop-KxE1cutE.css                4.47 kB │ gzip:   1.24 kB
+dist/assets/IslandStage-BctzDSoi.css                   4.83 kB │ gzip:   1.38 kB
+dist/assets/IslandExperiencePanel-Cn-0xXmE.css         6.01 kB │ gzip:   1.33 kB
+dist/assets/IslandPhotos-Dz-XgAxv.css                  6.54 kB │ gzip:   1.60 kB
+dist/assets/GrowingIsland-DqsVmHjt.css                 6.88 kB │ gzip:   1.76 kB
+dist/assets/IslandCustomization-BKdIHMdQ.css           7.08 kB │ gzip:   1.62 kB
+dist/assets/NatureTown-CusrCJWB.css                   12.17 kB │ gzip:   3.48 kB
+dist/assets/Explore-C0qQ-HMA.css                      13.06 kB │ gzip:   2.95 kB
+dist/assets/growing-CM9A3H6A.css                      15.45 kB │ gzip:   3.49 kB
+dist/assets/Island-DVCPJhVi.css                       27.09 kB │ gzip:   5.16 kB
+dist/assets/IslandLife-twUpqDIC.css                   61.34 kB │ gzip:   9.76 kB
+dist/assets/Island-cvkB2oyq.css                      136.73 kB │ gzip:  19.28 kB
+dist/assets/index-CioLx_K-.css                       281.98 kB │ gzip:  46.74 kB
+dist/assets/pdf-l0sNRNKZ.js                            0.00 kB │ gzip:   0.02 kB
+dist/assets/utils-B-dksMZM.js                          0.37 kB │ gzip:   0.24 kB
+dist/assets/Learn-dZlravWq.js                          0.57 kB │ gzip:   0.41 kB
+dist/assets/useGardenTime-D3ZxUsxt.js                  0.71 kB │ gzip:   0.39 kB
+dist/assets/lighting-U3a9i1i7.js                       0.79 kB │ gzip:   0.44 kB
+dist/assets/homeJourney-BkBsv3V2.js                    0.95 kB │ gzip:   0.58 kB
+dist/assets/random-BDr3YF07.js                         1.62 kB │ gzip:   1.03 kB
+dist/assets/RoundedBoxGeometry-DCb4BlEq.js             1.72 kB │ gzip:   0.81 kB
+dist/assets/room-BpO0kRPF.js                           1.75 kB │ gzip:   0.99 kB
+dist/assets/IslandWelcome-C3L4FrEw.js                  2.08 kB │ gzip:   1.10 kB
+dist/assets/IslandRewardGoal-DMqBgZvC.js               2.14 kB │ gzip:   0.98 kB
+dist/assets/LifeResidentPortrait-W78tpn-1.js           2.33 kB │ gzip:   1.28 kB
+dist/assets/IslandWorkReplay-Bq-aMuG4.js               2.44 kB │ gzip:   0.92 kB
+dist/assets/GrowingHouseGuide-Dynrv3RK.js              2.63 kB │ gzip:   1.30 kB
+dist/assets/footprint-QJ-NRPQP.js                      3.32 kB │ gzip:   1.69 kB
+dist/assets/IslandOnboarding-DRekDTcv.js               3.53 kB │ gzip:   1.55 kB
+dist/assets/guideMemoryPictures-ash4nbvm.js            4.04 kB │ gzip:   2.06 kB
+dist/assets/IslandDiscoveryGuide-C026nvkq.js           4.17 kB │ gzip:   1.76 kB
+dist/assets/IslandFurniture-CREOFCel.js                4.76 kB │ gzip:   1.79 kB
+dist/assets/scene-Csa9v9CH.js                          6.38 kB │ gzip:   2.98 kB
+dist/assets/geometry-eggg_qBh.js                       6.67 kB │ gzip:   2.84 kB
+dist/assets/IslandStage-Bq_fwCCF.js                    6.69 kB │ gzip:   2.72 kB
+dist/assets/IslandAlbum-BzitwuNo.js                    8.56 kB │ gzip:   3.23 kB
+dist/assets/friendRig-WAgT_-j5.js                      8.74 kB │ gzip:   3.14 kB
+dist/assets/LifeObservation-BDiZbCIU.js                9.00 kB │ gzip:   3.07 kB
+dist/assets/HomeJourneyPreview-BDp46BS7.js             9.36 kB │ gzip:   4.45 kB
+dist/assets/IslandCustomization-CNDXMiN6.js            9.90 kB │ gzip:   3.35 kB
+dist/assets/IslandExpression-DHQCP6EK.js               9.90 kB │ gzip:   3.28 kB
+dist/assets/IslandExperiencePanel-BWDpT3dd.js          9.97 kB │ gzip:   3.05 kB
+dist/assets/PokomokoLearningActor-2ghHuew1.js         10.01 kB │ gzip:   4.47 kB
+dist/assets/IslandPhotos-NwDChH2j.js                  10.16 kB │ gzip:   3.27 kB
+dist/assets/LifeMemories-3gpIzI7-.js                  10.59 kB │ gzip:   3.80 kB
+dist/assets/IslandStage-99IsHa_O.js                   10.75 kB │ gzip:   4.05 kB
+dist/assets/flowerGeometry-BzBcBqwE.js                10.79 kB │ gzip:   4.49 kB
+dist/assets/itemGeometry-D0S4hTbp.js                  10.83 kB │ gzip:   4.43 kB
+dist/assets/IslandSharedMemories-f9DeoYn-.js          12.05 kB │ gzip:   3.63 kB
+dist/assets/IslandWorkshop-BTRQDXMx.js                12.67 kB │ gzip:   3.60 kB
+dist/assets/menuMiniatures-BldEg2Ut.js                13.02 kB │ gzip:   5.27 kB
+dist/assets/cottage-Bu4jWYtT.js                       13.34 kB │ gzip:   5.97 kB
+dist/assets/homeInteriorCamera-GIR59eo4.js            19.49 kB │ gzip:   7.29 kB
+dist/assets/repository-CjDE8N1G.js                    21.81 kB │ gzip:   8.33 kB
+dist/assets/LifeWorld-sA6U_sRY.js                     29.19 kB │ gzip:  11.00 kB
+dist/assets/icons-kPFr67Ak.js                         29.46 kB │ gzip:  10.79 kB
+dist/assets/Stats-CQpBSend.js                         32.21 kB │ gzip:  10.72 kB
+dist/assets/GrowingWorld-Dd6PnOWr.js                  32.43 kB │ gzip:  12.72 kB
+dist/assets/life-observation-DLF2t2lO.js              33.78 kB │ gzip:  12.43 kB
+dist/assets/audio-DwtSHwBT.js                         36.13 kB │ gzip:   9.75 kB
+dist/assets/residentInterest-rxPtxo7s.js              40.36 kB │ gzip:  16.00 kB
+dist/assets/islandFurniturePlacement-klVv-15p.js      42.09 kB │ gzip:  12.18 kB
+dist/assets/repository-IadHXLYw.js                    46.09 kB │ gzip:  15.70 kB
+dist/assets/GrowingIsland-Z-JBXHHA.js                 48.22 kB │ gzip:  16.10 kB
+dist/assets/react-DcHpdqMy.js                         48.53 kB │ gzip:  17.24 kB
+dist/assets/NatureTown-ByGjdGvz.js                    50.85 kB │ gzip:  17.86 kB
+dist/assets/scene-U9xjXykX.js                         52.64 kB │ gzip:  20.51 kB
+dist/assets/Island-BSy_OkWw.js                        52.94 kB │ gzip:  16.32 kB
+dist/assets/IslandLife-C9G6otQ7.js                    63.29 kB │ gzip:  20.65 kB
+dist/assets/repository-CjxRXgNx.js                    90.76 kB │ gzip:  24.94 kB
+dist/assets/data-CYRvWfdS.js                          96.37 kB │ gzip:  32.45 kB
+dist/assets/runtimeAssets-5CivLc_g.js                109.95 kB │ gzip:  40.39 kB
+dist/assets/motion-iLBaTeAD.js                       119.65 kB │ gzip:  39.54 kB
+dist/assets/growing-CbSzmxbB.js                      185.88 kB │ gzip: 135.99 kB
+dist/assets/Explore-Cl0oyWJc.js                      209.48 kB │ gzip:  59.72 kB
+dist/assets/Island-D7_DQQJo.js                       274.97 kB │ gzip:  88.24 kB
+dist/assets/runtime-4fiOkbSe.js                      333.68 kB │ gzip: 104.04 kB
+dist/assets/charts-B2Phfr4C.js                       371.25 kB │ gzip: 108.31 kB
+dist/assets/residentRig-CpLbN-uo.js                  627.69 kB │ gzip: 163.13 kB
+dist/assets/index-C0Y7jBuK.js                        887.57 kB │ gzip: 252.21 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 6.28s
+
+PWA v1.2.0
+mode      generateSW
+precache  182 entries (5505.87 KiB)
+files generated
+  dist/sw.js
+  dist/workbox-1d305bb8.js
+warnings
+  One of the glob patterns doesn't match any files. Please remove or fix the following: {
+  "globDirectory": "/Users/yutogasaki/Projects/sansu/dist",
+  "globPattern": "assets/pokomoko-arcade-poses-*.webp",
+  "globIgnores": [
+    "visual-tests/**/*",
+    "fonts/NotoSansJP-Japanese.woff2",
+    "sw.js",
+    "workbox-*.js"
+  ]
+}
+  One of the glob patterns doesn't match any files. Please remove or fix the following: {
+  "globDirectory": "/Users/yutogasaki/Projects/sansu/dist",
+  "globPattern": "assets/pokomoko-arcade-rim-*.webp",
+  "globIgnores": [
+    "visual-tests/**/*",
+    "fonts/NotoSansJP-Japanese.woff2",
+    "sw.js",
+    "workbox-*.js"
+  ]
+}
+
+
+> pokko-fushigi-zukan-app@0.0.0 assets:check
+> node tools/check-asset-budget.mjs
+
+PASS assets:check
+- PWA precache: 182 unique files, 9.00 MiB / 12.00 MiB
+- Explore artwork: 27 production files, 2.97 MiB / 8.00 MiB
+- Production-input contract: docs/design only; absent from public and precache

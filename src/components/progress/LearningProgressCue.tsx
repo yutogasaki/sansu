@@ -49,8 +49,8 @@ export function LearningProgressCue({ profile, plan, active, busy = false }: { p
     const message = notice?.owner === profile.id && notice.subject === plan.subject && active ? notice.text : undefined;
     return <div className="learning-progress-cue" data-learning-progress="true">
         {ready && plan.cursor === 0 && <button type="button" className="learning-progress-finish-link" disabled={busy} onClick={() => {
-            if (navigation) navigation.open('/learn'); else window.location.hash = '/learn';
-        }}>しあげに ちょうせんできるよ！ <span aria-hidden="true">→</span></button>}
+            if (navigation) navigation.open('/stats'); else window.location.hash = '/stats';
+        }}>レベルアップに ちょうせんできるよ！ <span aria-hidden="true">→</span></button>}
         <span className="learning-progress-cue-label" title={`${title} · ${status}`}>{title} · {status}</span>
         <span className="learning-progress-cue-notice" role="status" aria-live="polite">{message}</span>
     </div>;

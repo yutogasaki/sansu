@@ -1,5 +1,7 @@
 # Shared Done Index
 
+- 2026-10-03: [Level-up and confirmation test entry consolidation](../../docs/design/2026-10-03-level-up-entry/README.md). Progress first in records; one level-up entry; confirmation/print in parent settings. 4606 tests, production14/parent2/classic31 PASS. Local, not published -> `docs/done/2026-10.md`
+
 - 2026-10-02: [本の自己レビューと修正v6](../../docs/design/2026-10-02-guide-picturebook/review-v6/README.md)。挿絵と本人の模型を分離し、320幅の主操作を初期表示へ。core4,606、3サイズ48撮影・家両幅PASS。未公開 -> `docs/done/2026-10.md`
 
 - 2026-10-02: [あそびかた6点のポップなデフォルメ](../../docs/design/2026-10-02-guide-picturebook/README.md)。全6種類の挿絵と固定snapshot模型、本/一覧/案内を統一。core4,606、3サイズ48撮影、家と実SW offline両幅PASS。ローカル、未公開 -> `docs/done/2026-10.md`

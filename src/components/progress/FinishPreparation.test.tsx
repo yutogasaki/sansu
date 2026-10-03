@@ -9,9 +9,9 @@ describe('visible, separate finish admission conditions', () => {
     const readiness = { coverageReady: false, fresh: false, recentCount: 8, recentCorrect: 6, coveredCount: 1, requiredCount: 3, missingUnitIds: ['missing'] };
     it('shows answer quantity, independent accuracy and coverage without promising an exact admission date', () => {
         const html = renderToStaticMarkup(<FinishPreparation view={learningProgressView(profile(), 'math', undefined, readiness)} />);
-        expect(html).toContain('8 / 20問');
-        expect(html).toContain('8問のうち 6問');
-        expect(html).toContain('1 / 3つの 型');
+        expect(html).toContain('8 / 20もん');
+        expect(html).toContain('6 / 8もん');
+        expect(html).toContain('1 / 3しゅるい');
         expect(html).not.toContain('あと12問で');
         const compact = renderToStaticMarkup(<FinishPreparation view={learningProgressView(profile(), 'math', undefined, readiness)} compact />);
         expect(compact).toContain('8 / 20');
@@ -23,7 +23,7 @@ describe('visible, separate finish admission conditions', () => {
         const view = learningProgressView(profile(), 'math', undefined, { ...readiness, recentCount: 20, recentCorrect: 19, fresh: true });
         expect(view.stage).toBe('unlock');
         const html = renderToStaticMarkup(<FinishPreparation view={view} />);
-        expect(html).toContain('1 / 3つの 型');
+        expect(html).toContain('1 / 3しゅるい');
         expect(html).not.toContain('じゅんびが できたよ');
         expect(html).not.toContain('まず あと0問');
     });
@@ -32,6 +32,6 @@ describe('visible, separate finish admission conditions', () => {
         p.mathLevels = p.mathLevels!.map(level => level.level === 17 ? { ...level, unlocked: true, enabled: false } : level);
         const view = learningProgressView(p, 'math', undefined, readiness);
         expect(view.stage).toBe('paused');
-        expect(renderToStaticMarkup(<FinishPreparation view={view} />)).toContain('8 / 20問');
+        expect(renderToStaticMarkup(<FinishPreparation view={view} />)).toContain('8 / 20もん');
     });
 });

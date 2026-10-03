@@ -1,0 +1,32 @@
+{
+  "sourceStable": true,
+  "sourceCount": 1429,
+  "distStable": true,
+  "distCount": 216,
+  "version": {
+    "version": "level-up-entry-20261003:de2d1b26-4cf9-47dd-8ddf-78fdddc35f5b",
+    "revision": "level-up-entry-20261003",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": true,
+        "fantasy": true,
+        "candidate": "living-fantasy-garden-v2",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "base": "level-up-entry-20261003"
+}

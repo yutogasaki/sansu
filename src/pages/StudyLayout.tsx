@@ -564,12 +564,12 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
             {/* Header: モバイルでは非表示 */}
             <div id="debug-header" className="flex-none mobile:hidden">
                 <Header
-                    title={sessionKind === 'finish-test' ? 'しあげ' : currentProblem.subject === 'math' ? t('さんすう', '算数') : t('えいご', '英語')}
+                    title={sessionKind === 'finish-test' ? 'レベルアップ' : currentProblem.subject === 'math' ? t('さんすう', '算数') : t('えいご', '英語')}
                     onBack={() => onNavigate("/")}
                     center={
                         <div className="flex items-center gap-3">
                             <span className="app-pill px-3 py-1 text-sm font-black text-slate-500">
-                                {sessionKind === 'finish-test' ? `しあげ ${currentIndex + 1} / ${blockSize}もん` : `${currentIndex + 1} 問目`}
+                                {sessionKind === 'finish-test' ? `レベルアップ ${currentIndex + 1} / ${blockSize}もん` : `${currentIndex + 1} 問目`}
                             </span>
                             {showTestTimer && (
                                 <span className={timerBadgeClass}>
@@ -593,7 +593,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                 )}
                 <div className="flex items-center gap-2">
                     <span className="app-pill px-2.5 py-0.5 text-[11px] font-black text-slate-500">
-                        {sessionKind === 'finish-test' ? `しあげ ${currentIndex + 1} / ${blockSize}もん` : `${currentIndex + 1} 問目`}
+                        {sessionKind === 'finish-test' ? `レベルアップ ${currentIndex + 1} / ${blockSize}もん` : `${currentIndex + 1} 問目`}
                     </span>
                     {showTestTimer && (
                         <span className={mobileTimerBadgeClass}>
