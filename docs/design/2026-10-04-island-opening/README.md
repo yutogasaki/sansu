@@ -37,4 +37,10 @@
 
 ## 配信
 
-mainへの反映と公開先の照合は、下の配信記録へ追記する。初期不具合報告の端末が開けるようになったことは、利用者の確認まで合格扱いにしない。
+main修正 `bcdcaf790b089186903d64b23ffb92e5263a868b` をpushし、Vercel成功と公開 `https://sansu-seven.vercel.app/version.json` のrevisionを照合した。レビューしたindexの1,534 app入力が固定候補と一致し、indexをリポジトリ外へexportしたdocs checkもPASS。作業中の別の美術差分は含めない。
+
+公開768幅Chromiumの旧 `f1c1e93f` で、初回設定・実回答1件・SW offline再起動を済ませた。同じタブで再接続し、通常の「きろく」へ移る操作で `bcdcaf79` へ自動更新し、島を表示、全native学習storeの不変を確認した（[新版の島](public-update-new-online.png)）。ただし、その直後のoffline再読込は `ERR_INTERNET_DISCONNECTED` で失敗した。[初回の未完了report](diagnostic-live-update.json)と[実画面](diagnostic-live-offline-too-early.png)を保持し、この旅程全体はPASSとしない。`navigator.serviceWorker.ready` は旧active workerを返せるため、新しいshellのcache/worker準備完了を確認していなかった。初回失敗時のworker/cache状態は取得しておらず、原因を断定しない。
+
+[公開ハーネス](live-update-check.mjs)は、切断前に現在のHTML/bundleのprecacheとactive controller、installing/waitingがないことを待つようにした。`SANSU_OPENING_LIVE_FRESH_ONLY=1` は現在公開版の初回/保存/offline検証として明示し、旧→新更新の証明へ置き換えない。初期不具合報告の端末が開けるようになったことは、利用者の確認まで合格扱いにしない。
+
+別の空プロフィールから公開 `bcdcaf79` を検証し、実初回設定→実回答1件→実SW offline再起動→オンラインの記録/島往復→offline再起動→同予約への追加回答を **PASS**（[report](public-current-report.json)、[オンラインの島](public-current-online.png)、[offline追加回答](public-current-offline-answer.png)）。両再起動の前後で全native学習storeを照合し、最後の実回答でlogsが1→2になった。現在公開版の起動/保存/offlineに対する証拠であり、初回の旧→新旅程のoffline失敗を解消した証明とは分ける。実iPadは未確認。
