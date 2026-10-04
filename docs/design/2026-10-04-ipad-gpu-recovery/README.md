@@ -34,3 +34,10 @@
 - 視覚：既存compact画面と[復旧後の実画面](graphics/chromium-smaller-surface-recovered.png)を比較。モデル・配置・操作を維持し、復旧時だけ輪郭が粗くなる。美術の改善や魅力の合格認定ではない。
 - 理解/安全：[保護者向けの詳細](graphics/chromium-gpu-unavailable.png)は折り畳み、子どもの再試行・学習を先に表示。保存削除を復旧手順にしない。子どもの無説明理解・再訪は未検証。
 - runtime：明示故障での復旧はPASS。iPad第6世代の実例外/実起動とPWA再起動は利用者の確認まで保留。保存形式・PWAコードは未変更で、前回のclassic更新検査を繰り返す代わりに今回の公開版で更新/保存/オフラインの旅程を確認する。
+
+
+## 公開版の更新
+
+main修正 `87133e00b6c217420174558f6476d918060f108c` をpush。公開旧版 `f59393bb` で実初回設定・回答1件・実SW offline起動を行い、同じ隔離ブラウザを新版へ更新。[公開版の実SW更新](public-update/report.json)はPASS。新版で全native学習store保持、現在HTML/bundleとactive workerの準備完了、新版のoffline再起動、同予約の追加回答（logs 1→2）、compact設定の継続を確認した。使用した[公開ハーネス](../2026-10-04-island-edge-cases/live-update-check.mjs)のhashもreportに保存。ChromiumのiPad UAであり、利用者の実iPadの復旧証拠にはしない。
+
+レビュー済みindexを新しい外部directoryへexportしたdocs checkと、全1,538入力/QAの固定候補とのhash照合はPASS。初回のcore/app入力はその後変更していない。[CI Docs](https://github.com/yutogasaki/sansu/actions/runs/37171229708)はsuccess、[CI Core](https://github.com/yutogasaki/sansu/actions/runs/37171229695)はこの記録時点で実行中。ローカルcoreは上記の通りPASS。

@@ -1,0 +1,2919 @@
+{
+  "target": "https://sansu-seven.vercel.app",
+  "mode": "live old to new release",
+  "pass": true,
+  "device": "Chromium with iPad UA; not a physical iPad",
+  "qaHash": "6294ac55f9f72702f300ba4a728552a5192b7f15f97ed5f020be23b2cfd0d971",
+  "navigations": [
+    {
+      "url": "https://sansu-seven.vercel.app/#/island",
+      "at": 1791080659130
+    },
+    {
+      "url": "https://sansu-seven.vercel.app/#/island",
+      "at": 1791080660098
+    },
+    {
+      "url": "https://sansu-seven.vercel.app/#/onboarding",
+      "at": 1791080660124
+    },
+    {
+      "url": "https://sansu-seven.vercel.app/#/island",
+      "at": 1791080662779
+    },
+    {
+      "url": "https://sansu-seven.vercel.app/#/island?learn=1",
+      "at": 1791080664632
+    },
+    {
+      "url": "https://sansu-seven.vercel.app/#/island",
+      "at": 1791080665449
+    },
+    {
+      "url": "https://sansu-seven.vercel.app/#/island",
+      "at": 1791080694424
+    },
+    {
+      "url": "https://sansu-seven.vercel.app/#/island",
+      "at": 1791080696196
+    },
+    {
+      "url": "https://sansu-seven.vercel.app/#/stats",
+      "at": 1791081111118
+    },
+    {
+      "url": "https://sansu-seven.vercel.app/?__app-update=87133e00b6c217420174558f6476d918060f108c%3A8790a08f-0475-4121-a450-97f4606ab117#/stats",
+      "at": 1791081115448
+    },
+    {
+      "url": "https://sansu-seven.vercel.app/#/stats",
+      "at": 1791081116154
+    },
+    {
+      "url": "https://sansu-seven.vercel.app/#/stats",
+      "at": 1791081116156
+    },
+    {
+      "url": "https://sansu-seven.vercel.app/#/island",
+      "at": 1791081116229
+    },
+    {
+      "url": "https://sansu-seven.vercel.app/?__app-update=1791081122338#/island",
+      "at": 1791081123375
+    },
+    {
+      "url": "https://sansu-seven.vercel.app/#/island",
+      "at": 1791081123394
+    },
+    {
+      "url": "https://sansu-seven.vercel.app/#/island",
+      "at": 1791081123399
+    },
+    {
+      "url": "https://sansu-seven.vercel.app/#/island",
+      "at": 1791081125164
+    },
+    {
+      "url": "https://sansu-seven.vercel.app/#/island",
+      "at": 1791081126791
+    },
+    {
+      "url": "https://sansu-seven.vercel.app/#/island?learn=1",
+      "at": 1791081129508
+    }
+  ],
+  "packWaitNavigations": [
+    {
+      "url": "https://sansu-seven.vercel.app/#/island",
+      "at": 1791081123368
+    }
+  ],
+  "oldOfflinePack": {
+    "waitMs": 177,
+    "script": "/assets/index-B1yLUOE8.js",
+    "controller": "https://sansu-seven.vercel.app/sw.js",
+    "caches": [
+      "workbox-precache-v2-https://sansu-seven.vercel.app/"
+    ]
+  },
+  "oldMetadata": {
+    "url": "https://sansu-seven.vercel.app/#/island",
+    "revision": "f59393bbe53c975581246067f151d137eaf0b212",
+    "version": "f59393bbe53c975581246067f151d137eaf0b212:07ab4cbc-8c33-4a7c-8698-6d78ff5131ba",
+    "delivery": "mystic-island-v1",
+    "candidate": "mystic-island-shore-garden-v18",
+    "learningCandidate": "pokomoko-pop-live-v8",
+    "islandFeatureEnabled": true,
+    "mode": "home",
+    "renderer": "original-fallback",
+    "artDirection": null,
+    "drawCalls": 0,
+    "expanded": null,
+    "residentAction": null,
+    "residentItemId": null,
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "serviceWorkerControlled": true,
+    "reducedMotion": false,
+    "appRoot": {
+      "revision": "f59393bbe53c975581246067f151d137eaf0b212",
+      "version": "f59393bbe53c975581246067f151d137eaf0b212:07ab4cbc-8c33-4a7c-8698-6d78ff5131ba",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    }
+  },
+  "oldNative": {
+    "appData": [
+      {
+        "id": "app",
+        "schemaVersion": 1,
+        "activeProfileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "profiles": {
+          "83265d7c-94d5-4e47-9185-b3ad45842bf1": {
+            "id": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "name": "プレイヤー",
+            "grade": 1,
+            "mathStartLevel": 7,
+            "vocabStartLevel": 1,
+            "subjectMode": "math",
+            "soundEnabled": true,
+            "uiTextMode": "standard",
+            "dailyGoal": 20,
+            "mathMainLevel": 8,
+            "mathMaxUnlocked": 8,
+            "mathMainLevelStartedAt": "2026-10-04T02:24:22.775Z",
+            "vocabMainLevel": 1,
+            "vocabMaxUnlocked": 1,
+            "vocabMainLevelStartedAt": "2026-10-04T02:24:22.775Z",
+            "mathLevels": [
+              {
+                "level": 0,
+                "unlocked": true,
+                "enabled": true,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 1,
+                "unlocked": true,
+                "enabled": true,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 2,
+                "unlocked": true,
+                "enabled": true,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 3,
+                "unlocked": true,
+                "enabled": true,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 4,
+                "unlocked": true,
+                "enabled": true,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 5,
+                "unlocked": true,
+                "enabled": true,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 6,
+                "unlocked": true,
+                "enabled": true,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 7,
+                "unlocked": true,
+                "enabled": true,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 8,
+                "unlocked": true,
+                "enabled": true,
+                "recentAnswersNonReview": [
+                  true
+                ],
+                "updatedAt": "2026-10-04T02:24:25.360Z",
+                "recentIndependentAnswersNonReview": [
+                  true
+                ]
+              },
+              {
+                "level": 9,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 10,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 11,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 12,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 13,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 14,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 15,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 16,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 17,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 18,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 19,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 20,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 21,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 22,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 23,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 24,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 25,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 26,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 27,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 28,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              }
+            ],
+            "vocabLevels": [
+              {
+                "level": 1,
+                "unlocked": true,
+                "enabled": true,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 2,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 3,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 4,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 5,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 6,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 7,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 8,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 9,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 10,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 11,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 12,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 13,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 14,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 15,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 16,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 17,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 18,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 19,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              },
+              {
+                "level": 20,
+                "unlocked": false,
+                "enabled": false,
+                "recentAnswersNonReview": [],
+                "updatedAt": "2026-10-04T02:24:22.776Z"
+              }
+            ],
+            "mathSkills": {
+              "add_5": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "add_5",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "add_finger": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "add_finger",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "add_tiny": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "add_tiny",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "big_small_compare": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "big_small_compare",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "compare_1d": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "compare_1d",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "compare_2d": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "compare_2d",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "compose_10": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "compose_10",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "compose_5": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "compose_5",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "count_10": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "count_10",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "count_100": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "count_100",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "count_5": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "count_5",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "count_50": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "count_50",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "count_back": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "count_back",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "count_color": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "count_color",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "count_dot": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "count_dot",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "count_fill": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "count_fill",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "count_next_10": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "count_next_10",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "count_next_20": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "count_next_20",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "count_oddone": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "count_oddone",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "count_order": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "count_order",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "count_pair": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "count_pair",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "count_read": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "count_read",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "count_shape": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "count_shape",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "count_which_more": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "count_which_more",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "height_compare": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "height_compare",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "length_compare": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "length_compare",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "one_less": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "one_less",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "one_more": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "one_more",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "one_to_one_match": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "one_to_one_match",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "ordinal_small": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "ordinal_small",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "pattern_copy": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "pattern_copy",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "same_count_match": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "same_count_match",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "same_or_different": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "same_or_different",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "share_equal": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "share_equal",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "sort_by_attribute": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "sort_by_attribute",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "spatial_words": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "spatial_words",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "sub_tiny": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "sub_tiny",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "two_less": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "two_less",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "two_more": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "two_more",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "weight_compare": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "weight_compare",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "which_is_empty": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "which_is_empty",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "zero_concept": {
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+                "id": "zero_concept",
+                "strength": 5,
+                "nextReview": "2026-11-03T02:24:22.776Z",
+                "totalAnswers": 0,
+                "correctAnswers": 0,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "updatedAt": "2026-10-04T02:24:22.776Z",
+                "status": "retired"
+              },
+              "add_1d_1_bridge": {
+                "id": "add_1d_1_bridge",
+                "strength": 1,
+                "nextReview": "2026-10-05T02:24:25.360Z",
+                "totalAnswers": 1,
+                "correctAnswers": 1,
+                "incorrectAnswers": 0,
+                "skippedAnswers": 0,
+                "lastCorrectAt": "2026-10-04T02:24:25.360Z",
+                "lastIndependentCorrectAt": "2026-10-04T02:24:25.360Z",
+                "updatedAt": "2026-10-04T02:24:25.360Z",
+                "status": "active",
+                "isWeak": false,
+                "independentCorrectAnswers": 1,
+                "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1"
+              }
+            },
+            "vocabWords": {},
+            "streak": 1,
+            "todayCount": 1,
+            "lastStudyDate": "2026-10-04",
+            "recentAttempts": [
+              {
+                "id": "1",
+                "timestamp": "2026-10-04T02:24:25.360Z",
+                "subject": "math",
+                "skillId": "add_1d_1_bridge",
+                "result": "correct",
+                "assistance": "independent"
+              }
+            ],
+            "schemaVersion": 1,
+            "syncMeta": {
+              "dirty": false
+            },
+            "islandTutorialVersion": 1
+          }
+        }
+      }
+    ],
+    "challengeContacts": [],
+    "challengeEvents": [],
+    "challengeRuns": [],
+    "challengeSummaries": [],
+    "exploreDiscoveries": [],
+    "exploreRunEvents": [],
+    "exploreRuns": [],
+    "islandEvents": [
+      {
+        "id": "[\"island-action-v1\",\"83265d7c-94d5-4e47-9185-b3ad45842bf1\",\"[\\\"island-plan-v1\\\",\\\"83265d7c-94d5-4e47-9185-b3ad45842bf1\\\",0]\",0]",
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "planId": "[\"island-plan-v1\",\"83265d7c-94d5-4e47-9185-b3ad45842bf1\",0]",
+        "timestamp": 1791080665360,
+        "type": "answer",
+        "action": {
+          "type": "answer",
+          "answer": "2"
+        },
+        "slotIndex": 0,
+        "result": "correct",
+        "learningLogId": 1,
+        "observation": {
+          "version": 1,
+          "problemId": "[\"island-plan-v1\",\"83265d7c-94d5-4e47-9185-b3ad45842bf1\",0]:slot-0",
+          "revisionBefore": 0,
+          "supportBefore": "unassisted-slot",
+          "answerScope": "whole",
+          "wholeCompleted": true,
+          "adapterVersion": "island-dom-v1",
+          "eventAt": 1791080664954,
+          "presentation": {
+            "id": "553bfa06-1018-45e6-848b-e296d90ed333",
+            "documentId": "f8a0fb02-4b6d-4e5c-ade7-d7af6fa47314",
+            "observedAt": 1791080664744,
+            "inputVersion": "island-input-v1",
+            "inputMode": "number",
+            "referenceVisual": "present"
+          },
+          "elapsedSincePresentationMs": 209.59999990463257,
+          "coverage": "current-presentation",
+          "gaps": []
+        }
+      },
+      {
+        "id": "[\"island-plan-v1\",\"83265d7c-94d5-4e47-9185-b3ad45842bf1\",0]:started",
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "planId": "[\"island-plan-v1\",\"83265d7c-94d5-4e47-9185-b3ad45842bf1\",0]",
+        "type": "plan_started",
+        "timestamp": 1791080664727
+      }
+    ],
+    "islandPhotoAlbums": [],
+    "islandPhotoBlobs": [],
+    "islandPhotos": [],
+    "islandPlans": [
+      {
+        "id": "[\"island-plan-v1\",\"83265d7c-94d5-4e47-9185-b3ad45842bf1\",0]",
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "schemaVersion": 1,
+        "plannerVersion": "island-learning-v1",
+        "subject": "math",
+        "slots": [
+          {
+            "problem": {
+              "categoryId": "add_1d_1_bridge",
+              "questionText": "1 + 1 =",
+              "correctAnswer": "2",
+              "inputType": "number",
+              "questionVisual": {
+                "kind": "addition-items",
+                "prompt": "あわせて いくつ？",
+                "groups": [
+                  {
+                    "emoji": "🍊",
+                    "label": "みかん",
+                    "count": 1
+                  },
+                  {
+                    "emoji": "🍊",
+                    "label": "みかん",
+                    "count": 1
+                  }
+                ]
+              },
+              "learningContext": {
+                "catalogVersion": "curriculum-v2",
+                "subject": "math",
+                "itemId": "add_1d_1_bridge",
+                "unitId": "math.add-small-increments",
+                "representation": "bridge",
+                "variant": "default",
+                "inputType": "number",
+                "problemKey": "{\"answer\":\"2\",\"inputType\":\"number\",\"item\":\"add_1d_1_bridge\",\"question\":\"1 + 1 =\",\"visual\":{\"groups\":[{\"count\":1,\"emoji\":\"🍊\",\"label\":\"みかん\"},{\"count\":1,\"emoji\":\"🍊\",\"label\":\"みかん\"}],\"kind\":\"addition-items\",\"prompt\":\"あわせて いくつ？\"}}"
+              },
+              "id": "[\"island-plan-v1\",\"83265d7c-94d5-4e47-9185-b3ad45842bf1\",0]:slot-0",
+              "subject": "math",
+              "isReview": false,
+              "isMaintenanceCheck": false
+            },
+            "source": "main",
+            "countsTowardReviewCap": false,
+            "assisted": false,
+            "completed": true,
+            "learningEvidenceAssistance": "independent"
+          },
+          {
+            "problem": {
+              "categoryId": "add_1d_1",
+              "questionText": "1 + 1 =",
+              "correctAnswer": "2",
+              "inputType": "number",
+              "learningContext": {
+                "catalogVersion": "curriculum-v2",
+                "subject": "math",
+                "itemId": "add_1d_1",
+                "unitId": "math.add-small-increments",
+                "representation": "symbol",
+                "variant": "default",
+                "inputType": "number",
+                "problemKey": "{\"answer\":\"2\",\"inputType\":\"number\",\"item\":\"add_1d_1\",\"question\":\"1 + 1 =\"}"
+              },
+              "id": "[\"island-plan-v1\",\"83265d7c-94d5-4e47-9185-b3ad45842bf1\",0]:slot-1",
+              "subject": "math",
+              "isReview": false,
+              "isMaintenanceCheck": false
+            },
+            "source": "main",
+            "countsTowardReviewCap": false,
+            "assisted": false,
+            "completed": false,
+            "learningEvidenceAssistance": "independent"
+          },
+          {
+            "problem": {
+              "categoryId": "add_1d_1",
+              "questionText": "1 + 1 =",
+              "correctAnswer": "2",
+              "inputType": "number",
+              "learningContext": {
+                "catalogVersion": "curriculum-v2",
+                "subject": "math",
+                "itemId": "add_1d_1",
+                "unitId": "math.add-small-increments",
+                "representation": "symbol",
+                "variant": "default",
+                "inputType": "number",
+                "problemKey": "{\"answer\":\"2\",\"inputType\":\"number\",\"item\":\"add_1d_1\",\"question\":\"1 + 1 =\"}"
+              },
+              "id": "[\"island-plan-v1\",\"83265d7c-94d5-4e47-9185-b3ad45842bf1\",0]:slot-2",
+              "subject": "math",
+              "isReview": false,
+              "isMaintenanceCheck": false
+            },
+            "source": "main",
+            "countsTowardReviewCap": false,
+            "assisted": false,
+            "completed": false,
+            "learningEvidenceAssistance": "independent"
+          }
+        ],
+        "status": "active",
+        "cursor": 1,
+        "revision": 1,
+        "startedAt": 1791080664727,
+        "rewardId": "[\"island-plan-v1\",\"83265d7c-94d5-4e47-9185-b3ad45842bf1\",0]:reward",
+        "rewardChoices": [
+          "flower",
+          "bench",
+          "lantern"
+        ],
+        "growthTarget": "garden",
+        "rewardPacing": "answers-v1",
+        "introducedItemIds": [
+          "add_1d_1_bridge",
+          "add_1d_1"
+        ]
+      }
+    ],
+    "islands": [
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "schemaVersion": 1,
+        "revision": 2,
+        "completedSets": 0,
+        "pendingRewards": [],
+        "updatedAt": 1791080665360,
+        "items": [
+          {
+            "id": "starter-flower",
+            "kind": "flower",
+            "position": {
+              "x": 1.5,
+              "z": 0.8
+            },
+            "rotation": 0,
+            "habitatId": "garden",
+            "growthLevel": 0
+          },
+          {
+            "id": "starter-lantern",
+            "kind": "lantern",
+            "position": {
+              "x": -1,
+              "z": 0.25
+            },
+            "rotation": 0,
+            "habitatId": "village",
+            "growthLevel": 0
+          }
+        ],
+        "growth": {
+          "version": 1,
+          "expansionLevel": 0,
+          "progress": {
+            "garden": 0,
+            "waterside": 0,
+            "grove": 0,
+            "village": 0
+          },
+          "focus": "garden",
+          "memories": [
+            {
+              "id": "island-growth-initial",
+              "kind": "initial",
+              "capturedAt": 1791080662788,
+              "completedSets": 0,
+              "expansionLevel": 0,
+              "progress": {
+                "garden": 0,
+                "waterside": 0,
+                "grove": 0,
+                "village": 0
+              },
+              "focus": "garden",
+              "items": [
+                {
+                  "id": "starter-flower",
+                  "kind": "flower",
+                  "position": {
+                    "x": 1.5,
+                    "z": 0.8
+                  },
+                  "rotation": 0,
+                  "habitatId": "garden",
+                  "growthLevel": 0
+                },
+                {
+                  "id": "starter-lantern",
+                  "kind": "lantern",
+                  "position": {
+                    "x": -1,
+                    "z": 0.25
+                  },
+                  "rotation": 0,
+                  "habitatId": "village",
+                  "growthLevel": 0
+                }
+              ],
+              "cosmetics": {
+                "themeId": "moon-garden",
+                "accentId": null,
+                "appearance": {
+                  "version": 1,
+                  "slots": {
+                    "sky": "legacy-v1:moon-garden:sky",
+                    "ground": "legacy-v1:moon-garden:ground",
+                    "shore": "legacy-v1:moon-garden:shore",
+                    "path": "legacy-v1:moon-garden:path",
+                    "water": "legacy-v1:moon-garden:water",
+                    "houseBody": "legacy-v1:moon-garden:houseBody",
+                    "houseRoof": "legacy-v1:moon-garden:houseRoof",
+                    "houseWindows": "legacy-v1:moon-garden:houseWindows",
+                    "tree": "legacy-v1:moon-garden:tree",
+                    "flower": "legacy-v1:moon-garden:flower",
+                    "mushroom": "legacy-v1:moon-garden:mushroom",
+                    "bridge": "legacy-v1:moon-garden:bridge"
+                  }
+                }
+              },
+              "sceneStyle": {
+                "version": 2,
+                "residentLooks": {
+                  "otter": "original",
+                  "rabbit": "original",
+                  "fox": "original"
+                },
+                "ambience": "off",
+                "emblem": "leaf",
+                "expression": {
+                  "version": 1,
+                  "residents": {
+                    "otter": {
+                      "outfit": null,
+                      "pattern": null,
+                      "trail": null
+                    },
+                    "rabbit": {
+                      "outfit": null,
+                      "pattern": null,
+                      "trail": null
+                    },
+                    "fox": {
+                      "outfit": null,
+                      "pattern": null,
+                      "trail": null
+                    }
+                  },
+                  "soundscape": null,
+                  "environment": {
+                    "period": null,
+                    "season": null
+                  },
+                  "album": {
+                    "cover": null,
+                    "stamp": null
+                  },
+                  "flagTrim": null
+                }
+              }
+            }
+          ],
+          "discoveries": []
+        },
+        "pendingPlanId": "[\"island-plan-v1\",\"83265d7c-94d5-4e47-9185-b3ad45842bf1\",0]",
+        "mathReviewTurn": 1,
+        "learningParty": {
+          "version": 1,
+          "streak": 1,
+          "light": 1,
+          "rideRemaining": 0
+        }
+      }
+    ],
+    "logs": [
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "subject": "math",
+        "itemId": "add_1d_1_bridge",
+        "result": "correct",
+        "isReview": false,
+        "timestamp": "2026-10-04T02:24:25.360Z",
+        "learningEvidence": {
+          "completion": "whole-problem",
+          "assistance": "independent",
+          "problem": {
+            "catalogVersion": "curriculum-v2",
+            "subject": "math",
+            "itemId": "add_1d_1_bridge",
+            "unitId": "math.add-small-increments",
+            "representation": "bridge",
+            "inputType": "number",
+            "variant": "default",
+            "problemKey": "{\"answer\":\"2\",\"inputType\":\"number\",\"item\":\"add_1d_1_bridge\",\"question\":\"1 + 1 =\",\"visual\":{\"groups\":[{\"count\":1,\"emoji\":\"🍊\",\"label\":\"みかん\"},{\"count\":1,\"emoji\":\"🍊\",\"label\":\"みかん\"}],\"kind\":\"addition-items\",\"prompt\":\"あわせて いくつ？\"}}"
+          }
+        },
+        "id": 1
+      }
+    ],
+    "memoryMath": [
+      {
+        "id": "add_1d_1_bridge",
+        "strength": 1,
+        "nextReview": "2026-10-05T02:24:25.360Z",
+        "totalAnswers": 1,
+        "correctAnswers": 1,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "lastCorrectAt": "2026-10-04T02:24:25.360Z",
+        "lastIndependentCorrectAt": "2026-10-04T02:24:25.360Z",
+        "updatedAt": "2026-10-04T02:24:25.360Z",
+        "status": "active",
+        "isWeak": false,
+        "independentCorrectAnswers": 1,
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "add_5",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "add_finger",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "add_tiny",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "big_small_compare",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "compare_1d",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "compare_2d",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "compose_10",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "compose_5",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "count_10",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "count_100",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "count_5",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "count_50",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "count_back",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "count_color",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "count_dot",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "count_fill",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "count_next_10",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "count_next_20",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "count_oddone",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "count_order",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "count_pair",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "count_read",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "count_shape",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "count_which_more",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "height_compare",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "length_compare",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "one_less",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "one_more",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "one_to_one_match",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "ordinal_small",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "pattern_copy",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "same_count_match",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "same_or_different",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "share_equal",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "sort_by_attribute",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "spatial_words",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "sub_tiny",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "two_less",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "two_more",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "weight_compare",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "which_is_empty",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      },
+      {
+        "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "id": "zero_concept",
+        "strength": 5,
+        "nextReview": "2026-11-03T02:24:22.776Z",
+        "totalAnswers": 0,
+        "correctAnswers": 0,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-10-04T02:24:22.776Z",
+        "status": "retired"
+      }
+    ],
+    "memoryVocab": [],
+    "parkEvents": [],
+    "parkPlans": [],
+    "parks": [],
+    "profiles": [
+      {
+        "id": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+        "name": "プレイヤー",
+        "grade": 1,
+        "mathStartLevel": 7,
+        "vocabStartLevel": 1,
+        "subjectMode": "math",
+        "soundEnabled": true,
+        "uiTextMode": "standard",
+        "dailyGoal": 20,
+        "mathMainLevel": 8,
+        "mathMaxUnlocked": 8,
+        "mathMainLevelStartedAt": "2026-10-04T02:24:22.775Z",
+        "vocabMainLevel": 1,
+        "vocabMaxUnlocked": 1,
+        "vocabMainLevelStartedAt": "2026-10-04T02:24:22.775Z",
+        "mathLevels": [
+          {
+            "level": 0,
+            "unlocked": true,
+            "enabled": true,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 1,
+            "unlocked": true,
+            "enabled": true,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 2,
+            "unlocked": true,
+            "enabled": true,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 3,
+            "unlocked": true,
+            "enabled": true,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 4,
+            "unlocked": true,
+            "enabled": true,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 5,
+            "unlocked": true,
+            "enabled": true,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 6,
+            "unlocked": true,
+            "enabled": true,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 7,
+            "unlocked": true,
+            "enabled": true,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 8,
+            "unlocked": true,
+            "enabled": true,
+            "recentAnswersNonReview": [
+              true
+            ],
+            "updatedAt": "2026-10-04T02:24:25.360Z",
+            "recentIndependentAnswersNonReview": [
+              true
+            ]
+          },
+          {
+            "level": 9,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 10,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 11,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 12,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 13,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 14,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 15,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 16,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 17,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 18,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 19,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 20,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 21,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 22,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 23,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 24,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 25,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 26,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 27,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 28,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          }
+        ],
+        "vocabLevels": [
+          {
+            "level": 1,
+            "unlocked": true,
+            "enabled": true,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 2,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 3,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 4,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 5,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 6,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 7,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 8,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 9,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 10,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 11,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 12,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 13,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 14,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 15,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 16,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 17,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 18,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 19,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          },
+          {
+            "level": 20,
+            "unlocked": false,
+            "enabled": false,
+            "recentAnswersNonReview": [],
+            "updatedAt": "2026-10-04T02:24:22.776Z"
+          }
+        ],
+        "mathSkills": {
+          "add_5": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "add_5",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "add_finger": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "add_finger",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "add_tiny": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "add_tiny",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "big_small_compare": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "big_small_compare",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "compare_1d": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "compare_1d",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "compare_2d": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "compare_2d",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "compose_10": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "compose_10",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "compose_5": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "compose_5",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "count_10": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "count_10",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "count_100": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "count_100",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "count_5": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "count_5",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "count_50": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "count_50",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "count_back": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "count_back",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "count_color": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "count_color",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "count_dot": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "count_dot",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "count_fill": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "count_fill",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "count_next_10": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "count_next_10",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "count_next_20": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "count_next_20",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "count_oddone": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "count_oddone",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "count_order": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "count_order",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "count_pair": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "count_pair",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "count_read": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "count_read",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "count_shape": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "count_shape",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "count_which_more": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "count_which_more",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "height_compare": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "height_compare",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "length_compare": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "length_compare",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "one_less": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "one_less",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "one_more": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "one_more",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "one_to_one_match": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "one_to_one_match",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "ordinal_small": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "ordinal_small",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "pattern_copy": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "pattern_copy",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "same_count_match": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "same_count_match",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "same_or_different": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "same_or_different",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "share_equal": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "share_equal",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "sort_by_attribute": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "sort_by_attribute",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "spatial_words": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "spatial_words",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "sub_tiny": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "sub_tiny",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "two_less": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "two_less",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "two_more": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "two_more",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "weight_compare": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "weight_compare",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "which_is_empty": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "which_is_empty",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "zero_concept": {
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1",
+            "id": "zero_concept",
+            "strength": 5,
+            "nextReview": "2026-11-03T02:24:22.776Z",
+            "totalAnswers": 0,
+            "correctAnswers": 0,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-10-04T02:24:22.776Z",
+            "status": "retired"
+          },
+          "add_1d_1_bridge": {
+            "id": "add_1d_1_bridge",
+            "strength": 1,
+            "nextReview": "2026-10-05T02:24:25.360Z",
+            "totalAnswers": 1,
+            "correctAnswers": 1,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "lastCorrectAt": "2026-10-04T02:24:25.360Z",
+            "lastIndependentCorrectAt": "2026-10-04T02:24:25.360Z",
+            "updatedAt": "2026-10-04T02:24:25.360Z",
+            "status": "active",
+            "isWeak": false,
+            "independentCorrectAnswers": 1,
+            "profileId": "83265d7c-94d5-4e47-9185-b3ad45842bf1"
+          }
+        },
+        "vocabWords": {},
+        "streak": 1,
+        "todayCount": 1,
+        "lastStudyDate": "2026-10-04",
+        "recentAttempts": [
+          {
+            "id": "1",
+            "timestamp": "2026-10-04T02:24:25.360Z",
+            "subject": "math",
+            "skillId": "add_1d_1_bridge",
+            "result": "correct",
+            "assistance": "independent"
+          }
+        ],
+        "schemaVersion": 1,
+        "syncMeta": {
+          "dirty": false
+        },
+        "islandTutorialVersion": 1
+      }
+    ]
+  },
+  "expectedRevision": "87133e00b6c217420174558f6476d918060f108c",
+  "publicVersion": {
+    "version": "87133e00b6c217420174558f6476d918060f108c:8790a08f-0475-4121-a450-97f4606ab117",
+    "revision": "87133e00b6c217420174558f6476d918060f108c",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": true,
+        "fantasy": true,
+        "candidate": "living-fantasy-garden-v2",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "newMetadata": {
+    "url": "https://sansu-seven.vercel.app/#/island",
+    "revision": "87133e00b6c217420174558f6476d918060f108c",
+    "version": "87133e00b6c217420174558f6476d918060f108c:8790a08f-0475-4121-a450-97f4606ab117",
+    "delivery": "mystic-island-v1",
+    "candidate": "mystic-island-shore-garden-v18",
+    "learningCandidate": "pokomoko-pop-live-v8",
+    "islandFeatureEnabled": true,
+    "mode": "home",
+    "renderer": "original-fallback",
+    "artDirection": null,
+    "drawCalls": 0,
+    "expanded": null,
+    "residentAction": null,
+    "residentItemId": null,
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "serviceWorkerControlled": true,
+    "reducedMotion": false,
+    "appRoot": {
+      "revision": "87133e00b6c217420174558f6476d918060f108c",
+      "version": "87133e00b6c217420174558f6476d918060f108c:8790a08f-0475-4121-a450-97f4606ab117",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    }
+  },
+  "newGraphics": "compact",
+  "nativePreservedOnline": true,
+  "newOfflinePack": {
+    "waitMs": 5219,
+    "script": "/assets/index-QGxUjMAe.js",
+    "controller": "https://sansu-seven.vercel.app/sw.js",
+    "caches": [
+      "workbox-precache-v2-https://sansu-seven.vercel.app/"
+    ]
+  },
+  "nativePreservedOffline": true,
+  "newOfflineAnswer": {
+    "before": 1,
+    "after": 2,
+    "plan": "[\"island-plan-v1\",\"83265d7c-94d5-4e47-9185-b3ad45842bf1\",0]",
+    "cursor": 2
+  }
+}
