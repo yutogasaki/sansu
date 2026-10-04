@@ -34,4 +34,8 @@ main `3b8b36545f87c0b25c30253ed3eaedf66605281f` に所有差分だけを加え�
 - runtime：純粋制御・実ブラウザ昇格・制限時の復旧と保存保持はPASS。実iPadでの画質/温度/長時間動作は未確認。frame cadenceをGPUメモリ測定と同一視しない。
 
 
-[classic smoke](smoke.txt)：31/31 PASS。[全ケースの観測](smoke-report.json)。保存/PWAの実装は今回未変更。公開版の実SW更新・保存保持・offline旅程は配信後に確認する。
+[classic smoke](smoke.txt)：31/31 PASS。[全ケースの観測](smoke-report.json)。保存/PWAの実装は今回未変更。公開版の実SW更新・保存保持・offline旅程も下記の通り確認した。
+
+## 公開版の更新検証
+
+コード `53187252fa60360f16430cbbbe1eb4a8aaa814dc` をmainへpushし、Vercel配信成功。[公開版の実SW更新結果](public-update/report.json)：旧 `3b8b3654` のnative onboarding/解答/オフライン保存を残したまま再接続し、通常の「きろく」境界から新版へ更新。全native storeの一致、最新版のprecacheとactive controller、更新後オフライン解答ログ1→2を確認。ChromiumのiPad UAによる確認で、物理iPadの確認ではない。
