@@ -29,7 +29,7 @@ function playDays(days: number, seed = 'pace-kid', daily = 20, weekly = false, d
         act({ type: 'plant', kind, cell }); return true;
     };
     act({ type: 'plant', kind: 'home', cell: spot(true)! });
-    const log: { day: number; villagers: number; level: number; land: number; drops: number; bank: number }[] = [];
+    const log: { day: number; villagers: number; level: number; unlocks: number; land: number; drops: number; bank: number }[] = [];
     for (let day = 1; day <= days; day++) {
         for (const session of (weekly ? [0] : [0, 1])) {
             if (weekly && (day - 1) % 7 !== 0) continue;
@@ -67,7 +67,7 @@ function playDays(days: number, seed = 'pace-kid', daily = 20, weekly = false, d
                 break;
             }
         }
-        log.push({ day, villagers: state.villagers.length, level: islandLevel(state), land: landCells(state).length, drops: state.drops, bank: state.town.bank });
+        log.push({ day, villagers: state.villagers.length, level: islandLevel(state), unlocks: state.unlocked.length, land: landCells(state).length, drops: state.drops, bank: state.town.bank });
     }
     return { state, log };
 }
@@ -79,15 +79,16 @@ describe('pacing (spec 52 §15, starting values)', () => {
         console.table([1, 3, 7, 14, 30].map(on));
         expect(on(1).villagers).toBeGreaterThanOrEqual(1);
         expect(on(7).villagers).toBeGreaterThanOrEqual(3);
-        expect(on(7).villagers).toBeLessThanOrEqual(6);
-        expect(on(30).villagers).toBeGreaterThanOrEqual(8);
-        expect(on(30).villagers).toBeLessThanOrEqual(24);
+        expect(on(7).villagers).toBeLessThanOrEqual(5);
+        expect(on(30).villagers).toBeGreaterThanOrEqual(12);
+        expect(on(30).villagers).toBeLessThanOrEqual(18);
     });
 
     it('keeps growing slowly for three months', () => {
         const { log } = playDays(90);
         console.table([45, 60, 90].map(day => log[day - 1]));
         expect(log[89].villagers).toBeGreaterThan(log[29].villagers);
+        expect(log[89].unlocks).toBeGreaterThan(log[29].unlocks);
     });
 
     it('gives two children different islands from the same habits', () => {

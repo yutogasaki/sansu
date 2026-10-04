@@ -56,7 +56,7 @@ describe('continued island growth and retained learning', () => {
         const state = ingestCompletions(started(), Array.from({ length: 84 }, (_, i) => ({ id: `f-${i}`, at: T0 + i }))).state;
         openTown(state);
         const stopped = structuredClone(state.town);
-        expect(stopped.bank).toBeGreaterThan(120);
+        expect(stopped.bank).toBe(168 - state.pier.dockAt);
         openTown(state);
         expect(state.town).toEqual(stopped);
         const planted = act(state, { type: 'plant', kind: 'home', cell: { x: 0, z: 3 } });

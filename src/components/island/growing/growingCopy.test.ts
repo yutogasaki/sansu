@@ -29,7 +29,7 @@ describe('Pokomoko lines', () => {
 
     it('announces keepsakes, sibling flowers and small surprises', () => {
         const state = { ...started(), unopened: [], arrivals: [] };
-        expect(revealLine(state, [{ type: 'keepsake', unitId: 'math:6' }])).toContain('きねんひん');
+        expect(revealLine(state, [{ type: 'keepsake', unitId: 'math:6' }])).toContain('くらべっこの てんびん');
         expect(revealLine(state, [{ type: 'gift', from: 'はるか' }])).toBe('はるかが おはなを くれたよ');
         expect(revealLine(state, [{ type: 'moment', moment: 'rainbow' }])).toBe('にじが でたよ！');
     });
@@ -47,4 +47,10 @@ it('offers a next action for learning-first beginners, keeping ordinary reasons 
     expect(state).toEqual(before);
     state.tutorial='done';
     expect(revealLine(state,[{type:'blocked',reason:'full'}])).toBe('おうちが いっぱいで、とまれなかったみたい。つぎは きっと');
+});
+
+it('names a learning keepsake even when a resident and house arrive together', () => {
+    const state = started();
+    expect(revealLine(state, [{ type: 'arrived', villagerId: state.villagers[0].id }, { type: 'keepsake', unitId: 'vocab:3' }]))
+        .toBe('ABCの つみきが とどいたよ！「しまってある」から おいてみよう');
 });

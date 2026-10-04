@@ -124,11 +124,28 @@ try {
             const record = await growingDb.islands.get(id);
             record.version = 1; record.state.drops = 20000; record.state.genki.best = 150;
             record.state.town.bank = 500;
+            record.state.keepsakes.push({ id: 'qa-keepsake', unitId: 'math:9' });
+            record.state.landmarks.push({ id: 'qa-stored-flower', kind: 'flower', growth: 6 });
             record.state.land = { expanded: 'east', extra: ['west', 'south'], capes: ['east', 'west'] };
             await growingDb.islands.put(record);
         }, id);
         await page.reload(); await ready(page);
         assert.equal((await read(page, id)).version, 3);
+        // Explicit mastery fixture tests discoverability; it is not proof of learning acquisition.
+        await tapSeed(page);
+        await page.getByRole('tab', { name: 'しまってある', exact: true }).tap();
+        const stored = page.locator('[data-growing-stored]');
+        assert.equal(await stored.first().getAttribute('data-growing-stored'), 'qa-keepsake');
+        assert.match(await stored.first().innerText(), /けいさんの ふんすい/);
+        assert.match(await stored.first().innerText(), /さんすう Lv9の きねん/);
+        await capture(page, 'learning-keepsake');
+        await stored.first().tap();
+        await cellTap(page, id, { x: 4, z: 2 });
+        await page.getByRole('button', { name: 'ここに おく', exact: true }).tap();
+        await waitForAsync(page, async id => (await (await import('/src/domain/growingIsland/repository.ts')).growingDb.islands.get(id))?.state.keepsakes.some(k => k.id === 'qa-keepsake' && k.cell?.x === 4 && k.cell?.z === 2), id);
+        await page.reload(); await ready(page);
+        assert.deepEqual((await read(page, id)).state.keepsakes.find(k => k.id === 'qa-keepsake').cell, { x: 4, z: 2 });
+        report.scenarios.push({ viewport, name: 'explicit-mastery-keepsake-first-in-storage-place-reload', pass: true });
         for (const [side, price] of [['east', 1200], ['west', 1440], ['south', 1680]]) {
             await page.getByRole('button', { name: 'メニュー', exact: true }).tap();
             await expandGrowingIslandUI(page, side, price);

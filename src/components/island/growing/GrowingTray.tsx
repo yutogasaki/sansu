@@ -18,11 +18,11 @@ export function GrowingTray({ state, onPick, onClose, initialTab = 'seeds' }: { 
     const seeds = SEEDS.filter(kind => (kind === 'wonder' ? (state.wonderSeeds ?? 0) > 0 : state.unlocked.includes(`seed:${kind}`)) && (!tutorial || kind === 'home'));
     const landmarks = LANDMARKS.filter(kind => state.unlocked.includes(`landmark:${kind}`));
     const stored = [
+        ...state.keepsakes.filter(k => !k.cell).map(k => ({ id: k.id, kind: 'flower' as SeedKind | LandmarkKind, seed: false, keepsake: k.unitId,
+            label: { name: KEEPSAKE_NAME[keepsakeKind(k.unitId)], icon: '🏅' } })),
         ...state.landmarks.filter(l => !l.cell).map(l => ({ id: l.id, kind: l.kind as SeedKind | LandmarkKind, seed: false, label: LANDMARK_LABEL[l.kind] })),
         ...state.plots.filter(p => !p.cell).map(p => ({ id: p.id, kind: p.kind as SeedKind | LandmarkKind, seed: true,
             label: { name: p.kind === 'home' ? HOME_STAGE[p.stage] : SEED_LABEL[p.kind].name, icon: SEED_LABEL[p.kind].icon } })),
-        ...state.keepsakes.filter(k => !k.cell).map(k => ({ id: k.id, kind: 'flower' as SeedKind | LandmarkKind, seed: false, keepsake: k.unitId,
-            label: { name: KEEPSAKE_NAME[keepsakeKind(k.unitId)], icon: '🏅' } })),
     ];
     const price = (value: number) => <span className="growing-price" aria-label={`しずく ${value}`}>💧{value}</span>;
     return <section className="growing-tray" aria-label="たねと めじるし">
@@ -57,9 +57,11 @@ export function GrowingTray({ state, onPick, onClose, initialTab = 'seeds' }: { 
             </button>)}
         </div>}
         {tab === 'stored' && !stored.length && <p className="growing-flower-note">しまってある ものは まだ ないよ</p>}
+        {tab === 'stored' && state.keepsakes.some(k => !k.cell) && <p className="growing-flower-note">まなびの きねんひん。すきな ばしょに おけるよ</p>}
         {tab === 'stored' && <div className="growing-grid">
-            {stored.map(item => <button key={item.id} className="growing-card" onClick={() => onPick({ mode: 'unstore', id: item.id, kind: item.kind, seed: item.seed, keepsake: 'keepsake' in item ? item.keepsake as string : undefined })}>
+            {stored.map(item => <button key={item.id} className="growing-card" data-growing-stored={item.id} onClick={() => onPick({ mode: 'unstore', id: item.id, kind: item.kind, seed: item.seed, keepsake: 'keepsake' in item ? item.keepsake as string : undefined })}>
                 <span className="growing-card-icon" aria-hidden="true">{item.label?.icon}</span><strong>{item.label?.name}</strong>
+                {'keepsake' in item && <small>{String(item.keepsake).startsWith('math:') ? 'さんすう' : 'えいご'} Lv{String(item.keepsake).split(':')[1]}の きねん</small>}
             </button>)}
         </div>}
     </section>;

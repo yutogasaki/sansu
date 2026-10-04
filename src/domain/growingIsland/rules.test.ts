@@ -131,8 +131,9 @@ describe('moving in', () => {
         const state = learn(started(), 6);
         const first = openTown(state);
         expect(first).toContainEqual({ type: 'boat', hoursLeft: state.pier.dockAt - state.town.clock });
-        expect(boatProgress(state)).toBeGreaterThan(.4);
-        state.town.bank = 24;
+        expect(boatProgress(state)).toBeGreaterThan(0);
+        expect(boatProgress(state)).toBeLessThan(.3);
+        state.town.bank = state.pier.dockAt - state.town.clock;
         const second = openTown(state);
         expect(docked(state)).toBe(true);
         expect(state.villagers).toHaveLength(1);
@@ -230,7 +231,9 @@ describe('nature', () => {
             let state = learn(started(), 20);
             state = act(state, { type: 'place', kind: 'water-bowl', cell: at(4, 2) }).state;
             state = act(state, { type: 'plant', kind: 'wild', cell: at(4, 3) }).state;
-            openTown(state);
+            // The longer crossing uses the first learning batch; learn enough to build this new seed.
+            state = learn(state, 3); openTown(state);
+            expect(state.plots.find(p => p.kind === 'wild')?.stage).toBe(1);
             for (let day = 1; day <= 30; day++) advanceNature(state, T0 + day * 24 * HOUR);
             return state;
         };

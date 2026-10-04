@@ -19,7 +19,7 @@ export const RULES = {
     baseFood: 2,
     basePlay: 2,
     /** The next boat docks this many town hours after the previous friend arrived. */
-    boatBaseHours: 24,
+    boatBaseHours: 48,
     boatHoursPerVillager: 2,
     likeRadius: 3,
     quietRadius: 2,
@@ -100,8 +100,8 @@ export const UNLOCKS: readonly { key: string; villagers?: number; level?: number
     { key: 'landmark:flower' }, { key: 'landmark:bench' }, { key: 'landmark:water-bowl' },
     { key: 'seed:farm', villagers: 1 }, { key: 'landmark:sapling', villagers: 1 }, { key: 'landmark:water-channel', villagers: 1 },
     { key: 'landmark:picnic-table', villagers: 2 }, { key: 'landmark:planter', villagers: 2 },
-    { key: 'seed:play', level: 2 }, { key: 'landmark:swing', level: 2 }, { key: 'landmark:bandstand', level: 2 }, { key: 'landmark:slide', level: 2 }, { key: 'landmark:postbox', villagers: 3 },
-    { key: 'landmark:lantern', level: 3 }, { key: 'landmark:fence', level: 3 }, { key: 'landmark:trampoline', level: 3 }, { key: 'landmark:fountain', level: 3 },
+    { key: 'seed:play', level: 2 }, { key: 'landmark:swing', level: 2 }, { key: 'landmark:bandstand', level: 4 }, { key: 'landmark:slide', level: 6 }, { key: 'landmark:postbox', villagers: 3 },
+    { key: 'landmark:lantern', level: 3 }, { key: 'landmark:fence', level: 3 }, { key: 'landmark:trampoline', level: 7 }, { key: 'landmark:fountain', level: 8 },
     { key: 'landmark:bakery', level: 4 },
     { key: 'seed:market', level: 4 }, { key: 'seed:festival', level: 5 }, { key: 'landmark:lighthouse', level: 6 },
 ];

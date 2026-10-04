@@ -1,4 +1,4 @@
-import { comfort, docked, foodSupport, housing, likesOf, waitingSeeds } from '../../../domain/growingIsland';
+import { comfort, docked, keepsakeKind, foodSupport, housing, likesOf, waitingSeeds } from '../../../domain/growingIsland';
 import type { Character, GrowingState, KeepsakeKind, Like, LandmarkKind, SeedKind, Species, TownEvent, Villager } from '../../../domain/growingIsland';
 
 export const SPECIES_NAME: Record<Species, string> = {
@@ -48,11 +48,15 @@ const KID_LINES = { girl: ['いっしょに あそぼう！', 'みずあそび �
 
 /** Pokomoko's single line after opening town time. One reason, never blame (§11.3). */
 export function revealLine(state: GrowingState, events: TownEvent[]) {
+    const keepsakes = events.filter(e => e.type === 'keepsake');
+    if (keepsakes.length) {
+        const first = keepsakes[0];
+        if (first.type === 'keepsake') return `${KEEPSAKE_NAME[keepsakeKind(first.unitId)]}${keepsakes.length > 1 ? 'など' : ''}が とどいたよ！「しまってある」から おいてみよう`;
+    }
     const arrived = events.filter(e => e.type === 'arrived').length;
     if (state.arrivals.length) return arrived > 1 ? 'なかまが きたよ！ ふねを さわってね' : `${arrivalName(state)}が きたよ！ ふねを さわってね`;
     if (state.unopened.length) return 'つぼみが できたよ。さわって ひらいてみよう';
     if (events.some(e => e.type === 'wonder-seed')) return 'ふしぎの たねが とどいたよ！「たね」から おいてみよう。なにが そだつかな';
-    if (events.some(e => e.type === 'keepsake')) return 'まなびの きねんひんが とどいたよ！「たね」の しまってある から おいてみよう';
     const gift = events.find(e => e.type === 'gift');
     if (gift?.type === 'gift') return `${gift.from}が おはなを くれたよ`;
     const level = events.find(e => e.type === 'level');
