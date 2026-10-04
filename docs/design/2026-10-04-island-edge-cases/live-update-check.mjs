@@ -7,7 +7,8 @@ const base=process.env.SANSU_OPENING_LIVE_URL||'https://sansu-seven.vercel.app',
 assert(out,'Specify a fresh output directory');await fs.mkdir(out,{recursive:false});
 const b=await chromium.launch(),c=await b.newContext({viewport:{width:768,height:1024},hasTouch:true,serviceWorkers:'allow',userAgent:'Mozilla/5.0 (iPad; CPU OS 15_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1'}),p=await c.newPage();p.setDefaultTimeout(60000);
 const freshOnly=process.env.SANSU_OPENING_LIVE_FRESH_ONLY==='1';
-const report={target:base,mode:freshOnly?'fresh current release; not a cross-release update':'live old to new release',pass:false,device:'Chromium with iPad UA; not a physical iPad',qaHash:createHash('sha256').update(await fs.readFile(new URL(import.meta.url))).digest('hex')};const errors=[];p.on('pageerror',e=>errors.push(e.message));
+const report={target:base,mode:freshOnly?'fresh current release; not a cross-release update':'live old to new release',pass:false,device:'Chromium with iPad UA; not a physical iPad',qaHash:createHash('sha256').update(await fs.readFile(new URL(import.meta.url))).digest('hex'),navigations:[],packWaitNavigations:[]};const errors=[];p.on('pageerror',e=>errors.push(e.message));
+p.on('framenavigated',frame=>{if(frame===p.mainFrame())report.navigations.push({url:frame.url(),at:Date.now()})});
 const ready=async()=>{await p.locator('[data-growing-island="ready"] canvas').waitFor();await p.locator('.growing-loading--overlay').waitFor({state:'hidden'})};
 const stored=()=>p.evaluate(async()=>{
  const q=indexedDB.open('SansuDatabase'),db=await new Promise((ok,no)=>{q.onsuccess=()=>ok(q.result);q.onerror=()=>no(q.error)});
@@ -17,9 +18,10 @@ const stored=()=>p.evaluate(async()=>{
 // Before an offline acceptance check, verify the current shell/bundle in precache
 // and an active controller with no pending worker; do not clear or inject caches.
 const offlinePackReady=async()=>{
- const script=await p.locator('script[type="module"][src]').getAttribute('src');
+ let script=await p.locator('script[type="module"][src]').getAttribute('src');
  const started=Date.now();
- await waitForAsync(p,async script=>{
+ const deadline=started+180000;
+ for(;;){try{await waitForAsync(p,async script=>{
   const reg=await navigator.serviceWorker.getRegistration();
   if(!reg?.active||reg.installing||reg.waiting||navigator.serviceWorker.controller!==reg.active)return false;
   for(const name of await caches.keys()){
@@ -29,7 +31,12 @@ const offlinePackReady=async()=>{
    if(html&&bundle&&(await html.text()).includes(script))return true;
   }
   return false;
- },script,180000);
+ },script,Math.max(1,deadline-Date.now()));break;}catch(error){
+  if(!/Execution context was destroyed|Cannot find context/.test(String(error))||Date.now()>=deadline)throw error;
+  report.packWaitNavigations.push({url:p.url(),at:Date.now()});
+  await p.waitForLoadState('domcontentloaded');await ready();
+  script=await p.locator('script[type="module"][src]').getAttribute('src');
+ }}
  return {waitMs:Date.now()-started,script,...await p.evaluate(async()=>({controller:navigator.serviceWorker.controller?.scriptURL,caches:await caches.keys()}))};
 };
 try{

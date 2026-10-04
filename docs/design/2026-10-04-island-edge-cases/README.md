@@ -43,3 +43,13 @@ main `5c637e76ad06e6dd1333c956aaab3117b7016f74` に今回の所有パッチだ�
 見た目は既存の島・alert・待機cardを使用。[軽い設定の島](graphics/chromium-compact-island.png)・[家](graphics/chromium-compact-house.png)と[失敗画面](graphics/chromium-gpu-unavailable.png)を確認した。模型/配置/色は保持し、影とMSAAを省く。美術の作り直し・魅力の合格認定ではない。理解/安全は短い失敗案内と元の操作からの再試行、保存中も帰宅できる。子どもの無説明の理解や再訪は未確認。runtimeと見た目/理解の証拠を分ける。実iPadの復旧は利用者の確認まで保留。
 
 花の保存失敗は[390幅](visit-390/gift-save-error.png)・[768幅](visit-768/gift-save-error.png)で実画面を確認。狭幅でも案内が折り返し、島と「おはな」「かえる」の操作を表示する。
+
+## 配信と公開検証
+
+main修正 `f1a1b6315f657171868a3198bdb8705b42e37a36` をpush。Vercel成功と公開 `https://sansu-seven.vercel.app/version.json` のrevision一致を確認した。コミットの1,536 app入力と5 QA hashが固定候補に一致し、レビューしたindexをリポジトリ外へexportしたdocs checkもPASS。最初のindex checkではgitignore対象のログの参照が欠け、[失敗](docs-check-first.txt)を保存して必要な証拠ログだけを明示的にstageした。別作業の美術差分は保持する。
+
+公開の旧 `5c637e76` で実初回設定・実回答1件・実SW offline起動を行い、同じタブを再接続して通常の「きろく」から修正 `f1a1b631` へ更新した。新版の島、Apple touchのcompact設定、全native学習storeの保持を確認。ただし、新版のoffline-pack準備を観測中の再navigationで `Execution context was destroyed` となり旅程は未完了（[初回report](diagnostic-public-update/report.json)・[切替中の画面](diagnostic-public-update/failure.png)）。この初回を全旅程PASSとはしない。実機の停止の原因や再navigationの原因は断定しない。
+
+[公開ハーネス](live-update-check.mjs)は元の180秒の期限内でこのcontext破棄だけを扱い、描画のreadyを待って現在bundleを再取得し、実worker/cacheの条件を再度観測する。その他の例外・期限超過は失敗のまま。page navigationと観測中のcontext破棄を記録する。ChromiumにiPad UAを与えてApple用設定を検査し、実iPad・実iPadOSの試験とは分ける。
+
+別の空プロフィールで公開 `f1a1b631` の[現在版の全旅程](public-current/report.json)はPASS。実初回設定→実回答1件→実SW offline再起動→オンラインの記録/島往復→offline再起動→同予約の追加回答を確認。compact設定を実DOMで照合し、両再起動で全native学習storeが一致、最後の実回答でlogsが1→2。初回5c→f1の未完了旅程をPASSへ置き換えず、現在版の起動/保存/offline証拠として扱う。
