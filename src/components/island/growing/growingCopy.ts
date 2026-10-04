@@ -63,6 +63,7 @@ export function revealLine(state: GrowingState, events: TownEvent[]) {
     const blocked = events.find(e => e.type === 'blocked');
     if (blocked?.type === 'blocked') {
         if (blocked.reason === 'unreachable') return 'ここまで いけないみたい。まわりを あけてみよう';
+        if (blocked.reason === 'full' && state.tutorial === 'first-home') return 'すむの たねを おいて、なかまの おうちを つくろう';
         if (blocked.reason === 'full') return 'おうちが いっぱいで、とまれなかったみたい。つぎは きっと';
         return 'ごはんが とどいてないみたい。はたけを つくってみよう';
     }

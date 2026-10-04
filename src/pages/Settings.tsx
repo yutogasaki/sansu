@@ -33,6 +33,9 @@ export const Settings: React.FC = () => {
     const [sound, setSound] = useState(true);
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [profiles, setProfiles] = useState<UserProfile[]>([]);
+    const switchingRef = useRef(false);
+    const [switchingId, setSwitchingId] = useState<string | null>(null);
+    const [switchError, setSwitchError] = useState(false);
 
     // 保護者ガードの状態
     const [showParentGuard, setShowParentGuard] = useState(false);
@@ -129,12 +132,19 @@ export const Settings: React.FC = () => {
     };
 
     const handleSwitchProfile = async (id: string) => {
-        await setActiveProfileId(id);
-        const p = await getActiveProfile();
-        if (p) {
-            syncProfileState(p);
+        if (switchingRef.current || id === profile?.id || navigation?.blocked || navigation?.learningBlocked) return;
+        switchingRef.current = true;
+        setSwitchingId(id);
+        setSwitchError(false);
+        try {
+            await setActiveProfileId(id);
+            navigate("/", { replace: true });
+        } catch {
+            setSwitchError(true);
+        } finally {
+            switchingRef.current = false;
+            setSwitchingId(null);
         }
-        navigate("/");
     };
 
     const handleCreateProfile = () => {
@@ -318,6 +328,22 @@ export const Settings: React.FC = () => {
             </Modal>
 
             <div className={navigation ? `utility-layout-content settings-layout${openSection ? " has-selection" : ""}` : "island-utility-content mx-auto w-full max-w-[22rem] space-y-3 pb-2"}>
+                {openSection && switchError && <p role="alert" className="settings-profile-switcher text-sm">きりかえが できなかったよ。もういちど おしてね。</p>}
+                {!openSection && profile && <SurfacePanel className="settings-profile-switcher" aria-label="あそぶ人を えらぶ">
+                    <div><h2 className="text-lg font-bold">だれが あそぶ？</h2><p className="mt-1 text-sm text-pokomoko-muted">なまえを おすと、その人の しまへ。</p></div>
+                    <div className="settings-profile-choices">
+                        {profiles.map(person => <button key={person.id} type="button"
+                            className="settings-profile-choice" aria-label={`${person.name || 'ゲスト'}${person.id === profile.id ? '（いま あそんでいる）' : 'に きりかえる'}`}
+                            aria-pressed={person.id === profile.id}
+                            disabled={Boolean(switchingId) || Boolean(navigation?.blocked || navigation?.learningBlocked)}
+                            onClick={() => { void handleSwitchProfile(person.id); }}>
+                            <span className="settings-profile-avatar" aria-hidden="true">{Array.from(person.name || '?')[0]}</span>
+                            <span className="settings-profile-name">{person.name || 'ゲスト'}</span>
+                            <span className="settings-profile-state">{switchingId === person.id ? 'きりかえ中…' : person.id === profile.id ? '✓ いま あそんでいる' : 'この人で あそぶ'}</span>
+                        </button>)}
+                    </div>
+                    <p role="status" className="text-sm text-pokomoko-muted">{switchError ? 'きりかえが できなかったよ。もういちど なまえを おしてね。' : switchingId ? 'しまを ひらいているよ…' : ''}</p>
+                </SurfacePanel>}
                 {navigation && <nav className="settings-category-list" aria-label={t("せっていの こうもく", "設定の項目")}>
                     {sectionButton("profile", "プロフィール", `${profile?.name || "ゲスト"} · ${GRADES[profile?.grade ?? 1] || "???"}`)}
                     {sectionButton("learning", t("べんきょう", "学習"), `${subjectLabel} · ${hissanLabel} · Lv.${profile?.mathMainLevel ?? 1}/${profile?.vocabMainLevel ?? 1}`)}
@@ -355,7 +381,7 @@ export const Settings: React.FC = () => {
                                                 </button>
                                             </div>
                                             <div className="flex items-center justify-between gap-3 border-t border-white/70 pt-3">
-                                                {profile?.id === p.id ? <Badge variant="primary">{t("つかってる", "使用中")}</Badge> : <Button size="sm" variant="secondary" className="px-3" onClick={() => handleSwitchProfile(p.id)}>{t("きりかえ", "切替")}</Button>}
+                                                {profile?.id === p.id ? <Badge variant="primary">{t("つかってる", "使用中")}</Badge> : <Button size="sm" variant="secondary" className="px-3" disabled={Boolean(switchingId) || Boolean(navigation?.blocked || navigation?.learningBlocked)} onClick={() => { void handleSwitchProfile(p.id); }}>{switchingId === p.id ? 'きりかえ中…' : t("きりかえ", "切替")}</Button>}
                                                 <div className="flex items-center gap-1">
                                                     <Button
                                                         size="sm"

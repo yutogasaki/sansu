@@ -39,3 +39,12 @@ describe('Pokomoko lines', () => {
         expect(['えま', 'えいた'].some(name => idleLine({ ...state, unopened: [], arrivals: [] }).includes(name) || actorLine(state, 'visitor').startsWith(name))).toBe(true);
     });
 });
+
+it('offers a next action for learning-first beginners, keeping ordinary reasons and state',()=>{
+    const state=newIsland('learning-first',T0), before=structuredClone(state);
+    expect(revealLine(state,[{type:'blocked',reason:'full'}])).toBe('すむの たねを おいて、なかまの おうちを つくろう');
+    expect(revealLine(state,[{type:'blocked',reason:'unreachable'}])).toBe('ここまで いけないみたい。まわりを あけてみよう');
+    expect(state).toEqual(before);
+    state.tutorial='done';
+    expect(revealLine(state,[{type:'blocked',reason:'full'}])).toBe('おうちが いっぱいで、とまれなかったみたい。つぎは きっと');
+});

@@ -32,7 +32,8 @@ export function nearestOpen(walkable: Set<string>, point: { x: number; z: number
 }
 
 /** An open cell next to a target, so walkers stop beside furniture instead of inside it. */
-export function besideOpen(walkable: Set<string>, target: Cell): Cell | undefined {
-    if (walkable.has(k(target))) return target;
-    return NEIGHBORS.map(d => ({ x: target.x + d.x, z: target.z + d.z })).find(c => walkable.has(k(c)));
+export function besideOpen(walkable: Set<string>, target: Cell, reachable?: Set<string>): Cell | undefined {
+    const available = (cell: Cell) => walkable.has(k(cell)) && (!reachable || reachable.has(k(cell)));
+    if (available(target)) return target;
+    return NEIGHBORS.map(d => ({ x: target.x + d.x, z: target.z + d.z })).find(available);
 }

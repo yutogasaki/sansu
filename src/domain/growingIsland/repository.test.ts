@@ -143,7 +143,7 @@ describe('growing island persistence', () => {
         const opened = await syncGrowingIsland('kid', facts, T0 + 10, db, old);
         expect(opened.learned).toBe(3);
         expect(opened.record.state.drops).toBe(6);
-        expect(opened.record.state.town).toEqual({ clock: 0, bank: 12 });
+        expect(opened.record.state.town).toEqual({ clock: 0, bank: 6 });
         const again = await syncGrowingIsland('kid', facts, T0 + 20, db, old);
         expect(again.learned).toBe(0);
         expect(again.record.state.drops).toBe(6);

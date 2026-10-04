@@ -11,10 +11,10 @@ import type { Cell, Command, SeedKind } from './types';
 const HOUR = 3_600_000, T0 = Date.UTC(2026, 8, 29, 7);
 
 /**
- * A plain scripted child: two learning sessions of six completions a day, then plants
+ * A plain scripted child: two learning sessions of ten completions a day, then plants
  * whatever the island seems to want. Buildings go on odd rows so even rows stay walkable.
  */
-function playDays(days: number, seed = 'pace-kid', daily = 12, weekly = false, decorFirst = false) {
+function playDays(days: number, seed = 'pace-kid', daily = 20, weekly = false, decorFirst = false) {
     let state = newIsland(seed, T0), n = 0, fact = 0;
     const act = (command: Command) => { state = applyIntent(state, { id: `pace-${n++}`, command }).state; };
     const spot = (blocking: boolean): Cell | undefined => {
@@ -39,19 +39,29 @@ function playDays(days: number, seed = 'pace-kid', daily = 12, weekly = false, d
             openTown(state);
             if (decorFirst) {
                 const cell = spot(false);
-                if (cell && state.drops >= 2) act({ type: 'place', kind: 'flower', cell });
+                if (cell && state.drops >= LANDMARK_PRICE.flower!) act({ type: 'place', kind: 'flower', cell });
             }
             for (let guard = 0; guard < 20; guard++) {
                 const reached = reachableFromHome(state), people = state.villagers.length;
                 const waiting = state.plots.filter(p => p.stage === 0 && p.cell && isReachable(p.cell, reached));
                 const quote = landQuote(state);
                 if (quote && (!spot(true) || !spot(false)) && state.drops >= quote.price) { act({ type: 'expand', side: quote.sides[0] }); continue; }
+                // Decoration-first play may fill a cape before the next level opens.
+                // Store owned decorations for free to make room for the next farm/home.
+                const needsFood = foodSupport(state) <= people + 1;
+                const needsHome = housing(state).vacancy + waiting.filter(p => p.kind === 'home').length < 1;
+                const crowded = needsFood && !spot(false) ? false : needsHome && !spot(true) ? true : undefined;
+                if (decorFirst && crowded !== undefined) {
+                    const decoration = state.landmarks.find(l => l.id !== 'starter-flower' && l.id !== 'starter-bench'
+                        && l.cell && (l.cell.z % 2 === 1) === crowded);
+                    if (decoration) { act({ type: 'store', id: decoration.id }); continue; }
+                }
                 if (housing(state).vacancy + waiting.filter(p => p.kind === 'home').length < 1 && plant('home', true)) continue;
                 if (foodSupport(state) + waiting.filter(p => p.kind === 'farm').length * 2 <= people + 1 && plant('farm', false)) continue;
                 if (playSupport(state) <= people && plant('play', true)) continue;
                 // Decorate a little, and keep room for farms.
                 const flower = spot(false), flowers = state.landmarks.filter(l => l.kind === 'flower').length;
-                if (flower && flowers < landCells(state).length / 8 && state.drops >= LANDMARK_PRICE.flower! + 12) {
+                if (flower && flowers < landCells(state).length / 8 && state.drops >= LANDMARK_PRICE.flower! + SEED_PRICE.home) {
                     act({ type: 'place', kind: 'flower', cell: flower }); continue;
                 }
                 break;
@@ -68,10 +78,10 @@ describe('pacing (spec 52 §15, starting values)', () => {
         const on = (day: number) => log[day - 1];
         console.table([1, 3, 7, 14, 30].map(on));
         expect(on(1).villagers).toBeGreaterThanOrEqual(1);
-        expect(on(7).villagers).toBeGreaterThanOrEqual(7);
-        expect(on(7).villagers).toBeLessThanOrEqual(12);
-        expect(on(30).villagers).toBeGreaterThanOrEqual(20);
-        expect(on(30).villagers).toBeLessThanOrEqual(40);
+        expect(on(7).villagers).toBeGreaterThanOrEqual(3);
+        expect(on(7).villagers).toBeLessThanOrEqual(6);
+        expect(on(30).villagers).toBeGreaterThanOrEqual(8);
+        expect(on(30).villagers).toBeLessThanOrEqual(24);
     });
 
     it('keeps growing slowly for three months', () => {
@@ -86,7 +96,7 @@ describe('pacing (spec 52 §15, starting values)', () => {
     });
 
     it.each([false, true])('continues beyond the former land cap for a year (decor first: %s)', decor => {
-        const { state, log } = playDays(365, 'pace-kid', 12, false, decor);
+        const { state, log } = playDays(365, 'pace-kid', 20, false, decor);
         console.table([90, 180, 365].map(day => ({ decor, ...log[day - 1] })));
         expect(log[364].villagers).toBeGreaterThan(log[179].villagers);
         expect(log[364].land).toBeGreaterThan(144);
@@ -94,7 +104,7 @@ describe('pacing (spec 52 §15, starting values)', () => {
     }, 30000);
 
     it('retains weekly batching throughput instead of losing all unused town hours', () => {
-        const daily = playDays(84).log[83], weekly = playDays(84, 'pace-kid', 12, true).log[83];
+        const daily = playDays(84).log[83], weekly = playDays(84, 'pace-kid', 20, true).log[83];
         console.table([{ habit: 'daily', ...daily }, { habit: 'weekly', ...weekly }]);
         expect(weekly.villagers).toBeGreaterThanOrEqual(daily.villagers - 4);
     }, 30000);
@@ -102,5 +112,13 @@ describe('pacing (spec 52 §15, starting values)', () => {
     it('still lets a small daily habit grow an island', () => {
         const { log } = playDays(90, 'pace-kid', 1);
         expect(log[89].villagers).toBeGreaterThan(log[29].villagers);
+    });
+
+    it('makes the twenty-question habit grow more than six questions without revoking small progress', () => {
+        const short = playDays(30, 'pace-kid', 6).log[29];
+        const standard = playDays(30).log[29];
+        console.table([{ habit: 'six', ...short }, { habit: 'twenty', ...standard }]);
+        expect(short.villagers).toBeGreaterThan(1);
+        expect(standard.villagers).toBeGreaterThan(short.villagers * 2);
     });
 });

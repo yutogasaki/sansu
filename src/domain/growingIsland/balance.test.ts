@@ -29,13 +29,13 @@ const blocked = () => {
 describe('continued island growth and retained learning', () => {
     it('extends all three sides after the existing five purchases without moving old objects', () => {
         let state = started();
-        state.drops = 2000; state.genki.best = 40;
+        state.drops = 20000; state.genki.best = 40;
         const home = structuredClone(state.plots[0]);
         for (const side of ['east', 'west', 'south', 'east', 'west'] as const) state = act(state, { type: 'expand', side }).state;
         expect(landCells(state)).toHaveLength(144);
         state.genki.best = 0; // Further districts do not require an even higher level.
         for (const [index, side] of (['east', 'west', 'south', 'east'] as const).entries()) {
-            expect(landQuote(state)).toEqual({ step: 6 + index, sides: ['east', 'west', 'south'], price: 120 + 24 * index });
+            expect(landQuote(state)).toEqual({ step: 6 + index, sides: ['east', 'west', 'south'], price: 1200 + 240 * index });
             state = act(state, { type: 'expand', side }).state;
         }
         expect(landBounds(state)).toEqual({ minX: -9, maxX: 17, depth: 11 });
@@ -48,7 +48,7 @@ describe('continued island growth and retained learning', () => {
         const first = ingestCompletions(newIsland('kid', T0), [fact, fact, { ...fact, at: T0 + 1 }]);
         expect(first.added).toBe(1);
         expect(first.state.drops).toBe(2);
-        expect(first.state.town.bank).toBe(4);
+        expect(first.state.town.bank).toBe(2);
         expect(ingestCompletions(first.state, [fact]).added).toBe(0);
     });
 
@@ -56,16 +56,16 @@ describe('continued island growth and retained learning', () => {
         const state = ingestCompletions(started(), Array.from({ length: 84 }, (_, i) => ({ id: `f-${i}`, at: T0 + i }))).state;
         openTown(state);
         const stopped = structuredClone(state.town);
-        expect(stopped.bank).toBeGreaterThan(280);
+        expect(stopped.bank).toBeGreaterThan(120);
         openTown(state);
         expect(state.town).toEqual(stopped);
         const planted = act(state, { type: 'plant', kind: 'home', cell: { x: 0, z: 3 } });
         expect(planted.state.plots[1].stage).toBeGreaterThan(0);
         expect(planted.state.villagers).toHaveLength(2);
-        expect(planted.state.town.clock + planted.state.town.bank).toBe(336);
+        expect(planted.state.town.clock + planted.state.town.bank).toBe(168);
         const farm = act(planted.state, { type: 'plant', kind: 'farm', cell: { x: 4, z: 2 } });
         expect(farm.state.plots[2].stage).toBe(1);
-        expect(farm.state.town.clock + farm.state.town.bank).toBe(336);
+        expect(farm.state.town.clock + farm.state.town.bank).toBe(168);
     });
 });
 

@@ -1,7 +1,7 @@
 import * as T from 'three';
 import type { IslandMaterials } from '../three/primitives';
 import { homeCellOf } from '../../../domain/growingIsland/community';
-import { HOME_CELL, key, walkableCells } from '../../../domain/growingIsland/space';
+import { HOME_CELL, key, reachableFromHome, walkableCells } from '../../../domain/growingIsland/space';
 import type { Cell, GrowingState, Villager } from '../../../domain/growingIsland';
 import { makeVillagerActor, type Actor } from './actors';
 import type { ObjectLayer, Seat } from './objectLayer';
@@ -28,6 +28,7 @@ export class GrowingLife {
     private walkers = new Map<string, Walker>();
     private walkable = new Set<string>();
     private seats = new Map<string, Seat>();
+    private homePaths = new Set<string>();
     private state?: GrowingState;
     private layout?: SceneLayout;
     private layer?: ObjectLayer;
@@ -45,6 +46,7 @@ export class GrowingLife {
     sync(state: GrowingState, layout: SceneLayout, layer: ObjectLayer) {
         this.state = state; this.layout = layout; this.layer = layer;
         this.walkable = walkableCells(state); this.seats = layer.seats;
+        this.homePaths = new Set([...reachableFromHome(state, this.walkable)].filter(cell => this.walkable.has(cell)));
         const shown = [...state.villagers].filter(v => !v.away).sort((a, b) => b.arrivedAt - a.arrivedAt).slice(0, VISIBLE_WALKERS);
         const keep = new Set(['pokomoko', 'visitor', ...shown.map(v => v.id), ...state.arrivals]);
         for (const [id, walker] of this.walkers) if (!keep.has(id) || id === 'visitor') {
@@ -74,7 +76,7 @@ export class GrowingLife {
     private add(villager: Villager, mode: Mode) {
         const actor = makeVillagerActor(this.m, villager);
         const home = this.state ? homeCellOf(this.state, villager) : HOME_CELL;
-        const start = besideOpen(this.walkable, home) ?? nearestOpen(this.walkable, home) ?? HOME_CELL;
+        const start = besideOpen(this.walkable, home, this.homePaths) ?? nearestOpen(this.homePaths, home) ?? HOME_CELL;
         this.walkers.set(villager.id, { actor, at: { ...start }, path: [], mode, until: 0, heading: Math.random() * 6, home });
         this.root.add(actor.root);
     }
@@ -83,14 +85,14 @@ export class GrowingLife {
         walker.mode = 'idle'; walker.until = 0;
         const from = nearestOpen(this.walkable, walker.at) ?? HOME_CELL;
         walker.at = { ...from };
-        const target = besideOpen(this.walkable, walker.home);
+        const target = besideOpen(this.walkable, walker.home, this.homePaths);
         walker.path = target ? walkRoute(this.walkable, from, target) ?? [] : [];
         if (walker.path.length) walker.mode = 'walk';
     }
 
     private chooseTarget(walker: Walker): Cell | undefined {
         const roll = Math.random();
-        if (roll < .35) return besideOpen(this.walkable, walker.home);
+        if (roll < .35) return besideOpen(this.walkable, walker.home, this.homePaths);
         if (roll < .75 && this.seats.size) {
             const seats = [...this.seats.keys()], pick = seats[Math.floor(Math.random() * seats.length)];
             const [x, z] = pick.split(',').map(Number);

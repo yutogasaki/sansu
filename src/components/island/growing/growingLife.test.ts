@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import * as T from 'three';
 import { IslandMaterials } from '../three/primitives';
 import { applyIntent, newIsland } from '../../../domain/growingIsland';
+import { key, reachableFromHome, walkableCells } from '../../../domain/growingIsland/space';
 import { GrowingLife } from './growingLife';
 import { buildObjectLayer } from './objectLayer';
 import { sceneLayout } from './sceneLayout';
@@ -48,4 +49,31 @@ describe('picking up a friend', () => {
         expect(ids).toContain('pokomoko');
         expect(ids).not.toContain(friend);
     });
+});
+
+
+it('starts residents on the doorstep-connected side of a reachable home, not an isolated neighbour', () => {
+    const state = newIsland('spawn-regression', T0);
+    state.arrivals = []; state.unopened = [];
+    state.plots = [
+        { id: 'north-home', kind: 'home', cell: { x: 1, z: 0 }, stage: 2, style: 'tree', plantedAt: 0, growth: 0, origin: 'seed', paid: 4 },
+        { id: 'east-home', kind: 'home', cell: { x: 4, z: 1 }, stage: 2, style: 'plain', plantedAt: 0, growth: 0, origin: 'seed', paid: 4 },
+        { id: 'edge-home', kind: 'home', cell: { x: 5, z: 3 }, stage: 2, style: 'water', plantedAt: 0, growth: 0, origin: 'seed', paid: 4 },
+    ];
+    state.landmarks.push({ id: 'east-tree', kind: 'sapling', cell: { x: 5, z: 0 }, growth: 18, maturedAt: 0 },
+        { id: 'middle-tree', kind: 'sapling', cell: { x: 4, z: 2 }, growth: 18, maturedAt: 0 });
+    state.villagers = [{ id: 'north', species: 'girl', home: 'north-home', arrivedAt: 0, trait: 'mellow', variant: { color: 0, accessory: 0, sparkle: false } },
+        { id: 'east', species: 'otter', home: 'east-home', arrivedAt: 0, trait: 'mellow', variant: { color: 0, accessory: 0, sparkle: false } }];
+    const before = structuredClone(state), m = new IslandMaterials('moon-garden'), layout = sceneLayout(state);
+    const life = new GrowingLife(m, { id: 'pokomoko', root: new T.Group(), body: new T.Group(), feet: [] });
+    life.sync(state, layout, buildObjectLayer(m, state, layout));
+    life.tick(0, 0, true, false);
+    const open = walkableCells(state), reached = reachableFromHome(state);
+    for (const id of ['north', 'east']) {
+        const actor = life.objects().find(o => o.userData.actorId === id)!;
+        const cell = layout.cellAt(actor.position);
+        expect(open.has(key(cell))).toBe(true);
+        expect(reached.has(key(cell))).toBe(true);
+    }
+    expect(state).toEqual(before);
 });

@@ -20,7 +20,7 @@ describe('flowers that mix', () => {
 
     it('lets children plant base colours only, and remembers each colour in the flower book', () => {
         let state = newIsland('kid-fl', T0);
-        state.drops = 20;
+        state.drops = 40;
         state = act(state, { type: 'place', kind: 'flower', cell: { x: 0, z: 3 }, color: 'yellow' });
         expect(state.landmarks.at(-1)).toMatchObject({ kind: 'flower', color: 'yellow' });
         expect(state.flowerBook).toEqual(['yellow']);
@@ -49,11 +49,11 @@ describe('flowers that mix', () => {
 describe('the bandstand', () => {
     it('opens at island level 2, takes one cell and counts as play', () => {
         let state = act(newIsland('kid-b', T0), { type: 'plant', kind: 'home', cell: { x: 1, z: 3 } });
-        state.drops = 20;
+        state.drops = 40;
         expect(() => act(state, { type: 'place', kind: 'bandstand', cell: { x: 4, z: 3 } })).toThrow('まだ');
         state.genki.best = 3; state.unlocked.push('landmark:bandstand');
         state = act(state, { type: 'place', kind: 'bandstand', cell: { x: 4, z: 3 } });
         expect(state.landmarks.at(-1)).toMatchObject({ kind: 'bandstand', cell: { x: 4, z: 3 } });
-        expect(state.drops).toBe(14);
+        expect(state.drops).toBe(10);
     });
 });

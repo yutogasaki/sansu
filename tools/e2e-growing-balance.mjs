@@ -8,9 +8,18 @@ const base = process.env.SANSU_GROWING_URL || 'http://127.0.0.1:5260';
 const out = process.env.SANSU_GROWING_OUTPUT;
 assert(out, 'Specify a fresh SANSU_GROWING_OUTPUT directory');
 await fs.mkdir(out, { recursive: false });
+async function sources() {
+    const walk = async directory => (await Promise.all((await fs.readdir(directory, { withFileTypes: true }))
+        .map(entry => entry.isDirectory() ? walk(`${directory}/${entry.name}`) : [`${directory}/${entry.name}`]))).flat();
+    const paths = [...await walk('src'), 'package.json', 'package-lock.json', 'vite.config.ts', 'index.html',
+        'tools/e2e-growing-balance.mjs', 'tools/island-e2e-helpers.mjs'];
+    return Object.fromEntries(await Promise.all(paths.sort().map(async path =>
+        [path, createHash('sha256').update(await fs.readFile(path)).digest('hex')])));
+}
+const initialSources = await sources();
 const browser = await chromium.launch();
 const report = { target: base, source: 'DEV preview, disposable profiles; real UI learning and explicit land fixture kept separate',
-    scenarios: [], captures: [], pass: false };
+    scenarios: [], captures: [], initialSources, pass: false };
 let activePage;
 const world = page => page.locator('[data-growing-world] canvas');
 const read = (page, id) => page.evaluate(async id => {
@@ -33,6 +42,7 @@ async function capture(page, label) {
 async function tapSeed(page) {
     // The tutorial invitation pulses continuously; use a real touch at its visible hit target.
     const button = page.getByRole('button', { name: 'たね', exact: true });
+    if (!await button.isVisible()) await page.getByRole('button', { name: 'メニュー', exact: true }).tap();
     await button.waitFor();
     const box = await button.boundingBox(); assert(box);
     await page.touchscreen.tap(box.x + box.width / 2, box.y + box.height / 2);
@@ -67,19 +77,39 @@ try {
         await capture(page, 'first-home');
         await page.locator('.island-shell-tab--learn').tap();
         await page.locator('[data-input-ready="true"]').waitFor(); await capture(page, 'learning');
-        let native = await readNative(page, id); const first = native.plan.id; let answers = 0;
-        while (native.plan.id === first && answers < 12) { native = (await answerUI(page, native.plan, { touch: true })).state; answers++; }
-        assert.equal(answers, 3);
+        let native = await readNative(page, id); let answers = 0;
+        for (; answers < 10; answers++) native = (await answerUI(page, native.plan, { touch: true })).state;
+        await page.getByRole('button', { name: 'とじる', exact: true }).tap(); await ready(page);
+        await waitForAsync(page, async id => (await (await import('/src/domain/growingIsland/repository.ts')).growingDb.islands.get(id))?.state.learned.length === 10, id);
+        const ten = await read(page, id);
+        assert.equal(ten.state.drops, 20);
+        assert.equal(ten.state.town.clock + ten.state.town.bank, 20);
+        await tapSeed(page); await page.locator('[data-growing-seed="home"]').tap();
+        await cellTap(page, id, { x: 4, z: 3 });
+        await page.waitForFunction(() => document.querySelector('.growing-placing')?.textContent.includes('しずくが あと 20こ'));
+        assert.match(await page.locator('.growing-placing').innerText(), /しずくが あと 20こ/);
+        assert.equal(await page.getByRole('button', { name: 'ここに おく', exact: true }).count(), 0);
+        await capture(page, 'ten-answers-home-shortfall');
+        await page.getByRole('button', { name: 'やめる', exact: true }).tap();
+        const cancelled = (await read(page, id)).state;
+        assert.equal(cancelled.drops, ten.state.drops);
+        assert.deepEqual(cancelled.plots, ten.state.plots);
+        assert.deepEqual(cancelled.learned, ten.state.learned);
+        await page.locator('.island-shell-tab--learn').tap();
+        await page.locator('[data-input-ready="true"]').waitFor();
+        native = await readNative(page, id);
+        for (; answers < 20; answers++) native = (await answerUI(page, native.plan, { touch: true })).state;
         const continuation = { id: native.plan.id, cursor: native.plan.cursor };
         await page.getByRole('button', { name: 'とじる', exact: true }).tap(); await ready(page);
-        await waitForAsync(page, async id => (await (await import('/src/domain/growingIsland/repository.ts')).growingDb.islands.get(id))?.state.learned.length === 3, id);
-        assert.equal((await read(page, id)).state.drops, 6);
-        await tapSeed(page);
-        await page.locator('[data-growing-seed="wild"]').tap(); await cellTap(page, id, { x: 4, z: 2 });
-        await capture(page, 'placement');
+        await waitForAsync(page, async id => (await (await import('/src/domain/growingIsland/repository.ts')).growingDb.islands.get(id))?.state.learned.length === 20, id);
+        const twenty = await read(page, id);
+        assert.equal(twenty.state.drops, 40);
+        assert.equal(twenty.state.town.clock + twenty.state.town.bank, 40);
+        await tapSeed(page); await page.locator('[data-growing-seed="home"]').tap();
+        await cellTap(page, id, { x: 4, z: 3 }); await capture(page, 'placement');
         await page.getByRole('button', { name: 'ここに おく', exact: true }).tap();
         await waitForAsync(page, async id => (await (await import('/src/domain/growingIsland/repository.ts')).growingDb.islands.get(id))?.state.plots.length === 2, id);
-        const planted = await read(page, id); assert.equal(planted.state.drops, 5); assert.equal(planted.state.plots[1].stage, 0);
+        const planted = await read(page, id); assert.equal(planted.state.drops, 0); assert.equal(planted.state.plots[1].paid, 40);
         await page.reload(); await ready(page); await capture(page, 'saved');
         assert.deepEqual((await read(page, id)).state.learned, planted.state.learned);
         assert.equal((await read(page, id)).state.plots[1].id, planted.state.plots[1].id);
@@ -92,14 +122,14 @@ try {
         await page.evaluate(async id => {
             const { growingDb } = await import('/src/domain/growingIsland/repository.ts');
             const record = await growingDb.islands.get(id);
-            record.version = 1; record.state.drops = 2000; record.state.genki.best = 150;
+            record.version = 1; record.state.drops = 20000; record.state.genki.best = 150;
             record.state.town.bank = 500;
             record.state.land = { expanded: 'east', extra: ['west', 'south'], capes: ['east', 'west'] };
             await growingDb.islands.put(record);
         }, id);
         await page.reload(); await ready(page);
         assert.equal((await read(page, id)).version, 3);
-        for (const [side, price] of [['east', 120], ['west', 144], ['south', 168]]) {
+        for (const [side, price] of [['east', 1200], ['west', 1440], ['south', 1680]]) {
             await page.getByRole('button', { name: 'メニュー', exact: true }).tap();
             await expandGrowingIslandUI(page, side, price);
             await waitForAsync(page, async ({ id, side }) => (await (await import('/src/domain/growingIsland/repository.ts')).growingDb.islands.get(id))?.state.land.districts?.includes(side), { id, side });
@@ -121,6 +151,8 @@ try {
         report.scenarios.push({ viewport, name: 'explicit-v1-save-migration-three-directions-banked-time', pass: true });
         await context.close();
     }
+    report.finalSources = await sources();
+    assert.deepEqual(report.finalSources, initialSources, 'App and QA source inputs stayed fixed');
     report.pass = true;
 } catch (error) {
     report.error = String(error.stack || error); process.exitCode = 1;

@@ -3,7 +3,7 @@ import type { Character, Like, SeedKind, Species, LandmarkKind, Trait, Variant }
 /** Starting values from spec 52. Tune them in play, not by editing the experience rules. */
 export const RULES = {
     dropsPerCompletion: 2,
-    townHoursPerCompletion: 4,
+    townHoursPerCompletion: 2,
     buildHours: 6,
     dawnHour: 6,
     /** Homes stay small so each new friend usually needs a new seed: the core loop. */
@@ -45,17 +45,19 @@ export const RULES = {
     learnedMemory: 3000,
 } as const;
 
-export const SEED_PRICE: Record<SeedKind, number> = { home: 4, farm: 4, play: 6, wild: 1, market: 8, festival: 10, wonder: 0 };
+/** Twenty completions buy one home/farm; small decoration stays within one ten-question block. */
+export const SEED_PRICE: Record<SeedKind, number> = { home: 40, farm: 40, play: 60, wild: 10, market: 120, festival: 160, wonder: 0 };
 /** Island levels that each bring one ふしぎの たね (§3.5). */
 export const WONDER_LEVELS = [3, 5, 7, 9] as const;
 
 export const LANDMARK_PRICE: Partial<Record<LandmarkKind, number>> = {
-    flower: 2, bench: 4, 'water-bowl': 4, sapling: 4, 'water-channel': 2, 'picnic-table': 8,
-    planter: 6, swing: 6, lantern: 8, fence: 4, lighthouse: 16, bandstand: 6, slide: 8, trampoline: 8, fountain: 10, bakery: 14, postbox: 4,
+    flower: 10, bench: 20, 'water-bowl': 20, sapling: 20, 'water-channel': 10, 'picnic-table': 40,
+    planter: 30, swing: 30, lantern: 40, fence: 20, lighthouse: 80, bandstand: 30, slide: 40, trampoline: 40, fountain: 50, bakery: 70, postbox: 20,
 };
 
-/** Land steps 1-3 keep the current 12/24/48 contract; capes open with the island level. */
-export const LAND_PRICE = [12, 24, 48, 72, 96] as const;
+/** Land competes with purchases over weeks; acquired cells and cape unlocks stay intact. */
+export const LAND_PRICE = [120, 240, 480, 720, 960] as const;
+export const DISTRICT_PRICE_STEP = 240;
 export const CAPE_LEVEL = [5, 6] as const;
 
 export const LIKES: Record<Species, readonly [Like, Like]> = {

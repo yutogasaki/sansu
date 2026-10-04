@@ -242,3 +242,8 @@ Life two-buildの `SANSU_LIFE_RESIDENCY_UPGRADE=1` は保存20→21の実SW更�
 - 案内や目標の選択だけでは時間・抽選・学習・費用を進めない。旧無料種を再配布せず、通常種/自然種の時計を区別する。色/移動/土地の記念snapshotはその後の変更でも維持し、演奏は本人の前景rendererの実開始から受領する。
 - reportは実URL、版/revision、Growing flag、島/本のcandidate、音/reduced motion、cache/SW状態、各scenarioと画面を記録する。app/QA（productionではdistも）の開始終了hashを一致させる。実行中のsource変更は診断として保存し、最終PASSの証拠に使わない。
 - `guidance.repository.test.ts` は版1/2→3、旧writerが触れられない `guidedIslands` 正本、CAS/重複/rollback/削除を検証する。実two-build更新、旧公開版からの復旧、実iOS、子どもの無説明理解・翌日の再訪を別に確認する。視覚・理解/安全・runtimeは独立して判定する。
+
+
+### 20問/日を基準とする育つ島の経済（2026-10-04）
+
+Growing balanceの行に従う。`tools/e2e-growing-balance.mjs`は390/768幅で実回答10問→家の不足20→取消→同じ学習へ戻り累計20問→家40の購入→reload/同予約を検査する。資源/所有/時間を注入しない。隔離プロフィールの作成はfixture。旧保存1と豊富な残高・既得5段階の土地・bank500は別の明示fixtureで、3方向の追加地区と残る時間を検査する。`economy.test.ts`では5/6/10/19/20問の購入境界、旧4しずく種と新40しずく種の実支払額の返金、旧bankの保持/既払完了の再送を確認する。保存形式は変更しない。実SW/two-build/実機/自発的な次の10問・再訪・後日正答は別ゲート。

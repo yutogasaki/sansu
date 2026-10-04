@@ -129,9 +129,12 @@ export const getAllProfiles = async () => {
 };
 
 export const setActiveProfileId = async (id: string) => {
+    await db.transaction("rw", [db.appData, db.profiles], async () => {
+        const appData = await getAppData();
+        if (!appData.profiles[id]) throw new Error("Profile missing");
+        await saveAppData({ ...appData, activeProfileId: id });
+    });
     profileStorage.setActiveId(id);
-    const appData = await getAppData();
-    await saveAppData({ ...appData, activeProfileId: id });
 };
 
 export const getActiveProfileId = () => {

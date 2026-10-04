@@ -32,7 +32,7 @@ export function GrowingSheet({ state, target, onAction, onClose }: {
         title = KEEPSAKE_NAME[keepsakeKind(keepsake.unitId)];
         detail = `${keepsake.unitId.startsWith('math') ? 'さんすう' : 'えいご'} Lv${keepsake.unitId.split(':')[1]}を みにつけた きねんだよ`;
         actions.push({ label: 'うごかす', action: { type: 'move' } }, { label: 'しまう', action: { type: 'store' } });
-    } else if (target === 'house') { title = 'ぽこもこの いえ'; detail = 'なかに はいって あそべるよ'; actions.push({ label: 'いえに はいる', action: { type: 'home' } }); }
+    } else if (target === 'house') { title = 'ぽこもこの いえ'; detail = 'なかに あそびかたの ほんが あるよ。まよったら ひらいてみよう'; actions.push({ label: 'いえに はいる', action: { type: 'home' } }); }
     else if (villager) {
         title = villagerName(villager);
         const home = state.plots.find(p => p.id === villager.home);

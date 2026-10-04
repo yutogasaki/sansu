@@ -1,4 +1,5 @@
 import * as T from 'three';
+import { buildGrowingTree } from './treeSilhouettes';
 import { buildLifeItem } from '../life/itemGeometry';
 import type { IslandMaterials } from '../three/primitives';
 import type { ItemKind, LifeItem } from '../../../domain/islandLife/model';
@@ -24,6 +25,7 @@ const OWN_MODELS: Partial<Record<LandmarkKind, (m: IslandMaterials) => T.Group>>
 };
 
 function landmarkModel(m: IslandMaterials, state: GrowingState, landmark: Landmark, reached: Set<string>) {
+    if (landmark.kind === 'sapling') return buildGrowingTree(m, landmark.id, landmark.growth);
     if (landmark.kind === 'lighthouse') return buildLighthouse(m);
     if (landmark.kind === 'bandstand') return buildBandstand(m);
     const own = OWN_MODELS[landmark.kind]; if (own) return own(m);

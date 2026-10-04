@@ -1,7 +1,7 @@
 import { ACHIEVEMENTS, noteGuidanceIntent, noteTownBuilds } from './guidance';
 import { islandLevel, occupantsOf, refreshUnlocks } from './community';
 import { styleAt, syncSoil } from './environment';
-import { CAPE_LEVEL, isKid, FLAG_PATTERNS, HATS, LAND_PRICE, LANDMARK_PRICE, RULES, SEED_PRICE, STYLE_LEVEL } from './rules';
+import { CAPE_LEVEL, DISTRICT_PRICE_STEP, isKid, FLAG_PATTERNS, HATS, LAND_PRICE, LANDMARK_PRICE, RULES, SEED_PRICE, STYLE_LEVEL } from './rules';
 import { isReachable, isVacant, occupant, onLand, reachableFromHome } from './space';
 import { DEFAULT_DECOR, patternOpen, RUG_COLORS, WORD_GROUPS } from './room';
 import { noteColor, PLANTED_COLORS } from './flowers';
@@ -39,7 +39,7 @@ export function landQuote(state: GrowingState): { step: number; sides: Side[]; p
     if (step <= 5 && islandLevel(state) >= CAPE_LEVEL[step - 4]) {
         return { step, sides: (['east', 'west'] as const).filter(side => !state.land.capes.includes(side)), price: LAND_PRICE[step - 1] };
     }
-    if (step >= 6) return { step, sides: ['east', 'west', 'south'], price: 96 + 24 * (step - 5) };
+    if (step >= 6) return { step, sides: ['east', 'west', 'south'], price: LAND_PRICE[4] + DISTRICT_PRICE_STEP * (step - 5) };
 }
 
 function expand(state: GrowingState, side: Side) {

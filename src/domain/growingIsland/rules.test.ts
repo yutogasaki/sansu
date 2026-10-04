@@ -54,11 +54,11 @@ describe('a new island', () => {
 });
 
 describe('learning', () => {
-    it('adds two drops and four town hours per completion, once', () => {
+    it('adds two drops and two town hours per completion, once', () => {
         const state = started(), facts = [{ id: 'x', at: T0 + 1 }, { id: 'y', at: T0 + 2 }];
         const once = ingestCompletions(state, facts).state;
         expect(once.drops).toBe(4);
-        expect(once.town.bank).toBe(8);
+        expect(once.town.bank).toBe(4);
         expect(ingestCompletions(once, facts)).toEqual({ state: once, added: 0 });
     });
 
@@ -77,11 +77,11 @@ describe('seeds and building', () => {
         const events = planted.events;
         expect(events).toContainEqual({ type: 'built', plotId: state.plots[1].id });
         expect(state.plots[1].stage).toBe(1);
-        expect(state.town).toEqual({ clock: 24, bank: 0 });
+        expect(state.town).toEqual({ clock: 12, bank: 0 });
     });
 
     it('waits without a bank of town time', () => {
-        const prepared = learn(started(), 2);
+        const prepared = learn(started(), 10);
         prepared.town.bank = 0;
         const state = act(prepared, { type: 'plant', kind: 'wild', cell: at(4, 2) }).state;
         openTown(state);
@@ -89,7 +89,7 @@ describe('seeds and building', () => {
     });
 
     it('does not build where nobody can walk, and says why', () => {
-        let state = learn(started(), 20);
+        let state = learn(started(), 40);
         // Fence in the far corner, then plant inside it.
         for (const cell of [at(4, 3), at(5, 3), at(4, 4)]) state = act(state, { type: 'place', kind: 'bench', cell }).state;
         state = act(state, { type: 'plant', kind: 'wild', cell: at(5, 4) }).state;
@@ -108,7 +108,7 @@ describe('seeds and building', () => {
     });
 
     it('refunds an unbuilt seed and keeps a built home with people in it', () => {
-        let state = learn(started(), 4);
+        let state = learn(started(), 5);
         state.town.bank = 0; // This test cancels a seed before any time is available.
         const before = state.drops;
         state = act(state, { type: 'plant', kind: 'wild', cell: at(4, 2) }).state;
@@ -118,7 +118,7 @@ describe('seeds and building', () => {
     });
 
     it('applies the same tap only once', () => {
-        const state = learn(started(), 4);
+        const state = learn(started(), 5);
         const first = applyIntent(state, { id: 'tap', command: { type: 'plant', kind: 'wild', cell: at(4, 2) } }).state;
         const again = applyIntent(first, { id: 'tap', command: { type: 'plant', kind: 'wild', cell: at(4, 2) } });
         expect(again.state).toBe(first);
@@ -131,7 +131,7 @@ describe('moving in', () => {
         const state = learn(started(), 6);
         const first = openTown(state);
         expect(first).toContainEqual({ type: 'boat', hoursLeft: state.pier.dockAt - state.town.clock });
-        expect(boatProgress(state)).toBeGreaterThan(.5);
+        expect(boatProgress(state)).toBeGreaterThan(.4);
         state.town.bank = 24;
         const second = openTown(state);
         expect(docked(state)).toBe(true);
@@ -144,7 +144,7 @@ describe('moving in', () => {
     });
 
     it('lets the second friend in on Pokomoko\'s basket, then needs farms for more', () => {
-        let state = learn(started(), 30);
+        let state = learn(started(), 60);
         state = act(state, { type: 'plant', kind: 'home', cell: at(0, 3) }).state;
         state = act(state, { type: 'plant', kind: 'home', cell: at(0, 4) }).state;
         openTown(state);
@@ -197,7 +197,7 @@ describe('comfort and island genki', () => {
 
 describe('nature', () => {
     it('grows a flower in real time and caps an absence at seven days', () => {
-        let state = learn(started(), 2);
+        let state = learn(started(), 10);
         state = act(state, { type: 'place', kind: 'flower', cell: at(4, 2) }).state;
         state.nature.realAt = T0;
         advanceNature(state, T0 + 3 * HOUR);
@@ -215,7 +215,7 @@ describe('nature', () => {
     });
 
     it('ages a mature tree into a big tree and a lord tree', () => {
-        let state = learn(started(), 2);
+        let state = learn(started(), 10);
         state = act(state, { type: 'place', kind: 'sapling', cell: at(4, 2) }).state;
         const id = state.landmarks.find(l => l.kind === 'sapling')!.id;
         const events = [...advanceNature(state, T0 + 20 * HOUR)];
@@ -243,13 +243,13 @@ describe('nature', () => {
 });
 
 describe('land', () => {
-    it('keeps the 12/24/48 steps and opens capes with the island level', () => {
+    it('charges 120/240/480 for new land and opens capes with the island level', () => {
         let state = started();
-        state.drops = 500;
+        state.drops = 2000;
         state = act(state, { type: 'expand', side: 'east' }).state;
         state = act(state, { type: 'expand', side: 'west' }).state;
         state = act(state, { type: 'expand', side: 'south' }).state;
-        expect(state.drops).toBe(500 - 12 - 24 - 48);
+        expect(state.drops).toBe(2000 - 120 - 240 - 480);
         expect(() => act(state, { type: 'expand', side: 'east' })).toThrow();
         state.genki.best = 25;
         state = act(state, { type: 'expand', side: 'east' }).state;

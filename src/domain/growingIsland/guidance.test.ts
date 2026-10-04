@@ -12,11 +12,11 @@ describe('island guidance evidence', () => {
     it('explains actual prices, unlocks and space instead of sending every unavailable goal to a bench', () => {
         const state = newIsland('kid', 0);
         const goal = (id: string) => achievementSuggestions(state).find(item => item.id === id)!;
-        expect(goal('A2').reason).toContain('しずく 4こ。いまは 0こ');
+        expect(goal('A2').reason).toContain('しずく 40こ。いまは 0こ');
         expect(goal('A5').reason).toContain('えらべるようになったら');
-        expect(goal('A6').reason).toContain('しずく 12こ。いまは 0こ');
+        expect(goal('A6').reason).toContain('しずく 120こ。いまは 0こ');
         state.tutorial = 'done'; state.drops = 1;
-        expect(goal('A1').reason).toContain('しずく 4こ。いまは 1こ');
+        expect(goal('A1').reason).toContain('しずく 40こ。いまは 1こ');
         state.landmarks = [];
         expect(goal('A4').reason).toContain('おいたら うごかせる');
         state.landmarks = [...landCells(state)].map((cell, index) => ({ id: `full-${index}`, kind: 'bench', growth: 0, cell }));
@@ -43,7 +43,7 @@ describe('island guidance evidence', () => {
     });
     it('requires a paid ordinary seed actually built by town time and opened; nature and free homes do not qualify', () => {
         let state = act(home(newIsland('kid', 0)), { type: 'open-all' });
-        state = ingestCompletions(state, Array.from({ length: 4 }, (_, i) => ({ id: `valid-${i}`, at: i + 1 }))).state;
+        state = ingestCompletions(state, Array.from({ length: 20 }, (_, i) => ({ id: `valid-${i}`, at: i + 1 }))).state;
         state = act(state, { type: 'plant', kind: 'farm', cell: { x: 4, z: 3 } });
         noteTownBuilds(state, openTown(state));
         const p = state.plots.find(p => p.kind === 'farm')!;
@@ -59,7 +59,7 @@ describe('island guidance evidence', () => {
     });
     it('uses earlier banked learning for a seed planted later', () => {
         let state = act(home(newIsland('kid', 0)), { type: 'open-all' });
-        state = ingestCompletions(state, Array.from({ length: 10 }, (_, i) => ({ id: `learn-${i}`, at: i + 1 }))).state;
+        state = ingestCompletions(state, Array.from({ length: 20 }, (_, i) => ({ id: `learn-${i}`, at: i + 1 }))).state;
         expect(state.town.bank).toBeGreaterThan(0);
         state = act(state, { type: 'plant', kind: 'farm', cell: { x: 4, z: 3 } });
         noteTownBuilds(state, openTown(state));
@@ -88,7 +88,7 @@ describe('island guidance evidence', () => {
         expect(() => act(state, { type: 'paint', target: 'starter-bench', color: 2 })).toThrow();
         expect(() => act(state, { type: 'expand', side: 'east' })).toThrow();
         expect(state).toEqual(original);
-        state.drops = 50;
+        state.drops = 400;
         state = act(state, { type: 'expand', side: 'east' }, 'expand-east');
         const first = structuredClone(state.guidance?.achievements.A6);
         expect(first).toMatchObject({ source: 'expand-east', at: 100, snapshot: { land: { expanded: 'east', extra: [], capes: [] } } });

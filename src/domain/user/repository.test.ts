@@ -111,6 +111,7 @@ import {
     getActiveProfile,
     getProfile,
     saveProfile,
+    setActiveProfileId,
     updateProfileAtomically,
 } from "./repository";
 
@@ -189,6 +190,33 @@ describe("getActiveProfile", () => {
         mocks.clearLocalActiveId.mockImplementation(() => {
             mocks.localActiveId = null;
         });
+    });
+
+    it("switches only the active id and keeps both profiles intact", async () => {
+        const first = profile('first'), second = profile('second');
+        mocks.storedAppData = appData([first, second], first.id);
+        mocks.localActiveId = first.id;
+        await setActiveProfileId(second.id);
+        expect(mocks.storedAppData).toEqual(appData([first, second], second.id));
+        expect(mocks.localActiveId).toBe(second.id);
+        expect(mocks.transaction).toHaveBeenCalled();
+    });
+
+    it("keeps the previous active id when switching cannot be saved", async () => {
+        mocks.storedAppData = appData([profile('first'), profile('second')], 'first');
+        mocks.localActiveId = 'first';
+        mocks.appDataPut.mockRejectedValueOnce(new Error('write failed'));
+        await expect(setActiveProfileId('second')).rejects.toThrow('write failed');
+        expect(mocks.localActiveId).toBe('first');
+        expect(mocks.storedAppData.activeProfileId).toBe('first');
+    });
+
+    it("refuses a profile that was removed before selection", async () => {
+        mocks.storedAppData = appData([profile('first')], 'first');
+        mocks.localActiveId = 'first';
+        await expect(setActiveProfileId('removed')).rejects.toThrow('Profile missing');
+        expect(mocks.localActiveId).toBe('first');
+        expect(mocks.appDataPut).not.toHaveBeenCalled();
     });
 
     it("repairs a stale local id from the valid AppData active profile", async () => {

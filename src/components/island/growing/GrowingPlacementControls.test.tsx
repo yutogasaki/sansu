@@ -13,15 +13,15 @@ function buttons(node: ReactNode): Button[] {
     return node.type === 'button' ? [node as Button] : buttons(node.props.children);
 }
 const T0 = Date.UTC(2026, 9, 3, 12);
-describe('placement recovery without changing the saved prices', () => {
+describe('placement recovery with current prices and retained owned items', () => {
     it.each([true, false])('home preview matches actual saved consumption; free first home %s', first => {
-        const state = newIsland('cost', T0); state.drops = 10; if (!first) state.tutorial = 'done';
+        const state = newIsland('cost', T0); state.drops = 40; if (!first) state.tutorial = 'done';
         const price = placementPrice(state, { mode: 'new', seed: true, kind: 'home' });
         const saved = applyIntent(state, { id: 'home', command: { type: 'plant', kind: 'home', cell: { x: 4, z: 2 } } }).state;
-        expect(price).toBe(first ? 0 : 4); expect(state.drops - saved.drops).toBe(price); expect(state.plots).toHaveLength(0);
+        expect(price).toBe(first ? 0 : 40); expect(state.drops - saved.drops).toBe(price); expect(state.plots).toHaveLength(0);
     });
     it('wild seeds are still paid during the first-home state; landmarks match the command price', () => {
-        const state = newIsland('cost', T0); state.drops = 10;
+        const state = newIsland('cost', T0); state.drops = 40;
         const wild = applyIntent(state, { id: 'wild', command: { type: 'plant', kind: 'wild', cell: { x: 4, z: 2 } } }).state;
         expect(placementPrice(state, { mode: 'new', seed: true, kind: 'wild' })).toBe(state.drops - wild.drops);
         const bench = applyIntent(state, { id: 'bench', command: { type: 'place', kind: 'bench', cell: { x: 4, z: 2 } } }).state;

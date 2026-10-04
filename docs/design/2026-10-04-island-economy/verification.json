@@ -1,0 +1,472 @@
+{
+  "target": "http://127.0.0.1:5260",
+  "baseRevision": "3b8b36545f87c0b25c30253ed3eaedf66605281f",
+  "sourceSnapshot": "/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-economy-xejgj3no",
+  "delivery": "DEV preview, not published",
+  "growingFlag": true,
+  "database": "SansuGrowingIslandPreviewV1",
+  "sourceManifestHash": "eae86313915a5dd6a7145db4318a996b14f9b848615cdc9c6d448f97d2d9639b",
+  "sourceStable": true,
+  "qaHash": "17b50a0d3fc017a5f2df1de1dd14c54c6a2fadb5e95e3fbedb5c4366fa1718b7",
+  "scenarios": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "name": "real-learning-placement-reload-resume",
+      "answers": 20,
+      "pass": true
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "name": "explicit-v1-save-migration-three-directions-banked-time",
+      "pass": true
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "name": "real-learning-placement-reload-resume",
+      "answers": 20,
+      "pass": true
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "name": "explicit-v1-save-migration-three-directions-banked-time",
+      "pass": true
+    }
+  ],
+  "captures": [
+    {
+      "file": "390-initial.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:9913027f-2ad8-4113-a3ab-5e3897973a1c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "growingFeatureEnabled": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}"
+      }
+    },
+    {
+      "file": "390-first-home.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:9913027f-2ad8-4113-a3ab-5e3897973a1c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "growingFeatureEnabled": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}"
+      }
+    },
+    {
+      "file": "390-learning.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:9913027f-2ad8-4113-a3ab-5e3897973a1c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": null
+    },
+    {
+      "file": "390-ten-answers-home-shortfall.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:9913027f-2ad8-4113-a3ab-5e3897973a1c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "growingFeatureEnabled": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}"
+      }
+    },
+    {
+      "file": "390-placement.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:9913027f-2ad8-4113-a3ab-5e3897973a1c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "growingFeatureEnabled": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}"
+      }
+    },
+    {
+      "file": "390-saved.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:9913027f-2ad8-4113-a3ab-5e3897973a1c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "growingFeatureEnabled": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}"
+      }
+    },
+    {
+      "file": "390-districts.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:9913027f-2ad8-4113-a3ab-5e3897973a1c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "growingFeatureEnabled": "true",
+        "growingBounds": "{\"minX\":-9,\"maxX\":14,\"depth\":11}"
+      }
+    },
+    {
+      "file": "390-district-placement.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:9913027f-2ad8-4113-a3ab-5e3897973a1c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "growingFeatureEnabled": "true",
+        "growingBounds": "{\"minX\":-9,\"maxX\":14,\"depth\":11}"
+      }
+    },
+    {
+      "file": "390-district-saved.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:9913027f-2ad8-4113-a3ab-5e3897973a1c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "growingFeatureEnabled": "true",
+        "growingBounds": "{\"minX\":-9,\"maxX\":14,\"depth\":11}"
+      }
+    },
+    {
+      "file": "768-initial.png",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:9913027f-2ad8-4113-a3ab-5e3897973a1c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "growingFeatureEnabled": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}"
+      }
+    },
+    {
+      "file": "768-first-home.png",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:9913027f-2ad8-4113-a3ab-5e3897973a1c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "growingFeatureEnabled": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}"
+      }
+    },
+    {
+      "file": "768-learning.png",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:9913027f-2ad8-4113-a3ab-5e3897973a1c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": null
+    },
+    {
+      "file": "768-ten-answers-home-shortfall.png",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:9913027f-2ad8-4113-a3ab-5e3897973a1c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "growingFeatureEnabled": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}"
+      }
+    },
+    {
+      "file": "768-placement.png",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:9913027f-2ad8-4113-a3ab-5e3897973a1c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "growingFeatureEnabled": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}"
+      }
+    },
+    {
+      "file": "768-saved.png",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:9913027f-2ad8-4113-a3ab-5e3897973a1c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "growingFeatureEnabled": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}"
+      }
+    },
+    {
+      "file": "768-districts.png",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:9913027f-2ad8-4113-a3ab-5e3897973a1c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "growingFeatureEnabled": "true",
+        "growingBounds": "{\"minX\":-9,\"maxX\":14,\"depth\":11}"
+      }
+    },
+    {
+      "file": "768-district-placement.png",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:9913027f-2ad8-4113-a3ab-5e3897973a1c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "growingFeatureEnabled": "true",
+        "growingBounds": "{\"minX\":-9,\"maxX\":14,\"depth\":11}"
+      }
+    },
+    {
+      "file": "768-district-saved.png",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:9913027f-2ad8-4113-a3ab-5e3897973a1c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "growingFeatureEnabled": "true",
+        "growingBounds": "{\"minX\":-9,\"maxX\":14,\"depth\":11}"
+      }
+    }
+  ],
+  "core": {
+    "files": 536,
+    "tests": 4690,
+    "result": "PASS",
+    "build": "PASS",
+    "lint": "PASS, one existing Fast Refresh warning"
+  },
+  "focused": {
+    "files": 33,
+    "tests": 171,
+    "result": "PASS"
+  },
+  "smoke": {
+    "initialPassed": 30,
+    "initialFailed": 1,
+    "failedScenario": "Explore Q7 discovery overlay timed out",
+    "focusedRerun": "PASS 1/1, same app source",
+    "fullCleanRerun": false
+  }
+}
