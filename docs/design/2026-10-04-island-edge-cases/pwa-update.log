@@ -1,0 +1,13 @@
+
+> pokko-fushigi-zukan-app@0.0.0 e2e:pwa-update
+> node tools/e2e-pwa-update.mjs
+
+PWA classic target {
+  directory: '/private/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-edge-candidate-eivolf/dist-classic-graphics-a',
+  version: 'development-local:4acd1664-2ccf-4ed3-8b04-c6f3285829b8'
+}
+  ➜  Local:   http://127.0.0.1:4273/
+PASS PWA onboarding safe-router handoff
+PASS PWA protected router recovery handoff
+PASS PWA same-route battle checkpoint
+PASS PWA service-worker-controlled version-drift recovery

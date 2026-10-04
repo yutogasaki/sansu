@@ -3,7 +3,7 @@ import { afterEach, expect, it, vi } from 'vitest';
 import { IslandLifeDatabase } from '../islandLife/repository';
 import { newLife, type LifeState } from '../islandLife/model';
 import { replayLife } from '../islandLife/simulation';
-import { GrowingIslandDatabase, syncGrowingIsland } from './repository';
+import { GrowingIslandDatabase, addMoment, commandGrowingIsland, deleteGrowingOwner, sendFlower, syncGrowingIsland } from './repository';
 
 const guard = vi.hoisted(() => ({ count: 0, replay: vi.fn() }));
 vi.mock('../../pwa', () => ({ holdPwaUpdateForCriticalPersistence: () => {
@@ -17,6 +17,29 @@ const fixture = () => {
     const old = new IslandLifeDatabase(`sync-old-${crypto.randomUUID()}`);
     stores.push(db, old); return { db, old };
 };
+
+it('guards a room change, flower and picture even when the caller has no UI hold', async () => {
+    const { db, old } = fixture(); await syncGrowingIsland('kid', [], 1000, db, old);
+    const put = db.islands.put.bind(db.islands), gift = db.gifts.put.bind(db.gifts), photo = db.moments.add.bind(db.moments);
+    vi.spyOn(db.islands, 'put').mockImplementation(value => { expect(guard.count).toBe(1); return put(value); });
+    vi.spyOn(db.gifts, 'put').mockImplementation(value => { expect(guard.count).toBe(1); return gift(value); });
+    vi.spyOn(db.moments, 'add').mockImplementation(value => { expect(guard.count).toBe(1); return photo(value); });
+    await commandGrowingIsland('kid', { id: 'decor', command: { type: 'decorate', rug: 1 } }, 1000, db);
+    await sendFlower('sister', 'はる', 'kid', 1000, db);
+    await addMoment('kid', new Blob(['picture']), 4, 3, 1000, db);
+    expect(guard.count).toBe(0);
+});
+
+it('protects owner deletion and releases the hold when a direct command aborts', async () => {
+    const { db, old } = fixture(); await syncGrowingIsland('kid', [], 1000, db, old);
+    const before = await db.islands.get('kid');
+    vi.spyOn(db.islands, 'put').mockImplementationOnce(() => { expect(guard.count).toBe(1); throw new Error('disk-full'); });
+    await expect(commandGrowingIsland('kid', { id: 'decor', command: { type: 'decorate', rug: 1 } }, 1000, db)).rejects.toThrow('disk-full');
+    expect(guard.count).toBe(0); expect(await db.islands.get('kid')).toEqual(before);
+    const remove = db.islands.delete.bind(db.islands);
+    vi.spyOn(db.islands, 'delete').mockImplementation(id => { expect(guard.count).toBe(1); return remove(id); });
+    await deleteGrowingOwner('kid', db); expect(guard.count).toBe(0);
+});
 
 it('allows an app update during a stalled read-only replay, then guards the real save', async () => {
     const { db, old } = fixture(), record = newLife('kid', 1000);

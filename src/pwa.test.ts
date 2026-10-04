@@ -70,6 +70,40 @@ const detectUpdate = async () => {
 }
 
 describe('PWA update lifecycle', () => {
+    it('keeps concurrent opening owners independent and requires a fresh scope in a new session', async () => {
+        win.location.href = 'https://example.com/#/island'; win.location.hash = '#/island'
+        const pwa = await start(), releaseFirst = pwa.allowPwaUpdateDuringReadOnlyOpening(), releaseSecond = pwa.allowPwaUpdateDuringReadOnlyOpening()
+        win.dispatchEvent(new Event('pointerdown')); releaseFirst(); releaseFirst()
+        pwa.notifyPwaRouteNavigation('#/island', 'next-island-session')
+        win.dispatchEvent(new Event('pointerdown'))
+        expect(await pwa.reopenPwaFromNetwork()).toBe(false)
+        const releaseNew = pwa.allowPwaUpdateDuringReadOnlyOpening()
+        releaseSecond()
+        expect(await pwa.reopenPwaFromNetwork()).toBe(true)
+        releaseNew()
+    })
+
+    it.each(['#/study', '#/stats?learn=1'])('does not carry an opening exception into active learning at %s', async hash => {
+        win.location.href = 'https://example.com/#/island'; win.location.hash = '#/island'
+        const pwa = await start(), releaseOpening = pwa.allowPwaUpdateDuringReadOnlyOpening()
+        win.location.hash = hash; win.location.href = `https://example.com/${hash}`
+        pwa.notifyPwaRouteNavigation(hash, 'learning')
+        win.dispatchEvent(new Event('pointerdown'))
+        await detectUpdate(); await vi.advanceTimersByTimeAsync(4000)
+        expect(win.location.replace).not.toHaveBeenCalled()
+        expect(await pwa.reopenPwaFromNetwork()).toBe(false)
+        releaseOpening()
+    })
+
+    it('expires the previous opening exception when learning starts on the same island route', async () => {
+        win.location.href = 'https://example.com/#/island'; win.location.hash = '#/island'
+        const pwa = await start(), releaseOpening = pwa.allowPwaUpdateDuringReadOnlyOpening()
+        expect(pwa.reachPwaUpdateCheckpoint('island-learning', { protectNextSession: true })).toBe(false)
+        await detectUpdate(); await vi.advanceTimersByTimeAsync(4000)
+        expect(win.location.replace).not.toHaveBeenCalled()
+        releaseOpening()
+    })
+
     it('allows recovery taps on an unplayable island opening while still protecting real saves', async () => {
         win.location.href = 'https://example.com/#/island'; win.location.hash = '#/island'
         const pwa = await start()

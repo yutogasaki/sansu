@@ -25,7 +25,7 @@ let deferredReloadVersion: string | null = null
 let deferredRecoveryVersion: string | null = null
 let updateSessionSequence = 0
 let criticalPersistenceCount = 0
-let readOnlyOpeningCount = 0
+const readOnlyOpenings = new Set<{ routeKey: string | null; sessionKey: string }>()
 let triggerUpdateCheck: () => void = () => undefined
 let updateProtectionState = createAppUpdateProtectionState(
     '',
@@ -50,9 +50,16 @@ const clearReloadMarkerFromUrl = () => {
     window.history.replaceState(window.history.state, '', cleanedUrl)
 }
 
+const hasReadOnlyIslandOpening = () => (
+    updateProtectionState.routeKey === '/island'
+    && new URLSearchParams(window.location.hash.split('?')[1] ?? '').get('learn') !== '1'
+    && [...readOnlyOpenings].some(opening => opening.routeKey === updateProtectionState.routeKey
+        && opening.sessionKey === updateProtectionState.sessionKey)
+)
+
 const isCurrentUpdateProtected = () => (
     criticalPersistenceCount > 0
-    || (readOnlyOpeningCount === 0 && shouldDeferAppUpdateForState(updateProtectionState))
+    || (!hasReadOnlyIslandOpening() && shouldDeferAppUpdateForState(updateProtectionState))
 )
 
 const reloadForUpdate = (version = Date.now().toString()): boolean => {
@@ -190,13 +197,14 @@ export const holdPwaUpdateForCriticalPersistence = (): (() => void) => {
 
 /** Only a loading screen with no playable island can waive route interaction protection. */
 export const allowPwaUpdateDuringReadOnlyOpening = (): (() => void) => {
-    readOnlyOpeningCount += 1
+    const opening = { routeKey: updateProtectionState.routeKey, sessionKey: updateProtectionState.sessionKey }
+    readOnlyOpenings.add(opening)
     resumeDeferredUpdate()
     let released = false
     return () => {
         if (released) return
         released = true
-        readOnlyOpeningCount = Math.max(0, readOnlyOpeningCount - 1)
+        readOnlyOpenings.delete(opening)
     }
 }
 

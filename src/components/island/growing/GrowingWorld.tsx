@@ -12,6 +12,7 @@ import { WorldEffects } from './worldEffects';
 import type { SceneLayout } from './sceneLayout';
 import { menuPictureMaker, type MenuPictures } from './menuMiniatures';
 import { growingHitTarget } from './growingHitTarget';
+import { createIslandRenderer } from '../three/createIslandRenderer';
 
 export interface WorldHandlers {
     onCell: (cell: Cell) => void;
@@ -21,7 +22,7 @@ export interface WorldHandlers {
     onActorTap: (id: string) => void;
     onPop?: () => void;
     /** The world's own loading steps: the scene is built, then the first picture is on screen. */
-    onStage?: (stage: 'scene' | 'ready') => void;
+    onStage?: (stage: 'scene' | 'ready' | 'failed') => void;
     onConcertStarted?: (receipt: number) => void;
 }
 /** Pictures of the island for the card and the island's story; never uploaded anywhere. */
@@ -33,11 +34,11 @@ export interface WorldCamera {
 export interface ShownMoment { id: number; moment: Moment; cell?: Cell }
 /** `cheer` makes the waiting friend jump (a home seed was planted); `festival` celebrates a new level. */
 type Props = WorldHandlers & { state: GrowingState; time: GardenTime; ghost?: Ghost; selectedId?: string; turn: number; cheer: number; festival: number;
-    hints?: readonly Cell[]; moment?: ShownMoment; show?: boolean; focus?: { id: string; n: number }; concert?: { cell: Cell; n: number }; onCamera?: (camera?: WorldCamera) => void };
+    hints?: readonly Cell[]; moment?: ShownMoment; show?: boolean; compact?: boolean; focus?: { id: string; n: number }; concert?: { cell: Cell; n: number }; onCamera?: (camera?: WorldCamera) => void };
 
 const reducedMotion = () => typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-export default function GrowingWorld({ state, time, ghost, selectedId, turn, cheer, festival, hints, moment, show, focus, concert, onCamera, ...handlers }: Props) {
+export default function GrowingWorld({ state, time, ghost, selectedId, turn, cheer, festival, hints, moment, show, compact, focus, concert, onCamera, ...handlers }: Props) {
     const host = useRef<HTMLDivElement>(null);
     const handlerRef = useRef(handlers);
     useEffect(() => { handlerRef.current = handlers; });
@@ -52,9 +53,12 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
     useEffect(() => {
         const node = host.current; if (!node) return;
         let renderer: T.WebGLRenderer;
-        try { renderer = new T.WebGLRenderer({ antialias: true }); } catch { setFailed(true); return; }
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
-        renderer.outputColorSpace = T.SRGBColorSpace; renderer.shadowMap.enabled = true; renderer.shadowMap.type = T.PCFSoftShadowMap;
+        let light = Boolean(compact);
+        try { const result = createIslandRenderer({}, light); renderer = result.renderer; light = result.compact; }
+        catch { setFailed(true); handlerRef.current.onStage?.('failed'); return; }
+        renderer.setPixelRatio(light ? 1 : Math.min(window.devicePixelRatio || 1, 1.5));
+        renderer.outputColorSpace = T.SRGBColorSpace; renderer.shadowMap.enabled = !light; renderer.shadowMap.type = T.PCFSoftShadowMap;
+        renderer.domElement.dataset.graphicsQuality = light ? 'compact' : 'standard';
         renderer.toneMapping = T.ACESFilmicToneMapping;
         renderer.domElement.setAttribute('aria-label', 'ぽこもこと なかまが くらす しま');
         renderer.domElement.style.touchAction = 'none';
@@ -64,6 +68,13 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
         const camera = new T.OrthographicCamera(-5, 5, 5, -5, .1, 100), view = initialView();
         let layout: SceneLayout = world.layout(latest.current.state), layer: ObjectLayer | undefined;
         let unopened = new Set<string>(), known: Set<string> | undefined, frame = 0, last = performance.now(), width = 1, height = 1, nextWave = 0, showing = false;
+        let lost = false;
+        const fail = () => {
+            lost = true; cancelAnimationFrame(frame); api.current = undefined; cameraRef.current?.(undefined);
+            setFailed(true); handlerRef.current.onStage?.('failed');
+        };
+        const contextLost = (event: Event) => { event.preventDefault(); fail(); };
+        renderer.domElement.addEventListener('webglcontextlost', contextLost);
         const reduced = reducedMotion();
         let pendingConcert: number | undefined;
 
@@ -157,6 +168,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
         const observer = new ResizeObserver(resize); observer.observe(node);
 
         const loop = () => {
+            if (lost) return;
             frame = requestAnimationFrame(loop);
             const now = performance.now(), delta = Math.min(64, now - last); last = now;
             const current = latest.current.state;
@@ -192,7 +204,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             moments.ambient(now, latest.current.time === 'night', current.landmarks.filter(l => l.cell && (l.kind === 'lantern' || l.kind === 'lighthouse')).length, camera.position.clone().setY(0), reduced);
             moments.tick(now);
             world.animate(now, reduced);
-            renderer.render(world.scene, camera);
+            try { renderer.render(world.scene, camera); } catch { fail(); return; }
             if (pendingConcert !== undefined && document.visibilityState === 'visible') {
                 const receipt = pendingConcert; pendingConcert = undefined;
                 if (world.life.concertActive(now)) handlerRef.current.onConcertStarted?.(receipt);
@@ -280,9 +292,12 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             canvas.removeEventListener('pointerdown', down); canvas.removeEventListener('pointermove', move);
             canvas.removeEventListener('pointerup', up); canvas.removeEventListener('pointercancel', up);
             canvas.removeEventListener('wheel', wheel);
-            layer?.dispose(); effects.dispose(); moments.dispose(); world.dispose(); renderer.dispose(); canvas.remove();
+            canvas.removeEventListener('webglcontextlost', contextLost);
+            layer?.dispose(); effects.dispose(); moments.dispose(); world.dispose(); renderer.dispose(); renderer.forceContextLoss(); canvas.remove();
             api.current = undefined; cameraRef.current?.(undefined);
         };
+    // A retry mounts a fresh world; its graphics profile is fixed for that lifetime.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => { api.current?.rebuild(state, ghost, selectedId, hints); }, [state, ghost, selectedId, hints]);

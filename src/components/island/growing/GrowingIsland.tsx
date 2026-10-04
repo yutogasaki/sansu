@@ -33,6 +33,7 @@ import { GrowingGuideEntry, type GrowingGuideRequest } from './GrowingGuideEntry
 import { achievementCatalog, starterStep } from '../../../domain/growingIsland/guidance';
 import type { AchievementId, GuidanceEvidence, StarterStepId } from '../../../domain/growingIsland/types';
 import { useNavigate } from 'react-router-dom';
+import { allowPwaUpdateDuringReadOnlyOpening } from '../../../pwa';
 import './growing.css';
 import { GrowingIslandMenu } from './GrowingIslandMenu';
 import type { MenuPictures } from './menuMiniatures';
@@ -81,10 +82,18 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     const [faces, setFaces] = useState<Record<string, string>>({});
     const [menuPictures, setMenuPictures] = useState<MenuPictures>({});
     const [visit, setVisit] = useState<Visit>(), [siblings, setSiblings] = useState<{ id: string; name: string }[]>([]);
+    const [visitSaving, setVisitSaving] = useState(false), [visitError, setVisitError] = useState<string>();
+    const visitEpoch = useRef(0);
+    useEffect(() => () => { visitEpoch.current++; }, [profileId]);
     const [naming, setNaming] = useState<string>();
     const [concert, setConcert] = useState<{ cell: Cell; n: number; until: number; targetId: string; ownerId: string }>(), [song, setSong] = useState(0);
     const navigate = useNavigate();
-    const [worldStep, setWorldStep] = useState<LoadingStep | 'ready'>('world');
+    const [worldStep, setWorldStep] = useState<LoadingStep | 'ready' | 'failed'>('world');
+    const [worldAttempt, setWorldAttempt] = useState(0);
+    const waitingForWorld = Boolean(own) && worldStep !== 'ready';
+    useEffect(() => {
+        if (active && waitingForWorld) return allowPwaUpdateDuringReadOnlyOpening();
+    }, [active, waitingForWorld]);
     const camera = useRef<WorldCamera | undefined>(undefined), pendingPicture = useRef(false);
     const placingInFlight = useRef(false);
     const menuTrigger = useRef<HTMLButtonElement>(null);
@@ -301,14 +310,33 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         setCard({ blob, url: URL.createObjectURL(blob), frame });
     };
     const startVisit = async (id: string) => {
-        setPanel(undefined);
-        const record = await readGrowingIsland(id), sibling = siblings.find(s => s.id === id);
-        if (!record || !sibling) { setLine('まだ その しまは ひらかれていないみたい'); return; }
-        setVisit({ id, name: sibling.name, state: record.state, sent: await flowerSentToday(profileId, id) }); setLine(undefined);
-        setSelected(undefined); setPlacing(undefined);
+        const epoch = ++visitEpoch.current; setPanel(undefined); setVisitError(undefined);
+        try {
+            const record = await readGrowingIsland(id), sibling = siblings.find(s => s.id === id);
+            if (epoch !== visitEpoch.current) return;
+            if (!record || !sibling) { setLine('まだ その しまは ひらかれていないみたい'); return; }
+            const sent = await flowerSentToday(profileId, id);
+            if (epoch !== visitEpoch.current) return;
+            setVisit({ id, name: sibling.name, state: record.state, sent }); setLine(undefined);
+            setSelected(undefined); setPlacing(undefined);
+        } catch { if (epoch === visitEpoch.current) setVisitError('しまを よみこめなかったよ。もういちど ためしてね。'); }
     };
 
-    const world = <GrowingWorld state={state} time={time} ghost={visit ? undefined : ghost} selectedId={visit ? undefined : selected} turn={turn} cheer={cheer} festival={festival}
+    const leaveVisit = () => { visitEpoch.current++; setVisit(undefined); setVisitError(undefined); setLine(undefined); };
+    const leaveFlower = async () => {
+        if (!visit || visit.sent || visitSaving) return;
+        const epoch = visitEpoch.current, target = visit; setVisitSaving(true); setVisitError(undefined);
+        try {
+            const sent = await sendFlower(profileId, profileName, target.id);
+            if (epoch !== visitEpoch.current) return;
+            if (sent) audio.play('discovery');
+            setVisit(current => current?.id === target.id ? { ...current, sent: true } : current);
+            setLine(`おはなを おいてきたよ。${target.name}が みたら よろこぶね`);
+        } catch { if (epoch === visitEpoch.current) setVisitError('おはなを ほぞん できなかったよ。もういちど ためしてね。'); }
+        finally { setVisitSaving(false); }
+    };
+
+    const world = <GrowingWorld key={worldAttempt} compact={worldAttempt > 0} state={state} time={time} ghost={visit ? undefined : ghost} selectedId={visit ? undefined : selected} turn={turn} cheer={cheer} festival={festival}
         hints={visit ? [] : hints} moment={visit ? undefined : moment} show={show} focus={focus} concert={concert} onCamera={c => { camera.current = c; }}
         onPop={() => audio.play('glass')} onStage={setWorldStep}
         onConcertStarted={receipt => { const id = ownConcertReceipt(profileId, Boolean(visit), receipt, concert); if (id) void island.acknowledge('concert-started', id); }}
@@ -347,8 +375,10 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
             setLine(actorLine(own, id)); if (own.villagers.some(v => v.id === id)) setSelected(`villager:${id}`);
         }} />;
 
+    const worldLoading = worldStep !== 'ready' && <GrowingLoading step={worldStep === 'failed' ? 'world' : worldStep} overlay failed={worldStep === 'failed'}
+        onRetry={() => { setWorldStep('world'); setWorldAttempt(value => value + 1); }} onLearn={onLearn} />;
     if (show) return <div className="island-life growing-island" data-growing-island="show" data-garden-time={time}>
-        <Suspense fallback={null}>{world}</Suspense>{worldStep !== 'ready' && <GrowingLoading step={worldStep} overlay />}
+        <Suspense fallback={null}>{world}</Suspense>{worldLoading}
         <button className="growing-chip growing-show-exit" onClick={() => setShow(false)}>おわる</button>
     </div>;
 
@@ -360,7 +390,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
                 else if (action.kind === 'memory') memoryTarget(action.evidence);
                 onGuideRequestConsumed?.();
             }} />}
-        <Suspense fallback={null}>{world}</Suspense>{worldStep !== 'ready' && <GrowingLoading step={worldStep} overlay />}
+        <Suspense fallback={null}>{world}</Suspense>{worldLoading}
         {dawn > 0 && <div className="growing-dawn" aria-hidden="true"><span>☀</span></div>}
         <div className="growing-hud-top">
             {visit ? <span className="growing-chip">{visit.name}の しま・{CHARACTER_NAME[visit.state.character]}</span> : <>
@@ -389,13 +419,10 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         {!placing && !panel && !menu && !selected && !guide.cue && !guide.notice && <p className="growing-bubble" role="status"><span aria-hidden="true">ぽこもこ</span>{bubble}</p>}
         {guideSafe && <GrowingGuideCue state={own} cue={guide.cue} notice={guide.notice} selected={guide.selected} onAction={() => starterAction()}
             onClose={guide.notice ? guide.dismissNotice : guide.pause} onBook={memory => openBook(memory)} />}
-        {island.error && <div className="growing-error" role="alert"><p>{island.error}</p><button onClick={island.clearError}>とじる</button></div>}
+        {(island.error || visitError) && <div className="growing-error" role="alert"><p>{island.error || visitError}</p><button onClick={() => { island.clearError(); setVisitError(undefined); }}>とじる</button></div>}
         {visit ? <div className="growing-hud-bottom">
-            <button className="growing-open-all" disabled={visit.sent} onClick={async () => {
-                if (await sendFlower(profileId, profileName, visit.id)) audio.play('discovery');
-                setVisit({ ...visit, sent: true }); setLine(`おはなを おいてきたよ。${visit.name}が みたら よろこぶね`);
-            }}>{visit.sent ? 'おはなを おいたよ' : 'おはなを おいてくる 🌸'}</button>
-            <button className="growing-seed-button" onClick={() => { setVisit(undefined); setLine(undefined); }}>かえる</button>
+            <button className="growing-open-all" disabled={visit.sent || visitSaving} onClick={() => void leaveFlower()}>{visit.sent ? 'おはなを おいたよ' : 'おはなを おいてくる 🌸'}</button>
+            <button className="growing-seed-button" onClick={leaveVisit}>かえる</button>
         </div> : placing ? <GrowingPlacementControls itemName={placementName(own, placing)} valid={Boolean(ghost?.valid)} shortfall={shortfall} pending={island.busy || island.syncing}
             message={ghost?.cell ? ghost.valid ? 'ここで いい？' : placing.kind === 'home' && canPlace(own, ghost.cell, placing.id)
                 ? 'ここまで いけないみたい。まわりを あけてみよう' : 'ここには おけないよ' : 'おく ばしょを さわってね'}

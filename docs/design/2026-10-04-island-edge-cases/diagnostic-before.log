@@ -1,0 +1,130 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+ ❯ src/pwa.test.ts (20 tests | 3 failed) 74ms
+   × PWA update lifecycle > does not carry an opening exception into active learning at #/study 33ms
+     → expected true to be false // Object.is equality
+   × PWA update lifecycle > does not carry an opening exception into active learning at #/stats?learn=1 2ms
+     → expected true to be false // Object.is equality
+   × PWA update lifecycle > expires the previous opening exception when learning starts on the same island route 3ms
+     → expected "spy" to not be called at all, but actually been called 1 times
+
+Received: 
+
+  1st spy call:
+
+    Array [
+      "https://example.com/?__app-update=next-build#/island",
+    ]
+
+
+Number of calls: 1
+
+ ❯ src/components/island/growing/useGrowingIsland.test.ts (3 tests | 1 failed) 159ms
+   × ends a stalled learning-history read and never saves its late result 4ms
+     → the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ src/domain/growingIsland/syncUpdateProtection.test.ts (4 tests | 2 failed) 75ms
+   × guards a room change, flower and picture even when the caller has no UI hold 12ms
+     → expected +0 to be 1 // Object.is equality
+   × protects owner deletion and releases the hold when a direct command aborts 4ms
+     → expected [Function] to throw error including 'disk-full' but got 'expected +0 to be 1 // Object.is equa…'
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/pwa.test.ts > PWA update lifecycle > does not carry an opening exception into active learning at #/study
+ FAIL  src/pwa.test.ts > PWA update lifecycle > does not carry an opening exception into active learning at #/stats?learn=1
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/pwa.test.ts:81:50
+     79|         await detectUpdate(); await vi.advanceTimersByTimeAsync(4000)
+     80|         expect(win.location.replace).not.toHaveBeenCalled()
+     81|         expect(await pwa.reopenPwaFromNetwork()).toBe(false)
+       |                                                  ^
+     82|         releaseOpening()
+     83|     })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  src/pwa.test.ts > PWA update lifecycle > expires the previous opening exception when learning starts on the same island route
+AssertionError: expected "spy" to not be called at all, but actually been called 1 times
+
+Received: 
+
+  1st spy call:
+
+    Array [
+      "https://example.com/?__app-update=next-build#/island",
+    ]
+
+
+Number of calls: 1
+
+ ❯ src/pwa.test.ts:90:42
+     88|         expect(pwa.reachPwaUpdateCheckpoint('island-learning', { prote…
+     89|         await detectUpdate(); await vi.advanceTimersByTimeAsync(4000)
+     90|         expect(win.location.replace).not.toHaveBeenCalled()
+       |                                          ^
+     91|         releaseOpening()
+     92|     })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  src/domain/growingIsland/syncUpdateProtection.test.ts > guards a room change, flower and picture even when the caller has no UI hold
+AssertionError: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ Table.<anonymous> src/domain/growingIsland/syncUpdateProtection.test.ts:24:83
+     22|     const { db, old } = fixture(); await syncGrowingIsland('kid', [], …
+     23|     const put = db.islands.put.bind(db.islands), gift = db.gifts.put.b…
+     24|     vi.spyOn(db.islands, 'put').mockImplementation(value => { expect(g…
+       |                                                                                   ^
+     25|     vi.spyOn(db.gifts, 'put').mockImplementation(value => { expect(gua…
+     26|     vi.spyOn(db.moments, 'add').mockImplementation(value => { expect(g…
+ ❯ Transaction.<anonymous> src/domain/growingIsland/repository.ts:144:32
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  src/domain/growingIsland/syncUpdateProtection.test.ts > protects owner deletion and releases the hold when a direct command aborts
+AssertionError: expected [Function] to throw error including 'disk-full' but got 'expected +0 to be 1 // Object.is equa…'
+
+Expected: "disk-full"
+Received: "expected +0 to be 1 // Object.is equality"
+
+ ❯ src/domain/growingIsland/syncUpdateProtection.test.ts:37:5
+     35|     const before = await db.islands.get('kid');
+     36|     vi.spyOn(db.islands, 'put').mockImplementationOnce(() => { expect(…
+     37|     await expect(commandGrowingIsland('kid', { id: 'decor', command: {…
+       |     ^
+     38|     expect(guard.count).toBe(0); expect(await db.islands.get('kid')).t…
+     39|     const remove = db.islands.delete.bind(db.islands);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  src/components/island/growing/useGrowingIsland.test.ts > ends a stalled learning-history read and never saves its late result
+AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ src/components/island/growing/useGrowingIsland.test.ts:44:35
+     42|     vi.useFakeTimers(); const facts = deferred<[]>(); mocks.facts.mock…
+     43|     RenderGrowing(); await vi.advanceTimersByTimeAsync(120_000);
+     44|     expect(RenderGrowing().error).toContain('よみこみ');
+       |                                   ^
+     45|     expect(mocks.sync).not.toHaveBeenCalled(); expect(mocks.saving).to…
+     46|     facts.resolve([]); await vi.advanceTimersByTimeAsync(0); expect(mo…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ Test Files  3 failed (3)
+      Tests  6 failed | 21 passed (27)
+   Start at  09:19:21
+   Duration  535ms (transform 241ms, setup 0ms, collect 317ms, tests 308ms, environment 0ms, prepare 122ms)
+

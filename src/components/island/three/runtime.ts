@@ -1,5 +1,6 @@
 import type { IslandDirectMarker } from '../islandDirectTargets';
 import * as THREE from 'three';
+import { createIslandRenderer } from './createIslandRenderer';
 import { OptionalFurnitureController } from './optionalFurnitureController';
 import { isOptionalFurniture, OPTIONAL_FURNITURE_CANDIDATE } from './optionalFurnitureGeometry';
 import { fitOptionalFurnitureCamera, optionalFurnitureCameraDiagnostic, OPTIONAL_FURNITURE_VIEW_ANGLES } from './optionalFurnitureFraming';
@@ -275,12 +276,14 @@ export class IslandScene {
         this.lastPlayRequestId = consumedPlayRequestId;
         this.lastWorkshopRequestId = consumedWorkshopRequestId;
         this.lastSharedRequestId = consumedSharedRequestId;
-        this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'low-power' });
-        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+        const graphics = createIslandRenderer({ alpha: false });
+        this.renderer = graphics.renderer;
+        this.renderer.setPixelRatio(graphics.compact ? 1 : Math.min(window.devicePixelRatio || 1, 1.5));
+        this.renderer.domElement.dataset.graphicsQuality = graphics.compact ? 'compact' : 'standard';
         this.renderer.outputColorSpace = THREE.SRGBColorSpace;
         this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
         this.renderer.toneMappingExposure = .9;
-        this.renderer.shadowMap.enabled = true;
+        this.renderer.shadowMap.enabled = !graphics.compact;
         this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         this.renderer.shadowMap.autoUpdate = false;
         this.scene.background = new THREE.Color(this.materials.color('#76cdd3'));

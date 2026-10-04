@@ -5,6 +5,7 @@ import { getProfile } from '../../../domain/user/repository';
 import { commandGrowingIsland, growingDb, GuidanceReceiptConflict, readGrowingIsland, syncGrowingIsland, type GrowingRecord } from '../../../domain/growingIsland/repository';
 import type { AchievementId, Command, NatureEvent, TownEvent } from '../../../domain/growingIsland';
 import type { LoadingStep } from './GrowingLoading';
+import { prepareIslandOpening } from '../../../domain/growingIsland/openingPreparation';
 
 export interface Reveal { id: number; town: TownEvent[]; nature: NatureEvent[] }
 
@@ -45,7 +46,7 @@ export function useGrowingIsland(profileId: string, active: boolean) {
         setSyncing(true);
         running.current = (async () => {
             try {
-                const [profile, facts] = full ? await Promise.all([getProfile(profileId), terminalFacts(profileId)]) : [undefined, []];
+                const [profile, facts] = full ? await prepareIslandOpening(() => Promise.all([getProfile(profileId), terminalFacts(profileId)])) : [undefined, []];
                 const levels = profile ? { math: profile.mathMainLevel, vocab: profile.vocabMainLevel } : undefined;
                 setStep('saving');
                 const result = await syncGrowingIsland(profileId, facts, Date.now(), growingDb, lifeDb, levels);

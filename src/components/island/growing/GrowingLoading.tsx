@@ -18,29 +18,34 @@ export const LOADING_STEPS = {
 } as const;
 export type LoadingStep = keyof typeof LOADING_STEPS;
 
-export function GrowingLoading({ step, overlay = false }: { step: LoadingStep; overlay?: boolean }) {
+export function GrowingLoading({ step, overlay = false, failed = false, onRetry, onLearn }: {
+    step: LoadingStep; overlay?: boolean; failed?: boolean; onRetry?: () => void; onLearn?: () => void;
+}) {
     const { percent, label } = LOADING_STEPS[step];
     const [slow, setSlow] = useState(false), [retrying, setRetrying] = useState(false), [notice, setNotice] = useState<string>();
     useEffect(() => {
         setSlow(false); setNotice(undefined);
-        if (overlay || step !== 'saving') return;
+        if (failed || !['saving', 'world', 'scene'].includes(step)) return;
         const timer = window.setTimeout(() => setSlow(true), 15_000);
         return () => window.clearTimeout(timer);
-    }, [step, overlay]);
+    }, [step, failed]);
     const reopen = async () => {
         setRetrying(true); setNotice(undefined);
         try { if (!await reopenPwaFromNetwork()) setNotice('ネットにつないで、すこし まってから ためしてね。'); }
         finally { setRetrying(false); }
     };
     return <div className={`growing-loading${overlay ? ' growing-loading--overlay' : ''}`} data-loading-step={step}>
-        <div className="growing-loading-card">
+        <div className="growing-loading-card" role={failed ? 'alert' : undefined}>
             <IslandToyIcon kind="island" size={54} />
-            <p className="growing-loading-title">しまを ひらいているよ <strong>{percent}%</strong></p>
-            <div className="growing-loading-bar" role="progressbar" aria-valuemin={0} aria-valuemax={100}
+            <p className="growing-loading-title">{failed ? 'しまの えを ひらけなかったよ' : <>しまを ひらいているよ <strong>{percent}%</strong></>}</p>
+            {!failed && <div className="growing-loading-bar" role="progressbar" aria-valuemin={0} aria-valuemax={100}
                 aria-valuenow={percent} aria-label={`しまを ひらいているよ ${percent}%`}><span style={{ width: `${percent}%` }} /></div>
-            <p className="growing-loading-label">{label}</p>
-            {slow && <><button className="island-primary" disabled={retrying} onClick={() => void reopen()}>もういちど ひらく</button>
-                {notice && <p className="growing-loading-label" role="status">{notice}</p>}</>}
+            }
+            <p className="growing-loading-label">{failed ? 'しまは ほぞんされているよ。かるくして ためしてみよう。' : label}</p>
+            {failed && onRetry && <button className="island-primary" onClick={onRetry}>もういちど みる</button>}
+            {(slow || failed) && <button className="island-primary" disabled={retrying} onClick={() => void reopen()}>{failed ? '最新版を ひらく' : 'もういちど ひらく'}</button>}
+            {failed && onLearn && <button className="island-primary" onClick={onLearn}>まなぶ</button>}
+            {notice && <p className="growing-loading-label" role="status">{notice}</p>}
         </div>
     </div>;
 }

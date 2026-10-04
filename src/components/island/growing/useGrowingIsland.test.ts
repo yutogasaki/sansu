@@ -13,14 +13,14 @@ const hooks = vi.hoisted(() => {
         commit() { for (const effect of effects.splice(0)) effect(); }, unmount() { for (const cell of cells) cell.cleanup?.(); },
     };
 });
-const mocks = vi.hoisted(() => ({ read: vi.fn(), sync: vi.fn(), command: vi.fn(), opening: 0, saving: 0 }));
+const mocks = vi.hoisted(() => ({ read: vi.fn(), sync: vi.fn(), command: vi.fn(), profile: vi.fn(), facts: vi.fn(), opening: 0, saving: 0 }));
 vi.mock('react', () => ({ useState: hooks.useState, useRef: hooks.useRef, useCallback: hooks.useCallback, useEffect: hooks.effect }));
 vi.mock('../../../pwa', () => ({
     allowPwaUpdateDuringReadOnlyOpening: () => { mocks.opening++; return () => { mocks.opening--; }; },
     holdPwaUpdateForCriticalPersistence: () => { mocks.saving++; return () => { mocks.saving--; }; },
 }));
-vi.mock('../../../domain/user/repository', () => ({ getProfile: async () => undefined }));
-vi.mock('../../../domain/islandLife/repository', () => ({ lifeDb: {}, terminalFacts: async () => [] }));
+vi.mock('../../../domain/user/repository', () => ({ getProfile: mocks.profile }));
+vi.mock('../../../domain/islandLife/repository', () => ({ lifeDb: {}, terminalFacts: mocks.facts }));
 vi.mock('../../../domain/growingIsland/repository', () => ({
     growingDb: {}, readGrowingIsland: mocks.read, syncGrowingIsland: mocks.sync, commandGrowingIsland: mocks.command,
     GuidanceReceiptConflict: class extends Error {},
@@ -31,11 +31,22 @@ const record = { profileId: 'kid', revision: 0 } as GrowingRecord;
 const RenderGrowing = (active = true) => { hooks.begin(); const api = useGrowingIsland('kid', active); hooks.commit(); return api; };
 beforeEach(() => {
     hooks.reset(); mocks.read.mockReset().mockReturnValue(new Promise(() => {})); mocks.sync.mockReset(); mocks.command.mockReset();
+    mocks.profile.mockReset().mockResolvedValue(undefined); mocks.facts.mockReset().mockResolvedValue([]);
     vi.stubGlobal('document', Object.assign(new EventTarget(), { visibilityState: 'visible' }));
     vi.stubGlobal('window', { setInterval: vi.fn(() => 1), clearInterval: vi.fn() });
     vi.stubGlobal('BroadcastChannel', undefined);
 });
-afterEach(() => { hooks.unmount(); expect(mocks.opening).toBe(0); expect(mocks.saving).toBe(0); vi.unstubAllGlobals(); });
+afterEach(() => { hooks.unmount(); expect(mocks.opening).toBe(0); expect(mocks.saving).toBe(0); vi.unstubAllGlobals(); vi.useRealTimers(); });
+
+it('ends a stalled learning-history read and never saves its late result', async () => {
+    vi.useFakeTimers(); const facts = deferred<[]>(); mocks.facts.mockReturnValueOnce(facts.promise);
+    RenderGrowing(); await vi.advanceTimersByTimeAsync(120_000);
+    expect(RenderGrowing().error).toContain('よみこみ');
+    expect(mocks.sync).not.toHaveBeenCalled(); expect(mocks.saving).toBe(0);
+    facts.resolve([]); await vi.advanceTimersByTimeAsync(0); expect(mocks.sync).not.toHaveBeenCalled();
+    mocks.sync.mockResolvedValue({ record, town: [], nature: [], learned: 0 });
+    await RenderGrowing().sync(); expect(RenderGrowing().record).toBe(record); expect(RenderGrowing().error).toBeUndefined();
+});
 
 it('keeps update recovery available after a failed opening and releases it when leaving', async () => {
     const sync = deferred<SyncResult>(); mocks.sync.mockReturnValue(sync.promise);

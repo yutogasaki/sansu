@@ -56,16 +56,23 @@ export class GrowingIslandDatabase extends Dexie {
 }
 export const growingDb = new GrowingIslandDatabase();
 
+/** Every writer protects the transaction, including callers outside the island hook. */
+async function withGrowingPersistence<T>(save: () => Promise<T>): Promise<T> {
+    const release = holdPwaUpdateForCriticalPersistence();
+    try { return await save(); }
+    finally { release(); }
+}
+
 export async function deleteGrowingOwner(profileId: string, database = growingDb) {
     if (!await Dexie.exists(database.name)) return;
-    await database.transaction('rw', [database.islands, database.balancedIslands, database.legacyIslands, database.moments, database.gifts], async () => {
+    await withGrowingPersistence(() => database.transaction('rw', [database.islands, database.balancedIslands, database.legacyIslands, database.moments, database.gifts], async () => {
         await database.islands.delete(profileId);
         await database.legacyIslands.delete(profileId);
         await database.balancedIslands.delete(profileId);
         await database.moments.where('profileId').equals(profileId).delete();
         await database.gifts.where('to').equals(profileId).delete();
         await database.gifts.where('from').equals(profileId).delete();
-    });
+    }));
 }
 
 export interface Completion { id: string; at: number }
@@ -129,7 +136,7 @@ export class GuidanceReceiptConflict extends Error {
  */
 export async function commandGrowingIsland(profileId: string, intent: Intent, now = Date.now(),
     database = growingDb): Promise<{ record: GrowingRecord; town: TownEvent[] }> {
-    return database.transaction('rw', database.islands, async () => {
+    return withGrowingPersistence(() => database.transaction('rw', database.islands, async () => {
         const current = await database.islands.get(profileId);
         if (!current) throw new Error('しまを よみこんでから もういちど ためしてね。');
         const upgraded = upgrade(current, now);
@@ -143,7 +150,7 @@ export async function commandGrowingIsland(profileId: string, intent: Intent, no
         const record = { ...upgraded, revision: current.revision + 1, updatedAt: now, state };
         await database.islands.put(record);
         return { record, town: events };
-    });
+    }));
 }
 
 /** Another profile's island, read without growing, saving or migrating anything (§13). */
@@ -170,11 +177,11 @@ export const giftId = (from: string, to: string, at: number) => JSON.stringify([
 export async function sendFlower(from: string, fromName: string, to: string, now = Date.now(), database = growingDb) {
     if (from === to) throw new Error('じぶんの しまには おくれないよ。');
     const id = giftId(from, to, now);
-    return database.transaction('rw', database.gifts, async () => {
+    return withGrowingPersistence(() => database.transaction('rw', database.gifts, async () => {
         if (await database.gifts.get(id)) return false;
         await database.gifts.put({ id, to, from, fromName: fromName.slice(0, 12), at: now });
         return true;
-    });
+    }));
 }
 
 export async function flowerSentToday(from: string, to: string, now = Date.now(), database = growingDb) {
@@ -186,7 +193,7 @@ export async function flowerSentToday(from: string, to: string, now = Date.now()
  * replay still runs from the very first day to today (§13).
  */
 export async function addMoment(profileId: string, image: Blob, width: number, height: number, now = Date.now(), database = growingDb) {
-    await database.transaction('rw', database.moments, async () => {
+    await withGrowingPersistence(() => database.transaction('rw', database.moments, async () => {
         await database.moments.add({ profileId, at: now, image, width, height });
         const all = await database.moments.where('[profileId+at]').between([profileId, Dexie.minKey], [profileId, Dexie.maxKey]).toArray();
         while (all.length > MOMENT_LIMIT) {
@@ -198,7 +205,7 @@ export async function addMoment(profileId: string, image: Blob, width: number, h
             await database.moments.delete(all[drop].id!);
             all.splice(drop, 1);
         }
-    });
+    }));
 }
 
 export async function listMoments(profileId: string, database = growingDb) {

@@ -49,6 +49,9 @@
 - `/onboarding`、`/study`、`/explore`、`/battle/play` は、子どもがまだpointer/key操作をしていない初回表示ではversion driftのreloadを許可し、操作後の同一セッションだけを保護する
 - Studyの回答/テスト保存、Exploreのrun開始/回答/帰還保存が進行中は、route遷移後もreloadを待機し、全critical persistence解放後にだけ再開する
 - 島の読み込み・失敗画面で遊べない間は、タップを理由に更新を止めない。Growingの同期は旧島の読み取り・Workerでの計算・島/贈り物を照合する短いtransactionに分け、更新holdは書き込みだけに置く。読み取り準備は120秒で打ち切り、遅い結果を保存へ渡さない。15秒の55%待機で現れる再起動ボタンは最新HTMLの取得後に開き直す。保存中/オフラインでは開き直さない。検証は `SANSU_OPENING_URL=<固定production preview> SANSU_OPENING_OUTPUT=<新しい出力先> node docs/design/2026-10-04-island-opening/browser-check.mjs`。実DBのupgrade阻害、Worker無応答、学習保持、ChromiumのSW offline再起動/回答を検査し、実iPadの起動確認とは分ける。
+- 島の読み込み例外は取得時のroute/checkpointに限定し、新しい学習セッションへ持ち越さない。プロフィール/学習履歴の先行読み取りも120秒で打ち切る。模様替え・花・写真・所有者削除は呼び出し元によらず実保存transactionを保護し、失敗時もholdを解放する。
+- 花の保存中の帰宅と保存失敗/再試行は `SANSU_VISIT_URL=<固定DEV preview> SANSU_VISIT_OUTPUT=<新しい出力先> SANSU_VISIT_WIDTH=768 node tools/e2e-growing-visit-recovery.mjs`（390幅も実行）。別書き込みの実IDB待機と明示障害を使い、遅い完了で訪問先へ戻らないこと、再試行で花が1つだけ残ることを確認。DEVの3人fixtureであり実利用者の保存ではない。
+- 70%の描画待機はGPU初期化失敗/実context喪失で終了し、軽い設定の再試行・最新版取得・学習へ進めることを確認する。Apple touchの省負荷設定（MSAA/影なし・pixelRatio1）を島と家で使い、Growingの離脱ではcontextも解放する。`SANSU_GRAPHICS_URL=<固定DEV preview> SANSU_GRAPHICS_OUTPUT=<新しい出力先> node tools/e2e-growing-graphics-recovery.mjs` は両engineの明示GPU拒否・学習保存/再試行とChromiumの実context喪失を検査する。WebGL2非対応や実古いiPadでの成功とは分ける。
 - React RouterのSPA遷移をnative `hashchange` に依存せず観測し、保護対象画面から離れると延期中の更新を一度だけ適用する。別の保護対象画面へ移った場合も最初の操作前に更新できる
 - Exploreのreplay、Battleのcancel/replay、Study breakのcontinueを選んだ時点は、同一URLでも新しいセッションとして再armする。結果・報酬・休憩が表示されただけではreloadせず、Studyの結果遷移はsession/profile保存完了より後に行う。replay/continueのpointerは新しいactive sessionの最初の保護操作として残す
 - PWA precacheが12 MiB以下で、探索本番画像の合計が8 MiB以下・1枚800 KiB以下である
