@@ -53,3 +53,5 @@ main修正 `f1a1b6315f657171868a3198bdb8705b42e37a36` をpush。Vercel成功と�
 [公開ハーネス](live-update-check.mjs)は元の180秒の期限内でこのcontext破棄だけを扱い、描画のreadyを待って現在bundleを再取得し、実worker/cacheの条件を再度観測する。その他の例外・期限超過は失敗のまま。page navigationと観測中のcontext破棄を記録する。ChromiumにiPad UAを与えてApple用設定を検査し、実iPad・実iPadOSの試験とは分ける。
 
 別の空プロフィールで公開 `f1a1b631` の[現在版の全旅程](public-current/report.json)はPASS。実初回設定→実回答1件→実SW offline再起動→オンラインの記録/島往復→offline再起動→同予約の追加回答を確認。compact設定を実DOMで照合し、両再起動で全native学習storeが一致、最後の実回答でlogsが1→2。初回5c→f1の未完了旅程をPASSへ置き換えず、現在版の起動/保存/offline証拠として扱う。
+
+続く公開 **`f1a1b631` → `7fb7fc55`** の[実SW更新・保存保持・新版offline再起動・同予約の追加回答](public-two-build/report.json)は全旅程PASS。両buildのapp入力は同一で、revision/version/bundleが異なる。現在HTML/bundleのprecache・active controller・installing/waitingなしを確認後に通信を切り、オンライン更新後とoffline起動後で全native学習storeが一致、最後にlogsが1→2。compact設定も維持。初回5c→f1の未完了と実iPadの未確認は保持する。コード `f1a1b631` の[GitHub Core](https://github.com/yutogasaki/sansu/actions/runs/37167631576)・[Docs](https://github.com/yutogasaki/sansu/actions/runs/37167631600)もsuccess。
