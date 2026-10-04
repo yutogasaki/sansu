@@ -90,6 +90,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     const navigate = useNavigate();
     const [worldStep, setWorldStep] = useState<LoadingStep | 'ready' | 'failed'>('world');
     const [worldAttempt, setWorldAttempt] = useState(0);
+    const [graphicsFailure, setGraphicsFailure] = useState<string>();
     const waitingForWorld = Boolean(own) && worldStep !== 'ready';
     useEffect(() => {
         if (active && waitingForWorld) return allowPwaUpdateDuringReadOnlyOpening();
@@ -338,7 +339,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
 
     const world = <GrowingWorld key={worldAttempt} compact={worldAttempt > 0} state={state} time={time} ghost={visit ? undefined : ghost} selectedId={visit ? undefined : selected} turn={turn} cheer={cheer} festival={festival}
         hints={visit ? [] : hints} moment={visit ? undefined : moment} show={show} focus={focus} concert={concert} onCamera={c => { camera.current = c; }}
-        onPop={() => audio.play('glass')} onStage={setWorldStep}
+        onPop={() => audio.play('glass')} onStage={setWorldStep} onFailure={setGraphicsFailure}
         onConcertStarted={receipt => { const id = ownConcertReceipt(profileId, Boolean(visit), receipt, concert); if (id) void island.acknowledge('concert-started', id); }}
         onCell={cell => { void audio.unlock(); if (visit) return; setMenu(false); if (placing) setPlacing({ ...placing, cell }); else setLine(undefined); }}
         onSelect={id => {
@@ -376,7 +377,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         }} />;
 
     const worldLoading = worldStep !== 'ready' && <GrowingLoading step={worldStep === 'failed' ? 'world' : worldStep} overlay failed={worldStep === 'failed'}
-        onRetry={() => { setWorldStep('world'); setWorldAttempt(value => value + 1); }} onLearn={onLearn} />;
+        failureDetail={graphicsFailure} onRetry={() => { setGraphicsFailure(undefined); setWorldStep('world'); setWorldAttempt(value => value + 1); }} onLearn={onLearn} />;
     if (show) return <div className="island-life growing-island" data-growing-island="show" data-garden-time={time}>
         <Suspense fallback={null}>{world}</Suspense>{worldLoading}
         <button className="growing-chip growing-show-exit" onClick={() => setShow(false)}>おわる</button>

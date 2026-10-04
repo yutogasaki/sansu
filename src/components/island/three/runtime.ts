@@ -278,8 +278,8 @@ export class IslandScene {
         this.lastSharedRequestId = consumedSharedRequestId;
         const graphics = createIslandRenderer({ alpha: false });
         this.renderer = graphics.renderer;
-        this.renderer.setPixelRatio(graphics.compact ? 1 : Math.min(window.devicePixelRatio || 1, 1.5));
-        this.renderer.domElement.dataset.graphicsQuality = graphics.compact ? 'compact' : 'standard';
+        this.renderer.setPixelRatio(graphics.recovery ? .65 : graphics.compact ? 1 : Math.min(window.devicePixelRatio || 1, 1.5));
+        this.renderer.domElement.dataset.graphicsQuality = graphics.recovery ? 'recovery' : graphics.compact ? 'compact' : 'standard';
         this.renderer.outputColorSpace = THREE.SRGBColorSpace;
         this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
         this.renderer.toneMappingExposure = .9;

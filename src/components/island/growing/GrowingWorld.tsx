@@ -23,6 +23,7 @@ export interface WorldHandlers {
     onPop?: () => void;
     /** The world's own loading steps: the scene is built, then the first picture is on screen. */
     onStage?: (stage: 'scene' | 'ready' | 'failed') => void;
+    onFailure?: (detail: string) => void;
     onConcertStarted?: (receipt: number) => void;
 }
 /** Pictures of the island for the card and the island's story; never uploaded anywhere. */
@@ -53,28 +54,44 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
     useEffect(() => {
         const node = host.current; if (!node) return;
         let renderer: T.WebGLRenderer;
-        let light = Boolean(compact);
-        try { const result = createIslandRenderer({}, light); renderer = result.renderer; light = result.compact; }
-        catch { setFailed(true); handlerRef.current.onStage?.('failed'); return; }
-        renderer.setPixelRatio(light ? 1 : Math.min(window.devicePixelRatio || 1, 1.5));
+        let light = Boolean(compact), recovery = Boolean(compact);
+        try { const result = createIslandRenderer({}, light, recovery); renderer = result.renderer; light = result.compact; recovery = result.recovery; }
+        catch (error) {
+            handlerRef.current.onFailure?.(`initialization: ${error instanceof Error ? error.message : String(error)}`);
+            setFailed(true); handlerRef.current.onStage?.('failed'); return;
+        }
+        let frame = 0, lost = false, released = false;
+        const disposers: (() => void)[] = [() => { renderer.dispose(); renderer.forceContextLoss(); renderer.domElement.remove(); }];
+        const release = () => {
+            if (released) return;
+            released = true; cancelAnimationFrame(frame); api.current = undefined; cameraRef.current?.(undefined);
+            for (const dispose of disposers.reverse()) { try { dispose(); } catch { /* Continue releasing the remaining GPU resources. */ } }
+        };
+        const fail = (stage: string, error?: unknown) => {
+            if (lost) return;
+            lost = true;
+            handlerRef.current.onFailure?.(`${stage} (${renderer.domElement.dataset.graphicsQuality}): ${error instanceof Error ? error.message : String(error ?? 'WebGL2 context lost')}`);
+            release(); setFailed(true); handlerRef.current.onStage?.('failed');
+        };
+        const contextLost = (event: Event) => { event.preventDefault(); fail('context-lost'); };
+        renderer.domElement.addEventListener('webglcontextlost', contextLost);
+        disposers.push(() => renderer.domElement.removeEventListener('webglcontextlost', contextLost));
+        try {
+        renderer.setPixelRatio(recovery ? .65 : light ? 1 : Math.min(window.devicePixelRatio || 1, 1.5));
         renderer.outputColorSpace = T.SRGBColorSpace; renderer.shadowMap.enabled = !light; renderer.shadowMap.type = T.PCFSoftShadowMap;
-        renderer.domElement.dataset.graphicsQuality = light ? 'compact' : 'standard';
+        renderer.domElement.dataset.graphicsQuality = recovery ? 'recovery' : light ? 'compact' : 'standard';
         renderer.toneMapping = T.ACESFilmicToneMapping;
         renderer.domElement.setAttribute('aria-label', 'ぽこもこと なかまが くらす しま');
         renderer.domElement.style.touchAction = 'none';
         node.append(renderer.domElement);
         handlerRef.current.onStage?.('scene');
-        const world = createWorldScene(renderer), effects = new WorldEffects(world.scene), moments = new MomentEffects(world.scene);
+        const world = createWorldScene(renderer); disposers.push(() => world.dispose());
+        const effects = new WorldEffects(world.scene); disposers.push(() => effects.dispose());
+        const moments = new MomentEffects(world.scene); disposers.push(() => moments.dispose());
         const camera = new T.OrthographicCamera(-5, 5, 5, -5, .1, 100), view = initialView();
         let layout: SceneLayout = world.layout(latest.current.state), layer: ObjectLayer | undefined;
-        let unopened = new Set<string>(), known: Set<string> | undefined, frame = 0, last = performance.now(), width = 1, height = 1, nextWave = 0, showing = false;
-        let lost = false;
-        const fail = () => {
-            lost = true; cancelAnimationFrame(frame); api.current = undefined; cameraRef.current?.(undefined);
-            setFailed(true); handlerRef.current.onStage?.('failed');
-        };
-        const contextLost = (event: Event) => { event.preventDefault(); fail(); };
-        renderer.domElement.addEventListener('webglcontextlost', contextLost);
+        let unopened = new Set<string>(), known: Set<string> | undefined, last = performance.now(), width = 1, height = 1, nextWave = 0, showing = false;
+        disposers.push(() => layer?.dispose());
         const reduced = reducedMotion();
         let pendingConcert: number | undefined;
 
@@ -165,7 +182,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
         });
         world.setTime(latest.current.time);
         resize();
-        const observer = new ResizeObserver(resize); observer.observe(node);
+        const observer = new ResizeObserver(resize); disposers.push(() => observer.disconnect()); observer.observe(node);
 
         const loop = () => {
             if (lost) return;
@@ -204,7 +221,8 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             moments.ambient(now, latest.current.time === 'night', current.landmarks.filter(l => l.cell && (l.kind === 'lantern' || l.kind === 'lighthouse')).length, camera.position.clone().setY(0), reduced);
             moments.tick(now);
             world.animate(now, reduced);
-            try { renderer.render(world.scene, camera); } catch { fail(); return; }
+            try { renderer.render(world.scene, camera); } catch (error) { fail('render', error); return; }
+            if (renderer.getContext().isContextLost()) { fail('context-lost'); return; }
             if (pendingConcert !== undefined && document.visibilityState === 'visible') {
                 const receipt = pendingConcert; pendingConcert = undefined;
                 if (world.life.concertActive(now)) handlerRef.current.onConcertStarted?.(receipt);
@@ -213,6 +231,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
         };
         let shown = false;
         loop();
+        if (lost) return release;
 
         // Touch: a still tap selects; a drag pans, or carries a friend; two fingers zoom.
         const pointers = new Map<number, { x: number; y: number; sx: number; sy: number }>();
@@ -287,15 +306,13 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
         canvas.addEventListener('pointerdown', down); canvas.addEventListener('pointermove', move);
         canvas.addEventListener('pointerup', up); canvas.addEventListener('pointercancel', up);
         canvas.addEventListener('wheel', wheel, { passive: false });
-        return () => {
-            cancelAnimationFrame(frame); observer.disconnect();
+        disposers.push(() => {
             canvas.removeEventListener('pointerdown', down); canvas.removeEventListener('pointermove', move);
             canvas.removeEventListener('pointerup', up); canvas.removeEventListener('pointercancel', up);
             canvas.removeEventListener('wheel', wheel);
-            canvas.removeEventListener('webglcontextlost', contextLost);
-            layer?.dispose(); effects.dispose(); moments.dispose(); world.dispose(); renderer.dispose(); renderer.forceContextLoss(); canvas.remove();
-            api.current = undefined; cameraRef.current?.(undefined);
-        };
+        });
+        return release;
+        } catch (error) { fail('scene-initialization', error); return release; }
     // A retry mounts a fresh world; its graphics profile is fixed for that lifetime.
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

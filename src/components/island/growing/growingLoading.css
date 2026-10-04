@@ -38,3 +38,7 @@
 .room-letters button { display: grid; gap: 4px; width: 100%; padding: 10px 12px; text-align: left; background: #fffaf0; border: 1px solid var(--pokomoko-edge, #e3d6bf); border-radius: 14px; font: inherit; }
 .room-letters button[data-unread="true"] { border: 2px solid #f25c8a; box-shadow: 3px 3px 0 #ffd23f; }
 .room-letters small { font-size: 12px; font-weight: 800; color: var(--pokomoko-muted, #7a6f88); }
+
+.growing-loading-details { width: 100%; font-size: 12px; }
+.growing-loading-details summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; }
+.growing-loading-details pre { max-height: 120px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; user-select: text; }

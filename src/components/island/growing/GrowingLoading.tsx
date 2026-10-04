@@ -18,8 +18,8 @@ export const LOADING_STEPS = {
 } as const;
 export type LoadingStep = keyof typeof LOADING_STEPS;
 
-export function GrowingLoading({ step, overlay = false, failed = false, onRetry, onLearn }: {
-    step: LoadingStep; overlay?: boolean; failed?: boolean; onRetry?: () => void; onLearn?: () => void;
+export function GrowingLoading({ step, overlay = false, failed = false, failureDetail, onRetry, onLearn }: {
+    step: LoadingStep; overlay?: boolean; failed?: boolean; failureDetail?: string; onRetry?: () => void; onLearn?: () => void;
 }) {
     const { percent, label } = LOADING_STEPS[step];
     const [slow, setSlow] = useState(false), [retrying, setRetrying] = useState(false), [notice, setNotice] = useState<string>();
@@ -45,6 +45,9 @@ export function GrowingLoading({ step, overlay = false, failed = false, onRetry,
             {failed && onRetry && <button className="island-primary" onClick={onRetry}>もういちど みる</button>}
             {(slow || failed) && <button className="island-primary" disabled={retrying} onClick={() => void reopen()}>{failed ? '最新版を ひらく' : 'もういちど ひらく'}</button>}
             {failed && onLearn && <button className="island-primary" onClick={onLearn}>まなぶ</button>}
+            {failed && failureDetail && <details className="growing-loading-details"><summary>保護者向け：表示エラーの詳細</summary>
+                <pre>{`build: ${__BUILD_REVISION__}\n${failureDetail}\n${navigator.userAgent}`}</pre>
+            </details>}
             {notice && <p className="growing-loading-label" role="status">{notice}</p>}
         </div>
     </div>;
