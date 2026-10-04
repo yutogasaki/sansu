@@ -44,3 +44,5 @@ main修正 `bcdcaf790b089186903d64b23ffb92e5263a868b` をpushし、Vercel成功�
 [公開ハーネス](live-update-check.mjs)は、切断前に現在のHTML/bundleのprecacheとactive controller、installing/waitingがないことを待つようにした。`SANSU_OPENING_LIVE_FRESH_ONLY=1` は現在公開版の初回/保存/offline検証として明示し、旧→新更新の証明へ置き換えない。初期不具合報告の端末が開けるようになったことは、利用者の確認まで合格扱いにしない。
 
 別の空プロフィールから公開 `bcdcaf79` を検証し、実初回設定→実回答1件→実SW offline再起動→オンラインの記録/島往復→offline再起動→同予約への追加回答を **PASS**（[report](public-current-report.json)、[オンラインの島](public-current-online.png)、[offline追加回答](public-current-offline-answer.png)）。両再起動の前後で全native学習storeを照合し、最後の実回答でlogsが1→2になった。現在公開版の起動/保存/offlineに対する証拠であり、初回の旧→新旅程のoffline失敗を解消した証明とは分ける。実iPadは未確認。
+
+修正した待機条件で公開 **`bcdcaf79` → `62ae08fc` の実SW更新・同じプロフィールの保存保持・新版offline再起動・同予約の追加回答まで全旅程PASS**（[report](public-two-build-report.json)、[新版の島](public-two-build-online.png)、[offline追加回答](public-two-build-offline-answer.png)）。二つのbuildのapp sourceは同一で、revision/versionとbundleが異なる。新しいHTML/bundleのprecache・active controllerとinstalling/waitingなしを確認してから通信を切り、全native学習storeがオンライン更新後とoffline再起動後の両方で一致、最後にlogsが1→2になった。これは二つ目の更新旅程であり、初回f1→bcdcの失敗を取り消さず、実iPadの復旧の代わりにしない。正常終了後も残ったハーネスのstdinはEOFで終了し、再実行用コードはrevision受信後にpauseするようにした。

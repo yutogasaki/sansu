@@ -40,6 +40,7 @@ try{
  report.oldMetadata=await runtimeMetadata(p);report.oldNative=await stored();await p.screenshot({path:`${out}/old-offline.png`});
  console.log(freshOnly?'READY CURRENT':'READY OLD',JSON.stringify({revision:report.oldMetadata.revision,version:report.oldMetadata.version,logs:native.logs.length}));
  const revision=freshOnly?report.oldMetadata.revision:await new Promise(resolve=>process.stdin.once('data',chunk=>resolve(String(chunk).trim())));assert(/^[a-f0-9]{40}$/.test(revision));report.expectedRevision=revision;
+ if(!freshOnly)process.stdin.pause();
  let version;for(let i=0;i<120;i++){try{version=await fetch(`${base}/version.json?t=${Date.now()}`,{cache:'no-store'}).then(r=>r.json());if(version.revision===revision)break;}catch{}await new Promise(ok=>setTimeout(ok,5000))}assert.equal(version?.revision,revision);report.publicVersion=version;
  await c.setOffline(false);await p.evaluate(()=>{window.dispatchEvent(new Event('online'));window.dispatchEvent(new Event('focus'))});
  // A real safe route ends the old playable session; no synthetic update event or cache clearing.
