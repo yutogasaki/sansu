@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { applyIntent, canPlace, landQuote } from './commands';
-import { foodSupport, housing, islandLevel, playSupport } from './community';
+import { foodSupport, genki, housing, islandLevel, playSupport } from './community';
 import { ingestCompletions, newIsland } from './island';
 import { advanceNature } from './nature';
 import { openTown } from './town';
@@ -14,7 +14,7 @@ const HOUR = 3_600_000, T0 = Date.UTC(2026, 8, 29, 7);
  * A plain scripted child: two learning sessions of ten completions a day, then plants
  * whatever the island seems to want. Buildings go on odd rows so even rows stay walkable.
  */
-function playDays(days: number, seed = 'pace-kid', daily = 20, weekly = false, decorFirst = false) {
+function playDays(days: number, seed = 'pace-kid', daily = 20, weekly = false, decorFirst = false, careFirst = false) {
     let state = newIsland(seed, T0), n = 0, fact = 0;
     const act = (command: Command) => { state = applyIntent(state, { id: `pace-${n++}`, command }).state; };
     const spot = (blocking: boolean): Cell | undefined => {
@@ -58,7 +58,14 @@ function playDays(days: number, seed = 'pace-kid', daily = 20, weekly = false, d
                 }
                 if (housing(state).vacancy + waiting.filter(p => p.kind === 'home').length < 1 && plant('home', true)) continue;
                 if (foodSupport(state) + waiting.filter(p => p.kind === 'farm').length * 2 <= people + 1 && plant('farm', false)) continue;
-                if (playSupport(state) <= people && plant('play', true)) continue;
+                if (careFirst && state.drops >= LANDMARK_PRICE.bench!) {
+                    const before = genki(state);
+                    const best = landCells(state).filter(c => canPlace(state, c)).map(cell => ({ cell,
+                        gain: genki({ ...state, landmarks: [...state.landmarks, { id: 'care-preview', kind: 'bench', cell, growth: 0 }] }) - before,
+                    })).sort((a, b) => b.gain - a.gain)[0];
+                    if (best && best.gain > 0) { act({ type: 'place', kind: 'bench', cell: best.cell }); continue; }
+                }
+                if (!careFirst && playSupport(state) <= people && plant('play', true)) continue;
                 // Decorate a little, and keep room for farms.
                 const flower = spot(false), flowers = state.landmarks.filter(l => l.kind === 'flower').length;
                 if (flower && flowers < landCells(state).length / 8 && state.drops >= LANDMARK_PRICE.flower! + SEED_PRICE.home) {
@@ -71,6 +78,7 @@ function playDays(days: number, seed = 'pace-kid', daily = 20, weekly = false, d
     }
     return { state, log };
 }
+
 
 describe('pacing (spec 52 §15, starting values)', () => {
     it('grows a village over a month without running away', () => {
@@ -123,3 +131,19 @@ describe('pacing (spec 52 §15, starting values)', () => {
         expect(standard.villagers).toBeGreaterThan(short.villagers * 2);
     });
 });
+
+// Population is driven by reachable homes and food, while play improves local comfort.
+// Compare actual comfort-first choices rather than using total play points as an admission quota.
+it.each(['pace-kid', 'kid-one', 'kid-two'])('keeps the whole loop coherent with comfort-first placement: %s', seed => {
+    const short = playDays(30, seed, 6, false, false, true).log[29];
+    const standard = playDays(30, seed, 20, false, false, true).log[29];
+    const longer = playDays(30, seed, 40, false, false, true).log[29];
+    console.table([{ seed, habit: 'six-care', ...short }, { seed, habit: 'twenty-care', ...standard }, { seed, habit: 'forty-care', ...longer }]);
+    expect(short.villagers).toBeGreaterThan(1);
+    expect(standard.villagers).toBeGreaterThan(short.villagers * 2);
+    expect(standard.villagers).toBeGreaterThanOrEqual(12);
+    expect(standard.villagers).toBeLessThanOrEqual(18);
+    expect(longer.villagers).toBeGreaterThan(standard.villagers);
+    expect(standard.level).toBeGreaterThan(short.level);
+    expect(standard.land).toBeGreaterThan(short.land);
+}, 30000);

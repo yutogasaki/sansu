@@ -3,7 +3,7 @@ import * as T from 'three';
 import { IslandMaterials } from '../three/primitives';
 import { applyIntent, newIsland } from '../../../domain/growingIsland';
 import { key, reachableFromHome, walkableCells } from '../../../domain/growingIsland/space';
-import { GrowingLife } from './growingLife';
+import { GrowingLife, VISIBLE_WALKERS } from './growingLife';
 import { buildObjectLayer } from './objectLayer';
 import { sceneLayout } from './sceneLayout';
 
@@ -49,6 +49,28 @@ describe('picking up a friend', () => {
         expect(ids).toContain('pokomoko');
         expect(ids).not.toContain(friend);
     });
+});
+
+it('finds the home of a resident outside the walker budget or asleep without adding actors or saving changes', () => {
+    const { state, life } = island();
+    state.land.expanded = 'east';
+    state.plots = Array.from({ length: 7 }, (_, x) => ({ ...state.plots[0], id: `home-${x}`, stage: 3, cell: { x, z: 3 } }));
+    state.villagers = Array.from({ length: 13 }, (_, i) => ({ ...state.villagers[0], id: `friend-${i}`, arrivedAt: i, home: `home-${Math.floor(i / 2)}` }));
+    const before = structuredClone(state), layout = sceneLayout(state), m = new IslandMaterials('moon-garden');
+    const layer = buildObjectLayer(m, state, layout);
+    life.sync(state, layout, layer); life.tick(0, 0, true, false);
+    const ids = life.actorIds();
+    expect(ids.filter(id => id.startsWith('friend-'))).toHaveLength(VISIBLE_WALKERS);
+    expect(life.positionOf('friend-0')).toBeUndefined();
+    expect(life.focusPositionOf('friend-0')).toEqual(layout.point({ x: 0, z: 3 }));
+    expect(life.focusPositionOf('friend-12')).toEqual(life.positionOf('friend-12'));
+    life.tick(0, 0, true, true);
+    expect(life.positionOf('friend-12')).toBeUndefined();
+    expect(life.focusPositionOf('friend-12')).toEqual(layout.point({ x: 6, z: 3 }));
+    expect(life.focusPositionOf('unknown')).toBeUndefined();
+    expect(life.actorIds()).toEqual(ids);
+    expect(state).toEqual(before);
+    life.dispose(); layer.dispose(); m.dispose();
 });
 
 

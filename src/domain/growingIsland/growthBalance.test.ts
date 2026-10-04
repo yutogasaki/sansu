@@ -2,10 +2,29 @@ import { describe, expect, it } from 'vitest';
 import { applyIntent } from './commands';
 import { refreshUnlocks } from './community';
 import { newIsland } from './island';
-import { advancePier, boatInterval } from './pier';
+import { advancePier, boatInterval, boatProgress } from './pier';
 import { openTown } from './town';
 
 describe('growth pacing with existing rights', () => {
+    it('shows the actual saved crossing fraction for old and new boats without changing the save', () => {
+        const state = applyIntent(newIsland('progress', 0), { id: 'first', command: { type: 'plant', kind: 'home', cell: { x: 1, z: 3 } } }).state;
+        for (const interval of [26, 50]) {
+            state.pier.dockAt = interval;
+            state.town.clock = 0;
+            expect(boatProgress(state)).toBe(0);
+            state.town.clock = interval / 2;
+            const before = structuredClone(state);
+            expect(boatProgress(state)).toBe(.5);
+            expect(state).toEqual(before);
+            state.town.clock = interval;
+            expect(boatProgress(state)).toBe(1);
+        }
+        // Arrival records need not be stored in chronological order.
+        state.villagers.unshift({ ...state.villagers[0], id: 'later', arrivedAt: 50 });
+        state.pier.dockAt = 102; state.town.clock = 76;
+        expect(boatProgress(state)).toBe(.5);
+    });
+
     it('retains a saved crossing and uses the new interval only after arrival', () => {
         const state = newIsland('old-boat', 0);
         state.tutorial = 'done';

@@ -166,6 +166,37 @@ try {
         assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
         assert.deepEqual(errors, []);
         report.scenarios.push({ viewport, name: 'explicit-v1-save-migration-three-directions-banked-time', pass: true });
+
+        // A legal late-game population is explicit diagnostic data, not acquired growth.
+        await page.evaluate(async id => {
+            const { growingDb } = await import('/src/domain/growingIsland/repository.ts');
+            const record = await growingDb.islands.get(id), prototype = record.state.villagers[0];
+            const home = record.state.plots.find(p => p.kind === 'home');
+            record.state.town.bank = 0;
+            record.state.plots.push(...Array.from({ length: 7 }, (_, i) => ({ ...home, id: `qa-focus-home-${i}`, stage: 3, cell: { x: -6 + i, z: 5 } })));
+            record.state.villagers = Array.from({ length: 13 }, (_, i) => ({ ...prototype, id: `qa-focus-friend-${i}`, home: `qa-focus-home-${Math.floor(i / 2)}`, arrivedAt: i,
+                name: i === 0 ? 'みつけたいこ' : `なかま${i}` }));
+            record.state.arrivals = [];
+            await growingDb.islands.put(record);
+        }, id);
+        await page.reload(); await ready(page);
+        const beforeFocus = await read(page, id), nativeBeforeFocus = await readNative(page, id);
+        await page.getByRole('button', { name: 'メニュー', exact: true }).tap();
+        await page.getByRole('button', { name: 'なかま', exact: true }).tap();
+        await page.locator('.growing-friends').getByRole('button', { name: /みつけたいこ/ }).tap();
+        await page.locator('.growing-sheet').getByText('みつけたいこ', { exact: true }).waitFor();
+        await page.waitForFunction(() => document.querySelector('[data-growing-world]')?.dataset.growingFocus === 'qa-focus-friend-0');
+        assert.deepEqual(JSON.parse(await page.locator('[data-growing-world]').getAttribute('data-growing-focus-cell')), { x: -6, z: 5 });
+        await page.waitForTimeout(800); await capture(page, 'indoor-friend-focus');
+        const focused = await read(page, id);
+        for (const key of ['drops', 'plots', 'landmarks', 'keepsakes', 'villagers', 'town', 'land', 'learned', 'unlocked']) assert.deepEqual(focused.state[key], beforeFocus.state[key]);
+        await page.locator('.growing-sheet').getByRole('button', { name: 'とじる', exact: true }).tap();
+        await page.locator('.island-shell-tab--learn').tap(); await page.locator('[data-input-ready="true"]').waitFor();
+        const nativeAfterFocus = await readNative(page, id);
+        assert.equal(nativeAfterFocus.plan.id, nativeBeforeFocus.plan.id);
+        assert.equal(nativeAfterFocus.plan.cursor, nativeBeforeFocus.plan.cursor);
+        assert.deepEqual(errors, []);
+        report.scenarios.push({ viewport, name: 'explicit-thirteen-residents-select-indoor-home-preserve-save-resume-learning', pass: true });
         await context.close();
     }
     report.finalSources = await sources();

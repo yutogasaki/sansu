@@ -51,8 +51,11 @@ export const docked = (state: GrowingState, hour = state.town.clock) => hour >= 
 /** How close the boat is, 0 far away to 1 at the pier. Learning moves it closer. */
 export function boatProgress(state: GrowingState) {
     if (docked(state)) return 1;
-    const interval = boatInterval(state.villagers.length - 1);
-    return Math.max(0, Math.min(1, 1 - (state.pier.dockAt - state.town.clock) / interval));
+    // This crossing began when the previous resident arrived. Its saved deadline may
+    // use an older balance; rendering must not substitute today's boat interval.
+    const sailedAt = state.villagers.reduce((latest, v) => Math.max(latest, v.arrivedAt), 0);
+    const interval = state.pier.dockAt - sailedAt;
+    return interval > 0 ? Math.max(0, Math.min(1, (state.town.clock - sailedAt) / interval)) : 0;
 }
 
 /**

@@ -144,11 +144,13 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             },
             concert: (cell, receipt) => { world.life.startConcert(cell, performance.now()); pendingConcert = receipt; },
             focus: id => {
-                const target = world.life.positionOf(id) ?? layer?.objects.get(id)?.position; if (!target) return;
+                const target = world.life.focusPositionOf(id) ?? layer?.objects.get(id)?.position; if (!target) return;
                 view.zoom = Math.max(view.zoom, 2.2);
                 const home = frameCamera(camera, layout, { ...view, pan: { x: 0, z: 0 } }, width / height);
                 view.pan = { x: target.x - home.x, z: target.z - home.z };
                 frameCamera(camera, layout, view, width / height);
+                node.dataset.growingFocus = id;
+                node.dataset.growingFocusCell = JSON.stringify(layout.cellAt(target));
             },
             festival: () => {
                 const now = performance.now();

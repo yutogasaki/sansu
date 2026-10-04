@@ -150,6 +150,14 @@ export class GrowingLife {
 
     positionOf(id: string) { const w = this.walkers.get(id); return w?.actor.root.visible ? w.actor.root.position.clone() : undefined; }
 
+    /** Every real resident remains findable, including friends indoors or away. */
+    focusPositionOf(id: string) {
+        const visible = this.positionOf(id);
+        if (visible) return visible;
+        const friend = this.state?.villagers.find(v => v.id === id);
+        return friend && this.state && this.layout ? this.layout.point(homeCellOf(this.state, friend)) : undefined;
+    }
+
     positions() { return [...this.walkers.values()].filter(w => w.actor.root.visible).map(w => w.actor.root.position.clone()); }
 
     pick(id: string) {
