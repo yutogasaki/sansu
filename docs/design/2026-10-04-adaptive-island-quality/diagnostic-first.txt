@@ -1,0 +1,11 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.waitForFunction: Timeout 45000ms exceeded.
+    at ratio (/private/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-adaptive-8kcizrg4/tools/e2e-island-adaptive-quality.mjs:17:43)
+    at /private/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-adaptive-8kcizrg4/tools/e2e-island-adaptive-quality.mjs:64:137 {
+  name: 'TimeoutError'
+}
+
+Node.js v24.14.0

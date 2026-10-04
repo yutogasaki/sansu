@@ -90,6 +90,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     const navigate = useNavigate();
     const [worldStep, setWorldStep] = useState<LoadingStep | 'ready' | 'failed'>('world');
     const [worldAttempt, setWorldAttempt] = useState(0);
+    const [qualityCeiling, setQualityCeiling] = useState(1.25);
     const [graphicsFailure, setGraphicsFailure] = useState<string>();
     const waitingForWorld = Boolean(own) && worldStep !== 'ready';
     useEffect(() => {
@@ -337,9 +338,11 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         finally { setVisitSaving(false); }
     };
 
-    const world = <GrowingWorld key={worldAttempt} compact={worldAttempt > 0} state={state} time={time} ghost={visit ? undefined : ghost} selectedId={visit ? undefined : selected} turn={turn} cheer={cheer} festival={festival}
+    const world = <GrowingWorld key={worldAttempt} active={active} compact={worldAttempt > 0} qualityCeiling={qualityCeiling} state={state} time={time} ghost={visit ? undefined : ghost} selectedId={visit ? undefined : selected} turn={turn} cheer={cheer} festival={festival}
         hints={visit ? [] : hints} moment={visit ? undefined : moment} show={show} focus={focus} concert={concert} onCamera={c => { camera.current = c; }}
-        onPop={() => audio.play('glass')} onStage={setWorldStep} onFailure={setGraphicsFailure}
+        onPop={() => audio.play('glass')} onStage={setWorldStep} onFailure={setGraphicsFailure} onQualityFallback={ceiling => {
+            setQualityCeiling(previous => Math.min(previous, ceiling)); setWorldStep('world'); setWorldAttempt(value => value + 1);
+        }}
         onConcertStarted={receipt => { const id = ownConcertReceipt(profileId, Boolean(visit), receipt, concert); if (id) void island.acknowledge('concert-started', id); }}
         onCell={cell => { void audio.unlock(); if (visit) return; setMenu(false); if (placing) setPlacing({ ...placing, cell }); else setLine(undefined); }}
         onSelect={id => {

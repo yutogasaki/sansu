@@ -12,6 +12,7 @@ import { WorldEffects } from './worldEffects';
 import type { SceneLayout } from './sceneLayout';
 import { menuPictureMaker, type MenuPictures } from './menuMiniatures';
 import { growingHitTarget } from './growingHitTarget';
+import { AdaptiveIslandQuality } from '../three/adaptiveIslandQuality';
 import { createIslandRenderer } from '../three/createIslandRenderer';
 
 export interface WorldHandlers {
@@ -23,6 +24,7 @@ export interface WorldHandlers {
     onPop?: () => void;
     /** The world's own loading steps: the scene is built, then the first picture is on screen. */
     onStage?: (stage: 'scene' | 'ready' | 'failed') => void;
+    onQualityFallback?: (ceiling: number) => void;
     onFailure?: (detail: string) => void;
     onConcertStarted?: (receipt: number) => void;
 }
@@ -35,19 +37,19 @@ export interface WorldCamera {
 export interface ShownMoment { id: number; moment: Moment; cell?: Cell }
 /** `cheer` makes the waiting friend jump (a home seed was planted); `festival` celebrates a new level. */
 type Props = WorldHandlers & { state: GrowingState; time: GardenTime; ghost?: Ghost; selectedId?: string; turn: number; cheer: number; festival: number;
-    hints?: readonly Cell[]; moment?: ShownMoment; show?: boolean; compact?: boolean; focus?: { id: string; n: number }; concert?: { cell: Cell; n: number }; onCamera?: (camera?: WorldCamera) => void };
+    hints?: readonly Cell[]; moment?: ShownMoment; show?: boolean; active?: boolean; compact?: boolean; qualityCeiling?: number; focus?: { id: string; n: number }; concert?: { cell: Cell; n: number }; onCamera?: (camera?: WorldCamera) => void };
 
 const reducedMotion = () => typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-export default function GrowingWorld({ state, time, ghost, selectedId, turn, cheer, festival, hints, moment, show, compact, focus, concert, onCamera, ...handlers }: Props) {
+export default function GrowingWorld({ state, time, ghost, selectedId, turn, cheer, festival, hints, moment, show, active = true, compact, qualityCeiling = 1.25, focus, concert, onCamera, ...handlers }: Props) {
     const host = useRef<HTMLDivElement>(null);
     const handlerRef = useRef(handlers);
     useEffect(() => { handlerRef.current = handlers; });
     const api = useRef<{ rebuild: (state: GrowingState, ghost?: Ghost, selectedId?: string, hints?: readonly Cell[]) => void; setTime: (time: GardenTime) => void; turn: (by: number) => void;
         cheer: () => void; festival: () => void; moment: (m: ShownMoment) => void; focus: (id: string) => void; concert: (cell: Cell, receipt: number) => void } | undefined>(undefined);
     const [failed, setFailed] = useState(false);
-    const latest = useRef({ state, ghost, selectedId, time, hints, show });
-    useEffect(() => { latest.current = { state, ghost, selectedId, time, hints, show }; });
+    const latest = useRef({ state, ghost, selectedId, time, hints, show, active });
+    useEffect(() => { latest.current = { state, ghost, selectedId, time, hints, show, active }; });
     const cameraRef = useRef(onCamera);
     useEffect(() => { cameraRef.current = onCamera; });
 
@@ -60,6 +62,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             handlerRef.current.onFailure?.(`initialization: ${error instanceof Error ? error.message : String(error)}`);
             setFailed(true); handlerRef.current.onStage?.('failed'); return;
         }
+        const quality = light ? new AdaptiveIslandQuality(Math.min(qualityCeiling, window.devicePixelRatio || 1)) : undefined;
         let frame = 0, lost = false, released = false;
         const disposers: (() => void)[] = [() => { renderer.dispose(); renderer.forceContextLoss(); renderer.domElement.remove(); }];
         const release = () => {
@@ -71,13 +74,20 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             if (lost) return;
             lost = true;
             handlerRef.current.onFailure?.(`${stage} (${renderer.domElement.dataset.graphicsQuality}): ${error instanceof Error ? error.message : String(error ?? 'WebGL2 context lost')}`);
-            release(); setFailed(true); handlerRef.current.onStage?.('failed');
+            const ceiling = quality?.fallbackCeiling();
+            release();
+            if (ceiling !== undefined && handlerRef.current.onQualityFallback) {
+                handlerRef.current.onQualityFallback(ceiling); return;
+            }
+            setFailed(true); handlerRef.current.onStage?.('failed');
         };
         const contextLost = (event: Event) => { event.preventDefault(); fail('context-lost'); };
         renderer.domElement.addEventListener('webglcontextlost', contextLost);
         disposers.push(() => renderer.domElement.removeEventListener('webglcontextlost', contextLost));
         try {
-        renderer.setPixelRatio(recovery ? .65 : light ? 1 : Math.min(window.devicePixelRatio || 1, 1.5));
+        renderer.setPixelRatio(quality?.ratio ?? Math.min(window.devicePixelRatio || 1, 1.5));
+        renderer.domElement.dataset.pixelRatio = String(renderer.getPixelRatio());
+        renderer.domElement.dataset.qualityCeiling = String(qualityCeiling);
         renderer.outputColorSpace = T.SRGBColorSpace; renderer.shadowMap.enabled = !light; renderer.shadowMap.type = T.PCFSoftShadowMap;
         renderer.domElement.dataset.graphicsQuality = recovery ? 'recovery' : light ? 'compact' : 'standard';
         renderer.toneMapping = T.ACESFilmicToneMapping;
@@ -118,7 +128,9 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             frameCamera(camera, layout, view, width / height);
         };
         const resize = () => {
-            width = Math.max(1, node.clientWidth); height = Math.max(1, node.clientHeight);
+            const nextWidth = Math.max(1, node.clientWidth), nextHeight = Math.max(1, node.clientHeight);
+            if (nextWidth !== width || nextHeight !== height) quality?.reset();
+            width = nextWidth; height = nextHeight;
             renderer.setSize(width, height, false);
             frameCamera(camera, layout, view, width / height);
         };
@@ -221,7 +233,13 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             moments.ambient(now, latest.current.time === 'night', current.landmarks.filter(l => l.cell && (l.kind === 'lantern' || l.kind === 'lighthouse')).length, camera.position.clone().setY(0), reduced);
             moments.tick(now);
             world.animate(now, reduced);
-            try { renderer.render(world.scene, camera); } catch (error) { fail('render', error); return; }
+            try {
+                const ratio = quality?.sample(now, latest.current.active && width > 1 && height > 1 && document.visibilityState === 'visible');
+                if (ratio !== undefined && ratio !== renderer.getPixelRatio()) renderer.setPixelRatio(ratio);
+                renderer.domElement.dataset.pixelRatio = String(renderer.getPixelRatio());
+                if (quality) renderer.domElement.dataset.qualityLimit = String(quality.ceilingRatio);
+                renderer.render(world.scene, camera);
+            } catch (error) { fail('render', error); return; }
             if (renderer.getContext().isContextLost()) { fail('context-lost'); return; }
             if (pendingConcert !== undefined && document.visibilityState === 'visible') {
                 const receipt = pendingConcert; pendingConcert = undefined;
