@@ -10,6 +10,7 @@ They are for deploy, release, recovery, and maintenance workflows.
 - [3d-asset-pipeline.md](3d-asset-pipeline.md)
 - [backlog-triage.md](backlog-triage.md)
 - [growing-verification.md](growing-verification.md)
+- [差分から検証を選ぶ](verification-plan.md)
 - [pwa-release.md](pwa-release.md)
 - [release-checklist.md](release-checklist.md)
 - [schema-migration.md](schema-migration.md)

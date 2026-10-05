@@ -33,6 +33,7 @@
         "test:run": "vitest run",
         "verify:core": "npm run docs:check && npm run check:current-ui-entry && npm run lint && npm run typecheck && npm run test:run && npm run build",
         "verify:growing": "node tools/verify-growing.mjs",
+        "verify:plan": "node tools/verification-plan.mjs",
         "verify:release": "VITE_ISLAND_ENABLED=false VITE_BUILD_PLAY_ENABLED=false npm run verify:core && npm run e2e:smoke && npm run e2e:pwa-update && npm run e2e:pwa-two-build",
         "preview": "vite preview",
         "e2e:smoke": "node tools/e2e-smoke.mjs",

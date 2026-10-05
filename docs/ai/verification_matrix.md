@@ -122,6 +122,8 @@ Islandの画面captureは `tools/island-e2e-helpers.mjs` の `runtimeMetadata` �
 
 | Change Type | Required Checks | Manual Checks | Notes |
 |---|---|---|---|
+| Verification tooling / test harness | `npm run verify:core` | 実際の変更CLI/harnessを想定入力・対象・flagで実行し、失敗分岐も確認 | 案内やplan出力は実検証のPASSではない。共有作業ツリーとコミット対象を区別する |
+| App routing | `npm run verify:core`, `npm run e2e:smoke` | 現行Island入口・直リンク・履歴戻る/進む・同じ学習予約への復帰を確認 | Storage/PWA/各モードの変更は該当行も適用。classicのPASSをGrowingへ流用しない |
 | Docs only | `npm run docs:check` | Read-through for role/tone sanity | No app build required unless behavior text changed |
 | Copy or content only | `npm run lint`, `npm run build` | Affected screen wording | Check tone for child/parent UX |
 | Shared UI component | `npm run lint`, `npm run typecheck`, `npm run test:run`, `npm run build` | Desktop + mobile layout sanity | Prefer screenshot or visual notes |
@@ -152,6 +154,8 @@ Islandの画面captureは `tools/island-e2e-helpers.mjs` の `runtimeMetadata` �
 If a task spans more than one change type, use the stricter row.
 
 ## Shortcut Commands
+
+- `npm run verify:plan`: Git差分から本表の必要チェック・手動確認・関連仕様を案内する。[差分から検証を選ぶ手順](../runbooks/verification-plan.md)。未分類はcoreと分類確認を要求し、検査の実行/PASS/公開判定は行わない。
 
 - `npm run verify:growing` は[育つ島の検証入口](../runbooks/growing-verification.md)。作業ツリーの隔離候補にcore/classic smoke/Growing本番形式の実回答・購入・本・保存・実SW offlineを適用して結果を集約する。exit 0は組込チェックのPASSで、Growing two-build更新/中断復旧/旧writer/実機/視覚・理解・再訪の未検証を含む公開判定はPARTIAL。`verify:release` は引き続きclassic専用である。
 
