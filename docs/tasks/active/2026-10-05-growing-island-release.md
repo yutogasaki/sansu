@@ -8,7 +8,7 @@
 
 ## 現在地と範囲
 
-棚卸し時のHEADは `7eda1fd9`。その後、検証運用のmain `10515403` を基点にプロフィール切替/active IDの保存修正、保護者設定、橋と棚卸しを統合候補へ固定した。隔離core4,735と新buildのGrowing本人切替両幅PASS。既存smoke/Growing/橋UIは同一入力を照合して既存結果へ帰属させる。詳細は `docs/done/2026-10.md` とローカル `output/integration-index*.json`。各変更の検証を最新公開版の合格とは扱わない。
+棚卸し時のHEADは `7eda1fd9`。その後、プロフィール切替/active IDの保存修正、保護者設定、橋と棚卸しをmain `2c9e4850` へコミット・pushした。隔離core4,735と新buildのGrowing本人切替両幅PASS。既存smoke/Growing/橋UIは同一入力を照合して既存結果へ帰属させる。詳細は `docs/done/2026-10.md` とローカル `output/integration-index*.json`。各変更の検証を最新公開版の合格とは扱わない。
 
 - [橋の統合](../../design/2026-10-05-growing-bridge/production.md)：既存変更を含むcore4,705・smoke・経済両幅・橋3サイズPASS。本番SW/two-build/実機は未実施。
 - [保護者設定](../../design/2026-10-04-parent-settings/README.md)：共有ツリーでcore4,700、classic smoke30/31＋対象2件の再実行PASS。修正後の全31件の再実行ではない。

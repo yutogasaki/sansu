@@ -132,6 +132,7 @@
 | [検証マトリクス](ai/verification_matrix.md) | 変更種類ごとの必須確認 |
 | [育つ島の検証入口](runbooks/growing-verification.md) | `npm run verify:growing` で隔離候補の自動検査と結果集約 |
 | [差分から検証を選ぶ](runbooks/verification-plan.md) | Git差分から必要チェック・仕様・手動確認を案内 |
+| [育つ島の固定検証データ](runbooks/growing-fixtures.md) | 初期/育ち途中/混雑を同じ保存から再現してUIを比較 |
 | [リリース手順](runbooks/release-checklist.md) | リリース前の確認 |
 | [PWAリリース手順](runbooks/pwa-release.md) | 更新、オフライン、データ保持 |
 | [保存移行手順](runbooks/schema-migration.md) | Dexieや保存形式を変えるとき |

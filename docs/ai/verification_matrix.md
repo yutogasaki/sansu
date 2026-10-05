@@ -156,6 +156,8 @@ If a task spans more than one change type, use the stricter row.
 
 ## Shortcut Commands
 
+- `npm run fixtures:growing` / `npm run e2e:growing-fixtures`: [固定QA保存の生成/再利用/撮影](../runbooks/growing-fixtures.md)。初期・育ち途中・13住人40品の同じpayloadで390/768幅を比較し、所有/座標/人口と学習正本を照合する。固定時計と合成資産の診断で、実獲得/実機FPS/公開のPASSへ流用しない。
+
 - `npm run verify:plan`: Git差分から本表の必要チェック・手動確認・関連仕様を案内する。[差分から検証を選ぶ手順](../runbooks/verification-plan.md)。未分類はcoreと分類確認を要求し、検査の実行/PASS/公開判定は行わない。
 
 - `npm run verify:growing` は[育つ島の検証入口](../runbooks/growing-verification.md)。作業ツリーの隔離候補にcore/classic smoke/Growing本番形式の実回答・購入・本・保存・実SW offlineを適用して結果を集約する。exit 0は組込チェックのPASSで、Growing two-build更新/中断復旧/旧writer/実機/視覚・理解・再訪の未検証を含む公開判定はPARTIAL。`verify:release` は引き続きclassic専用である。
