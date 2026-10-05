@@ -13,6 +13,19 @@
 - 各ケースを390/768幅で復元。固定日時（Asia/Tokyo、音off、tablet reduced motion）の明示診断でhome画面を撮影し、reload後の所有/人口/土地/時計と学習正本の不変を確認する。各幅/ケースのsource pack/hash、build revision/flags、画像・native保存を新規outputへ残す。
 - viewportエミュレーションと固定時計の診断。実FPS/実機/実獲得/offline更新/子どもの理解/再訪の合格にはしない。runtimeのfixture再現、視覚的魅力、理解/安全は独立し、後二つは未評価とする。
 
+## 1コマンドで候補を撮影する
+
+```bash
+npm run snapshot:growing
+npm run snapshot:growing -- --fixtures /absolute/path/to/pack/fixtures.json --before /absolute/path/to/before/report.json --output-dir /absolute/path/to/new-snapshot
+```
+
+作業ツリー（未コミットを含む）をwatch対象外へ固定し、build入力archive/hashを保存。Growingのflagsとrevisionを指定してbuildし、専用loopback previewで6画面を撮影する。`--fixtures` がなければ新しいpackを生成し、指定時は元のpackを照合してコピーする。`--before` は同じ `--fixtures` と組み合わせ、撮影後に横並び比較を作る。前版のreport/PNG/native原本も実行前後の不変を確認する。
+
+新規outputだけを使用し、repo内ならignoreされた `output/` 配下へ置く。既存のdistやpreview、利用中browserは使用しない。終了・失敗・SIGINT/SIGTERM時に自分のpreview/子processと一時コピーを片付け、ログ/pack/画像/子report・入力archiveを残す。中断やcleanup失敗ではPASSにせず、後続を止める。版と配信version、候補/生成物の実行前後一致を照合する。
+
+`report.json` / `summary.md` に撮影結果、比較の有無、cleanupと未評価項目を記録する。build/撮影用の診断コマンドで、`verify:core` や実取得/PWA更新/美術/子ども/公開の合格を代行しない。比較を指定しなければ `comparisonIntegrity` は未評価。
+
 ## Usage
 
 ```bash
@@ -41,4 +54,4 @@ PNG/native保存の撮影時hashがない旧reportは再撮影する。比較中
 
 ## Verification
 
-packの決定性、現在の保存への読込、配置/住宅/人口の整合、hash破損・owner混在・学習履歴/版/生成source不一致の拒否を回帰で確認する。tooling行のcoreと、新しいpack/同じpackの再利用・6ケースの本番形式撮影を実行する。比較では実撮影2組をCLIへ入力し、横並びの12画像と版情報をブラウザで確認する。欠落/破損/条件不一致/別owner/旧report/上書き/path escapeの拒否を検査する。生成・復元・比較が成功しただけで公開の合格としない。
+packの決定性、現在の保存への読込、配置/住宅/人口の整合、hash破損・owner混在・学習履歴/版/生成source不一致の拒否を回帰で確認する。tooling行のcoreと、新しいpack/同じpackの再利用・6ケースの本番形式撮影を実行する。snapshotでは生成packと既存pack/前版の2経路、既存output/旧reportの拒否、失敗/中断のprocess cleanupを検査する。比較では実撮影2組をCLIへ入力し、横並びの12画像と版情報をブラウザで確認する。欠落/破損/条件不一致/別owner/旧report/上書き/path escapeの拒否を検査する。生成・復元・比較が成功しただけで公開の合格としない。

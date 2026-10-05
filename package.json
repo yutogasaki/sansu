@@ -37,6 +37,7 @@
         "fixtures:growing": "node tools/growing-fixture-data.mjs",
         "e2e:growing-fixtures": "node tools/e2e-growing-fixtures.mjs",
         "compare:growing-fixtures": "node tools/compare-growing-fixtures.mjs",
+        "snapshot:growing": "node tools/snapshot-growing.mjs",
         "verify:release": "VITE_ISLAND_ENABLED=false VITE_BUILD_PLAY_ENABLED=false npm run verify:core && npm run e2e:smoke && npm run e2e:pwa-update && npm run e2e:pwa-two-build",
         "preview": "vite preview",
         "e2e:smoke": "node tools/e2e-smoke.mjs",

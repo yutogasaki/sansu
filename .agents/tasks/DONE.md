@@ -1,5 +1,7 @@
 # Shared Done Index
 
+- 2026-10-05: [固定QA撮影を1コマンドへ](../../docs/runbooks/growing-fixtures.md)。snapshot:growingで隔離/build/preview/新規または既存pack/撮影/任意比較/cleanupを集約。core4,780、実12撮影/6組比較、旧report拒否とSIGINT中断の後始末PASS。合成診断で公開/実機/美術/子どもは別評価。詳細: `docs/done/2026-10.md`。
+
 - 2026-10-05: [固定QA保存の2版比較](../../docs/runbooks/growing-fixtures.md)を追加。撮影時の画像/native hash・所有/条件/版を照合し、6組を横並び表示。隔離core4,768、実12撮影/比較CLI/browser PASS。一時通知や動作の位相、美術/理解/公開は別評価。詳細: `docs/done/2026-10.md`。
 
 - 2026-10-05: [育つ島の固定QA保存](../../docs/runbooks/growing-fixtures.md)と撮影コマンドを追加。初期/途中/混雑の同じpackを2つの実build・12画面で再利用し、隔離core4,743 tests PASS。合成データの診断で、公開/実機/子どもの評価は別。詳細: `docs/done/2026-10.md`。

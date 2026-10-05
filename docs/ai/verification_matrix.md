@@ -156,7 +156,7 @@ If a task spans more than one change type, use the stricter row.
 
 ## Shortcut Commands
 
-- `npm run fixtures:growing` / `npm run e2e:growing-fixtures` / `npm run compare:growing-fixtures`: [固定QA保存の生成/再利用/撮影](../runbooks/growing-fixtures.md)。初期・育ち途中・13住人40品の同じpayloadで390/768幅を撮影・横並び比較し、撮影時の画像/native SHA・所有/座標/人口・学習正本・版/flag/条件を照合する。固定時計と合成資産の診断で、実獲得/実機FPS/公開のPASSへ流用しない。
+- `npm run snapshot:growing` / `npm run fixtures:growing` / `npm run e2e:growing-fixtures` / `npm run compare:growing-fixtures`: [固定QA保存の生成/再利用/撮影](../runbooks/growing-fixtures.md)。snapshotは隔離build/preview/撮影/任意比較とcleanupを集約する診断で、coreを代行しない。初期・育ち途中・13住人40品の同じpayloadで390/768幅を撮影・横並び比較し、撮影時の画像/native SHA・所有/座標/人口・学習正本・版/flag/条件を照合する。固定時計と合成資産の診断で、実獲得/実機FPS/公開のPASSへ流用しない。
 
 - `npm run verify:plan`: Git差分から本表の必要チェック・手動確認・関連仕様を案内する。[差分から検証を選ぶ手順](../runbooks/verification-plan.md)。未分類はcoreと分類確認を要求し、検査の実行/PASS/公開判定は行わない。
 
