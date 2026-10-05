@@ -6,6 +6,7 @@ import { chromium } from 'playwright';
 import { hash, loadDomain, ownedState, stableJSON, validatePack } from './growing-fixture-data.mjs';
 import { readNative, runtimeMetadata } from './island-e2e-helpers.mjs';
 import { digestFiles } from './verify-growing.mjs';
+import { CAPTURE_SCHEMA, captureConditions } from './growing-fixture-evidence.mjs';
 
 export function parseOptions(args) {
     const options = {};
@@ -82,11 +83,11 @@ export async function main(args = process.argv.slice(2)) {
     assert(typeof version.version === 'string' && version.version && typeof version.revision === 'string' && version.revision, 'Build identity required');
     assert.equal(version.island?.enabled, true); assert.equal(version.delivery, 'snap-root-v1');
     const buildFiles = await files(options.build), initialBuild = await digestFiles(options.build, buildFiles);
-    const qaFiles = ['tools/e2e-growing-fixtures.mjs', 'tools/growing-fixture-data.mjs', 'tools/island-e2e-helpers.mjs', 'tools/verify-growing.mjs', 'package.json'];
+    const qaFiles = ['tools/e2e-growing-fixtures.mjs', 'tools/growing-fixture-data.mjs', 'tools/growing-fixture-evidence.mjs', 'tools/island-e2e-helpers.mjs', 'tools/verify-growing.mjs', 'package.json'];
     const initialQA = await digestFiles(process.cwd(), qaFiles);
     await fs.mkdir(path.dirname(options.output), { recursive: true });
     await fs.mkdir(options.output, { recursive: false });
-    const report = { target: options.base, version, payloadHash: pack.payloadHash, sourceHash: pack.sourceHash,
+    const report = { schema: CAPTURE_SCHEMA, conditions: captureConditions(pack), target: options.base, version, payloadHash: pack.payloadHash, sourceHash: pack.sourceHash,
         scope: 'Explicit synthetic Growing saves, fixed Date/Asia-Tokyo, fresh Chromium contexts. No earned learning, device/FPS, offline update or child evaluation.',
         fixtures: options.fixtures, initialBuild, initialQA, cases: [], pass: false,
         gates: { fixtureRuntime: 'NOT_EVALUATED', visualAppeal: 'NOT_EVALUATED', comprehensionSafety: 'NOT_EVALUATED' } };
@@ -94,7 +95,7 @@ export async function main(args = process.argv.slice(2)) {
     try {
         for (const item of pack.cases) for (const width of [390, 768]) {
             const context = await browser.newContext({ viewport: { width, height: width === 390 ? 844 : 1024 }, timezoneId: pack.timezone,
-                reducedMotion: width === 768 ? 'reduce' : 'no-preference', hasTouch: true });
+                reducedMotion: width === 768 ? 'reduce' : 'no-preference', hasTouch: true, deviceScaleFactor: 1 });
             const page = await context.newPage(), errors = [];
             page.setDefaultTimeout(30000); page.on('pageerror', error => errors.push(error.message));
             try {
@@ -108,7 +109,7 @@ export async function main(args = process.argv.slice(2)) {
                 const before = await islandRecord(page, item.profile.id), learning = await readNative(page, item.profile.id);
                 assert.equal(stableJSON(ownedState(before.state)), stableJSON(ownedState(item.island.state)), 'Fixture changed while opening');
                 await page.waitForTimeout(800);
-                const file = `${item.id}-${width}.png`; await page.screenshot({ path: path.join(options.output, file) });
+                const file = `${item.id}-${width}.png`, imageHash = hash(await page.screenshot({ path: path.join(options.output, file) }));
                 const metadata = await runtimeMetadata(page);
                 assert.equal(metadata.version, version.version); assert.equal(metadata.revision, version.revision);
                 assert.equal(metadata.appRoot.version, version.version); assert.equal(metadata.appRoot.islandFeatureEnabled, true);
@@ -121,9 +122,11 @@ export async function main(args = process.argv.slice(2)) {
                 assert.equal(stableJSON(ownedState(after.state)), stableJSON(ownedState(before.state)), 'Fixture changed after reload');
                 assert.equal(stableJSON(await readNative(page, item.profile.id)), stableJSON(learning), 'Learning stores changed while viewing fixture');
                 assert.deepEqual(errors, []);
-                await fs.writeFile(path.join(options.output, `${item.id}-${width}-native.json`), JSON.stringify({ before, after, learning }, null, 2));
+                const nativeFile = `${item.id}-${width}-native.json`;
+                const nativeBytes = JSON.stringify({ before, after, learning }, null, 2), nativeHash = hash(nativeBytes);
+                await fs.writeFile(path.join(options.output, nativeFile), nativeBytes);
                 report.cases.push({ id: item.id, width, file, metadata, visualCandidate: 'growing-island-v1', payloadHash: pack.payloadHash,
-                    objects: after.state.plots.length + after.state.landmarks.length, population: after.state.villagers.length, pass: true });
+                    nativeFile, imageHash, nativeHash, growingFeatureEnabled: true, objects: after.state.plots.length + after.state.landmarks.length, population: after.state.villagers.length, pass: true });
             } catch (error) {
                 report.failure = { id: item.id, width, url: page.url(), error: String(error.stack || error), errors,
                     screen: await page.locator('body').innerText().catch(() => 'unavailable') };
@@ -135,6 +138,10 @@ export async function main(args = process.argv.slice(2)) {
         assert.equal(hash(await fs.readFile(options.fixtures)), hash(fixtureBytes), 'Fixture pack changed during capture');
         assert.equal((await loadDomain()).sourceHash, loaded.sourceHash, 'Domain inputs changed during capture');
         assert.deepEqual(await digestFiles(process.cwd(), qaFiles), initialQA, 'QA inputs changed during capture');
+        for (const item of report.cases) {
+            assert.equal(hash(await fs.readFile(path.join(options.output, item.file))), item.imageHash, 'Capture image changed');
+            assert.equal(hash(await fs.readFile(path.join(options.output, item.nativeFile))), item.nativeHash, 'Capture native evidence changed');
+        }
         report.pass = true; report.gates.fixtureRuntime = 'PASS';
     } catch (error) {
         report.gates.fixtureRuntime = 'FAIL'; report.error = String(error.stack || error); throw error;

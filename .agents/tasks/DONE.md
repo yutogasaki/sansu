@@ -1,5 +1,7 @@
 # Shared Done Index
 
+- 2026-10-05: [固定QA保存の2版比較](../../docs/runbooks/growing-fixtures.md)を追加。撮影時の画像/native hash・所有/条件/版を照合し、6組を横並び表示。隔離core4,768、実12撮影/比較CLI/browser PASS。一時通知や動作の位相、美術/理解/公開は別評価。詳細: `docs/done/2026-10.md`。
+
 - 2026-10-05: [育つ島の固定QA保存](../../docs/runbooks/growing-fixtures.md)と撮影コマンドを追加。初期/途中/混雑の同じpackを2つの実build・12画面で再利用し、隔離core4,743 tests PASS。合成データの診断で、公開/実機/子どもの評価は別。詳細: `docs/done/2026-10.md`。
 
 - 2026-10-05: 橋・本人切替/保存・保護者設定とタスク棚卸しをmain `2c9e4850` へコミット・push。隔離core4,735、Growing本番形式の本人切替両幅PASS。既存smoke/Growing旅程の入力同一を照合して記録を継承。公開/実機/利用者は別。詳細: `docs/done/2026-10.md`。
