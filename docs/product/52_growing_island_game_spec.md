@@ -1,5 +1,7 @@
 # 52 育つ島 — ゲーム仕様
 
+> 2026-10-06: [島runtimeの一本化](../adr/2026-10-06-single-island-runtime.md)により、ホームは育つ島だけを使う。旧Life/Home Journey/Nature Townの独立画面と起動コマンドを撤去する。以下の旧画面・flag・検証入口は当時の履歴であり、現行起動の指示ではない。旧DB・所有・学習・検証済み移行と共用モデルを保持する。
+
 - 仕様ID: `growing-island-v1`。版: **1.6 / 2026-10-04**（1日20問を基準に新規購入とまち時間を調整。繰り返す地区拡張・未使用時間の保持・実日の出来事・到達できる家/遊びを維持。互換境界は[バランスと保存契約](growing-island-balance.md)）
 - 状態: **設計確定・実装中。** 体験・規則・画面の形は本書で決める。数値は「初期値」で、実装した画面で遊んで調整する。調整しても §0 の体験と CONSTITUTION の安全の約束は変えない。実装の段階は[実装タスク](../tasks/active/2026-09-29-growing-island-v1.md)。
 - 北極星: [CONSTITUTION §1「育つ島」](../../CONSTITUTION.md)、[ADR](../adr/2026-09-29-north-star-growing-island.md)

@@ -9,8 +9,6 @@
     "scripts": {
         "dev": "npm run dev:island",
         "dev:classic": "VITE_ISLAND_ENABLED=false vite --host 127.0.0.1 --port 5201 --strictPort --open /#/explore",
-        "dev:home-journey": "VITE_ISLAND_ENABLED=true VITE_HOME_JOURNEY_PREVIEW=true vite --host 127.0.0.1 --port 5213",
-        "dev:island-life": "VITE_ISLAND_ENABLED=true VITE_ISLAND_LIFE_PREVIEW=true vite --host 127.0.0.1 --port 5223 --strictPort",
         "dev:island": "VITE_ISLAND_ENABLED=true vite --host 127.0.0.1 --port 5198 --strictPort --open /#/island",
         "dev:test-server": "vite",
         "e2e:island": "node tools/e2e-island.mjs",
@@ -51,14 +49,11 @@
         "e2e:pwa-two-build": "node tools/e2e-pwa-two-build.mjs",
         "benchmark:fixed-ten": "node tools/e2e-fixed-ten-throughput.mjs",
         "e2e:island-living": "node tools/e2e-island-living.mjs",
-        "dev:nature-town": "VITE_ISLAND_ENABLED=true VITE_NATURE_TOWN_ENABLED=true vite --host 127.0.0.1 --port 5233 --strictPort --open /#/nature-town",
         "agent:index": "node tools/generate-agent-index.mjs",
         "agent:index:check": "node tools/generate-agent-index.mjs --check",
         "e2e:island-food-loop": "node tools/e2e-island-food-loop.mjs",
         "e2e:island-water-channel": "node tools/e2e-island-water-channel.mjs",
-        "dev:island-fantasy": "VITE_ISLAND_ENABLED=true VITE_ISLAND_LIFE_PREVIEW=true VITE_ISLAND_FANTASY_ENABLED=true vite --host 127.0.0.1 --port 5230 --strictPort",
-        "dev:growing-island": "VITE_ISLAND_ENABLED=true VITE_ISLAND_LIFE_PREVIEW=true VITE_ISLAND_FANTASY_ENABLED=true VITE_GROWING_ISLAND_ENABLED=true vite --host 127.0.0.1 --port 5260 --strictPort",
-        "e2e:island-fantasy": "node tools/e2e-island-fantasy.mjs"
+        "dev:growing-island": "npm run dev:island"
     },
     "dependencies": {
         "@pdf-lib/fontkit": "^1.1.1",

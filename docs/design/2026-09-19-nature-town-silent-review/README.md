@@ -1,5 +1,7 @@
 # Nature Town SAFE-06：無説明での読み取り確認セット
 
+> この文書は当時の独立試作の検証記録。2026-10-06に旧画面・専用入口を撤去した。[現行の島](../../architecture/island-runtime.md)はGrowingであり、下記の旧URLやflagを現行候補の起動・受入へ使わない。
+
 2026-09-19。**実画面の取得PASS、独立観察は未実施（0人）**。SAFE-06はNOT_RUNのまま。
 
 ## 観察者に渡すもの
@@ -33,4 +35,4 @@
 - 無文字理解・安全: **未確認。参加者0人**。画像やARIAの機械検査で代替しない。
 - 見た目の魅力: **HOLD継続**。最終美術・全身受渡し演技は別途残る。
 
-[撮影script](../../../tools/e2e-nature-town-silent-review.mjs)。受入47件すべてのPASSやS1全体の完成を意味しない。[hash一覧](sha256.json)。
+[撮影script](https://github.com/yutogasaki/sansu/blob/6acabf8a885a35ec80ba337f272e5d8d31f696a0/tools/e2e-nature-town-silent-review.mjs)。受入47件すべてのPASSやS1全体の完成を意味しない。[hash一覧](sha256.json)。

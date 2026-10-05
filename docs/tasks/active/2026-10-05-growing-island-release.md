@@ -1,12 +1,14 @@
 # 最新変更を一つの公開候補へまとめる
 
-- 更新日: 2026-10-05
+- 更新日: 2026-10-06
 - Review By: 2026-10-12
 - 状態: 固定統合候補のcore/本人切替確認済み。公開URL・Growing更新/復旧・実機/利用者は未確認
 - 正本: [憲法](../../../CONSTITUTION.md)、[親仕様01](../../product/01_app_spec.md)、[ゲーム仕様52](../../product/52_growing_island_game_spec.md)、[保存13](../../product/13_data_storage_migration_spec.md)、[検証マトリクス](../../ai/verification_matrix.md)
 - 目的: 実装済み変更を重複して作らず、学習・島・家・本人切替・保護者・橋を同じ版で評価できる候補にまとめる。
 
 ## 現在地と範囲
+
+2026-10-06: [島runtimeの一本化](../../architecture/island-runtime.md)を追加。旧独立UIを撤去し、Growing/家/学習と旧保存互換を保持。隔離core4,756、smoke31、Growing本番形式の実SW offlineと通常/旧flag buildでの本人切替・履歴・同予約を確認。異なる設定の独立build検査であり、実SW two-build更新・公開URL・実機/実利用者の合格ではない。
 
 棚卸し時のHEADは `7eda1fd9`。その後、プロフィール切替/active IDの保存修正、保護者設定、橋と棚卸しをmain `2c9e4850` へコミット・pushした。隔離core4,735と新buildのGrowing本人切替両幅PASS。既存smoke/Growing/橋UIは同一入力を照合して既存結果へ帰属させる。詳細は `docs/done/2026-10.md` とローカル `output/integration-index*.json`。各変更の検証を最新公開版の合格とは扱わない。
 

@@ -1,4 +1,4 @@
-import { homeJourneyEnabled, validHomeJourney } from './homeJourney';
+import { validHomeJourney } from './homeJourney';
 import { db, type SansuDatabase } from '../../db';
 import { getLearningAttemptTransactionTables } from '../learningAttemptWriter';
 import { planParkLearning } from '../park/learning';
@@ -141,7 +141,6 @@ export async function startIslandPlan(profileId: string, database = db): Promise
             rewardId: `${id}:reward`, rewardChoices: islandRewardChoices(island.completedSets),
             growthTarget: getIslandGrowthTarget(growingIsland),
             rewardPacing: 'answers-v1',
-            ...(homeJourneyEnabled() ? { homeJourneyVersion: 1 as const } : {}),
             introducedItemIds: [...new Set(learning.slots.filter(slot => !(learning.subject === 'math' ? mergedMath : mergedVocab)
                 .some(state => state.id === slot.problem.categoryId && state.totalAnswers > 0)).map(slot => slot.problem.categoryId))],
         };

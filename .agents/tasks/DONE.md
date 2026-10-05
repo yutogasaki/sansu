@@ -1,5 +1,7 @@
 # Shared Done Index
 
+- 2026-10-06: [島runtimeを一本化](../../docs/architecture/island-runtime.md)。Growingへホームを固定し、旧独立画面/入口82ファイルを撤去。旧保存・所有・学習・共用モデルを保持。隔離core4,756、smoke31、Growing offline、通常/旧flagの両buildで本人切替・履歴・同予約がPASS。公開/実機/利用者は別。詳細: `docs/done/2026-10.md`。
+
 - 2026-10-05: [固定QA撮影を1コマンドへ](../../docs/runbooks/growing-fixtures.md)。snapshot:growingで隔離/build/preview/新規または既存pack/撮影/任意比較/cleanupを集約。core4,780、実12撮影/6組比較、旧report拒否とSIGINT中断の後始末PASS。合成診断で公開/実機/美術/子どもは別評価。詳細: `docs/done/2026-10.md`。
 
 - 2026-10-05: [固定QA保存の2版比較](../../docs/runbooks/growing-fixtures.md)を追加。撮影時の画像/native hash・所有/条件/版を照合し、6組を横並び表示。隔離core4,768、実12撮影/比較CLI/browser PASS。一時通知や動作の位相、美術/理解/公開は別評価。詳細: `docs/done/2026-10.md`。

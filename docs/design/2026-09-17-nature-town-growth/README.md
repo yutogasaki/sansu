@@ -1,5 +1,7 @@
 # Nature Town NT-2：成長する一周
 
+> この文書は当時の独立試作の検証記録。2026-10-06に旧画面・専用入口を撤去した。[現行の島](../../architecture/island-runtime.md)はGrowingであり、下記の旧URLやflagを現行候補の起動・受入へ使わない。
+
 2026-09-17。[実画面の一覧](contact-sheet.md)／[対象buildと実測](runtime-report.json)。
 
 ## 実装

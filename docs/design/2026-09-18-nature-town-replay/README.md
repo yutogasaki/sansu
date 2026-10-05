@@ -1,5 +1,7 @@
 # Nature Town：画面再開とプロフィール切替
 
+> この文書は当時の独立試作の検証記録。2026-10-06に旧画面・専用入口を撤去した。[現行の島](../../architecture/island-runtime.md)はGrowingであり、下記の旧URLやflagを現行候補の起動・受入へ使わない。
+
 2026-09-18。対象はmainへpush済みの `11d0d25` と同じGit treeを隔離して作った本番形式build。[版・全dist SHA](build-manifest.json)、[実測](runtime-report.json)、[先行診断](prior-diagnostics.json)。flagは `VITE_ISLAND_ENABLED=true`、`VITE_NATURE_TOWN_ENABLED=true`、候補は `nature-town-living-s1`。対象URLは `http://127.0.0.1:5337/#/nature-town`。
 
 ## 確認方法

@@ -9,16 +9,16 @@ const scripts = {
   build: "tsc -b && node tools/build-app.mjs && npm run assets:check",
   "dev:classic":
     "VITE_ISLAND_ENABLED=false vite --host 127.0.0.1 --port 5201 --strictPort --open /#/explore",
-  "dev:nature-town":
-    "VITE_ISLAND_ENABLED=true VITE_NATURE_TOWN_ENABLED=true vite --host 127.0.0.1 --port 5233 --strictPort --open /#/nature-town",
 };
 
 const appRootSource = [
+  '<Route path="/nature-town" element={<Navigate to="/" replace />} />',
   "data-build-version={__APP_VERSION__}",
   "data-island-feature-enabled={String(islandEnabled())}",
-  "data-nature-town-feature-enabled={String(import.meta.env.VITE_NATURE_TOWN_ENABLED === 'true')}",
+  'data-nature-town-feature-enabled="false"',
 ].join(" ");
 const islandPageSource = [
+  "<GrowingIsland profileId={profile.id} />",
   "data-island-feature-enabled={String(islandEnabled())}",
   "data-visual-candidate-id={ISLAND_VISUAL_CANDIDATE}",
   "data-learning-candidate={ISLAND_LEARNING_CANDIDATE}",
@@ -62,7 +62,7 @@ const guardInput = (overrides = {}) => ({
 });
 
 describe("current UI entry guard", () => {
-  it("accepts distinct Island, classic Explore, and Nature Town entry points", () => {
+  it("accepts one Growing home with classic Explore isolated", () => {
     expect(findCurrentUiEntryFailures(guardInput())).toEqual([]);
   });
 
@@ -89,12 +89,12 @@ describe("current UI entry guard", () => {
       "classic Explore must remain an explicit, isolated opt-in",
     ],
     [
-      "Nature Town opened on the classic route",
+      "a retired Nature Town command restored",
       {
         "dev:nature-town":
           "VITE_ISLAND_ENABLED=false vite --port 5233 --strictPort --open /#/explore",
       },
-      "Nature Town must remain an explicit preview on its own route and port",
+      "retired island previews must have no development entry",
     ],
   ])("rejects %s", (_description, overrides, expectedFailure) => {
     expect(
@@ -191,7 +191,7 @@ describe("current UI entry guard", () => {
     ],
     [
       "Nature Town",
-      "data-nature-town-feature-enabled={String(import.meta.env.VITE_NATURE_TOWN_ENABLED === 'true')}",
+      'data-nature-town-feature-enabled="false"',
     ],
   ])("rejects shared-route evidence without the %s feature flag", (_name, marker) => {
     expect(
@@ -199,7 +199,7 @@ describe("current UI entry guard", () => {
         appRootSource: appRootSource.replace(marker, ""),
       })),
     ).toContain(
-      "the shared application root must expose Island and Nature Town feature flags on every route",
+      "the shared application root must expose Island and retired Nature Town status on every route",
     );
   });
 
@@ -229,3 +229,10 @@ describe("current UI entry guard", () => {
     );
   });
 });
+
+ it.each(["growingIslandEnabled() ? <GrowingIsland /> : <IslandLife />", "const HomeJourneyPreview = lazy(() => import('./preview'))", "useIslandLife(profile.id)"])("rejects restored legacy home switch: %s", source => {
+   expect(findCurrentUiEntryFailures(guardInput({ islandPageSource: islandPageSource + source }))).toContain("the Island home must use Growing without a legacy renderer switch");
+ });
+ it("rejects a Nature Town route that can be reactivated", () => {
+   expect(findCurrentUiEntryFailures(guardInput({ appRootSource: appRootSource.replace('<Route path="/nature-town" element={<Navigate to="/" replace />} />', 'const NatureTown = lazy(() => import("./pages/NatureTown"))') }))).toContain("Nature Town must redirect home even when old flags are present");
+ });

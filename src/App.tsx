@@ -20,7 +20,6 @@ import { islandStudyDestination } from "./domain/island/studyRoute";
 import './components/ui/WholeAppAtelier.css';
 
 const Learn = lazy(() => import('./pages/Learn'));
-const NatureTown = lazy(() => import('./pages/NatureTown'));
 const Island = lazy(() => import('./pages/Island'));
 const Explore = lazy(() => import('./pages/Explore').then(module => ({ default: module.Explore })));
 const Stats = lazy(() => import('./pages/Stats').then(module => ({ default: module.Stats })));
@@ -170,7 +169,7 @@ function App() {
             data-configured-delivery-id={__DELIVERY_ID__}
             data-visual-lineage-id={__VISUAL_LINEAGE_ID__}
             data-island-feature-enabled={String(islandEnabled())}
-            data-nature-town-feature-enabled={String(import.meta.env.VITE_NATURE_TOWN_ENABLED === 'true')}
+            data-nature-town-feature-enabled="false"
         >
             <HashRouter>
                 <PwaRouteObserver />
@@ -237,7 +236,7 @@ function App() {
                     </Route>
 
                     <Route element={<Layout />}>
-                        <Route path="/nature-town" element={import.meta.env.VITE_NATURE_TOWN_ENABLED === 'true' ? <PrivateRoute><Suspense fallback={<Spinner fullScreen message="しまを じゅんびちゅう…" />}><NatureTown /></Suspense></PrivateRoute> : <Navigate to="/" replace />} />
+                        <Route path="/nature-town" element={<Navigate to="/" replace />} />
                         <Route path="/park" element={<Navigate to="/" replace />} />
                         <Route path="/island" element={islandAvailable() ?
                             <PrivateRoute>{islandEnabled() ? null : <Suspense fallback={<Spinner fullScreen message="しまを じゅんびちゅう…" />}><Island /></Suspense>}</PrivateRoute>

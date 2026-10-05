@@ -1,5 +1,7 @@
 # Nature Town RNG-02：ネイティブ固定フレーム比較
 
+> この文書は当時の独立試作の検証記録。2026-10-06に旧画面・専用入口を撤去した。[現行の島](../../architecture/island-runtime.md)はGrowingであり、下記の旧URLやflagを現行候補の起動・受入へ使わない。
+
 2026-09-19。**RNG-02 PASS**。受入46/47。SAFE-06の独立観察は未完了。
 
 ## 実行と結果
@@ -29,4 +31,4 @@
 - 見た目の魅力: HOLD継続。最終美術の評価ではない。
 - 無文字理解・安全: 独立観察0人、SAFE-06はNOT_RUN。
 
-[実行script](../../../tools/e2e-nature-town-fixed-frames.mjs)、[Linux workflow](../../../.github/workflows/nature-town-fixed-frames.yml)、[hash一覧](sha256.json)。
+[実行script](https://github.com/yutogasaki/sansu/blob/6acabf8a885a35ec80ba337f272e5d8d31f696a0/tools/e2e-nature-town-fixed-frames.mjs)、[Linux workflow](https://github.com/yutogasaki/sansu/blob/6acabf8a885a35ec80ba337f272e5d8d31f696a0/.github/workflows/nature-town-fixed-frames.yml)、[hash一覧](sha256.json)。

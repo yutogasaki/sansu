@@ -6,10 +6,8 @@ import { islandEnabled } from "../domain/island/feature";
 import "./island/IslandShell.css";
 import "./ui/MenuAtelier.css";
 import { IslandNavigationContext, useIslandNavigationState } from './island/useIslandNavigation';
-import { Spinner } from './ui/Spinner';
 
 import { IslandRenderBoundary } from './island/IslandRenderBoundary';
-import { growingIslandEnabled } from './island/growing/feature';
 import { GrowingLoading } from './island/growing/GrowingLoading';
 
 const Island = React.lazy(() => import('../pages/Island'));
@@ -23,7 +21,7 @@ export const Layout: React.FC = () => {
     const navigation = useIslandNavigationState(supportsIslandShell);
     const isFullScreen = isStudy || isBattlePlay || isExplore || location.pathname === "/park"
         || (supportsIslandShell ? navigation.focus : location.pathname === '/island');
-    const showFooter = !isFullScreen && location.pathname !== "/nature-town";
+    const showFooter = !isFullScreen;
     const isIslandShell = supportsIslandShell && !navigation.active;
 
     React.useEffect(() => {
@@ -56,7 +54,7 @@ export const Layout: React.FC = () => {
                     <Outlet />
                 </div>
                 {navigation.mounted && <div className="island-session-host" hidden={!navigation.active} inert={!navigation.active || undefined}>
-                    <IslandRenderBoundary><React.Suspense fallback={growingIslandEnabled() ? <GrowingLoading step="app" /> : <Spinner fullScreen message="しまを じゅんびちゅう…" />}><Island /></React.Suspense></IslandRenderBoundary>
+                    <IslandRenderBoundary><React.Suspense fallback={<GrowingLoading step="app" />}><Island /></React.Suspense></IslandRenderBoundary>
                 </div>}
             </main>
 

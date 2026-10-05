@@ -1,5 +1,7 @@
 # Nature Town NT-4：実2ビルド更新
 
+> この文書は当時の独立試作の検証記録。2026-10-06に旧画面・専用入口を撤去した。[現行の島](../../architecture/island-runtime.md)はGrowingであり、下記の旧URLやflagを現行候補の起動・受入へ使わない。
+
 2026-09-19。実装整合は **PASS**。390×844と768×1024（動き抑制）で実施。アプリのコード変更なし。検証scriptと記録は未コミット。
 
 ## 対象と再現条件
@@ -10,7 +12,7 @@
 - 旧版: `nt3-index-20260918:49487bd0-d20d-4d36-ae22-8e26ff6605df`。
 - 新版: `nt4-new-20260919:772afd78-8f2c-46d2-a93f-9a0a252ada3f`。
 - 同一ソースから独立にコンパイル。JS bundleとSWが異なる2つのdistを同じoriginで切替。versionファイルの書換えで更新を偽装していない。全配信ファイルのhashが実行前後で一致。
-- [実行スクリプト](../../../tools/e2e-nature-town-two-build.mjs)は `SANSU_TOWN_OLD_DIR`、`SANSU_TOWN_NEW_DIR`、`SANSU_TOWN_SOURCE_ROOT`、`SANSU_TOWN_OUTPUT` で対象を指定。source rootは両buildと同じソースを使う。
+- [実行スクリプト](https://github.com/yutogasaki/sansu/blob/6acabf8a885a35ec80ba337f272e5d8d31f696a0/tools/e2e-nature-town-two-build.mjs)は `SANSU_TOWN_OLD_DIR`、`SANSU_TOWN_NEW_DIR`、`SANSU_TOWN_SOURCE_ROOT`、`SANSU_TOWN_OUTPUT` で対象を指定。source rootは両buildと同じソースを使う。
 
 ## 確認した経路
 

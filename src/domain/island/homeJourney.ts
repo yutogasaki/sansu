@@ -6,9 +6,6 @@ export const HOME_JOURNEY_STEPS = [
     { at: 15, title: 'ちいさな やたいが できた' }, { at: 21, title: 'ベンチが ふかふかに なった' },
     { at: 33, title: 'おうちに テラスが できた' }, { at: 45, title: 'おみせから おとどけもの' },
 ] as const;
-export function homeJourneyEnabled() {
-    return import.meta.env.DEV && import.meta.env.VITE_HOME_JOURNEY_PREVIEW === 'true';
-}
 export function validHomeJourney(value: unknown): value is HomeJourneyState | undefined {
     if (value === undefined) return true;
     if (!value || typeof value !== 'object') return false;

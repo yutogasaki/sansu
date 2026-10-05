@@ -47,21 +47,23 @@ export function findCurrentUiEntryFailures({
         buildDefaultsSource?.includes('env.VITE_ISLAND_LIFE_ENABLED = "true"'),
     ],
     [
-      "Nature Town must remain an explicit preview on its own route and port",
-      [
-        "VITE_ISLAND_ENABLED=true",
-        "VITE_NATURE_TOWN_ENABLED=true",
-        "--port 5233",
-        "--strictPort",
-        "--open /#/nature-town",
-      ].every((part) => scripts["dev:nature-town"]?.includes(part)),
+      "retired island previews must have no development entry",
+      !scripts["dev:nature-town"] && !scripts["dev:home-journey"] && !scripts["dev:island-life"] && !scripts["dev:island-fantasy"],
     ],
     [
-      "the shared application root must expose Island and Nature Town feature flags on every route",
-      [
-        "data-island-feature-enabled={String(islandEnabled())}",
-        "data-nature-town-feature-enabled={String(import.meta.env.VITE_NATURE_TOWN_ENABLED === 'true')}",
-      ].every((part) => appRootSource.includes(part)),
+      "Nature Town must redirect home even when old flags are present",
+      appRootSource.includes('<Route path="/nature-town" element={<Navigate to="/" replace />} />') &&
+        !appRootSource.includes("const NatureTown"),
+    ],
+    [
+      "the shared application root must expose Island and retired Nature Town status on every route",
+      appRootSource.includes("data-island-feature-enabled={String(islandEnabled())}") &&
+        appRootSource.includes('data-nature-town-feature-enabled="false"'),
+    ],
+    [
+      "the Island home must use Growing without a legacy renderer switch",
+      islandPageSource.includes("<GrowingIsland ") &&
+        !/growingIslandEnabled|lifeEnabled|HomeJourneyPreview|useIslandLife|<IslandLife/.test(islandPageSource),
     ],
     [
       "the shared application root must expose the unique runtime build version on every route",

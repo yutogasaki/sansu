@@ -20,6 +20,12 @@ function correct(plan: IslandPlan) {
     const slot = plan.slots[plan.cursor], grid = parkHissanGrid(slot.problem);
     return { type: 'answer' as const, answer: grid ? grid.steps[slot.hissanStep ?? 0].correctValues : slot.problem.correctAnswer };
 }
+// Explicit old reservation fixture: retirement must still finish its stored contract.
+async function legacyReservation(d: SansuDatabase) {
+    const plan = { ...await startIslandPlan('child', d), homeJourneyVersion: 1 as const };
+    await d.islandPlans.put(plan);
+    return plan;
+}
 async function finish(d: SansuDatabase, plan: IslandPlan) {
     while (plan.status === 'active') plan = (await commitIslandLearning('child', plan.id, plan.revision, correct(plan), d)).plan;
     return plan;
@@ -33,17 +39,19 @@ describe('home journey reservation and persistence', () => {
         for (let i = 0; i < 7; i++) other = advanceHomeJourney(other, 6);
         expect(other).toEqual(state); expect(advanceHomeJourney(other, 6)).toEqual(other);
     });
-    it('does not retrofit an existing reservation and freezes opt-in through flag removal', async () => {
+    it('does not enroll new reservations even with the retired flag, and preserves stored opt-in', async () => {
         const d = await setup(), old = await startIslandPlan('child', d);
         vi.stubEnv('VITE_HOME_JOURNEY_PREVIEW', 'true');
         expect((await startIslandPlan('child', d)).homeJourneyVersion).toBeUndefined();
         await finish(d, old); expect((await d.islands.get('child'))?.homeJourney).toBeUndefined();
-        const fresh = await startIslandPlan('child', d); expect(fresh.homeJourneyVersion).toBe(1);
-        vi.stubEnv('VITE_HOME_JOURNEY_PREVIEW', 'false'); await finish(d, fresh);
-        expect((await d.islands.get('child'))?.homeJourney?.answers).toBe(fresh.slots.length);
+        const fresh = await startIslandPlan('child', d); expect(fresh.homeJourneyVersion).toBeUndefined();
+        await finish(d, fresh); expect((await d.islands.get('child'))?.homeJourney).toBeUndefined();
+        const stored = await legacyReservation(d);
+        vi.stubEnv('VITE_HOME_JOURNEY_PREVIEW', 'false'); await finish(d, stored);
+        expect((await d.islands.get('child'))?.homeJourney?.answers).toBe(stored.slots.length);
     });
     it('rolls back a failed final save and ignores duplicate receipts after reopening', async () => {
-        vi.stubEnv('VITE_HOME_JOURNEY_PREVIEW', 'true'); const d = await setup(); let plan = await startIslandPlan('child', d);
+        vi.stubEnv('VITE_HOME_JOURNEY_PREVIEW', 'true'); const d = await setup(); let plan = await legacyReservation(d);
         while (plan.cursor < plan.slots.length - 1) plan = (await commitIslandLearning('child', plan.id, plan.revision, correct(plan), d)).plan;
         const action = correct(plan), before = await d.islands.get('child');
         const fail = (_key: unknown, event: IslandEvent) => { if (event.type === 'plan_completed') throw new Error('save-failed'); };
@@ -56,7 +64,7 @@ describe('home journey reservation and persistence', () => {
         expect(await d.islands.get('child')).toEqual(after);
     });
     it('counts supported completion without requiring independent correctness', async () => {
-        vi.stubEnv('VITE_HOME_JOURNEY_PREVIEW', 'true'); const d = await setup(); let plan = await startIslandPlan('child', d);
+        vi.stubEnv('VITE_HOME_JOURNEY_PREVIEW', 'true'); const d = await setup(); let plan = await legacyReservation(d);
         while (plan.status === 'active') {
             for (const type of ['support_opened', 'model_opened', 'supported_completed'] as const)
                 plan = (await commitIslandLearning('child', plan.id, plan.revision, { type }, d)).plan;
@@ -65,4 +73,14 @@ describe('home journey reservation and persistence', () => {
         expect(island.homeJourney?.answers).toBe(3);
         expect(() => assertIsland({ ...island, homeJourney: { version: 1, answers: NaN } })).toThrow();
     });
+});
+
+it('preserves existing Home Journey history through a new ordinary reservation', async () => {
+    const d = await setup();
+    await d.islands.update('child', { homeJourney: { version: 1, answers: 21 } });
+    vi.stubEnv('VITE_HOME_JOURNEY_PREVIEW', 'true');
+    const plan = await startIslandPlan('child', d);
+    expect(plan.homeJourneyVersion).toBeUndefined();
+    await finish(d, plan);
+    expect((await d.islands.get('child'))?.homeJourney).toEqual({ version: 1, answers: 21 });
 });

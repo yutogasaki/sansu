@@ -1,5 +1,7 @@
 # Nature Town ground A v1
 
+> この文書は当時の独立試作の検証記録。2026-10-06に旧画面・専用入口を撤去した。[現行の島](../../architecture/island-runtime.md)はGrowingであり、下記の旧URLやflagを現行候補の起動・受入へ使わない。
+
 This is a bounded local visual iteration for Nature Town S1 / NT-1. The previous screen used opaque green on each ground button, which made the empty portions of the map read like a uniform checkerboard. The selected candidate makes those land colors continuous and adds broad, static meadow variation. Map coordinates, terrain, props, interaction targets, learning behavior, and storage do not change.
 
 ## Direction comparison

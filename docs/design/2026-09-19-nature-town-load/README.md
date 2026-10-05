@@ -1,5 +1,7 @@
 # Nature Town NT-5：将来規模の負荷診断
 
+> この文書は当時の独立試作の検証記録。2026-10-06に旧画面・専用入口を撤去した。[現行の島](../../architecture/island-runtime.md)はGrowingであり、下記の旧URLやflagを現行候補の起動・受入へ使わない。
+
 2026-09-19。**PARTIAL：3条件は全世界一致、96人・24地区は計算が終わらず打切り**。SAFE-07はNOT_RUNを維持。実機iOS・長期運用も未確認。アプリ変更なし、検証scriptと記録は未コミット。
 
 ## 対象と診断条件
@@ -29,7 +31,7 @@ callbackは実アプリの同期区間であり、純粋なstepWorld単独時間
 
 診断用CSS `.town-cell,.town-resident-marker { content-visibility:auto }` で画面外内容を省略。アプリへ出荷する最適化ではない。完了した3条件では通常/省略の両方が、同じstepWorldを30回適用した全世界と一致。画面外の地区・住人、在庫、乱数ordinal、学習progressも保持。
 
-初版はコンテナ自身のcheckVisibilityを測り、省略件数を0と記録した。コンテナの存在と内容の省略は異なるため、子要素の可視性を測るよう修正。同じbuild/CSSの24人・8地区を1tickだけ再確認し、**224個の子要素の省略**と全世界一致を確認。[追加診断](visibility-report.json)。全負荷測定は繰り返していない。[全測定時のscript原本](harness-measured.mjs)と[修正版](../../../tools/e2e-nature-town-load.mjs)を区別する。
+初版はコンテナ自身のcheckVisibilityを測り、省略件数を0と記録した。コンテナの存在と内容の省略は異なるため、子要素の可視性を測るよう修正。同じbuild/CSSの24人・8地区を1tickだけ再確認し、**224個の子要素の省略**と全世界一致を確認。[追加診断](visibility-report.json)。全負荷測定は繰り返していない。[全測定時のscript原本](harness-measured.mjs)と[修正版](https://github.com/yutogasaki/sansu/blob/6acabf8a885a35ec80ba337f272e5d8d31f696a0/tools/e2e-nature-town-load.mjs)を区別する。
 
 ## 次に直すこと
 

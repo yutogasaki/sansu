@@ -21,6 +21,8 @@ If the information would still matter after several unrelated tasks, it belongs 
 
 ## Durable Memory
 
+- Single island runtime (2026-10-06): [ADR](../adr/2026-10-06-single-island-runtime.md). Growing is the only island home; retired Life/Home Journey/Nature Town flags cannot select another home. Preserve old stores, verified Life migration, learning and shared character meshes. Independent prototype UI is retired; do not recreate its dev commands.
+
 ### 1. Source of Truth
 
 - Pokomoko identity (2026-09-27, explicit user instruction): do not redesign the existing character without separate explicit authorization. World or art-direction changes do not authorize changing its face, silhouette, proportions, ears, patchwork fabric, dots, palette or owned appearance. Keep the same original model in the world, home, portraits and memories. The fantasy prototype's replacement companion was withdrawn; do not treat it or the B concept-board character as approved.

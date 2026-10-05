@@ -1,5 +1,7 @@
 # Nature Town NT-5：経路探索の重複削減
 
+> この文書は当時の独立試作の検証記録。2026-10-06に旧画面・専用入口を撤去した。[現行の島](../../architecture/island-runtime.md)はGrowingであり、下記の旧URLやflagを現行候補の起動・受入へ使わない。
+
 2026-09-19。**4負荷条件の計測・全世界一致PASS**。前回未完了だった96人・24地区も完走。SAFE-07はPASSへ、受入45/47。性能の実機保証や最終美術の合格ではない。未コミット・未公開。
 
 ## 実装と確認
@@ -54,4 +56,4 @@ callbackは同期区間で保存/描画全体とは異なる。保存と描画�
 | 24人・24地区 | [画像](24-24-full.png) | [画像](24-24-culled.png) |
 | 96人・24地区 | [画像](96-24-full.png) | [画像](96-24-culled.png) |
 
-再現script: [load](../../../tools/e2e-nature-town-load.mjs)、[fixture](../../../tools/nature-town-load-fixture.mjs)。隔離ソースの `SANSU_TOWN_SOURCE_ROOT`、配信URLの `SANSU_TOWN_URL`、`SANSU_TOWN_EXPECT_REVISION=nt5-optimized-20260919`、新規 `SANSU_TOWN_OUTPUT` を指定する。古い隔離ソースを既定のまま使わない。[hash一覧](sha256.json)。
+再現script: [load](https://github.com/yutogasaki/sansu/blob/6acabf8a885a35ec80ba337f272e5d8d31f696a0/tools/e2e-nature-town-load.mjs)、[fixture](https://github.com/yutogasaki/sansu/blob/6acabf8a885a35ec80ba337f272e5d8d31f696a0/tools/nature-town-load-fixture.mjs)。隔離ソースの `SANSU_TOWN_SOURCE_ROOT`、配信URLの `SANSU_TOWN_URL`、`SANSU_TOWN_EXPECT_REVISION=nt5-optimized-20260919`、新規 `SANSU_TOWN_OUTPUT` を指定する。古い隔離ソースを既定のまま使わない。[hash一覧](sha256.json)。

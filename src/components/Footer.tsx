@@ -5,7 +5,6 @@ import { warmUpTTS } from "../utils/tts";
 import { islandEnabled } from "../domain/island/feature";
 import { IslandToyHouse, IslandToyLand } from "./island/IslandToyIcon";
 import { islandTabUrl, type IslandTab, useIslandNavigation } from './island/useIslandNavigation';
-import { growingIslandEnabled } from './island/growing/feature';
 import { useWaitingSeeds } from './island/growing/seedBadge';
 
 type TabItem = {
@@ -44,7 +43,7 @@ export const Footer: React.FC = () => {
                     const active = item.to === "/study" && currentPath === "/learn"
                         ? true : currentPath === "/learn" ? false : navigation ? item.tab === navigation.tab : currentPath === item.to;
                     const primary = item.to === "/study";
-                    const waiting = primary && growingIslandEnabled() && seeds > 0 ? seeds : 0;
+                    const waiting = primary && seeds > 0 ? seeds : 0;
                     return (
                         <button
                             key={item.to}

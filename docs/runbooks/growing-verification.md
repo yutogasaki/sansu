@@ -14,6 +14,8 @@
 
 ## Usage
 
+島のホームは[育つ島へ一本化](../architecture/island-runtime.md)している。開発は`npm run dev`（5198）を使う。旧Life/Home Journey/Nature Townの専用UI・起動コマンドは撤去済み。旧flag/URLの回帰は同文書の`e2e-single-island.mjs`で検査する。
+
 ```bash
 npm run verify:growing
 npm run verify:growing -- --output-dir /absolute/path/to/new-output
