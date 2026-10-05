@@ -105,6 +105,8 @@ export interface GrowingState {
     flagPattern?: number;
     drops: number;
     land: { expanded?: 'east' | 'west'; extra: Side[]; capes: ('east' | 'west')[]; districts?: Side[] };
+    /** One shoreline lookout bridge. Absent in every pre-bridge save. */
+    bridge?: { x: number };
     plots: Plot[];
     landmarks: Landmark[];
     keepsakes: Keepsake[];
@@ -154,6 +156,8 @@ export type Command =
     | { type: 'unstore'; id: string; cell: Cell }
     | { type: 'pluck'; id: string }
     | { type: 'expand'; side: Side }
+    | { type: 'bridge-build'; x: number }
+    | { type: 'bridge-remove' }
     | { type: 'name'; target: string; name: string }
     | { type: 'paint'; target: string; color: number }
     | { type: 'open'; id: string }

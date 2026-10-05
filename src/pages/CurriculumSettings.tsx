@@ -4,7 +4,7 @@ import { getActiveProfile, saveProfile, updateProfileAtomically } from "../domai
 import { UserProfile } from "../domain/types";
 import { syncLevelState, syncUnlockLevel } from "../domain/user/profile";
 import { needsProgressionResume, resumeProgression } from "../domain/user/resumeProgression";
-import { ParentGuard } from "../components/domain/ParentGuard";
+import { Modal } from "../components/ui/Modal";
 import { ScreenScaffold } from "../components/ScreenScaffold";
 import { Badge } from "../components/ui/Badge";
 import { Button } from "../components/ui/Button";
@@ -161,8 +161,8 @@ export const CurriculumSettings: React.FC = () => {
         <div className="px-[var(--screen-padding-x)] pt-1">
             <SurfacePanel variant="flat" className="space-y-3">
                 <SurfacePanelHeader
-                    title="みる きょうか"
-                    description="レベルを なおしたい きょうかを えらんでね"
+                    title="科目"
+                    description="出題する内容・難しさを調整する科目を選びます"
                 />
                 <SegmentedControl
                     aria-label="表示する教科"
@@ -179,18 +179,18 @@ export const CurriculumSettings: React.FC = () => {
 
     return (
         <ScreenScaffold
-            title="がくしゅう せってい"
+            title="学習範囲を変更"
             containerClassName="curriculum-screen"
             showBack
-            onBack={() => navigate("/settings")}
+            onBack={() => navigate("/parents")}
             topSlot={tabs}
             contentClassName="px-[var(--screen-padding-x)] pt-4 space-y-5"
         >
-            <ParentGuard
-                isOpen={showGuard}
-                onSuccess={handleConfirmLevel}
-                onCancel={closeGuard}
-            />
+            <Modal isOpen={showGuard} onClose={closeGuard} title="学習範囲の変更を確認"
+                footer={<div className="flex gap-2"><Button variant="secondary" onClick={closeGuard}>やめる</Button><Button onClick={handleConfirmLevel}>変更する</Button></div>}>
+                <p>{activeTab === 'math' ? '算数' : '英語'}の{pendingAction === 'resume' ? '進級を再開' : pendingAction === 'unlock' ? '解放上限を変更' : '練習の中心を変更'}：Lv.{pendingLevel}</p>
+                <p className="mt-3 text-sm text-pokomoko-muted">{pendingAction === 'main' ? '出題の中心が変わり、上のレベルはオフになります。学習記録は残ります。' : pendingAction === 'unlock' ? '練習できる範囲が変わります。現在のレベルより下には設定できません。' : '次の範囲を有効にします。レベルアップの条件と学習記録はそのままです。'}</p>
+            </Modal>
             {profile && needsProgressionResume(profile, activeTab) && <SurfacePanel className="space-y-3" aria-label="進級の再開">
                 <SurfacePanelHeader title={`Lv.${currentLevel + 1}への進級`} />
                 <p className="text-sm text-pokomoko-muted">次のレベルは現在オフです。レベルを選び直すと、上のレベルがオフになることがあります。</p>
@@ -207,7 +207,7 @@ export const CurriculumSettings: React.FC = () => {
             <SurfacePanel>
                 <SurfacePanelHeader
                     title={`${currentSubjectLabel} の いま`}
-                    description="メインレベルと いま つかえる はんいを ここで みなおせるよ"
+                    description="普段は練習に合わせて進みます。難しさが合わないときだけ調整してください。"
                 />
                 <div className="grid grid-cols-2 gap-3">
                     <InsetPanel className="space-y-1 py-4 text-center">
@@ -228,7 +228,7 @@ export const CurriculumSettings: React.FC = () => {
                     </InsetPanel>
                 </div>
                 <p className="text-center text-xs leading-5 text-slate-400">
-                    メインを かえると だす もんだいが かわるよ。さんすうは 解放上限も べつで えらべます。
+                    「メイン」は練習の中心。「解放上限」は練習できる範囲の上限です。確認テストは保護者画面から行えます。
                 </p>
             </SurfacePanel>
 

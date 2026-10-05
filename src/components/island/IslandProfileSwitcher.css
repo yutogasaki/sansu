@@ -1,0 +1,8 @@
+.island-profile-switch {
+    display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+    min-height: 44px; padding: 5px 8px; border: 1px solid var(--pokomoko-edge);
+    border-radius: 12px; background: var(--pokomoko-paper); color: var(--pokomoko-ink);
+    font-size: 12px; font-weight: 700; white-space: nowrap;
+}
+.island-profile-switch:focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 3px; }
+.island-profile-switch:disabled { opacity: .5; }

@@ -74,6 +74,8 @@ IDは仕様42の固定16品に限り、資格は本人の保存済み `completed
 
 既存学習データでは `memoryMath` / `memoryVocab` をskill / word単位のSRS正本とする。`UserProfile.mathSkills` / `vocabWords` は旧コード互換のミラーとして残し、プロフィール取得時に正本テーブルを重ねる。`logs` は全回答履歴、`UserProfile.recentAttempts` は直近300件の出題用リングバッファとして役割を分ける。1回答のログ・記憶・プロフィール更新は同一トランザクションで行い、旧MemoryStateの `isWeak` は初回参照時に履歴から復元して保存する。プロフィール削除時は関連する `logs` / `memoryMath` / `memoryVocab` / `exploreRuns` / `exploreRunEvents` / `exploreDiscoveries` と、同IDのいきもの端末状態・図鑑も削除する。
 
+使用中のプロフィールは `appData.activeProfileId` を正本とし、localStorageの `sansu_active_profile` は互換用の写しとする。正本が欠落・無効な場合だけ、有効な写し、先頭のプロフィールの順で復旧する。取得時の復旧は最新のappDataを読むtransaction内で行い、切替や学習保存と競合する古いsnapshotでプロフィールを上書きしない。切替の保存失敗では写しを変更しない。store・schemaの変更や学習記録の移行は不要。
+
 ## 3. 新規テーブル案
 
 ```ts

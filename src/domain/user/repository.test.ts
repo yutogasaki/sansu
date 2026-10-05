@@ -241,13 +241,36 @@ describe("getActiveProfile", () => {
         }));
     });
 
-    it("keeps a valid local selection and repairs divergent AppData", async () => {
-        const expected = profile("local");
-        mocks.storedAppData = appData([expected, profile("stored")], "stored");
-        mocks.localActiveId = expected.id;
+    it("keeps the committed selection when the local mirror still names the previous profile", async () => {
+        const expected = profile("stored");
+        mocks.storedAppData = appData([profile("local"), expected], expected.id);
+        mocks.localActiveId = "local";
 
         await expect(getActiveProfile()).resolves.toBe(expected);
-        expect(mocks.setLocalActiveId).not.toHaveBeenCalled();
+        expect(mocks.setLocalActiveId).toHaveBeenCalledWith(expected.id);
+        expect(mocks.appDataPut).not.toHaveBeenCalled();
+    });
+
+    it("does not roll back a switch when a reader runs before its local mirror is updated", async () => {
+        const first = profile('first'), second = { ...profile('second'), mathMainLevel: 11, vocabMainLevel: 4 };
+        mocks.storedAppData = appData([first, second], first.id);
+        mocks.localActiveId = first.id;
+        let duringSwitch: UserProfile | null = null;
+        mocks.appDataPut.mockImplementationOnce(async (value: AppData & { id: string }) => {
+            mocks.storedAppData = value;
+            duringSwitch = await getActiveProfile();
+        });
+        await setActiveProfileId(second.id);
+        expect(duringSwitch).toEqual(second);
+        expect(mocks.storedAppData).toEqual(appData([first, second], second.id));
+        await expect(getActiveProfile()).resolves.toEqual(second);
+    });
+
+    it("uses a valid local mirror only when the committed active id is invalid", async () => {
+        const expected = profile('local');
+        mocks.storedAppData = appData([profile('first'), expected], 'removed');
+        mocks.localActiveId = expected.id;
+        await expect(getActiveProfile()).resolves.toEqual(expected);
         expect(mocks.appDataPut).toHaveBeenCalledWith(expect.objectContaining({
             activeProfileId: expected.id,
         }));

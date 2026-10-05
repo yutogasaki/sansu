@@ -26,6 +26,7 @@ export function useGrowingIsland(profileId: string, active: boolean) {
     const [error, setError] = useState<string>();
     const [busy, setBusy] = useState(false);
     const [syncing, setSyncing] = useState(false);
+    const [saving, setSaving] = useState(false);
     const [step, setStep] = useState<LoadingStep>('learning');
     const running = useRef<Promise<void> | undefined>(undefined), revealId = useRef(0);
     const caller = useRef({ profileId, active });
@@ -48,7 +49,7 @@ export function useGrowingIsland(profileId: string, active: boolean) {
             try {
                 const [profile, facts] = full ? await prepareIslandOpening(() => Promise.all([getProfile(profileId), terminalFacts(profileId)])) : [undefined, []];
                 const levels = profile ? { math: profile.mathMainLevel, vocab: profile.vocabMainLevel } : undefined;
-                setStep('saving');
+                setStep('saving'); setSaving(true);
                 const result = await syncGrowingIsland(profileId, facts, Date.now(), growingDb, lifeDb, levels);
                 setRecord(current => current?.profileId === result.record.profileId && current.revision > result.record.revision ? current : result.record); setError(undefined);
                 // Only meaningful changes are announced, so two open tabs never ping-pong refreshes.
@@ -57,7 +58,7 @@ export function useGrowingIsland(profileId: string, active: boolean) {
                 const shown = result.town.some(e => e.type !== 'quiet') || result.nature.some(e => e.type === 'big-tree' || e.type === 'lord-tree' || e.type === 'spread' || e.type === 'mixed');
                 if (result.town.length || shown) setReveal({ id: ++revealId.current, town: result.town, nature: result.nature });
             } catch (e) { setError(message(e)); }
-            finally { running.current = undefined; setSyncing(false); }
+            finally { running.current = undefined; setSyncing(false); setSaving(false); }
         })();
         return running.current;
     }, [profileId]);
@@ -123,6 +124,6 @@ export function useGrowingIsland(profileId: string, active: boolean) {
         return () => { live = false; clearInterval(id); document.removeEventListener('visibilitychange', visible); };
     }, [active, profileId, sync]);
 
-    return { record: record?.profileId === profileId ? record : undefined, reveal, error, busy, syncing, dispatch, acknowledge, sync, step,
+    return { record: record?.profileId === profileId ? record : undefined, reveal, error, busy, syncing, saving, dispatch, acknowledge, sync, step,
         clearError: () => setError(undefined) };
 }

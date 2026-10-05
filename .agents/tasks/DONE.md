@@ -1,8 +1,16 @@
 # Shared Done Index
 
+- 2026-10-05: 橋・本人切替/保存・保護者設定とタスク棚卸しを統合候補へ固定。隔離core4,735、Growing本番形式の本人切替両幅PASS。既存smoke/Growing旅程の入力同一を照合して記録を継承。公開/実機/利用者は別。詳細: `docs/done/2026-10.md`。
+
 - 2026-10-05: Git差分から検証マトリクスの必須チェック・仕様・手動確認を案内する `verify:plan` を追加。staged契約/削除/rename/未分類を確認、隔離commit候補core4,728 testsとCLI各モードPASS。詳細: `docs/done/2026-10.md`。
 
 - 2026-10-05: [育つ島の検証入口](../../docs/runbooks/growing-verification.md)を追加。`verify:growing`で隔離候補/core/classic smoke/Growing本番形式の実回答・購入・本・保存・SW offlineを集約。core4,722・smoke31・両幅4旅程PASS。公開判定PARTIALと未検証項目を分離。ローカルの検証運用変更 -> `docs/done/2026-10.md`
+
+- 2026-10-05: 今後のタスクを公開準備・全体UX・性能・美術の4担当へ整理。実装済み/未コミット/公開未確認、実保存/実機/利用者待ち、後続候補を分離。共有キュー・backlog・文書入口/ポータルを同期。文書のみ -> `docs/done/2026-10.md`
+
+- 2026-10-04: [島から使う人を切り替える](../../docs/design/2026-10-04-island-profile-switch/README.md)。島の入口→名前、保存/編集lock・読取準備の分離、実Growing両幅の切替と再開PASS。ローカル、公開は未実施 -> `docs/done/2026-10.md`
+
+- 2026-10-04: プロフィール切替直後の学習レベルを修正。古いlocalStorageによる巻戻りを再現し、保存済みactive IDを優先。repository14件・両幅の実切替/回答隔離/途中復帰PASS。全体検証のtimeoutと再実行を記録。ローカル、未公開 -> `docs/done/2026-10.md`
 
 - 2026-10-04: [20問/日を基準にした島の経済](../../docs/design/2026-10-04-island-economy/README.md)。新規家/畑40・花10、まち時間2/問。資産保持、core4,690・両幅実20問PASS。smoke30/31＋当該1件再実行PASS。ローカル、未公開 -> `docs/done/2026-10.md`
 

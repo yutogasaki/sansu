@@ -533,6 +533,7 @@ const waitForStudyReady = async (page) => {
 
 const completeSessionBySkipping = async (page, totalQuestions) => {
   for (let index = 0; index < totalQuestions; index += 1) {
+    await page.locator(`[data-study-index="${index}"]`).waitFor({ timeout: STEP_TIMEOUT_MS });
     await page.getByRole("button", { name: /スキップ/ }).waitFor({ timeout: STEP_TIMEOUT_MS });
     await page.getByRole("button", { name: /スキップ/ }).click();
     await page.getByRole("button", { name: /次へ/ }).waitFor({ timeout: STEP_TIMEOUT_MS });
@@ -675,14 +676,8 @@ const scenarioStatsToPeriodicTest = async (browser) => {
   assert(await mathProgress.getByRole('button', { name: /かくにんテスト|確認テスト/ }).count() === 0, 'confirmation test starts only from parent settings');
   await navigateHash(page, "/settings", /#\/settings/);
   await page.getByRole('button', { name: /ほごしゃ|保護者/ }).first().click();
-  const gate = page.getByRole('dialog');
-  const factors = (await gate.innerText()).match(/(\d+)\s*×\s*(\d+)\s*=/);
-  assert(factors, 'parent gate should show its real multiplication question');
-  await gate.getByPlaceholder('答え', { exact: true }).fill(String(Number(factors[1]) * Number(factors[2])));
-  await Promise.all([
-    waitForHash(page, /#\/parents/),
-    gate.getByRole('button', { name: 'OK', exact: true }).click(),
-  ]);
+  await waitForHash(page, /#\/parents/);
+  assert(await page.getByRole('dialog').count() === 0, 'parent overview opens without arithmetic gate');
   await page.locator('.parent-check-entry > summary').click();
   await page.getByRole('button', { name: 'アプリで確認', exact: true }).click();
   await waitForStudyReady(page);
@@ -2974,7 +2969,7 @@ const scenarioRootTangleVerticalSlice = async (
   await context.close();
 };
 
-const scenarioParentsGateShown = async (browser) => {
+const scenarioParentsDirectEntry = async (browser) => {
   const context = await browser.newContext({ baseURL: activeBaseUrl });
   const page = await context.newPage();
   await clearClientStorage(page);
@@ -2984,9 +2979,15 @@ const scenarioParentsGateShown = async (browser) => {
     window.location.hash = "/parents";
   });
   await waitForHash(page, /#\/parents/);
-  await page.getByText("ほごしゃ かくにん").waitFor({ timeout: STEP_TIMEOUT_MS });
-  await page.getByRole("button", { name: "やめる" }).click();
-  await waitForHash(page, /#\/(settings|onboarding)/);
+  await page.getByText('確認テスト（20問）', { exact: true }).waitFor({ timeout: STEP_TIMEOUT_MS });
+  assert(await page.getByRole('dialog').count() === 0, 'direct parent URL opens without arithmetic');
+  await page.getByRole('button', { name: /学習範囲を変更/ }).click();
+  await waitForHash(page, /#\/settings\/curriculum/);
+  await page.getByRole('button', { name: 'メインにする', exact: true }).first().click();
+  const confirmation = page.getByRole('dialog');
+  await confirmation.getByText('学習範囲の変更を確認').waitFor();
+  assert(await confirmation.getByRole('textbox').count() === 0, 'range confirmation requires no arithmetic answer');
+  await confirmation.getByRole('button', { name: 'やめる', exact: true }).click();
 
   await preserveSmokeObservation(context);
   await context.close();
@@ -6475,6 +6476,12 @@ const main = async () => {
       if (!results.every(Boolean)) process.exitCode = 1;
       return;
     }
+    if (process.env.SANSU_E2E_PARENT_SETTINGS_ONLY === "1") {
+      results.push(await runScenario("confirmation test from parent settings", () => scenarioStatsToPeriodicTest(browser)));
+      results.push(await runScenario("parent direct entry and range confirmation", () => scenarioParentsDirectEntry(browser)));
+      if (!results.every(Boolean)) process.exitCode = 1;
+      return;
+    }
     const rapidLoopBenchmarkRuns = Number.parseInt(
       process.env.SANSU_RAPID_LOOP_BENCHMARK_RUNS || "0",
       10,
@@ -6634,7 +6641,7 @@ const main = async () => {
       browser,
       { width: 1080, height: 1920 },
     )));
-    results.push(await runScenario("guards /parents route behind parent gate", () => scenarioParentsGateShown(browser)));
+    results.push(await runScenario("opens /parents directly without arithmetic", () => scenarioParentsDirectEntry(browser)));
 
     const ok = results.every(Boolean);
     if (!ok) process.exitCode = 1;

@@ -142,34 +142,31 @@ export const getActiveProfileId = () => {
 };
 
 export const getActiveProfile = async () => {
-    const appData = await getAppData();
-    const localActiveId = getActiveProfileId();
-    const hasProfile = (id: string | null): id is string => Boolean(id && appData.profiles[id]);
-
-    const resolvedActiveId = hasProfile(localActiveId)
-        ? localActiveId
-        : hasProfile(appData.activeProfileId)
+    // Resolve/repair against the latest committed selection. A local mirror can
+    // still name the previous person while a switch is completing in this tab
+    // or another tab; it must never roll the committed selection back.
+    const profile = await db.transaction("rw", [db.appData, db.profiles], async () => {
+        const appData = await getAppData();
+        const localActiveId = getActiveProfileId();
+        const hasProfile = (id: string | null): id is string => Boolean(id && appData.profiles[id]);
+        const resolvedActiveId = hasProfile(appData.activeProfileId)
             ? appData.activeProfileId
-            : Object.keys(appData.profiles)[0] || null;
+            : hasProfile(localActiveId)
+                ? localActiveId
+                : Object.keys(appData.profiles)[0] || null;
 
-    if (!resolvedActiveId) {
-        if (localActiveId) {
-            profileStorage.clearActiveId();
+        if (appData.activeProfileId !== resolvedActiveId) {
+            await saveAppData({ ...appData, activeProfileId: resolvedActiveId });
         }
-        if (appData.activeProfileId !== null) {
-            await saveAppData({ ...appData, activeProfileId: null });
-        }
+        return resolvedActiveId ? appData.profiles[resolvedActiveId] : null;
+    });
+
+    if (!profile) {
+        profileStorage.clearActiveId();
         return null;
     }
-
-    if (localActiveId !== resolvedActiveId) {
-        profileStorage.setActiveId(resolvedActiveId);
-    }
-    if (appData.activeProfileId !== resolvedActiveId) {
-        await saveAppData({ ...appData, activeProfileId: resolvedActiveId });
-    }
-
-    return hydrateProfileMemory(appData.profiles[resolvedActiveId]);
+    if (getActiveProfileId() !== profile.id) profileStorage.setActiveId(profile.id);
+    return hydrateProfileMemory(profile);
 };
 
 export const deleteProfileOwnedIndexedDbRows = async (

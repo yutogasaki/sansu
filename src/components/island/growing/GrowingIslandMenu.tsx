@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Archive, BookOpen, Camera, ChevronDown, Flower2, House, PawPrint, Pencil, RotateCcw, RotateCw, Settings2, Sprout, X } from 'lucide-react';
+import { Archive, BookOpen, Camera, ChevronDown, Flower2, House, PawPrint, Pencil, RotateCcw, RotateCw, Settings2, Sprout, X, Waypoints } from 'lucide-react';
 import type { Side, Villager } from '../../../domain/growingIsland/types';
 import { villagerName } from './growingCopy';
 import type { MenuPictures } from './menuMiniatures';
@@ -24,6 +24,8 @@ export interface GrowingIslandMenuProps {
     onSettings: () => void;
     onRotate: (direction: -1 | 1) => void;
     onExpand: (side: Side) => void;
+    bridge?: { built: boolean; ready: boolean; reason: string };
+    onBridge?: () => void;
 }
 
 /** A small, optional paper beside the live island; every entry opens its real destination. */
@@ -52,6 +54,10 @@ export function GrowingIslandMenuContents(props: GrowingIslandMenuProps) {
             <button onClick={props.onFlowers}><Flower2 size={20} aria-hidden="true" /><span>はなずかん</span></button>
         </div>
         <div className="growing-pocket-footer">
+            {props.bridge && <button className="growing-pocket-bridge" disabled={!props.bridge.built && !props.bridge.ready} onClick={props.onBridge}
+                aria-label={props.bridge.built ? 'はしを みにいく' : 'はしを つくる'}>
+                <Waypoints size={19} aria-hidden="true" /><span>{props.bridge.built ? 'はしを みにいく' : props.bridge.ready ? 'はしを つくる' : props.bridge.reason}</span>
+            </button>}
             <button className="growing-pocket-guide" aria-label="しまの あそびかた" onClick={props.onGuide}><BookOpen size={20} aria-hidden="true" /><span>あそびかた</span></button>
         <details className="growing-pocket-tools" onToggle={event => {
             if (event.currentTarget.open) event.currentTarget.querySelector('.growing-pocket-tool-buttons')?.scrollIntoView({ block: 'nearest', behavior: 'instant' });

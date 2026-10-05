@@ -14,6 +14,7 @@ import { menuPictureMaker, type MenuPictures } from './menuMiniatures';
 import { growingHitTarget } from './growingHitTarget';
 import { AdaptiveIslandQuality } from '../three/adaptiveIslandQuality';
 import { createIslandRenderer } from '../three/createIslandRenderer';
+import { bridgeAnchor, bridgeEnd } from '../../../domain/growingIsland/space';
 
 export interface WorldHandlers {
     onCell: (cell: Cell) => void;
@@ -37,17 +38,19 @@ export interface WorldCamera {
 export interface ShownMoment { id: number; moment: Moment; cell?: Cell }
 /** `cheer` makes the waiting friend jump (a home seed was planted); `festival` celebrates a new level. */
 type Props = WorldHandlers & { state: GrowingState; time: GardenTime; ghost?: Ghost; selectedId?: string; turn: number; cheer: number; festival: number;
-    hints?: readonly Cell[]; moment?: ShownMoment; show?: boolean; active?: boolean; compact?: boolean; qualityCeiling?: number; focus?: { id: string; n: number }; concert?: { cell: Cell; n: number }; onCamera?: (camera?: WorldCamera) => void };
+    hints?: readonly Cell[]; moment?: ShownMoment; show?: boolean; active?: boolean; compact?: boolean; qualityCeiling?: number; focus?: { id: string; n: number }; concert?: { cell: Cell; n: number }; bridgeBuild?: number; onCamera?: (camera?: WorldCamera) => void };
 
 const reducedMotion = () => typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-export default function GrowingWorld({ state, time, ghost, selectedId, turn, cheer, festival, hints, moment, show, active = true, compact, qualityCeiling = 1.25, focus, concert, onCamera, ...handlers }: Props) {
+export default function GrowingWorld({ state, time, ghost, selectedId, turn, cheer, festival, hints, moment, show, active = true, compact, qualityCeiling = 1.25, focus, concert, bridgeBuild, onCamera, ...handlers }: Props) {
     const host = useRef<HTMLDivElement>(null);
     const handlerRef = useRef(handlers);
     useEffect(() => { handlerRef.current = handlers; });
     const api = useRef<{ rebuild: (state: GrowingState, ghost?: Ghost, selectedId?: string, hints?: readonly Cell[]) => void; setTime: (time: GardenTime) => void; turn: (by: number) => void;
-        cheer: () => void; festival: () => void; moment: (m: ShownMoment) => void; focus: (id: string) => void; concert: (cell: Cell, receipt: number) => void } | undefined>(undefined);
+        cheer: () => void; festival: () => void; moment: (m: ShownMoment) => void; focus: (id: string) => void; concert: (cell: Cell, receipt: number) => void;
+        bridgeStart: () => void } | undefined>(undefined);
     const [failed, setFailed] = useState(false);
+    const [bridgeStage, setBridgeStage] = useState<'building' | 'crossing' | 'arrived'>();
     const latest = useRef({ state, ghost, selectedId, time, hints, show, active });
     useEffect(() => { latest.current = { state, ghost, selectedId, time, hints, show, active }; });
     const cameraRef = useRef(onCamera);
@@ -96,6 +99,9 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
         node.append(renderer.domElement);
         handlerRef.current.onStage?.('scene');
         const world = createWorldScene(renderer); disposers.push(() => world.dispose());
+        let bridgeWork: { at: number; resident: string; owner: string; parts: T.Object3D[]; crossing?: boolean } | undefined;
+        let bridgeClear = 0;
+        disposers.push(() => window.clearTimeout(bridgeClear));
         const effects = new WorldEffects(world.scene); disposers.push(() => effects.dispose());
         const moments = new MomentEffects(world.scene); disposers.push(() => moments.dispose());
         const camera = new T.OrthographicCamera(-5, 5, 5, -5, .1, 100), view = initialView();
@@ -108,6 +114,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
         const rebuild = (next: GrowingState, nextGhost?: Ghost, selected?: string, nextHints?: readonly Cell[]) => {
             layout = world.layout(next);
             node.dataset.growingBounds = JSON.stringify(layout.bounds);
+            node.dataset.bridgeSaved = String(Boolean(next.bridge));
             layer?.dispose();
             layer = buildObjectLayer(world.m, next, layout, nextGhost, selected, nextHints);
             world.scene.add(layer.root);
@@ -125,6 +132,11 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             known = new Set(layer.objects.keys());
             unopened = new Set(next.unopened);
             world.life.sync(next, layout, layer);
+            if (bridgeWork && (!next.bridge || bridgeWork.owner !== next.seed)) {
+                bridgeWork = undefined; window.clearTimeout(bridgeClear); setBridgeStage(undefined);
+            }
+            if (!next.bridge) { window.clearTimeout(bridgeClear); setBridgeStage(undefined); }
+            else if (bridgeWork) bridgeWork.parts = layer.objects.get('bridge')?.children[0]?.children.filter(o => o.name.startsWith('bridge-')) ?? [];
             frameCamera(camera, layout, view, width / height);
         };
         const resize = () => {
@@ -136,6 +148,16 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
         };
         api.current = {
             rebuild, setTime: next => world.setTime(next),
+            bridgeStart: () => {
+                const current = latest.current.state;
+                const resident = current.villagers.find(v => !v.away && !current.arrivals.includes(v.id));
+                const model = layer?.objects.get('bridge')?.children[0];
+                if (!current.bridge || !resident || !model) return;
+                const parts = model.children.filter(o => o.name.startsWith('bridge-'));
+                parts.forEach(o => { o.visible = false; });
+                bridgeWork = { at: performance.now(), resident: resident.id, owner: current.seed, parts };
+                window.clearTimeout(bridgeClear); setBridgeStage('building');
+            },
             turn: by => { view.azimuth += by * Math.PI / 6; frameCamera(camera, layout, view, width / height); },
             cheer: () => { const now = performance.now(); world.life.hop('visitor', now); world.life.hop('pokomoko', now + 120); },
             moment: shown => {
@@ -144,8 +166,8 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             },
             concert: (cell, receipt) => { world.life.startConcert(cell, performance.now()); pendingConcert = receipt; },
             focus: id => {
-                const target = world.life.focusPositionOf(id) ?? layer?.objects.get(id)?.position; if (!target) return;
-                view.zoom = Math.max(view.zoom, 2.2);
+                const target = world.life.focusPositionOf(id) ?? layer?.objects.get(id)?.position.clone().add(new T.Vector3(0, 0, id === 'bridge' ? 1.1 : 0)); if (!target) return;
+                view.zoom = Math.max(view.zoom, id === 'bridge' ? 1.35 : 2.2);
                 const home = frameCamera(camera, layout, { ...view, pan: { x: 0, z: 0 } }, width / height);
                 view.pan = { x: target.x - home.x, z: target.z - home.z };
                 frameCamera(camera, layout, view, width / height);
@@ -231,6 +253,29 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
                 if (now > nextWave) { world.life.celebrate(now); nextWave = now + 6000; }
             }
             world.life.tick(now, delta, reduced, latest.current.time === 'night');
+            if (bridgeWork && current.bridge) {
+                const { at, resident, parts } = bridgeWork, elapsed = now - at;
+                const buildTime = reduced ? 1500 : 3000, crossTime = reduced ? 1500 : 3000;
+                const progress = Math.min(1, elapsed / buildTime);
+                parts.forEach(o => { o.visible = o.name.startsWith('bridge-board-') ? progress >= (Number(o.name.slice(13)) + 1) / 8 : progress >= 1; });
+                const shore = layout.point(bridgeAnchor(current)), end = layout.point(bridgeEnd(current));
+                const poko = world.life.root.getObjectByName('growing-pokomoko');
+                const friend = world.life.root.getObjectByName(`growing-villager-${resident}`);
+                if (poko) { poko.visible = true; poko.position.set(shore.x - .38, .14 + (reduced ? 0 : Math.abs(Math.sin(now / 150)) * .06), shore.z + .35 + progress * 1.8); poko.rotation.y = .3; }
+                if (friend) {
+                    friend.visible = true;
+                    const crossing = Math.min(1, Math.max(0, (elapsed - buildTime) / crossTime));
+                    friend.position.set(shore.x + .12, .16 + (reduced ? 0 : Math.abs(Math.sin(now / 170)) * .04), shore.z + crossing * (end.z - shore.z));
+                    friend.rotation.y = 0;
+                }
+                if (elapsed >= buildTime && !bridgeWork.crossing) { bridgeWork.crossing = true; setBridgeStage('crossing'); }
+                if (elapsed >= buildTime + crossTime) {
+                    parts.forEach(o => { o.visible = true; });
+                    world.life.finishBridgeBuild(resident, bridgeEnd(current));
+                    bridgeWork = undefined; setBridgeStage('arrived');
+                    bridgeClear = window.setTimeout(() => setBridgeStage(undefined), 2200);
+                }
+            }
             effects.tick(now, delta);
             moments.ambient(now, latest.current.time === 'night', current.landmarks.filter(l => l.cell && (l.kind === 'lantern' || l.kind === 'lighthouse')).length, camera.position.clone().setY(0), reduced);
             moments.tick(now);
@@ -341,6 +386,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
     useEffect(() => { if (moment) api.current?.moment(moment); }, [moment]);
     useEffect(() => { if (focus) api.current?.focus(focus.id); }, [focus]);
     useEffect(() => { if (concert) api.current?.concert(concert.cell, concert.n); }, [concert]);
+    useEffect(() => { if (bridgeBuild) api.current?.bridgeStart(); }, [bridgeBuild]);
     useEffect(() => { api.current?.setTime(time); }, [time]);
     useEffect(() => { if (cheer) api.current?.cheer(); }, [cheer]);
     useEffect(() => { if (festival) api.current?.festival(); }, [festival]);
@@ -349,5 +395,8 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
 
     return <div className="growing-world" ref={host} data-growing-world data-visual-candidate="growing-island-v1" data-growing-feature-enabled="true">
         {failed && <p className="growing-world-failed">しまを ひょうじ できなかったよ。よみなおしてみてね。</p>}
+        {bridgeStage && <div className="growing-bridge-caption" data-bridge-stage={bridgeStage} role="status">
+            {bridgeStage === 'building' ? 'ぽこもこが はしを つくっているよ' : bridgeStage === 'crossing' ? 'なかまが わたっているよ' : 'むこうまで いけた！'}
+        </div>}
     </div>;
 }

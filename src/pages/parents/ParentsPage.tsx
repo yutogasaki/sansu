@@ -1,12 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { getWeakMathSkillIds, getWeakVocabIds } from '../../domain/learningRepository';
 import { ENGLISH_WORDS } from '../../domain/english/words';
 import type { RecentAttempt, UserProfile } from '../../domain/types';
 import { getActiveProfile } from '../../domain/user/repository';
 import { getParentAttemptLabel, getParentMathSkillLabel, getParentVocabWordLabel } from './parentAttemptLabel';
 import { PARENT_REVIEW_COPY } from './parentReviewCopy';
-import { ParentGateModal } from '../../components/gate/ParentGateModal';
 import { Spinner } from '../../components/ui/Spinner';
 import { Badge } from '../../components/ui/Badge';
 import { InsetPanel, SectionLabel, SurfacePanel, SurfacePanelHeader } from '../../components/ui/SurfacePanel';
@@ -20,24 +19,17 @@ import { learningLevelTitle } from '../../domain/learning/progressView';
 import './Parents.css';
 import { useIslandNavigation } from '../../components/island/useIslandNavigation';
 
-type ParentsRouteState = {
-    parentGatePassed?: boolean;
-};
-
 export const ParentsPage: React.FC = () => {
     const navigate = useNavigate();
     const navigation = useIslandNavigation();
     const learningOverlay = navigation?.learning ?? false;
-    const location = useLocation();
     const settingsReturnUrl = '/settings';
-    const routeState = location.state as ParentsRouteState | null;
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [weakMathIds, setWeakMathIds] = useState<string[]>([]);
     const [weakVocabIds, setWeakVocabIds] = useState<string[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [loadError, setLoadError] = useState(false);
     const [retry, setRetry] = useState(0);
-    const [isGatePassed, setIsGatePassed] = useState(Boolean(routeState?.parentGatePassed));
     const vocabWordMap = useMemo(
         () => new Map(ENGLISH_WORDS.map(word => [word.id, word])),
         []
@@ -45,11 +37,6 @@ export const ParentsPage: React.FC = () => {
 
     useEffect(() => {
         if (learningOverlay) return;
-        if (!isGatePassed) {
-            setIsLoading(false);
-            return;
-        }
-
         let cancelled = false;
 
         const loadData = async () => {
@@ -92,19 +79,7 @@ export const ParentsPage: React.FC = () => {
         return () => {
             cancelled = true;
         };
-    }, [isGatePassed, retry, learningOverlay]);
-
-    if (!isGatePassed) {
-        return (
-            <ScreenScaffold title="保護者" footerSpacing="none" scroll={false}>
-                <ParentGateModal
-                    isOpen
-                    onClose={() => navigate(settingsReturnUrl)}
-                    onSuccess={() => setIsGatePassed(true)}
-                />
-            </ScreenScaffold>
-        );
-    }
+    }, [retry, learningOverlay]);
 
     if (isLoading) {
         return (
@@ -151,10 +126,10 @@ export const ParentsPage: React.FC = () => {
             containerClassName="parents-screen"
             contentClassName="parents-ledger px-[var(--screen-padding-x)] pt-1 space-y-5"
         >
-            <SurfacePanel className="parent-overview" data-parent-candidate="parent-learning-hub-v1">
+            <SurfacePanel className="parent-overview" data-parent-candidate="parent-learning-hub-v2">
                 <SurfacePanelHeader
                     title={`${profile.name}さんの学び`}
-                    description="今の範囲と、積み重ねた記録"
+                    description="今の出題範囲と、積み重ねた記録"
                 />
                 <div className="parent-current-ranges">
                     {(['math', 'vocab'] as const).map(subject => {
@@ -171,11 +146,11 @@ export const ParentsPage: React.FC = () => {
 
             <SurfacePanel className="parent-actions">
                 <details className="parent-details parent-check-entry">
-                    <summary><span><ClipboardCheck size={22} aria-hidden="true" /><span><strong>理解度を確認</strong><small>必要なときに · アプリ / 紙</small></span></span><ChevronDown size={20} aria-hidden="true" /></summary>
+                    <summary><span><ClipboardCheck size={22} aria-hidden="true" /><span><strong>確認テスト（20問）</strong><small>理解の確認に · レベルは変わりません</small></span></span><ChevronDown size={20} aria-hidden="true" /></summary>
                     <ParentAssessment key={profile.id} profile={profile} onUpdate={setProfile} />
                 </details>
                 <button className="parent-range-action" type="button" onClick={() => navigation ? navigation.open('/settings/curriculum') : navigate('/settings/curriculum')}>
-                    <span><SlidersHorizontal size={22} aria-hidden="true" /><span><strong>学習範囲を調整</strong><small>レベル・進級の設定</small></span></span><ArrowRight size={20} aria-hidden="true" />
+                    <span><SlidersHorizontal size={22} aria-hidden="true" /><span><strong>学習範囲を変更</strong><small>出題する内容・難しさを調整</small></span></span><ArrowRight size={20} aria-hidden="true" />
                 </button>
             </SurfacePanel>
 

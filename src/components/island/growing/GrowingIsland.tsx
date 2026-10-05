@@ -36,6 +36,7 @@ import { useNavigate } from 'react-router-dom';
 import { allowPwaUpdateDuringReadOnlyOpening } from '../../../pwa';
 import './growing.css';
 import { GrowingIslandMenu } from './GrowingIslandMenu';
+import { bridgeSite } from '../../../domain/growingIsland/space';
 import type { MenuPictures } from './menuMiniatures';
 
 const GrowingWorld = lazy(() => import('./GrowingWorld'));
@@ -66,14 +67,18 @@ function hintCells(state: GrowingState, events: TownEvent[]): Cell[] {
 }
 
 /** The growing island home (spec 52): play, plant, learn, open, and show. */
-export default function GrowingIsland({ profileId, profileName = '', active, sound, onHome, onLearn, guideRequest, onGuideRequestConsumed }: { profileId: string; profileName?: string; active: boolean; sound: boolean; onHome: () => void; onLearn: () => void;
-    guideRequest?: GrowingGuideRequest; onGuideRequestConsumed?: () => void }) {
+export default function GrowingIsland({ profileId, profileName = '', active, sound, onHome, onLearn, guideRequest, onGuideRequestConsumed, onProfileSwitchBlockedChange }: { profileId: string; profileName?: string; active: boolean; sound: boolean; onHome: () => void; onLearn: () => void;
+    guideRequest?: GrowingGuideRequest; onGuideRequestConsumed?: () => void; onProfileSwitchBlockedChange?: (blocked: boolean) => void }) {
     const island = useGrowingIsland(profileId, active);
     const own = island.record?.state;
     const time = useGardenTime(active);
     const [panel, setPanel] = useState<Panel>(), [menu, setMenu] = useState(false), [turn, setTurn] = useState(0);
     const [guideMemory, setGuideMemory] = useState<AchievementId>();
     const [placing, setPlacing] = useState<Placing>(), [selected, setSelected] = useState<string>();
+    const [bridgeChoice, setBridgeChoice] = useState<'build' | 'remove'>();
+    const [bridgeBuild, setBridgeBuild] = useState(0), [bridgeBusy, setBridgeBusy] = useState(false);
+    useEffect(() => { if (!bridgeBusy) return; const timer = window.setTimeout(() => setBridgeBusy(false), 8500); return () => window.clearTimeout(timer); }, [bridgeBusy, bridgeBuild]);
+    useEffect(() => { setBridgeChoice(undefined); setBridgeBusy(false); setBridgeBuild(0); }, [profileId]);
     const [line, setLine] = useState<string>(), [dawn, setDawn] = useState(0);
     const [cheer, setCheer] = useState(0), [festival, setFestival] = useState(0);
     const [hints, setHints] = useState<Cell[]>([]), [moment, setMoment] = useState<ShownMoment>();
@@ -124,8 +129,13 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     const audio = useIslandWorkshopAudio(sound && active);
     useIslandAmbience(show ? 'shell-three-notes' : time === 'night' ? 'evening' : 'breeze', sound, active);
     const state = visit?.state ?? own;
+    const profileSwitchBlocked = active && (island.busy || island.saving || visitSaving || Boolean(placing) || Boolean(bridgeChoice) || naming !== undefined);
+    useEffect(() => {
+        onProfileSwitchBlockedChange?.(profileSwitchBlocked);
+        return () => onProfileSwitchBlockedChange?.(false);
+    }, [onProfileSwitchBlockedChange, profileSwitchBlocked]);
     const guideSafe = active && worldStep === 'ready' && !island.busy && !island.syncing && !island.error && !dawn && !visit && !show
-        && !panel && !menu && !placing && !selected && !card && !story && naming === undefined;
+        && !panel && !menu && !placing && !selected && !card && !story && !bridgeChoice && !bridgeBusy && naming === undefined;
     const guide = useGrowingGuide({ state: own, active, safe: guideSafe, dispatch: island.dispatch, acknowledge: island.acknowledge });
 
     useEffect(() => {
@@ -232,6 +242,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         const target = selected; if (!target) return;
         const id = target.startsWith('villager:') ? target.slice(9) : target;
         if (action.type === 'home') { setSelected(undefined); onHome(); return; }
+        if (action.type === 'bridge-remove') { setSelected(undefined); setBridgeChoice('remove'); return; }
         if (action.type === 'move') {
             const plot = own.plots.find(p => p.id === id), landmark = own.landmarks.find(l => l.id === id), keepsake = own.keepsakes.find(k => k.id === id);
             setPlacing({ kind: (plot?.kind ?? landmark?.kind ?? 'flower')!, seed: Boolean(plot), id, mode: 'move', keepsake: keepsake?.unitId }); setSelected(undefined);
@@ -338,7 +349,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         finally { setVisitSaving(false); }
     };
 
-    const world = <GrowingWorld key={worldAttempt} active={active} compact={worldAttempt > 0} qualityCeiling={qualityCeiling} state={state} time={time} ghost={visit ? undefined : ghost} selectedId={visit ? undefined : selected} turn={turn} cheer={cheer} festival={festival}
+    const world = <GrowingWorld key={worldAttempt} active={active} compact={worldAttempt > 0} qualityCeiling={qualityCeiling} state={state} time={time} ghost={visit ? undefined : ghost} selectedId={visit ? undefined : selected} turn={turn} cheer={cheer} festival={festival} bridgeBuild={bridgeBuild}
         hints={visit ? [] : hints} moment={visit ? undefined : moment} show={show} focus={focus} concert={concert} onCamera={c => { camera.current = c; }}
         onPop={() => audio.play('glass')} onStage={setWorldStep} onFailure={setGraphicsFailure} onQualityFallback={ceiling => {
             setQualityCeiling(previous => Math.min(previous, ceiling)); setWorldStep('world'); setWorldAttempt(value => value + 1);
@@ -409,6 +420,9 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
                 <div className="growing-row"><button type="submit" className="growing-primary">きめる</button><button type="button" onClick={closeNaming}>やめる</button></div></div>
         </form>}
         {menu && !visit && <GrowingIslandMenu villagers={own.villagers} faces={faces} pictures={menuPictures} drops={own.drops} busy={island.busy} quote={quote}
+            bridge={{ built: Boolean(own.bridge), ready: own.villagers.some(v => !v.away && !own.arrivals.includes(v.id)) && bridgeSite(own) !== undefined,
+                reason: own.villagers.some(v => !v.away && !own.arrivals.includes(v.id)) ? 'はしの ばしょを あけてね' : 'なかまが きてから' }}
+            onBridge={() => { setMenu(false); if (own.bridge) { setSelected('bridge'); setFocus({ id: 'bridge', n: Date.now() }); } else setBridgeChoice('build'); }}
             onClose={() => { setMenu(false); menuTrigger.current?.focus({ preventScroll: true }); }}
             onFriends={() => { guide.pause(); setMenu(false); loadFaces(); setPanel('friends'); }}
             onSeeds={() => { void audio.unlock(); setMenu(false); setPanel('tray'); setSelected(undefined); }}
@@ -420,7 +434,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
             onGuide={() => openBook(undefined, 'menu')} onSettings={() => { setMenu(false); navigate('/settings'); }}
             onRotate={direction => setTurn(value => value + direction)}
             onExpand={side => void run({ type: 'expand', side }, () => { setMenu(false); audio.play('assemble'); })} />}
-        {!placing && !panel && !menu && !selected && !guide.cue && !guide.notice && <p className="growing-bubble" role="status"><span aria-hidden="true">ぽこもこ</span>{bubble}</p>}
+        {!placing && !panel && !menu && !selected && !bridgeChoice && !bridgeBusy && !guide.cue && !guide.notice && <p className="growing-bubble" role="status"><span aria-hidden="true">ぽこもこ</span>{bubble}</p>}
         {guideSafe && <GrowingGuideCue state={own} cue={guide.cue} notice={guide.notice} selected={guide.selected} onAction={() => starterAction()}
             onClose={guide.notice ? guide.dismissNotice : guide.pause} onBook={memory => openBook(memory)} />}
         {(island.error || visitError) && <div className="growing-error" role="alert"><p>{island.error || visitError}</p><button onClick={() => { island.clearError(); setVisitError(undefined); }}>とじる</button></div>}
@@ -448,6 +462,20 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
             onClear={() => void run({ type: 'choose-goal' })} onTry={goalAction} onResumeStarter={() => void guide.resume().then(() => setPanel(undefined))}
             onStarterAction={() => starterAction()} onTarget={memoryTarget} />}
         {panel === 'visit' && <VisitPicker profiles={siblings} onVisit={id => void startVisit(id)} onClose={() => setPanel(undefined)} />}
+        {bridgeChoice && <div className="growing-overlay" role="dialog" aria-modal="true" aria-label={bridgeChoice === 'build' ? 'はしを つくる' : 'はしを しまう'}>
+            <div className="growing-overlay-body"><strong>{bridgeChoice === 'build' ? 'ぽこもこに はしを おねがいする？' : 'はしを しまう？'}</strong>
+                <p>{bridgeChoice === 'build' ? 'なかまが わたって、むこうの みはらしだいへ いくよ' : 'また いつでも つくれるよ'}</p>
+                <div className="growing-row"><button onClick={() => setBridgeChoice(undefined)}>やめる</button><button className="growing-primary" disabled={island.busy}
+                    onClick={() => {
+                        const site = bridgeSite(own);
+                        const command: Command | undefined = bridgeChoice === 'remove' ? { type: 'bridge-remove' }
+                            : site === undefined ? undefined : { type: 'bridge-build', x: site };
+                        if (!command) { setBridgeChoice(undefined); setLine('はしの ばしょを あけてね'); return; }
+                        void run(command, () => { setBridgeChoice(undefined); setLine(command.type === 'bridge-build' ? undefined : 'はしを しまったよ');
+                            if (command.type === 'bridge-build') { setBridgeBusy(true); setBridgeBuild(value => value + 1); } });
+                    }}>{bridgeChoice === 'build' ? 'つくる' : 'しまう'}</button></div>
+            </div>
+        </div>}
         {!visit && selected && !placing && <GrowingSheet state={own} target={selected} onAction={sheetAction} onClose={() => setSelected(undefined)} />}
         {card && <CardView url={card.url} busy={!card.blob} frame={card.frame} onFrame={frame => void makeCard(frame)} onSave={() => { if (card.blob) saveImage(card.blob, `${own.islandName ?? 'しま'}-card.png`); }}
             onClose={() => { if (card.url) URL.revokeObjectURL(card.url); setCard(undefined); }} />}

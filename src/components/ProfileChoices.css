@@ -1,0 +1,13 @@
+.settings-profile-choices { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+.settings-profile-choice {
+    display: grid; grid-template-columns: 40px minmax(0, 1fr); column-gap: 12px;
+    align-items: center; min-height: 76px; padding: 12px; text-align: left;
+    border: 1px solid var(--pokomoko-edge); border-radius: 14px;
+    background: var(--pokomoko-paper); color: var(--pokomoko-ink);
+}
+.settings-profile-choice[aria-pressed="true"] { background: var(--app-surface-soft); border-color: var(--pokomoko-blue); }
+.settings-profile-choice:focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 3px; }
+.settings-profile-choice:disabled { cursor: wait; opacity: .65; }
+.settings-profile-avatar { grid-row: span 2; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; background: var(--pokomoko-canvas); font-size: 20px; font-weight: 700; }
+.settings-profile-name { overflow-wrap: anywhere; font-size: 17px; font-weight: 700; }
+.settings-profile-state { font-size: 13px; color: var(--pokomoko-muted); }

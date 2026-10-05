@@ -1,8 +1,8 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import * as T from 'three';
 import { IslandMaterials } from '../three/primitives';
 import { applyIntent, newIsland } from '../../../domain/growingIsland';
-import { key, reachableFromHome, walkableCells } from '../../../domain/growingIsland/space';
+import { bridgeEnd, key, landBounds, reachableFromHome, walkableCells } from '../../../domain/growingIsland/space';
 import { GrowingLife, VISIBLE_WALKERS } from './growingLife';
 import { buildObjectLayer } from './objectLayer';
 import { sceneLayout } from './sceneLayout';
@@ -98,4 +98,26 @@ it('starts residents on the doorstep-connected side of a reachable home, not an 
         expect(reached.has(key(cell))).toBe(true);
     }
     expect(state).toEqual(before);
+});
+
+it('lets a resident walk to the saved lookout in ordinary life and brings them ashore when removed', () => {
+    const { state, life, friend } = island();
+    state.bridge = { x: 2 };
+    const m = new IslandMaterials('moon-garden'), layout = sceneLayout(state), layer = buildObjectLayer(m, state, layout);
+    life.sync(state, layout, layer);
+    const random = vi.spyOn(Math, 'random').mockReturnValue(.01);
+    try {
+        let reached = false;
+        for (let i = 1; i <= 25; i++) {
+            life.tick(i * 1000, 1000, true, false);
+            const position = life.positionOf(friend);
+            if (position && layout.cellAt(position).z === bridgeEnd(state).z) reached = true;
+        }
+        expect(reached).toBe(true);
+        delete state.bridge;
+        const nextLayout = sceneLayout(state), nextLayer = buildObjectLayer(m, state, nextLayout);
+        life.sync(state, nextLayout, nextLayer); life.tick(26000, 16, true, false);
+        expect(nextLayout.cellAt(life.positionOf(friend)!).z).toBeLessThan(landBounds(state).depth);
+        nextLayer.dispose();
+    } finally { random.mockRestore(); layer.dispose(); life.dispose(); m.dispose(); }
 });

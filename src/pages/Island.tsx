@@ -15,6 +15,7 @@ import { lifeEnabled } from '../domain/islandLife/model';
 import { replayLife } from '../domain/islandLife/simulation';
 import { lifeDb } from '../domain/islandLife/repository';
 import { savedHeroStyle } from '../domain/islandLife/savedHeroStyle';
+import { IslandProfileSwitcher } from '../components/island/IslandProfileSwitcher';
 import { IslandDirectActions } from '../components/island/IslandDirectActions';
 import type { IslandDirectTarget } from '../components/island/islandDirectTargets';
 import { IslandHelp, IslandTutorial, TUTORIAL_TOPICS } from '../components/island/tutorial/IslandTutorial';
@@ -144,6 +145,7 @@ const IslandWorkReplay = lazy(() => import('../components/island/IslandWorkRepla
 const IslandWorkshop = lazy(() => import('../components/island/IslandWorkshop').then(module => ({ default: module.IslandWorkshop })));
 
 function IslandSession({ profile }: { profile: UserProfile }) {
+    const [growingProfileSwitchBlocked, setGrowingProfileSwitchBlocked] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
     const navigation = useIslandNavigation();
@@ -694,7 +696,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                 ? <h1 title={houseOverview ? `${profile.name}の いえ` : island.experience?.islandName}>{profile.name}の {houseOverview ? 'いえ' : 'しま'}</h1>
                 : <><p>{profile.name}の</p><h1 title={island.experience?.islandName}>{island.experience?.islandName ?? 'ふしぎな しま'}</h1></>}</div>
             {milestoneNotice.milestone && <IslandMilestoneNotice milestone={milestoneNotice.milestone} island={island} />}</div>
-            <div className="island-header-actions"><IslandSoundControl key={screen} enabled={profile.soundEnabled} disabled={busy} onChange={enabled => run(async () => {
+            <div className="island-header-actions">{active && screen === 'home' && <IslandProfileSwitcher activeId={profile.id} disabled={busy || lifeControls.busy || preparingLearning || opening || growingProfileSwitchBlocked || Boolean(navigation?.blocked || navigation?.learningBlocked)} />}<IslandSoundControl key={screen} enabled={profile.soundEnabled} disabled={busy} onChange={enabled => run(async () => {
                 const updated = await updateProfileAtomically(profile.id, current => ({ ...current, soundEnabled: enabled }));
                 if (!updated) throw new Error('Profile unavailable');
                 return updated;
@@ -710,7 +712,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         {roomWord && screen === 'keepsakes' && <p className="room-word" role="status" key={roomWord.at}><strong>{roomWord.text}</strong>{roomWord.japanese && <span>{roomWord.japanese}</span>}</p>}
         {screen === 'placement' && preview && <IslandPlacementActions valid={valid} disabled={busy} onSave={savePlacement} onCancel={cancelPlacement} />}
         {active && screen === 'home' && lifeEnabled() && <Suspense fallback={growingIslandEnabled() ? <GrowingLoading step="screen" /> : <Spinner fullScreen message="しまを ひらいているよ…" />}>{growingIslandEnabled()
-            ? <GrowingIsland key={profile.id} profileId={profile.id} profileName={profile.name} active={active && screen === 'home'} sound={Boolean(profile.soundEnabled)} onHome={enterHouse} onLearn={() => void begin()}
+            ? <GrowingIsland onProfileSwitchBlockedChange={setGrowingProfileSwitchBlocked} key={profile.id} profileId={profile.id} profileName={profile.name} active={active && screen === 'home'} sound={Boolean(profile.soundEnabled)} onHome={enterHouse} onLearn={() => void begin()}
                 guideRequest={growingGuideRequest} onGuideRequestConsumed={() => setGrowingGuideRequest(undefined)} />
             : <IslandLife controls={lifeControls} onHome={enterHouse} disabled={busy || preparingLearning} islandName={island.experience?.islandName ?? 'ふしぎな しま'} />}</Suspense>}
         {active && homeJourneyScene && <Suspense fallback={<Spinner fullScreen message="しまを ひらいているよ…" />}><HomeJourneyPreview key={profile.id} state={island.homeJourney}

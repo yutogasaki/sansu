@@ -5,7 +5,7 @@ import type { IslandMaterials } from '../three/primitives';
 import type { ItemKind, LifeItem } from '../../../domain/islandLife/model';
 import { connectedWaterChannels, waterChannelConnections } from '../../../domain/islandLife/waterChannels';
 import { waterLayout } from '../../../domain/growingIsland/environment';
-import { HOME_CELL, key } from '../../../domain/growingIsland/space';
+import { HOME_CELL, bridgeAnchor, key } from '../../../domain/growingIsland/space';
 import type { Cell, FlowerColor, GrowingState, Landmark, LandmarkKind, PlotStyle, SeedKind } from '../../../domain/growingIsland';
 import { keepsakeKind, treeAge } from '../../../domain/growingIsland';
 import { buildBud, buildLighthouse, buildPlot } from './plotGeometry';
@@ -15,6 +15,7 @@ import { wonder } from './wonderPaint';
 import { buildColorFlower } from './flowerGeometry';
 import { buildBoat, buildPier } from './pierGeometry';
 import type { SceneLayout } from './sceneLayout';
+import { buildBridge } from './bridgeGeometry';
 
 export interface Ghost { kind: SeedKind | LandmarkKind; seed: boolean; cell?: Cell; valid: boolean; style: PlotStyle; allowed: Cell[]; keepsake?: string; color?: FlowerColor }
 
@@ -127,6 +128,7 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
         if ((p.kind === 'farm' || p.kind === 'market') && p.stage > 0 && !seats.has(key(p.cell))) seats.set(key(p.cell), 'tend');
     }
     for (const k of state.keepsakes) if (k.cell) add(k.id, buildKeepsake(m, keepsakeKind(k.unitId)), k.cell);
+    if (state.bridge) add('bridge', buildBridge(m), bridgeAnchor(state));
     const pier = buildPier(m); pier.position.copy(layout.pierRoot); root.add(pier);
     const flag = buildFlag(m, state.flagColor ?? 0, state.flagPattern ?? 0, state.emblem?.image);
     flag.position.copy(layout.pierRoot).add(new T.Vector3(-.36, .02, .1));

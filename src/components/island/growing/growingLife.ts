@@ -1,7 +1,7 @@
 import * as T from 'three';
 import type { IslandMaterials } from '../three/primitives';
 import { homeCellOf } from '../../../domain/growingIsland/community';
-import { HOME_CELL, key, reachableFromHome, walkableCells } from '../../../domain/growingIsland/space';
+import { HOME_CELL, bridgeEnd, key, reachableFromHome, walkableCells } from '../../../domain/growingIsland/space';
 import type { Cell, GrowingState, Villager } from '../../../domain/growingIsland';
 import { makeVillagerActor, type Actor } from './actors';
 import type { ObjectLayer, Seat } from './objectLayer';
@@ -62,6 +62,12 @@ export class GrowingLife {
         for (const id of this.walkers.keys()) {
             const walker = this.walkers.get(id)!, villager = villagers.get(id);
             if (villager) walker.home = homeCellOf(state, villager);
+            if ((!this.walkable.has(key({ x: Math.round(walker.at.x), z: Math.round(walker.at.z) }))
+                || walker.path.some(cell => !this.walkable.has(key(cell))))
+                && walker.mode !== 'boat' && walker.mode !== 'sailing' && walker.mode !== 'pier' && walker.mode !== 'held') {
+                walker.at = nearestOpen(this.walkable, walker.at) ?? { ...HOME_CELL };
+                walker.path = []; walker.mode = 'idle'; walker.until = 0;
+            }
             if (walker.mode === 'boat' && !state.arrivals.includes(id)) {
                 // Step off at the pier, then walk home along open ground.
                 walker.at = { ...(nearestOpen(this.walkable, layout.cellAt(layout.pierEnd)) ?? HOME_CELL) };
@@ -92,6 +98,7 @@ export class GrowingLife {
 
     private chooseTarget(walker: Walker): Cell | undefined {
         const roll = Math.random();
+        if (this.state?.bridge && roll < .15) return bridgeEnd(this.state);
         if (roll < .35) return besideOpen(this.walkable, walker.home, this.homePaths);
         if (roll < .75 && this.seats.size) {
             const seats = [...this.seats.keys()], pick = seats[Math.floor(Math.random() * seats.length)];
@@ -159,6 +166,15 @@ export class GrowingLife {
     }
 
     positions() { return [...this.walkers.values()].filter(w => w.actor.root.visible).map(w => w.actor.root.position.clone()); }
+
+    /** Resume the normal walk from the actual lookout after the one-time building scene. */
+    finishBridgeBuild(id: string, end: Cell) {
+        for (const name of ['pokomoko', id]) {
+            const walker = this.walkers.get(name); if (!walker) continue;
+            walker.at = { ...end }; walker.path = []; walker.seat = undefined;
+            walker.mode = 'idle'; walker.until = performance.now() + 1800;
+        }
+    }
 
     pick(id: string) {
         const w = this.walkers.get(id);

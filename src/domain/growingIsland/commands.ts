@@ -2,7 +2,7 @@ import { ACHIEVEMENTS, noteGuidanceIntent, noteTownBuilds } from './guidance';
 import { islandLevel, occupantsOf, refreshUnlocks } from './community';
 import { styleAt, syncSoil } from './environment';
 import { CAPE_LEVEL, DISTRICT_PRICE_STEP, isKid, FLAG_PATTERNS, HATS, LAND_PRICE, LANDMARK_PRICE, RULES, SEED_PRICE, STYLE_LEVEL } from './rules';
-import { isReachable, isVacant, occupant, onLand, reachableFromHome } from './space';
+import { bridgeAnchor, bridgeSite, canBuildBridge, isReachable, isVacant, key, occupant, onLand, reachableFromHome } from './space';
 import { DEFAULT_DECOR, patternOpen, RUG_COLORS, WORD_GROUPS } from './room';
 import { noteColor, PLANTED_COLORS } from './flowers';
 import { openTown, welcome } from './town';
@@ -51,6 +51,11 @@ function expand(state: GrowingState, side: Side) {
     else if (quote.step <= 5) state.land.capes.push(side as 'east' | 'west');
     else (state.land.districts ??= []).push(side);
     syncSoil(state);
+    if (state.bridge) {
+        const x = bridgeSite(state);
+        if (x === undefined) fail('はしの ばしょが ないよ。はしを しまってから ひろげてね。');
+        state.bridge.x = x;
+    }
 }
 
 function find(state: GrowingState, id: string) {
@@ -149,6 +154,18 @@ function apply(state: GrowingState, command: Command): TownEvent[] {
             break;
         }
         case 'expand': expand(state, command.side); break;
+        case 'bridge-build': {
+            if (state.bridge) fail('はしは もう あるよ。');
+            if (!state.villagers.some(v => !v.away && !state.arrivals.includes(v.id))) fail('なかまが きてから つくろう。');
+            if (!canBuildBridge(state, command.x)) fail('はしを かける ばしょを あけてね。');
+            state.bridge = { x: command.x };
+            break;
+        }
+        case 'bridge-remove': {
+            if (!state.bridge) fail('はしは まだ ないよ。');
+            delete state.bridge;
+            break;
+        }
         case 'name': {
             const name = command.name.trim();
             if (!name || [...name].length > 12) fail('なまえは 1〜12もじで つけてね。');
@@ -232,6 +249,8 @@ function apply(state: GrowingState, command: Command): TownEvent[] {
             break;
         }
     }
+    if (state.bridge && !reachableFromHome(state).has(key(bridgeAnchor(state))))
+        fail('はしまで いけなくなるよ。まわりを あけてね。');
     return events;
 }
 

@@ -19,10 +19,9 @@ import { useIslandNavigation } from '../components/island/useIslandNavigation';
 import { UserProfile } from "../domain/types";
 import { getActiveProfile, deleteProfile, getAllProfiles, updateProfileAtomically, setActiveProfileId } from "../domain/user/repository";
 import { setSoundEnabled } from "../utils/audio";
-import { ParentGateModal } from "../components/gate/ParentGateModal";
-import { activateVocabNextLevel, needsVocabNextLevelActivation } from "../hooks/useStudySession.logic";
 import { ScreenScaffold } from "../components/ScreenScaffold";
 import storage from "../utils/storage";
+import { ProfileChoices } from "../components/ProfileChoices";
 import "./UtilityLayout.css";
 
 export const Settings: React.FC = () => {
@@ -37,12 +36,7 @@ export const Settings: React.FC = () => {
     const [switchingId, setSwitchingId] = useState<string | null>(null);
     const [switchError, setSwitchError] = useState(false);
 
-    // 保護者ガードの状態
-    const [showParentGuard, setShowParentGuard] = useState(false);
-    const [guardCallback, setGuardCallback] = useState<(() => void) | null>(null);
     const profileIdRef = useRef<string | null>(null);
-    const [activationError, setActivationError] = useState(false);
-    const [isActivating, setIsActivating] = useState(false);
 
     // Modals State
     const [renameTarget, setRenameTarget] = useState<UserProfile | null>(null);
@@ -208,37 +202,6 @@ export const Settings: React.FC = () => {
         await persistProfileUpdate(updated);
     };
 
-    // 保護者ガードを表示して、通過したらcallbackを実行
-    const withParentGuard = (callback: () => void) => {
-        setGuardCallback(() => callback);
-        setShowParentGuard(true);
-    };
-
-    const handleGuardSuccess = () => {
-        setShowParentGuard(false);
-        guardCallback?.();
-    };
-
-
-
-
-
-    const handleActivateVocab = async () => {
-        if (!profile || isActivating) return;
-        const expected = { profileId: profile.id, mainLevel: profile.vocabMainLevel };
-        setActivationError(false);
-        setIsActivating(true);
-        try {
-            const updated = await updateProfileAtomically(profile.id, current => activateVocabNextLevel(current, expected));
-            if (!updated) throw new Error("Profile missing");
-            if (profileIdRef.current === updated.id) syncProfileState(updated);
-        } catch {
-            if (profileIdRef.current === expected.profileId) setActivationError(true);
-        } finally {
-            setIsActivating(false);
-        }
-    };
-
     const subjectLabel = profile?.subjectMode === "math" ? t("さんすう", "算数") : profile?.subjectMode === "vocab" ? t("えいご", "英語") : t("さんすう+えいご", "算数+英語");
     const hissanLabel = profile?.hissanModeEnabled !== false ? t("ひっさんON", "筆算ON") : t("ひっさんOFF", "筆算OFF");
     const soundLabel = sound ? t("おとON", "サウンドON") : t("おとOFF", "サウンドOFF");
@@ -252,7 +215,7 @@ export const Settings: React.FC = () => {
         return (
         <button
             type="button"
-            onClick={() => key === 'parent' ? withParentGuard(() => navigate('/parents', { state: { parentGatePassed: true } })) : toggleSection(key)}
+            onClick={() => key === 'parent' ? (navigation ? navigation.open('/parents') : navigate('/parents')) : toggleSection(key)}
             aria-expanded={openSection === key}
             aria-controls={navigation && key !== 'parent' ? sectionId : undefined}
             aria-current={navigation && openSection === key ? "page" : undefined}
@@ -281,11 +244,6 @@ export const Settings: React.FC = () => {
             containerClassName={navigation ? "utility-layout-screen" : undefined}
             contentClassName={navigation ? "utility-layout-scroll" : "px-6 pt-2"}
         >
-            <ParentGateModal
-                isOpen={showParentGuard}
-                onClose={() => setShowParentGuard(false)}
-                onSuccess={handleGuardSuccess}
-            />
             <Modal
                 isOpen={!!renameTarget}
                 onClose={() => setRenameTarget(null)}
@@ -331,24 +289,16 @@ export const Settings: React.FC = () => {
                 {openSection && switchError && <p role="alert" className="settings-profile-switcher text-sm">きりかえが できなかったよ。もういちど おしてね。</p>}
                 {!openSection && profile && <SurfacePanel className="settings-profile-switcher" aria-label="あそぶ人を えらぶ">
                     <div><h2 className="text-lg font-bold">だれが あそぶ？</h2><p className="mt-1 text-sm text-pokomoko-muted">なまえを おすと、その人の しまへ。</p></div>
-                    <div className="settings-profile-choices">
-                        {profiles.map(person => <button key={person.id} type="button"
-                            className="settings-profile-choice" aria-label={`${person.name || 'ゲスト'}${person.id === profile.id ? '（いま あそんでいる）' : 'に きりかえる'}`}
-                            aria-pressed={person.id === profile.id}
-                            disabled={Boolean(switchingId) || Boolean(navigation?.blocked || navigation?.learningBlocked)}
-                            onClick={() => { void handleSwitchProfile(person.id); }}>
-                            <span className="settings-profile-avatar" aria-hidden="true">{Array.from(person.name || '?')[0]}</span>
-                            <span className="settings-profile-name">{person.name || 'ゲスト'}</span>
-                            <span className="settings-profile-state">{switchingId === person.id ? 'きりかえ中…' : person.id === profile.id ? '✓ いま あそんでいる' : 'この人で あそぶ'}</span>
-                        </button>)}
-                    </div>
+                    <ProfileChoices profiles={profiles} activeId={profile.id} switchingId={switchingId}
+                        disabled={Boolean(switchingId) || Boolean(navigation?.blocked || navigation?.learningBlocked)}
+                        onSelect={id => { void handleSwitchProfile(id); }} />
                     <p role="status" className="text-sm text-pokomoko-muted">{switchError ? 'きりかえが できなかったよ。もういちど なまえを おしてね。' : switchingId ? 'しまを ひらいているよ…' : ''}</p>
                 </SurfacePanel>}
                 {navigation && <nav className="settings-category-list" aria-label={t("せっていの こうもく", "設定の項目")}>
                     {sectionButton("profile", "プロフィール", `${profile?.name || "ゲスト"} · ${GRADES[profile?.grade ?? 1] || "???"}`)}
-                    {sectionButton("learning", t("べんきょう", "学習"), `${subjectLabel} · ${hissanLabel} · Lv.${profile?.mathMainLevel ?? 1}/${profile?.vocabMainLevel ?? 1}`)}
+                    {sectionButton("learning", t("べんきょう", "学習"), `${subjectLabel} · ${hissanLabel}`)}
                     {sectionButton("display", t("みため と おと", "表示とサウンド"), `${soundLabel} · ${textLabel} · ${kanjiLabel}`)}
-                    {sectionButton("parent", t("ほごしゃ", "保護者"), t("きろく · はんい · かくにん", "学習状況 · 範囲調整 · 理解度の確認"))}
+                    {sectionButton("parent", t("ほごしゃ", "保護者"), t("きろく · はんい · テスト", "学習記録 · 範囲変更 · 確認テスト"))}
                 </nav>}
                 <div className={navigation ? "settings-panels" : "space-y-3"}>
                 {navigation && !openSection && <div className="settings-empty-selection">
@@ -409,17 +359,11 @@ export const Settings: React.FC = () => {
 
                 {/* ── 学習 ── */}
                 <SurfacePanel id="settings-panel-learning" hidden={Boolean(navigation && openSection !== "learning")} className="overflow-hidden rounded-[28px] p-0">
-                    {!navigation && sectionButton("learning", t("べんきょう", "学習"), `${subjectLabel} · ${hissanLabel} · Lv.${profile?.mathMainLevel ?? 1}/${profile?.vocabMainLevel ?? 1}`)}
+                    {!navigation && sectionButton("learning", t("べんきょう", "学習"), `${subjectLabel} · ${hissanLabel}`)}
                     <AnimatePresence>
                         {openSection === "learning" && (
                             <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }} className="overflow-hidden">
                                 <div className="space-y-5 px-5 pb-5">
-                                    {profile && needsVocabNextLevelActivation(profile) && <InsetPanel className="space-y-3 p-4">
-                                        <p className="text-sm text-slate-700">英語の次のレベルも、少しずつ練習できます。</p>
-                                        <Button size="sm" className="min-h-11 w-full" disabled={isActivating} onClick={() => { void handleActivateVocab(); }}>英語 Lv.{profile.vocabMainLevel + 1}の練習を始める</Button>
-                                        <p className="text-xs text-pokomoko-muted">今のレベルを続けながら、10問のうち最大3問を新しい単語にします。</p>
-                                        {activationError && <p role="alert" className="text-sm text-slate-700">保存できませんでした。もう一度お試しください。</p>}
-                                    </InsetPanel>}
                                     <SurfacePanelHeader title={t("べんきょう する もの", "学習する科目")} />
                                     <SegmentedControl
                                         aria-label={t("べんきょう する もの", "学習する科目")}
@@ -437,19 +381,7 @@ export const Settings: React.FC = () => {
                                         description={t("おおきい すうじ の とき ひっさん で とける", "大きい数の計算で筆算UIを表示")}
                                         action={<Button aria-label={t("ひっさん モード", "筆算モード")} aria-pressed={profile?.hissanModeEnabled !== false} size="sm" variant={profile?.hissanModeEnabled !== false ? "primary" : "secondary"} onClick={async () => { if (!profile) return; await persistProfileUpdate({ ...profile, hissanModeEnabled: !profile.hissanModeEnabled }); }} className="w-20">{profile?.hissanModeEnabled !== false ? "ON" : "OFF"}</Button>}
                                     />
-                                    <PanelDivider />
-                                    <SurfacePanelHeader title={t("レベル", "レベル")} />
-                                    <div className="grid gap-3">
-                                        {[
-                                            { label: t("さんすう", "算数"), level: profile?.mathMainLevel ?? 1 },
-                                            { label: t("えいご", "英語"), level: profile?.vocabMainLevel ?? 1 },
-                                        ].map((item) => (
-                                            <InsetPanel key={item.label} className="flex items-center justify-between px-4 py-3">
-                                                <div className="font-bold text-slate-600">{item.label} <span className="text-lg font-black text-slate-800">Lv.{item.level}</span></div>
-                                                <Button variant="secondary" size="sm" aria-label={`${item.label}のレベルを変更`} onClick={() => navigation ? navigation.open("/settings/curriculum") : navigate("/settings/curriculum")}>{t("かえる", "変更")}</Button>
-                                            </InsetPanel>
-                                        ))}
-                                    </div>
+
                                 </div>
                             </motion.div>
                         )}
@@ -481,7 +413,7 @@ export const Settings: React.FC = () => {
                 {/* ── 保護者 ── */}
 
                 </div>
-                {!navigation && sectionButton("parent", t("ほごしゃ", "保護者"), t("きろく · はんい · かくにん", "学習状況 · 範囲調整 · 理解度の確認"))}
+                {!navigation && sectionButton("parent", t("ほごしゃ", "保護者"), t("きろく · はんい · テスト", "学習記録 · 範囲変更 · 確認テスト"))}
             </div>
         </ScreenScaffold>
     );

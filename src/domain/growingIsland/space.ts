@@ -45,8 +45,9 @@ function landmarkCells(landmark: Landmark): Cell[] {
 
 /** What occupies a cell. Spread wild plants are reported so seeds can replace them. */
 export function occupant(state: GrowingState, cell: Cell, except?: string):
-    { type: 'house' } | { type: 'landmark'; id: string } | { type: 'plot'; id: string; spread: boolean } | { type: 'keepsake'; id: string } | undefined {
+    { type: 'house' } | { type: 'bridge' } | { type: 'landmark'; id: string } | { type: 'plot'; id: string; spread: boolean } | { type: 'keepsake'; id: string } | undefined {
     if (isHouseCell(cell)) return { type: 'house' };
+    if (state.bridge && same(cell, bridgeAnchor(state))) return { type: 'bridge' };
     const landmark = state.landmarks.find(l => l.id !== except && landmarkCells(l).some(c => same(c, cell)));
     if (landmark) return { type: 'landmark', id: landmark.id };
     const plot = state.plots.find(p => p.id !== except && p.cell && same(p.cell, cell));
@@ -76,7 +77,30 @@ export function walkableCells(state: GrowingState): Set<string> {
     for (const l of state.landmarks) if (landmarkBlocks(l)) landmarkCells(l).forEach(c => blocked.add(key(c)));
     for (const p of state.plots) if (p.cell && plotBlocks(p)) blocked.add(key(p.cell));
     for (const k of state.keepsakes) if (k.cell) blocked.add(key(k.cell));
-    return new Set(landCells(state).map(key).filter(k => !blocked.has(k)));
+    const open = new Set(landCells(state).map(key).filter(k => !blocked.has(k)));
+    if (state.bridge) {
+        const { depth } = landBounds(state);
+        open.add(key({ x: state.bridge.x, z: depth }));
+        open.add(key({ x: state.bridge.x, z: depth + 1 }));
+    }
+    return open;
+}
+
+export function bridgeAnchor(state: GrowingState, x = state.bridge?.x ?? 2): Cell { return { x, z: landBounds(state).depth - 1 }; }
+export function bridgeEnd(state: GrowingState): Cell { return { x: state.bridge!.x, z: landBounds(state).depth + 1 }; }
+
+/** Existing objects and unreachable shores cannot be replaced by a bridge. */
+export function canBuildBridge(state: GrowingState, x: number) {
+    const bounds = landBounds(state), shore = bridgeAnchor(state, x);
+    if (!Number.isInteger(x) || x < bounds.minX + 1 || x > bounds.maxX - 2) return false;
+    const withoutBridge = { ...state, bridge: undefined };
+    return !occupant(withoutBridge, shore) && reachableFromHome(withoutBridge).has(key(shore));
+}
+
+export function bridgeSite(state: GrowingState) {
+    const { minX, maxX } = landBounds(state), preferred = state.bridge?.x ?? minX + 2;
+    const candidates = [preferred, ...Array.from({ length: maxX - minX - 2 }, (_, i) => minX + 1 + i)];
+    return candidates.find(x => canBuildBridge(state, x));
 }
 
 /** Cells reachable on foot from Pokomoko's doorstep. */

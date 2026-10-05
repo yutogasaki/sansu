@@ -35,6 +35,8 @@
 .growing-pocket-shortcuts svg, .growing-pocket-memories svg, .growing-pocket-guide svg { stroke-width: 1.7; flex-shrink: 0; }
 .growing-pocket-memories { grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--pokomoko-edge); padding-top: 2px; }
 .growing-pocket-footer { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; border-top: 1px solid var(--pokomoko-edge); padding-top: 2px; }
+.growing-pocket-bridge { grid-column: 1 / -1; display: flex; align-items: center; justify-content: center; gap: 7px; background: #e2f1e8 !important; }
+.growing-pocket-bridge:disabled { opacity: .55; cursor: default; }
 .growing-pocket-tools { min-width: 0; }
 .growing-pocket-tools summary { display: flex; align-items: center; justify-content: center; gap: 6px; list-style: none; font-size: 12px; }
 .growing-pocket-tools summary::-webkit-details-marker { display: none; }

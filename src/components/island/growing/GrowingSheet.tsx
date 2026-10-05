@@ -9,6 +9,7 @@ import { CHARACTER_NAME, HOME_STAGE, kindName, LANDMARK_LABEL, SEED_LABEL, villa
 import { ROOF_COLORS, WONDER_ROOFS } from './plotParts';
 
 export type SheetAction = { type: 'move' } | { type: 'store' } | { type: 'pluck' } | { type: 'home' }
+    | { type: 'bridge-remove' }
     | { type: 'paint'; color: number } | { type: 'name'; name: string } | { type: 'away'; away: boolean }
     | { type: 'flag'; color?: number; pattern?: number } | { type: 'dress'; color?: number; hat?: number };
 const PATTERN_NAME = ['むじ', 'しま', 'みずたま', 'ほし', 'ハート'];
@@ -27,7 +28,8 @@ export function GrowingSheet({ state, target, onAction, onClose }: {
     const keepsake = state.keepsakes.find(k => k.id === target), level = islandLevel(state);
     let title = '', detail = '';
     const actions: { label: string; action: SheetAction }[] = [];
-    if (target === 'flag') { title = 'しまの はた'; detail = level >= STYLE_LEVEL.flagPattern ? 'いろと もようを えらべるよ' : 'いろを えらべるよ'; }
+    if (target === 'bridge' && state.bridge) { title = 'みはらしの はし'; detail = 'なかまが わたって みはらしだいまで いくよ'; actions.push({ label: 'はしを しまう', action: { type: 'bridge-remove' } }); }
+    else if (target === 'flag') { title = 'しまの はた'; detail = level >= STYLE_LEVEL.flagPattern ? 'いろと もようを えらべるよ' : 'いろを えらべるよ'; }
     else if (keepsake) {
         title = KEEPSAKE_NAME[keepsakeKind(keepsake.unitId)];
         detail = `${keepsake.unitId.startsWith('math') ? 'さんすう' : 'えいご'} Lv${keepsake.unitId.split(':')[1]}を みにつけた きねんだよ`;
