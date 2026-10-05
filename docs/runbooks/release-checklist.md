@@ -17,6 +17,7 @@ Shortcuts:
 
 - `npm run verify:core`
 - `npm run verify:release`
+- `npm run verify:growing` — [育つ島の隔離候補と結果集約](growing-verification.md)。組込チェックのPASSと公開判定PARTIALを区別する。
 
 ## Checklist
 

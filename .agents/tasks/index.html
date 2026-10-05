@@ -9,7 +9,115 @@
 .asset-group>summary .group-name{white-space:normal;min-width:0}.group-name strong,.group-name small{display:block;line-height:1.5}.group-name small{font:11px/1.5 ui-monospace,monospace;color:var(--muted);overflow-wrap:anywhere}.asset-group>summary .group-name strong{font-size:15px}
 .asset-size{text-align:right}.asset-size small{display:block;color:var(--muted);font-size:11px;line-height:1.45}@media(max-width:640px){.asset-size{text-align:left}}
 .evidence-gallery{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px}.evidence-gallery .asset-item{display:block!important;padding:10px!important;border:1px solid var(--line);border-radius:9px;background:#f7f9f4}.evidence-gallery .asset-thumb{width:100%;height:250px;margin-bottom:8px}.evidence-gallery .asset-name{display:block;font-weight:700}.evidence-gallery .asset-size{display:block;text-align:left;font-size:12px}@media(max-width:640px){.evidence-gallery{grid-template-columns:1fr}.evidence-gallery .asset-thumb{height:260px}}
-</style></head><body><header><nav aria-label="メインナビゲーション"><strong>SANSU</strong><a href="../index.html">概要</a><a href="index.html" aria-current="page">タスク</a><a href="../../docs/index.html">ドキュメント</a><a href="../map.html">仕様と実装</a></nav></header><main><h1>タスク</h1><p class="subtitle">Sansu repository · Markdownから生成した閲覧用ポータル</p><label for="search">このページを検索</label><input id="search" type="search" placeholder="タイトル・ファイル名・キーワード"><p id="result" role="status" hidden></p><p>実行キューに登録された 4 件。「何の話か／現在地／次の一手」で分類しています。登録は実装済み・公開済みを意味しません。</p><section class="doc-group"><h2 class="section-title">1・体験の確認</h2><div class="grid"><article class="card" data-search="学習・庭・家の一続きの体験：本番の学習→庭/室内→offlineを確認済み。起動/島/家の読み込み表示・描画再試行を実装し、4サイズの同じ学習への復帰と写真操作、本番両幅の遅延/再試行/offlineを確認 次：実機の音・読み上げと利用者の往復操作を確認 docs/tasks/active/2026-09-20-whole-app-ux-coherence.md # whole-app ux/ui coherence
+</style></head><body><header><nav aria-label="メインナビゲーション"><strong>SANSU</strong><a href="../index.html">概要</a><a href="index.html" aria-current="page">タスク</a><a href="../../docs/index.html">ドキュメント</a><a href="../map.html">仕様と実装</a></nav></header><main><h1>タスク</h1><p class="subtitle">Sansu repository · Markdownから生成した閲覧用ポータル</p><label for="search">このページを検索</label><input id="search" type="search" placeholder="タイトル・ファイル名・キーワード"><p id="result" role="status" hidden></p><p>実行キューに登録された 5 件。「何の話か／現在地／次の一手」で分類しています。登録は実装済み・公開済みを意味しません。</p><section class="doc-group"><h2 class="section-title">0・任意の導き</h2><div class="grid"><article class="card" data-search="スターターとアチーブメントv1：通知から記念へ直行、導入の次の一手、本人の記念を大きく表示。対象core4,576・両幅dev/家/production offline pass 次：[実画面と対象境界](../../docs/design/2026-10-02-guidance-ux/readme.md)。実機・実two-build・子どもの理解/再訪は別 docs/tasks/active/2026-10-01-island-guidance.md # 育つ島のスターターとアチーブメントv1
+
+- 更新日: 2026-10-01
+- review by: 2026-10-08
+- 状態: ローカル実装・対象の検証完了。公開・実機・子どもの確認は未実施
+- 正本: [導きと記念v1](../../product/island-starter-achievements-proposal.md)、[親仕様01](../../product/01_app_spec.md)、[仕様52](../../product/52_growing_island_game_spec.md)、[保存13](../../product/13_data_storage_migration_spec.md)
+- 依頼: 「実装して」。既存のdirty作業を保持し、この機能を実装・検証する
+- 効く柱: くふう、にぎわい、愛着。弱める柱なし
+- 面白さの仮説: 最初の一周の実体験と選べる遊びの絵から、自分で配置を試し、自分でまなぶを選びやすくなる
+
+## 範囲
+
+- 2026-10-02 ux: 通知から対象の記念へ直行。導入中と選択中の主操作を整理し、本人の固定snapshotを大きく表示。保存・時計・報酬の変更なし。
+
+- s1〜s5を保存済み事実から記録し、任意のひとこと案内と本からの再開を設ける。
+- a1〜a6の出来事を本人の対象を反映したsvgの絵・スタンプとして残す。今試せる候補最大3つ、選択目標一つを扱う。
+- 主入口は「いえ → 室内の本「あそびかた」」。メニューにも入口を残す。家で読み、閉じると家に戻り、実際の遊びを選ぶと島へ進む。島メニューにも入口を残す。
+- 2026-10-02: 室内の本から直接開く入口を追加。待つ理由を価格・空き場所・対象・解放ごとに示し、未準備の遊びは目標だけ選んで本に留まる。家の本を開いている間は本人の保存更新を時計同期なしで購読する。
+- 島の命令・学習完了・演奏実開始・通知実表示の境界を分け、本人recordへ保存する。旧writerが案内を消せない保存境界を維持する。
+- 旧島・学習の規則、費用・時間・成長・解放・既得権、ぽこもこの造形は維持する。
+- 混色・木陰利用・学習記念品展示・稀な来訪のアチーブメントと達成の自動写真は後続範囲。
+
+## docs to touch
+
+- 01、52、本仕様、46、43、13、product/readme：機能・導入・旧案内・入口・保存・採用の位置づけ。
+- 本タスクとtasks：実施範囲と状態。完了履歴/証拠は検証後に担当が追記する。
+- 憲法・学習・共通ui・wiki memory・adr：既存契約を維持し変更不要。
+
+## verification
+
+- 文書: 親・52・46・43・13・仕様地図を同期。`npm run docs:check` pass（2026-10-01）。既存の4タスクの期限警告のみ。
+- 純粋ロジックとrepository: 無料/通常/自然の区別、先行操作、取消/同位置/再送、旧島の根拠、未知版/破損、cas、保存失敗、owner削除を対象にする。
+- アプリ: verify:core、smokeとgrowingの該当旅程を適用。390×844/768×1024で新規/既存・本/目標/達成・学習往復・reload/offline・音なし・reduced motionを確認する。
+- 本番sw更新・実two-build・実機・子どもの無説明理解/翌日の再訪は別ゲート。未実行を完了に読み替えない。
+- 視覚の魅力、無文字理解/安全、runtimeを別に判定する。最終結果と証拠は実施後に追記する。
+
+### 最終結果
+
+- 2026-10-02 ux追加候補: core4,576、classic31件、両幅のdev/家/本番形式の実sw offline pass。[実画面と対象境界](../../design/2026-10-02-guidance-ux/readme.md)。実機・実two-build・子どもの理解/再訪は別。
+
+- 2026-10-02コミット対象: core4,570テスト、classic smoke31件、dev家2ケース/16画面、dev全体6ケース/14画面、本番形式2ケース/20画面と実sw offline pass。stageのapp入力一致、indexの文書検証を適用。[最新の結果](../../design/2026-10-01-island-guidance/fixes-checks.json)。
+
+- 家入口の追加: 両幅2ケース・10画面pass。読書で全学習store/growing recordが変わらないこと、家での開閉・reload、目標/記念から実際の旗操作、通常3回答後の同予約再開を確認。追加後のverify:coreも4,586テストpass。[家の実画面](../../design/2026-10-01-island-guidance/house-entry.html)。
+- 家入口closeoutのdocs再checkは、別作業menu-atelierの `screens.html` / `contact-sheet.png` リンク切れ2件でfail。先行coreのdocs passとは区別する。今回の文書リンクとdiffの検査に問題なし。
+- verify:core: 固定入力でも516ファイル / 4,586テスト、docs/lint/typecheck/build/assets pass。classic smoke31件pass。既存のislandlife起動テストのdocumentモックを補って4件の失敗を解消。
+- 390/768幅の固定dev8ケース・14画面、固定production2ケース・16画面pass。s1〜s5/a1〜a6、閉じる・選択・固定記念、学習予約の再開、旧島の保守的移行、本人の演奏実描画と土地拡張を確認。実取得と明示fixtureを区別する。
+- productionはdb注入なしの実初回設定と5回答、実sw offline再読込・同じ次問・所有と記念の保持を確認。開始/終了のapp/dist/qa hash一致。育成の既存回帰4ケースもpass。
+- 独立レビューで訪問先の演奏の出所と同期中の表示抑止を補い、演奏の受領境界2回帰テストを追加。今回の変更ファイルは固定コピーと本体で一致を確認。
+- [実画面・結果・診断の記録](../../design/2026-10-01-island-guidance/readme.md)。入力変更のあった途中の結果を最終passへ読み替えていない。
+- runtime対象旅程はgo。視覚の魅力と無文字理解/安全の利用者評価はhold。commit/push/本番配布・実two-build更新・実機・子どもの理解/意欲の評価は未実施。
+
+## 体験リスク
+
+長い導入が宿題に見えないか、本と小さい目標の絵に気付くか、追加の通貨なしで記念を見返したくなるかは利用者観察で確認する。自動テストや作者の操作だけでは判定しない。
+"><h2><a href="../../docs/tasks/active/2026-10-01-island-guidance.md">スターターとアチーブメントv1：通知から記念へ直行、導入の次の一手、本人の記念を大きく表示。対象core4,576・両幅DEV/家/production offline PASS 次：[実画面と対象境界](../../docs/design/2026-10-02-guidance-ux/README.md)。実機・実two-build・子どもの理解/再訪は別</a></h2><p class="path">docs/tasks/active/2026-10-01-island-guidance.md</p><p>- 更新日: 2026-10-01 - Review By: 2026-10-08</p><details><summary>詳細を読む</summary><pre># 育つ島のスターターとアチーブメントv1
+
+- 更新日: 2026-10-01
+- Review By: 2026-10-08
+- 状態: ローカル実装・対象の検証完了。公開・実機・子どもの確認は未実施
+- 正本: [導きと記念v1](../../product/island-starter-achievements-proposal.md)、[親仕様01](../../product/01_app_spec.md)、[仕様52](../../product/52_growing_island_game_spec.md)、[保存13](../../product/13_data_storage_migration_spec.md)
+- 依頼: 「実装して」。既存のdirty作業を保持し、この機能を実装・検証する
+- 効く柱: くふう、にぎわい、愛着。弱める柱なし
+- 面白さの仮説: 最初の一周の実体験と選べる遊びの絵から、自分で配置を試し、自分でまなぶを選びやすくなる
+
+## 範囲
+
+- 2026-10-02 UX: 通知から対象の記念へ直行。導入中と選択中の主操作を整理し、本人の固定snapshotを大きく表示。保存・時計・報酬の変更なし。
+
+- S1〜S5を保存済み事実から記録し、任意のひとこと案内と本からの再開を設ける。
+- A1〜A6の出来事を本人の対象を反映したSVGの絵・スタンプとして残す。今試せる候補最大3つ、選択目標一つを扱う。
+- 主入口は「いえ → 室内の本「あそびかた」」。メニューにも入口を残す。家で読み、閉じると家に戻り、実際の遊びを選ぶと島へ進む。島メニューにも入口を残す。
+- 2026-10-02: 室内の本から直接開く入口を追加。待つ理由を価格・空き場所・対象・解放ごとに示し、未準備の遊びは目標だけ選んで本に留まる。家の本を開いている間は本人の保存更新を時計同期なしで購読する。
+- 島の命令・学習完了・演奏実開始・通知実表示の境界を分け、本人recordへ保存する。旧writerが案内を消せない保存境界を維持する。
+- 旧島・学習の規則、費用・時間・成長・解放・既得権、ぽこもこの造形は維持する。
+- 混色・木陰利用・学習記念品展示・稀な来訪のアチーブメントと達成の自動写真は後続範囲。
+
+## Docs To Touch
+
+- 01、52、本仕様、46、43、13、product/README：機能・導入・旧案内・入口・保存・採用の位置づけ。
+- 本タスクとTASKS：実施範囲と状態。完了履歴/証拠は検証後に担当が追記する。
+- 憲法・学習・共通UI・wiki memory・ADR：既存契約を維持し変更不要。
+
+## Verification
+
+- 文書: 親・52・46・43・13・仕様地図を同期。`npm run docs:check` PASS（2026-10-01）。既存の4タスクの期限警告のみ。
+- 純粋ロジックとrepository: 無料/通常/自然の区別、先行操作、取消/同位置/再送、旧島の根拠、未知版/破損、CAS、保存失敗、owner削除を対象にする。
+- アプリ: verify:core、smokeとGrowingの該当旅程を適用。390×844/768×1024で新規/既存・本/目標/達成・学習往復・reload/offline・音なし・reduced motionを確認する。
+- 本番SW更新・実two-build・実機・子どもの無説明理解/翌日の再訪は別ゲート。未実行を完了に読み替えない。
+- 視覚の魅力、無文字理解/安全、runtimeを別に判定する。最終結果と証拠は実施後に追記する。
+
+### 最終結果
+
+- 2026-10-02 UX追加候補: core4,576、classic31件、両幅のDEV/家/本番形式の実SW offline PASS。[実画面と対象境界](../../design/2026-10-02-guidance-ux/README.md)。実機・実two-build・子どもの理解/再訪は別。
+
+- 2026-10-02コミット対象: core4,570テスト、classic smoke31件、DEV家2ケース/16画面、DEV全体6ケース/14画面、本番形式2ケース/20画面と実SW offline PASS。stageのapp入力一致、indexの文書検証を適用。[最新の結果](../../design/2026-10-01-island-guidance/fixes-checks.json)。
+
+- 家入口の追加: 両幅2ケース・10画面PASS。読書で全学習store/Growing recordが変わらないこと、家での開閉・reload、目標/記念から実際の旗操作、通常3回答後の同予約再開を確認。追加後のverify:coreも4,586テストPASS。[家の実画面](../../design/2026-10-01-island-guidance/house-entry.html)。
+- 家入口closeoutのdocs再checkは、別作業menu-atelierの `screens.html` / `contact-sheet.png` リンク切れ2件でFAIL。先行coreのdocs PASSとは区別する。今回の文書リンクとdiffの検査に問題なし。
+- verify:core: 固定入力でも516ファイル / 4,586テスト、docs/lint/typecheck/build/assets PASS。classic smoke31件PASS。既存のIslandLife起動テストのdocumentモックを補って4件の失敗を解消。
+- 390/768幅の固定DEV8ケース・14画面、固定production2ケース・16画面PASS。S1〜S5/A1〜A6、閉じる・選択・固定記念、学習予約の再開、旧島の保守的移行、本人の演奏実描画と土地拡張を確認。実取得と明示fixtureを区別する。
+- productionはDB注入なしの実初回設定と5回答、実SW offline再読込・同じ次問・所有と記念の保持を確認。開始/終了のapp/dist/QA hash一致。育成の既存回帰4ケースもPASS。
+- 独立レビューで訪問先の演奏の出所と同期中の表示抑止を補い、演奏の受領境界2回帰テストを追加。今回の変更ファイルは固定コピーと本体で一致を確認。
+- [実画面・結果・診断の記録](../../design/2026-10-01-island-guidance/README.md)。入力変更のあった途中の結果を最終PASSへ読み替えていない。
+- runtime対象旅程はGO。視覚の魅力と無文字理解/安全の利用者評価はHOLD。commit/push/本番配布・実two-build更新・実機・子どもの理解/意欲の評価は未実施。
+
+## 体験リスク
+
+長い導入が宿題に見えないか、本と小さい目標の絵に気付くか、追加の通貨なしで記念を見返したくなるかは利用者観察で確認する。自動テストや作者の操作だけでは判定しない。
+</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">1・体験の確認</h2><div class="grid"><article class="card" data-search="学習・庭・家の一続きの体験：本番の学習→庭/室内→offlineを確認済み。起動/島/家の読み込み表示・描画再試行を実装し、4サイズの同じ学習への復帰と写真操作、本番両幅の遅延/再試行/offlineを確認 次：実機の音・読み上げと利用者の往復操作を確認 docs/tasks/active/2026-09-20-whole-app-ux-coherence.md # whole-app ux/ui coherence
 
 ## 2026-09-29 起動・読み込みと再試行
 
@@ -833,7 +941,7 @@ This is a performance implementation within the existing product rules, so the p
 - Life-enabled `verify:core` passed: 460 files / 4,168 tests, lint (one existing IslandMilestone fast-refresh warning), typecheck, build and asset budget. The production decorations journey passed at 390×844 and 768×1024 (tablet reduced motion): six real answers, earned purchase, rotate/move/store/re-place, abort/retry, offline reload and learning return, followed by a separate synthetic 30-item stress fixture. Both stress scenes loaded 34 instances from eight GLBs, retained 17 textures, switched LOD, and had no page errors. Phone placement and tablet stress screenshots were inspected for visible props/residents and controls.
 - Local browser evidence: `output/playwright/runtime-props-20260924/browser/report.json`; operation-count diagnostic: `output/playwright/runtime-props-20260924/clone-count.json`. Target `http://127.0.0.1:5298`, version `development-local:b761cc63-f444-40d7-8107-d092ddce3f07`, app/dist/harness fingerprint `3583321974cb0a09960d6a6867689645af002eb229fdd61c18efa28b46892671` matched at start/end. Delivery Island/Life enabled, Life preview/BuildPlay disabled; runtime assets `island-life-runtime-assets-v3`, home props `island-home-props-v1`.
 - This local renderer change is complete. No deployment, real iPhone timing, new art approval, child comprehension/replay assessment or full release-matrix pass is claimed. Ongoing per-frame rendering costs and installed-device measurement remain separate follow-ups.
-</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">3・庭と家の美術</h2><div class="grid"><article class="card" data-search="幻想の庭と既存画面を揃える：元のぽこもこを維持。「いえ」は既存の室内へ直接入る導線を復元。外観は庭で表示 次：実画面の利用者評価と、棚/写真等を含む後続の美術調整。仕様51全体は継続 docs/tasks/active/2026-09-27-living-fantasy-first-playable.md # 幻想の庭 — 最初の遊べる一周
+</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">3・庭と家の美術</h2><div class="grid"><article class="card" data-search="幻想の庭と既存画面を揃える：元のぽこもこを維持。「いえ」は既存の室内へ直接入る導線を復元。外観は庭で表示。10/1 [家のメニュー](../../docs/design/2026-10-01-house-atelier/readme.md)と[島/共有メニュー](../../docs/design/2026-10-01-menu-atelier/readme.md)を紙の素材・目的別入口へ整理。4サイズの実画面と学習往復を確認。10/2 [島を残すメニュー](../../docs/design/2026-10-02-island-pocket-menu/readme.md)へ再整理し、実住人の入口と小画面の密度を改善（ローカル）。続いて[2つの模型入口](../../docs/design/2026-10-02-island-play-menu/readme.md)へ主従を再設計し、世界の実モデルと4サイズの操作を確認。続いて[全画面の仕上げ](../../docs/design/2026-10-02-whole-app-atelier/readme.md)を初期設定/学習/記録/設定/保護者/しあげ/副モードへ反映し、実入力・保存・offlineと接触シートを確認（ローカル）。[記録の密度と進級停止の説明](../../docs/design/2026-10-02-progress-clear/readme.md)を追加修正し、限定再開/取消/保存retry・core4,605を確認 次：全画面候補の公開判断と実機/利用者の見た目・理解/再訪評価。仕様51/52全体は継続 docs/tasks/active/2026-09-27-living-fantasy-first-playable.md # 幻想の庭 — 最初の遊べる一周
 
 ## 2026-09-29 入室の復元
 
@@ -899,7 +1007,7 @@ b方向の実3d地形・家・曲がった枝葉・相棒・昼夕夜、通常�
 ## 2026-09-27 本番統合
 
 元のぽこもこを保つv2を、自然の育成・運搬・食事・水路・土とともに家庭内本番へ統合。[公開記録](../../design/2026-09-27-fantasy-production/readme.md)に固定build・旧→新/中断/互換復旧・実購入/offline・三ゲートを保存した。全v1の完成とは区別し、入口・家の美術統一、30品時の軽量化、実機・子どもの観察は継続する。
-"><h2><a href="../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md">幻想の庭と既存画面を揃える：元のぽこもこを維持。「いえ」は既存の室内へ直接入る導線を復元。外観は庭で表示 次：実画面の利用者評価と、棚/写真等を含む後続の美術調整。仕様51全体は継続</a></h2><p class="path">docs/tasks/active/2026-09-27-living-fantasy-first-playable.md</p><p>家の外観だけで止まる変更を取り消し、「いえ」と庭の家から既存の室内overviewへ直接入る。床の移動・棚・アルバム・写真と庭への帰還を維持する。家の外観は庭に残す。ぽこもこの造形変更はない。[実画面と回帰確認](../../design/2026-09-29-house-interior-restore/README.md)。 main `4002e67b` から本番へ反映済み。公開URLの390/768幅で初回学</p><details><summary>詳細を読む</summary><pre># 幻想の庭 — 最初の遊べる一周
+"><h2><a href="../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md">幻想の庭と既存画面を揃える：元のぽこもこを維持。「いえ」は既存の室内へ直接入る導線を復元。外観は庭で表示。10/1 [家のメニュー](../../docs/design/2026-10-01-house-atelier/README.md)と[島/共有メニュー](../../docs/design/2026-10-01-menu-atelier/README.md)を紙の素材・目的別入口へ整理。4サイズの実画面と学習往復を確認。10/2 [島を残すメニュー](../../docs/design/2026-10-02-island-pocket-menu/README.md)へ再整理し、実住人の入口と小画面の密度を改善（ローカル）。続いて[2つの模型入口](../../docs/design/2026-10-02-island-play-menu/README.md)へ主従を再設計し、世界の実モデルと4サイズの操作を確認。続いて[全画面の仕上げ](../../docs/design/2026-10-02-whole-app-atelier/README.md)を初期設定/学習/記録/設定/保護者/しあげ/副モードへ反映し、実入力・保存・offlineと接触シートを確認（ローカル）。[記録の密度と進級停止の説明](../../docs/design/2026-10-02-progress-clear/README.md)を追加修正し、限定再開/取消/保存retry・core4,605を確認 次：全画面候補の公開判断と実機/利用者の見た目・理解/再訪評価。仕様51/52全体は継続</a></h2><p class="path">docs/tasks/active/2026-09-27-living-fantasy-first-playable.md</p><p>家の外観だけで止まる変更を取り消し、「いえ」と庭の家から既存の室内overviewへ直接入る。床の移動・棚・アルバム・写真と庭への帰還を維持する。家の外観は庭に残す。ぽこもこの造形変更はない。[実画面と回帰確認](../../design/2026-09-29-house-interior-restore/README.md)。 main `4002e67b` から本番へ反映済み。公開URLの390/768幅で初回学</p><details><summary>詳細を読む</summary><pre># 幻想の庭 — 最初の遊べる一周
 
 ## 2026-09-29 入室の復元
 
@@ -1225,6 +1333,51 @@ main `4002e67b` から本番へ反映済み。公開URLの390/768幅で初回学
 親仕様、現行v8の実装marker・検証記録、mainの履歴、タスクとポータルの生成元を照合しました。新しい本番操作・実機観察・子どもの評価は行っていません。過去の合格を今回の新しい合格として記録しません。
 </pre></details></article><article class="card" data-search="shared done index .agents/tasks/done.md # shared done index
 
+- 2026-10-05: [育つ島の検証入口](../../docs/runbooks/growing-verification.md)を追加。`verify:growing`で隔離候補/core/classic smoke/growing本番形式の実回答・購入・本・保存・sw offlineを集約。core4,722・smoke31・両幅4旅程pass。公開判定partialと未検証項目を分離。ローカルの検証運用変更 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-04: [20問/日を基準にした島の経済](../../docs/design/2026-10-04-island-economy/readme.md)。新規家/畑40・花10、まち時間2/問。資産保持、core4,690・両幅実20問pass。smoke30/31＋当該1件再実行pass。ローカル、未公開 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-04: [使う人の切り替えを簡単にする](../../docs/design/2026-10-04-profile-switch/readme.md)。設定→名前の2タップ、失敗retry・両プロフィール保持、core4,675・3サイズ・smoke31 pass。ローカル、公開は未実施 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-03: [level-up and confirmation test entry consolidation](../../docs/design/2026-10-03-level-up-entry/readme.md). progress first in records; one level-up entry; confirmation/print in parent settings. 4606 tests, production14/parent2/classic31 pass. local, not published -&gt; `docs/done/2026-10.md`
+
+- 2026-10-02: [本の自己レビューと修正v6](../../docs/design/2026-10-02-guide-picturebook/review-v6/readme.md)。挿絵と本人の模型を分離し、320幅の主操作を初期表示へ。core4,606、3サイズ48撮影・家両幅pass。未公開 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-02: [あそびかた6点のポップなデフォルメ](../../docs/design/2026-10-02-guide-picturebook/readme.md)。全6種類の挿絵と固定snapshot模型、本/一覧/案内を統一。core4,606、3サイズ48撮影、家と実sw offline両幅pass。ローカル、未公開 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-02: [記録の文字量と進級停止の説明を修正](../../docs/design/2026-10-02-progress-clear/readme.md)。メイン再選択による上位offを再現、選択済み操作を無効化、隣接次範囲だけの保護者確認付き再開を追加。core4,605・classic31・5サイズ35ケース/65撮影・両幅の読込/保存retry pass。ローカル、本人の操作履歴/実機/公開は別 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-02: [島以外を含む全画面の仕上げ](../../docs/design/2026-10-02-whole-app-atelier/readme.md)。初期設定/学習/記録/設定/保護者/しあげ/副モード、短横入力と確認/英文focusを整備。519 files/4,603 tests、smoke31、実画面と保存/offlineを確認。ローカル、公開と利用者評価は別 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-02: [学習・島・家のmain統合の最終確認](../../docs/design/2026-10-02-learning-island-integration/final/readme.md)。最終core4,599 tests、両幅案内/家/実sw offline・メニュー4サイズpass。変更なしの仕上げ14/保存バランス4/navigation両幅/classic31を入力照合して保持。実機/公開先/子どもは別 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-02: [本の次の一手と記念を改善](../../docs/design/2026-10-02-guidance-ux/readme.md)。通知の対象へ直行・導入の主操作・本人の大きな記念。core4,576、両幅dev/家/production offline pass -&gt; `docs/done/2026-10.md`
+
+- 2026-10-02: [2つの模型で選ぶ島メニュー](../../docs/design/2026-10-02-island-play-menu/readme.md)。実住人と建築前の模型、主入口/補助列へ再設計。core4,603 tests、関連9、4サイズの全旅程・記録不変pass。ローカル実装、子どもの無説明理解は未観察 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-02: [学習と島の固定統合候補](../../docs/design/2026-10-02-learning-island-integration/readme.md)を確認。core4,587 tests、仕上げ14ケース、家/メニュー/案内/保存/両幅sw offline、classic31件pass。証拠logのgit除外を修正。実機・後続の並行変更・公開は別範囲 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-02: [家の本と案内の修正](../../docs/design/2026-10-01-island-guidance/fixes-checks.json)。直接入口・不足理由・あとでやる・別タブ同期。コミット対象core4,570、両幅dev/production offline pass -&gt; `docs/done/2026-10.md`
+
+- 2026-10-02: [島を眺めながら選ぶメニュー](../../docs/design/2026-10-02-island-pocket-menu/readme.md)。縦は小さな下側の紙、横は右側、実住人の入口・遊び優先・操作の折りたたみへ。4サイズの往復と0/8人を検査。ローカル実装、未公開 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-01: [島と共有メニューのデザイン](../../docs/design/2026-10-01-menu-atelier/readme.md)。紙の素材を島/種/収納/仲間/設定/5タブへ展開。core4,586 tests、classic31件、island navigation両幅、4サイズの実画面確認。ローカル実装、未公開 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-01: [あそびかたの家入口](../../docs/design/2026-10-01-island-guidance/house-entry.html)を追加。家で開閉、遊びを選ぶと島へ。読書の保存不変・両幅の実操作/学習予約再開・core4,586テストpass。未公開 -&gt; `docs/done/2026-10.md`
+- 2026-10-01: [育つ島のスターターとアチーブメント実装](../../docs/design/2026-10-01-island-guidance/readme.md)。任意s1〜s5/a1〜a6・本・固定記念・保存3。core4,586テスト、固定両幅dev/production/offline pass。ローカル実装、未公開 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-01: [家のメニューのデザイン](../../docs/design/2026-10-01-house-atelier/readme.md)を整理。基本検証・回帰31件・標準/育つ島の4サイズ計6ケースpass。ローカル実装、未公開 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-01: [スターターとアチーブメントの仕様案](../../docs/product/island-starter-achievements-proposal.md)を検討。最初の一周・初期6件・任意目標・実達成/保存/受入を整理。文書検証済み、採用前・未実装 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-01: 育つ島のバランスb1〜b6を実装。反復地区・時間保持・実日の出来事・到達判定・重複防止・保存2。関連88 tests、両幅の実操作/production offline pass、未公開 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-01: しあげの準備3条件を常時表示し、入口と保存済みの結果にレベルアップを明示。関連16テスト・固定両幅14ケースpass。ローカル実装 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-01: 学習教材の語義・型・範囲・基礎9導入と仕上げ被覆を修正。core4,544テスト、classic smoke31/31、両幅20ケースpass。ローカル実装 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-01: 家の歩行案内と読み上げ用説明を「ぽこもこ」へ訂正。ローカル修正、公開未実施 -&gt; `docs/done/2026-10.md`
+
 - 2026-10-01: [しあげによる進級と入口ui](../../docs/done/2026-10.md)。ローカル実装・検証済み。公開・実機・利用者評価は別。
 
 - 2026-09-29: 起動/島/家の読み込み表示と同じ保存の描画再試行を実装。core4,300 tests・4サイズ・写真・smoke/pwa通過。水源/時計の次期導入設計を整理。main c1e3bebfから本番反映・公開両幅も通過 -&gt; `docs/done/2026-09.md`
@@ -1411,7 +1564,54 @@ durable completion history and verification facts still belong in `docs/done/yyy
 
 - 2026-09-27: 手元変更のbackupと最新mainへの整理。公開済み保存/報酬/ぽこもこを維持し、旧試作・入口と資料を整理 -&gt; `docs/done/2026-09.md`
 - 2026-10-01: しあげの条件を全20問独力正解に変更。19/20のレベル維持、新予約20/20の進級を実ui/保存で確認、4391 tests pass -&gt; `docs/done/2026-10.md`
-"><h2><a href="DONE.md">Shared Done Index</a></h2><p class="path">.agents/tasks/DONE.md</p><p>- 2026-10-01: [しあげによる進級と入口UI](../../docs/done/2026-10.md)。ローカル実装・検証済み。公開・実機・利用者評価は別。 - 2026-09-29: 起動/島/家の読み込み表示と同じ保存の描画再試行を実装。core4,300 tests・4サイズ・写真・smoke/PWA通過。水源/時計の次期導入設計を整理。main c1e3bebfから本番反映・公開両幅も通過 -&gt; </p><details><summary>詳細を読む</summary><pre># Shared Done Index
+
+- 2026-10-01: 学習アルゴリズム監査a1〜a10修正。独力/代表出題/coverage/復習・回復・配分を整え、全4474 tests・smoke31・固定preview80実回答を確認。ローカル、本番未配布 -&gt; `docs/done/2026-10.md`
+"><h2><a href="DONE.md">Shared Done Index</a></h2><p class="path">.agents/tasks/DONE.md</p><p>- 2026-10-05: [育つ島の検証入口](../../docs/runbooks/growing-verification.md)を追加。`verify:growing`で隔離候補/core/classic smoke/Growing本番形式の実回答・購入・本・保存・SW offlineを集約。core4,722・smoke31・両幅4旅程PASS。公開判定PARTIALと未検証項目を分離。ローカルの検証運用</p><details><summary>詳細を読む</summary><pre># Shared Done Index
+
+- 2026-10-05: [育つ島の検証入口](../../docs/runbooks/growing-verification.md)を追加。`verify:growing`で隔離候補/core/classic smoke/Growing本番形式の実回答・購入・本・保存・SW offlineを集約。core4,722・smoke31・両幅4旅程PASS。公開判定PARTIALと未検証項目を分離。ローカルの検証運用変更 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-04: [20問/日を基準にした島の経済](../../docs/design/2026-10-04-island-economy/README.md)。新規家/畑40・花10、まち時間2/問。資産保持、core4,690・両幅実20問PASS。smoke30/31＋当該1件再実行PASS。ローカル、未公開 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-04: [使う人の切り替えを簡単にする](../../docs/design/2026-10-04-profile-switch/README.md)。設定→名前の2タップ、失敗retry・両プロフィール保持、core4,675・3サイズ・smoke31 PASS。ローカル、公開は未実施 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-03: [Level-up and confirmation test entry consolidation](../../docs/design/2026-10-03-level-up-entry/README.md). Progress first in records; one level-up entry; confirmation/print in parent settings. 4606 tests, production14/parent2/classic31 PASS. Local, not published -&gt; `docs/done/2026-10.md`
+
+- 2026-10-02: [本の自己レビューと修正v6](../../docs/design/2026-10-02-guide-picturebook/review-v6/README.md)。挿絵と本人の模型を分離し、320幅の主操作を初期表示へ。core4,606、3サイズ48撮影・家両幅PASS。未公開 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-02: [あそびかた6点のポップなデフォルメ](../../docs/design/2026-10-02-guide-picturebook/README.md)。全6種類の挿絵と固定snapshot模型、本/一覧/案内を統一。core4,606、3サイズ48撮影、家と実SW offline両幅PASS。ローカル、未公開 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-02: [記録の文字量と進級停止の説明を修正](../../docs/design/2026-10-02-progress-clear/README.md)。メイン再選択による上位offを再現、選択済み操作を無効化、隣接次範囲だけの保護者確認付き再開を追加。core4,605・classic31・5サイズ35ケース/65撮影・両幅の読込/保存retry PASS。ローカル、本人の操作履歴/実機/公開は別 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-02: [島以外を含む全画面の仕上げ](../../docs/design/2026-10-02-whole-app-atelier/README.md)。初期設定/学習/記録/設定/保護者/しあげ/副モード、短横入力と確認/英文focusを整備。519 files/4,603 tests、smoke31、実画面と保存/offlineを確認。ローカル、公開と利用者評価は別 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-02: [学習・島・家のmain統合の最終確認](../../docs/design/2026-10-02-learning-island-integration/final/README.md)。最終core4,599 tests、両幅案内/家/実SW offline・メニュー4サイズPASS。変更なしの仕上げ14/保存バランス4/navigation両幅/classic31を入力照合して保持。実機/公開先/子どもは別 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-02: [本の次の一手と記念を改善](../../docs/design/2026-10-02-guidance-ux/README.md)。通知の対象へ直行・導入の主操作・本人の大きな記念。core4,576、両幅DEV/家/production offline PASS -&gt; `docs/done/2026-10.md`
+
+- 2026-10-02: [2つの模型で選ぶ島メニュー](../../docs/design/2026-10-02-island-play-menu/README.md)。実住人と建築前の模型、主入口/補助列へ再設計。core4,603 tests、関連9、4サイズの全旅程・記録不変PASS。ローカル実装、子どもの無説明理解は未観察 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-02: [学習と島の固定統合候補](../../docs/design/2026-10-02-learning-island-integration/README.md)を確認。core4,587 tests、仕上げ14ケース、家/メニュー/案内/保存/両幅SW offline、classic31件PASS。証拠logのGit除外を修正。実機・後続の並行変更・公開は別範囲 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-02: [家の本と案内の修正](../../docs/design/2026-10-01-island-guidance/fixes-checks.json)。直接入口・不足理由・あとでやる・別タブ同期。コミット対象core4,570、両幅DEV/production offline PASS -&gt; `docs/done/2026-10.md`
+
+- 2026-10-02: [島を眺めながら選ぶメニュー](../../docs/design/2026-10-02-island-pocket-menu/README.md)。縦は小さな下側の紙、横は右側、実住人の入口・遊び優先・操作の折りたたみへ。4サイズの往復と0/8人を検査。ローカル実装、未公開 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-01: [島と共有メニューのデザイン](../../docs/design/2026-10-01-menu-atelier/README.md)。紙の素材を島/種/収納/仲間/設定/5タブへ展開。core4,586 tests、classic31件、Island navigation両幅、4サイズの実画面確認。ローカル実装、未公開 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-01: [あそびかたの家入口](../../docs/design/2026-10-01-island-guidance/house-entry.html)を追加。家で開閉、遊びを選ぶと島へ。読書の保存不変・両幅の実操作/学習予約再開・core4,586テストPASS。未公開 -&gt; `docs/done/2026-10.md`
+- 2026-10-01: [育つ島のスターターとアチーブメント実装](../../docs/design/2026-10-01-island-guidance/README.md)。任意S1〜S5/A1〜A6・本・固定記念・保存3。core4,586テスト、固定両幅DEV/production/offline PASS。ローカル実装、未公開 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-01: [家のメニューのデザイン](../../docs/design/2026-10-01-house-atelier/README.md)を整理。基本検証・回帰31件・標準/育つ島の4サイズ計6ケースPASS。ローカル実装、未公開 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-01: [スターターとアチーブメントの仕様案](../../docs/product/island-starter-achievements-proposal.md)を検討。最初の一周・初期6件・任意目標・実達成/保存/受入を整理。文書検証済み、採用前・未実装 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-01: 育つ島のバランスB1〜B6を実装。反復地区・時間保持・実日の出来事・到達判定・重複防止・保存2。関連88 tests、両幅の実操作/production offline PASS、未公開 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-01: しあげの準備3条件を常時表示し、入口と保存済みの結果にレベルアップを明示。関連16テスト・固定両幅14ケースPASS。ローカル実装 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-01: 学習教材の語義・型・範囲・基礎9導入と仕上げ被覆を修正。core4,544テスト、classic smoke31/31、両幅20ケースPASS。ローカル実装 -&gt; `docs/done/2026-10.md`
+
+- 2026-10-01: 家の歩行案内と読み上げ用説明を「ぽこもこ」へ訂正。ローカル修正、公開未実施 -&gt; `docs/done/2026-10.md`
 
 - 2026-10-01: [しあげによる進級と入口UI](../../docs/done/2026-10.md)。ローカル実装・検証済み。公開・実機・利用者評価は別。
 
@@ -1599,6 +1799,8 @@ Durable completion history and verification facts still belong in `docs/done/YYY
 
 - 2026-09-27: 手元変更のbackupと最新mainへの整理。公開済み保存/報酬/ぽこもこを維持し、旧試作・入口と資料を整理 -&gt; `docs/done/2026-09.md`
 - 2026-10-01: しあげの条件を全20問独力正解に変更。19/20のレベル維持、新予約20/20の進級を実UI/保存で確認、4391 tests PASS -&gt; `docs/done/2026-10.md`
+
+- 2026-10-01: 学習アルゴリズム監査A1〜A10修正。独力/代表出題/coverage/復習・回復・配分を整え、全4474 tests・smoke31・固定preview80実回答を確認。ローカル、本番未配布 -&gt; `docs/done/2026-10.md`
 </pre></details></article></section><footer>正本は各カードのリンク先です。更新: <code>npm run agent:index</code> · <a href="../../docs/runbooks/repository-portal.md">使い方</a></footer></main><script>
 const search=document.querySelector('#search');const cards=[...document.querySelectorAll('[data-search]')];search.addEventListener('input',()=>{const q=search.value.trim().toLowerCase();let count=0;for(const card of cards){card.hidden=!card.dataset.search.includes(q);if(!card.hidden)count++;}for(const group of document.querySelectorAll('.doc-group,.spec-list,.asset-groups')){const visible=[...group.querySelectorAll(':scope > [data-search],:scope > .card')].some(card=>!card.hidden);group.hidden=!visible;if(group.previousElementSibling?.classList.contains('group-title'))group.previousElementSibling.hidden=!visible;}for(const archive of document.querySelectorAll('.archive-section')){if(q&&[...archive.querySelectorAll('[data-search]')].some(card=>!card.hidden))archive.open=true;}const result=document.querySelector('#result');result.hidden=!q;result.textContent=count+' 件を表示';});
 </script></body></html>

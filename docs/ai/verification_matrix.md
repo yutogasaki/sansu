@@ -153,6 +153,8 @@ If a task spans more than one change type, use the stricter row.
 
 ## Shortcut Commands
 
+- `npm run verify:growing` は[育つ島の検証入口](../runbooks/growing-verification.md)。作業ツリーの隔離候補にcore/classic smoke/Growing本番形式の実回答・購入・本・保存・実SW offlineを適用して結果を集約する。exit 0は組込チェックのPASSで、Growing two-build更新/中断復旧/旧writer/実機/視覚・理解・再訪の未検証を含む公開判定はPARTIAL。`verify:release` は引き続きclassic専用である。
+
 - 既存 `e2e:pwa-update` はclassicの初回導線を検査するため、Island/BuildPlay flagを無効にしたbuildを使う。別buildは `SANSU_PWA_PREVIEW_DIR` で指定でき、省略時は `dist`。島とParkの更新検査は各flagを有効にした対応buildで実行し、配布用の固定artifactと回帰用のflag構成を混同しない。
 
 - Use `npm run docs:check` for docs/process-only changes.

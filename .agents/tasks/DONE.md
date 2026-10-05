@@ -1,5 +1,7 @@
 # Shared Done Index
 
+- 2026-10-05: [育つ島の検証入口](../../docs/runbooks/growing-verification.md)を追加。`verify:growing`で隔離候補/core/classic smoke/Growing本番形式の実回答・購入・本・保存・SW offlineを集約。core4,722・smoke31・両幅4旅程PASS。公開判定PARTIALと未検証項目を分離。ローカルの検証運用変更 -> `docs/done/2026-10.md`
+
 - 2026-10-04: [20問/日を基準にした島の経済](../../docs/design/2026-10-04-island-economy/README.md)。新規家/畑40・花10、まち時間2/問。資産保持、core4,690・両幅実20問PASS。smoke30/31＋当該1件再実行PASS。ローカル、未公開 -> `docs/done/2026-10.md`
 
 - 2026-10-04: [使う人の切り替えを簡単にする](../../docs/design/2026-10-04-profile-switch/README.md)。設定→名前の2タップ、失敗retry・両プロフィール保持、core4,675・3サイズ・smoke31 PASS。ローカル、公開は未実施 -> `docs/done/2026-10.md`

@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { promises as fs } from 'node:fs';
 import { chromium } from 'playwright';
+import { plantProduction } from './growing-production-helpers.mjs';
 import { answerUI, readNative, runtimeMetadata } from './island-e2e-helpers.mjs';
 
 const base = process.env.SANSU_GROWING_PRODUCTION_URL, out = process.env.SANSU_GROWING_PRODUCTION_OUTPUT;
@@ -29,24 +30,10 @@ async function capture(page, label) {
     report.captures.push({ file, ...await runtimeMetadata(page), world: await page.locator('[data-growing-world]').count()
         ? await page.locator('[data-growing-world]').evaluate(e => ({ ...e.dataset })) : null });
 }
-async function plant(page, kind, cell) {
-    const button = page.getByRole('button', { name: 'たね', exact: true }); await button.waitFor();
-    const box = await button.boundingBox(); assert(box); await page.touchscreen.tap(box.x + box.width / 2, box.y + box.height / 2);
-    await page.locator(`[data-growing-seed="${kind}"]`).tap();
-    // Ground-cell projection for the unchanged initial camera, using its actual viewport.
-    const point = await page.evaluate(cell => {
-        const box = document.querySelector('[data-growing-world] canvas').getBoundingClientRect(), aspect = box.width / box.height;
-        const norm = v => { const d = Math.hypot(...v); return v.map(n => n / d); };
-        const right = norm([11, 0, -4.5]), forward = norm([4.5, 7.8, 11]);
-        const up = [forward[1] * right[2], forward[2] * right[0] - forward[0] * right[2], -forward[1] * right[0]];
-        const relative = [cell.x - 2.5, .04 - .2, cell.z - 2 - .6];
-        const dot = v => v.reduce((s, n, i) => s + n * relative[i], 0);
-        const half = Math.max((5 + 4.2) / 2 * .82, (6 + 2.2) / 2 / aspect);
-        return { x: box.x + (dot(right) / (half * aspect) + 1) / 2 * box.width, y: box.y + (1 - dot(up) / half) / 2 * box.height };
-    }, cell);
-    await page.touchscreen.tap(point.x, point.y);
-    await page.getByRole('button', { name: 'ここに おく', exact: true }).tap();
+async function plant(page, kind, cell, id) {
+    await plantProduction(page, kind, cell, (await read(page, id)).state);
 }
+
 try {
     report.version = await (await browser.newPage()).request.get(`${base}/version.json`).then(r => r.json());
     for (const viewport of [{ width: 390, height: 844 }, { width: 768, height: 1024 }]) {
@@ -59,35 +46,48 @@ try {
         await ready(page);
         if (await page.getByRole('button', { name: /おと.*オン/ }).count()) await page.getByRole('button', { name: /おと.*オン/ }).tap();
         let native = await readNative(page); const id = native.island.profileId;
-        await plant(page, 'home', { x: 1, z: 3 }); await until(page, id, r => r.state.villagers.length === 1);
+        await plant(page, 'home', { x: 1, z: 3 }, id); await until(page, id, r => r.state.villagers.length === 1);
         await capture(page, 'first-home');
-        await page.getByRole('button', { name: /^まなぶ/ }).tap(); await page.locator('[data-input-ready="true"]').waitFor();
-        native = await readNative(page, id); const first = native.plan.id; let answers = 0;
-        while (native.plan.id === first && answers < 12) { native = (await answerUI(page, native.plan, { touch: true, dev: false })).state; answers++; }
-        assert.equal(answers, 3); const continuation = { id: native.plan.id, cursor: native.plan.cursor };
+        await page.locator('.island-shell-tab--learn').tap(); await page.locator('[data-input-ready="true"]').waitFor();
+        native = await readNative(page, id);
+        while (native.logs.length < 10) native = (await answerUI(page, native.plan, { touch: true, dev: false })).state;
+        await page.getByRole('button', { name: 'とじる', exact: true }).tap(); await ready(page);
+        await until(page, id, r => r.state.learned.length === 10);
+        const seeds = page.getByRole('button', { name: 'たね', exact: true });
+        if (!await seeds.isVisible()) await page.getByRole('button', { name: 'メニュー', exact: true }).tap();
+        const hit = await seeds.boundingBox(); assert(hit); await page.touchscreen.tap(hit.x + hit.width / 2, hit.y + hit.height / 2);
+        await page.locator('[data-growing-seed="home"]').tap();
+        await page.waitForFunction(() => document.querySelector('.growing-placing')?.textContent.includes('しずくが あと 20こ'));
+        assert.match(await page.locator('.growing-placing').innerText(), /しずくが あと 20こ/);
+        await page.getByRole('button', { name: 'やめる', exact: true }).tap();
+        await page.locator('.island-shell-tab--learn').tap(); await page.locator('[data-input-ready="true"]').waitFor();
+        native = await readNative(page, id);
+        while (native.logs.length < 20) native = (await answerUI(page, native.plan, { touch: true, dev: false })).state;
+        const continuation = { id: native.plan.id, cursor: native.plan.cursor };
         await capture(page, 'learning');
         await page.getByRole('button', { name: 'とじる', exact: true }).tap(); await ready(page);
-        const earned = await until(page, id, r => r.state.learned.length === 3); assert.equal(earned.state.drops, 6);
-        await plant(page, 'wild', { x: 4, z: 2 });
-        const planted = await until(page, id, r => r.state.plots.length === 2); assert.equal(planted.state.drops, 5); assert.equal(planted.state.plots[1].stage, 0);
+        const earned = await until(page, id, r => r.state.learned.length === 20); assert.equal(earned.state.drops, 40);
+        await plant(page, 'home', { x: 4, z: 2 }, id);
+        const planted = await until(page, id, r => r.state.plots.length === 2); assert.equal(planted.state.drops, 0); assert.equal(planted.state.plots[1].stage, 0);
         await capture(page, 'planted');
         await page.evaluate(async () => navigator.serviceWorker.ready); await page.reload(); await ready(page);
         await page.waitForFunction(() => Boolean(navigator.serviceWorker.controller));
         await context.setOffline(true); await page.reload(); await ready(page);
         assert.deepEqual((await read(page, id)).state.plots, planted.state.plots);
         await capture(page, 'offline');
-        await page.getByRole('button', { name: /^まなぶ/ }).tap(); await page.locator('[data-input-ready="true"]').waitFor();
+        await page.locator('.island-shell-tab--learn').tap(); await page.locator('[data-input-ready="true"]').waitFor();
         native = await readNative(page, id); assert.equal(native.plan.id, continuation.id); assert.equal(native.plan.cursor, continuation.cursor);
         native = (await answerUI(page, native.plan, { touch: true, dev: false })).state;
         native = (await answerUI(page, native.plan, { touch: true, dev: false })).state;
-        assert.equal(native.logs.length, 5);
+        native = (await answerUI(page, native.plan, { touch: true, dev: false })).state;
+        assert.equal(native.logs.length, 23);
         await page.getByRole('button', { name: 'とじる', exact: true }).tap(); await ready(page);
-        const offline = await until(page, id, r => r.state.learned.length === 5); assert.equal(offline.state.drops, 9); assert.equal(offline.state.plots[1].stage, 1);
-        await page.reload(); await ready(page); assert.equal((await read(page, id)).state.drops, 9);
-        assert.equal((await readNative(page, id)).logs.length, 5); await capture(page, 'offline-saved');
+        const offline = await until(page, id, r => r.state.learned.length === 23); assert.equal(offline.state.drops, 6); assert.equal(offline.state.plots[1].stage, 1);
+        await page.reload(); await ready(page); assert.equal((await read(page, id)).state.drops, 6);
+        assert.equal((await readNative(page, id)).logs.length, 23); await capture(page, 'offline-saved');
         assert.deepEqual(errors, []); await context.setOffline(false);
         assert.equal(await page.evaluate(async () => (await indexedDB.databases()).some(db => db.name.includes('Preview'))), false);
-        report.scenarios.push({ viewport, source: 'Real onboarding, UI home/learning/seed, real SW offline reload and answers; no fixture writes', answers: 5, saveVersion: offline.version, pass: true });
+        report.scenarios.push({ viewport, source: 'Real onboarding, UI home/learning/seed, real SW offline reload and answers; no fixture writes', answers: 23, saveVersion: offline.version, pass: true });
         await context.close();
     }
     report.pass = true;
