@@ -1,5 +1,7 @@
 # Shared Done Index
 
+- 2026-10-07: [共用3Dのsession接続を分割](../../docs/architecture/island-runtime.md)。家/配置/共有展示/写真/工作/遊びの型付き接続と一つの遅延rendererへ整理。59propsの構文照合、core4,766/smoke31、Growing production・本人切替/履歴・配置/工作/写真の両幅がPASS。公開/実機/子ども評価は別。詳細: `docs/done/2026-10.md`。
+
 - 2026-10-06: [sessionの配置・写真・工作を分割](../../docs/architecture/island-runtime.md)。保存と画面往復の契約を保持し、core4,761・smoke31・Growing production・本人切替/履歴・写真/工作/配置の390/768幅をlocal確認。公開/実機/子ども評価は別。詳細: `docs/done/2026-10.md`。
 
 - 2026-10-06: [共用描画の配置整理](../../docs/architecture/island-runtime.md)。庭/家/光/時計など18ファイルをthree/gardenへ移動し、元のぽこもこを共用組立元へ抽出。形状/素材/布と処理本体を保持。core4,757、最終smoke31、Growing実操作/offline、家/学習の履歴往復がPASS。初回classicの1件timeoutは保持。性能・公開/実機/利用者は別。詳細: `docs/done/2026-10.md`。

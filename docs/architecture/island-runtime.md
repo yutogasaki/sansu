@@ -8,6 +8,8 @@
 |---|---|
 | ルートと共通ナビゲーション | `src/App.tsx`、`src/components/Layout.tsx` |
 | 本人を復元するページ入口 | `src/pages/Island.tsx` |
+| 共用3Dの遅延読込と描画propsの合成 | `src/components/island/IslandSessionStage.tsx` |
+| 家・配置・共有展示・写真・工作・遊びの描画接続 | `src/components/island/islandSession*Stage.ts` |
 | 家・本・学習と画面状態を接続 | `src/components/island/IslandSession.tsx` |
 | 正本の初期読込・保存済み予約の復元 | `src/components/island/useIslandSessionState.ts` |
 | 学習回答のcommitと表示receipt | `src/components/island/useIslandSessionLearning.ts` |
@@ -50,3 +52,5 @@ SANSU_SINGLE_ISLAND_URL=http://127.0.0.1:4173 SANSU_SINGLE_ISLAND_OUTPUT=output/
 実SWの版切替と対応writerへの復旧は[更新検証の手順](../runbooks/growing-update.md)を参照。
 
 配置のpreviewと検索状態は専用hookが持つ。保存のrevision確認は既存repositoryへ委ね、成功時だけsessionの戻り先と家のfocusを更新する。写真・工作のpanelを分けても、cameraへ移る前の工作view・保存作品のref・draft切替・写真の戻り先はsessionに残す。panelのmountでこれらを初期化せず、任意の3D/UIは遅延読込を維持する。
+
+共用3Dへの接続は家・配置・共有展示・写真・工作・遊びの型付き関数で組み立てる。各関数は新しいstateやwriterを持たず、sessionの保存と操作を受け渡す。IslandSessionStageは一つのSuspense/rendererへ合成し、地面の入力は共有展示のpreviewを優先する。表示条件はsessionで維持し、学習や記録の裏に旧3Dを作らない。

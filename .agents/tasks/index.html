@@ -9,7 +9,7 @@
 .asset-group>summary .group-name{white-space:normal;min-width:0}.group-name strong,.group-name small{display:block;line-height:1.5}.group-name small{font:11px/1.5 ui-monospace,monospace;color:var(--muted);overflow-wrap:anywhere}.asset-group>summary .group-name strong{font-size:15px}
 .asset-size{text-align:right}.asset-size small{display:block;color:var(--muted);font-size:11px;line-height:1.45}@media(max-width:640px){.asset-size{text-align:left}}
 .evidence-gallery{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px}.evidence-gallery .asset-item{display:block!important;padding:10px!important;border:1px solid var(--line);border-radius:9px;background:#f7f9f4}.evidence-gallery .asset-thumb{width:100%;height:250px;margin-bottom:8px}.evidence-gallery .asset-name{display:block;font-weight:700}.evidence-gallery .asset-size{display:block;text-align:left;font-size:12px}@media(max-width:640px){.evidence-gallery{grid-template-columns:1fr}.evidence-gallery .asset-thumb{height:260px}}
-</style></head><body><header><nav aria-label="メインナビゲーション"><strong>SANSU</strong><a href="../index.html">概要</a><a href="index.html" aria-current="page">タスク</a><a href="../../docs/index.html">ドキュメント</a><a href="../map.html">仕様と実装</a></nav></header><main><h1>タスク</h1><p class="subtitle">Sansu repository · Markdownから生成した閲覧用ポータル</p><label for="search">このページを検索</label><input id="search" type="search" placeholder="タイトル・ファイル名・キーワード"><p id="result" role="status" hidden></p><p>実行キューに登録された 6 件。「何の話か／現在地／次の一手」で分類しています。登録は実装済み・公開済みを意味しません。</p><section class="doc-group"><h2 class="section-title">1・統合と公開準備</h2><div class="grid"><article class="card" data-search="最新変更を一つの公開候補へまとめる：島をgrowingへ一本化し、sessionの初期読込/学習/家と配置/写真/工作を分離し、共用キャラクター/庭の配置を整理。core4,761/smoke31・growing offline・旧保存1→3の実sw更新/通信切断/対応writer復旧・本人切替/履歴をlocal確認。実旧writerの正本隔離も診断pass 次：固定候補の公開urlと版、実利用者の保存、実機/子どもを照合。確認した旧版以外の保存・全写真は別。公開の実行はその依頼時に行う docs/tasks/active/2026-10-05-growing-island-release.md # 最新変更を一つの公開候補へまとめる
+</style></head><body><header><nav aria-label="メインナビゲーション"><strong>SANSU</strong><a href="../index.html">概要</a><a href="index.html" aria-current="page">タスク</a><a href="../../docs/index.html">ドキュメント</a><a href="../map.html">仕様と実装</a></nav></header><main><h1>タスク</h1><p class="subtitle">Sansu repository · Markdownから生成した閲覧用ポータル</p><label for="search">このページを検索</label><input id="search" type="search" placeholder="タイトル・ファイル名・キーワード"><p id="result" role="status" hidden></p><p>実行キューに登録された 6 件。「何の話か／現在地／次の一手」で分類しています。登録は実装済み・公開済みを意味しません。</p><section class="doc-group"><h2 class="section-title">1・統合と公開準備</h2><div class="grid"><article class="card" data-search="最新変更を一つの公開候補へまとめる：島をgrowingへ一本化し、sessionの初期読込/学習/家と配置/写真/工作・共用3d接続を分離し、共用キャラクター/庭の配置を整理。core4,766/smoke31・growing offline・旧保存1→3の実sw更新/通信切断/対応writer復旧・本人切替/履歴をlocal確認。実旧writerの正本隔離も診断pass 次：固定候補の公開urlと版、実利用者の保存、実機/子どもを照合。確認した旧版以外の保存・全写真は別。公開の実行はその依頼時に行う docs/tasks/active/2026-10-05-growing-island-release.md # 最新変更を一つの公開候補へまとめる
 
 - 更新日: 2026-10-06
 - review by: 2026-10-12
@@ -18,6 +18,8 @@
 - 目的: 実装済み変更を重複して作らず、学習・島・家・本人切替・保護者・橋を同じ版で評価できる候補にまとめる。
 
 ## 現在地と範囲
+
+2026-10-07共用3d接続: sessionのrenderer propsを家/配置/共有展示/写真/工作/遊びの型付き関数へ分割し、一つの遅延renderer/suspenseへ合成。表示条件・地面入力の優先順位・保存とsession寿命を維持。59propsの構文照合、core4,766/smoke31、growing production/offline・本人切替/履歴・配置/工作/写真の390/768幅pass。別作業の未コミットgrowing案内を除いた独立checkoutを検証し、mainの対象indexとの入力一致を確認する。公開/実機/子ども評価は別。[構成](../../architecture/island-runtime.md)。
 
 2026-10-06 session追補: 配置選択/保存/空editorの復帰をhookへ、写真の対象/metadataと工作draft/保存作品再演の表示を専用panelへ分割。同本人のsessionと既存writer/戻り先を保持。core4,761、classic31、growing production実操作/offline、本人切替/履歴、390/768幅で写真保存/読込故障/削除と配置/作品再演の往復がpass。旧所有fixtureを使う任意機能の診断は実獲得の証明と区別し、公開/実機/子ども評価へ広げない。[構成](../../architecture/island-runtime.md)と `docs/done/2026-10.md`。
 
@@ -58,7 +60,7 @@
 ## docs to touch
 
 共有tasks/blocked、担当タスク、検証証拠と完了履歴。挙動変更が必要な場合のみ親仕様と該当子仕様を先に更新する。今回の棚卸しは仕様・adr・運用memoryの変更不要。
-"><h2><a href="../../docs/tasks/active/2026-10-05-growing-island-release.md">最新変更を一つの公開候補へまとめる：島をGrowingへ一本化し、sessionの初期読込/学習/家と配置/写真/工作を分離し、共用キャラクター/庭の配置を整理。core4,761/smoke31・Growing offline・旧保存1→3の実SW更新/通信切断/対応writer復旧・本人切替/履歴をlocal確認。実旧writerの正本隔離も診断PASS 次：固定候補の公開URLと版、実利用者の保存、実機/子どもを照合。確認した旧版以外の保存・全写真は別。公開の実行はその依頼時に行う</a></h2><p class="path">docs/tasks/active/2026-10-05-growing-island-release.md</p><p>- 更新日: 2026-10-06 - Review By: 2026-10-12</p><details><summary>詳細を読む</summary><pre># 最新変更を一つの公開候補へまとめる
+"><h2><a href="../../docs/tasks/active/2026-10-05-growing-island-release.md">最新変更を一つの公開候補へまとめる：島をGrowingへ一本化し、sessionの初期読込/学習/家と配置/写真/工作・共用3D接続を分離し、共用キャラクター/庭の配置を整理。core4,766/smoke31・Growing offline・旧保存1→3の実SW更新/通信切断/対応writer復旧・本人切替/履歴をlocal確認。実旧writerの正本隔離も診断PASS 次：固定候補の公開URLと版、実利用者の保存、実機/子どもを照合。確認した旧版以外の保存・全写真は別。公開の実行はその依頼時に行う</a></h2><p class="path">docs/tasks/active/2026-10-05-growing-island-release.md</p><p>- 更新日: 2026-10-06 - Review By: 2026-10-12</p><details><summary>詳細を読む</summary><pre># 最新変更を一つの公開候補へまとめる
 
 - 更新日: 2026-10-06
 - Review By: 2026-10-12
@@ -67,6 +69,8 @@
 - 目的: 実装済み変更を重複して作らず、学習・島・家・本人切替・保護者・橋を同じ版で評価できる候補にまとめる。
 
 ## 現在地と範囲
+
+2026-10-07共用3D接続: sessionのrenderer propsを家/配置/共有展示/写真/工作/遊びの型付き関数へ分割し、一つの遅延renderer/Suspenseへ合成。表示条件・地面入力の優先順位・保存とsession寿命を維持。59propsの構文照合、core4,766/smoke31、Growing production/offline・本人切替/履歴・配置/工作/写真の390/768幅PASS。別作業の未コミットGrowing案内を除いた独立checkoutを検証し、mainの対象indexとの入力一致を確認する。公開/実機/子ども評価は別。[構成](../../architecture/island-runtime.md)。
 
 2026-10-06 session追補: 配置選択/保存/空editorの復帰をhookへ、写真の対象/metadataと工作draft/保存作品再演の表示を専用panelへ分割。同本人のsessionと既存writer/戻り先を保持。core4,761、classic31、Growing production実操作/offline、本人切替/履歴、390/768幅で写真保存/読込故障/削除と配置/作品再演の往復がPASS。旧所有fixtureを使う任意機能の診断は実獲得の証明と区別し、公開/実機/子ども評価へ広げない。[構成](../../architecture/island-runtime.md)と `docs/done/2026-10.md`。
 
@@ -1445,6 +1449,8 @@ B方向の実3D地形・家・曲がった枝葉・相棒・昼夕夜、通常�
 共有キュー、関連仕様/タスク、Git履歴と未コミット一覧、10/1〜10/5の検証記録を照合した。アプリ実装・本番操作・実機/子どもの観察は行っていない。過去の検証を新しい候補の合格として記録しない。
 </pre></details></article><article class="card" data-search="shared done index .agents/tasks/done.md # shared done index
 
+- 2026-10-07: [共用3dのsession接続を分割](../../docs/architecture/island-runtime.md)。家/配置/共有展示/写真/工作/遊びの型付き接続と一つの遅延rendererへ整理。59propsの構文照合、core4,766/smoke31、growing production・本人切替/履歴・配置/工作/写真の両幅がpass。公開/実機/子ども評価は別。詳細: `docs/done/2026-10.md`。
+
 - 2026-10-06: [sessionの配置・写真・工作を分割](../../docs/architecture/island-runtime.md)。保存と画面往復の契約を保持し、core4,761・smoke31・growing production・本人切替/履歴・写真/工作/配置の390/768幅をlocal確認。公開/実機/子ども評価は別。詳細: `docs/done/2026-10.md`。
 
 - 2026-10-06: [共用描画の配置整理](../../docs/architecture/island-runtime.md)。庭/家/光/時計など18ファイルをthree/gardenへ移動し、元のぽこもこを共用組立元へ抽出。形状/素材/布と処理本体を保持。core4,757、最終smoke31、growing実操作/offline、家/学習の履歴往復がpass。初回classicの1件timeoutは保持。性能・公開/実機/利用者は別。詳細: `docs/done/2026-10.md`。
@@ -1702,7 +1708,9 @@ durable completion history and verification facts still belong in `docs/done/yyy
 - 2026-10-01: しあげの条件を全20問独力正解に変更。19/20のレベル維持、新予約20/20の進級を実ui/保存で確認、4391 tests pass -&gt; `docs/done/2026-10.md`
 
 - 2026-10-01: 学習アルゴリズム監査a1〜a10修正。独力/代表出題/coverage/復習・回復・配分を整え、全4474 tests・smoke31・固定preview80実回答を確認。ローカル、本番未配布 -&gt; `docs/done/2026-10.md`
-"><h2><a href="DONE.md">Shared Done Index</a></h2><p class="path">.agents/tasks/DONE.md</p><p>- 2026-10-06: [sessionの配置・写真・工作を分割](../../docs/architecture/island-runtime.md)。保存と画面往復の契約を保持し、core4,761・smoke31・Growing production・本人切替/履歴・写真/工作/配置の390/768幅をlocal確認。公開/実機/子ども評価は別。詳細: `docs/done/2026-10.md`。 - 2</p><details><summary>詳細を読む</summary><pre># Shared Done Index
+"><h2><a href="DONE.md">Shared Done Index</a></h2><p class="path">.agents/tasks/DONE.md</p><p>- 2026-10-07: [共用3Dのsession接続を分割](../../docs/architecture/island-runtime.md)。家/配置/共有展示/写真/工作/遊びの型付き接続と一つの遅延rendererへ整理。59propsの構文照合、core4,766/smoke31、Growing production・本人切替/履歴・配置/工作/写真の両幅がPASS。公開/実機/子ども評価は別。詳細</p><details><summary>詳細を読む</summary><pre># Shared Done Index
+
+- 2026-10-07: [共用3Dのsession接続を分割](../../docs/architecture/island-runtime.md)。家/配置/共有展示/写真/工作/遊びの型付き接続と一つの遅延rendererへ整理。59propsの構文照合、core4,766/smoke31、Growing production・本人切替/履歴・配置/工作/写真の両幅がPASS。公開/実機/子ども評価は別。詳細: `docs/done/2026-10.md`。
 
 - 2026-10-06: [sessionの配置・写真・工作を分割](../../docs/architecture/island-runtime.md)。保存と画面往復の契約を保持し、core4,761・smoke31・Growing production・本人切替/履歴・写真/工作/配置の390/768幅をlocal確認。公開/実機/子ども評価は別。詳細: `docs/done/2026-10.md`。
 

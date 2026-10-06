@@ -8,6 +8,8 @@
 
 ## 現在地と範囲
 
+2026-10-07共用3D接続: sessionのrenderer propsを家/配置/共有展示/写真/工作/遊びの型付き関数へ分割し、一つの遅延renderer/Suspenseへ合成。表示条件・地面入力の優先順位・保存とsession寿命を維持。59propsの構文照合、core4,766/smoke31、Growing production/offline・本人切替/履歴・配置/工作/写真の390/768幅PASS。別作業の未コミットGrowing案内を除いた独立checkoutを検証し、mainの対象indexとの入力一致を確認する。公開/実機/子ども評価は別。[構成](../../architecture/island-runtime.md)。
+
 2026-10-06 session追補: 配置選択/保存/空editorの復帰をhookへ、写真の対象/metadataと工作draft/保存作品再演の表示を専用panelへ分割。同本人のsessionと既存writer/戻り先を保持。core4,761、classic31、Growing production実操作/offline、本人切替/履歴、390/768幅で写真保存/読込故障/削除と配置/作品再演の往復がPASS。旧所有fixtureを使う任意機能の診断は実獲得の証明と区別し、公開/実機/子ども評価へ広げない。[構成](../../architecture/island-runtime.md)と `docs/done/2026-10.md`。
 
 2026-10-06共用描画: 元のぽこもこの組立元と庭/家/光/時計をthree配下へ整理。現行Growing・家・学習が旧Home Journeyの建物/成長を参照せず共用する。形状/素材/布と移動18ファイルの処理を照合し、core4,757、最終smoke31、Growing実操作/offlineと家/学習の履歴往復がPASS。初回classicの1024px縦で再試行メッセージ待ちがtimeoutした記録を残し、対象5サイズと全31件を同じ候補で再確認。性能計測/公開/実機/利用者の評価は含めない。[配置と解放の境界](../../architecture/island-runtime.md)。

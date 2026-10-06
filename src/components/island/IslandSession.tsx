@@ -1,3 +1,10 @@
+import { IslandSessionStage } from './IslandSessionStage';
+import { islandSessionHouseStage } from './islandSessionHouseStage';
+import { islandSessionPlacementStage } from './islandSessionPlacementStage';
+import { islandSessionSharedStage } from './islandSessionSharedStage';
+import { islandSessionPhotoStage } from './islandSessionPhotoStage';
+import { islandSessionWorkshopStage } from './islandSessionWorkshopStage';
+import { islandSessionPlayStage } from './islandSessionPlayStage';
 import { IslandSessionPhotos } from './IslandSessionPhotos';
 import { IslandSessionWorkshop } from './IslandSessionWorkshop';
 import { useIslandSessionPlacement } from './useIslandSessionPlacement';
@@ -7,10 +14,7 @@ import { useIslandSessionLearning } from './useIslandSessionLearning';
 import { Spinner } from '../../components/ui/Spinner';
 import { GrowingLoading } from './growing/GrowingLoading';
 import type { GrowingGuideRequest } from './growing/GrowingGuideEntry';
-import { readWordAloud, useGrowingRoom } from './growing/useGrowingRoom';
-import { guestLine } from './growing/houseGuests';
-import { noteFor, playNote } from './growing/notes';
-import { villagerName } from './growing/growingCopy';
+import { useGrowingRoom } from './growing/useGrowingRoom';
 import { lifeDb } from '../../domain/islandLife/repository';
 import { savedHeroStyle } from '../../domain/islandLife/savedHeroStyle';
 import { IslandProfileSwitcher } from './IslandProfileSwitcher';
@@ -35,7 +39,7 @@ import { isFirstIslandPlan } from '../../domain/island/learningSession';
 import { setIslandNextSubject } from '../../domain/island/subjectPreference';
 import { isValidIslandPlacement } from '../../domain/island/catalog';
 import { ISLAND_DELIVERY_ID, ISLAND_VISUAL_CANDIDATE, ISLAND_LEARNING_CANDIDATE, islandEnabled } from '../../domain/island/feature';
-import type { IslandBasicItemKind, IslandHabitatId, IslandItem } from '../../domain/island/types';
+import type { IslandBasicItemKind, IslandHabitatId } from '../../domain/island/types';
 import { selectIslandGrowthTarget } from '../../domain/island/growthRepository';
 import { reachPwaUpdateCheckpoint } from '../../pwa';
 import { setSoundEnabled } from '../../utils/audio';
@@ -60,7 +64,7 @@ import { IslandSessionHouse } from './IslandSessionHouse';
 import { IslandToyIcon } from './IslandToyIcon';
 import { useIslandLearningKeepsakes } from './useIslandLearningKeepsakes';
 import type { IslandLearningKeepsakeId } from '../../domain/island/learningKeepsakes';
-import { islandDistrictForPosition, islandHomeDistrict } from './islandDistrictView';
+import { islandHomeDistrict } from './islandDistrictView';
 import { useIslandRewardGoal } from './useIslandRewardGoal';
 import { useIslandCustomization } from './useIslandCustomization';
 import { IslandStarReceipt } from './IslandStarReceipt';
@@ -90,7 +94,6 @@ import type { IslandSharedSceneRequest, IslandStageState } from './three/types';
 import type { IslandWorkshopView } from './IslandWorkshop';
 import { useIslandWorkshop } from './useIslandWorkshop';
 import { useIslandWorkshopAudio } from './useIslandWorkshopAudio';
-import { getIslandWorkshop } from '../../domain/island/workshop';
 import type { WorkshopSceneRequest } from './three/workshopScene';
 import '../../components/domain/LearningAnswerForm.css';
 import './Island.css';
@@ -100,22 +103,8 @@ import './IslandImmersiveLayout.css';
 import './IslandHouseOverview.css';
 
 type Screen = IslandScreen;
-const RENDERER_RECOVERY_HINT = '「もういちど みる」で、しまを ひらこう。';
-
-function sharingHint(items: IslandItem[], selectedId: string) {
-    const selected = items.find(item => item.id === selectedId);
-    if (!selected) return undefined;
-    const pair = [
-        { kinds: ['flower', 'bench'], hint: 'ベンチの まえに おはなを おくと…？' },
-        { kinds: ['lantern', 'mushroom'], hint: 'きのこの いすの まえに あかりを おくと…？' },
-        { kinds: ['fountain', 'swing'], hint: 'ブランコの まえに ふんすいを おくと…？' },
-    ].find(pair => pair.kinds.includes(selected.kind) && pair.kinds.every(kind => items.some(item => item.kind === kind)));
-    return pair?.hint;
-}
-
 const GrowingIsland = lazy(() => import('./growing/GrowingIsland'));
 const GrowingHouseGuide = lazy(() => import('./growing/GrowingHouseGuide'));
-const IslandStage = lazy(() => import('./IslandStage'));
 const IslandAlbum = lazy(() => import('./IslandAlbum').then(module => ({ default: module.IslandAlbum })));
 const IslandCustomization = lazy(() => import('./IslandCustomization').then(module => ({ default: module.IslandCustomization })));
 const IslandDiscoveryGuide = lazy(() => import('./IslandDiscoveryGuide').then(module => ({ default: module.IslandDiscoveryGuide })));
@@ -523,114 +512,54 @@ export function IslandSession({ profile }: { profile: UserProfile }) {
         </Suspense>}
         {/* Learning hides the world. Do not create a legacy WebGL world
             behind the questions just to destroy it when returning home. */}
-        {active && screen !== 'home' && !learning && !['help', 'album', 'photos', 'inventory', 'challenge'].includes(screen) && <Suspense fallback={<Spinner fullScreen destination={screen === 'keepsakes' ? 'house' : 'island'} message={screen === 'keepsakes' ? 'いえを ひらいているよ…' : 'しまを ひらいているよ…'} />}><IslandStage onTutorialReady={setTutorialStageReady} onCameraPractice={() => tutorial.practice('view')} compactCameraControls={screen === 'play'} items={stageIsland.items} completedSets={island.completedSets} pulse={pulse} learning={learning}
-            challengeDisplayed={challengeSummary?.displayed}
-            learningKeepsakes={keepsakeRoomActive ? { closeOverview: houseOverview, state: island.learningKeepsakes, selectedId: keepsakeFocus, decor: growingRoom.decor } : undefined}
-            onHomeEnter={!busy && ['home', 'play'].includes(screen) ? enterHouse : undefined}
-            onHomeAction={!busy && screen === 'keepsakes' ? action => {
-                if (action.type === 'album') { setReturnToHouse(true); setAlbumComparison('garden'); setScreen('album'); }
-                else if (action.type === 'notices') { setKeepsakeFocus(undefined); setHouseSection('notices'); }
-                else if (action.type === 'word') { const word = readWordAloud(action.word); setRoomWord({ text: word?.surface ?? action.word.replace(/_lv\d+$/, ''), japanese: word?.japanese, at: Date.now() }); }
-                else if (action.type === 'desk') void begin();
-                else if (action.type === 'guest') {
-                    const guest = growingRoom.guests.find(g => g.id === action.id);
-                    if (guest) { if (profile.soundEnabled) playNote(noteFor(guest.species)); setRoomWord({ text: villagerName(guest), japanese: guestLine(guest), at: Date.now() }); }
-                }
-                else if (!keepsakes.pending) { keepsakes.select(action.id); setKeepsakeFocus(action.id); setHouseSection('keepsakes'); }
-            } : undefined}
-            furnitureTrial={furnitureTrial}
-            furnitureTrialChoice={furnitureTrial ? { residentId: furnitureResident, ...(furnitureKind === 'tea-table' ? { partnerId: furniturePartner } : {}) } : undefined}
-            furniturePlacement={furniturePlacementChoice} furniturePlacementSearchRequestId={furniturePlacementChoice ? furniturePlacementSearch : undefined}
-            onFurniturePlacement={result => {
-                if (busy || screen !== 'placement' || !preview || !furniturePlacementChoice || result.key !== furniturePlacementKey(preview, furniturePlacementChoice)) return;
-                setFurniturePlacementResult(result);
-                if (result.suggestion?.requestId === furniturePlacementSearch && result.suggestion) {
-                    const suggestion = result.suggestion;
-                    setDistrict(islandDistrictForPosition(island, suggestion.position));
-                    setPreview(previous => previous?.id === result.itemId ? { ...previous, position: suggestion.position, rotation: suggestion.rotation } : previous);
-                    setFurniturePlacementSearch(undefined); setFurniturePlacementResult(undefined);
-                }
-            }}
-            cosmeticFocus={screen === 'customization' ? cosmeticFocus : undefined}
-            experience={stageIsland.experience}
-            expressionSelection={screen === 'expression' ? expressionScene : getIslandExpression(stageIsland).selection}
-            expressionCaptionKey={screen === 'expression' ? `${expressionResident ?? 'world'}:${expression.previewAction?.type === 'equip-trail' ? expressionWalk?.id ?? '' : ''}` : undefined}
-            expressionResidentId={screen === 'expression' && !preparingLearning ? expressionResident : undefined}
-            expressionFlagFocus={screen === 'expression' && !preparingLearning && expressionFlagFocus}
-            expressionWalkRequest={screen === 'expression' && !preparingLearning && expression.previewAction?.type === 'equip-trail' ? expressionWalk : undefined}
-            shared={{ island: stageIsland, active: screen === 'shared' || screen === 'camera' && photoOrigin === 'shared',
-                selectedDisplayId: screen === 'shared' ? sharedSelection : undefined,
-                focusDisplayId: screen === 'shared' && !sharedPreview ? sharedSelection : screen === 'camera' ? photoDisplayId : undefined,
-                preview: screen === 'shared' ? sharedPreview : undefined }}
-            sharedRequest={sharedRequest}
-            onSharedAction={sharedActions.capture}
-            onSharedDisplaySelect={!learning && !busy && ['home', 'play', 'shared', 'showcase'].includes(screen) ? id => {
-                if (screen === 'shared') { sharedCommand({ type: 'stop' }); setSharedPreview(undefined); setSharedSelection(id); }
-                else openShared(undefined, id);
-            } : undefined}
-            onSharedFeedback={setSharedFeedback}
-            photographing={screen === 'camera'}
-            workshop={screen === 'workshop' || cameraInlet ? { ...workshopView, workshop: getIslandWorkshop(island), active: true, busy,
-                replayLayout: workReplay ? showCurrentDraft ? getIslandWorkshop(island).draftCheckpoint.draft.layout : workReplay.target.layout : undefined } : undefined}
-            workshopRequest={screen === 'workshop' || cameraInlet ? workshopRequest : undefined}
-            onWorkshopAction={workshopActions.capture}
-            onWorkshopGesture={() => { void workshopAudio.unlock(); }} onWorkshopFeedback={workshopAudio.play}
-            onWorkshopSpecimenSelect={id => setWorkshopView(view => ({ ...view, selectedSpecimenId: id }))}
-            onWorkshopPartSelect={id => setWorkshopView(view => ({ ...view, selectedPartId: id }))}
-            residentPortraitId={screen === 'experience' ? portraitResident : screen === 'camera' ? photoResident : undefined}
-            cosmetics={screen === 'customization' ? customization.preview ?? getIslandCosmetics(island) : getIslandCosmetics(stageIsland)}
-            photoRequestId={screen === 'camera' ? photos.requestId : undefined} onPhoto={photos.consume}
-            milestoneNotice={screen === 'furniture' && furnitureTrial ? <aside className="island-growth-preview-notice" role="status"><strong>どうぐの おためし</strong>いまの しまは そのまま。</aside>
+        {active && screen !== 'home' && !learning && !['help', 'album', 'photos', 'inventory', 'challenge'].includes(screen) && <IslandSessionStage screen={screen}
+            house={islandSessionHouseStage({ screen, setScreen, island, busy, keepsakeRoomActive, houseOverview,
+                challengeSummary, keepsakeFocus, growingRoom, soundEnabled: Boolean(profile.soundEnabled), keepsakes,
+                enterHouse, begin, setReturnToHouse, setAlbumComparison, setKeepsakeFocus, setHouseSection, setRoomWord })}
+            placement={islandSessionPlacementStage({ screen, island, busy, furnitureTrial, furnitureKind,
+                furnitureResident, furniturePartner, furniturePlacementChoice, playRequest, valid,
+                controls: { preview, setPreview, placementSuggestionId, setPlacementSuggestionId, furniturePlacementSearch,
+                    setFurniturePlacementSearch, setFurniturePlacementResult }, setDistrict })}
+            shared={islandSessionSharedStage({ screen, island, stageIsland, busy, learning, photoOrigin, photoDisplayId,
+                sharedSelection, sharedPreview, sharedRequest, sharedActions, sharedCommand, setSharedPreview,
+                setSharedSelection, setSharedFeedback, openShared })}
+            photo={islandSessionPhotoStage({ screen, portraitResident, photoResident, photos })}
+            workshop={islandSessionWorkshopStage({ screen, island, busy, cameraInlet, workshopView, workshopRequest,
+                workReplay, showCurrentDraft, workshopActions, workshopAudio, setWorkshopView })}
+            play={islandSessionPlayStage({ screen, island, busy, learning, playRequest, photoTargetId, tutorial,
+                setPlayMessage, setWorkshopRequest, setSharedRequest, play, select })}
+                common={{
+                    onTutorialReady: setTutorialStageReady,
+                    onCameraPractice: () => tutorial.practice('view'),
+                    compactCameraControls: screen === 'play',
+                    items: stageIsland.items,
+                    completedSets: island.completedSets,
+                    pulse: pulse,
+                    learning: learning,
+                    cosmeticFocus: screen === 'customization' ? cosmeticFocus : undefined,
+                    experience: stageIsland.experience,
+                    expressionSelection: screen === 'expression' ? expressionScene : getIslandExpression(stageIsland).selection,
+                    expressionCaptionKey: screen === 'expression' ? `${expressionResident ?? 'world'}:${expression.previewAction?.type === 'equip-trail' ? expressionWalk?.id ?? '' : ''}` : undefined,
+                    expressionResidentId: screen === 'expression' && !preparingLearning ? expressionResident : undefined,
+                    expressionFlagFocus: screen === 'expression' && !preparingLearning && expressionFlagFocus,
+                    expressionWalkRequest: screen === 'expression' && !preparingLearning && expression.previewAction?.type === 'equip-trail' ? expressionWalk : undefined,
+                    cosmetics: screen === 'customization' ? customization.preview ?? getIslandCosmetics(island) : getIslandCosmetics(stageIsland),
+                    milestoneNotice: screen === 'furniture' && furnitureTrial ? <aside className="island-growth-preview-notice" role="status"><strong>どうぐの おためし</strong>いまの しまは そのまま。</aside>
                 : screen === 'customization' ? <IslandCustomizationPreviewNotice saved={getIslandCosmetics(island)} preview={customization.preview ?? getIslandCosmetics(island)} />
                 : <>{growthLook && <aside className="island-growth-preview-notice" role="status"><strong>つぎに 育つ すがた・おためし</strong>{growthLook.description}</aside>}
                     {screen === 'experience' && experience.previewIsland && <aside className="island-growth-preview-notice" role="status"><strong>けしきの おためし</strong>いまの しまは そのまま。</aside>}
                     {screen === 'expression' && expression.previewAction && <aside className="island-growth-preview-notice" role="status"><strong>むりょうの おためし</strong>いまの しまは そのまま。</aside>}
-                    {(learning || screen === 'reward') && starReceipt && <IslandStarReceipt key={starReceipt.id} receiptId={starReceipt.id} stars={starReceipt.stars} />}</>}
-            growth={stageIsland.growth} growthTarget={plan?.status === 'active' ? plan.growthTarget : undefined}
-            comparisonHabitat={screen === 'growth' ? growthViewHabitat : undefined}
-            districtFocus={learning || screen === 'shared' || screen === 'customization' || screen === 'expression' || screen === 'furniture' || screen === 'camera' && photoTargetId !== 'current' ? 'all' : district} readOnly={keepsakeRoomActive || ['growth', 'inventory', 'reward', 'customization', 'guide', 'experience', 'expression'].includes(screen)}
-            onDiscovery={['home', 'play', 'showcase'].includes(screen) ? discoveries.capture : undefined}
-            reaction={reaction} learningProgress={(learning || screen === 'reward') && plan
-                ? { sectionId: plan.id, completed: plan.cursor, total: plan.slots.length } : undefined}
-            preview={preview} previewValid={valid} selectedId={screen === 'play' ? playRequest?.itemId : preview?.id}
-            placementSuggestionId={screen === 'placement' ? placementSuggestionId : undefined}
-            onPlacementSuggestion={({ itemId, position }) => {
-                if (screen !== 'placement' || busy || preview?.id !== itemId) return;
-                setDistrict(islandDistrictForPosition(island, position));
-                setPreview(previous => previous?.id === itemId ? { ...previous, position } : previous);
-                setPlacementSuggestionId(undefined);
-            }}
-            playRequest={screen === 'play' || screen === 'furniture' && !busy || screen === 'camera' && photoTargetId === 'current' ? playRequest : undefined}
-            onRendererRecovered={() => { setPlayMessage(message => message === RENDERER_RECOVERY_HINT ? undefined : message); setWorkshopRequest(undefined); setSharedRequest(undefined); }}
-            onPlayResult={result => {
-                if (result.requestId !== playRequest?.id) return;
-                if (result.status === 'playing') tutorial.practice('play');
-                if (screen === 'furniture') {
-                    setPlayMessage(result.status === 'playing' ? 'なかまと ためしているよ。'
-                        : result.reason === 'renderer' ? RENDERER_RECOVERY_HINT
-                            : result.reason === 'resident-unavailable' || result.reason === 'partner-unavailable' ? 'いま こられる なかまを えらんでみよう。'
-                                : 'どうぐの まわりに、とおれる すきまを あけてみよう。');
-                    return;
-                }
-                setPlayMessage(result.status === 'blocked' ? 'どうぶつが とおれる すきまを あけて みよう。'
-                    : result.status === 'unavailable' ? (result.reason === 'renderer' ? RENDERER_RECOVERY_HINT : 'もちものから しまに おいて、あそぼう。')
-                        : result.activity ? (result.activity === 'flower' ? 'おはなを おすそわけ。' : result.activity === 'star' ? 'ほしの ひかりを おすそわけ。'
-                            : result.activity === 'bubble' ? 'みずたまを おすそわけ。' : 'なかまと ためしているよ。')
-                            : sharingHint(island.items, result.itemId) ?? 'ほかの ばしょも えらべるよ。');
-            }}
-            onGroundPoint={screen === 'shared' && sharedPreview && !busy ? point => setSharedPreview(previous => {
-                if (!previous) return previous;
-                const position = { x: Math.round(point.x * 4) / 4, z: Math.round(point.z * 4) / 4 };
-                return { ...previous, position, valid: isValidSharedDisplayPlacement(island, previous.displayId, previous.target, position) };
-            }) : screen === 'placement' && !busy ? point => { setFurniturePlacementSearch(undefined); setFurniturePlacementResult(undefined); setPlacementSuggestionId(undefined); setPreview(previous => {
-                if (!previous) return previous;
-                const position = { x: Math.round(point.x * 4) / 4, z: Math.round(point.z * 4) / 4 };
-                return previous.position?.x === position.x && previous.position?.z === position.z ? previous : { ...previous, position };
-            }); } : undefined}
-            onItemSelect={!learning && !busy && !['customization', 'guide', 'growth', 'experience', 'expression', 'showcase', 'workshop', 'camera', 'photos', 'shared', 'furniture', 'keepsakes'].includes(screen) ? id => {
-                if (screen === 'play') play(id);
-                else { const item = island.items.find(candidate => candidate.id === id); if (item) select(item); }
-            } : undefined} /></Suspense>}
+                    {(learning || screen === 'reward') && starReceipt && <IslandStarReceipt key={starReceipt.id} receiptId={starReceipt.id} stars={starReceipt.stars} />}</>,
+                    growth: stageIsland.growth,
+                    growthTarget: plan?.status === 'active' ? plan.growthTarget : undefined,
+                    comparisonHabitat: screen === 'growth' ? growthViewHabitat : undefined,
+                    districtFocus: learning || screen === 'shared' || screen === 'customization' || screen === 'expression' || screen === 'furniture' || screen === 'camera' && photoTargetId !== 'current' ? 'all' : district,
+                    readOnly: keepsakeRoomActive || ['growth', 'inventory', 'reward', 'customization', 'guide', 'experience', 'expression'].includes(screen),
+                    onDiscovery: ['home', 'play', 'showcase'].includes(screen) ? discoveries.capture : undefined,
+                    reaction: reaction,
+                    learningProgress: (learning || screen === 'reward') && plan
+                ? { sectionId: plan.id, completed: plan.cursor, total: plan.slots.length } : undefined,
+                }} />}
         {tutorial.current && !customization.error && <IslandTutorial id={tutorial.current.id} onShown={tutorial.shown} onClose={tutorial.dismiss}
             text={tutorial.current.id === 'growth' && screen === 'home' ? '学んだぶん、しまが 育ったよ。育った すがたを みてみよう。' : undefined}
             action={tutorial.current.id === 'growth' && screen === 'home' ? 'みにいく' : undefined}
