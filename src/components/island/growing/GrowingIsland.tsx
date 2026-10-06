@@ -5,7 +5,7 @@ import { canReachHomePlacement } from '../../../domain/growingIsland/commands';
 import type { Cell, Command, FlowerColor, GrowingState, LandmarkKind, SeedKind, TownEvent } from '../../../domain/growingIsland';
 import { addMoment, flowerSentToday, listMoments, readGrowingIsland, sendFlower, type MomentRecord } from '../../../domain/growingIsland/repository';
 import { getAllProfiles } from '../../../domain/user/repository';
-import { useGardenTime } from '../life/fantasy/useGardenTime';
+import { useGardenTime } from '../three/garden/useGardenTime';
 import { GrowingLoading, type LoadingStep } from './GrowingLoading';
 import { useIslandWorkshopAudio } from '../useIslandWorkshopAudio';
 import { useIslandAmbience } from '../useIslandAmbience';

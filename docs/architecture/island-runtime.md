@@ -14,6 +14,8 @@
 | 家の挑戦・手紙・模様替えの表示 | `src/components/island/IslandSessionHouse.tsx` |
 | 島の画面と操作 | `src/components/island/growing/GrowingIsland.tsx` |
 | 島の描画 | `src/components/island/growing/GrowingWorld.tsx` |
+| 島・家・学習の共用キャラクター | `src/components/island/three/islandCharacters.ts` |
+| 共用の庭・家・光・景色の時計と描画計算 | `src/components/island/three/garden/` |
 | 島の規則と保存 | `src/domain/growingIsland/` |
 | 家、取得済みの記念・所有と学習 | 共用の `src/components/island/` と `src/domain/island/` |
 
@@ -23,8 +25,9 @@
 
 - `src/domain/islandLife/`は旧保存の読み込み、検証済みGrowing移行、旧所有・履歴と学習連携を支える。DB名やschemaをこの整理で変更しない。
 - `src/domain/natureTown/`の純粋な計算、保存保護とテストは再利用資産として残す。旧DBは自動合算しない。
-- `src/components/island/homeJourney/scene.ts`は現行Growingと学習が使う元のぽこもこモデルも作る。フォルダ名が旧試作名でも、独立したホームを起動するものではない。
-- `src/components/island/life/`内の共用モデル、光・時計、純粋な描画計算は現行の島・家とテストから使う。
+- 元のぽこもこの造形は`three/islandCharacters.ts`の`makePokomokoRig`を唯一の組立元とする。`buildIslandCharacters`は共用の材料cache・ぽこもこ・うさぎ・カワウソを作り、Growing、家の互換renderer、学習actorから使う。旧Home Journeyの建物/成長コードは参照しない。利用先でmeshをrootから移した場合、そのgeometryは利用先が解放し、builderは残るrootと共用材料を解放する。
+- `three/garden/`は旧`life/fantasy/`から移した共用の庭・家・光・景色の時計と描画計算。Growingと家の互換rendererから同じ実装を使い、景色の時計を成長や報酬へ使わない。Life固有の水演出/保存済み再演のadapterもここから参照するが、保存や純粋な規則は既存のdomainに残す。
+- `src/components/island/homeJourney/scene.ts`は旧予約と造形回帰用の試作建物を保持し、ぽこもこだけを共用組立元から作る。`src/components/island/life/`の家/旧所有・履歴用の描画adapterも保持する。独立したホームや旧保存の自動合算を追加しない。
 - 保存済みHome Journey予約の完了・rollback・重複防止と履歴の読み込みは維持する。新しい予約に旧試作を付けない。
 
 未実装の自然拡張を、この画面整理の完了に含めない。旧画面の検証資料は当時の範囲とGit版を参照し、現行画面の合格へ流用しない。

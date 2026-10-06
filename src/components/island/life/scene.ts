@@ -1,4 +1,4 @@
-import { batchStaticGardenItems } from './fantasy/staticBatch';
+import { batchStaticGardenItems } from '../three/garden/staticBatch';
 import { buildHomeProps } from './homeProps';
 import { gardenRuntimeAsset, runtimeAssetSlot } from './runtimeAssetSlots';
 import { isolationMarker } from './isolationMarker';
@@ -8,23 +8,23 @@ import type { SandScene } from './sandboxGeometry';
 import { buildCanopyScenery } from './canopyScenery';
 import { makeLifeMotion, type LifeSeat } from './residentMotion';
 import * as T from 'three';
-import { buildHomeJourney } from '../homeJourney/scene';
+import { buildIslandCharacters } from '../three/islandCharacters';
 import { type Cell, type LifeState } from '../../../domain/islandLife/model';
 import { cellKey, districts, homeCell, isolatedItems, landCells, pathToActivity } from '../../../domain/islandLife/space';
 import { plantGatherings } from '../../../domain/islandLife/discovery';
 import type { PlacementPreview } from './placement';
 import { buildLandscape } from './landscape';
 import { buildHeritageHouse, buildHeritageTree } from './heritageScenery';
-import { buildFantasyGarden } from './fantasy/garden';
-import { buildGardenCottage } from './fantasy/cottage';
-import type { GardenTime } from './fantasy/presentation';
-import { batchGardenLanterns } from './fantasy/lanternBatch';
+import { buildFantasyGarden } from '../three/garden/garden';
+import { buildGardenCottage } from '../three/garden/cottage';
+import type { GardenTime } from '../three/garden/presentation';
+import { batchGardenLanterns } from '../three/garden/lanternBatch';
 import { batch } from '../three/primitives';
 
 import { buildLifeItem, tint } from './itemGeometry';
 export { tint } from './itemGeometry';
 export function buildLifeScene(state: LifeState, selected?: string, selectedCell?: Cell, placement?: PlacementPreview) {
-    const content = buildHomeJourney(undefined, { residentsOnly: true, naturalOtter: true }), root = content.world;
+    const content = buildIslandCharacters({ naturalOtter: true }), root = content.world;
     const fantasy = state.worldStyle === 'fantasy-garden-v1';
     const fantasyPaint = fantasy ? new T.MeshStandardMaterial({color:'#ffffff',vertexColors:true,roughness:.85,metalness:0}) : undefined;
     const fantasyDecorationPaint = fantasy ? new T.MeshStandardMaterial({color:'#ffffff',vertexColors:true,roughness:.8,metalness:0}) : undefined;

@@ -1,9 +1,9 @@
 import * as T from 'three';
-import { buildHomeJourney } from '../homeJourney/scene';
-import { buildGardenGround } from '../life/fantasy/garden';
-import { buildGardenCottage } from '../life/fantasy/cottage';
-import { applyGardenLight } from '../life/fantasy/lighting';
-import type { GardenTime } from '../life/fantasy/presentation';
+import { buildIslandCharacters } from '../three/islandCharacters';
+import { buildGardenGround } from '../three/garden/garden';
+import { buildGardenCottage } from '../three/garden/cottage';
+import { applyGardenLight } from '../three/garden/lighting';
+import type { GardenTime } from '../three/garden/presentation';
 import { soilAt } from '../../../domain/growingIsland/environment';
 import type { GrowingState } from '../../../domain/growingIsland';
 import { wrapPokomoko } from './actors';
@@ -18,8 +18,8 @@ export function createWorldScene(renderer: T.WebGLRenderer) {
     sun.shadow.mapSize.set(1024, 1024);
     Object.assign(sun.shadow.camera, { left: -9, right: 9, top: 7, bottom: -7 });
     sun.shadow.normalBias = .025; sun.shadow.bias = -.0002; scene.add(sun);
-    // Pokomoko's model and the shared material cache come from the existing home journey rig.
-    const content = buildHomeJourney(undefined, { residentsOnly: true, naturalOtter: true });
+    // The same original meshes and material cache are shared with the house and learning actor.
+    const content = buildIslandCharacters({ naturalOtter: true });
     const m = content.m;
     const life = new GrowingLife(m, wrapPokomoko(content.hero, content.heroBody, content.heroFeet));
     content.rabbit.pose.removeFromParent(); content.otter.pose.removeFromParent();

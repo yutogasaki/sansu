@@ -7,8 +7,8 @@ try {
     await page.goto(process.env.SANSU_FEEDBACK_URL || 'http://127.0.0.1:5230');
     const data = await page.evaluate(async () => {
         const T = await import('/node_modules/.vite/deps/three.js');
-        const { buildHomeJourney } = await import('/src/components/island/homeJourney/scene.ts');
-        const model = buildHomeJourney(undefined, { residentsOnly: true });
+        const { buildIslandCharacters } = await import('/src/components/island/three/islandCharacters.ts');
+        const model = buildIslandCharacters();
         const renderer = new T.WebGLRenderer({ alpha: true, antialias: true, preserveDrawingBuffer: true });
         const width = 192, height = 224;
         renderer.setSize(width, height); renderer.setPixelRatio(1);

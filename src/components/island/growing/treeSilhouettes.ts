@@ -1,6 +1,6 @@
 import * as T from 'three';
 import { batch, curve, mesh, type IslandMaterials } from '../three/primitives';
-import { leafGeometry } from '../life/fantasy/geometry';
+import { leafGeometry } from '../three/garden/geometry';
 import { growthStage } from '../../../domain/islandLife/model';
 
 export type TreeForm = 'spread' | 'spire' | 'branch';

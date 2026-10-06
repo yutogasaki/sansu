@@ -8,7 +8,7 @@ import { makePicnicMotion, picnicRole } from './picnicMotion';
 import { makeWaterGaze } from './waterGaze';
 import * as T from 'three';
 import { makeLifeHeroHead, makeRelationGaze } from './relationGaze';
-import type { buildHomeJourney } from '../homeJourney/scene';
+import type { buildIslandCharacters } from '../three/islandCharacters';
 import { easeResident, poseResidentTail, RESIDENT_SCALE, residentSeatContactY, sampleResidentStride, turnResidentToward } from '../three/residentRig';
 import { growthStage, isRoamVisit, LIFE_STEP_MS, type Cell, type LifeState } from '../../../domain/islandLife/model';
 import { activityPhase, favoriteReactionElapsed, residentReaction } from '../../../domain/islandLife/activity';
@@ -17,7 +17,7 @@ import { smoothArrival, turnToward } from './residentWalk';
 import { makeLifeStateProjection } from './stateProjection';
 
 export type LifeSeat = { seat: T.Mesh; pivot?: T.Group; picnic?: { seats: T.Mesh[]; snacks: T.Group[] } };
-export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, state: LifeState,
+export function makeLifeMotion(content: ReturnType<typeof buildIslandCharacters>, state: LifeState,
     point: (cell: Cell) => T.Vector3, seats: Map<string, LifeSeat>, sandboxes = new Map<string, SandScene>()) {
     const project = makeLifeStateProjection(state);
     let visible = state, renderedAt = state.now, renderedReduced = false;

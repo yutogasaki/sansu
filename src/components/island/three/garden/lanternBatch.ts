@@ -1,6 +1,6 @@
 import * as T from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import type { buildLanternLight } from '../lanternLight';
+import type { buildLanternLight } from '../../life/lanternLight';
 
 /** Retain the exact reachable-cell light and footprint regions in one draw call. */
 export function batchGardenLanterns(light: ReturnType<typeof buildLanternLight>) {

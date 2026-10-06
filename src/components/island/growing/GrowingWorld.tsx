@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import * as T from 'three';
-import type { GardenTime } from '../life/fantasy/presentation';
+import type { GardenTime } from '../three/garden/presentation';
 import { boatProgress, docked } from '../../../domain/growingIsland';
 import type { Cell, GrowingState, Moment, Villager } from '../../../domain/growingIsland';
 import { makeVillagerActor } from './actors';

@@ -1,5 +1,5 @@
 import * as T from 'three';
-import { buildHomeJourney } from '../homeJourney/scene';
+import { buildIslandCharacters } from '../three/islandCharacters';
 import { disposeGeometry } from '../three/primitives';
 import type { Style } from '../../../domain/islandLife/model';
 import { makeLearningExpression } from './expression';
@@ -10,7 +10,7 @@ export const learningScarfColor = (style: Style) => style === 'sunshine' ? '#f5b
 
 /** Reparent the original meshes without altering their shape, cloth or face. */
 export function makeLearningActorRig() {
-    const model = buildHomeJourney(undefined, { residentsOnly: true });
+    const model = buildIslandCharacters();
     const scarf = new T.Mesh(new T.TorusGeometry(.18, .047, 8, 32), model.m.surface(learningScarfColor('original'), .85));
     scarf.name = 'learning-hero-scarf';
     scarf.rotation.x = Math.PI / 2; scarf.position.y = .59; model.heroBody.add(scarf);

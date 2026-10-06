@@ -4,7 +4,7 @@ import type { Cell, LifeState } from '../../../../domain/islandLife/model';
 import { GardenGeometry, leafGeometry, variation, type V3 } from './geometry';
 import { FANTASY_CANDIDATE, type GardenTime } from './presentation';
 import { gardenGlow } from './glow';
-import { batch } from '../../three/primitives';
+import { batch } from '../primitives';
 import { soilMoistureAt, soilWetness } from '../../../../domain/islandLife/soilMoisture';
 
 /** Every owned cell remains level and playable; all big roots live outside it. */

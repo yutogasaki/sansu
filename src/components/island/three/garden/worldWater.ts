@@ -4,8 +4,8 @@ import { evaluateDiscovery } from '../../../../domain/islandLife/discovery';
 import { createDiscoveryScene, type DiscoveryScene, type PresentationEvidence } from '../../../../domain/islandLife/discoveryJournal';
 import { DiscoveryPresentation } from '../../../../domain/islandLife/discoveryPresentation';
 import { waterSurfacePoint } from '../../../../domain/islandLife/waterMagic';
-import { buildWaterMagic, WATER_MAGIC_MS, WATER_RIPPLE_MS, WATER_RETRY_MS } from '../waterMagic';
-import { visibleRelationObject } from '../relationVisibility';
+import { buildWaterMagic, WATER_MAGIC_MS, WATER_RIPPLE_MS, WATER_RETRY_MS } from '../../life/waterMagic';
+import { visibleRelationObject } from '../../life/relationVisibility';
 
 export function prepareGardenWater(profileId: string, state: LifeState, itemId: string, point: [number, number]) {
     const captured = { ...state, waterTouch: { itemId, point } };

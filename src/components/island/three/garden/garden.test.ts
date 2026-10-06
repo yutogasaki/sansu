@@ -3,8 +3,8 @@ import * as T from 'three';
 import { newLife, type LifeState } from '../../../../domain/islandLife/model';
 import { replayLife } from '../../../../domain/islandLife/simulation';
 import { sceneDigest } from '../../../../domain/islandLife/discoveryJournal';
-import { buildLifeScene } from '../scene';
-import { canReuseLifeScene } from '../sceneReuse';
+import { buildLifeScene } from '../../life/scene';
+import { canReuseLifeScene } from '../../life/sceneReuse';
 import { prepareGardenWater } from './worldWater';
 
 function garden(): LifeState {
