@@ -7,7 +7,11 @@
 | 責務 | 実装 |
 |---|---|
 | ルートと共通ナビゲーション | `src/App.tsx`、`src/components/Layout.tsx` |
-| 本人・家・本・学習を接続する入口 | `src/pages/Island.tsx` |
+| 本人を復元するページ入口 | `src/pages/Island.tsx` |
+| 家・本・学習と画面状態を接続 | `src/components/island/IslandSession.tsx` |
+| 正本の初期読込・保存済み予約の復元 | `src/components/island/useIslandSessionState.ts` |
+| 学習回答のcommitと表示receipt | `src/components/island/useIslandSessionLearning.ts` |
+| 家の挑戦・手紙・模様替えの表示 | `src/components/island/IslandSessionHouse.tsx` |
 | 島の画面と操作 | `src/components/island/growing/GrowingIsland.tsx` |
 | 島の描画 | `src/components/island/growing/GrowingWorld.tsx` |
 | 島の規則と保存 | `src/domain/growingIsland/` |
@@ -34,3 +38,7 @@ SANSU_SINGLE_ISLAND_URL=http://127.0.0.1:4173 SANSU_SINGLE_ISLAND_OUTPUT=output/
 ```
 
 単一ホーム・家・実回答1件・同予約への復帰・旧URL転送を390/768幅で確認する。旧Townのsentinelは明示した隔離fixtureで、実利用者の移行を証明しない。旧flagを設定した別buildにも同じ検査を適用する。公開・PWA実two-build・実機・子どもの観察は別のゲート。
+
+初期読込・学習・家の構成を分けても、同じ本人のsessionを画面往復でmountし直さない。本人切替だけ`profile.id`のkeyで状態を更新し、学習予約/表示receipt/読み上げを引き継ぐ。保存・採点・PWA checkpointの契約は変更しない。
+
+実SWの版切替と対応writerへの復旧は[更新検証の手順](../runbooks/growing-update.md)を参照。

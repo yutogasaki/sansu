@@ -6,12 +6,14 @@
 
 | 分類 | 仕事 | 今どこまで進んだか | 次にすること |
 |---|---|---|---|
-| 1・統合と公開準備 | [最新変更を一つの公開候補へまとめる](../../docs/tasks/active/2026-10-05-growing-island-release.md) | main `2c9e4850` に橋・本人切替/保存・保護者設定を統合済み。隔離core4,735とGrowing本番形式の本人切替両幅PASS。既存smoke/Growing/橋UIは入力同一を照合して結果を継承。公開URL・更新/復旧・実機/利用者は別 | 固定候補の公開/既存保存とGrowingのPWA two-build・中断復旧・旧writer/rollbackを確認。公開の実行はその依頼時に行い、版と公開URLを照合 |
+| 1・統合と公開準備 | [最新変更を一つの公開候補へまとめる](../../docs/tasks/active/2026-10-05-growing-island-release.md) | 島をGrowingへ一本化し、sessionの初期読込/学習/家を分離。core4,757/smoke31・Growing offline・旧保存1→3の実SW更新/通信切断/対応writer復旧・本人切替/履歴をlocal確認。実旧writerの正本隔離も診断PASS | 固定候補の公開URLと版、実利用者の保存、実機/子どもを照合。確認した旧版以外の保存・全写真は別。公開の実行はその依頼時に行う |
 | 2・体験 | [学習・島・家の一続きの体験](../../docs/tasks/active/2026-09-20-whole-app-ux-coherence.md) | 学習直行・挑戦/記録・保護者動線、島からの本人切替を実装・対象検証。保護者の役割整理もローカル候補あり | 1の候補で本人切替→島→家/本→学習→記録/保護者→同じ問題への復帰を照合。実機の音・読み上げ、利用者確認はBLOCKEDへ |
 | 3・性能 | [起動と物が増えた島の軽量化](../../docs/tasks/active/2026-09-23-island-performance.md) | 旧Lifeのraycast・頂点共有・影再利用を改善。本番反映の記録あり。旧30品desktop P95は38.2/55.6msで目標未達。Growingへの改善効果は未認定 | 現行Growingで起動/入室・人口と所有物増加を条件付き計測し、同じ保存で原因を絞る。iPhoneの30秒待ち・電池/GPUは実機で確認 |
 | 4・美術 | [島・家・本・学習の見た目と理解を確認](../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md) | メニュー・全画面・本の挿絵v6をローカル実装・撮影済み。橋も3サイズの実画面と元候補の一致を確認。仕様51/52全体の完成とは扱わない | 1の固定候補のcritical-path接触シートを既存の採用候補と比較。視覚、理解/安全、runtimeを個別判定し、実機/利用者の未評価を残す |
 
 ## 実装済みとして扱うもの
+
+- [session責務の分割とPWA更新/復旧の検査](../../docs/runbooks/growing-update.md)：初期読込・学習commit・家の構成を分離。同じ保存で旧版→候補→対応writerへ実SW更新。共用描画の配置整理と性能は後続で、公開/実利用者の引継ぎは1へ残す。
 
 - [島runtimeの一本化](../../docs/architecture/island-runtime.md)：Growingを唯一のホームにし、旧独立UI/起動入口を撤去。旧DB・学習・所有・移行と共用モデルを保持。今回のlocal検証とGit反映は完了履歴へ記録し、公開/更新/実利用者確認は1の担当に残す。
 

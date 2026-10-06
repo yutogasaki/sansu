@@ -17,3 +17,5 @@ They are for deploy, release, recovery, and maintenance workflows.
 - [schema-migration.md](schema-migration.md)
 
 - [repository-portal.md](repository-portal.md)
+
+- [育つ島の更新と復旧](growing-update.md)：実SWの旧版→候補版、通信切断、対応writerへの復旧を固定したlocal buildで検証。

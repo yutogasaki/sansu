@@ -1,5 +1,7 @@
 # Shared Done Index
 
+- 2026-10-06: [島sessionの責務分割](../../docs/architecture/island-runtime.md)と[実PWA更新/復旧](../../docs/runbooks/growing-update.md)。初期読込・学習commit・家の表示を分離。core4,757/smoke31、実旧保存1→3と通常/切断/対応writerへのrollback、旧writer隔離、本人切替/履歴/同予約がPASS。初回配置検査の単発timeoutも保持。公開/実機/利用者・共用描画整理/性能は別。詳細: `docs/done/2026-10.md`。
+
 - 2026-10-06: [島runtimeを一本化](../../docs/architecture/island-runtime.md)。Growingへホームを固定し、旧独立画面/入口82ファイルを撤去。旧保存・所有・学習・共用モデルを保持。隔離core4,756、smoke31、Growing offline、通常/旧flagの両buildで本人切替・履歴・同予約がPASS。公開/実機/利用者は別。詳細: `docs/done/2026-10.md`。
 
 - 2026-10-05: [固定QA撮影を1コマンドへ](../../docs/runbooks/growing-fixtures.md)。snapshot:growingで隔離/build/preview/新規または既存pack/撮影/任意比較/cleanupを集約。core4,780、実12撮影/6組比較、旧report拒否とSIGINT中断の後始末PASS。合成診断で公開/実機/美術/子どもは別評価。詳細: `docs/done/2026-10.md`。

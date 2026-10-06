@@ -13,7 +13,7 @@ const files = execFileSync('rg', ['--files', '--no-ignore', 'src', 'public', 'di
 files.push('package.json', 'package-lock.json', 'vite.config.ts', 'tools/e2e-single-island.mjs', 'tools/island-e2e-helpers.mjs', 'tools/verify-growing.mjs');
 const inputs = await digestFiles(process.cwd(), files);
 const browser = await chromium.launch();
-const report = { scope: 'Real onboarding, one real answer, house, same reservation and retired URL at both widths. Explicit old Nature Town sentinel checks no automatic deletion/merge; it is not a real user migration.', target: base, inputs, scenarios: [], pass: false };
+const report = { scope: 'Real onboarding, one real answer, house/learning history back-forward, same reservation and retired URL at both widths. Explicit old Nature Town sentinel checks no automatic deletion/merge; it is not a real user migration.', target: base, inputs, scenarios: [], pass: false };
 const ready = async page => {
     await page.locator('[data-growing-island="ready"] [data-growing-world] canvas').waitFor();
     await page.locator('.growing-loading--overlay').waitFor({ state: 'hidden' });
@@ -46,6 +46,10 @@ try {
             await page.getByRole('button', { name: 'いえ', exact: true }).click();
             await page.locator('.island-page[data-mode="keepsakes"] [data-renderer="three"] canvas').waitFor();
             await page.screenshot({ path: `${output}/${width}-house.png` });
+            await page.goBack(); await ready(page);
+            await page.goForward();
+            await page.locator('.island-page[data-mode="keepsakes"] [data-renderer="three"] canvas').waitFor();
+            assert.equal((await readNative(page, id)).logs.length, initial.logs.length);
             await page.getByRole('button', { name: 'しま', exact: true }).click(); await ready(page);
             await page.locator('.island-shell-tab--learn').click();
             await page.locator('[data-input-ready="true"]').waitFor();
@@ -66,6 +70,8 @@ try {
             assert.deepEqual(saved, sentinel);
             await page.screenshot({ path: `${output}/${width}-home.png` });
             await page.locator('.island-shell-tab--learn').click(); await page.locator('[data-input-ready="true"]').waitFor();
+            await page.goBack(); await ready(page);
+            await page.goForward(); await page.locator('[data-input-ready="true"]').waitFor();
             const resumed = await readNative(page, id);
             assert.deepEqual({ id: resumed.plan.id, cursor: resumed.plan.cursor }, reservation);
             assert.equal(resumed.logs.length, answered.logs.length);

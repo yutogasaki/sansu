@@ -13,6 +13,9 @@ const islandPageSource = await fs.readFile(
   new URL("../src/pages/Island.tsx", import.meta.url),
   "utf8",
 );
+const islandSessionSource = await fs.readFile(
+  new URL("../src/components/island/IslandSession.tsx", import.meta.url), "utf8",
+);
 const smokeSource = await fs.readFile(
   new URL("./e2e-smoke.mjs", import.meta.url),
   "utf8",
@@ -46,6 +49,7 @@ const failures = findCurrentUiEntryFailures({
   scripts,
   appRootSource,
   islandPageSource,
+  islandSessionSource,
   smokeSource,
   buildDefaultsSource,
   entryDocs,

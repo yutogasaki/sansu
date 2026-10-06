@@ -26,3 +26,5 @@ npm run verify:growing -- --output-dir /absolute/path/to/new-output
 ## Verification
 
 runnerの回帰テストは、環境の混入防止、コピー中/検証中の変更検出、子reportの偽合格拒否、失敗時の停止を検査する。入口自身の確認は本コマンドを実行して、実buildと本番形式のGrowing旅程を確認する。公開時は[検証マトリクス](../ai/verification_matrix.md)と[公開チェックリスト](release-checklist.md)の追加項目を適用する。
+
+実SWを使う版切替・中断復旧・対応writerへのrollbackは[Growing更新検証](growing-update.md)で固定した別buildを使う。`verify:growing`の通常offline検査と分けて記録する。

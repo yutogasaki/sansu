@@ -99,6 +99,7 @@ Islandの画面captureは `tools/island-e2e-helpers.mjs` の `runtimeMetadata` �
 | `npm run benchmark:island-fixed-ten` | Study / Islandを固定10問、phone/tablet各10反復で比較。初回済みの明示fixtureで6問区切りの自動次問まで計時し、追加操作0・自動報酬面0を必須とする。初回3問は別の実設定検査 |
 | `npm run benchmark:fixed-ten` | Study / Exploreの固定10問throughput、回復、中断、game-only receipt整合を比較 |
 | `node tools/e2e-island-world-shadow.mjs` | DEV Life全景の実影タップ→同じ本人の拡大または全景挨拶→連打/対象切替→保存/再読込→編集/収納→学習。`SANSU_WORLD_SHADOW_URL` と新しい `SANSU_WORLD_SHADOW_OUTPUT` を指定。任意の `SANSU_WORLD_SHADOW_FIXTURE` は元recordの論理時刻/割当を保持しrealAtを起動へ合わせる明示fixture。自然獲得の証拠とはしない。fixtureなしでは実購入後に本当に着座した住民だけを検査。`SANSU_WORLD_SHADOW_ZOOM=1` / `SANSU_WORLD_SHADOW_DEVICE=phone` は拡大限定診断。core後に順次実行し、source hashと表示時刻/着座位置列を照合 |
+| `node tools/e2e-growing-update.mjs` | 固定した旧/候補/復旧の実buildを同じlocal originで配信。両幅の実学習・保存済み問題・所有を保護し、通常/通信切断からの更新、offline同予約/追加回答、対応writerへのrollbackを確認。[入力と範囲](../runbooks/growing-update.md)。実端末/実利用者/全写真の証拠とは別 |
 | `node tools/e2e-single-island.mjs` | 固定local productionで旧URLの転送、Growing home/家、実回答1件、同予約の復帰と明示旧Town DB sentinel保持を390/768幅で確認。`SANSU_SINGLE_ISLAND_URL`と新しい`SANSU_SINGLE_ISLAND_OUTPUT`を指定。旧flagを設定した別buildにも適用する。実利用者の移行・Growing two-build更新とは別 |
 | `npm run verify:core` | Docs check + full local quality gate |
 | `npm run verify:release` | Full local quality gate + smoke E2E + production PWA checkpoint E2E |

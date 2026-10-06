@@ -9,15 +9,17 @@
 .asset-group>summary .group-name{white-space:normal;min-width:0}.group-name strong,.group-name small{display:block;line-height:1.5}.group-name small{font:11px/1.5 ui-monospace,monospace;color:var(--muted);overflow-wrap:anywhere}.asset-group>summary .group-name strong{font-size:15px}
 .asset-size{text-align:right}.asset-size small{display:block;color:var(--muted);font-size:11px;line-height:1.45}@media(max-width:640px){.asset-size{text-align:left}}
 .evidence-gallery{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px}.evidence-gallery .asset-item{display:block!important;padding:10px!important;border:1px solid var(--line);border-radius:9px;background:#f7f9f4}.evidence-gallery .asset-thumb{width:100%;height:250px;margin-bottom:8px}.evidence-gallery .asset-name{display:block;font-weight:700}.evidence-gallery .asset-size{display:block;text-align:left;font-size:12px}@media(max-width:640px){.evidence-gallery{grid-template-columns:1fr}.evidence-gallery .asset-thumb{height:260px}}
-</style></head><body><header><nav aria-label="メインナビゲーション"><strong>SANSU</strong><a href="../index.html">概要</a><a href="index.html" aria-current="page">タスク</a><a href="../../docs/index.html">ドキュメント</a><a href="../map.html">仕様と実装</a></nav></header><main><h1>タスク</h1><p class="subtitle">Sansu repository · Markdownから生成した閲覧用ポータル</p><label for="search">このページを検索</label><input id="search" type="search" placeholder="タイトル・ファイル名・キーワード"><p id="result" role="status" hidden></p><p>実行キューに登録された 6 件。「何の話か／現在地／次の一手」で分類しています。登録は実装済み・公開済みを意味しません。</p><section class="doc-group"><h2 class="section-title">1・統合と公開準備</h2><div class="grid"><article class="card" data-search="最新変更を一つの公開候補へまとめる：main `2c9e4850` に橋・本人切替/保存・保護者設定を統合済み。隔離core4,735とgrowing本番形式の本人切替両幅pass。既存smoke/growing/橋uiは入力同一を照合して結果を継承。公開url・更新/復旧・実機/利用者は別 次：固定候補の公開/既存保存とgrowingのpwa two-build・中断復旧・旧writer/rollbackを確認。公開の実行はその依頼時に行い、版と公開urlを照合 docs/tasks/active/2026-10-05-growing-island-release.md # 最新変更を一つの公開候補へまとめる
+</style></head><body><header><nav aria-label="メインナビゲーション"><strong>SANSU</strong><a href="../index.html">概要</a><a href="index.html" aria-current="page">タスク</a><a href="../../docs/index.html">ドキュメント</a><a href="../map.html">仕様と実装</a></nav></header><main><h1>タスク</h1><p class="subtitle">Sansu repository · Markdownから生成した閲覧用ポータル</p><label for="search">このページを検索</label><input id="search" type="search" placeholder="タイトル・ファイル名・キーワード"><p id="result" role="status" hidden></p><p>実行キューに登録された 6 件。「何の話か／現在地／次の一手」で分類しています。登録は実装済み・公開済みを意味しません。</p><section class="doc-group"><h2 class="section-title">1・統合と公開準備</h2><div class="grid"><article class="card" data-search="最新変更を一つの公開候補へまとめる：島をgrowingへ一本化し、sessionの初期読込/学習/家を分離。core4,757/smoke31・growing offline・旧保存1→3の実sw更新/通信切断/対応writer復旧・本人切替/履歴をlocal確認。実旧writerの正本隔離も診断pass 次：固定候補の公開urlと版、実利用者の保存、実機/子どもを照合。確認した旧版以外の保存・全写真は別。公開の実行はその依頼時に行う docs/tasks/active/2026-10-05-growing-island-release.md # 最新変更を一つの公開候補へまとめる
 
 - 更新日: 2026-10-06
 - review by: 2026-10-12
-- 状態: 固定統合候補のcore/本人切替確認済み。公開url・growing更新/復旧・実機/利用者は未確認
+- 状態: 固定統合候補のcore/本人切替/実sw旧保存1→3・更新中断/対応writer復旧をlocal確認。公開url・実機/利用者は未確認
 - 正本: [憲法](../../../constitution.md)、[親仕様01](../../product/01_app_spec.md)、[ゲーム仕様52](../../product/52_growing_island_game_spec.md)、[保存13](../../product/13_data_storage_migration_spec.md)、[検証マトリクス](../../ai/verification_matrix.md)
 - 目的: 実装済み変更を重複して作らず、学習・島・家・本人切替・保護者・橋を同じ版で評価できる候補にまとめる。
 
 ## 現在地と範囲
+
+2026-10-06追補: sessionの初期読込/学習commit/家を分離し、core4,757・smoke31・growing production両幅pass。実旧git `cca109ef` →最終候補→現行writerの `b7c6a562` の3buildで、旧保存1→3、学習中の更新待機・通信切断・offline同予約の追加回答・rollbackを両幅確認。実旧writerのguided正本隔離と旧tabの学習事実一回回復はfake indexeddbの別診断。初回配置の10秒timeoutを残し、最終同旅程はpass。[再実行手順](../../runbooks/growing-update.md)と `docs/done/2026-10.md` が対象と未評価範囲を持つ。公開/全写真/本物の保存/実機/子どもの合格へは広げない。
 
 2026-10-06: [島runtimeの一本化](../../architecture/island-runtime.md)を追加。旧独立uiを撤去し、growing/家/学習と旧保存互換を保持。隔離core4,756、smoke31、growing本番形式の実sw offlineと通常/旧flag buildでの本人切替・履歴・同予約を確認。異なる設定の独立build検査であり、実sw two-build更新・公開url・実機/実利用者の合格ではない。
 
@@ -52,15 +54,17 @@
 ## docs to touch
 
 共有tasks/blocked、担当タスク、検証証拠と完了履歴。挙動変更が必要な場合のみ親仕様と該当子仕様を先に更新する。今回の棚卸しは仕様・adr・運用memoryの変更不要。
-"><h2><a href="../../docs/tasks/active/2026-10-05-growing-island-release.md">最新変更を一つの公開候補へまとめる：main `2c9e4850` に橋・本人切替/保存・保護者設定を統合済み。隔離core4,735とGrowing本番形式の本人切替両幅PASS。既存smoke/Growing/橋UIは入力同一を照合して結果を継承。公開URL・更新/復旧・実機/利用者は別 次：固定候補の公開/既存保存とGrowingのPWA two-build・中断復旧・旧writer/rollbackを確認。公開の実行はその依頼時に行い、版と公開URLを照合</a></h2><p class="path">docs/tasks/active/2026-10-05-growing-island-release.md</p><p>- 更新日: 2026-10-06 - Review By: 2026-10-12</p><details><summary>詳細を読む</summary><pre># 最新変更を一つの公開候補へまとめる
+"><h2><a href="../../docs/tasks/active/2026-10-05-growing-island-release.md">最新変更を一つの公開候補へまとめる：島をGrowingへ一本化し、sessionの初期読込/学習/家を分離。core4,757/smoke31・Growing offline・旧保存1→3の実SW更新/通信切断/対応writer復旧・本人切替/履歴をlocal確認。実旧writerの正本隔離も診断PASS 次：固定候補の公開URLと版、実利用者の保存、実機/子どもを照合。確認した旧版以外の保存・全写真は別。公開の実行はその依頼時に行う</a></h2><p class="path">docs/tasks/active/2026-10-05-growing-island-release.md</p><p>- 更新日: 2026-10-06 - Review By: 2026-10-12</p><details><summary>詳細を読む</summary><pre># 最新変更を一つの公開候補へまとめる
 
 - 更新日: 2026-10-06
 - Review By: 2026-10-12
-- 状態: 固定統合候補のcore/本人切替確認済み。公開URL・Growing更新/復旧・実機/利用者は未確認
+- 状態: 固定統合候補のcore/本人切替/実SW旧保存1→3・更新中断/対応writer復旧をlocal確認。公開URL・実機/利用者は未確認
 - 正本: [憲法](../../../CONSTITUTION.md)、[親仕様01](../../product/01_app_spec.md)、[ゲーム仕様52](../../product/52_growing_island_game_spec.md)、[保存13](../../product/13_data_storage_migration_spec.md)、[検証マトリクス](../../ai/verification_matrix.md)
 - 目的: 実装済み変更を重複して作らず、学習・島・家・本人切替・保護者・橋を同じ版で評価できる候補にまとめる。
 
 ## 現在地と範囲
+
+2026-10-06追補: sessionの初期読込/学習commit/家を分離し、core4,757・smoke31・Growing production両幅PASS。実旧Git `cca109ef` →最終候補→現行writerの `b7c6a562` の3buildで、旧保存1→3、学習中の更新待機・通信切断・offline同予約の追加回答・rollbackを両幅確認。実旧writerのguided正本隔離と旧tabの学習事実一回回復はfake IndexedDBの別診断。初回配置の10秒timeoutを残し、最終同旅程はPASS。[再実行手順](../../runbooks/growing-update.md)と `docs/done/2026-10.md` が対象と未評価範囲を持つ。公開/全写真/本物の保存/実機/子どもの合格へは広げない。
 
 2026-10-06: [島runtimeの一本化](../../architecture/island-runtime.md)を追加。旧独立UIを撤去し、Growing/家/学習と旧保存互換を保持。隔離core4,756、smoke31、Growing本番形式の実SW offlineと通常/旧flag buildでの本人切替・履歴・同予約を確認。異なる設定の独立build検査であり、実SW two-build更新・公開URL・実機/実利用者の合格ではない。
 
@@ -1433,6 +1437,8 @@ B方向の実3D地形・家・曲がった枝葉・相棒・昼夕夜、通常�
 共有キュー、関連仕様/タスク、Git履歴と未コミット一覧、10/1〜10/5の検証記録を照合した。アプリ実装・本番操作・実機/子どもの観察は行っていない。過去の検証を新しい候補の合格として記録しない。
 </pre></details></article><article class="card" data-search="shared done index .agents/tasks/done.md # shared done index
 
+- 2026-10-06: [島sessionの責務分割](../../docs/architecture/island-runtime.md)と[実pwa更新/復旧](../../docs/runbooks/growing-update.md)。初期読込・学習commit・家の表示を分離。core4,757/smoke31、実旧保存1→3と通常/切断/対応writerへのrollback、旧writer隔離、本人切替/履歴/同予約がpass。初回配置検査の単発timeoutも保持。公開/実機/利用者・共用描画整理/性能は別。詳細: `docs/done/2026-10.md`。
+
 - 2026-10-06: [島runtimeを一本化](../../docs/architecture/island-runtime.md)。growingへホームを固定し、旧独立画面/入口82ファイルを撤去。旧保存・所有・学習・共用モデルを保持。隔離core4,756、smoke31、growing offline、通常/旧flagの両buildで本人切替・履歴・同予約がpass。公開/実機/利用者は別。詳細: `docs/done/2026-10.md`。
 
 - 2026-10-05: [固定qa撮影を1コマンドへ](../../docs/runbooks/growing-fixtures.md)。snapshot:growingで隔離/build/preview/新規または既存pack/撮影/任意比較/cleanupを集約。core4,780、実12撮影/6組比較、旧report拒否とsigint中断の後始末pass。合成診断で公開/実機/美術/子どもは別評価。詳細: `docs/done/2026-10.md`。
@@ -1684,7 +1690,9 @@ durable completion history and verification facts still belong in `docs/done/yyy
 - 2026-10-01: しあげの条件を全20問独力正解に変更。19/20のレベル維持、新予約20/20の進級を実ui/保存で確認、4391 tests pass -&gt; `docs/done/2026-10.md`
 
 - 2026-10-01: 学習アルゴリズム監査a1〜a10修正。独力/代表出題/coverage/復習・回復・配分を整え、全4474 tests・smoke31・固定preview80実回答を確認。ローカル、本番未配布 -&gt; `docs/done/2026-10.md`
-"><h2><a href="DONE.md">Shared Done Index</a></h2><p class="path">.agents/tasks/DONE.md</p><p>- 2026-10-06: [島runtimeを一本化](../../docs/architecture/island-runtime.md)。Growingへホームを固定し、旧独立画面/入口82ファイルを撤去。旧保存・所有・学習・共用モデルを保持。隔離core4,756、smoke31、Growing offline、通常/旧flagの両buildで本人切替・履歴・同予約がPASS。公開/実機/利用者は別。詳細: </p><details><summary>詳細を読む</summary><pre># Shared Done Index
+"><h2><a href="DONE.md">Shared Done Index</a></h2><p class="path">.agents/tasks/DONE.md</p><p>- 2026-10-06: [島sessionの責務分割](../../docs/architecture/island-runtime.md)と[実PWA更新/復旧](../../docs/runbooks/growing-update.md)。初期読込・学習commit・家の表示を分離。core4,757/smoke31、実旧保存1→3と通常/切断/対応writerへのrollback、旧writer隔離、本人切</p><details><summary>詳細を読む</summary><pre># Shared Done Index
+
+- 2026-10-06: [島sessionの責務分割](../../docs/architecture/island-runtime.md)と[実PWA更新/復旧](../../docs/runbooks/growing-update.md)。初期読込・学習commit・家の表示を分離。core4,757/smoke31、実旧保存1→3と通常/切断/対応writerへのrollback、旧writer隔離、本人切替/履歴/同予約がPASS。初回配置検査の単発timeoutも保持。公開/実機/利用者・共用描画整理/性能は別。詳細: `docs/done/2026-10.md`。
 
 - 2026-10-06: [島runtimeを一本化](../../docs/architecture/island-runtime.md)。Growingへホームを固定し、旧独立画面/入口82ファイルを撤去。旧保存・所有・学習・共用モデルを保持。隔離core4,756、smoke31、Growing offline、通常/旧flagの両buildで本人切替・履歴・同予約がPASS。公開/実機/利用者は別。詳細: `docs/done/2026-10.md`。
 

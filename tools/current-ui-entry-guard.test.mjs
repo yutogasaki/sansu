@@ -236,3 +236,11 @@ describe("current UI entry guard", () => {
  it("rejects a Nature Town route that can be reactivated", () => {
    expect(findCurrentUiEntryFailures(guardInput({ appRootSource: appRootSource.replace('<Route path="/nature-town" element={<Navigate to="/" replace />} />', 'const NatureTown = lazy(() => import("./pages/NatureTown"))') }))).toContain("Nature Town must redirect home even when old flags are present");
  });
+
+it('checks both the profile entry and the extracted runtime', () => {
+   const entry = "import { IslandSession } from '../components/island/IslandSession'; return <IslandSession key={profile.id} profile={profile} />";
+   expect(findCurrentUiEntryFailures(guardInput({ islandPageSource: entry, islandSessionSource: islandPageSource }))).toEqual([]);
+   expect(findCurrentUiEntryFailures(guardInput({ islandPageSource: '', islandSessionSource: islandPageSource }))).toContain('the Island profile entry must render its reviewed session');
+   expect(findCurrentUiEntryFailures(guardInput({ islandPageSource: entry, islandSessionSource: islandPageSource + ' useIslandLife(profile.id)' }))).toContain('the Island home must use Growing without a legacy renderer switch');
+   expect(findCurrentUiEntryFailures(guardInput({ islandPageSource: entry + ' useIslandLife(profile.id)', islandSessionSource: islandPageSource }))).toContain('the Island home must use Growing without a legacy renderer switch');
+ });

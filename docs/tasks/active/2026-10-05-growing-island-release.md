@@ -2,11 +2,13 @@
 
 - 更新日: 2026-10-06
 - Review By: 2026-10-12
-- 状態: 固定統合候補のcore/本人切替確認済み。公開URL・Growing更新/復旧・実機/利用者は未確認
+- 状態: 固定統合候補のcore/本人切替/実SW旧保存1→3・更新中断/対応writer復旧をlocal確認。公開URL・実機/利用者は未確認
 - 正本: [憲法](../../../CONSTITUTION.md)、[親仕様01](../../product/01_app_spec.md)、[ゲーム仕様52](../../product/52_growing_island_game_spec.md)、[保存13](../../product/13_data_storage_migration_spec.md)、[検証マトリクス](../../ai/verification_matrix.md)
 - 目的: 実装済み変更を重複して作らず、学習・島・家・本人切替・保護者・橋を同じ版で評価できる候補にまとめる。
 
 ## 現在地と範囲
+
+2026-10-06追補: sessionの初期読込/学習commit/家を分離し、core4,757・smoke31・Growing production両幅PASS。実旧Git `cca109ef` →最終候補→現行writerの `b7c6a562` の3buildで、旧保存1→3、学習中の更新待機・通信切断・offline同予約の追加回答・rollbackを両幅確認。実旧writerのguided正本隔離と旧tabの学習事実一回回復はfake IndexedDBの別診断。初回配置の10秒timeoutを残し、最終同旅程はPASS。[再実行手順](../../runbooks/growing-update.md)と `docs/done/2026-10.md` が対象と未評価範囲を持つ。公開/全写真/本物の保存/実機/子どもの合格へは広げない。
 
 2026-10-06: [島runtimeの一本化](../../architecture/island-runtime.md)を追加。旧独立UIを撤去し、Growing/家/学習と旧保存互換を保持。隔離core4,756、smoke31、Growing本番形式の実SW offlineと通常/旧flag buildでの本人切替・履歴・同予約を確認。異なる設定の独立build検査であり、実SW two-build更新・公開URL・実機/実利用者の合格ではない。
 

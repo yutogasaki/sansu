@@ -2,11 +2,17 @@ export function findCurrentUiEntryFailures({
   scripts,
   appRootSource,
   islandPageSource,
+  islandSessionSource,
   smokeSource,
   buildDefaultsSource,
   entryDocs = {},
 }) {
+  const runtimeSource = islandSessionSource ?? islandPageSource;
   const checks = [
+    [
+      "the Island profile entry must render its reviewed session",
+      islandSessionSource === undefined || (islandPageSource.includes("from '../components/island/IslandSession'") && islandPageSource.includes('<IslandSession key={profile.id} profile={profile} />')),
+    ],
     [
       "npm run dev must delegate to the current Island app",
       scripts.dev === "npm run dev:island",
@@ -62,8 +68,8 @@ export function findCurrentUiEntryFailures({
     ],
     [
       "the Island home must use Growing without a legacy renderer switch",
-      islandPageSource.includes("<GrowingIsland ") &&
-        !/growingIslandEnabled|lifeEnabled|HomeJourneyPreview|useIslandLife|<IslandLife/.test(islandPageSource),
+      runtimeSource.includes("<GrowingIsland ") &&
+        !/growingIslandEnabled|lifeEnabled|HomeJourneyPreview|useIslandLife|<IslandLife/.test(runtimeSource + islandPageSource),
     ],
     [
       "the shared application root must expose the unique runtime build version on every route",
@@ -71,12 +77,12 @@ export function findCurrentUiEntryFailures({
     ],
     [
       "the Island screen must expose the runtime feature flag beside its candidate identity",
-      islandPageSource.includes(
+      runtimeSource.includes(
         "data-island-feature-enabled={String(islandEnabled())}",
       ) &&
-        islandPageSource.includes("data-visual-candidate-id={ISLAND_VISUAL_CANDIDATE}") &&
-        islandPageSource.includes("data-learning-candidate={ISLAND_LEARNING_CANDIDATE}") &&
-        islandPageSource.includes("data-build-revision={__BUILD_REVISION__}"),
+        runtimeSource.includes("data-visual-candidate-id={ISLAND_VISUAL_CANDIDATE}") &&
+        runtimeSource.includes("data-learning-candidate={ISLAND_LEARNING_CANDIDATE}") &&
+        runtimeSource.includes("data-build-revision={__BUILD_REVISION__}"),
     ],
     [
       "project memory must identify Island as current and the former Explore launch as historical",
