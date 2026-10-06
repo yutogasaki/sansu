@@ -8,6 +8,8 @@
 
 ## 現在地と範囲
 
+2026-10-06 session追補: 配置選択/保存/空editorの復帰をhookへ、写真の対象/metadataと工作draft/保存作品再演の表示を専用panelへ分割。同本人のsessionと既存writer/戻り先を保持。core4,761、classic31、Growing production実操作/offline、本人切替/履歴、390/768幅で写真保存/読込故障/削除と配置/作品再演の往復がPASS。旧所有fixtureを使う任意機能の診断は実獲得の証明と区別し、公開/実機/子ども評価へ広げない。[構成](../../architecture/island-runtime.md)と `docs/done/2026-10.md`。
+
 2026-10-06共用描画: 元のぽこもこの組立元と庭/家/光/時計をthree配下へ整理。現行Growing・家・学習が旧Home Journeyの建物/成長を参照せず共用する。形状/素材/布と移動18ファイルの処理を照合し、core4,757、最終smoke31、Growing実操作/offlineと家/学習の履歴往復がPASS。初回classicの1024px縦で再試行メッセージ待ちがtimeoutした記録を残し、対象5サイズと全31件を同じ候補で再確認。性能計測/公開/実機/利用者の評価は含めない。[配置と解放の境界](../../architecture/island-runtime.md)。
 
 2026-10-06追補: sessionの初期読込/学習commit/家を分離し、core4,757・smoke31・Growing production両幅PASS。実旧Git `cca109ef` →最終候補→現行writerの `b7c6a562` の3buildで、旧保存1→3、学習中の更新待機・通信切断・offline同予約の追加回答・rollbackを両幅確認。実旧writerのguided正本隔離と旧tabの学習事実一回回復はfake IndexedDBの別診断。初回配置の10秒timeoutを残し、最終同旅程はPASS。[再実行手順](../../runbooks/growing-update.md)と `docs/done/2026-10.md` が対象と未評価範囲を持つ。公開/全写真/本物の保存/実機/子どもの合格へは広げない。

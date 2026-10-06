@@ -1,3 +1,6 @@
+import { IslandSessionPhotos } from './IslandSessionPhotos';
+import { IslandSessionWorkshop } from './IslandSessionWorkshop';
+import { useIslandSessionPlacement } from './useIslandSessionPlacement';
 import { lazy, Suspense } from 'react';
 import { useIslandSessionState } from './useIslandSessionState';
 import { useIslandSessionLearning } from './useIslandSessionLearning';
@@ -25,15 +28,15 @@ import type { IslandScreen } from '../../domain/island/navigation';
 import { db } from '../../db';
 import { updateProfileAtomically } from '../../domain/user/repository';
 import type { UserProfile } from '../../domain/types';
-import { claimIslandReward, saveIslandEdit, startIslandPlan } from '../../domain/island/repository';
+import { claimIslandReward, startIslandPlan } from '../../domain/island/repository';
 
 import { useIslandLearningObservation } from './useIslandLearningObservation';
 import { isFirstIslandPlan } from '../../domain/island/learningSession';
 import { setIslandNextSubject } from '../../domain/island/subjectPreference';
-import { findAvailablePosition, isValidIslandPlacement } from '../../domain/island/catalog';
+import { isValidIslandPlacement } from '../../domain/island/catalog';
 import { ISLAND_DELIVERY_ID, ISLAND_VISUAL_CANDIDATE, ISLAND_LEARNING_CANDIDATE, islandEnabled } from '../../domain/island/feature';
 import type { IslandBasicItemKind, IslandHabitatId, IslandItem } from '../../domain/island/types';
-import { selectIslandGrowthTarget, setIslandItemAppearance } from '../../domain/island/growthRepository';
+import { selectIslandGrowthTarget } from '../../domain/island/growthRepository';
 import { reachPwaUpdateCheckpoint } from '../../pwa';
 import { setSoundEnabled } from '../../utils/audio';
 
@@ -69,7 +72,7 @@ import { getOwnedIslandFurniture, isIslandOptionalFurnitureKind, type IslandOpti
 
 import { useIslandFurniture } from './useIslandFurniture';
 import { islandFurnitureTrial } from './islandFurnitureTrial';
-import { furniturePlacementKey, type IslandFurniturePlacementResult } from './islandFurniturePlacement';
+import { furniturePlacementKey } from './islandFurniturePlacement';
 
 import { useIslandExperience } from './useIslandExperience';
 
@@ -81,13 +84,13 @@ import type { IslandDisplayPreview } from './IslandSharedMemories';
 import { findSharedDisplayPosition } from './islandSharedPlacement';
 
 import { useIslandSharedMemories } from './useIslandSharedMemories';
-import { isValidSharedDisplayPlacement, resolveSharedTarget, SHARED_DISPLAY_IDS, sharedDisplayKey, sharedTargetName, sharedWorkCaptureKey,
+import { isValidSharedDisplayPlacement, resolveSharedTarget, SHARED_DISPLAY_IDS, sharedDisplayKey,
     type SharedDisplayId, type SharedTarget, type SharedTargetRef } from '../../domain/island/sharedMemories';
 import type { IslandSharedSceneRequest, IslandStageState } from './three/types';
 import type { IslandWorkshopView } from './IslandWorkshop';
 import { useIslandWorkshop } from './useIslandWorkshop';
 import { useIslandWorkshopAudio } from './useIslandWorkshopAudio';
-import { getIslandWorkshop, getWorkshopSpecimenName, workshopSpecimenIdentity } from '../../domain/island/workshop';
+import { getIslandWorkshop } from '../../domain/island/workshop';
 import type { WorkshopSceneRequest } from './three/workshopScene';
 import '../../components/domain/LearningAnswerForm.css';
 import './Island.css';
@@ -119,11 +122,7 @@ const IslandDiscoveryGuide = lazy(() => import('./IslandDiscoveryGuide').then(mo
 const IslandFurniture = lazy(() => import('./IslandFurniture').then(module => ({ default: module.IslandFurniture })));
 const IslandExperiencePanel = lazy(() => import('./IslandExperiencePanel').then(module => ({ default: module.IslandExperiencePanel })));
 const IslandExpression = lazy(() => import('./IslandExpression').then(module => ({ default: module.IslandExpression })));
-const IslandPhotoCamera = lazy(() => import('./IslandPhotos').then(module => ({ default: module.IslandPhotoCamera })));
-const IslandPhotoGallery = lazy(() => import('./IslandPhotos').then(module => ({ default: module.IslandPhotoGallery })));
 const IslandSharedMemories = lazy(() => import('./IslandSharedMemories').then(module => ({ default: module.IslandSharedMemories })));
-const IslandWorkReplay = lazy(() => import('./IslandWorkReplay').then(module => ({ default: module.IslandWorkReplay })));
-const IslandWorkshop = lazy(() => import('./IslandWorkshop').then(module => ({ default: module.IslandWorkshop })));
 
 export function IslandSession({ profile }: { profile: UserProfile }) {
     const [growingProfileSwitchBlocked, setGrowingProfileSwitchBlocked] = useState(false);
@@ -181,23 +180,25 @@ export function IslandSession({ profile }: { profile: UserProfile }) {
     const [expressionWalk, setExpressionWalk] = useState<IslandStageState['expressionWalkRequest']>();
     const [preparingLearning, setPreparingLearning] = useState(false);
     const [experienceEntryTab, setExperienceEntryTab] = useState<'island' | 'layouts'>('island');
-    const [preview, setPreview] = useState<IslandItem>();
-    const [placementSuggestionId, setPlacementSuggestionId] = useState<string>();
     const [playRequest, setPlayRequest] = useState<IslandStageState['playRequest']>();
     const [playResident, setPlayResident] = useState<IslandResidentId>();
     useEffect(() => { if (screen !== 'play') setPlayResident(undefined); }, [screen]);
     const [furnitureKind, setFurnitureKind] = useState<IslandOptionalFurnitureKind>('telescope');
     const [furnitureResident, setFurnitureResident] = useState<IslandResidentId>('otter');
     const [furniturePartner, setFurniturePartner] = useState<IslandResidentId>('rabbit');
-    const [furniturePlacementSearch, setFurniturePlacementSearch] = useState<string>();
-    const [furniturePlacementResult, setFurniturePlacementResult] = useState<IslandFurniturePlacementResult>();
     const [cosmeticFocus, setCosmeticFocus] = useState<IslandAppearanceSlotId | 'all'>('all');
-    const [returnToFurniture, setReturnToFurniture] = useState(false);
     const [chosenDistrict, setDistrict] = useState<IslandDistrict>();
     const district = islandHomeDistrict(island, chosenDistrict);
     const [albumComparison, setAlbumComparison] = useState<IslandHabitatId | 'all'>('garden');
     const [playMessage, setPlayMessage] = useState<string>();
     const { busy, busyKind, error, run } = useIslandActions();
+    const { preview, setPreview, placementSuggestionId, setPlacementSuggestionId,
+        furniturePlacementSearch, setFurniturePlacementSearch, furniturePlacementResult, setFurniturePlacementResult,
+        returnToFurniture, setReturnToFurniture, select, appearance, place } = useIslandSessionPlacement({
+        profileId: profile.id, island, screen, setScreen, busy, active, opening, hasShell, navigation, run,
+        setSnapshot, setDistrict, setPlayRequest, setPlayMessage, returnToGuide, returnToHouse,
+        onPlaced: () => { setReturnToHouse(false); setHouseSection('home'); setKeepsakeFocus(undefined); },
+    });
     const milestoneNotice = useIslandMilestoneNotice(profile.id, active && screen === 'learning' && !preparingLearning,
         Boolean(error || loadError || nextPlanError));
     const comparisonDisabled = busy && busyKind !== 'discovery';
@@ -325,31 +326,11 @@ export function IslandSession({ profile }: { profile: UserProfile }) {
         reportLearningBlocked?.(busy || preparingLearning || opening || screen === 'challenge');
         return () => { reportBlocked?.(false); reportLearningBlocked?.(false); };
     }, [reportBlocked, reportLearningBlocked, active, busy, busyKind, preparingLearning, opening, screen]);
-    const recoverPlacement = useEffectEvent(() => navigation?.open('/island?view=inventory', true));
-    const placementWasPrepared = useRef(false);
-    useEffect(() => {
-        if (screen !== 'placement') { placementWasPrepared.current = false; return; }
-        if (preview) { placementWasPrepared.current = true; return; }
-        // Clearing a saved/cancelled preview may render before the route change.
-        // Recover only an editor entered without a selection, never that exit.
-        if (hasShell && active && !opening && !navigation?.blocked && !placementWasPrepared.current) recoverPlacement();
-    }, [hasShell, active, opening, screen, preview, navigation?.blocked]);
     const enterHouse = () => {
         if (comparisonDisabled) return;
         setReturnToHouse(false);
         setLocalHouseSection('home');
         setKeepsakeFocus(undefined); setPreview(undefined); setReaction(undefined); setPlayRequest(undefined); setScreen('keepsakes');
-    };
-    const select = (item: IslandItem, current = island) => {
-        if (!current || busy) return;
-        setFurniturePlacementSearch(undefined); setFurniturePlacementResult(undefined);
-        setReturnToFurniture(screen === 'furniture' && isIslandOptionalFurnitureKind(item.kind));
-        setPlayRequest(undefined);
-        setPlacementSuggestionId(item.position ? undefined : item.id);
-        const position = item.position ?? findAvailablePosition(current, item.kind, item.id) ?? { x: 0, z: 1 };
-        setDistrict(islandDistrictForPosition(current, position));
-        setPreview({ ...item, position });
-        setScreen('placement');
     };
     const openCustomization = () => {
         if (busy) return;
@@ -469,14 +450,6 @@ export function IslandSession({ profile }: { profile: UserProfile }) {
         setSnapshot(updated); setGrowthPreviewHabitat(undefined); setScreen('home');
         return updated;
     };
-    const appearance = async (level: number) => {
-        if (!island || !preview) return;
-        const updated = await run(() => setIslandItemAppearance(profile.id, island.revision, preview.id, level));
-        if (!updated) return;
-        setSnapshot(updated);
-        const item = updated.items.find(candidate => candidate.id === preview.id);
-        if (item) setPreview(previous => previous ? { ...previous, appearanceLevel: item.appearanceLevel } : previous);
-    };
     const claim = async (rewardId: string, kind: IslandBasicItemKind) => {
         if (!island) return;
         const updated = await run(() => claimIslandReward(profile.id, island.revision, rewardId, kind));
@@ -484,16 +457,6 @@ export function IslandSession({ profile }: { profile: UserProfile }) {
         setSnapshot(updated);
         const item = updated.items.find(candidate => candidate.id === `${rewardId}:item`);
         if (item) select(item, updated);
-    };
-    const place = async (store = false) => {
-        if (!island || !preview?.position) return;
-        const updated = await run(() => saveIslandEdit(profile.id, island.revision, store
-            ? { type: 'store', itemId: preview.id }
-            : { type: 'place', itemId: preview.id, position: preview.position!, rotation: preview.rotation }));
-        if (!updated) return;
-        setSnapshot(updated); setPreview(undefined); setPlayRequest(undefined); setPlayMessage(undefined);
-        setScreen(navigation ? 'home' : returnToFurniture ? 'furniture' : returnToGuide ? 'guide' : returnToHouse ? 'keepsakes' : 'home');
-        setReturnToHouse(false); setHouseSection('home'); setKeepsakeFocus(undefined);
     };
     const tryTutorial = (id: TutorialId) => {
         const topic = TUTORIAL_TOPICS.find(topic => topic.id === id)!;
@@ -521,13 +484,7 @@ export function IslandSession({ profile }: { profile: UserProfile }) {
     const photoResident = photoResidents.find(id => photoTargetId === `resident-${id}`);
     const cameraInlet = screen === 'camera' && photoTargetId === 'inlet';
     const photoDisplayId = SHARED_DISPLAY_IDS.find(id => photoTargetId === `display-${id}` && island.sharedMemories?.displays[id]);
-    const photoDisplay = photoDisplayId ? island.sharedMemories?.displays[photoDisplayId] : undefined;
     const keepsakeRoomActive = !preparingLearning && (screen === 'keepsakes' || screen === 'camera' && photoTargetId === 'keepsakes');
-    const photoTargets = [{ id: 'island', label: 'しまぜんぶ' }, ...photoResidents.map(id => ({ id: `resident-${id}`, label: experienceState.residents[id].name })),
-        ...(['play', 'showcase'].includes(photoOrigin) ? [{ id: 'current', label: 'いまの けしき' }] : []),
-        ...SHARED_DISPLAY_IDS.flatMap(id => island.sharedMemories?.displays[id] ? [{ id: `display-${id}`, label: sharedTargetName(island, island.sharedMemories.displays[id]!.target) }] : []),
-        ...(photoOrigin === 'workshop' ? [{ id: 'inlet', label: workshopView.mode === 'build' ? 'つくった しくみ' : 'みつけた もの' }] : []),
-        ...(photoOrigin === 'keepsakes' ? [{ id: 'keepsakes', label: 'いえ' }] : [])];
     const savePlacement = () => { setFurniturePlacementSearch(undefined); void place(); };
     const cancelPlacement = navigation ? home : returnToFurniture ? () => {
         setFurniturePlacementSearch(undefined); setFurniturePlacementResult(undefined); setPreview(undefined); setScreen('furniture');
@@ -709,40 +666,21 @@ export function IslandSession({ profile }: { profile: UserProfile }) {
                             residentId: furnitureResident, ...(furnitureKind === 'tea-table' ? { partnerId: furniturePartner } : {}) }); }}
                     onPurchase={() => { void receiveFurniture(); }} onRetry={furniture.retry ? () => { void receiveFurniture(true); } : undefined}
                     onPlace={select} onInventory={() => { setPlayRequest(undefined); setScreen('inventory'); }} onClose={home} onLearn={() => void begin()} />
-                : screen === 'camera' ? <IslandPhotoCamera photos={photos} targets={photoTargets} targetId={photoTargetId} disabled={busy}
-                    onTarget={id => { photos.cancel(); setPhotoTargetId(id); }}
-                    onCapture={() => photos.capture({ islandName: experienceState.islandName,
-                        composition: cameraInlet ? workshopView.mode === 'build' ? 'work' : 'specimen' : photoDisplay ? 'display' : photoResident ? 'resident' : 'island',
-                        targetName: cameraInlet ? workshopView.mode === 'build' ? workReplay && !showCurrentDraft ? workReplay.target.name : 'つくっている しくみ' : getWorkshopSpecimenName(getIslandWorkshop(island), workshopView.selectedSpecimenId)
-                            : keepsakeRoomActive ? 'いえ' : photoDisplay ? sharedTargetName(island, photoDisplay.target) : photoResident ? experienceState.residents[photoResident].name : undefined,
-                        targetKey: cameraInlet ? workshopView.mode === 'observe' ? workshopSpecimenIdentity(profile.id, workshopView.selectedSpecimenId)
-                            : workReplay && !showCurrentDraft ? workReplay.target.targetKey : undefined : photoDisplay?.target.targetKey ?? photoResident })}
-                    onGallery={openPhotos} onClose={() => { photos.cancel(); if (navigation) navigation.back(); else setScreen(photoOrigin); }} onLearn={() => void begin()} />
-                : screen === 'photos' ? <IslandPhotoGallery photos={photos} decoration={getIslandExpression(island).selection.album} disabled={busy} onCamera={photograph} onClose={home} onLearn={() => void begin()} />
+                : screen === 'camera' || screen === 'photos' ? <IslandSessionPhotos screen={screen} island={island} profileId={profile.id}
+                    photos={photos} photoOrigin={photoOrigin} photoTargetId={photoTargetId} workshopView={workshopView}
+                    workReplay={workReplay} showCurrentDraft={showCurrentDraft} keepsakeRoomActive={keepsakeRoomActive} disabled={busy}
+                    onTarget={id => { photos.cancel(); setPhotoTargetId(id); }} onGallery={openPhotos}
+                    onCamera={photograph} onCameraClose={() => { photos.cancel(); if (navigation) navigation.back(); else setScreen(photoOrigin); }}
+                    onGalleryClose={home} onLearn={() => void begin()} />
                 : screen === 'shared' ? <IslandSharedMemories island={island} selectedId={sharedSelection} preview={sharedPreview} disabled={busy}
                     onSelect={setSharedSelection} onPreview={setSharedPreview} onAction={sharedActions.act} onCommand={sharedCommand}
                     error={sharedActions.error} onRetry={sharedActions.retry} feedback={sharedFeedback}
                     onRevisit={revisitShared} onPhoto={photograph} onClose={home} onLearn={() => void begin()} />
-                : screen === 'workshop' && workReplay ? <IslandWorkReplay target={workReplay.target} disabled={busy} showingDraft={showCurrentDraft}
-                    onShowDraft={setShowCurrentDraft} onCommand={command => setWorkshopRequest({ id: crypto.randomUUID(), command })}
-                    error={sharedActions.error} onRetry={sharedActions.retry ? () => { void sharedActions.retry?.(); } : undefined}
-                    onStartFrom={async () => { const updated = await sharedActions.act({ type: 'start-from-work', target: workReplay.ref });
-                        if (!updated) return false;
-                        setWorkReplay(undefined); setShowCurrentDraft(false); setWorkshopRequest(undefined); return true; }}
-                    onPhoto={photograph} onClose={() => openShared(undefined, sharedSelection)} onLearn={() => void begin()} />
-                : screen === 'workshop' ? <IslandWorkshop workshop={getIslandWorkshop(island)} view={workshopView} disabled={busy}
-                    onPhoto={photograph}
-                    onDisplay={id => {
-                        if (id === 'work-1' || id === 'work-2') { const work = getIslandWorkshop(island).works[id];
-                            if (work) openShared({ kind: 'work', workId: id, targetKey: sharedWorkCaptureKey(profile.id, id, work) }); }
-                        else openShared({ kind: 'specimen', specimenId: id });
-                    }}
-                    onGesture={() => { void workshopAudio.unlock(); }}
-                    residents={ISLAND_RESIDENT_IDS.filter(id => id !== 'fox' || island.completedSets >= 4 && isIslandHabitatUnlocked(island, 'waterside'))
-                        .map(id => ({ id, name: experienceState.residents[id].name }))}
-                    onView={view => { setWorkshopView(view); if (view.mode !== workshopView.mode || view.residentId !== workshopView.residentId) setWorkshopRequest({ id: crypto.randomUUID(), command: { type: 'stop' } }); }}
-                    onCommand={command => setWorkshopRequest({ id: crypto.randomUUID(), command })}
-                    onAction={workshopActions.act} error={workshopActions.error} onRetry={workshopActions.retry} onClose={home} onLearn={() => void begin()} />
+                : screen === 'workshop' ? <IslandSessionWorkshop island={island} profileId={profile.id} busy={busy}
+                    workshopView={workshopView} setWorkshopView={setWorkshopView} setWorkshopRequest={setWorkshopRequest}
+                    workReplay={workReplay} setWorkReplay={setWorkReplay} showCurrentDraft={showCurrentDraft} setShowCurrentDraft={setShowCurrentDraft}
+                    sharedSelection={sharedSelection} sharedActions={sharedActions} workshopActions={workshopActions} workshopAudio={workshopAudio}
+                    openShared={openShared} onPhoto={photograph} onClose={home} onLearn={() => void begin()} />
                 : screen === 'keepsakes' ? <IslandSessionHouse island={island} controls={keepsakes} disabled={busy} comparisonDisabled={comparisonDisabled}
                     active={active} profileId={profile.id} room={growingRoom}
                     onChallengeResult={() => { setChallengeStartIntent(false); setScreen('challenge'); }}

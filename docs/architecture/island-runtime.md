@@ -11,6 +11,9 @@
 | 家・本・学習と画面状態を接続 | `src/components/island/IslandSession.tsx` |
 | 正本の初期読込・保存済み予約の復元 | `src/components/island/useIslandSessionState.ts` |
 | 学習回答のcommitと表示receipt | `src/components/island/useIslandSessionLearning.ts` |
+| 所有物の配置選択・保存と空のeditorの復帰 | `src/components/island/useIslandSessionPlacement.ts` |
+| 写真の対象・保存metadataとcamera/gallery表示 | `src/components/island/IslandSessionPhotos.tsx` |
+| 工作draft・保存作品の再演と操作の表示 | `src/components/island/IslandSessionWorkshop.tsx` |
 | 家の挑戦・手紙・模様替えの表示 | `src/components/island/IslandSessionHouse.tsx` |
 | 島の画面と操作 | `src/components/island/growing/GrowingIsland.tsx` |
 | 島の描画 | `src/components/island/growing/GrowingWorld.tsx` |
@@ -45,3 +48,5 @@ SANSU_SINGLE_ISLAND_URL=http://127.0.0.1:4173 SANSU_SINGLE_ISLAND_OUTPUT=output/
 初期読込・学習・家の構成を分けても、同じ本人のsessionを画面往復でmountし直さない。本人切替だけ`profile.id`のkeyで状態を更新し、学習予約/表示receipt/読み上げを引き継ぐ。保存・採点・PWA checkpointの契約は変更しない。
 
 実SWの版切替と対応writerへの復旧は[更新検証の手順](../runbooks/growing-update.md)を参照。
+
+配置のpreviewと検索状態は専用hookが持つ。保存のrevision確認は既存repositoryへ委ね、成功時だけsessionの戻り先と家のfocusを更新する。写真・工作のpanelを分けても、cameraへ移る前の工作view・保存作品のref・draft切替・写真の戻り先はsessionに残す。panelのmountでこれらを初期化せず、任意の3D/UIは遅延読込を維持する。
