@@ -1,5 +1,6 @@
 import * as T from 'three';
-import { buildIslandCharacters } from '../three/islandCharacters';
+import { makePokomokoRig } from '../three/islandCharacters';
+import { IslandMaterials } from '../three/primitives';
 import { buildGardenGround } from '../three/garden/garden';
 import { buildGardenCottage } from '../three/garden/cottage';
 import { applyGardenLight } from '../three/garden/lighting';
@@ -18,11 +19,11 @@ export function createWorldScene(renderer: T.WebGLRenderer) {
     sun.shadow.mapSize.set(1024, 1024);
     Object.assign(sun.shadow.camera, { left: -9, right: 9, top: 7, bottom: -7 });
     sun.shadow.normalBias = .025; sun.shadow.bias = -.0002; scene.add(sun);
-    // The same original meshes and material cache are shared with the house and learning actor.
-    const content = buildIslandCharacters({ naturalOtter: true });
-    const m = content.m;
-    const life = new GrowingLife(m, wrapPokomoko(content.hero, content.heroBody, content.heroFeet));
-    content.rabbit.pose.removeFromParent(); content.otter.pose.removeFromParent();
+    // Build the same original hero without the old world's unused rabbit/otter rigs.
+    // Life owns the hero geometry; this scene owns the shared material cache.
+    const m = new IslandMaterials('moon-garden');
+    const hero = makePokomokoRig(m);
+    const life = new GrowingLife(m, wrapPokomoko(hero.hero, hero.heroBody, hero.heroFeet));
     scene.add(life.root);
     const cottage = buildGardenCottage();
     let ground: ReturnType<typeof buildGardenGround> | undefined, groundKey = '';
@@ -57,7 +58,7 @@ export function createWorldScene(renderer: T.WebGLRenderer) {
         },
         animate(at: number, reduced: boolean) { ground?.animate(at, reduced); },
         dispose() {
-            life.dispose(); ground?.dispose(); cottage.dispose(); content.dispose();
+            life.dispose(); ground?.dispose(); cottage.dispose(); m.dispose();
         },
     };
 }

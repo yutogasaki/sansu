@@ -2,7 +2,7 @@ import * as T from 'three';
 import { isKid } from '../../../domain/growingIsland/rules';
 import { makeFriendRig } from './friendRig';
 import { wonder } from './wonderPaint';
-import type { IslandMaterials } from '../three/primitives';
+import { disposeGeometry, type IslandMaterials } from '../three/primitives';
 import type { Villager } from '../../../domain/growingIsland';
 import { buildSparkle } from './pierGeometry';
 
@@ -18,6 +18,22 @@ export interface Actor {
     /** Shoulder pivots for waving; Pokomoko keeps its own established rig and has none here. */
     arms?: T.Object3D[];
     trait?: Villager['trait'];
+}
+
+const disposedActors = new WeakSet<Actor>();
+
+/** Geometry belongs to the actor; palette, cloth and wonder paint remain shared. */
+export function disposeActor(actor: Actor) {
+    if (disposedActors.has(actor)) return;
+    disposedActors.add(actor);
+    disposeGeometry(actor.root);
+    // buildSparkle creates this material for this actor alone.
+    if (actor.sparkle instanceof T.Mesh) {
+        const materials = Array.isArray(actor.sparkle.material) ? actor.sparkle.material : [actor.sparkle.material];
+        for (const material of new Set(materials)) material.dispose();
+    }
+    actor.root.removeFromParent();
+    actor.root.clear();
 }
 
 type Rig = ReturnType<typeof makeFriendRig>;

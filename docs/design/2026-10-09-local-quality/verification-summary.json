@@ -1,0 +1,2009 @@
+{
+  "status": "CHECKS_PASSED",
+  "candidate": {
+    "version": {
+      "version": "7e9a6c7a-quality-final-v3-55d331f22e94:a3e3e986-dfbd-4bec-b95a-2acaeb08889d",
+      "revision": "7e9a6c7a-quality-final-v3-55d331f22e94",
+      "delivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "park": {
+        "enabled": false,
+        "renderer": "retired"
+      },
+      "island": {
+        "enabled": true,
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "life": {
+          "enabled": true,
+          "discovery": false,
+          "fantasy": true,
+          "candidate": "living-fantasy-garden-v2",
+          "saveVersion": 21
+        },
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "residentCandidate": "patchwork-otter-v1",
+        "artDirection": "moon-garden"
+      }
+    },
+    "sourceHash": "55d331f22e94cc91f80e6250ca6246dd7a840744d04e6b9a5e2b954aa324d3be",
+    "flags": {
+      "VITE_ISLAND_ENABLED": "true",
+      "VITE_ISLAND_LIFE_ENABLED": "true",
+      "VITE_GROWING_ISLAND_ENABLED": "true",
+      "VITE_ISLAND_FANTASY_ENABLED": "true",
+      "VITE_ISLAND_LIFE_PREVIEW": "false",
+      "VITE_NATURE_TOWN_ENABLED": "false",
+      "VITE_HOME_JOURNEY_PREVIEW": "false",
+      "VITE_ISLAND_LIFE_DISCOVERY_ENABLED": "false",
+      "VITE_BUILD_PLAY_ENABLED": "false",
+      "VITE_EXPLORE_EXPERIENCE": "snap-root-v1"
+    },
+    "inputFiles": 16674,
+    "distFiles": 153
+  },
+  "sourceReports": {
+    "final-v3/manifest.json": "c212d2b50152e30cbe6862b9f6b0fab7c19c6353ba94e7fdf41d53fc97e8a9c0",
+    "final-v3/checks.json": "c86e54dc94a12e8ee8b2298c297c707ecd27217511a6ee4ae978adca9c408068",
+    "final-journeys-v3/report.json": "881c8ae8874d16e0d4a5c059445c3a38ff5c9c6e5d908b3b58878baf29986469",
+    "update-final-v3/report.json": "c7449c2ca34f1917c5ac633335f7fc217dc8fe208e66f2cf5c23953d36e4e9f4",
+    "update-final-v3/update/report.json": "60b9575c1495624faff59a9dea4b9fe6ffea64eca9aa0356b6fec29733c42f9c",
+    "throughput-final-v3/throughput.json": "3610590a5eca6601962a7355b68099a31e9ca9f0b0bc1fa57adf0d574afb0e74",
+    "performance-native-v2/report.json": "787eb9fc465a35c25261366f050c0b0adec8d65956182865dd9e7a6645c9a1d3",
+    "performance-baseline-reuse.json": "d89af0acfefae5f898a2de1b0b15bf41368f492f71ca94617b05a03a19acc4ca",
+    "performance-native-v3/report.json": "8a89c020bc8c6eb72503c1542771e01e14a2cabde3e1bf8e8fe55bf0c47516ce",
+    "final-journeys-v3/launchvisual/report.json": "93866ed99c1c1c91612e4404b0f20d1969b86d133e3110ef226e16a2e00a710b",
+    "performance-paired-v1/report.json": "531fe649b6a5bfbf8e54d0198e3a2cbb8d98db1c23cd67641952315a274d9deb",
+    "scripts/performance-paired-derivation.json": "f452718fedd255a27175bef826765bcb874ccc54386b18ff753d4575c19fce4b",
+    "frame-diagnostic-v1/report.json": "94ff6e17a0cf299c34ea00754689db7fb0500c344b5d1a4d8d199665bce9de2f",
+    "scripts/frame-diagnostic-derivation.json": "4869da8de3be0fccb0c1affc4ec69ac51d0a7f50db37e462fb5ed0ae19960dd4"
+  },
+  "finalChecks": [
+    {
+      "id": "core",
+      "startedAt": "2026-10-09T02:36:21.616Z",
+      "pass": true,
+      "code": 0,
+      "finishedAt": "2026-10-09T02:38:26.363Z"
+    },
+    {
+      "id": "classic-smoke",
+      "startedAt": "2026-10-09T02:38:26.396Z",
+      "pass": true,
+      "code": 0,
+      "finishedAt": "2026-10-09T02:40:52.408Z"
+    }
+  ],
+  "finalJourneys": [
+    {
+      "id": "guidance",
+      "script": "tools/e2e-growing-guidance-production.mjs",
+      "startedAt": "2026-10-09T02:41:01.406Z",
+      "pass": true,
+      "exitCode": 0,
+      "finishedAt": "2026-10-09T02:43:17.714Z"
+    },
+    {
+      "id": "balance",
+      "script": "tools/e2e-growing-balance-production.mjs",
+      "startedAt": "2026-10-09T02:43:17.715Z",
+      "pass": true,
+      "exitCode": 0,
+      "finishedAt": "2026-10-09T02:44:45.641Z"
+    },
+    {
+      "id": "single",
+      "script": "tools/e2e-single-island.mjs",
+      "startedAt": "2026-10-09T02:44:45.641Z",
+      "pass": true,
+      "exitCode": 0,
+      "finishedAt": "2026-10-09T02:45:25.783Z"
+    },
+    {
+      "id": "profiles",
+      "script": "tools/e2e-profile-switch.mjs",
+      "startedAt": "2026-10-09T02:45:25.783Z",
+      "pass": true,
+      "exitCode": 0,
+      "finishedAt": "2026-10-09T02:46:23.913Z"
+    },
+    {
+      "id": "party",
+      "script": "tools/e2e-pokomoko-party.mjs",
+      "startedAt": "2026-10-09T02:46:23.913Z",
+      "pass": true,
+      "exitCode": 0,
+      "finishedAt": "2026-10-09T02:49:35.901Z"
+    },
+    {
+      "id": "decimal",
+      "script": "tools/e2e-manual-decimal.mjs",
+      "startedAt": "2026-10-09T02:49:35.902Z",
+      "pass": true,
+      "exitCode": 0,
+      "finishedAt": "2026-10-09T02:50:25.457Z"
+    },
+    {
+      "id": "failures",
+      "script": "/Users/yutogasaki/Projects/sansu/output/goal-quality-20261009/scripts/growing-failure.mjs",
+      "startedAt": "2026-10-09T02:50:25.458Z",
+      "pass": true,
+      "exitCode": 0,
+      "finishedAt": "2026-10-09T02:52:04.355Z"
+    },
+    {
+      "id": "launchvisual",
+      "script": "/Users/yutogasaki/Projects/sansu/output/goal-quality-20261009/scripts/launch-visual.mjs",
+      "startedAt": "2026-10-09T02:52:04.356Z",
+      "pass": true,
+      "exitCode": 0,
+      "finishedAt": "2026-10-09T02:52:23.947Z"
+    }
+  ],
+  "update": {
+    "steps": [
+      {
+        "id": "legacy",
+        "startedAt": "2026-10-09T02:52:26.507Z",
+        "pass": true,
+        "finishedAt": "2026-10-09T02:52:31.724Z"
+      },
+      {
+        "id": "update",
+        "startedAt": "2026-10-09T02:52:31.725Z",
+        "pass": true,
+        "finishedAt": "2026-10-09T02:55:20.422Z"
+      }
+    ],
+    "scenarios": [
+      {
+        "width": 390,
+        "interrupted": false,
+        "pass": true,
+        "earnedCount": 4,
+        "reservation": {
+          "id": "[\"island-plan-v1\",\"af08f1dd-8736-4d75-b72c-5b74e03cb1f6\",1]",
+          "cursor": 1
+        },
+        "reloads": [
+          "http://127.0.0.1:49236/?__app-update=1791514366625",
+          "http://127.0.0.1:49236/?__app-update=1791514382083"
+        ],
+        "migration": {
+          "from": 1,
+          "to": 3
+        }
+      },
+      {
+        "width": 390,
+        "interrupted": true,
+        "pass": true,
+        "earnedCount": 4,
+        "reservation": {
+          "id": "[\"island-plan-v1\",\"e0c325b6-dd2e-4e37-9ddc-57f8fd43ac2c\",1]",
+          "cursor": 1
+        },
+        "reloads": [
+          "http://127.0.0.1:49236/?__app-update=1791514410076",
+          "http://127.0.0.1:49236/?__app-update=1791514421580"
+        ],
+        "migration": {
+          "from": 1,
+          "to": 3
+        }
+      },
+      {
+        "width": 768,
+        "interrupted": false,
+        "pass": true,
+        "earnedCount": 4,
+        "reservation": {
+          "id": "[\"island-plan-v1\",\"8fabdb23-23c4-40e4-a23d-413bf33dadb5\",1]",
+          "cursor": 1
+        },
+        "reloads": [
+          "http://127.0.0.1:49236/?__app-update=1791514441397",
+          "http://127.0.0.1:49236/?__app-update=1791514459227"
+        ],
+        "migration": {
+          "from": 1,
+          "to": 3
+        }
+      },
+      {
+        "width": 768,
+        "interrupted": true,
+        "pass": true,
+        "earnedCount": 4,
+        "reservation": {
+          "id": "[\"island-plan-v1\",\"45d1b539-6e6f-4259-a81c-e89290fb7a3c\",1]",
+          "cursor": 1
+        },
+        "reloads": [
+          "http://127.0.0.1:49236/?__app-update=1791514490830",
+          "http://127.0.0.1:49236/?__app-update=1791514505107"
+        ],
+        "migration": {
+          "from": 1,
+          "to": 3
+        }
+      }
+    ],
+    "cleanup": {
+      "browserClosed": true,
+      "serverClosed": true
+    }
+  },
+  "baselineReuse": {
+    "report": "output/goal-quality-20261009/performance-native-v2/report.json",
+    "sha256": "787eb9fc465a35c25261366f050c0b0adec8d65956182865dd9e7a6645c9a1d3",
+    "baselineComplete": true,
+    "baselineCases": 18,
+    "baselineRevision": "7e9a6c7a-quality-before-de0d932e9a5f",
+    "sourceDistFixtureUnchanged": true,
+    "qaUnchanged": true,
+    "reason": "The before candidate completed all 18 cases and its final integrity audit before final-v2 was interrupted to fix the observer program-cache key. Partial final-v2 timings are diagnostic only. Reuse the complete before candidate with the unchanged timing harness, browser, conditions, and exact prepared saves; compare only after final-v3 completes."
+  },
+  "throughput": {
+    "executedCandidate": "7e9a6c7a-quality-final-v3-55d331f22e94",
+    "eligible": true,
+    "pass": true,
+    "buildSource": {
+      "path": "/Users/yutogasaki/Projects/sansu/output/goal-quality-20261009/throughput-final-v3/benchmark-source.json",
+      "manifestSHA": "c943ffa4525dd0a405001fed033074e27267cc8d25dfe960d93687359da0a4e8",
+      "sourceHash": "55d331f22e94cc91f80e6250ca6246dd7a840744d04e6b9a5e2b954aa324d3be",
+      "revision": "7e9a6c7a-quality-final-v3-55d331f22e94",
+      "flags": {
+        "VITE_ISLAND_ENABLED": "true",
+        "VITE_ISLAND_LIFE_ENABLED": "true",
+        "VITE_GROWING_ISLAND_ENABLED": "true",
+        "VITE_ISLAND_FANTASY_ENABLED": "true",
+        "VITE_ISLAND_LIFE_PREVIEW": "false",
+        "VITE_NATURE_TOWN_ENABLED": "false",
+        "VITE_HOME_JOURNEY_PREVIEW": "false",
+        "VITE_ISLAND_LIFE_DISCOVERY_ENABLED": "false",
+        "VITE_BUILD_PLAY_ENABLED": "false",
+        "VITE_EXPLORE_EXPERIENCE": "snap-root-v1"
+      }
+    },
+    "runtime": {
+      "revisions": [
+        "7e9a6c7a-quality-final-v3-55d331f22e94"
+      ],
+      "versions": [
+        "7e9a6c7a-quality-final-v3-55d331f22e94:fe215e04-2c38-4633-b720-b26c7e2560ca"
+      ],
+      "candidates": [
+        "mystic-island-shore-garden-v18"
+      ],
+      "learningCandidates": [
+        "pokomoko-pop-live-v8"
+      ],
+      "deliveryIds": [
+        "mystic-island-v1"
+      ],
+      "flag": "VITE_ISLAND_ENABLED=true",
+      "evidenceSource": "Actual rendered Island data attributes on the shared Vite target; Study fixture runs against the same server."
+    },
+    "runs": 80,
+    "method": {
+      "setup": "Wait for the empty-profile Island welcome to commit before inserting each disposable profile; retain the same document for fixture hooks and navigate only after that lookup has resolved.",
+      "input": "physical-keyboard digits and Enter, identical answers and ordinary actions in both lanes",
+      "order": "Study/Island alternates by repetition and scenario within each viewport",
+      "timing": "Browser performance.now; answer delay begins at the final digit keydown for automatic completion, or Enter for explicit completion. Total includes typing and automated observation overhead. Q6 ends only when the exact next plan is operable; no continuation action is performed.",
+      "fixtureScope": "Isolated disposable browser profiles only. Before timing, one explicitly synthetic existing-island completion bypasses the introduction. Island creates real six-slot plans, with a test-only Dexie creating hook replacing newly created slots before display; existing reservations are never changed.",
+      "plannerTruth": "Not production planner evidence. All fixed slots are explicit test-fixture main assignments with no review or maintenance flags.",
+      "learningDifference": "Island records the real atomic writer and reward receipts in its disposable profile. Study uses its existing nonrecording DEV fixture. Neither lane reads or changes a real user profile.",
+      "islandTail": "Six slots in each of two newly saved sets, after the declared synthetic existing-island baseline. Only the first four slots of the second new set are answered. Two repeated fixture tail slots remain pending and unsubmitted.",
+      "missDifference": "Island retries and corrects Q4/Q8 on the same saved Problem. Study retains its correction panel and explicit next action. Only all-correct throughput is compared for the >=1.0 gate.",
+      "rendering": "Both lanes use reduced-motion and sound off. Before timed input, every initial Island keypad control must fit and preserve a 44px target; active digit/edit keys must receive a center hit, the automatic three-column keypad has no redundant submit key and preserves 789 / 456 / 123 / delete-0-clear ordering. Normal-motion, touch and full-input fidelity are separate Island E2E gates."
+    },
+    "comparisons": [
+      {
+        "layout": "phone",
+        "studyMedianProblemsPerMinute": 123.12761739281072,
+        "islandMedianProblemsPerMinute": 288.4481934371539,
+        "allCorrectIslandToStudyRatio": 2.3426766435098423,
+        "correctOperableP95Ms": 202.29999995231628,
+        "incorrectRetryP95Ms": 201.79999995231628,
+        "correctSamples": 200,
+        "incorrectSamples": 20,
+        "automaticSectionTransitionMedianMs": 192.89999997615814,
+        "automaticSectionTransitionSamples": 10,
+        "sectionBoundaryP95Ms": 200.60000002384186,
+        "sectionBoundarySamples": 20,
+        "rawStudyDurationMedianMs": 4873,
+        "rawIslandDurationMedianMs": 2080.100000023842
+      },
+      {
+        "layout": "tablet",
+        "studyMedianProblemsPerMinute": 123.09090381749114,
+        "islandMedianProblemsPerMinute": 288.6697464772752,
+        "allCorrectIslandToStudyRatio": 2.3451752934180297,
+        "correctOperableP95Ms": 202.29999995231628,
+        "incorrectRetryP95Ms": 201.39999997615814,
+        "correctSamples": 200,
+        "incorrectSamples": 20,
+        "automaticSectionTransitionMedianMs": 199.75,
+        "automaticSectionTransitionSamples": 10,
+        "sectionBoundaryP95Ms": 202.59999990463257,
+        "sectionBoundarySamples": 20,
+        "rawStudyDurationMedianMs": 4874.450000047684,
+        "rawIslandDurationMedianMs": 2078.5
+      }
+    ],
+    "gates": {
+      "tenAlternatingRepetitions": true,
+      "allCorrectIslandThroughputNotBelowStudy": true,
+      "correctP95AtMost650Ms": true,
+      "incorrectP95AtMost550Ms": true,
+      "sectionBoundaryP95AtMost650Ms": true,
+      "twentySameQuestionIncorrectSamplesPerLayout": true,
+      "noExtraOrdinaryQuestionActions": true,
+      "automaticSectionBoundaryIncluded": true,
+      "emptyInputAfterEveryTransition": true,
+      "initialIslandControlsUsable": true,
+      "exactFixtureAndAtomicReceipts": true,
+      "phoneAndTablet": true,
+      "noBrowserErrors": true,
+      "oneRenderedBuildAndCandidate": true,
+      "sourceFilesUnchangedDuringBenchmark": true
+    }
+  },
+  "performance": {
+    "schema": "sansu-quality-performance-v2-native-timing",
+    "browser": "145.0.7632.6",
+    "conditions": {
+      "widths": [
+        390,
+        768
+      ],
+      "repetitions": 3,
+      "frameSampleMs": 10000,
+      "ghostTaps": 20,
+      "sound": "off",
+      "serviceWorkers": "blocked",
+      "cold": "Fresh context with only identical prepared IndexedDB/localStorage restored. No prior navigation or HTTP cache in measured context.",
+      "warm": "Reload in same context with HTTP cache; no service worker.",
+      "savedClock": "Date-only native subclass; performance, rAF and timers untouched and probed on cold/warm documents",
+      "limitations": "Desktop headless Chromium with touch-sized viewports, not iPhone/iPad hardware. OS/filesystem/GPU caches and thermal state uncontrolled. rAF gaps are scheduling evidence, not direct GPU timing. No sound, offline-update or child evaluation."
+    },
+    "fixtureHash": "438a9c66ec8b2ed28f2367e4ab6c6bf1cafc14a2897f9415780dfaee7366afa3",
+    "payloadHash": "73f4ef783a08017793855d6bfa364bdf6e0c074672cef3919498070dda4b4d2c",
+    "qa": {
+      "/Users/yutogasaki/Projects/sansu/output/goal-quality-20261009/scripts/performance.mjs": "6ee4f186e94d6e77cec5c1393016206e032eda23aba8ae7c13f88293db250ddc",
+      "/Users/yutogasaki/Projects/sansu/tools/verify-growing.mjs": "2cb50aef1dbdaff6e8cfb80a39bacdb3bb2c685026cd731ba7abba82910408aa",
+      "/Users/yutogasaki/Projects/sansu/tools/growing-fixture-data.mjs": "6ee183feabe6a7196d0a6f34cfd49f5e368d55144a96544dd0ed501e13756dbe",
+      "/Users/yutogasaki/Projects/sansu/tools/island-e2e-helpers.mjs": "b307f0506e17fa58af4a1dac0fcecca34e8d9bc3ded342f5227cd63d97d44baf"
+    },
+    "nativeCases": 36,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+    "ignoredConsole": {
+      "reason": "Intentional serviceWorkers:block in timing contexts; real SW update/offline is verified separately.",
+      "count": 72
+    },
+    "measurementIntegrity": "PASS",
+    "latencyAssessment": "MIXED_RESULTS",
+    "beforeRevision": {
+      "version": "7e9a6c7a-quality-before-de0d932e9a5f:08d999d1-2138-4b6c-a4f8-d5bc5ef0701b",
+      "revision": "7e9a6c7a-quality-before-de0d932e9a5f",
+      "delivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "park": {
+        "enabled": false,
+        "renderer": "retired"
+      },
+      "island": {
+        "enabled": true,
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "life": {
+          "enabled": true,
+          "discovery": false,
+          "fantasy": true,
+          "candidate": "living-fantasy-garden-v2",
+          "saveVersion": 21
+        },
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "residentCandidate": "patchwork-otter-v1",
+        "artDirection": "moon-garden"
+      }
+    },
+    "baselineSourceRunWindow": {
+      "startedAt": "2026-10-09T01:18:23.606Z",
+      "finishedAt": "2026-10-09T02:32:50.231Z",
+      "scope": "Full source run: before18 plus interrupted final-v2 and cleanup. A separate before-only finish timestamp was not recorded."
+    },
+    "afterWindow": {
+      "startedAt": "2026-10-09T03:05:39.618Z",
+      "finishedAt": "2026-10-09T04:03:53.469Z"
+    },
+    "interpretation": "Measurement integrity passed. Speed gains and regressions require review of the paired measurements; this status alone is not a latency target pass.",
+    "comparison": [
+      {
+        "id": "starter",
+        "width": 390,
+        "before": {
+          "id": "starter",
+          "width": 390,
+          "repetitions": 3,
+          "coldReadyMs": 2120.5,
+          "warmReadyMs": 2083.2999999523163,
+          "rafP50Ms": 26.700000000000728,
+          "rafP95Ms": 40,
+          "ghostP95Ms": 389.5,
+          "ghostActionableP95Ms": 394.7999999523163,
+          "houseReadyMs": 1444.1000000238419,
+          "returnReadyMs": 1448.2000000476837
+        },
+        "after": {
+          "id": "starter",
+          "width": 390,
+          "repetitions": 3,
+          "coldReadyMs": 2096.5,
+          "warmReadyMs": 2084.2999999523163,
+          "rafP50Ms": 26.700000000000728,
+          "rafP95Ms": 40,
+          "ghostP95Ms": 322,
+          "ghostActionableP95Ms": 328.7000000476837,
+          "houseReadyMs": 1483.3999999761581,
+          "returnReadyMs": 1407.5
+        },
+        "qualityEquivalent": true,
+        "savedNativeHash": "29a9ce9528f8ee772b6a43235f460c921b01e7fb868b50c72b4ed5fab26c5698",
+        "quality": [
+          {
+            "width": 390,
+            "height": 844,
+            "pixelRatio": "1",
+            "qualityCeiling": "1.25",
+            "graphicsQuality": "standard"
+          }
+        ],
+        "deltaMs": {
+          "coldReadyMs": -24,
+          "warmReadyMs": 1,
+          "rafP50Ms": 0,
+          "rafP95Ms": 0,
+          "ghostP95Ms": -67.5,
+          "ghostActionableP95Ms": -66.09999990463257,
+          "houseReadyMs": 39.299999952316284,
+          "returnReadyMs": -40.700000047683716
+        }
+      },
+      {
+        "id": "starter",
+        "width": 768,
+        "before": {
+          "id": "starter",
+          "width": 768,
+          "repetitions": 3,
+          "coldReadyMs": 2185.399999976158,
+          "warmReadyMs": 2171.399999976158,
+          "rafP50Ms": 40.10000000000218,
+          "rafP95Ms": 54.099999999998545,
+          "ghostP95Ms": 402,
+          "ghostActionableP95Ms": 412.60000002384186,
+          "houseReadyMs": 1569.5999999046326,
+          "returnReadyMs": 1504.1000000238419
+        },
+        "after": {
+          "id": "starter",
+          "width": 768,
+          "repetitions": 3,
+          "coldReadyMs": 2139.100000023842,
+          "warmReadyMs": 2124.600000023842,
+          "rafP50Ms": 40.20000000000073,
+          "rafP95Ms": 54.29999999999927,
+          "ghostP95Ms": 336.6999999284744,
+          "ghostActionableP95Ms": 346.2000000476837,
+          "houseReadyMs": 1567.2000000476837,
+          "returnReadyMs": 1449.8999999761581
+        },
+        "qualityEquivalent": true,
+        "savedNativeHash": "29a9ce9528f8ee772b6a43235f460c921b01e7fb868b50c72b4ed5fab26c5698",
+        "quality": [
+          {
+            "width": 768,
+            "height": 1024,
+            "pixelRatio": "1",
+            "qualityCeiling": "1.25",
+            "graphicsQuality": "standard"
+          }
+        ],
+        "deltaMs": {
+          "coldReadyMs": -46.299999952316284,
+          "warmReadyMs": -46.799999952316284,
+          "rafP50Ms": 0.09999999999854481,
+          "rafP95Ms": 0.2000000000007276,
+          "ghostP95Ms": -65.30000007152557,
+          "ghostActionableP95Ms": -66.39999997615814,
+          "houseReadyMs": -2.3999998569488525,
+          "returnReadyMs": -54.200000047683716
+        }
+      },
+      {
+        "id": "growing",
+        "width": 390,
+        "before": {
+          "id": "growing",
+          "width": 390,
+          "repetitions": 3,
+          "coldReadyMs": 2171.1999999284744,
+          "warmReadyMs": 2152.399999976158,
+          "rafP50Ms": 38.900000000001455,
+          "rafP95Ms": 41.29999999999927,
+          "ghostP95Ms": 402,
+          "ghostActionableP95Ms": 413.2999999523163,
+          "houseReadyMs": 1470.5999999046326,
+          "returnReadyMs": 1485.6999999284744
+        },
+        "after": {
+          "id": "growing",
+          "width": 390,
+          "repetitions": 3,
+          "coldReadyMs": 2098.0999999046326,
+          "warmReadyMs": 2088,
+          "rafP50Ms": 39.400000000001455,
+          "rafP95Ms": 41,
+          "ghostP95Ms": 335,
+          "ghostActionableP95Ms": 337.10000002384186,
+          "houseReadyMs": 1457.3000000715256,
+          "returnReadyMs": 1423
+        },
+        "qualityEquivalent": true,
+        "savedNativeHash": "c1060d1a78e2d4de6805795f9d87a8c40d57da4f17b3eebb3cbab70d8dc581e1",
+        "quality": [
+          {
+            "width": 390,
+            "height": 844,
+            "pixelRatio": "1",
+            "qualityCeiling": "1.25",
+            "graphicsQuality": "standard"
+          }
+        ],
+        "deltaMs": {
+          "coldReadyMs": -73.10000002384186,
+          "warmReadyMs": -64.39999997615814,
+          "rafP50Ms": 0.5,
+          "rafP95Ms": -0.2999999999992724,
+          "ghostP95Ms": -67,
+          "ghostActionableP95Ms": -76.19999992847443,
+          "houseReadyMs": -13.299999833106995,
+          "returnReadyMs": -62.699999928474426
+        }
+      },
+      {
+        "id": "growing",
+        "width": 768,
+        "before": {
+          "id": "growing",
+          "width": 768,
+          "repetitions": 3,
+          "coldReadyMs": 2222.7000000476837,
+          "warmReadyMs": 2241.2999999523163,
+          "rafP50Ms": 53.29999999999927,
+          "rafP95Ms": 66,
+          "ghostP95Ms": 428.2000000476837,
+          "ghostActionableP95Ms": 539.2000000476837,
+          "houseReadyMs": 1579.1999999284744,
+          "returnReadyMs": 1540.6999999284744
+        },
+        "after": {
+          "id": "growing",
+          "width": 768,
+          "repetitions": 3,
+          "coldReadyMs": 2229,
+          "warmReadyMs": 2243.8000000715256,
+          "rafP50Ms": 53.39999999999418,
+          "rafP95Ms": 66.69999999999709,
+          "ghostP95Ms": 365.89999997615814,
+          "ghostActionableP95Ms": 391.7000000476837,
+          "houseReadyMs": 1677.6000000238419,
+          "returnReadyMs": 1540.5
+        },
+        "qualityEquivalent": true,
+        "savedNativeHash": "d73af1b8c3804eefe7aae33f81b5a8ed4b7d339d12b3666580dffafe887c01c4",
+        "quality": [
+          {
+            "width": 768,
+            "height": 1024,
+            "pixelRatio": "1",
+            "qualityCeiling": "1.25",
+            "graphicsQuality": "standard"
+          }
+        ],
+        "deltaMs": {
+          "coldReadyMs": 6.299999952316284,
+          "warmReadyMs": 2.5000001192092896,
+          "rafP50Ms": 0.09999999999490683,
+          "rafP95Ms": 0.6999999999970896,
+          "ghostP95Ms": -62.300000071525574,
+          "ghostActionableP95Ms": -147.5,
+          "houseReadyMs": 98.40000009536743,
+          "returnReadyMs": -0.19999992847442627
+        }
+      },
+      {
+        "id": "crowded",
+        "width": 390,
+        "before": {
+          "id": "crowded",
+          "width": 390,
+          "repetitions": 3,
+          "coldReadyMs": 2327.5,
+          "warmReadyMs": 2340.5999999046326,
+          "rafP50Ms": 66.70000000000437,
+          "rafP95Ms": 80.90000000000146,
+          "ghostP95Ms": 400.7999999523163,
+          "ghostActionableP95Ms": 419.8000000715256,
+          "houseReadyMs": 1511.7999999523163,
+          "returnReadyMs": 1645.2999999523163
+        },
+        "after": {
+          "id": "crowded",
+          "width": 390,
+          "repetitions": 3,
+          "coldReadyMs": 2420.399999976158,
+          "warmReadyMs": 2325,
+          "rafP50Ms": 79.30000000000291,
+          "rafP95Ms": 106.70000000000437,
+          "ghostP95Ms": 382.10000002384186,
+          "ghostActionableP95Ms": 889,
+          "houseReadyMs": 1573.5999999046326,
+          "returnReadyMs": 1645.1000000238419
+        },
+        "qualityEquivalent": true,
+        "savedNativeHash": "c2e51870297e4bd254a12d22c6ede3f6646d92306463703681064f32b954fbe0",
+        "quality": [
+          {
+            "width": 390,
+            "height": 844,
+            "pixelRatio": "1",
+            "qualityCeiling": "1.25",
+            "graphicsQuality": "standard"
+          }
+        ],
+        "deltaMs": {
+          "coldReadyMs": 92.89999997615814,
+          "warmReadyMs": -15.599999904632568,
+          "rafP50Ms": 12.599999999998545,
+          "rafP95Ms": 25.80000000000291,
+          "ghostP95Ms": -18.699999928474426,
+          "ghostActionableP95Ms": 469.1999999284744,
+          "houseReadyMs": 61.799999952316284,
+          "returnReadyMs": -0.19999992847442627
+        }
+      },
+      {
+        "id": "crowded",
+        "width": 768,
+        "before": {
+          "id": "crowded",
+          "width": 768,
+          "repetitions": 3,
+          "coldReadyMs": 2380.2999999523163,
+          "warmReadyMs": 2412.899999976158,
+          "rafP50Ms": 80,
+          "rafP95Ms": 93.40000000000146,
+          "ghostP95Ms": 433.2000000476837,
+          "ghostActionableP95Ms": 994.2000000476837,
+          "houseReadyMs": 1745.7999999523163,
+          "returnReadyMs": 1678.2999999523163
+        },
+        "after": {
+          "id": "crowded",
+          "width": 768,
+          "repetitions": 3,
+          "coldReadyMs": 2374.2999999523163,
+          "warmReadyMs": 2398.3000000715256,
+          "rafP50Ms": 80.09999999999854,
+          "rafP95Ms": 93.40000000000146,
+          "ghostP95Ms": 388,
+          "ghostActionableP95Ms": 440,
+          "houseReadyMs": 1685.8999999761581,
+          "returnReadyMs": 1656.5
+        },
+        "qualityEquivalent": true,
+        "savedNativeHash": "235f9d918158c8ab0a6a79892cc9dfdd18c0368f38ee934e85ad8eaafca857a3",
+        "quality": [
+          {
+            "width": 768,
+            "height": 1024,
+            "pixelRatio": "1",
+            "qualityCeiling": "1.25",
+            "graphicsQuality": "standard"
+          }
+        ],
+        "deltaMs": {
+          "coldReadyMs": -6,
+          "warmReadyMs": -14.599999904632568,
+          "rafP50Ms": 0.09999999999854481,
+          "rafP95Ms": 0,
+          "ghostP95Ms": -45.200000047683716,
+          "ghostActionableP95Ms": -554.2000000476837,
+          "houseReadyMs": -59.89999997615814,
+          "returnReadyMs": -21.799999952316284
+        }
+      }
+    ],
+    "frameConfirmation": {
+      "scope": {
+        "case": "crowded",
+        "width": 390,
+        "repetitionsPerProcess": 1,
+        "processes": 6,
+        "freshBrowserPerProcess": true,
+        "frameSampleMs": 10000,
+        "ghostTaps": 0,
+        "entryEvaluated": false,
+        "ghostEvaluated": false,
+        "checkpoints": [
+          "afterCold",
+          "afterWarm",
+          "afterFrames"
+        ],
+        "seedFile": "/Users/yutogasaki/Projects/sansu/output/goal-quality-20261009/performance-native-v2/saved-states/crowded-390.json",
+        "savedNativeHash": "c2e51870297e4bd254a12d22c6ede3f6646d92306463703681064f32b954fbe0",
+        "savedStorageHash": "98d49ba8fcdcbd300f32875b0e9b5856005288342937957d0f389c27ab49971b",
+        "interpretation": "PASS certifies only valid measurement/integrity in all six rAF-only runs. Cold/warm timing is retained as setup context, not an entry/interaction performance evaluation. It is not an automatic performance-improvement or causal attribution verdict. OS/GPU caches and thermal state remain uncontrolled; this does not replace the full 36-case comparison."
+      },
+      "revisions": {
+        "before": "7e9a6c7a-quality-before-de0d932e9a5f",
+        "final": "7e9a6c7a-quality-final-v3-55d331f22e94"
+      },
+      "order": [
+        "before",
+        "final",
+        "final",
+        "before",
+        "before",
+        "final"
+      ],
+      "startedAt": "2026-10-09T04:05:22.090Z",
+      "finishedAt": "2026-10-09T04:19:56.829Z",
+      "measurementIntegrity": "PASS",
+      "sameQualityRendererSave": true,
+      "derivation": {
+        "file": "/Users/yutogasaki/Projects/sansu/output/goal-quality-20261009/scripts/performance-paired-derivation.json",
+        "sha256": "f452718fedd255a27175bef826765bcb874ccc54386b18ff753d4575c19fce4b",
+        "originalSHA256": "6ee4f186e94d6e77cec5c1393016206e032eda23aba8ae7c13f88293db250ddc",
+        "derivedSHA256": "08dbbbac40e8d7b7da76f63333311938a3041b473bd565f7fd91ee40a16cf9be"
+      },
+      "sixRafP95Ms": [
+        {
+          "index": 1,
+          "label": "before",
+          "rafP95Ms": 80.69999999999709
+        },
+        {
+          "index": 2,
+          "label": "final",
+          "rafP95Ms": 80.80000000000291
+        },
+        {
+          "index": 3,
+          "label": "final",
+          "rafP95Ms": 80.20000000000437
+        },
+        {
+          "index": 4,
+          "label": "before",
+          "rafP95Ms": 80.70000000000437
+        },
+        {
+          "index": 5,
+          "label": "before",
+          "rafP95Ms": 80.70000000000437
+        },
+        {
+          "index": 6,
+          "label": "final",
+          "rafP95Ms": 106.79999999999563
+        }
+      ],
+      "summary": {
+        "before": {
+          "count": 3,
+          "values": [
+            80.69999999999709,
+            80.70000000000437,
+            80.70000000000437
+          ],
+          "medianMs": 80.70000000000437,
+          "minMs": 80.69999999999709,
+          "maxMs": 80.70000000000437
+        },
+        "final": {
+          "count": 3,
+          "values": [
+            80.80000000000291,
+            80.20000000000437,
+            106.79999999999563
+          ],
+          "medianMs": 80.80000000000291,
+          "minMs": 80.20000000000437,
+          "maxMs": 106.79999999999563
+        }
+      },
+      "pairs": [
+        {
+          "runOrder": [
+            1,
+            2
+          ],
+          "beforeMs": 80.69999999999709,
+          "finalMs": 80.80000000000291,
+          "finalMinusBeforeMs": 0.10000000000582077
+        },
+        {
+          "runOrder": [
+            3,
+            4
+          ],
+          "beforeMs": 80.70000000000437,
+          "finalMs": 80.20000000000437,
+          "finalMinusBeforeMs": -0.5
+        },
+        {
+          "runOrder": [
+            5,
+            6
+          ],
+          "beforeMs": 80.70000000000437,
+          "finalMs": 106.79999999999563,
+          "finalMinusBeforeMs": 26.09999999999127
+        }
+      ],
+      "sourceReport": "performance-paired-v1/report.json",
+      "interpretation": "This bounded nearby rAF-only confirmation does not replace the original36, identify a causal factor, or certify ghost/entry latency. See the original navigation/placement results including regressions."
+    },
+    "review": {
+      "placementTwoFrameResponse": "Observed lower median P95 in all six original groups; not direct GPU-present timing.",
+      "startupEntrySteadyFrames": "No across-the-board speed improvement certified. Original values and paired frame observations are retained.",
+      "placementReadiness": "Five original group medians are lower; crowded390 is higher. Both candidates have pending-sync-or-command delays; this remaining wait is not waived by the other gains.",
+      "visualQuality": "Same sampled canvas/quality settings; author comparison retained terrain, objects and visible characters. Animation phases can differ."
+    },
+    "rendererDiagnostic": {
+      "measurementIntegrity": "PASS",
+      "officialTiming": false,
+      "candidateRevisions": [
+        "7e9a6c7a-quality-before-de0d932e9a5f",
+        "7e9a6c7a-quality-final-v3-55d331f22e94"
+      ],
+      "scope": {
+        "caseIds": [
+          "crowded"
+        ],
+        "widths": [
+          390
+        ],
+        "repetitions": 3,
+        "frameSampleMs": 10000,
+        "ghostTaps": 0,
+        "entryEvaluated": false,
+        "ghostEvaluated": false,
+        "sound": "off",
+        "serviceWorkers": "blocked",
+        "purpose": "Instrumented crowded390 diagnostic: three fresh-context repetitions per candidate, in supplied manifest order, sharing one owned browser. Observe Three constructor events and read renderer.info in the existing frame tick. This is neither official performance evidence nor a causality gate and does not replace the original 36 cases or counterbalanced paired confirmation.",
+        "instrumentation": {
+          "observer": "New per-document EventTarget at __THREE_DEVTOOLS__; weak references only; no render or timing wrappers",
+          "renderer": "The selected renderer has a connected DOM canvas exactly equal to the current Growing world canvas; info/memory and program count read once per existing frame-sample rAF tick; other renderer identities retained separately",
+          "programs": "Start/end samples only: primitive id/name/usedTimes plus cacheKey length and non-security FNV-1a fingerprint; no shader/hook source",
+          "scene": "At existing once-per-second quality samples, count all observed live Scene graphs separately with ancestor visibility. Direct children growing-life and growing-objects identify candidate scenes; retain candidate count rather than assume exactly one. Record each growing-life direct child actor local position/rotation and visibility. No bounds, matrix, projection or frustum calculations",
+          "counters": "renderer.info is the most recent render statistics with unchanged autoReset, not cumulative work or GPU timing. Scene graph visibility is not actual frustum visibility; graphs are not asserted associated to a particular renderer",
+          "overhead": "Diagnostic reads and graph walks add work. Per-read duration is recorded but excludes some allocation/serialization/GC cost. Correlate gapMs and elapsedMs; do not treat instrumented timings as an uninstrumented speed result"
+        },
+        "cold": "Fresh context with only identical prepared IndexedDB/localStorage restored. No prior navigation or HTTP cache in measured context.",
+        "warm": "Reload in same context with HTTP cache; no service worker.",
+        "savedClock": "Date-only native subclass; performance, rAF and timers untouched and probed on cold/warm documents",
+        "limitations": "Desktop headless Chromium with touch-sized viewports, not iPhone/iPad hardware. OS/filesystem/GPU caches and thermal state uncontrolled. rAF gaps are scheduling evidence, not direct GPU timing. No sound, offline-update or child evaluation."
+      },
+      "startedAt": "2026-10-09T04:26:47.406Z",
+      "finishedAt": "2026-10-09T04:40:25.382Z",
+      "rows": [
+        {
+          "label": "before",
+          "rep": 1,
+          "rafP95Ms": 80.20000000000437,
+          "selectedRendererCounts": [
+            1
+          ],
+          "growingSceneCounts": [
+            1
+          ],
+          "render": {
+            "calls": {
+              "min": 908,
+              "max": 910,
+              "distinct": 3
+            },
+            "triangles": {
+              "min": 354020,
+              "max": 354724,
+              "distinct": 3
+            },
+            "points": {
+              "min": 18,
+              "max": 18,
+              "distinct": 1
+            },
+            "lines": {
+              "min": 0,
+              "max": 0,
+              "distinct": 1
+            },
+            "frame": {
+              "min": 587,
+              "max": 729,
+              "distinct": 143
+            }
+          },
+          "memory": {
+            "geometries": {
+              "min": 607,
+              "max": 622,
+              "distinct": 2
+            },
+            "textures": {
+              "min": 10,
+              "max": 10,
+              "distinct": 1
+            }
+          },
+          "programCount": {
+            "min": 10,
+            "max": 10,
+            "distinct": 1
+          },
+          "programSamples": [
+            [
+              ":06be2090:241:2",
+              ":07cae414:244:1",
+              ":304748f0:260:2",
+              ":38395b8f:248:1",
+              ":3fe075a1:257:1",
+              ":59cfcb00:263:78",
+              ":74762078:261:1",
+              ":ba1cbba9:251:17",
+              ":dbe56aa0:263:2",
+              "patchwork-otter-v1:68fdb65e:280:1"
+            ],
+            [
+              ":06be2090:241:2",
+              ":07cae414:244:1",
+              ":304748f0:260:2",
+              ":38395b8f:248:1",
+              ":3fe075a1:257:1",
+              ":59cfcb00:263:78",
+              ":74762078:261:1",
+              ":ba1cbba9:251:17",
+              ":dbe56aa0:263:2",
+              "patchwork-otter-v1:68fdb65e:280:1"
+            ]
+          ],
+          "scene": {
+            "objects": {
+              "min": 792,
+              "max": 792,
+              "distinct": 1
+            },
+            "visibleObjects": {
+              "min": 780,
+              "max": 780,
+              "distinct": 1
+            },
+            "meshes": {
+              "min": 570,
+              "max": 570,
+              "distinct": 1
+            },
+            "visibleMeshes": {
+              "min": 560,
+              "max": 560,
+              "distinct": 1
+            },
+            "visibleCastShadowMeshes": {
+              "min": 375,
+              "max": 375,
+              "distinct": 1
+            },
+            "visibleReceiveShadowMeshes": {
+              "min": 515,
+              "max": 515,
+              "distinct": 1
+            }
+          },
+          "actors": {
+            "min": 14,
+            "max": 14,
+            "distinct": 1
+          },
+          "observerReadMs": {
+            "min": 0,
+            "max": 0.20000004768371582,
+            "distinct": 5
+          },
+          "sceneReadMs": {
+            "min": 0.19999992847442627,
+            "max": 1.100000023841858,
+            "distinct": 7
+          }
+        },
+        {
+          "label": "before",
+          "rep": 2,
+          "rafP95Ms": 80.90000000000146,
+          "selectedRendererCounts": [
+            1
+          ],
+          "growingSceneCounts": [
+            1
+          ],
+          "render": {
+            "calls": {
+              "min": 910,
+              "max": 910,
+              "distinct": 1
+            },
+            "triangles": {
+              "min": 354724,
+              "max": 354724,
+              "distinct": 1
+            },
+            "points": {
+              "min": 18,
+              "max": 18,
+              "distinct": 1
+            },
+            "lines": {
+              "min": 0,
+              "max": 0,
+              "distinct": 1
+            },
+            "frame": {
+              "min": 588,
+              "max": 728,
+              "distinct": 141
+            }
+          },
+          "memory": {
+            "geometries": {
+              "min": 607,
+              "max": 622,
+              "distinct": 2
+            },
+            "textures": {
+              "min": 10,
+              "max": 10,
+              "distinct": 1
+            }
+          },
+          "programCount": {
+            "min": 10,
+            "max": 10,
+            "distinct": 1
+          },
+          "programSamples": [
+            [
+              ":06be2090:241:2",
+              ":07cae414:244:1",
+              ":304748f0:260:2",
+              ":38395b8f:248:1",
+              ":3fe075a1:257:1",
+              ":59cfcb00:263:78",
+              ":74762078:261:1",
+              ":ba1cbba9:251:17",
+              ":dbe56aa0:263:2",
+              "patchwork-otter-v1:68fdb65e:280:1"
+            ],
+            [
+              ":06be2090:241:2",
+              ":07cae414:244:1",
+              ":304748f0:260:2",
+              ":38395b8f:248:1",
+              ":3fe075a1:257:1",
+              ":59cfcb00:263:78",
+              ":74762078:261:1",
+              ":ba1cbba9:251:17",
+              ":dbe56aa0:263:2",
+              "patchwork-otter-v1:68fdb65e:280:1"
+            ]
+          ],
+          "scene": {
+            "objects": {
+              "min": 792,
+              "max": 792,
+              "distinct": 1
+            },
+            "visibleObjects": {
+              "min": 780,
+              "max": 780,
+              "distinct": 1
+            },
+            "meshes": {
+              "min": 570,
+              "max": 570,
+              "distinct": 1
+            },
+            "visibleMeshes": {
+              "min": 560,
+              "max": 560,
+              "distinct": 1
+            },
+            "visibleCastShadowMeshes": {
+              "min": 375,
+              "max": 375,
+              "distinct": 1
+            },
+            "visibleReceiveShadowMeshes": {
+              "min": 515,
+              "max": 515,
+              "distinct": 1
+            }
+          },
+          "actors": {
+            "min": 14,
+            "max": 14,
+            "distinct": 1
+          },
+          "observerReadMs": {
+            "min": 0,
+            "max": 0.20000004768371582,
+            "distinct": 5
+          },
+          "sceneReadMs": {
+            "min": 0.09999990463256836,
+            "max": 1.0999999046325684,
+            "distinct": 9
+          }
+        },
+        {
+          "label": "before",
+          "rep": 3,
+          "rafP95Ms": 81.20000000000437,
+          "selectedRendererCounts": [
+            1
+          ],
+          "growingSceneCounts": [
+            1
+          ],
+          "render": {
+            "calls": {
+              "min": 904,
+              "max": 910,
+              "distinct": 7
+            },
+            "triangles": {
+              "min": 352612,
+              "max": 354724,
+              "distinct": 7
+            },
+            "points": {
+              "min": 18,
+              "max": 18,
+              "distinct": 1
+            },
+            "lines": {
+              "min": 0,
+              "max": 0,
+              "distinct": 1
+            },
+            "frame": {
+              "min": 572,
+              "max": 711,
+              "distinct": 140
+            }
+          },
+          "memory": {
+            "geometries": {
+              "min": 607,
+              "max": 622,
+              "distinct": 2
+            },
+            "textures": {
+              "min": 10,
+              "max": 10,
+              "distinct": 1
+            }
+          },
+          "programCount": {
+            "min": 10,
+            "max": 10,
+            "distinct": 1
+          },
+          "programSamples": [
+            [
+              ":06be2090:241:2",
+              ":07cae414:244:1",
+              ":304748f0:260:2",
+              ":38395b8f:248:1",
+              ":3fe075a1:257:1",
+              ":59cfcb00:263:78",
+              ":74762078:261:1",
+              ":ba1cbba9:251:17",
+              ":dbe56aa0:263:2",
+              "patchwork-otter-v1:68fdb65e:280:1"
+            ],
+            [
+              ":06be2090:241:2",
+              ":07cae414:244:1",
+              ":304748f0:260:2",
+              ":38395b8f:248:1",
+              ":3fe075a1:257:1",
+              ":59cfcb00:263:78",
+              ":74762078:261:1",
+              ":ba1cbba9:251:17",
+              ":dbe56aa0:263:2",
+              "patchwork-otter-v1:68fdb65e:280:1"
+            ]
+          ],
+          "scene": {
+            "objects": {
+              "min": 792,
+              "max": 792,
+              "distinct": 1
+            },
+            "visibleObjects": {
+              "min": 780,
+              "max": 780,
+              "distinct": 1
+            },
+            "meshes": {
+              "min": 570,
+              "max": 570,
+              "distinct": 1
+            },
+            "visibleMeshes": {
+              "min": 560,
+              "max": 560,
+              "distinct": 1
+            },
+            "visibleCastShadowMeshes": {
+              "min": 375,
+              "max": 375,
+              "distinct": 1
+            },
+            "visibleReceiveShadowMeshes": {
+              "min": 515,
+              "max": 515,
+              "distinct": 1
+            }
+          },
+          "actors": {
+            "min": 14,
+            "max": 14,
+            "distinct": 1
+          },
+          "observerReadMs": {
+            "min": 0,
+            "max": 0.20000004768371582,
+            "distinct": 4
+          },
+          "sceneReadMs": {
+            "min": 0.19999992847442627,
+            "max": 0.8999999761581421,
+            "distinct": 8
+          }
+        },
+        {
+          "label": "final",
+          "rep": 1,
+          "rafP95Ms": 80.39999999999418,
+          "selectedRendererCounts": [
+            1
+          ],
+          "growingSceneCounts": [
+            1
+          ],
+          "render": {
+            "calls": {
+              "min": 908,
+              "max": 910,
+              "distinct": 3
+            },
+            "triangles": {
+              "min": 354020,
+              "max": 354724,
+              "distinct": 3
+            },
+            "points": {
+              "min": 18,
+              "max": 18,
+              "distinct": 1
+            },
+            "lines": {
+              "min": 0,
+              "max": 0,
+              "distinct": 1
+            },
+            "frame": {
+              "min": 587,
+              "max": 729,
+              "distinct": 143
+            }
+          },
+          "memory": {
+            "geometries": {
+              "min": 562,
+              "max": 562,
+              "distinct": 1
+            },
+            "textures": {
+              "min": 10,
+              "max": 10,
+              "distinct": 1
+            }
+          },
+          "programCount": {
+            "min": 10,
+            "max": 10,
+            "distinct": 1
+          },
+          "programSamples": [
+            [
+              ":06be2090:241:2",
+              ":07cae414:244:1",
+              ":304748f0:260:2",
+              ":38395b8f:248:1",
+              ":3fe075a1:257:1",
+              ":59cfcb00:263:78",
+              ":74762078:261:1",
+              ":ba1cbba9:251:17",
+              ":dbe56aa0:263:2",
+              "patchwork-otter-v1:06e9e7a0:257:1"
+            ],
+            [
+              ":06be2090:241:2",
+              ":07cae414:244:1",
+              ":304748f0:260:2",
+              ":38395b8f:248:1",
+              ":3fe075a1:257:1",
+              ":59cfcb00:263:78",
+              ":74762078:261:1",
+              ":ba1cbba9:251:17",
+              ":dbe56aa0:263:2",
+              "patchwork-otter-v1:06e9e7a0:257:1"
+            ]
+          ],
+          "scene": {
+            "objects": {
+              "min": 792,
+              "max": 792,
+              "distinct": 1
+            },
+            "visibleObjects": {
+              "min": 780,
+              "max": 780,
+              "distinct": 1
+            },
+            "meshes": {
+              "min": 570,
+              "max": 570,
+              "distinct": 1
+            },
+            "visibleMeshes": {
+              "min": 560,
+              "max": 560,
+              "distinct": 1
+            },
+            "visibleCastShadowMeshes": {
+              "min": 375,
+              "max": 375,
+              "distinct": 1
+            },
+            "visibleReceiveShadowMeshes": {
+              "min": 515,
+              "max": 515,
+              "distinct": 1
+            }
+          },
+          "actors": {
+            "min": 14,
+            "max": 14,
+            "distinct": 1
+          },
+          "observerReadMs": {
+            "min": 0,
+            "max": 0.30000007152557373,
+            "distinct": 5
+          },
+          "sceneReadMs": {
+            "min": 0.19999992847442627,
+            "max": 8.200000047683716,
+            "distinct": 8
+          }
+        },
+        {
+          "label": "final",
+          "rep": 2,
+          "rafP95Ms": 81.20000000000437,
+          "selectedRendererCounts": [
+            1
+          ],
+          "growingSceneCounts": [
+            1
+          ],
+          "render": {
+            "calls": {
+              "min": 906,
+              "max": 910,
+              "distinct": 5
+            },
+            "triangles": {
+              "min": 353316,
+              "max": 354724,
+              "distinct": 5
+            },
+            "points": {
+              "min": 18,
+              "max": 18,
+              "distinct": 1
+            },
+            "lines": {
+              "min": 0,
+              "max": 0,
+              "distinct": 1
+            },
+            "frame": {
+              "min": 564,
+              "max": 702,
+              "distinct": 139
+            }
+          },
+          "memory": {
+            "geometries": {
+              "min": 562,
+              "max": 562,
+              "distinct": 1
+            },
+            "textures": {
+              "min": 10,
+              "max": 10,
+              "distinct": 1
+            }
+          },
+          "programCount": {
+            "min": 10,
+            "max": 10,
+            "distinct": 1
+          },
+          "programSamples": [
+            [
+              ":06be2090:241:2",
+              ":07cae414:244:1",
+              ":304748f0:260:2",
+              ":38395b8f:248:1",
+              ":3fe075a1:257:1",
+              ":59cfcb00:263:78",
+              ":74762078:261:1",
+              ":ba1cbba9:251:17",
+              ":dbe56aa0:263:2",
+              "patchwork-otter-v1:06e9e7a0:257:1"
+            ],
+            [
+              ":06be2090:241:2",
+              ":07cae414:244:1",
+              ":304748f0:260:2",
+              ":38395b8f:248:1",
+              ":3fe075a1:257:1",
+              ":59cfcb00:263:78",
+              ":74762078:261:1",
+              ":ba1cbba9:251:17",
+              ":dbe56aa0:263:2",
+              "patchwork-otter-v1:06e9e7a0:257:1"
+            ]
+          ],
+          "scene": {
+            "objects": {
+              "min": 792,
+              "max": 792,
+              "distinct": 1
+            },
+            "visibleObjects": {
+              "min": 780,
+              "max": 780,
+              "distinct": 1
+            },
+            "meshes": {
+              "min": 570,
+              "max": 570,
+              "distinct": 1
+            },
+            "visibleMeshes": {
+              "min": 560,
+              "max": 560,
+              "distinct": 1
+            },
+            "visibleCastShadowMeshes": {
+              "min": 375,
+              "max": 375,
+              "distinct": 1
+            },
+            "visibleReceiveShadowMeshes": {
+              "min": 515,
+              "max": 515,
+              "distinct": 1
+            }
+          },
+          "actors": {
+            "min": 14,
+            "max": 14,
+            "distinct": 1
+          },
+          "observerReadMs": {
+            "min": 0,
+            "max": 0.20000004768371582,
+            "distinct": 4
+          },
+          "sceneReadMs": {
+            "min": 0.2999999523162842,
+            "max": 0.8999999761581421,
+            "distinct": 5
+          }
+        },
+        {
+          "label": "final",
+          "rep": 3,
+          "rafP95Ms": 80.5,
+          "selectedRendererCounts": [
+            1
+          ],
+          "growingSceneCounts": [
+            1
+          ],
+          "render": {
+            "calls": {
+              "min": 896,
+              "max": 910,
+              "distinct": 11
+            },
+            "triangles": {
+              "min": 346980,
+              "max": 354724,
+              "distinct": 10
+            },
+            "points": {
+              "min": 18,
+              "max": 18,
+              "distinct": 1
+            },
+            "lines": {
+              "min": 0,
+              "max": 0,
+              "distinct": 1
+            },
+            "frame": {
+              "min": 456,
+              "max": 594,
+              "distinct": 139
+            }
+          },
+          "memory": {
+            "geometries": {
+              "min": 562,
+              "max": 562,
+              "distinct": 1
+            },
+            "textures": {
+              "min": 10,
+              "max": 10,
+              "distinct": 1
+            }
+          },
+          "programCount": {
+            "min": 10,
+            "max": 10,
+            "distinct": 1
+          },
+          "programSamples": [
+            [
+              ":06be2090:241:2",
+              ":07cae414:244:1",
+              ":304748f0:260:2",
+              ":38395b8f:248:1",
+              ":3fe075a1:257:1",
+              ":59cfcb00:263:78",
+              ":74762078:261:1",
+              ":ba1cbba9:251:17",
+              ":dbe56aa0:263:2",
+              "patchwork-otter-v1:06e9e7a0:257:1"
+            ],
+            [
+              ":06be2090:241:2",
+              ":07cae414:244:1",
+              ":304748f0:260:2",
+              ":38395b8f:248:1",
+              ":3fe075a1:257:1",
+              ":59cfcb00:263:78",
+              ":74762078:261:1",
+              ":ba1cbba9:251:17",
+              ":dbe56aa0:263:2",
+              "patchwork-otter-v1:06e9e7a0:257:1"
+            ]
+          ],
+          "scene": {
+            "objects": {
+              "min": 792,
+              "max": 792,
+              "distinct": 1
+            },
+            "visibleObjects": {
+              "min": 780,
+              "max": 780,
+              "distinct": 1
+            },
+            "meshes": {
+              "min": 570,
+              "max": 570,
+              "distinct": 1
+            },
+            "visibleMeshes": {
+              "min": 560,
+              "max": 560,
+              "distinct": 1
+            },
+            "visibleCastShadowMeshes": {
+              "min": 375,
+              "max": 375,
+              "distinct": 1
+            },
+            "visibleReceiveShadowMeshes": {
+              "min": 515,
+              "max": 515,
+              "distinct": 1
+            }
+          },
+          "actors": {
+            "min": 14,
+            "max": 14,
+            "distinct": 1
+          },
+          "observerReadMs": {
+            "min": 0,
+            "max": 0.19999992847442627,
+            "distinct": 4
+          },
+          "sceneReadMs": {
+            "min": 0.19999992847442627,
+            "max": 0.8999999761581421,
+            "distinct": 7
+          }
+        }
+      ],
+      "interpretation": "Read-only instrumented diagnostic. Render calls/triangles cover the latest renderer.render including shadow passes, not all browser-frame CPU/GPU work. Geometry counts are renderer registrations awaiting disposal, not bytes. Graph visibility is not frustum visibility. This does not erase the original slow cases or identify their cause.",
+      "programKeyDifference": "The patchwork-otter-v1 key is 280 chars before and 257 after. Static fixed-dist inspection found a 42-char observer hook before versus the restored 19-char native empty hook after. Suffix-stripped prefix length238 and inverse FNV d27b6f1c are consistent; raw prefix byte equality was not directly captured. Fabric source and the shared Three bundle are unchanged; this is key transparency, not evidence of altered shader work."
+    }
+  },
+  "setupContrast": [
+    {
+      "width": 390,
+      "headers": [
+        {
+          "surface": "grade",
+          "text": "まなぶ じゅんび",
+          "foreground": {
+            "css": "rgb(48, 54, 79)",
+            "rgba": [
+              48,
+              54,
+              79,
+              1
+            ]
+          },
+          "background": {
+            "css": "rgb(255, 253, 249)",
+            "rgba": [
+              255,
+              253,
+              249,
+              1
+            ]
+          },
+          "contrastRatio": 11.702805987772294,
+          "contrastMethod": "WCAG relative sRGB luminance; foreground alpha composited over the required opaque background",
+          "effectiveOpacity": 1,
+          "display": "flex",
+          "visibility": "visible",
+          "backgroundImage": "none",
+          "box": {
+            "x": 82,
+            "y": 20.796875,
+            "width": 156.078125,
+            "height": 38.390625
+          },
+          "headerBox": {
+            "x": 20,
+            "y": 0,
+            "width": 350,
+            "height": 84
+          },
+          "backBox": {
+            "x": 20,
+            "y": 18,
+            "width": 44,
+            "height": 44
+          },
+          "sheetBox": {
+            "x": 20,
+            "y": 168.109375,
+            "width": 350,
+            "height": 571.796875
+          }
+        },
+        {
+          "surface": "subject",
+          "text": "まなぶ じゅんび",
+          "foreground": {
+            "css": "rgb(48, 54, 79)",
+            "rgba": [
+              48,
+              54,
+              79,
+              1
+            ]
+          },
+          "background": {
+            "css": "rgb(255, 253, 249)",
+            "rgba": [
+              255,
+              253,
+              249,
+              1
+            ]
+          },
+          "contrastRatio": 11.702805987772294,
+          "contrastMethod": "WCAG relative sRGB luminance; foreground alpha composited over the required opaque background",
+          "effectiveOpacity": 1,
+          "display": "flex",
+          "visibility": "visible",
+          "backgroundImage": "none",
+          "box": {
+            "x": 82,
+            "y": 20.796875,
+            "width": 156.078125,
+            "height": 38.390625
+          },
+          "headerBox": {
+            "x": 20,
+            "y": 0,
+            "width": 350,
+            "height": 84
+          },
+          "backBox": {
+            "x": 20,
+            "y": 18,
+            "width": 44,
+            "height": 44
+          },
+          "sheetBox": {
+            "x": 20,
+            "y": 281,
+            "width": 350,
+            "height": 346
+          }
+        },
+        {
+          "surface": "math",
+          "text": "まなぶ じゅんび",
+          "foreground": {
+            "css": "rgb(48, 54, 79)",
+            "rgba": [
+              48,
+              54,
+              79,
+              1
+            ]
+          },
+          "background": {
+            "css": "rgb(255, 253, 249)",
+            "rgba": [
+              255,
+              253,
+              249,
+              1
+            ]
+          },
+          "contrastRatio": 11.702805987772294,
+          "contrastMethod": "WCAG relative sRGB luminance; foreground alpha composited over the required opaque background",
+          "effectiveOpacity": 1,
+          "display": "flex",
+          "visibility": "visible",
+          "backgroundImage": "none",
+          "box": {
+            "x": 82,
+            "y": 20.796875,
+            "width": 156.078125,
+            "height": 38.390625
+          },
+          "headerBox": {
+            "x": 20,
+            "y": 0,
+            "width": 350,
+            "height": 84
+          },
+          "backBox": {
+            "x": 20,
+            "y": 18,
+            "width": 44,
+            "height": 44
+          },
+          "sheetBox": {
+            "x": 20,
+            "y": 84,
+            "width": 350,
+            "height": 958
+          }
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "headers": [
+        {
+          "surface": "grade",
+          "text": "まなぶ じゅんび",
+          "foreground": {
+            "css": "rgb(48, 54, 79)",
+            "rgba": [
+              48,
+              54,
+              79,
+              1
+            ]
+          },
+          "background": {
+            "css": "rgb(255, 253, 249)",
+            "rgba": [
+              255,
+              253,
+              249,
+              1
+            ]
+          },
+          "contrastRatio": 11.702805987772294,
+          "contrastMethod": "WCAG relative sRGB luminance; foreground alpha composited over the required opaque background",
+          "effectiveOpacity": 1,
+          "display": "flex",
+          "visibility": "visible",
+          "backgroundImage": "none",
+          "box": {
+            "x": 156,
+            "y": 20.796875,
+            "width": 156.078125,
+            "height": 38.390625
+          },
+          "headerBox": {
+            "x": 94,
+            "y": 0,
+            "width": 580,
+            "height": 84
+          },
+          "backBox": {
+            "x": 94,
+            "y": 18,
+            "width": 44,
+            "height": 44
+          },
+          "sheetBox": {
+            "x": 114,
+            "y": 253.609375,
+            "width": 540,
+            "height": 580.796875
+          }
+        },
+        {
+          "surface": "subject",
+          "text": "まなぶ じゅんび",
+          "foreground": {
+            "css": "rgb(48, 54, 79)",
+            "rgba": [
+              48,
+              54,
+              79,
+              1
+            ]
+          },
+          "background": {
+            "css": "rgb(255, 253, 249)",
+            "rgba": [
+              255,
+              253,
+              249,
+              1
+            ]
+          },
+          "contrastRatio": 11.702805987772294,
+          "contrastMethod": "WCAG relative sRGB luminance; foreground alpha composited over the required opaque background",
+          "effectiveOpacity": 1,
+          "display": "flex",
+          "visibility": "visible",
+          "backgroundImage": "none",
+          "box": {
+            "x": 156,
+            "y": 20.796875,
+            "width": 156.078125,
+            "height": 38.390625
+          },
+          "headerBox": {
+            "x": 94,
+            "y": 0,
+            "width": 580,
+            "height": 84
+          },
+          "backBox": {
+            "x": 94,
+            "y": 18,
+            "width": 44,
+            "height": 44
+          },
+          "sheetBox": {
+            "x": 114,
+            "y": 366.5,
+            "width": 540,
+            "height": 355
+          }
+        },
+        {
+          "surface": "math",
+          "text": "まなぶ じゅんび",
+          "foreground": {
+            "css": "rgb(48, 54, 79)",
+            "rgba": [
+              48,
+              54,
+              79,
+              1
+            ]
+          },
+          "background": {
+            "css": "rgb(255, 253, 249)",
+            "rgba": [
+              255,
+              253,
+              249,
+              1
+            ]
+          },
+          "contrastRatio": 11.702805987772294,
+          "contrastMethod": "WCAG relative sRGB luminance; foreground alpha composited over the required opaque background",
+          "effectiveOpacity": 1,
+          "display": "flex",
+          "visibility": "visible",
+          "backgroundImage": "none",
+          "box": {
+            "x": 156,
+            "y": 20.796875,
+            "width": 156.078125,
+            "height": 38.390625
+          },
+          "headerBox": {
+            "x": 94,
+            "y": 0,
+            "width": 580,
+            "height": 84
+          },
+          "backBox": {
+            "x": 94,
+            "y": 18,
+            "width": 44,
+            "height": 44
+          },
+          "sheetBox": {
+            "x": 114,
+            "y": 84,
+            "width": 540,
+            "height": 967
+          }
+        }
+      ]
+    }
+  ],
+  "boundaries": {
+    "deployment": "NOT_PERFORMED",
+    "physicalDevices": "NOT_EVALUATED",
+    "childComprehension": "NOT_EVALUATED",
+    "childAppealRetentionLearningEffect": "NOT_EVALUATED",
+    "art": "Author review of the changed flow and retained adopted screens; not a new world-wide art approval."
+  }
+}

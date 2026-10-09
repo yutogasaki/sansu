@@ -3,7 +3,7 @@ import * as T from 'three';
 import type { GardenTime } from '../three/garden/presentation';
 import { boatProgress, docked } from '../../../domain/growingIsland';
 import type { Cell, GrowingState, Moment, Villager } from '../../../domain/growingIsland';
-import { makeVillagerActor } from './actors';
+import { disposeActor, makeVillagerActor } from './actors';
 import { MomentEffects } from './momentEffects';
 import { buildObjectLayer, type Ghost, type ObjectLayer } from './objectLayer';
 import { frameCamera, initialView, panFromDrag } from './growingCamera';
@@ -12,8 +12,11 @@ import { WorldEffects } from './worldEffects';
 import type { SceneLayout } from './sceneLayout';
 import { menuPictureMaker, type MenuPictures } from './menuMiniatures';
 import { growingHitTarget } from './growingHitTarget';
+import type { DropPlayKind } from './growingDropPlay';
+import { DROP_PLAY_MS } from './growingDropPlay';
 import { AdaptiveIslandQuality } from '../three/adaptiveIslandQuality';
 import { createIslandRenderer } from '../three/createIslandRenderer';
+import { retainSharedRendererCache } from '../three/sharedRendererCache';
 import { bridgeAnchor, bridgeEnd } from '../../../domain/growingIsland/space';
 
 export interface WorldHandlers {
@@ -22,6 +25,8 @@ export interface WorldHandlers {
     onOpen: (plotId: string) => void;
     onDisembark: () => void;
     onActorTap: (id: string) => void;
+    onActorDrag?: () => void;
+    onActorPlay?: (id: string, kind: DropPlayKind) => void;
     onPop?: () => void;
     /** The world's own loading steps: the scene is built, then the first picture is on screen. */
     onStage?: (stage: 'scene' | 'ready' | 'failed') => void;
@@ -99,19 +104,52 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
         node.append(renderer.domElement);
         handlerRef.current.onStage?.('scene');
         const world = createWorldScene(renderer); disposers.push(() => world.dispose());
+        const releaseSharedCache = retainSharedRendererCache(world.m.residentFabric());
+        disposers.push(releaseSharedCache);
         let bridgeWork: { at: number; resident: string; owner: string; parts: T.Object3D[]; crossing?: boolean } | undefined;
         let bridgeClear = 0;
         disposers.push(() => window.clearTimeout(bridgeClear));
         const effects = new WorldEffects(world.scene); disposers.push(() => effects.dispose());
         const moments = new MomentEffects(world.scene); disposers.push(() => moments.dispose());
         const camera = new T.OrthographicCamera(-5, 5, 5, -5, .1, 100), view = initialView();
+        type View = ReturnType<typeof initialView>;
+        let playFocus: { at: number; from: View; to: View; returnTo: View; restoring?: boolean } | undefined;
+        let interruptedOrigin: View | undefined;
+        const copyView = (): View => ({ zoom: view.zoom, azimuth: view.azimuth, pan: { ...view.pan } });
+        const ease = (n: number) => n * n * (3 - 2 * n);
+        const restoreFocus = () => {
+            if (reduced || !interruptedOrigin) return;
+            playFocus = { at: performance.now(), from: copyView(), to: interruptedOrigin, returnTo: interruptedOrigin, restoring: true };
+            interruptedOrigin = undefined;
+        };
+        const focusOnPlay = (cell: Cell) => {
+            if (reduced) return;
+            const from = copyView(), point = layout.point(cell);
+            const centered = frameCamera(camera, layout, { ...view, pan: { x: 0, z: 0 } }, width / height);
+            const to: View = { zoom: Math.max(from.zoom, 1.65), azimuth: from.azimuth,
+                pan: { x: (point.x - centered.x) * .8, z: (point.z - centered.z) * .8 } };
+            playFocus = { at: performance.now(), from, to, returnTo: interruptedOrigin ?? from };
+            interruptedOrigin = undefined;
+            frameCamera(camera, layout, view, width / height);
+        };
         let layout: SceneLayout = world.layout(latest.current.state), layer: ObjectLayer | undefined;
         let unopened = new Set<string>(), known: Set<string> | undefined, last = performance.now(), width = 1, height = 1, nextWave = 0, showing = false;
         disposers.push(() => layer?.dispose());
         const reduced = reducedMotion();
         let pendingConcert: number | undefined;
+        let rebuilt: { state: GrowingState; ghost?: Ghost; selected?: string; hints?: readonly Cell[] } | undefined;
 
         const rebuild = (next: GrowingState, nextGhost?: Ghost, selected?: string, nextHints?: readonly Cell[]) => {
+            // The first props effect follows the initial scene build with the same
+            // immutable inputs. Keep that scene (and its visitor) instead of rebuilding it.
+            if (rebuilt?.state === next && rebuilt.ghost === nextGhost && rebuilt.selected === selected && rebuilt.hints === nextHints) return;
+            if (rebuilt?.state === next && layer) {
+                // Preview-only input does not change saved objects, walking paths,
+                // visitors, opening effects, bridge work or the current camera.
+                layer.updatePreview(nextGhost, selected, nextHints);
+                rebuilt = { state: next, ghost: nextGhost, selected, hints: nextHints };
+                return;
+            }
             layout = world.layout(next);
             node.dataset.growingBounds = JSON.stringify(layout.bounds);
             node.dataset.bridgeSaved = String(Boolean(next.bridge));
@@ -138,6 +176,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             if (!next.bridge) { window.clearTimeout(bridgeClear); setBridgeStage(undefined); }
             else if (bridgeWork) bridgeWork.parts = layer.objects.get('bridge')?.children[0]?.children.filter(o => o.name.startsWith('bridge-')) ?? [];
             frameCamera(camera, layout, view, width / height);
+            rebuilt = { state: next, ghost: nextGhost, selected, hints: nextHints };
         };
         const resize = () => {
             const nextWidth = Math.max(1, node.clientWidth), nextHeight = Math.max(1, node.clientHeight);
@@ -166,6 +205,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             },
             concert: (cell, receipt) => { world.life.startConcert(cell, performance.now()); pendingConcert = receipt; },
             focus: id => {
+                playFocus = undefined;
                 const target = world.life.focusPositionOf(id) ?? layer?.objects.get(id)?.position.clone().add(new T.Vector3(0, 0, id === 'bridge' ? 1.1 : 0)); if (!target) return;
                 view.zoom = Math.max(view.zoom, id === 'bridge' ? 1.35 : 2.2);
                 const home = frameCamera(camera, layout, { ...view, pan: { x: 0, z: 0 } }, width / height);
@@ -210,8 +250,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
                     actor.root.rotation.y = .3;
                     lens.position.set(.18, .7, 1.25); lens.lookAt(0, .6, 0);
                     try { out[villager.id] = snap(lens, scene, size, size).toDataURL('image/png'); } catch { /* A missing face falls back to its initial. */ }
-                    actor.root.removeFromParent();
-                    actor.root.traverse(o => { if (o instanceof T.Mesh) o.geometry.dispose(); });
+                    disposeActor(actor);
                 }
                 return out;
             },
@@ -244,6 +283,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             }
             if (latest.current.show !== showing) {
                 showing = Boolean(latest.current.show);
+                playFocus = undefined;
                 if (showing) { view.zoom = 1; view.pan = { x: 0, z: 0 }; }
             }
             if (latest.current.show) {
@@ -251,6 +291,20 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
                 view.azimuth += delta * (reduced ? .00004 : .00012);
                 frameCamera(camera, layout, view, width / height);
                 if (now > nextWave) { world.life.celebrate(now); nextWave = now + 6000; }
+            }
+            if (playFocus && !latest.current.show) {
+                const elapsed = now - playFocus.at;
+                const amount = playFocus.restoring ? Math.min(1, elapsed / 420)
+                    : elapsed < 360 ? ease(elapsed / 360)
+                        : elapsed < DROP_PLAY_MS - 850 ? 1
+                            : 1 - ease(Math.min(1, (elapsed - (DROP_PLAY_MS - 850)) / 850));
+                const weight = playFocus.restoring ? ease(amount) : amount;
+                const base = !playFocus.restoring && elapsed >= DROP_PLAY_MS - 850 ? playFocus.returnTo : playFocus.from;
+                view.zoom = base.zoom + (playFocus.to.zoom - base.zoom) * weight;
+                view.pan.x = base.pan.x + (playFocus.to.pan.x - base.pan.x) * weight;
+                view.pan.z = base.pan.z + (playFocus.to.pan.z - base.pan.z) * weight;
+                frameCamera(camera, layout, view, width / height);
+                if (elapsed >= (playFocus.restoring ? 420 : DROP_PLAY_MS)) playFocus = undefined;
             }
             world.life.tick(now, delta, reduced, latest.current.time === 'night');
             if (bridgeWork && current.bridge) {
@@ -308,21 +362,42 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             ray.setFromCamera(ndc, camera); return ray;
         };
         const ground = (event: PointerEvent) => cast(event).ray.intersectPlane(plane, new T.Vector3());
-        const actorAt = (event: PointerEvent) => cast(event).intersectObjects(world.life.objects(), true)[0]?.object.userData.actorId as string | undefined;
+        const actorAt = (event: PointerEvent) => {
+            const actors = world.life.objects();
+            const direct = cast(event).intersectObjects(actors, true)[0]?.object.userData.actorId as string | undefined;
+            if (direct) return direct;
+            // Tiny moving friends still need a finger-sized drag start. This fallback is
+            // limited to actors; ordinary object taps keep their visible hit priority.
+            const rect = renderer.domElement.getBoundingClientRect();
+            const radius = event.pointerType === 'touch' ? 25 : 16;
+            let nearest: { id: string; distance: number } | undefined;
+            for (const root of actors) {
+                const id = root.userData.actorId as string | undefined;
+                if (!id || id === 'visitor') continue;
+                const center = new T.Box3().setFromObject(root).getCenter(new T.Vector3()).project(camera);
+                const x = rect.left + (center.x + 1) * rect.width / 2, y = rect.top + (1 - center.y) * rect.height / 2;
+                const distance = Math.hypot(event.clientX - x, event.clientY - y);
+                if (distance <= radius && (!nearest || distance < nearest.distance)) nearest = { id, distance };
+            }
+            return nearest?.id;
+        };
         const down = (event: PointerEvent) => {
             try { renderer.domElement.setPointerCapture(event.pointerId); } catch { /* A pointer that already ended cannot be captured. */ }
+            if (playFocus) { interruptedOrigin = playFocus.returnTo; playFocus = undefined; }
             pointers.set(event.pointerId, { x: event.clientX, y: event.clientY, sx: event.clientX, sy: event.clientY });
             if (pointers.size === 1) { moved = false; pendingActor = actorAt(event); carrying = undefined; }
             if (pointers.size === 2) {
+                interruptedOrigin = undefined;
                 const [a, b] = [...pointers.values()];
                 pinch = Math.hypot(a.x - b.x, a.y - b.y); twist = Math.atan2(b.y - a.y, b.x - a.x); pendingActor = undefined;
-                if (carrying) { world.life.drop(carrying, performance.now()); carrying = undefined; }
+                if (carrying) { world.life.cancelCarry(carrying, performance.now()); carrying = undefined; }
             }
         };
         const move = (event: PointerEvent) => {
             const p = pointers.get(event.pointerId); if (!p) return;
             const dx = event.clientX - p.x, dy = event.clientY - p.y; p.x = event.clientX; p.y = event.clientY;
             if (pointers.size === 2) {
+                interruptedOrigin = undefined;
                 const [a, b] = [...pointers.values()], distance = Math.hypot(a.x - b.x, a.y - b.y);
                 if (pinch > 0) view.zoom = Math.max(1, Math.min(4, view.zoom * distance / pinch));
                 // Two fingers twisting turn the island, as on the current island.
@@ -333,15 +408,26 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             }
             if (!moved && Math.hypot(event.clientX - p.sx, event.clientY - p.sy) < 7) return;
             moved = true;
-            if (pendingActor && !carrying && world.life.pick(pendingActor)) carrying = pendingActor;
+            if (pendingActor && !carrying && world.life.pick(pendingActor)) { carrying = pendingActor; handlerRef.current.onActorDrag?.(); }
             pendingActor = undefined;
             if (carrying) { const point = ground(event); if (point) world.life.drag(carrying, point); return; }
+            interruptedOrigin = undefined;
             panFromDrag(camera, view, dx, dy, width, height); frameCamera(camera, layout, view, width / height);
         };
         const up = (event: PointerEvent) => {
             if (!pointers.delete(event.pointerId)) return;
-            if (carrying) { world.life.drop(carrying, performance.now()); carrying = undefined; return; }
-            if (moved || pointers.size) return;
+            if (carrying) {
+                const id = carrying, finalPoint = ground(event);
+                if (finalPoint) world.life.drag(id, finalPoint);
+                const play = finalPoint ? world.life.drop(id, performance.now()) : undefined;
+                if (!finalPoint) world.life.cancelCarry(id, performance.now());
+                carrying = undefined;
+                if (play) { focusOnPlay(play.cell); handlerRef.current.onActorPlay?.(id, play.kind); }
+                else restoreFocus();
+                return;
+            }
+            if (moved || pointers.size) { restoreFocus(); return; }
+            restoreFocus();
             const h = handlerRef.current;
             if (latest.current.ghost) {
                 // While placing, every tap chooses the cell under the finger.
@@ -359,21 +445,30 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
                 if (data.actorId) { world.life.hop(data.actorId, performance.now()); h.onActorTap(data.actorId); return; }
                 if (data.objectId) { h.onSelect(data.objectId); return; }
             }
+            const nearbyActor = actorAt(event);
+            if (nearbyActor) { world.life.hop(nearbyActor, performance.now()); h.onActorTap(nearbyActor); return; }
             const point = ground(event);
             if (point) { h.onSelect(undefined); h.onCell(layout.cellAt(point)); }
         };
+        const cancel = (event: PointerEvent) => {
+            if (!pointers.delete(event.pointerId)) return;
+            if (carrying) { world.life.cancelCarry(carrying, performance.now()); carrying = undefined; }
+            pendingActor = undefined; moved = true;
+            if (!pointers.size) restoreFocus();
+        };
         const wheel = (event: WheelEvent) => {
             event.preventDefault();
+            playFocus = undefined; interruptedOrigin = undefined;
             view.zoom = Math.max(1, Math.min(4, view.zoom * Math.exp(-event.deltaY * .002)));
             frameCamera(camera, layout, view, width / height);
         };
         const canvas = renderer.domElement;
         canvas.addEventListener('pointerdown', down); canvas.addEventListener('pointermove', move);
-        canvas.addEventListener('pointerup', up); canvas.addEventListener('pointercancel', up);
+        canvas.addEventListener('pointerup', up); canvas.addEventListener('pointercancel', cancel);
         canvas.addEventListener('wheel', wheel, { passive: false });
         disposers.push(() => {
             canvas.removeEventListener('pointerdown', down); canvas.removeEventListener('pointermove', move);
-            canvas.removeEventListener('pointerup', up); canvas.removeEventListener('pointercancel', up);
+            canvas.removeEventListener('pointerup', up); canvas.removeEventListener('pointercancel', cancel);
             canvas.removeEventListener('wheel', wheel);
         });
         return release;

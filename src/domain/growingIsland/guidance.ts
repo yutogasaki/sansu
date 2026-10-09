@@ -20,6 +20,12 @@ export function pendingAchievements(state: GrowingState) {
 export function newGuidance(automatic: boolean): GrowingGuidance {
     return { version: 1, starter: { automatic, steps: {} }, achievements: {}, notified: [] };
 }
+/** A stored or missing flower cannot be offered as a place on the island. */
+export function pendingRevisitFlower(state: GrowingState) {
+    const marker = state.guidance?.firstFlower;
+    if (!marker || marker.seen) return undefined;
+    return state.landmarks.find(item => item.id === marker.id && item.kind === 'flower' && item.cell);
+}
 const target = (state: GrowingState, id: string) => state.plots.find(p => p.id === id) ?? state.landmarks.find(p => p.id === id)
     ?? state.keepsakes.find(p => p.id === id) ?? state.villagers.find(p => p.id === id);
 function evidence(state: GrowingState, source: string, at?: number, id?: string): GuidanceEvidence {
@@ -69,6 +75,7 @@ export function validateGuidance(g: GrowingGuidance) {
     if (g.version !== 1 || !g.starter || typeof g.starter.automatic !== 'boolean' || !g.starter.steps || !g.achievements
         || Array.isArray(g.starter.steps) || Array.isArray(g.achievements) || !Array.isArray(g.notified) || g.notified.some(id => !ACHIEVEMENTS.includes(id) || !g.achievements[id])
         || (g.selected !== undefined && !ACHIEVEMENTS.includes(g.selected))
+        || (g.firstFlower !== undefined && (typeof g.firstFlower.id !== 'string' || !g.firstFlower.id || typeof g.firstFlower.seen !== 'boolean'))
         || Object.entries(g.starter.steps).some(([id, value]) => !STARTER_STEPS.includes(id as StarterStepId) || !validEvidence(value))
         || Object.entries(g.achievements).some(([id, value]) => !ACHIEVEMENTS.includes(id as AchievementId) || !validEvidence(value))
         || (g.learning !== undefined && !validEvidence(g.learning)))

@@ -4,6 +4,25 @@ export const ISLAND_CANDIDATE = 'mystic-island-shore-garden-v18';
 export const button = (page, name) => page.getByRole('button', { name, exact: true });
 export const activate = (locator, touch = false) => touch ? locator.tap() : locator.click();
 
+/** Open the visible Growing menu, including the label used by older update builds. */
+export async function openGrowingMenu(page, { touch = false } = {}) {
+    const menu = page.locator('.growing-menu');
+    if (!await menu.isVisible()) {
+        const trigger = page.locator('.growing-island').getByRole('button', { name: /^(しまのメニュー|メニュー)$/ });
+        await activate(trigger, touch);
+    }
+    await menu.waitFor();
+    return menu;
+}
+
+/** Home keeps destinations in its menu; other screens retain the shared tabs. */
+export async function openIslandDestination(page, name, { touch = false } = {}) {
+    const tab = page.locator('.island-shell-nav').getByRole('button', { name, exact: true });
+    const destination = await tab.isVisible() ? tab : (await openGrowingMenu(page, { touch })).getByRole('button', { name, exact: true });
+    await destination.scrollIntoViewIfNeeded();
+    await activate(destination, touch);
+}
+
 export async function seedDev(page, { skill = 'add_1d_1', subject = 'math', familiar = true, name = 'つむぎ' } = {}) {
     return page.evaluate(async ({ skill, subject, familiar, name }) => {
         const { db } = await import('/src/db/index.ts');
@@ -86,7 +105,10 @@ export async function waitReady(page) {
         const root = document.querySelector('.island-page');
         // Learning deliberately hides its mounted world; wait for the actual input surface.
         if (root?.getAttribute('data-mode') === 'learning') return Boolean(root.querySelector('[data-input-ready="true"] .park-answer'));
-        const canvas = root?.querySelector('.life-world[data-rendered="true"] canvas, [data-renderer="three"] canvas');
+        // Growing's record can be ready before its first real frame. Its loading
+        // overlay must be gone before a visible canvas counts as operable.
+        if (root?.querySelector('.growing-loading--overlay')) return false;
+        const canvas = root?.querySelector('[data-growing-island="ready"] [data-growing-world] canvas, .life-world[data-rendered="true"] canvas, [data-renderer="three"] canvas');
         return Boolean(canvas && canvas.getBoundingClientRect().width > 0 && canvas.getBoundingClientRect().height > 0);
     });
 }

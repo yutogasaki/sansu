@@ -72,7 +72,17 @@ function apply(state: GrowingState, command: Command): TownEvent[] {
             state.guidance.starter.automatic = false;
             break;
         }
+        case 'choose-starter-play': {
+            if (!state.guidance || !state.guidance.starter.steps.S3 || state.guidance.starter.steps.S4
+                || (command.id !== 'A3' && command.id !== 'A4')) fail('もういちど えらんでね。');
+            state.guidance.selected = command.id;
+            break;
+        }
         case 'starter-guide': if (state.guidance) state.guidance.starter.automatic = command.automatic; break;
+        case 'ack-revisit-flower': {
+            if (state.guidance?.firstFlower?.id === command.id) state.guidance.firstFlower.seen = true;
+            break;
+        }
         case 'ack-achievements': {
             if (state.guidance) for (const id of command.ids) if (state.guidance.achievements[id] && !state.guidance.notified.includes(id)) state.guidance.notified.push(id);
             break;
@@ -114,7 +124,10 @@ function apply(state: GrowingState, command: Command): TownEvent[] {
             } else if (command.kind === 'flower') color = 'red';
             claim(state, command.cell);
             pay(state, price);
-            state.landmarks.push({ id: `l${state.nextId++}`, kind: command.kind, cell: { ...command.cell }, growth: 0, ...(color ? { color } : {}) });
+            const id = `l${state.nextId++}`;
+            state.landmarks.push({ id, kind: command.kind, cell: { ...command.cell }, growth: 0, ...(color ? { color } : {}) });
+            if (command.kind === 'flower' && state.guidance && !state.guidance.firstFlower)
+                state.guidance.firstFlower = { id, seen: false };
             if (color) noteColor(state, color);
             break;
         }

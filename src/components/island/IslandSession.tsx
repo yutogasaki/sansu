@@ -479,6 +479,17 @@ export function IslandSession({ profile }: { profile: UserProfile }) {
         setFurniturePlacementSearch(undefined); setFurniturePlacementResult(undefined); setPreview(undefined); setScreen('furniture');
     } : home;
     const houseOverview = screen === 'keepsakes' && houseSection === 'home';
+    const soundControl = <IslandSoundControl key={screen} enabled={profile.soundEnabled} disabled={busy} onChange={enabled => run(async () => {
+        const updated = await updateProfileAtomically(profile.id, current => ({ ...current, soundEnabled: enabled }));
+        if (!updated) throw new Error('Profile unavailable');
+        return updated;
+    }).then(updated => Boolean(updated))} />;
+    const homeUtilities = <>
+        <span className="growing-pocket-profile">{profile.name}</span>
+        <IslandProfileSwitcher activeId={profile.id} disabled={busy || preparingLearning || opening || growingProfileSwitchBlocked || Boolean(navigation?.blocked || navigation?.learningBlocked)} />
+        {soundControl}
+        {milestoneNotice.milestone && <IslandMilestoneNotice milestone={milestoneNotice.milestone} island={island} />}
+    </>;
     return <main className="island-page" data-tutorial-topic={tutorial.current?.id} data-layout-version="display-v1" data-game-id="mystic-island-v1" data-mode={screen} data-life-home={screen === 'home' ? 'true' : undefined} data-home-layout={screen === 'home' ? 'world-first-v2' : undefined} data-complex={Boolean(learning && complex)}
         data-house-layout={houseOverview ? 'world-first-v1' : undefined} data-house-candidate={houseOverview ? 'house-world-first-v1' : undefined}
         data-visual-candidate-id={ISLAND_VISUAL_CANDIDATE} data-delivery-id={ISLAND_DELIVERY_ID}
@@ -486,16 +497,12 @@ export function IslandSession({ profile }: { profile: UserProfile }) {
         data-island-feature-enabled={String(islandEnabled())}
         data-island-revision={island.revision} data-discovery-count={island.growth?.discoveries.length ?? 0}
         data-build-revision={__BUILD_REVISION__} data-build-version={__APP_VERSION__} data-busy={busy}>
-        {!['showcase', 'placement'].includes(screen) && <header className="island-header"><div className="island-brand" data-learning-milestone={learning ? Boolean(milestoneNotice.milestone) : undefined}>
+        {!['home', 'showcase', 'placement'].includes(screen) && <header className="island-header"><div className="island-brand" data-learning-milestone={learning ? Boolean(milestoneNotice.milestone) : undefined}>
             {houseOverview ? <IslandToyIcon kind="house" size={25} /> : <Leaf size={20} />}<div>{houseOverview || screen === 'home'
                 ? <h1 title={houseOverview ? `${profile.name}の いえ` : island.experience?.islandName}>{profile.name}の {houseOverview ? 'いえ' : 'しま'}</h1>
                 : <><p>{profile.name}の</p><h1 title={island.experience?.islandName}>{island.experience?.islandName ?? 'ふしぎな しま'}</h1></>}</div>
             {milestoneNotice.milestone && <IslandMilestoneNotice milestone={milestoneNotice.milestone} island={island} />}</div>
-            <div className="island-header-actions">{active && screen === 'home' && <IslandProfileSwitcher activeId={profile.id} disabled={busy || preparingLearning || opening || growingProfileSwitchBlocked || Boolean(navigation?.blocked || navigation?.learningBlocked)} />}<IslandSoundControl key={screen} enabled={profile.soundEnabled} disabled={busy} onChange={enabled => run(async () => {
-                const updated = await updateProfileAtomically(profile.id, current => ({ ...current, soundEnabled: enabled }));
-                if (!updated) throw new Error('Profile unavailable');
-                return updated;
-            }).then(updated => Boolean(updated))} />
+            <div className="island-header-actions">{soundControl}
             {learning ? <div className="island-learning-return">
                 {island.pendingRewards.length > 0 && <span className="island-learning-gifts" aria-label={`おくりもの ${island.pendingRewards.length}こ`}><Gift size={15} aria-hidden="true" />{island.pendingRewards.length}</span>}
                 <button className="island-text-button island-learning-pause" disabled={busy || preparingLearning} onClick={() => {
@@ -508,7 +515,7 @@ export function IslandSession({ profile }: { profile: UserProfile }) {
         {screen === 'placement' && preview && <IslandPlacementActions valid={valid} disabled={busy} onSave={savePlacement} onCancel={cancelPlacement} />}
         {active && screen === 'home' && <Suspense fallback={<GrowingLoading step="screen" />}>
             <GrowingIsland onProfileSwitchBlockedChange={setGrowingProfileSwitchBlocked} key={profile.id} profileId={profile.id} profileName={profile.name} active={active} sound={Boolean(profile.soundEnabled)} onHome={enterHouse} onLearn={() => void begin()}
-                guideRequest={growingGuideRequest} onGuideRequestConsumed={() => setGrowingGuideRequest(undefined)} />
+                menuUtilities={homeUtilities} guideRequest={growingGuideRequest} onGuideRequestConsumed={() => setGrowingGuideRequest(undefined)} />
         </Suspense>}
         {/* Learning hides the world. Do not create a legacy WebGL world
             behind the questions just to destroy it when returning home. */}

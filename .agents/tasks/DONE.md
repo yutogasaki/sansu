@@ -1,5 +1,7 @@
 # Shared Done Index
 
+- 2026-10-09: [島の一周を固定ローカル候補へ仕上げる](../../docs/design/2026-10-09-local-quality/README.md)。案内・本人一覧・学習/初回の表示・描画資源とpreview更新を改善。v3のcore4,803/classic32、全主要旅程・保存故障/更新・実画面・同保存性能を確認。性能は混在を明記し、公開/実機/子ども評価は別。詳細: `docs/done/2026-10.md`。
+
 - 2026-10-07: [共用3Dのsession接続を分割](../../docs/architecture/island-runtime.md)。家/配置/共有展示/写真/工作/遊びの型付き接続と一つの遅延rendererへ整理。59propsの構文照合、core4,766/smoke31、Growing production・本人切替/履歴・配置/工作/写真の両幅がPASS。公開/実機/子ども評価は別。詳細: `docs/done/2026-10.md`。
 
 - 2026-10-06: [sessionの配置・写真・工作を分割](../../docs/architecture/island-runtime.md)。保存と画面往復の契約を保持し、core4,761・smoke31・Growing production・本人切替/履歴・写真/工作/配置の390/768幅をlocal確認。公開/実機/子ども評価は別。詳細: `docs/done/2026-10.md`。

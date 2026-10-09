@@ -4,6 +4,7 @@ import { starterStep } from '../../../domain/growingIsland/guidance';
 import type { AchievementId, Command } from '../../../domain/growingIsland';
 import { holdPwaUpdateForCriticalPersistence } from '../../../pwa';
 import { GrowingGuideBook } from './GrowingGuideBook';
+import { starterCopy } from './useGrowingGuide';
 import type { GrowingGuideAction } from './GrowingGuideEntry';
 import './growing.css';
 
@@ -55,7 +56,9 @@ export default function GrowingHouseGuide({ profileId, onClose, onLearn, onIslan
             onResumeStarter={() => void act([{ type: 'starter-guide', automatic: true }], () => onIslandAction({ kind: 'resume' }))}
             onStarterAction={() => {
                 const step = starterStep(record.state);
-                if (step === 'S4') onLearn(); else if (step) onIslandAction({ kind: 'starter', step });
-            }} onTarget={evidence => onIslandAction({ kind: 'memory', evidence })} />
+                if (step === 'S4' && starterCopy(record.state, step).action === 'まなぶ') onLearn();
+                else if (step) onIslandAction({ kind: 'starter', step });
+            }} onStarterChoose={id => void act([{ type: 'choose-starter-play', id }], () => onIslandAction({ kind: 'goal', id }))}
+            onTarget={evidence => onIslandAction({ kind: 'memory', evidence })} />
     </>;
 }

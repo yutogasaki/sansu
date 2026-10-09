@@ -2696,7 +2696,10 @@ const scenarioLightBridgeVerticalSlice = async (
 const scenarioRootTangleVerticalSlice = async (
   browser,
   viewport = { width: 390, height: 844 },
+  { secondMiss = true } = {},
 ) => {
+  const captureRoot = (page, label) => captureFocusedE2EStage(page, viewport,
+    secondMiss ? label : label.replace('root-tangle', 'root-tangle-first-retry'));
   const context = await browser.newContext({
     baseURL: activeBaseUrl,
     reducedMotion: "reduce",
@@ -2799,7 +2802,7 @@ const scenarioRootTangleVerticalSlice = async (
       && await rootStage.getAttribute("data-visual-scene-id") === "root-tangle-dew-blocked",
     "the painted root tangle should enter with its Pokko tangled identity",
   );
-  await captureFocusedE2EStage(page, viewport, "root-tangle-idle");
+  await captureRoot(page, "root-tangle-idle");
   const rootCameraKey = await rootStage.getAttribute("data-camera-key");
   assert(rootCameraKey === "root-tangle-side-v4", "root tangle should expose its locked camera");
   assert(
@@ -2884,40 +2887,117 @@ const scenarioRootTangleVerticalSlice = async (
     `root-tangle hint should persist for the retry; skill=${rootSkillId}, count=${retryHintCount}, layout=${JSON.stringify(retryHintLayout)}`,
   );
 
-  const questionBeforeSecondMiss = await rootStage.getAttribute("data-question-text");
-  const secondAnswer = await getExploreNumericAnswer(page);
-  const observedSecondMiss = await observeRootTangleMiss(page, secondAnswer + 1);
-  assert(observedSecondMiss.question === questionBeforeSecondMiss,
-    "root tangle should hold the failed equation through the observed incorrect frame");
-  await page.getByText(/しきで のこりを見て、もういちど ためせるよ/)
-    .waitFor({ timeout: STEP_TIMEOUT_MS });
-  assert(
-    await retryHint.isVisible(),
-    "root-tangle quantity visual should remain available after the assistance refresh",
-  );
+  const runId = await page.locator('.explore-world').getAttribute('data-run-id');
+  const firstRetryRun = (await readExplorePersistenceSnapshot(page)).runs.find(run => run.runId === runId);
+  assert(firstRetryRun?.activeCheckpoint?.state.pendingProblem, 'The first retry must have a durable gate');
+  const firstRetryGate = firstRetryRun.activeCheckpoint.state.pendingProblem;
+  if (secondMiss) {
+    const questionBeforeSecondMiss = await rootStage.getAttribute("data-question-text");
+    const secondAnswer = await getExploreNumericAnswer(page);
+    const observedSecondMiss = await observeRootTangleMiss(page, secondAnswer + 1);
+    assert(observedSecondMiss.question === questionBeforeSecondMiss,
+      "root tangle should hold the failed equation through the observed incorrect frame");
+  }
+
+  const retrySnapshot = await readExplorePersistenceSnapshot(page);
+  const retryRun = retrySnapshot.runs.find(run => run.runId === runId);
+  const retryGate = retryRun?.activeCheckpoint?.state.pendingProblem;
+  assert(retryGate?.gateId === firstRetryGate.gateId && retryGate.attemptCount === (secondMiss ? 2 : 1)
+    && retryRun.activeCheckpoint.state.steps === 6,
+  'A retry must retain the same root gate and step without consuming the next slot');
+  assert(JSON.stringify(retryRun.learningSegments) === JSON.stringify(firstRetryRun.learningSegments),
+    'A representation retry must not rewrite the reserved segment');
+  const retryAssignment = retryRun.learningAssignments[retryGate.problem.id];
+  assert(JSON.stringify(retryAssignment) === JSON.stringify(retryGate.learningAssignment),
+    'The visible retry must use its committed learning assignment');
+  if (retryGate.problem.id !== firstRetryGate.problem.id) {
+    assert(retryAssignment.source === 'representation-retry'
+      && retryAssignment.learningEvidenceAssistance === 'assisted'
+      && retryAssignment.gateId === firstRetryGate.gateId
+      && retryAssignment.categoryId === retryGate.problem.categoryId
+      && JSON.stringify(retryAssignment.reservedProblem) === JSON.stringify(retryGate.problem)
+      && retryAssignment.reservedEncounterId === retryGate.encounterId,
+    'A refreshed retry must atomically preserve the full Problem, assistance and encounter binding');
+  } else {
+    assert(JSON.stringify(retryGate.problem) === JSON.stringify(firstRetryGate.problem)
+      && JSON.stringify(retryAssignment) === JSON.stringify(firstRetryGate.learningAssignment),
+    'A retry that did not refresh must keep the original Problem and assignment');
+  }
+  // Specs 10/11 retain Root Tangle's quantity hint on the first miss only.
+  // Later support follows the learning planner, including a symbol problem
+  // without root imagery. Never force its skill to preserve an encounter.
+  const rootCompatibleSkills = ['sub_tiny', 'sub_1d1d_nc_bridge', 'sub_1d1d_c_bridge',
+    'sub_2d1d_nc_bridge', 'sub_2d1d_c_bridge'];
+  const retainsRoot = Boolean(retryGate.problem.questionVisual
+    && rootCompatibleSkills.includes(retryGate.problem.categoryId));
+  assert(retryGate.encounterId === (retainsRoot ? 'root-tangle' : undefined),
+    'Only a supported quantity representation may retain root semantics');
+  assert(await rootStage.getAttribute('data-question-text') === retryGate.problem.questionText
+    && await rootStage.getAttribute('data-skill-id') === retryGate.problem.categoryId,
+  'The rendered retry must match the committed Problem');
+  if (retainsRoot) {
+    await page.getByText(/しきで のこりを見て、もういちど ためせるよ/)
+      .waitFor({ timeout: STEP_TIMEOUT_MS });
+    assert(await retryHint.isVisible(), 'A supported root retry keeps its quantity hint');
+  } else {
+    assert(secondMiss && await retryHint.count() === 0
+      && await page.getByTestId('root-tangle-equation').count() === 0
+      && await rootStage.getAttribute('data-visual-surface-id') !== 'explore-encounter-root-tangle',
+    'An unsupported representation must render the ordinary problem without a fabricated root hint');
+  }
+  const rootMisses = retrySnapshot.events.filter(event => event.type === 'problem_answered'
+    && event.gateId === firstRetryGate.gateId);
+  assert(rootMisses.length === (secondMiss ? 2 : 1)
+    && rootMisses.every(event => event.result === 'incorrect')
+    && new Set(rootMisses.map(event => event.attemptKey)).size === rootMisses.length,
+  'Each real miss must produce exactly one distinct saved attempt');
+  await page.evaluate(retry => { window.__sansuSmokeObservation.rootRetry = retry; }, {
+    misses: rootMisses.length, originalSkill: firstRetryGate.problem.categoryId,
+    retrySkill: retryGate.problem.categoryId, assignmentSource: retryAssignment.source,
+    problemId: retryGate.problem.id, encounterId: retryGate.encounterId ?? null, retainsRoot,
+  });
 
   const rootAttemptKey = await page.getByTestId("explore-attempt").getAttribute("data-attempt-key");
   assert(rootAttemptKey, "root-tangle retry should expose an attempt key");
   const refreshedAnswer = await getExploreNumericAnswer(page);
-  await page.keyboard.type(String(refreshedAnswer));
+  await typeExploreNumericOnce(page, refreshedAnswer);
   await page.getByRole("button", { name: "こたえる" }).click();
-  await page.getByText(/せいかい！ ねっこが ほどけて、しずくが ころころ/).waitFor({ timeout: STEP_TIMEOUT_MS });
-  assert(
-    await rootStage.getAttribute("data-visual-scene-id") === "root-tangle-dew-open",
-    "the painted root tangle should reveal its opened passage after a correct answer",
-  );
-  await captureFocusedE2EStage(page, viewport, "root-tangle-correct");
-  const observationScene = page.getByTestId("explore-observation-scene");
-  await observationScene.waitFor({ timeout: RAPID_LOOP_CI_BUDGET_MS });
-  await captureFocusedE2EStage(page, viewport, "root-tangle-observation");
-  const observationDiorama = observationScene.locator("xpath=parent::*");
-  assert(
-    await observationDiorama.getAttribute("data-visual-lineage-id") === "pokko-field-v1"
+  if (retainsRoot) {
+    await page.getByText(/せいかい！ ねっこが ほどけて、しずくが ころころ/).waitFor({ timeout: STEP_TIMEOUT_MS });
+    assert(await rootStage.getAttribute("data-visual-scene-id") === "root-tangle-dew-open",
+      "the painted root tangle should reveal its opened passage after a correct answer");
+    await captureRoot(page, "root-tangle-correct");
+    const observationScene = page.getByTestId("explore-observation-scene");
+    await observationScene.waitFor({ timeout: RAPID_LOOP_CI_BUDGET_MS });
+    await captureRoot(page, "root-tangle-observation");
+    const observationDiorama = observationScene.locator("xpath=parent::*");
+    assert(await observationDiorama.getAttribute("data-visual-lineage-id") === "pokko-field-v1"
       && await observationDiorama.getAttribute("data-visual-mode") === "observation"
       && await observationDiorama.getAttribute("data-camera-key") === rootCameraKey,
-    "Q7 should carry the committed root observation into the same-camera payoff",
-  );
-  await closeBlockingResearchDiscovery(page, /大発見！.*しずくの道が ひらいた！/, 3);
+    "Q7 should carry the committed root observation into the same-camera payoff");
+  } else {
+    await page.locator('.explore-research-overlay[role="dialog"]').waitFor({ timeout: RAPID_LOOP_CI_BUDGET_MS });
+    assert(await page.getByTestId('explore-observation-scene').count() === 0,
+      'A symbol retry must not invent a root-specific observation');
+    await captureFocusedE2EStage(page, viewport, 'root-gate-neutral-discovery');
+  }
+  const clearedSnapshot = await readExplorePersistenceSnapshot(page);
+  const clearedRun = clearedSnapshot.runs.find(run => run.runId === runId);
+  const clearedState = clearedRun.activeCheckpoint.state;
+  const rootClear = clearedSnapshot.events.filter(event => event.type === 'problem_answered'
+    && event.attemptKey === rootAttemptKey);
+  assert(rootClear.length === 1 && rootClear[0].result === 'correct'
+    && rootClear[0].recordedSkillId === retryGate.problem.categoryId,
+  'The retry completion must save exactly one correct receipt for the rendered skill');
+  const rootFind = clearedState.temporaryFinds.at(-1);
+  assert(clearedState.steps === 7 && rootFind.nodeId === retryGate.nodeId
+    && rootFind.discoveryFeatureId === 'discovery-feature:firefly-flower-light-path'
+    && rootFind.source.attemptKey === rootAttemptKey
+    && rootFind.source.encounterId === retryGate.encounterId
+    && rootFind.observationId === (retainsRoot ? 'explore-observation:root-tangle-light-path' : undefined),
+  'The Q7 payoff must match the committed retry, including neutral observation provenance');
+  await closeBlockingResearchDiscovery(page, retainsRoot
+    ? /大発見！.*しずくの道が ひらいた！/ : /大発見！.*花のまんなかに 四滴！/, 3);
   await waitForNewExploreAttempt(page, rootAttemptKey);
 
   const finalAttemptKey = await page.getByTestId("explore-attempt").getAttribute("data-attempt-key");
@@ -2933,7 +3013,7 @@ const scenarioRootTangleVerticalSlice = async (
   await primaryReturn.click();
   await page.locator("#return-summary-title").waitFor({ timeout: STEP_TIMEOUT_MS });
   await assertResearchLibraryReturnLayout(page, viewport);
-  await captureFocusedE2EStage(page, viewport, "root-tangle-return");
+  await captureRoot(page, "root-tangle-return");
   assert(
     await page.getByLabel("つぎの たんけんの けはい").isVisible(),
     "return summary should turn an unopened route into a next-run goal",
@@ -2961,7 +3041,7 @@ const scenarioRootTangleVerticalSlice = async (
 
   const logsAfter = await countIndexedDbRows(page, "logs");
   assert(
-    logsAfter === logsBefore + 10,
+    logsAfter === logsBefore + (secondMiss ? 10 : 9),
     `explore should feed every rapid-loop attempt into formal learning; got ${logsBefore} -> ${logsAfter}`,
   );
 
@@ -6559,6 +6639,10 @@ const main = async () => {
       return;
     }
     if (process.env.SANSU_E2E_ROOT_TANGLE_ONLY === "1") {
+      results.push(await runScenario(
+        "retains root observation after the first same-problem retry",
+        () => scenarioRootTangleVerticalSlice(browser, { width: 390, height: 844 }, { secondMiss: false }),
+      ));
       for (const viewport of [
         { width: 390, height: 844 },
         { width: 768, height: 1024 },
@@ -6624,6 +6708,10 @@ const main = async () => {
       browser,
       { width: 1080, height: 1920 },
     )));
+    results.push(await runScenario(
+      "retains root observation after the first same-problem retry",
+      () => scenarioRootTangleVerticalSlice(browser, { width: 390, height: 844 }, { secondMiss: false }),
+    ));
     results.push(await runScenario("opens the root tangle with profile-near subtraction", () => scenarioRootTangleVerticalSlice(browser)));
     results.push(await runScenario("keeps the root tangle playable on tablet", () => scenarioRootTangleVerticalSlice(
       browser,

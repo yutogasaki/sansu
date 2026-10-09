@@ -7,6 +7,7 @@ import { makeLearningActorRig, learningScarfColor } from './learningActor/rig';
 import { ACTOR_CATCH_MS, ACTOR_PLACE_MS, ACTOR_JUMP_MS, ACTOR_LAND_MS, sampleInputGesture, sampleBurstGesture } from './learningActor/motion';
 import { poseLearningActor } from './learningActor/pose';
 import { learningActorFrames } from './learningActor/frame';
+import { retainSharedRendererCache } from './three/sharedRendererCache';
 
 type ActorCue = 'catch' | 'place' | 'jump' | 'land';
 type TimedInput = PokomokoInputCue & { fromX?: number; fromY?: number; startedAt?: number };
@@ -57,6 +58,7 @@ export default function PokomokoLearningActor(props: Props) {
             return;
         }
         const actor = rig, view = renderer;
+        const releaseSharedCache = retainSharedRendererCache(actor.m.residentFabric());
         const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
         let width = 1, height = 1, frame = 0, disposed = false, lost = false, rendered = false, renderCount = 0;
         element.dataset.reducedMotion = String(reduced.matches);
@@ -202,6 +204,7 @@ export default function PokomokoLearningActor(props: Props) {
             reduced.removeEventListener('change', motionPreference);
             surface.removeEventListener('webglcontextlost', contextLost);
             surface.removeEventListener('webglcontextrestored', contextRestored);
+            releaseSharedCache();
             actor.dispose(); view.dispose(); view.forceContextLoss(); surface.remove();
         };
     }, [props.active]);

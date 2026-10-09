@@ -5,6 +5,7 @@ import { cn } from "../utils/cn";
 import { islandEnabled } from "../domain/island/feature";
 import "./island/IslandShell.css";
 import "./ui/MenuAtelier.css";
+import "./island/growing/quietHome.css";
 import { IslandNavigationContext, useIslandNavigationState } from './island/useIslandNavigation';
 
 import { IslandRenderBoundary } from './island/IslandRenderBoundary';

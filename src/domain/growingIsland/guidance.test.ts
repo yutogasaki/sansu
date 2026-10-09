@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { applyIntent } from './commands';
-import { achievementSuggestions, migrateGuidance, noteTownBuilds, pendingAchievements, starterStep } from './guidance';
+import { achievementSuggestions, migrateGuidance, noteTownBuilds, pendingAchievements, pendingRevisitFlower, starterStep, validateGuidance } from './guidance';
 import { ingestCompletions, newIsland } from './island';
 import { openTown } from './town';
 import { landCells } from './space';
@@ -9,6 +9,36 @@ const act = (state: GrowingState, command: Command, id = crypto.randomUUID()) =>
 const home = (state: GrowingState) => act(state, { type: 'plant', kind: 'home', cell: { x: 1, z: 3 } });
 
 describe('island guidance evidence', () => {
+    it('offers only the first child-placed flower that still has an island cell, and persists a single acknowledgement', () => {
+        let state = newIsland('kid', 0);
+        state.drops = 20;
+        state.unlocked.push('landmark:flower');
+        state = act(state, { type: 'place', kind: 'flower', cell: { x: 4, z: 2 } });
+        const id = state.guidance?.firstFlower?.id;
+        expect(id).toBeDefined();
+        expect(pendingRevisitFlower(state)?.cell).toEqual({ x: 4, z: 2 });
+        state = act(state, { type: 'move', id: id!, cell: { x: 4, z: 3 } });
+        expect(pendingRevisitFlower(state)?.cell).toEqual({ x: 4, z: 3 });
+        state = act(state, { type: 'store', id: id! });
+        expect(pendingRevisitFlower(state)).toBeUndefined();
+        state = act(state, { type: 'unstore', id: id!, cell: { x: 4, z: 2 } });
+        state.landmarks.find(item => item.id === id)!.growth = 6;
+        expect(pendingRevisitFlower(state)?.id).toBe(id);
+        state = act(state, { type: 'ack-revisit-flower', id: 'other-profile-flower' });
+        expect(pendingRevisitFlower(state)?.id).toBe(id);
+        state = act(state, { type: 'ack-revisit-flower', id: id! });
+        expect(pendingRevisitFlower(structuredClone(state))).toBeUndefined();
+        state = act(state, { type: 'place', kind: 'flower', cell: { x: 4, z: 4 } });
+        expect(state.guidance?.firstFlower).toEqual({ id, seen: true });
+        expect(pendingRevisitFlower(state)).toBeUndefined();
+    });
+    it('keeps older guidance without a revisit marker valid and rejects a malformed marker', () => {
+        const state = newIsland('older-profile', 0);
+        migrateGuidance(state);
+        expect(state.guidance?.firstFlower).toBeUndefined();
+        expect(pendingRevisitFlower(state)).toBeUndefined();
+        expect(() => validateGuidance({ ...state.guidance!, firstFlower: { id: '', seen: false } })).toThrow();
+    });
     it('explains actual prices, unlocks and space instead of sending every unavailable goal to a bench', () => {
         const state = newIsland('kid', 0);
         const goal = (id: string) => achievementSuggestions(state).find(item => item.id === id)!;
@@ -40,6 +70,18 @@ describe('island guidance evidence', () => {
         expect(learned.state.guidance?.starter.steps.S4).toBeUndefined();
         state = act(learned.state, { type: 'learning-returned', profileId: 'kid', expectedRevision: 0 });
         expect(starterStep(state)).toBe('S5');
+    });
+    it('saves a free first-play choice without changing learning or automatic guidance', () => {
+        let state = act(home(newIsland('kid', 0)), { type: 'open-all' });
+        state = act(state, { type: 'choose-starter-play', id: 'A3' });
+        expect(state.guidance?.selected).toBe('A3');
+        expect(state.guidance?.starter.automatic).toBe(true);
+        expect(state.drops).toBe(0);
+        expect(starterStep(state)).toBe('S4');
+        state = act(state, { type: 'flag', color: 2 });
+        expect(state.guidance?.achievements.A3?.snapshot.flagColor).toBe(2);
+        expect(starterStep(state)).toBe('S4');
+        expect(() => act(state, { type: 'choose-starter-play', id: 'A2' } as Command)).toThrow();
     });
     it('requires a paid ordinary seed actually built by town time and opened; nature and free homes do not qualify', () => {
         let state = act(home(newIsland('kid', 0)), { type: 'open-all' });

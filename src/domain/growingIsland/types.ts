@@ -94,6 +94,8 @@ export interface GrowingGuidance {
     selected?: AchievementId;
     notified: AchievementId[];
     learning?: GuidanceEvidence;
+    /** The first flower placed by this child after this cue exists; older saves have no marker. */
+    firstFlower?: { id: string; seen: boolean };
 }
 
 export interface GrowingState {
@@ -170,7 +172,9 @@ export type Command =
     | { type: 'emblem'; image: string; glyph: string }
     | { type: 'ack-moment'; day: number }
     | { type: 'choose-goal'; id?: AchievementId }
+    | { type: 'choose-starter-play'; id: 'A3' | 'A4' }
     | { type: 'starter-guide'; automatic: boolean }
+    | { type: 'ack-revisit-flower'; id: string }
     | { type: 'ack-achievements'; ids: AchievementId[]; profileId: string; expectedRevision: number }
     | { type: 'concert-started'; id: string; profileId: string; expectedRevision: number }
     | { type: 'learning-returned'; profileId: string; expectedRevision: number };

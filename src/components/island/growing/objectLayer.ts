@@ -64,10 +64,6 @@ function ring(color: string, radius = .44) {
     mesh.rotation.x = Math.PI / 2; mesh.position.y = .05; mesh.userData.ownMaterial = true; return mesh;
 }
 
-/**
- * Everything placed on the island, rebuilt when the saved state changes. Materials come from
- * the shared cache; only geometries and the ghost's translucent copies belong to this layer.
- */
 /** A big tree grows a size larger, and the island's lord tree much larger with a ring of flowers (§5). */
 function ageTree(m: IslandMaterials, state: GrowingState, landmark: Landmark, holder: T.Object3D) {
     const age = treeAge(state, landmark.id);
@@ -87,14 +83,32 @@ function ageTree(m: IslandMaterials, state: GrowingState, landmark: Landmark, ho
     }
 }
 
+/** Release owned resources once, leaving shared palette materials and textures alive. */
+function disposeRoots(roots: readonly T.Object3D[]) {
+    const geometries = new Set<T.BufferGeometry>(), materials = new Set<T.Material>(), textures = new Set<T.Texture>();
+    for (const root of roots) {
+        root.traverse(object => {
+            if (!(object instanceof T.Mesh)) return;
+            geometries.add(object.geometry);
+            if (object.userData.ownMaterial) for (const material of Array.isArray(object.material) ? object.material : [object.material]) materials.add(material);
+            if (object.userData.ownTexture) textures.add(object.userData.ownTexture as T.Texture);
+        });
+        root.removeFromParent();
+    }
+    geometries.forEach(geometry => geometry.dispose());
+    materials.forEach(material => material.dispose());
+    textures.forEach(texture => texture.dispose());
+}
+
+/** Saved objects persist while selection, placement and hints change. */
 export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout: SceneLayout, ghost?: Ghost, selectedId?: string, hints: readonly Cell[] = []) {
     const root = new T.Group(); root.name = 'growing-objects';
     const objects = new Map<string, T.Object3D>(), buds = new Map<string, T.Object3D>(), seats = new Map<string, Seat>();
+    const swingPivots = new Map<string, T.Object3D>();
     const reached = connectedWaterChannels(waterLayout(state));
     const add = (id: string, model: T.Object3D, cell: Cell) => {
         const holder = new T.Group(); holder.position.copy(layout.point(cell)); holder.add(model);
         holder.traverse(o => { o.userData.objectId = id; }); root.add(holder); objects.set(id, holder);
-        if (selectedId === id) holder.add(ring('#fff5ac'));
         return holder;
     };
     for (const l of state.landmarks) {
@@ -107,6 +121,10 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
             bow.position.set(.16, .12, .16); holder.add(bow);
         }
         const seat = SEATS[l.kind]; if (seat) seats.set(key(l.cell), seat);
+        if (l.kind === 'swing') {
+            const pivot = holder.getObjectByName('swing-seat')?.parent;
+            if (pivot) swingPivots.set(key(l.cell), pivot);
+        }
     }
     for (const p of state.plots) {
         if (!p.cell) continue;
@@ -133,15 +151,6 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
     const flag = buildFlag(m, state.flagColor ?? 0, state.flagPattern ?? 0, state.emblem?.image);
     flag.position.copy(layout.pierRoot).add(new T.Vector3(-.36, .02, .1));
     flag.traverse(o => { o.userData.objectId = 'flag'; }); root.add(flag);
-    if (selectedId === 'flag') { const r = ring('#fff5ac', .3); r.position.copy(flag.position); root.add(r); }
-    if (selectedId === 'house' && !ghost) {
-        // The cottage belongs to the persistent world scene, outside this layer's usual add().
-        // Outline its footprint so selecting it has the same quiet ground cue as placed objects.
-        const r = ring('#fff5ac', .95);
-        r.name = 'growing-house-selection';
-        r.position.copy(layout.point({ x: HOME_CELL.x + .5, z: HOME_CELL.z - .5 }, .08));
-        root.add(r);
-    }
     // A few dotted wonder mushrooms on the shore from the first day: "ふしぎ" here and there.
     for (const [x, z, size] of [[layout.bounds.minX - .55, .2, 1.5], [layout.bounds.maxX + .5, 1.4, 1.2], [layout.bounds.minX - .45, layout.depth - 1.3, 1.05]] as const) {
         const shroom = new T.Group(); shroom.position.copy(layout.point({ x, z }));
@@ -150,35 +159,57 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
         cap.position.y = .18 * size; shroom.add(stem, cap); shroom.name = 'wonder-mushroom'; root.add(shroom);
     }
     const glows: T.Mesh[] = [];
-    for (const cell of hints) {
-        // "ここ" — the place a friend could not reach or a home is needed (§11.3).
-        const glow = ring('#ffe27a', .46); glow.position.copy(layout.point(cell, .08)); glow.name = 'growing-hint'; root.add(glow); glows.push(glow);
-    }
     const arrivalBoat = buildBoat(m); arrivalBoat.position.copy(layout.dock); arrivalBoat.visible = state.arrivals.length > 0;
     arrivalBoat.traverse(o => { o.userData.boat = 'arrival'; }); root.add(arrivalBoat);
     const visitorBoat = buildBoat(m); visitorBoat.visible = false; root.add(visitorBoat);
     const nextBoat = buildBoat(m, true); nextBoat.position.copy(layout.farther); nextBoat.scale.setScalar(.8); root.add(nextBoat);
     nextBoat.traverse(o => { if (o instanceof T.Mesh) o.userData.ownMaterial = true; });
-    if (ghost) {
-        for (const cell of ghost.allowed) {
-            const tile = new T.Mesh(new T.PlaneGeometry(.9, .9), new T.MeshBasicMaterial({ color: '#fff4c1', transparent: true, opacity: .2, depthWrite: false }));
-            tile.rotation.x = -Math.PI / 2; tile.position.copy(layout.point(cell, .07)); tile.userData.ownMaterial = true; root.add(tile);
+    const previews: T.Object3D[] = [];
+    let disposed = false;
+    const clearPreview = () => {
+        disposeRoots(previews); previews.length = 0; glows.length = 0;
+    };
+    const addPreview = (object: T.Object3D, parent: T.Object3D = root) => { parent.add(object); previews.push(object); };
+    const updatePreview = (nextGhost?: Ghost, selected?: string, nextHints: readonly Cell[] = []) => {
+        if (disposed) return;
+        clearPreview();
+        const holder = selected ? objects.get(selected) : undefined;
+        if (selected && holder) {
+            const outline = ring('#fff5ac');
+            // Bud rings were part of their opening target; normal selection rings
+            // remain visual only. Keep the original parent for pop/scale animation.
+            if (buds.has(selected)) outline.userData.budId = selected;
+            addPreview(outline, holder);
         }
-        if (ghost.cell) {
-            const holder = new T.Group(); holder.name = 'growing-ghost'; holder.position.copy(layout.point(ghost.cell)); root.add(holder);
-            holder.add(ghostModel(m, ghost), ring(ghost.valid ? '#fff5ac' : '#8a5a3a'));
+        if (selected === 'flag') { const outline = ring('#fff5ac', .3); outline.position.copy(flag.position); addPreview(outline); }
+        if (selected === 'house' && !nextGhost) {
+            const outline = ring('#fff5ac', .95); outline.name = 'growing-house-selection';
+            outline.position.copy(layout.point({ x: HOME_CELL.x + .5, z: HOME_CELL.z - .5 }, .08)); addPreview(outline);
         }
-    }
+        for (const cell of nextHints) {
+            // "ここ" — the place a friend could not reach or a home is needed (§11.3).
+            const glow = ring('#ffe27a', .46); glow.position.copy(layout.point(cell, .08)); glow.name = 'growing-hint'; addPreview(glow); glows.push(glow);
+        }
+        if (nextGhost) {
+            for (const cell of nextGhost.allowed) {
+                const tile = new T.Mesh(new T.PlaneGeometry(.9, .9), new T.MeshBasicMaterial({ color: '#fff4c1', transparent: true, opacity: .2, depthWrite: false }));
+                tile.rotation.x = -Math.PI / 2; tile.position.copy(layout.point(cell, .07)); tile.userData.ownMaterial = true; addPreview(tile);
+            }
+            if (nextGhost.cell) {
+                const preview = new T.Group(); preview.name = 'growing-ghost'; preview.position.copy(layout.point(nextGhost.cell)); addPreview(preview);
+                preview.add(ghostModel(m, nextGhost), ring(nextGhost.valid ? '#fff5ac' : '#8a5a3a'));
+            }
+        }
+    };
+    updatePreview(ghost, selectedId, hints);
     return {
-        root, objects, buds, seats, arrivalBoat, visitorBoat, nextBoat, glows, flag,
+        root, objects, buds, seats, swingPivots, arrivalBoat, visitorBoat, nextBoat, glows, flag, updatePreview,
         dispose() {
-            root.traverse(o => {
-                if (!(o instanceof T.Mesh)) return;
-                o.geometry.dispose();
-                if (o.userData.ownMaterial) (o.material as T.Material).dispose();
-                (o.userData.ownTexture as T.Texture | undefined)?.dispose();
-            });
-            root.removeFromParent();
+            if (disposed) return;
+            disposed = true;
+            // Selection rings may be parented to saved objects. Detach their owned
+            // resources before disposing the base, so nothing is released twice.
+            clearPreview(); disposeRoots([root]);
         },
     };
 }

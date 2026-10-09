@@ -1,0 +1,32 @@
+/* Only the growing home collapses chrome; reading and learning keep their layouts. */
+.island-shell .island-shell-nav--home {
+    position: absolute; z-index: 6; right: max(12px, env(safe-area-inset-right));
+    bottom: max(12px, env(safe-area-inset-bottom)); width: auto; min-height: 0;
+    display: block; padding: 0; border: 0; background: transparent; pointer-events: none;
+}
+.island-shell .island-shell-nav--home .island-shell-tab--learn {
+    flex-direction: row; min-width: 104px; min-height: 48px; gap: 7px; padding: 10px 14px;
+    font-size: 14px; border-radius: 18px; pointer-events: auto;
+}
+.growing-island[data-home-ui-candidate][data-growing-island="ready"] .growing-hud-top { top: max(12px, env(safe-area-inset-top)); }
+.growing-island[data-home-ui-candidate] .growing-menu-button { min-height: 44px; font-size: 13px; font-weight: 700; }
+.growing-island[data-home-ui-candidate][data-growing-island="ready"] .growing-hud-bottom { right: auto; left: 12px; bottom: max(12px, env(safe-area-inset-bottom)); }
+.growing-island[data-home-ui-candidate][data-growing-island="ready"] .growing-bubble { bottom: 76px; max-width: min(300px, calc(100% - 24px)); }
+.growing-island[data-home-ui-candidate] .growing-placing { bottom: max(76px, calc(env(safe-area-inset-bottom) + 64px)); }
+.growing-island[data-home-ui-candidate][data-growing-island="visit"] .growing-hud-bottom { margin-bottom: max(76px, calc(env(safe-area-inset-bottom) + 64px)); }
+.island-shell:has(.growing-island[data-growing-island="show"]) .island-shell-nav--home { display: none; }
+.growing-pocket-identity { display: flex; align-items: center; gap: 8px; padding-block: 4px 8px; }
+.growing-pocket-identity button { display: flex; flex: 1; align-items: center; justify-content: space-between; gap: 8px; overflow-wrap: anywhere; text-align: left; }
+.growing-pocket-identity span { flex-shrink: 0; font-size: 14px; font-weight: 800; }
+.growing-pocket-utilities { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; border-top: 1px solid var(--pokomoko-edge); padding-block: 8px; }
+.growing-pocket-profile { flex-basis: 100%; overflow-wrap: anywhere; color: var(--pokomoko-muted); font-size: 12px; }
+.growing-pocket-utilities .island-sound-control { min-width: 0; }
+.growing-pocket-utilities :is(.island-profile-switch, .island-sound-button) { border: 1px solid var(--pokomoko-edge); }
+.island-shell .growing-island[data-home-ui-candidate] .growing-pocket-menu { top: auto; bottom: max(76px, calc(env(safe-area-inset-bottom) + 64px)); max-height: calc(100% - 140px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); width: min(340px, calc(100% - 24px)); }
+@media (max-height: 500px) and (min-width: 450px) {
+    .island-shell .growing-island[data-home-ui-candidate] .growing-pocket-menu { top: auto; bottom: 68px; max-height: calc(100% - 76px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); width: min(380px, calc(100% - 124px)); }
+    .growing-pocket-identity { grid-column: 1 / -1; }
+    .growing-pocket-utilities { grid-column: 1 / -1; padding-block: 4px; }
+    .growing-pocket-profile { flex-basis: auto; }
+    .growing-pocket-primary { grid-row: 2 / 5; }
+}

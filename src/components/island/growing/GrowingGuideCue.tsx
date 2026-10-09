@@ -1,6 +1,8 @@
 import { achievementCatalog } from '../../../domain/growingIsland/guidance';
 import type { AchievementId, GrowingState, StarterStepId } from '../../../domain/growingIsland/types';
 import { GrowingGuideArt } from './GrowingGuideArt';
+import { GrowingFlowerPrice } from './GrowingFlowerPrice';
+import { hasPurchasedFlower } from './growingGuideTargets';
 import './growingGuide.css';
 
 export function GrowingGuideCue({ state, cue, notice, selected, onAction, onClose, onBook }: {
@@ -16,7 +18,11 @@ export function GrowingGuideCue({ state, cue, notice, selected, onAction, onClos
         </aside>;
     }
     if (cue) return <aside className="growing-guide-cue" data-guidance-starter={cue.id} role="status">
-        <div><span>ぽこもこ</span><strong>{cue.hint}</strong><button onClick={onAction}>{cue.action}</button></div>
+        <div><span>ぽこもこ</span><strong>{cue.hint}</strong>
+            {cue.id === 'S4' && cue.action === 'まなぶ' && !state.guidance?.starter.legacy
+                && !hasPurchasedFlower(state)
+                && state.unlocked.includes('landmark:flower') && <GrowingFlowerPrice drops={state.drops} />}
+            <button onClick={onAction}>{cue.action}</button></div>
         <button className="growing-guide-cue-close" aria-label="しまの ヒントを とじる" onClick={onClose}>×</button>
     </aside>;
     if (!selected || state.guidance?.achievements[selected]) return null;

@@ -20,13 +20,28 @@ describe('Island footer persistence gates', () => {
         { blocked: false, learningBlocked: false, disabled: [false, false, false, false, false] },
     ])('keeps the five destinations usable according to blocked=$blocked and learningBlocked=$learningBlocked', ({ blocked, learningBlocked, disabled }) => {
         vi.stubEnv('VITE_ISLAND_ENABLED', 'true');
-        const html = renderToStaticMarkup(<MemoryRouter initialEntries={['/island']}>
+        const html = renderToStaticMarkup(<MemoryRouter initialEntries={['/island?view=keepsakes']}>
             <IslandFooter blocked={blocked} learningBlocked={learningBlocked} />
         </MemoryRouter>);
         const buttons = html.match(/<button\b[^>]*>/g) ?? [];
         expect(buttons.map(button => button.match(/aria-label="([^"]+)"/)?.[1])).toEqual(['しま', 'いえ', 'まなぶ', 'きろく', '設定']);
         expect(buttons.map(button => button.includes('disabled=""'))).toEqual(disabled);
-        expect(buttons[0]).toContain('aria-current="page"');
+        expect(buttons[1]).toContain('aria-current="page"');
+    });
+    it.each([
+        { blocked: false, learningBlocked: false, disabled: false },
+        { blocked: true, learningBlocked: false, disabled: true },
+        { blocked: false, learningBlocked: true, disabled: true },
+    ])('keeps a single learning action on home with its persistence gate: %j', ({ blocked, learningBlocked, disabled }) => {
+        vi.stubEnv('VITE_ISLAND_ENABLED', 'true');
+        const html = renderToStaticMarkup(<MemoryRouter initialEntries={['/island']}>
+            <IslandFooter blocked={blocked} learningBlocked={learningBlocked} />
+        </MemoryRouter>);
+        const buttons = html.match(/<button\b[^>]*>/g) ?? [];
+        expect(buttons).toHaveLength(1);
+        expect(buttons[0]).toContain('aria-label="まなぶ"');
+        expect(buttons[0]?.includes('disabled=""')).toBe(disabled);
+        expect(html).toContain('island-shell-nav--home');
     });
     it.each([
         ['/island?view=keepsakes', 'いえ'],

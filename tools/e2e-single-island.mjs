@@ -3,7 +3,7 @@ import { promises as fs } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { chromium } from 'playwright';
 import { digestFiles } from './verify-growing.mjs';
-import { answerUI, readNative, runtimeMetadata } from './island-e2e-helpers.mjs';
+import { answerUI, openIslandDestination, readNative, runtimeMetadata } from './island-e2e-helpers.mjs';
 
 const base = process.env.SANSU_SINGLE_ISLAND_URL, output = process.env.SANSU_SINGLE_ISLAND_OUTPUT;
 assert(base && output, 'Set a local production URL and a fresh output directory');
@@ -43,7 +43,7 @@ try {
                 const tx = database.transaction('saves', 'readwrite'); tx.objectStore('saves').put(sentinel);
                 await new Promise((ok, no) => { tx.oncomplete = ok; tx.onabort = () => no(tx.error); }); database.close();
             }, sentinel);
-            await page.getByRole('button', { name: 'いえ', exact: true }).click();
+            await openIslandDestination(page, 'いえ');
             await page.locator('.island-page[data-mode="keepsakes"] [data-renderer="three"] canvas').waitFor();
             await page.screenshot({ path: `${output}/${width}-house.png` });
             await page.goBack(); await ready(page);

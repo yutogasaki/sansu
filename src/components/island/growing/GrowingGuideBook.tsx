@@ -3,8 +3,10 @@ import type { KeyboardEvent } from 'react';
 import type { AchievementId, GrowingState, GuidanceEvidence, StarterStepId } from '../../../domain/growingIsland';
 import { achievementCatalog, achievementSuggestions, starterStep } from '../../../domain/growingIsland/guidance';
 import { GrowingGuideArt } from './GrowingGuideArt';
+import { GrowingFlowerPrice } from './GrowingFlowerPrice';
 import { kindName, villagerName } from './growingCopy';
-import { STARTER_COPY } from './useGrowingGuide';
+import { starterCopy } from './useGrowingGuide';
+import { hasPurchasedFlower, starterPlayChoices } from './growingGuideTargets';
 import './growingGuide.css';
 
 const STARTER_ART: Record<StarterStepId, AchievementId> = { S1: 'A1', S2: 'A2', S3: 'A1', S4: 'A2', S5: 'A2' };
@@ -19,11 +21,12 @@ export interface GrowingGuideBookProps {
     onTry: (id: AchievementId) => void;
     onResumeStarter: () => void;
     onStarterAction: () => void;
+    onStarterChoose: (id: 'A3' | 'A4') => void;
     onTarget: (evidence: GuidanceEvidence) => void;
 }
 
 /** An optional, illustrated book leaves the actual island visible above the page. */
-export function GrowingGuideBook({ state, busy, initialMemory, onClose, onChoose, onClear, onTry, onResumeStarter, onStarterAction, onTarget }: GrowingGuideBookProps) {
+export function GrowingGuideBook({ state, busy, initialMemory, onClose, onChoose, onClear, onTry, onResumeStarter, onStarterAction, onStarterChoose, onTarget }: GrowingGuideBookProps) {
     const [tab, setTab] = useState<'try' | 'done'>(initialMemory ? 'done' : 'try');
     const [detail, setDetail] = useState<AchievementId | undefined>(initialMemory ?? state.guidance?.selected);
     const uid = useId(), heading = useRef<HTMLHeadingElement>(null);
@@ -44,11 +47,10 @@ export function GrowingGuideBook({ state, busy, initialMemory, onClose, onChoose
     const suggestions = achievementSuggestions(state);
     const available = suggestions.filter(item => item.available).slice(0, 3);
     const step = starterStep(state);
-    const waitingSeed = step === 'S5' && state.plots.some(p => !p.starter && p.paid > 0 && p.kind !== 'wild' && p.kind !== 'wonder' && p.cell);
-    const starter = step ? { ...STARTER_COPY[step], ...(waitingSeed
-        ? { hint: state.unopened.length ? 'そだった つぼみを さわってみよう' : 'たねが まってるよ。いまは しまを ながめてみよう', action: 'たねを みる' }
-        : step === 'S5' && state.drops < 4 ? { hint: 'いまは ベンチで あそべるよ', action: 'しまへ もどる' } : {}) } : undefined;
+    const starter = step ? starterCopy(state, step) : undefined;
     const selected = state.guidance?.selected;
+    const starterChoices = step === 'S4' && !state.guidance?.starter.legacy && !selected
+        ? starterPlayChoices(state) : [];
     const achieved = achievementCatalog.filter(item => state.guidance?.achievements[item.id])
         .sort((a, b) => (state.guidance!.achievements[b.id]!.at ?? 0) - (state.guidance!.achievements[a.id]!.at ?? 0));
     const tryDetail = detail ?? selected;
@@ -90,15 +92,23 @@ export function GrowingGuideBook({ state, busy, initialMemory, onClose, onChoose
             {tab === 'try' && <>
                 {step && starter && !opened && <article className="growing-guide-starter" data-guidance-starter={step}>
                     <GrowingGuideArt id={STARTER_ART[step]} />
-                    <div><span className="growing-guide-kicker">はじめの あそび</span><h3>{starter.title}</h3><p>{starter.hint}</p>
-                        <div className="growing-guide-actions"><button className="growing-guide-primary" disabled={busy} onClick={onStarterAction}>{starter.action}</button>
+                    <div><span className="growing-guide-kicker">{state.guidance?.starter.legacy ? 'しまの あそび' : 'はじめの あそび'}</span><h3>{starter.title}</h3><p>{starter.hint}</p>
+                        {step === 'S4' && starter.action === 'まなぶ' && !state.guidance?.starter.legacy
+                            && !hasPurchasedFlower(state)
+                            && state.unlocked.includes('landmark:flower') && <GrowingFlowerPrice drops={state.drops} />}
+                        {starterChoices.length > 0 && <div className="growing-guide-starter-choices" aria-label="つぎの あそび">
+                            {starterChoices.map(id => <button key={id} data-starter-play={id} disabled={busy} onClick={() => onStarterChoose(id)}>
+                                <GrowingGuideArt id={id} /><strong>{id === 'A4' ? 'ベンチを うごかす' : 'はたの いろを かえる'}</strong><span>むりょう・いま できる</span>
+                            </button>)}
+                        </div>}
+                        <div className="growing-guide-actions">{starterChoices.length === 0 && <button className="growing-guide-primary" disabled={busy} onClick={onStarterAction}>{starter.action}</button>}
                             {!state.guidance?.starter.automatic && <button disabled={busy} onClick={onResumeStarter}>しまで ヒントを みる</button>}</div>
                     </div>
                 </article>}
                 {entry && !proof && <article className="growing-guide-detail" aria-label={`${entry.title}の ヒント`}>
                     <GrowingGuideArt id={entry.id} />
                     <div><span className="growing-guide-kicker">{selected === entry.id ? 'えらんでいる あそび' : 'これを やってみる？'}</span>
-                        <h3>{entry.title}</h3><p>{entry.hint}</p>{suggestion?.reason && <p className="growing-guide-note">{suggestion.reason}</p>}
+                        <h3>{entry.title}</h3><p>{step === 'S4' && selected === 'A4' && entry.id === 'A4' ? starter?.hint : entry.hint}</p>{suggestion?.reason && <p className="growing-guide-note">{suggestion.reason}</p>}
                         <div className="growing-guide-actions">
                             {selected === entry.id ? <><button className="growing-guide-primary" disabled={busy || !suggestion?.available} onClick={() => onTry(entry.id)}>しまで やってみる</button><button disabled={busy} onClick={onClear}>えらぶのを やめる</button></>
                                 : <button className="growing-guide-primary" disabled={busy} onClick={() => onChoose(entry.id, Boolean(suggestion?.available))}>{suggestion?.available ? 'これを やってみる' : 'あとで やることにする'}</button>}

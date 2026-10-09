@@ -46,8 +46,9 @@ export function IslandProfileSwitcher({ activeId, disabled }: { activeId: string
         }
     };
     return <>
+        {/* Opening names is read-only; background saves must not swallow this tap. */}
         <button ref={trigger} type="button" className="island-profile-switch" aria-label="あそぶ人を きりかえる" aria-haspopup="dialog"
-            disabled={disabled} onClick={() => setOpen(true)}><UsersRound size={18} aria-hidden="true" /><span>きりかえ</span></button>
+            onClick={() => setOpen(true)}><UsersRound size={18} aria-hidden="true" /><span>きりかえ</span></button>
         <Modal isOpen={open} onClose={close} title="だれが あそぶ？" initialFocus="dialog"
             footer={<Button variant="secondary" className="w-full" disabled={Boolean(switchingId)} onClick={close}>とじる</Button>}>
             <p className="mb-4 text-sm text-pokomoko-muted">なまえを おすと、その人の しまへ。</p>
@@ -55,7 +56,7 @@ export function IslandProfileSwitcher({ activeId, disabled }: { activeId: string
                 disabled={disabled || Boolean(switchingId)} onSelect={id => { void select(id); }} />}
             {!profiles && !loadError && <p role="status">なまえを よみこみ中…</p>}
             {loadError && <div role="alert"><p>なまえを よみこめなかったよ。</p><Button variant="secondary" onClick={() => setAttempt(value => value + 1)}>もういちど</Button></div>}
-            <p role="status" className="mt-3 text-sm text-pokomoko-muted">{switchError ? 'きりかえが できなかったよ。もういちど なまえを おしてね。' : switchingId ? 'しまを ひらいているよ…' : ''}</p>
+            <p role="status" className="mt-3 text-sm text-pokomoko-muted">{switchError ? 'きりかえが できなかったよ。もういちど なまえを おしてね。' : switchingId ? 'しまを ひらいているよ…' : disabled ? 'いまの そうさが おわるまで まってね。' : ''}</p>
         </Modal>
     </>;
 }

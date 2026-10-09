@@ -10,6 +10,26 @@ const make = () => { const db = new GrowingIslandDatabase(`guidance-${crypto.ran
 afterEach(async () => { await Promise.all(stores.splice(0).map(db => db.delete())); });
 
 describe('guidance save boundary', () => {
+    it('reads older saves without a flower marker and saves a one-time cue only for its owner', async () => {
+        const { db, life } = make();
+        const old = (await syncGrowingIsland('kid', [], 0, db, life)).record;
+        const sibling = (await syncGrowingIsland('sibling', [], 0, db, life)).record;
+        expect((await readGrowingIsland('kid', db))?.state.guidance?.firstFlower).toBeUndefined();
+        const prepared = structuredClone(old);
+        prepared.state.drops = 10;
+        prepared.state.unlocked.push('landmark:flower');
+        await db.islands.put(prepared);
+        const intent = { id: 'placed-flower', command: { type: 'place' as const, kind: 'flower' as const, cell: { x: 4, z: 2 } } };
+        const placed = await commandGrowingIsland('kid', intent, 1, db);
+        const id = placed.record.state.guidance?.firstFlower?.id;
+        expect(id).toBeDefined();
+        expect(placed.record.state.drops).toBe(0);
+        expect((await commandGrowingIsland('kid', intent, 2, db)).record.revision).toBe(placed.record.revision);
+        await commandGrowingIsland('kid', { id: 'cue-shown', command: { type: 'ack-revisit-flower', id: id! } }, 3, db);
+        db.close(); await db.open();
+        expect((await readGrowingIsland('kid', db))?.state.guidance?.firstFlower).toEqual({ id, seen: true });
+        expect(await db.islands.get('sibling')).toEqual(sibling);
+    });
     it('observes another connection saving the owner without consuming time, and excludes sibling changes', async () => {
         const { db, life } = make();
         const before = (await syncGrowingIsland('kid', [], 0, db, life)).record;

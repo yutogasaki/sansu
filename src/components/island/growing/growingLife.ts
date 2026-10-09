@@ -3,7 +3,8 @@ import type { IslandMaterials } from '../three/primitives';
 import { homeCellOf } from '../../../domain/growingIsland/community';
 import { HOME_CELL, bridgeEnd, key, reachableFromHome, walkableCells } from '../../../domain/growingIsland/space';
 import type { Cell, GrowingState, Villager } from '../../../domain/growingIsland';
-import { makeVillagerActor, type Actor } from './actors';
+import { disposeActor, makeVillagerActor, type Actor } from './actors';
+import { DROP_PLAY_MS, sampleDropPlay, type DropPlayKind } from './growingDropPlay';
 import type { ObjectLayer, Seat } from './objectLayer';
 import type { SceneLayout } from './sceneLayout';
 import { besideOpen, nearestOpen, walkRoute } from './walkers';
@@ -14,6 +15,7 @@ interface Walker {
     seat?: { cell: Cell; kind: Seat }; hopAt?: number; heading: number; home: Cell;
     /** How a friend answers a touch: lively ones spin, shy ones turn away, others wave. */
     react?: { kind: 'wave' | 'spin' | 'shy'; at: number };
+    play?: { kind: DropPlayKind; cell: Cell; exit: Cell; at: number };
 }
 
 export const VISIBLE_WALKERS = 12;
@@ -51,7 +53,7 @@ export class GrowingLife {
         const keep = new Set(['pokomoko', 'visitor', ...shown.map(v => v.id), ...state.arrivals]);
         for (const [id, walker] of this.walkers) if (!keep.has(id) || id === 'visitor') {
             if (id === 'pokomoko') continue;
-            walker.actor.root.removeFromParent(); this.walkers.delete(id);
+            disposeActor(walker.actor); this.walkers.delete(id);
         }
         const villagers = new Map(state.villagers.map(v => [v.id, v]));
         for (const id of keep) {
@@ -61,10 +63,17 @@ export class GrowingLife {
         }
         for (const id of this.walkers.keys()) {
             const walker = this.walkers.get(id)!, villager = villagers.get(id);
+            if (walker.play && this.seats.get(key(walker.play.cell)) !== (walker.play.kind === 'bench' ? 'sit' : 'swing')) {
+                walker.play = undefined; walker.seat = undefined; walker.mode = 'idle'; walker.until = 0;
+            }
+            if (walker.play && !this.walkable.has(key(walker.play.exit))) {
+                walker.play.exit = this.playExit(walker.play.cell, walker.play.kind);
+            }
             if (villager) walker.home = homeCellOf(state, villager);
+            const seatedOnExisting = walker.mode === 'seat' && walker.seat && this.seats.get(key(walker.seat.cell)) === walker.seat.kind;
             if ((!this.walkable.has(key({ x: Math.round(walker.at.x), z: Math.round(walker.at.z) }))
                 || walker.path.some(cell => !this.walkable.has(key(cell))))
-                && walker.mode !== 'boat' && walker.mode !== 'sailing' && walker.mode !== 'pier' && walker.mode !== 'held') {
+                && walker.mode !== 'boat' && walker.mode !== 'sailing' && walker.mode !== 'pier' && walker.mode !== 'held' && !seatedOnExisting) {
                 walker.at = nearestOpen(this.walkable, walker.at) ?? { ...HOME_CELL };
                 walker.path = []; walker.mode = 'idle'; walker.until = 0;
             }
@@ -114,8 +123,18 @@ export class GrowingLife {
     private seatBeside(cell: Cell) {
         for (const [text, kind] of this.seats) {
             const [x, z] = text.split(',').map(Number);
-            if (Math.abs(x - cell.x) + Math.abs(z - cell.z) === 1) return { cell: { x, z }, kind };
+            if (Math.abs(x - cell.x) + Math.abs(z - cell.z) === 1 && !this.seatOccupied({ x, z })) return { cell: { x, z }, kind };
         }
+    }
+
+    private seatOccupied(cell: Cell, except?: Walker) {
+        return [...this.walkers.values()].some(w => w !== except && w.mode === 'seat' && w.seat && key(w.seat.cell) === key(cell));
+    }
+
+    private playExit(cell: Cell, kind: DropPlayKind): Cell {
+        const front = { x: cell.x, z: cell.z + 1 };
+        if (kind === 'swing' && this.walkable.has(key(front))) return front;
+        return besideOpen(this.walkable, cell) ?? nearestOpen(this.walkable, cell) ?? HOME_CELL;
     }
 
     /** えんそうかい: everyone visible gathers in a ring around the bandstand for a while. */
@@ -124,6 +143,10 @@ export class GrowingLife {
 
     hop(id: string, now: number) {
         const w = this.walkers.get(id); if (!w) return;
+        if (w.play) {
+            w.at = { ...w.play.exit };
+            w.play = undefined; w.seat = undefined; w.mode = 'idle'; w.until = now + 1500;
+        }
         w.hopAt = now;
         const trait = w.actor.trait;
         w.react = { kind: trait === 'lively' ? 'spin' : trait === 'shy' ? 'shy' : 'wave', at: now };
@@ -179,7 +202,7 @@ export class GrowingLife {
     pick(id: string) {
         const w = this.walkers.get(id);
         if (!w || id === 'visitor' || w.mode === 'boat' || w.mode === 'sailing') return false;
-        w.mode = 'held'; w.path = []; w.seat = undefined; return true;
+        w.mode = 'held'; w.path = []; w.seat = undefined; w.play = undefined; return true;
     }
 
     drag(id: string, point: T.Vector3) {
@@ -188,16 +211,31 @@ export class GrowingLife {
     }
 
     /** Dropped on a seat, a friend uses it; otherwise they land on the nearest open cell. */
-    drop(id: string, now: number) {
+    drop(id: string, now: number): { kind: DropPlayKind; cell: Cell } | undefined {
         const w = this.walkers.get(id); if (!w || w.mode !== 'held') return;
         const cell = { x: Math.round(w.at.x), z: Math.round(w.at.z) }, seat = this.seats.get(key(cell));
-        if (seat) { w.mode = 'seat'; w.seat = { cell, kind: seat }; w.at = { ...cell }; w.until = now + 7000; return; }
+        if (seat && !this.seatOccupied(cell, w)) {
+            w.mode = 'seat'; w.seat = { cell, kind: seat }; w.at = { ...cell };
+            const kind = seat === 'sit' ? 'bench' : seat === 'swing' ? 'swing' : undefined;
+            const exit = kind ? this.playExit(cell, kind) : HOME_CELL;
+            w.play = kind ? { kind, cell, exit, at: now } : undefined;
+            w.until = now + (kind ? DROP_PLAY_MS : 7000);
+            return kind ? { kind, cell } : undefined;
+        }
         const open = nearestOpen(this.walkable, w.at) ?? HOME_CELL;
-        w.at = { ...open }; w.mode = 'idle'; w.until = now + 2500;
+        w.at = { ...open }; w.mode = 'idle'; w.play = undefined; w.until = now + 2500;
+    }
+
+    /** A cancelled gesture lands safely without pretending the object was used. */
+    cancelCarry(id: string, now: number) {
+        const w = this.walkers.get(id); if (!w || w.mode !== 'held') return;
+        const open = nearestOpen(this.walkable, w.at) ?? HOME_CELL;
+        w.at = { ...open }; w.mode = 'idle'; w.seat = undefined; w.play = undefined; w.until = now + 1500;
     }
 
     tick(now: number, delta: number, reduced: boolean, night: boolean) {
         const layout = this.layout, layer = this.layer; if (!layout || !layer) return;
+        for (const pivot of layer.swingPivots.values()) pivot.rotation.x = 0;
         if (import.meta.env.DEV && typeof location !== 'undefined' && location.hash.includes('lineup')) {
             // Development only: everyone stands in a row facing the camera, to compare silhouettes.
             [...this.walkers.values()].forEach((w, i) => {
@@ -265,8 +303,22 @@ export class GrowingLife {
                     else { w.mode = 'idle'; w.until = now + 2500 + Math.random() * 5000; }
                 }
             }
-            if (w.mode === 'seat' && now > w.until) { w.mode = 'idle'; w.seat = undefined; w.until = now + 1500; }
+            if (w.mode === 'seat' && now > w.until) {
+                if (w.play) w.at = { ...w.play.exit };
+                w.mode = 'idle'; w.seat = undefined; w.play = undefined; w.until = now + 1500;
+            }
             const position = w.mode === 'seat' && w.seat ? layout.point(w.seat.kind === 'tend' ? w.at : w.seat.cell) : layout.point(w.at);
+            const play = w.play && w.mode === 'seat' ? sampleDropPlay(w.play.kind, now - w.play.at, reduced) : undefined;
+            const leaving = w.play && w.mode === 'seat' ? Math.max(0, Math.min(1, (now - w.play.at - (DROP_PLAY_MS - 650)) / 650)) : 0;
+            if (w.play && leaving) {
+                const from = w.play.cell, to = w.play.exit, step = leaving * leaving * (3 - 2 * leaving);
+                position.lerp(layout.point(to), step);
+                w.at = { x: from.x + (to.x - from.x) * step, z: from.z + (to.z - from.z) * step };
+            }
+            if (play && w.play?.kind === 'swing') {
+                const pivot = layer.swingPivots.get(key(w.play.cell));
+                if (pivot) pivot.rotation.x = play.rootPitch;
+            }
             let lean = 0;
             if (w.mode === 'seat' && w.seat?.kind === 'slide' && !reduced) {
                 // Up the steps at the back, then whoosh down the chute.
@@ -279,13 +331,14 @@ export class GrowingLife {
             if (w.mode === 'seat' && w.seat?.kind === 'tend') lean = reduced ? .35 : .35 + Math.sin(now / 400) * .12;
             if (w.mode === 'seat' && w.seat) y = w.seat.kind === 'sit' ? .16 : w.seat.kind === 'swing' ? .2 : w.seat.kind === 'slide' || w.seat.kind === 'tend' ? 0
                 : w.seat.kind === 'bounce' ? .2 + (reduced ? 0 : Math.abs(Math.sin(now / 260)) * .4) : .05;
+            if (play) y *= 1 - leaving * leaving * (3 - 2 * leaving);
             if (w.mode === 'held') y = .55 + (reduced ? 0 : Math.sin(now / 120) * .03);
             if (w.mode === 'walk' && !reduced) y = Math.abs(Math.sin(now / 110)) * .035;
             if (w.hopAt !== undefined && now >= w.hopAt) {
                 const t = (now - w.hopAt) / 520;
                 if (t >= 1) w.hopAt = undefined; else y += Math.sin(Math.PI * t) * (reduced ? .08 : .35);
             }
-            actor.root.position.set(position.x, position.y + y, position.z);
+            actor.root.position.set(position.x, position.y + y + (play?.lift ?? 0), position.z + (play?.travel ?? 0));
             actor.root.rotation.y = w.mode === 'seat' ? (w.seat?.kind === 'tend' && w.seat ? Math.atan2(w.seat.cell.x - w.at.x, w.seat.cell.z - w.at.z) : 0) : w.heading;
             if (w.react && now - w.react.at < 1400 && !reduced) {
                 const t = (now - w.react.at) / 1400;
@@ -293,13 +346,19 @@ export class GrowingLife {
                 else if (w.react.kind === 'shy') actor.root.rotation.y += Math.PI * .6 + Math.sin(t * Math.PI * 4) * .12;
             }
             this.poseArms(w, now, reduced, false);
-            if (w.mode === 'seat' && w.seat?.kind === 'swing' && !reduced) actor.root.rotation.x = Math.sin(now / 500) * .18;
+            if (play) actor.root.rotation.x = play.rootPitch;
+            else if (w.mode === 'seat' && w.seat?.kind === 'swing' && !reduced) actor.root.rotation.x = Math.sin(now / 500) * .18;
             else actor.root.rotation.x = lean;
+            actor.root.rotation.z = play?.roll ?? 0;
+            actor.body.rotation.x = play?.bodyPitch ?? 0;
             const swing = w.mode === 'walk' && !reduced ? Math.sin(now / 110) * .5 : 0;
-            actor.feet.forEach((foot, i) => { foot.rotation.x = i ? swing : -swing; });
+            actor.feet.forEach((foot, i) => { foot.rotation.x = play ? (i ? play.rightFoot : play.leftFoot) : i ? swing : -swing; });
             if (actor.sparkle) actor.sparkle.rotation.y = now / 600;
         }
     }
 
-    dispose() { this.root.removeFromParent(); this.walkers.clear(); }
+    dispose() {
+        for (const walker of this.walkers.values()) disposeActor(walker.actor);
+        this.root.removeFromParent(); this.walkers.clear();
+    }
 }

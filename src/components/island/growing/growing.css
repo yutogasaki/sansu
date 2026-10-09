@@ -16,6 +16,23 @@
     display: block; min-width: 0; flex: 0 1 auto; overflow: hidden; text-overflow: ellipsis;
 }
 .growing-hud-top > :not([data-growing-character]) { flex-shrink: 0; }
+.growing-island[data-growing-island="visit"] .growing-hud-top .growing-chip {
+    max-width: 100%; white-space: normal; overflow-wrap: anywhere;
+}
+.growing-island[data-growing-island="visit"] { display: flex; flex-direction: column; }
+.growing-island[data-growing-island="visit"] .growing-hud-top {
+    position: relative; top: auto; left: auto; right: auto; flex: none; margin: calc(56px + env(safe-area-inset-top)) 12px 0;
+}
+.growing-island[data-growing-island="visit"] .growing-bubble {
+    position: relative; left: auto; bottom: auto; min-height: 0; flex: 0 1 auto; overflow-y: auto;
+    margin: auto 0 0 12px;
+}
+.growing-island[data-growing-island="visit"] .growing-hud-bottom {
+    position: relative; right: auto; bottom: auto; flex: none; max-width: calc(100% - 24px);
+    margin: 8px 12px 12px auto;
+}
+.growing-island[data-growing-island="visit"] .growing-hud-bottom .growing-open-all { min-width: 0; }
+.growing-island[data-growing-island="visit"] .growing-hud-bottom .growing-seed-button { flex: none; }
 .growing-menu-button { margin-left: auto; }
 .growing-menu {
     position: absolute; z-index: 8; top: calc(100px + env(safe-area-inset-top)); right: 12px; display: grid; gap: 8px; padding: 10px;
@@ -34,6 +51,10 @@
     box-shadow: 0 3px 12px rgb(30 40 60 / 14%); font-size: 14px; font-weight: 700; line-height: 1.5;
 }
 .growing-bubble > span { display: block; font-size: 11px; color: var(--pokomoko-muted); }
+.growing-revisit-flower { display: block; min-height: 44px; margin-top: 5px; padding: 6px 10px;
+    border: 1px solid var(--pokomoko-edge); border-radius: 12px; background: var(--pokomoko-paper);
+    color: var(--pokomoko-blue-deep); font-size: 13px; font-weight: 800; }
+.growing-revisit-flower:focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 2px; }
 
 .growing-hud-bottom { position: absolute; z-index: 5; right: 12px; bottom: 12px; display: flex; gap: 8px; align-items: center; }
 .growing-seed-button {

@@ -679,7 +679,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                 {/* Question / Card Area */}
                 {/* Mobile: Use flex-1 with min-h-0 to allow shrinking if controls need space */}
                 <div id="debug-card-container" {...swipeHandlers} className="flex-1 min-h-0 px-4 py-2 flex flex-col justify-center relative z-0 land:px-6 ipadland:flex-[2] ipadland:p-0 mobile:px-1 mobile:py-1 ipadland:min-h-0">
-                    <Card className="relative min-h-0 w-full overflow-hidden rounded-[30px] border-t-[3px] border-t-cyan-300/80 p-6 shadow-[0_26px_60px_-40px_rgba(15,23,42,0.42)] land:p-4 mobile:border-t-2 mobile:p-4 mobile:shadow-none">
+                    <Card className="relative flex min-h-0 w-full flex-col overflow-hidden rounded-[30px] border-t-[3px] border-t-cyan-300/80 p-6 shadow-[0_26px_60px_-40px_rgba(15,23,42,0.42)] land:p-4 mobile:border-t-2 mobile:p-4 mobile:shadow-none">
                         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.3),transparent_36%),linear-gradient(180deg,rgba(255,255,255,0.18),transparent_50%)]" />
 
                         {/* Compact correct feedback overlay on card */}
@@ -703,7 +703,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                         </AnimatePresence>
 
                         {/* Top row: review badge (left) + skip button (right) */}
-                        <div className="absolute top-2 left-3 right-3 z-20 flex items-center justify-between mobile:top-1 mobile:left-2 mobile:right-2">
+                        <div className="relative z-10 mb-2 flex min-h-[44px] shrink-0 items-center justify-between">
                             <AnimatePresence>
                                 {currentProblem.isReview ? (
                                     <motion.div

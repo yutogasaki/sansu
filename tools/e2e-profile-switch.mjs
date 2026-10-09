@@ -2,17 +2,7 @@ import assert from 'node:assert/strict';
 import { promises as fs } from 'node:fs';
 import { build } from 'esbuild';
 import { chromium } from 'playwright';
-import { answerUI, readNative, runtimeMetadata, waitMode } from './island-e2e-helpers.mjs';
-
-async function waitReady(page) {
-    await page.locator('.island-page').waitFor();
-    await page.waitForFunction(() => {
-        const root = document.querySelector('.island-page');
-        if (root?.getAttribute('data-mode') === 'learning') return Boolean(root.querySelector('[data-input-ready="true"] .park-answer'));
-        const canvas = root?.querySelector('[data-growing-island="ready"] [data-growing-world] canvas, .life-world[data-rendered="true"] canvas, [data-renderer="three"] canvas');
-        return Boolean(canvas && canvas.getBoundingClientRect().width > 0 && canvas.getBoundingClientRect().height > 0);
-    });
-}
+import { answerUI, openGrowingMenu, openIslandDestination, readNative, runtimeMetadata, waitMode, waitReady } from './island-e2e-helpers.mjs';
 
 const base = process.env.SANSU_PROFILE_URL ?? 'http://127.0.0.1:5198';
 const out = process.env.SANSU_PROFILE_OUTPUT;
@@ -52,7 +42,10 @@ try {
             await page.goto(`${base}/#/island`);
             await waitReady(page);
             const checkOwner = async person => {
-                await page.waitForFunction(name => document.querySelector('.island-header')?.textContent.includes(name), person.name);
+                const menu = await openGrowingMenu(page);
+                await menu.locator('.growing-pocket-profile').waitFor();
+                assert.equal(await menu.locator('.growing-pocket-profile').textContent(), person.name, 'The menu shows the committed profile');
+                await menu.getByRole('button', { name: 'メニューを とじる', exact: true }).click();
                 const active = await page.evaluate(async () => {
                     const request = indexedDB.open('SansuDatabase');
                     const db = await new Promise(resolve => { request.onsuccess = () => resolve(request.result); });
@@ -69,11 +62,13 @@ try {
             for (const [index, person] of [high, low, high, low].entries()) {
                 if (index > 0) {
                     if (index === 1) {
-                        await page.getByRole('button', { name: '設定', exact: true }).click();
+                        await openIslandDestination(page, '設定');
                     } else {
-                        await page.getByRole('button', { name: 'あそぶ人を きりかえる', exact: true }).click();
+                        const menu = await openGrowingMenu(page);
+                        await menu.getByRole('button', { name: 'あそぶ人を きりかえる', exact: true }).click();
                     }
                     await page.getByRole('button', { name: `${person.name}に きりかえる`, exact: true }).click();
+                    await page.getByRole('dialog', { name: 'だれが あそぶ？', exact: true }).waitFor({ state: 'hidden' });
                     await waitMode(page, 'home'); await waitReady(page); await checkOwner(person);
                 }
                 await page.locator('.island-shell-tab--learn').click();

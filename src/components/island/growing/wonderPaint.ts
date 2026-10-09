@@ -41,3 +41,11 @@ export function wonder(kind: Wonder): T.Material {
     }
     return material;
 }
+
+/** Drop old renderer listeners while retaining the session's drawn materials and textures. */
+export function releaseWonderPaintRendererReferences() {
+    for (const material of cache.values()) {
+        material.dispose();
+        material.map?.dispose();
+    }
+}

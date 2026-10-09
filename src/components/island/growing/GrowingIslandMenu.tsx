@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import { Archive, BookOpen, Camera, ChevronDown, Flower2, House, PawPrint, Pencil, RotateCcw, RotateCw, Settings2, Sprout, X, Waypoints } from 'lucide-react';
+import { useEffect, useRef, type ReactNode } from 'react';
+import { Archive, BarChart3, BookOpen, Camera, ChevronDown, Flower2, House, PawPrint, Pencil, RotateCcw, RotateCw, Settings2, Sprout, X, Waypoints } from 'lucide-react';
 import type { Side, Villager } from '../../../domain/growingIsland/types';
 import { villagerName } from './growingCopy';
 import type { MenuPictures } from './menuMiniatures';
@@ -22,6 +22,10 @@ export interface GrowingIslandMenuProps {
     onFlowers: () => void;
     onGuide: () => void;
     onSettings: () => void;
+    onRecords?: () => void;
+    onName?: () => void;
+    islandName?: string;
+    utilities?: ReactNode;
     onRotate: (direction: -1 | 1) => void;
     onExpand: (side: Side) => void;
     bridge?: { built: boolean; ready: boolean; reason: string };
@@ -32,6 +36,7 @@ export interface GrowingIslandMenuProps {
 export function GrowingIslandMenuContents(props: GrowingIslandMenuProps) {
     const { villagers, quote, pictures } = props;
     return <div className="growing-pocket-entries">
+        {props.onName && <div className="growing-pocket-identity"><button onClick={props.onName}>{props.islandName || 'しまの なまえ'}<Pencil size={16} aria-hidden="true" /></button><span aria-label={`しずく ${props.drops}`}>💧 {props.drops}</span></div>}
         <div className="growing-pocket-primary">
             <button className="growing-pocket-friends" aria-label="なかま" aria-describedby="growing-menu-population" onClick={props.onFriends}>
                 <span className="growing-pocket-model" aria-hidden="true">
@@ -53,6 +58,8 @@ export function GrowingIslandMenuContents(props: GrowingIslandMenuProps) {
             <button onClick={props.onShow}><Camera size={20} aria-hidden="true" /><span>みせる</span></button>
             <button onClick={props.onFlowers}><Flower2 size={20} aria-hidden="true" /><span>はなずかん</span></button>
         </div>
+        {props.onRecords && <div className="growing-pocket-memories"><button onClick={props.onRecords}><BarChart3 size={20} aria-hidden="true" /><span>きろく</span></button><button onClick={props.onSettings}><Settings2 size={20} aria-hidden="true" /><span>設定</span></button></div>}
+        {props.utilities && <div className="growing-pocket-utilities">{props.utilities}</div>}
         <div className="growing-pocket-footer">
             {props.bridge && <button className="growing-pocket-bridge" disabled={!props.bridge.built && !props.bridge.ready} onClick={props.onBridge}
                 aria-label={props.bridge.built ? 'はしを みにいく' : 'はしを つくる'}>
@@ -66,7 +73,7 @@ export function GrowingIslandMenuContents(props: GrowingIslandMenuProps) {
             <div className="growing-pocket-tool-buttons">
                 <button aria-label="ひだりに まわす" onClick={() => props.onRotate(-1)}><RotateCcw size={18} aria-hidden="true" /><span>ひだり</span></button>
                 <button aria-label="みぎに まわす" onClick={() => props.onRotate(1)}><RotateCw size={18} aria-hidden="true" /><span>みぎ</span></button>
-                <button onClick={props.onSettings}><Settings2 size={18} aria-hidden="true" /><span>せってい</span></button>
+                {!props.onRecords && <button onClick={props.onSettings}><Settings2 size={18} aria-hidden="true" /><span>せってい</span></button>}
             </div>
             {quote && <div className="growing-pocket-expansion" aria-label="しまを ひろげる">
                 {quote.sides.map(side => <button key={side} disabled={props.busy || props.drops < quote.price} onClick={() => props.onExpand(side)}>
@@ -83,7 +90,7 @@ export function GrowingIslandMenu(props: GrowingIslandMenuProps) {
     const close = useRef<HTMLButtonElement>(null);
     useEffect(() => { close.current?.focus({ preventScroll: true }); }, []);
     useEffect(() => {
-        const escape = (event: KeyboardEvent) => { if (event.key === 'Escape') { event.preventDefault(); onClose(); } };
+        const escape = (event: KeyboardEvent) => { if (event.key === 'Escape' && !event.defaultPrevented && !(event.target instanceof Element && event.target.closest('[role="dialog"]'))) { event.preventDefault(); onClose(); } };
         window.addEventListener('keydown', escape);
         return () => window.removeEventListener('keydown', escape);
     }, [onClose]);

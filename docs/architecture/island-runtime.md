@@ -30,7 +30,8 @@
 
 - `src/domain/islandLife/`は旧保存の読み込み、検証済みGrowing移行、旧所有・履歴と学習連携を支える。DB名やschemaをこの整理で変更しない。
 - `src/domain/natureTown/`の純粋な計算、保存保護とテストは再利用資産として残す。旧DBは自動合算しない。
-- 元のぽこもこの造形は`three/islandCharacters.ts`の`makePokomokoRig`を唯一の組立元とする。`buildIslandCharacters`は共用の材料cache・ぽこもこ・うさぎ・カワウソを作り、Growing、家の互換renderer、学習actorから使う。旧Home Journeyの建物/成長コードは参照しない。利用先でmeshをrootから移した場合、そのgeometryは利用先が解放し、builderは残るrootと共用材料を解放する。
+- 元のぽこもこの造形は`three/islandCharacters.ts`の`makePokomokoRig`を唯一の組立元とする。Growingの`worldScene`は同じ組立元を直接呼び、使わない旧うさぎ/カワウソの試作rigを作らない。GrowingLifeがactorの固有geometryを、worldSceneが共用材料cacheを解放する。`buildIslandCharacters`は家の互換rendererと学習actorで使う。旧Home Journeyの建物/成長コードは参照しない。利用先でmeshをrootから移した場合、そのgeometryは利用先が解放し、builderは残るrootと共用材料を解放する。
+- Growingの配置予告・選択・ヒントだけが変わる場合はpreview資源を更新し、保存された建物・住人・船を保持する。保存stateの変更は全体を再構築する。`three/sharedRendererCache.ts`は登録したrendererが全て終了した時に共有DFG/sprite/wonder-paint資源の旧renderer参照を解放する。材質のshader hookを観測する際は元のhookとprogram keyを維持し、観測の有無で同じshaderの共有を分断しない。
 - `three/garden/`は旧`life/fantasy/`から移した共用の庭・家・光・景色の時計と描画計算。Growingと家の互換rendererから同じ実装を使い、景色の時計を成長や報酬へ使わない。Life固有の水演出/保存済み再演のadapterもここから参照するが、保存や純粋な規則は既存のdomainに残す。
 - `src/components/island/homeJourney/scene.ts`は旧予約と造形回帰用の試作建物を保持し、ぽこもこだけを共用組立元から作る。`src/components/island/life/`の家/旧所有・履歴用の描画adapterも保持する。独立したホームや旧保存の自動合算を追加しない。
 - 保存済みHome Journey予約の完了・rollback・重複防止と履歴の読み込みは維持する。新しい予約に旧試作を付けない。

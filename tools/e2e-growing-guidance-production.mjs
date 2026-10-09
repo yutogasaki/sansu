@@ -4,7 +4,7 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { chromium } from 'playwright';
 import { plantProduction } from './growing-production-helpers.mjs';
-import { answerUI, readNative, runtimeMetadata } from './island-e2e-helpers.mjs';
+import { answerUI, openGrowingMenu, openIslandDestination, readNative, runtimeMetadata, waitReady } from './island-e2e-helpers.mjs';
 
 const base = process.env.SANSU_GUIDANCE_PRODUCTION_URL, out = process.env.SANSU_GUIDANCE_PRODUCTION_OUTPUT;
 assert(base && out, 'Specify a local production URL and fresh output directory');
@@ -66,7 +66,15 @@ try {
         await page.getByRole('button', { name: /^まなぶ/ }).first().tap();
         for (const name of ['小学 1 年生', 'さんすう', '足し算まで']) await page.getByRole('button', { name, exact: true }).tap();
         await ready(page);
-        if (await page.getByRole('button', { name: /おと.*オン/ }).count()) await page.getByRole('button', { name: /おと.*オン/ }).tap();
+        await openGrowingMenu(page, { touch: true });
+        const sound = page.locator('.island-sound-button');
+        if (await sound.getAttribute('data-sound-state') !== 'off') {
+            // A blocked audio context first needs its offered enable gesture.
+            // Then use the real mute action and wait for the persisted setting.
+            if (await sound.getAttribute('aria-label') === 'おとを だす') await sound.tap();
+            await page.getByRole('button', { name: 'おとを けす', exact: true }).tap();
+        }
+        await page.locator('.island-sound-button[data-sound-state="off"]').waitFor();
         let native = await readNative(page); const id = native.island.profileId;
         await plant(page, 'home', { x: 1, z: 3 }, id); await until(page, id, r => r.state.villagers.length === 1);
         await page.getByRole('button', { name: 'ぜんぶ ひらく', exact: true }).tap();
@@ -80,7 +88,8 @@ try {
         await page.getByRole('button', { name: 'とじる', exact: true }).tap(); await ready(page);
         const earned = await until(page, id, r => r.state.learned.length === 3); assert.equal(earned.state.drops, 6);
         await until(page, id, r => Boolean(r.state.guidance?.starter.steps.S4));
-        await page.getByRole('button', { name: 'メニュー', exact: true }).tap();
+        await openGrowingMenu(page, { touch: true });
+        await capture(page, 'menu');
         await page.getByRole('button', { name: 'しまの あそびかた', exact: true }).tap();
         await capture(page, 'book');
         await page.locator('.growing-guide-all summary').tap(); await page.locator('[data-guidance-goal="A3"]').first().tap();
@@ -89,7 +98,8 @@ try {
         const colored = await until(page, id, r => Boolean(r.state.guidance?.achievements.A3));
         const remembered = colored.state.guidance.achievements.A3;
         await page.getByRole('button', { name: 'とじる', exact: true }).tap();
-        await page.locator('.island-shell-nav').getByRole('button', { name: 'いえ', exact: true }).tap();
+        await openIslandDestination(page, 'いえ', { touch: true });
+        await waitReady(page); await capture(page, 'house');
         await page.locator('[data-house-guide-book]').tap(); await page.locator('.growing-guide-book').waitFor();
         assert.equal(await page.locator('.island-page').getAttribute('data-mode'), 'keepsakes');
         await capture(page, 'house-book');
@@ -109,7 +119,7 @@ try {
         await context.setOffline(true); await page.reload(); await ready(page);
         assert.deepEqual((await read(page, id)).state.plots, planted.state.plots);
         await capture(page, 'offline');
-        await page.locator('.island-shell-nav').getByRole('button', { name: 'いえ', exact: true }).tap();
+        await openIslandDestination(page, 'いえ', { touch: true });
         await page.locator('[data-house-guide-book]').tap(); await page.locator('.growing-guide-book').waitFor();
         await capture(page, 'offline-house-book');
         await page.locator('.growing-guide-book').getByRole('button', { name: 'とじる', exact: true }).tap();
@@ -128,13 +138,13 @@ try {
         await page.reload(); await ready(page); assert.equal((await read(page, id)).state.drops, 6);
         assert.deepEqual((await read(page, id)).state.guidance.achievements.A3, remembered);
         assert.equal((await readNative(page, id)).logs.length, 23); await capture(page, 'offline-saved');
-        await page.getByRole('button', { name: 'メニュー', exact: true }).tap();
+        await openGrowingMenu(page, { touch: true });
         await page.getByRole('button', { name: 'しまの あそびかた', exact: true }).tap();
         await page.getByRole('tab', { name: 'できたこと', exact: true }).tap();
         await capture(page, 'offline-memories');
         assert.deepEqual(errors, []); await context.setOffline(false);
         assert.equal(await page.evaluate(async () => (await indexedDB.databases()).some(db => db.name.includes('Preview'))), false);
-        report.scenarios.push({ viewport, source: 'Real onboarding, starter, goal/color, paid farm, ordinary UI answers and actual SW offline reload; no fixture writes', answers: 23, saveVersion: offline.version, pass: true });
+        report.scenarios.push({ viewport, source: 'Real onboarding, starter, goal/color, paid farm, ordinary UI answers and actual SW offline reload; no fixture writes', sound: 'off', answers: 23, saveVersion: offline.version, pass: true });
         await context.close();
     }
     report.finalSources = await sources();

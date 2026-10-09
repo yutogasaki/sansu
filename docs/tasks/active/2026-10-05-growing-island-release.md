@@ -1,12 +1,14 @@
 # 最新変更を一つの公開候補へまとめる
 
-- 更新日: 2026-10-06
+- 更新日: 2026-10-09
 - Review By: 2026-10-12
-- 状態: 固定統合候補のcore/本人切替/実SW旧保存1→3・更新中断/対応writer復旧をlocal確認。公開URL・実機/利用者は未確認
+- 状態: 10/9の固定v3をcore4,803/classic32・全主要旅程・保存故障/更新・実画面・性能でlocal検証。公開URL・実機/利用者は未確認
 - 正本: [憲法](../../../CONSTITUTION.md)、[親仕様01](../../product/01_app_spec.md)、[ゲーム仕様52](../../product/52_growing_island_game_spec.md)、[保存13](../../product/13_data_storage_migration_spec.md)、[検証マトリクス](../../ai/verification_matrix.md)
 - 目的: 実装済み変更を重複して作らず、学習・島・家・本人切替・保護者・橋を同じ版で評価できる候補にまとめる。
 
 ## 現在地と範囲
+
+2026-10-09: ユーザーが、実機や子どもの参加を待たずこちらで改善できる範囲を[一つの品質ゴール](../archive/2026-10-09-local-quality-goal.md)として指定。最新差分の統合・一周・学習・見た目・保存更新を固定v3で検証し、同保存の性能比較とsource/dist archiveも記録した。[実画面・結果・制約](../../design/2026-10-09-local-quality/README.md)。性能は配置応答の改善と残る待ちを分け、公開実行・実機・実利用者の引継ぎはこの親タスクに残す。
 
 2026-10-07共用3D接続: sessionのrenderer propsを家/配置/共有展示/写真/工作/遊びの型付き関数へ分割し、一つの遅延renderer/Suspenseへ合成。表示条件・地面入力の優先順位・保存とsession寿命を維持。59propsの構文照合、core4,766/smoke31、Growing production/offline・本人切替/履歴・配置/工作/写真の390/768幅PASS。別作業の未コミットGrowing案内を除いた独立checkoutを検証し、mainの対象indexとの入力一致を確認する。公開/実機/子ども評価は別。[構成](../../architecture/island-runtime.md)。
 

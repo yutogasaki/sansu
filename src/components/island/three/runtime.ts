@@ -1,6 +1,7 @@
 import type { IslandDirectMarker } from '../islandDirectTargets';
 import * as THREE from 'three';
 import { createIslandRenderer } from './createIslandRenderer';
+import { retainSharedRendererCache } from './sharedRendererCache';
 import { OptionalFurnitureController } from './optionalFurnitureController';
 import { isOptionalFurniture, OPTIONAL_FURNITURE_CANDIDATE } from './optionalFurnitureGeometry';
 import { fitOptionalFurnitureCamera, optionalFurnitureCameraDiagnostic, OPTIONAL_FURNITURE_VIEW_ANGLES } from './optionalFurnitureFraming';
@@ -127,6 +128,8 @@ export function fitIslandComparisonCamera(camera: THREE.OrthographicCamera,
 }
 
 export class IslandScene {
+    private releaseSharedCache?: () => void;
+    private roomSharedCache?: { material: THREE.Material; release: () => void };
     private readonly scene = new THREE.Scene();
     private readonly homeResident = new HomeResident();
     private readonly keepsakeRoom = new IslandLearningKeepsakeScenery();
@@ -278,6 +281,7 @@ export class IslandScene {
         this.lastSharedRequestId = consumedSharedRequestId;
         const graphics = createIslandRenderer({ alpha: false });
         this.renderer = graphics.renderer;
+        this.releaseSharedCache = retainSharedRendererCache(this.materials.residentFabric());
         this.renderer.setPixelRatio(graphics.recovery ? .65 : graphics.compact ? 1 : Math.min(window.devicePixelRatio || 1, 1.5));
         this.renderer.domElement.dataset.graphicsQuality = graphics.recovery ? 'recovery' : graphics.compact ? 'compact' : 'standard';
         this.renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -467,6 +471,15 @@ export class IslandScene {
         const keepsakesChanged = this.keepsakeRoom.update(state.learningKeepsakes?.state, state.completedSets,
             this.keepsakeRoomActive, state.learningKeepsakes?.selectedId, state.challengeDisplayed)
             || this.keepsakeRoom.setDecor(this.keepsakeRoomActive ? state.learningKeepsakes?.decor : undefined);
+        // The house can be the renderer's only view; its materials belong to the
+        // room, not the outside residents. Watch the actual wall before its draw.
+        const roomWall = this.keepsakeRoom.group.getObjectByName('keepsake-room-wall');
+        if (roomWall instanceof THREE.Mesh && !Array.isArray(roomWall.material)
+            && roomWall.material !== this.roomSharedCache?.material) {
+            const previous = this.roomSharedCache;
+            this.roomSharedCache = { material: roomWall.material, release: retainSharedRendererCache(roomWall.material) };
+            previous?.release();
+        }
         if (this.keepsakeRoomActive && !state.learningKeepsakes?.selectedId) {
             this.homeResident.show(this.keepsakeRoom.group);
             if (!this.homeResident.group.parent) this.scene.add(this.homeResident.group);
@@ -2310,6 +2323,8 @@ export class IslandScene {
         });
         materials.forEach(material => material.dispose());
         this.materials.dispose();
+        this.roomSharedCache?.release(); this.roomSharedCache = undefined;
+        this.releaseSharedCache?.();
         this.renderer.dispose();
         this.renderer.forceContextLoss();
         this.renderer.domElement.remove();

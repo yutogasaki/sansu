@@ -5,6 +5,13 @@ import { seedLearningProfile, expectedLearningModel } from './island-learning-fi
 import { readNative } from './island-e2e-helpers.mjs';
 const url = process.env.SANSU_MANUAL_DECIMAL_URL || 'http://127.0.0.1:5697';
 const out = process.env.SANSU_MANUAL_DECIMAL_OUTPUT || 'output/manual-decimal';
+async function writtenEntry(root, problem) {
+    const grid = expectedLearningModel({ problem }); assert(grid);
+    const step = grid.steps[0];
+    const ordered = step.inputCellIndices.map((col, i) => ({ col, value: step.correctValues[i] })).sort((a, b) => a.col - b.col);
+    const editable = await root.locator('[data-written-input]').evaluateAll(elements => elements.map(el => el.getAttribute('data-written-input')));
+    return { editable, entry: ordered.filter(cell => editable.includes(`${step.rowIndex}-${cell.col}`)).map(cell => cell.value).join('') };
+}
 await mkdir(out, { recursive: true });
 const browser = await chromium.launch(), report = [];
 try {
@@ -13,8 +20,12 @@ try {
         let context, page;
         try {
             const written = scenario !== 'decimal', skill = scenario === 'written-retry' ? 'mul_2d1d' : 'dec_add';
-            let id, root, problem, oldId;
-            for (let attempt = 0; attempt < 15; attempt++) {
+            // Keep actual planner draws. Two-digit products are uncommon; exhaustion
+            // is a missing eligible sample, never permission to test a three-digit one.
+            const maxAttempts = scenario === 'written-retry' ? 96 : 15;
+            row.sampling = { method: 'fresh-profile-normal-planner', maxAttempts, history: [] };
+            let id, root, problem, oldId, selected = false;
+            for (let attempt = 1; attempt <= maxAttempts; attempt++) {
                 if (context) await context.close();
                 context = await browser.newContext({ viewport: { width, height: width === 390 ? 844 : 1024 }, hasTouch: true, reducedMotion: 'reduce' });
                 page = await context.newPage(); page.setDefaultTimeout(20000); page.on('pageerror', e => row.errors.push(e.message));
@@ -32,7 +43,30 @@ try {
                     const answer = Math.round((m[2] === '+' ? Number(m[1]) + Number(m[3]) : Number(m[1]) * Number(m[3])) * 10000) / 10000;
                     problem = { questionText, correctAnswer: String(answer), categoryId: skill, ...(skill === 'mul_2d1d' ? { hissanVersion: 2 } : {}) };
                 }
-                if (scenario === 'written-retry' ? String(problem.correctAnswer).length === 2 : String(problem.correctAnswer).includes('.')) { row.sampleAttempts = attempt + 1; break; }
+                const answer = String(problem.correctAnswer), writtenSample = written ? await writtenEntry(root, problem) : undefined;
+                const rejectionReasons = [];
+                if (scenario === 'written-retry') {
+                    if (!/^\d{2}$/.test(answer)) rejectionReasons.push('answer-is-not-two-digits');
+                } else {
+                    if (!answer.includes('.')) rejectionReasons.push('answer-has-no-decimal-point');
+                }
+                row.sampleAttempts = attempt;
+                row.sampling.history.push({ attempt, profileId: id, problemId: oldId, question: problem.questionText,
+                    answer, categoryId: problem.categoryId, ...(writtenSample ?? {}), eligible: rejectionReasons.length === 0, rejectionReasons });
+                if (rejectionReasons.length === 0) {
+                    selected = true; row.sampling.acceptedAttempt = attempt; row.sampling.status = 'selected';
+                    // A matching question with incorrect controls is an app failure,
+                    // not a reason to discard the draw and seek a passing sample.
+                    if (scenario === 'written-retry') {
+                        assert.match(writtenSample.entry, /^\d{2}$/);
+                        assert.equal(writtenSample.editable.length, 2);
+                    }
+                    break;
+                }
+            }
+            if (!selected) {
+                row.sampling.status = 'exhausted'; row.failureKind = 'sample-exhausted';
+                throw new Error(`SAMPLE_EXHAUSTED: ${lane}/${width}/${scenario} found no eligible sample in ${maxAttempts} normal planner draws; regression was not exercised`);
             }
             row.question = problem.questionText; row.answer = problem.correctAnswer;
             const keypad = page.getByRole('group', { name: 'すうじ キーパッド' });
@@ -53,11 +87,7 @@ try {
                 await page.screenshot({ path: `${out}/${lane}-${width}-${scenario}.png` });
                 await input(fraction);
             } else {
-                const grid = expectedLearningModel({ problem }); assert(grid);
-                const step = grid.steps[0];
-                const ordered = step.inputCellIndices.map((col, i) => ({ col, value: step.correctValues[i] })).sort((a, b) => a.col - b.col);
-                const editable = await root.locator('[data-written-input]').evaluateAll(elements => elements.map(el => el.getAttribute('data-written-input')));
-                const entry = ordered.filter(cell => editable.includes(`${step.rowIndex}-${cell.col}`)).map(cell => cell.value).join('');
+                const { entry } = await writtenEntry(root, problem);
                 if (scenario === 'written-retry') assert.equal(entry.length, 2);
                 const wrong = String((Number(entry[0]) + 1) % 10) + entry.slice(1);
                 await input(wrong);

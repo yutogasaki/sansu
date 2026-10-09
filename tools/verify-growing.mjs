@@ -205,7 +205,10 @@ export async function main(args = process.argv.slice(2)) {
         await executeSteps(steps, async step => {
             console.log(`[verify:growing] ${step.id}… (${output})`);
             if (step.command) {
-                await run(npm, step.command, `${step.id}.log`, env);
+                await run(npm, step.command, `${step.id}.log`, step.id === 'classic-smoke' ? {
+                    ...env, SANSU_E2E_DIAGNOSTIC_DIR: path.join(output, 'classic-smoke-diagnostics'),
+                    SANSU_E2E_CAPTURE_DIR: path.join(output, 'classic-smoke-screens'),
+                } : env);
                 if (step.id === 'core') {
                     report.version = JSON.parse(await fs.readFile(path.join(candidate, 'dist/version.json'), 'utf8'));
                     assert.equal(report.version.revision, report.candidate.revision);

@@ -1,10 +1,11 @@
 import * as T from 'three';
 import type { Villager } from '../../../domain/growingIsland/types';
-import type { IslandMaterials } from '../three/primitives';
-import { makeVillagerActor } from './actors';
+import { disposeGeometry, type IslandMaterials } from '../three/primitives';
+import { disposeActor, makeVillagerActor, type Actor } from './actors';
 import { buildPlot } from './plotGeometry';
 
 export interface MenuPictures { friends?: string; seeds?: string }
+const miniatureActors = new WeakMap<T.Object3D, Actor[]>();
 
 export function visibleBounds(pixels: Uint8ClampedArray, width: number, height: number) {
     let left = width, top = height, right = -1, bottom = -1;
@@ -17,10 +18,12 @@ export function visibleBounds(pixels: Uint8ClampedArray, width: number, height: 
 /** Catalogue miniatures use the world's actual models, never invented residents or grown seeds. */
 export function menuMiniature(m: IslandMaterials, villagers?: readonly Villager[]) {
     const root = new T.Group();
+    const actors: Actor[] = []; miniatureActors.set(root, actors);
     const base = new T.Mesh(new T.CylinderGeometry(.65, .7, .12, 36), m.surface(villagers ? '#b7ce9f' : '#d6bd91', .9));
     base.position.y = -.06; base.receiveShadow = true; root.add(base);
     if (villagers) villagers.slice(0, 3).forEach((villager, index, people) => {
         const actor = makeVillagerActor(m, villager);
+        actors.push(actor);
         actor.root.position.x = (index - (people.length - 1) / 2) * .44;
         actor.root.position.z = index % 2 ? -.08 : .06;
         actor.root.rotation.y = index % 2 ? -.15 : .2;
@@ -31,7 +34,9 @@ export function menuMiniature(m: IslandMaterials, villagers?: readonly Villager[
 }
 
 function disposeModel(root: T.Object3D) {
-    root.traverse(object => { if (object instanceof T.Mesh) object.geometry.dispose(); });
+    for (const actor of miniatureActors.get(root) ?? []) disposeActor(actor);
+    miniatureActors.delete(root);
+    disposeGeometry(root);
 }
 
 /** Two cached PNGs on the same GPU; no canvas resizing, camera movement, or extra WebGL context. */

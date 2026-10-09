@@ -1,6 +1,7 @@
 import * as T from 'three';
 import type { AchievementId, GuidanceEvidence } from '../../../domain/growingIsland/types';
 import { disposeGeometry, IslandMaterials } from '../three/primitives';
+import { retainSharedRendererCache } from '../three/sharedRendererCache';
 import { guideMemoryModel } from './guideMemoryModels';
 import { visibleBounds } from './menuMiniatures';
 
@@ -24,9 +25,11 @@ function renderBatch() {
     scheduled = false;
     const jobs = [...pending.entries()]; pending.clear();
     let renderer: T.WebGLRenderer | undefined;
+    let releaseSharedCache: (() => void) | undefined;
     const materials = new IslandMaterials();
     try {
         renderer = new T.WebGLRenderer({ alpha: true, antialias: true, preserveDrawingBuffer: true });
+        releaseSharedCache = retainSharedRendererCache(materials.surface('#bfd6a4', .9));
         renderer.setSize(600, 400); renderer.setPixelRatio(1);
         renderer.setClearColor(0, 0); renderer.outputColorSpace = T.SRGBColorSpace;
         renderer.shadowMap.enabled = true; renderer.shadowMap.type = T.PCFSoftShadowMap;
@@ -69,5 +72,5 @@ function renderBatch() {
             finally { if (model) disposeGeometry(model); }
         }
     } catch { for (const [, job] of jobs) job.resolve(undefined); }
-    finally { materials.dispose(); renderer?.dispose(); renderer?.forceContextLoss(); }
+    finally { materials.dispose(); releaseSharedCache?.(); renderer?.dispose(); renderer?.forceContextLoss(); }
 }
