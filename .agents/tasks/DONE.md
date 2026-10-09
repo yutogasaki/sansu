@@ -1,5 +1,7 @@
 # Shared Done Index
 
+- 2026-10-10: 島の3段階・家・学習を紹介するWebを制作。coreと4幅の完成ビルド検査PASS。main公開用の `/promo/` 配信を追加。[制作記録](../../docs/design/2026-10-10-promotion-website/README.md)
+
 - 2026-10-09: [島の一周を固定ローカル候補へ仕上げる](../../docs/design/2026-10-09-local-quality/README.md)。案内・本人一覧・学習/初回の表示・描画資源とpreview更新を改善。v3のcore4,803/classic32、全主要旅程・保存故障/更新・実画面・同保存性能を確認。性能は混在を明記し、公開/実機/子ども評価は別。詳細: `docs/done/2026-10.md`。
 
 - 2026-10-07: [共用3Dのsession接続を分割](../../docs/architecture/island-runtime.md)。家/配置/共有展示/写真/工作/遊びの型付き接続と一つの遅延rendererへ整理。59propsの構文照合、core4,766/smoke31、Growing production・本人切替/履歴・配置/工作/写真の両幅がPASS。公開/実機/子ども評価は別。詳細: `docs/done/2026-10.md`。

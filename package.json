@@ -53,7 +53,9 @@
         "agent:index:check": "node tools/generate-agent-index.mjs --check",
         "e2e:island-food-loop": "node tools/e2e-island-food-loop.mjs",
         "e2e:island-water-channel": "node tools/e2e-island-water-channel.mjs",
-        "dev:growing-island": "npm run dev:island"
+        "dev:growing-island": "npm run dev:island",
+        "dev:website": "vite --config website/vite.config.js",
+        "build:website": "vite build --config website/vite.config.js"
     },
     "dependencies": {
         "@pdf-lib/fontkit": "^1.1.1",

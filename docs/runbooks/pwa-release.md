@@ -84,3 +84,7 @@
 - If updates stop arriving, inspect cache headers first.
 - If the browser sees a new build but the app does not reload, inspect `version.json` and service worker registration.
 - If only iOS is delayed, record that separately before changing shared logic.
+
+## 宣伝サイトの配信
+
+宣伝サイトは同じmainのbuildから `https://sansu-seven.vercel.app/promo/` へ配信する。`tools/build-app.mjs` はゲームのWorkbox生成後に `website/` を `/promo/` のbaseでbuildし、`dist/promo/` へ複製する。宣伝用画像・HTML・フォントをゲームのoffline packへ入れない。`vite.config.ts` のnavigation fallback除外を維持し、ゲームSWが実制御するブラウザーから `/promo/` の実ページへ移れることを確認する。宣伝ページはSWを登録せず、ゲームのDBを使わない。配信仕様は[53](../product/53_promotion_website_spec.md)。

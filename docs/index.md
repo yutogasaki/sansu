@@ -147,3 +147,7 @@
 - 状態メモを仕様の代わりにしない。完了ログから現行挙動を推測しない。
 - 文書だけの変更でも `npm run docs:check` を実行する。
 - HTMLは生成物。Markdownを更新後、`npm run agent:index` で再生成する。
+
+## 宣伝用Webサイト
+
+[仕様53](product/53_promotion_website_spec.md) · [完成画面と制作記録](design/2026-10-10-promotion-website/README.md)。島の成長差・家・算数と英語を紹介する独立サイト。

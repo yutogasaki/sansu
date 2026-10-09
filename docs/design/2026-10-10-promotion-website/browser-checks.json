@@ -1,0 +1,52 @@
+{
+  "target": "http://127.0.0.1:5200/",
+  "candidate": "promotion-bright-island-v1",
+  "checks": [
+    {
+      "width": 320,
+      "stages": "PASS",
+      "faq": "PASS",
+      "images": "PASS",
+      "overflow": "PASS",
+      "targets": "PASS",
+      "links": "PASS"
+    },
+    {
+      "width": 390,
+      "stages": "PASS",
+      "faq": "PASS",
+      "images": "PASS",
+      "overflow": "PASS",
+      "targets": "PASS",
+      "links": "PASS"
+    },
+    {
+      "width": 768,
+      "stages": "PASS",
+      "faq": "PASS",
+      "images": "PASS",
+      "overflow": "PASS",
+      "targets": "PASS",
+      "links": "PASS"
+    },
+    {
+      "width": 1440,
+      "stages": "PASS",
+      "faq": "PASS",
+      "images": "PASS",
+      "overflow": "PASS",
+      "targets": "PASS",
+      "links": "PASS"
+    }
+  ],
+  "errors": [],
+  "keyboard": "PASS",
+  "reducedMotion": "PASS",
+  "noJavaScript": "PASS",
+  "serviceWorkers": {
+    "registrations": 0,
+    "databases": 0
+  },
+  "date": "2026-10-10",
+  "scope": "Independent static website; local production preview; no app deployment"
+}

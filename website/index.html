@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f4fbff">
+  <meta name="description" content="ぽこもこと、自分だけの島を育てよう。花や木を置き、住人と遊び、家を楽しむ。算数・英語の短い学習が、島の新しい景色につながります。">
+  <meta property="og:title" content="ぽこもこと不思議な島 — 学ぶたび、わたしの島が育っていく。">
+  <meta property="og:description" content="小さな島から、にぎやかな毎日へ。島・家・算数と英語がつながる、学んで育てる島のゲーム。">
+  <meta property="og:type" content="website">
+  <title>ぽこもこと不思議な島 | 学ぶたび、わたしの島が育っていく。</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%233354a4'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-size='45' fill='white'%3Eぽ%3C/text%3E%3C/svg%3E">
+  <link rel="preload" href="/fonts/zen-maru-gothic-black.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./main.js"></script>
+</head>
+<body data-visual-candidate="promotion-bright-island-v1">
+  <a class="skip-link" href="#main">本文へすすむ</a>
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="ぽこもこと不思議な島 トップ"><span class="brand-mark" aria-hidden="true">ぽ</span><span>ぽこもこと<span class="brand-sub">不思議な島</span></span></a>
+    <nav aria-label="ページ内ナビゲーション"><a href="#island">島でできること</a><a href="#home">おうち</a><a href="#learning">学び</a></nav>
+    <a class="button small" href="https://sansu-seven.vercel.app/#/island">島ではじめる <span aria-hidden="true">↗</span></a>
+  </header>
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="little-sun" aria-hidden="true">✳</span> 学んで、あそんで、育てる島。</p>
+        <h1 id="hero-title">学ぶたび、<br>わたしの島が<br><span>育っていく。</span></h1>
+        <p class="hero-description">小さな花を置いたら、誰かが遊びにきた。<br>ひとつ学んだら、島に新しい景色ができた。<br>ぽこもこと育てる、じぶんだけの毎日。</p>
+        <div class="hero-actions"><a class="button" href="https://sansu-seven.vercel.app/#/island">わたしの島をはじめる <span aria-hidden="true">↗</span></a><a class="text-link" href="#growth">育った島を見てみる <span aria-hidden="true">↓</span></a></div>
+        <p class="hero-note">島づくり × 算数・英語の学習</p>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-photo"><img src="/images/island-thriving.png" alt="丸い屋根の家、花、ベンチと住人が並ぶ、大きく育った3Dの島" width="768" height="1024" fetchpriority="high"></div>
+        <span class="photo-sticker"><span aria-hidden="true">✦</span> ここ、ぜんぶ<br>わたしの島。</span>
+        <div class="photo-caption"><span class="caption-dot" aria-hidden="true"></span> 小さな島が、こんなににぎやかに。</div>
+        <p class="image-note">実際のゲーム画面・紹介用の配置例</p>
+      </div>
+      <a class="scroll-cue" href="#growth">島のくらしを、のぞいてみよう <span aria-hidden="true">↓</span></a>
+    </section>
+    <section class="growth section" id="growth" aria-labelledby="growth-title">
+      <div class="section-heading"><p class="eyebrow">A LITTLE ISLAND, A BIG STORY</p><h2 id="growth-title">はじまりは、小さな島。<br><span>この先は、あなたしだい。</span></h2><p>花を置く。家を育てる。新しい住人を迎える。<br>少しずつ変わる景色に、また会いたくなる。</p></div>
+      <div class="growth-selector" role="group" aria-label="島の成長段階を選ぶ">
+        <button type="button" class="growth-button" aria-pressed="false" data-stage="start"><span>01</span> はじめの島</button>
+        <button type="button" class="growth-button" aria-pressed="true" data-stage="growing"><span>02</span> 少し育った島</button>
+        <button type="button" class="growth-button" aria-pressed="false" data-stage="thriving"><span>03</span> にぎわう島</button>
+      </div>
+      <div class="growth-showcase">
+        <div class="growth-photo"><img id="growth-image" src="/images/island-growing.png" alt="花やベンチが増えて、2人の住人が暮らす少し育った島" width="768" height="1024" loading="lazy"></div>
+        <div class="growth-story" aria-live="polite" aria-atomic="true"><span class="stage-number" id="stage-number">02</span><p class="eyebrow" id="stage-label">少し育った島</p><h3 id="stage-title">「ここに、お花を<br>置いてみよう。」</h3><p id="stage-copy">花やベンチ、水ばちを置くと、島に過ごす場所が増えていく。住人が歩いて、座って、遊びにくる。自分の工夫が、景色になっていきます。</p><div class="stage-detail" id="stage-detail">花や木を育てる / 置き方を工夫する / 住人と遊ぶ</div></div>
+      </div>
+      <p class="section-note">画像は実際のゲームで作成した紹介用の配置例です。成長の速さや島の姿は、遊び方によって変わります。</p>
+      <noscript><div class="no-script-gallery"><figure><img src="/images/island-start.png" alt="はじめの島" width="768" height="1024" loading="lazy"><figcaption>はじめの島</figcaption></figure><figure><img src="/images/island-thriving.png" alt="にぎわう島" width="768" height="1024" loading="lazy"><figcaption>にぎわう島</figcaption></figure></div><p>成長段階の切り替えにはJavaScriptを使用します。</p></noscript>
+    </section>
+    <section class="island-section section" id="island" aria-labelledby="island-title">
+      <div class="section-heading left"><p class="eyebrow">LIFE ON YOUR ISLAND</p><h2 id="island-title">眺めるだけじゃない。<br>さわると、島がこたえてくれる。</h2></div>
+      <div class="activities">
+        <article><span class="activity-icon" aria-hidden="true">✿</span><span class="activity-number">01 / つくる</span><h3>好きな場所に、<br>好きな景色を。</h3><p>花や木、ベンチ、あかり。置く場所を変えながら、自分の島をつくろう。気が変わったら、動かしてやり直せます。</p></article>
+        <article><span class="activity-icon coral" aria-hidden="true">♧</span><span class="activity-number">02 / あそぶ</span><h3>住人をつまんで、<br>いっしょにあそぼう。</h3><p>ぽこもこや住人を、ベンチやブランコへ。座ったり、こいだり。島での遊びは、学習をしなくても楽しめます。</p></article>
+        <article><span class="activity-icon yellow" aria-hidden="true">⌂</span><span class="activity-number">03 / そだてる</span><h3>家が育つ。<br>仲間がふえる。</h3><p>家のたねを置き、学習でまちの時間を進める。育った場所をひらくと、新しいくらしが始まる。土地も、さらに広げられます。</p></article>
+      </div>
+    </section>
+    <section class="home-section section" id="home" aria-labelledby="home-title">
+      <div class="home-visual"><div class="home-photo"><img src="/images/home.png" alt="ピンクのソファ、本棚、テーブルがある家の中を歩くぽこもこ" width="768" height="1024" loading="lazy"></div><span class="home-tag">おかえり、ぽこもこ。</span></div>
+      <div class="home-copy"><p class="eyebrow">A PLACE TO CALL HOME</p><h2 id="home-title">島に、わたしの<br><span>「ただいま」を。</span></h2><p class="large-copy">外で遊んだあとは、<br>ぽこもことおうちへ。</p><p>床をさわると、ぽこもこがてくてく。<br>本を開いたり、写真を見たり、学びの記念を飾ったり。島での毎日が、ここに残ります。</p><div class="home-extra"><span aria-hidden="true">✧</span><div><h3>覚えたことばが、壁の模様に。</h3><p>英語の学びが、おうちの景色につながる。壁の模様をさわると、ことばを聞くこともできます。</p></div></div><p class="image-note">写真は実際の家の画面です。模様や記念品は進み方で変わります。</p></div>
+    </section>
+    <section class="learning-section section" id="learning" aria-labelledby="learning-title">
+      <div class="learning-copy"><p class="eyebrow">A LITTLE LEARNING, A NEW TOMORROW</p><h2 id="learning-title">「もうひとつ」が、<br><span>島の明日になる。</span></h2><p class="large-copy">算数も、英語も。<br>ぽこもこと、ひとつずつ。</p><p>短い練習を終えると、島の材料「しずく」と<br>まちの時間が届きます。島に戻ったときの<br>「何が変わったかな？」も、楽しみのひとつ。</p><div class="subjects"><div><span>さんすう</span><p>数・計算から、少しずつ。<br>ヒントを見て確かめられます。</p></div><div><span>えいご</span><p>ことばを聞いて、選んで。<br>覚えたことばをおうちにも。</p></div></div><div class="gentle-note">わからないときは、ヒントを。<br>今日はここまで、も自分で選べます。</div></div>
+      <div class="learning-visual"><span class="learning-sticker">ぽこもこが<br>いっしょ！</span><div class="phone"><img src="/images/learning.png" alt="ぽこもこと1足す1を練習する算数画面。大きな数字キーと、ヒント・わからないの操作がある" width="390" height="844" loading="lazy"></div><span class="learning-caption">実際の算数学習画面</span></div>
+    </section>
+    <section class="loop-section section" aria-labelledby="loop-title"><p class="eyebrow">EVERY DAY, YOUR WAY</p><h2 id="loop-title">つくる。学ぶ。<br class="mobile-break">また、会いにくる。</h2><div class="daily-loop"><div><span>01</span><h3>島であそぶ</h3><p>好きな場所をつくって、<br>住人と過ごそう。</p></div><span class="loop-arrow" aria-hidden="true">→</span><div><span>02</span><h3>少し、まなぶ</h3><p>算数や英語を、<br>自分のペースで。</p></div><span class="loop-arrow" aria-hidden="true">→</span><div><span>03</span><h3>育った島へ</h3><p>変わった景色をひらいて、<br>次の楽しみを見つけよう。</p></div></div></section>
+    <section class="parent-section section" id="parents" aria-labelledby="parent-title"><div><p class="eyebrow">FOR PARENTS</p><h2 id="parent-title">そばで見守る<br>おうちの方へ。</h2><p>急がせるよりも、また会いたくなる場所を。<br>遊びと学びを、子ども自身のペースで。</p></div><div class="faq"><details><summary>どんな学習ができますか？<span aria-hidden="true">＋</span></summary><p>算数と英語の練習ができます。算数は数や計算など、英語はことばを聞いて選ぶ練習など。わからない問題にはヒントがあり、学習の記録も確認できます。</p></details><details><summary>毎日学習しないと、島はなくなりますか？<span aria-hidden="true">＋</span></summary><p>学習しない日や、お休みした日を罰する仕組みはありません。取得したものや土地、迎えた住人を取り上げたり、住人が飢えたり退去したりすることもありません。</p></details><details><summary>記録はどこに保存されますか？<span aria-hidden="true">＋</span></summary><p>島と学習の記録は、遊んでいる端末のブラウザー内に保存されます。別の端末へ自動では引き継がれません。ブラウザーのデータを削除すると記録も失われるため、同じ端末・ブラウザーでご利用ください。</p></details><details><summary>スマートフォンでも遊べますか？<span aria-hidden="true">＋</span></summary><p>スマートフォン・タブレット・パソコンのブラウザー向けに作られています。島は3D表示を使うため、端末やブラウザーによって表示や動作の速さが変わります。</p></details></div></section>
+    <section class="closing"><p class="eyebrow">YOUR ISLAND IS WAITING</p><h2>次に育つのは、<br>あなたの島。</h2><p>ぽこもこと、小さなはじまりを。</p><a class="button" href="https://sansu-seven.vercel.app/#/island">わたしの島をはじめる <span aria-hidden="true">↗</span></a><span class="closing-flower" aria-hidden="true">✿</span></section>
+  </main>
+  <footer><a class="brand footer-brand" href="#"><span class="brand-mark" aria-hidden="true">ぽ</span><span>ぽこもこと不思議な島</span></a><p>学んで、あそんで、育てる島。</p><a href="#parents">おうちの方へ ↑</a></footer>
+</body>
+</html>

@@ -1,0 +1,88 @@
+{
+  "date": "2026-10-10",
+  "scope": "Index-exported candidate. verify:release is the classic regression lane; not Growing human/device acceptance.",
+  "baseCommit": "8299f4a09a42512583482ffc2557d5ec8d05a139",
+  "verifiedIndexTree": "660a67781df52dd428c3bb426c8af19f06d5bf81",
+  "checks": {
+    "verify:release": "PASS",
+    "testFiles": 544,
+    "tests": 4803,
+    "classicSmokeCases": 32,
+    "pwaUpdate": "PASS",
+    "pwaTwoBuild": "PASS"
+  },
+  "logSHA256": "97887f2ac5ea08fa9e2feb8d86fbfe1c00b032f30799afc6aeb514c65f282fd1",
+  "websiteBrowser": {
+    "target": "http://127.0.0.1:5299/promo/",
+    "candidate": "promotion-bright-island-v1",
+    "checks": [
+      {
+        "width": 320,
+        "stages": "PASS",
+        "faq": "PASS",
+        "images": "PASS",
+        "overflow": "PASS",
+        "targets": "PASS",
+        "links": "PASS"
+      },
+      {
+        "width": 390,
+        "stages": "PASS",
+        "faq": "PASS",
+        "images": "PASS",
+        "overflow": "PASS",
+        "targets": "PASS",
+        "links": "PASS"
+      },
+      {
+        "width": 768,
+        "stages": "PASS",
+        "faq": "PASS",
+        "images": "PASS",
+        "overflow": "PASS",
+        "targets": "PASS",
+        "links": "PASS"
+      },
+      {
+        "width": 1440,
+        "stages": "PASS",
+        "faq": "PASS",
+        "images": "PASS",
+        "overflow": "PASS",
+        "targets": "PASS",
+        "links": "PASS"
+      }
+    ],
+    "errors": [],
+    "keyboard": "PASS",
+    "reducedMotion": "PASS",
+    "noJavaScript": "PASS",
+    "serviceWorkers": {
+      "registrations": 0,
+      "databases": 0
+    }
+  },
+  "controlledNavigation": {
+    "controlled": true,
+    "sw": "http://127.0.0.1:5299/sw.js",
+    "candidate": "promotion-bright-island-v1",
+    "cachePromo": []
+  },
+  "codeBlobs": {
+    "100644 c680d00f8ea47b05cdfa00bc7fecb3951d98c4ab 0": "tools/build-app.mjs",
+    "100644 b946e9caa6dac1d134494494148d62bdd15c370c 0": "vite.config.ts",
+    "100644 af5f003a8524510d1e23c8bb411cc49095237071 0": "website/index.html",
+    "100644 b356fb155a63b65bef553190e993fd0f1962c204 0": "website/main.js",
+    "100644 ec2c850bc74736e4cd5fe837e99be84148abfd36 0": "website/public/fonts/OFL-ZenMaruGothic.txt",
+    "100644 000e626c3754bc9948ae2a4a58fd40e72c57736d 0": "website/public/fonts/noto-sans-jp.woff2",
+    "100644 d5c2a3bde531540c85f051596123c7e6e37a49ff 0": "website/public/fonts/zen-maru-gothic-black.woff2",
+    "100644 bc02aa58b40bd87fe0e53d8a8f14a81bfaa473e2 0": "website/public/images/home.png",
+    "100644 59af133a3119edc59ce3336a78c30bc9f5781551 0": "website/public/images/island-growing.png",
+    "100644 a0e8306606bff4551140233d0b992f9c04dc2bc9 0": "website/public/images/island-start.png",
+    "100644 06c344b4e058db77f67e924747da74087c446cb4 0": "website/public/images/island-thriving.png",
+    "100644 6db7ab74d4768596bf7b7de8694ddaec95480389 0": "website/public/images/learning.png",
+    "100644 0bb2b93fddf0f91c9f7cbf2023f835ee65f932dc 0": "website/style.css",
+    "100644 86963ff2e11b67142702c6a7397afaed45a700ae 0": "website/vite.config.js"
+  },
+  "publication": "Pending git push; canonical target https://sansu-seven.vercel.app/promo/"
+}

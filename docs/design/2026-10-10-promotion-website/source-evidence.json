@@ -1,0 +1,174 @@
+{
+  "date": "2026-10-10",
+  "candidate": "promotion-bright-island-v1",
+  "websiteTarget": "http://127.0.0.1:5200/",
+  "appArtCandidate": "bright-round-island-v1",
+  "appWorldCandidate": "growing-island-v1",
+  "gameSources": {
+    "day": {
+      "target": "http://127.0.0.1:55649",
+      "version": {
+        "version": "8299f4a09a42512583482ffc2557d5ec8d05a139-snapshot-903d9674503b:ef248a7d-c0a5-4343-96ce-1ff70b7d3755",
+        "revision": "8299f4a09a42512583482ffc2557d5ec8d05a139-snapshot-903d9674503b",
+        "delivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "park": {
+          "enabled": false,
+          "renderer": "retired"
+        },
+        "island": {
+          "enabled": true,
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "life": {
+            "enabled": true,
+            "discovery": false,
+            "fantasy": true,
+            "candidate": "living-fantasy-garden-v2",
+            "saveVersion": 21
+          },
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "residentCandidate": "patchwork-otter-v1",
+          "artDirection": "moon-garden"
+        }
+      },
+      "sourceHash": "903d9674503bca58536a4495549c963e711c5d5472740d1d4b1fdc3ab21ff1e0",
+      "scope": "synthetic same fixture restore/reload, 3 islands x 2 viewports; actual production-format rendering"
+    },
+    "journey": {
+      "target": "http://127.0.0.1:5317",
+      "version": {
+        "version": "development-local:d65f0da6-a6db-4276-9741-25d36b8067b7",
+        "revision": "development-local",
+        "delivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "park": {
+          "enabled": false,
+          "renderer": "retired"
+        },
+        "island": {
+          "enabled": true,
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "life": {
+            "enabled": true,
+            "discovery": false,
+            "fantasy": false,
+            "candidate": "island-life-v1",
+            "saveVersion": 21
+          },
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "residentCandidate": "patchwork-otter-v1",
+          "artDirection": "moon-garden"
+        }
+      },
+      "pass": true,
+      "scenarios": [
+        {
+          "width": 390,
+          "pass": true,
+          "metadata": {
+            "url": "http://127.0.0.1:5317/#/island?learn=1",
+            "revision": "development-local",
+            "version": "development-local:d65f0da6-a6db-4276-9741-25d36b8067b7",
+            "delivery": "mystic-island-v1",
+            "candidate": "mystic-island-shore-garden-v18",
+            "learningCandidate": "pokomoko-pop-live-v8",
+            "islandFeatureEnabled": true,
+            "mode": "learning",
+            "renderer": "live-original",
+            "artDirection": null,
+            "drawCalls": 0,
+            "expanded": null,
+            "residentAction": null,
+            "residentItemId": null,
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "serviceWorkerControlled": true,
+            "reducedMotion": false,
+            "appRoot": {
+              "revision": "development-local",
+              "version": "development-local:d65f0da6-a6db-4276-9741-25d36b8067b7",
+              "configuredDelivery": "snap-root-v1",
+              "visualLineage": "pokko-field-v1",
+              "islandFeatureEnabled": true,
+              "natureTownFeatureEnabled": false
+            }
+          }
+        },
+        {
+          "width": 768,
+          "pass": true,
+          "metadata": {
+            "url": "http://127.0.0.1:5317/#/island?learn=1",
+            "revision": "development-local",
+            "version": "development-local:d65f0da6-a6db-4276-9741-25d36b8067b7",
+            "delivery": "mystic-island-v1",
+            "candidate": "mystic-island-shore-garden-v18",
+            "learningCandidate": "pokomoko-pop-live-v8",
+            "islandFeatureEnabled": true,
+            "mode": "learning",
+            "renderer": "live-original",
+            "artDirection": null,
+            "drawCalls": 0,
+            "expanded": null,
+            "residentAction": null,
+            "residentItemId": null,
+            "viewport": {
+              "width": 768,
+              "height": 1024
+            },
+            "serviceWorkerControlled": true,
+            "reducedMotion": true,
+            "appRoot": {
+              "revision": "development-local",
+              "version": "development-local:d65f0da6-a6db-4276-9741-25d36b8067b7",
+              "configuredDelivery": "snap-root-v1",
+              "visualLineage": "pokko-field-v1",
+              "islandFeatureEnabled": true,
+              "natureTownFeatureEnabled": false
+            }
+          }
+        }
+      ]
+    }
+  },
+  "images": {
+    "learning.png": "958e40db13136268d47d8355ea616fd49fa251e65f386f6aadb6851370e63b5c",
+    "home.png": "33aa94318d7e4e99d548f5323950fc3553bca559485d71a7b46c2a0b102111c4",
+    "island-thriving.png": "bfb1c5b3179d167efded39be977b37b5d884197465cb263f012b8f9e83738a42",
+    "island-growing.png": "bd3b7474553daf36068cf3fa5c5078fa33311241a0c2771164ccddf6d3a4c3b6",
+    "island-start.png": "d9ca50cc21c383f24782df805eb8e422cb238383bd60565cb331951630b79e0f"
+  },
+  "sourceFiles": {
+    "website/index.html": "d51b111b56f8244affce6086ce8821f04826e515d90f5763df9a7c6495fdbe2a",
+    "website/vite.config.js": "611e1f50a7725472e0b9768be0a6010bee29650e4c465e3a7dabc628a7029845",
+    "website/main.js": "631cd2c017350d4a83a5688f108d4bf2ec3aa0c1088c84802486e61da1e07196",
+    "website/style.css": "19d200c1cf74f3d56db829ce2c717face9629a34119741024ab54f1dbef67c74",
+    "website/public/images/learning.png": "958e40db13136268d47d8355ea616fd49fa251e65f386f6aadb6851370e63b5c",
+    "website/public/images/home.png": "33aa94318d7e4e99d548f5323950fc3553bca559485d71a7b46c2a0b102111c4",
+    "website/public/images/island-thriving.png": "bfb1c5b3179d167efded39be977b37b5d884197465cb263f012b8f9e83738a42",
+    "website/public/images/island-growing.png": "bd3b7474553daf36068cf3fa5c5078fa33311241a0c2771164ccddf6d3a4c3b6",
+    "website/public/images/island-start.png": "d9ca50cc21c383f24782df805eb8e422cb238383bd60565cb331951630b79e0f",
+    "website/public/fonts/OFL-ZenMaruGothic.txt": "2a20cf7ce1909d8ee1e949095d340f7d7656705f7c810a2d6faf56800ad0cb3d",
+    "website/public/fonts/zen-maru-gothic-black.woff2": "e3266aca5e0a680e2cc1e4fbb9d4320f6dfee22c11525b9d0e1f7acd56b02a55",
+    "website/public/fonts/noto-sans-jp.woff2": "539b381a6e0a5a49d299867d9ab722ad7e41d01f07bbcb6bed4518b63f8d4b0a"
+  },
+  "buildFiles": {
+    "dist-website/index.html": "3374e86fd53dd069d4ab347b4522725cfc2fce591b853b0f43a561a9f5dcdf9b",
+    "dist-website/images/learning.png": "958e40db13136268d47d8355ea616fd49fa251e65f386f6aadb6851370e63b5c",
+    "dist-website/images/home.png": "33aa94318d7e4e99d548f5323950fc3553bca559485d71a7b46c2a0b102111c4",
+    "dist-website/images/island-thriving.png": "bfb1c5b3179d167efded39be977b37b5d884197465cb263f012b8f9e83738a42",
+    "dist-website/images/island-growing.png": "bd3b7474553daf36068cf3fa5c5078fa33311241a0c2771164ccddf6d3a4c3b6",
+    "dist-website/images/island-start.png": "d9ca50cc21c383f24782df805eb8e422cb238383bd60565cb331951630b79e0f",
+    "dist-website/fonts/OFL-ZenMaruGothic.txt": "2a20cf7ce1909d8ee1e949095d340f7d7656705f7c810a2d6faf56800ad0cb3d",
+    "dist-website/fonts/zen-maru-gothic-black.woff2": "e3266aca5e0a680e2cc1e4fbb9d4320f6dfee22c11525b9d0e1f7acd56b02a55",
+    "dist-website/fonts/noto-sans-jp.woff2": "539b381a6e0a5a49d299867d9ab722ad7e41d01f07bbcb6bed4518b63f8d4b0a",
+    "dist-website/assets/index-Qt7YR9dY.css": "accb0cf9f775a502391bc9a453e8bc3d25fa4d620d339c38beca92392303e53a",
+    "dist-website/assets/index-D_pKjlI3.js": "54038cae2b3e00695904494720aafdd2ea326b56ae1550a859da6f320ea4ab8c"
+  },
+  "editing": "Source PNG files copied byte-for-byte. CSS frames crop their display; no generated game artwork.",
+  "synthetic": "Island stages are explicit synthetic QA configurations; not an earned progression or promised timeline."
+}
