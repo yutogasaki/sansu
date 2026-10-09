@@ -1,0 +1,194 @@
+{
+  "source": "/private/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-promo-source.OyTwb8",
+  "target": "http://127.0.0.1:5300",
+  "sourceHash": "6aae3b008ac5ac0897de86f7a65f480ddc084d964a983f7c2f9a9d1182012060",
+  "epoch": 1791601200000,
+  "synthetic": true,
+  "note": "Resources, maturity and population explicitly set. No learning acquisition claim.",
+  "captures": [
+    {
+      "id": "start",
+      "file": "island-start.png",
+      "sha256": "66791cfccd817677944ff7217b9f1cbc60cf0eeaebd005622a1dc0663304a46b",
+      "metadata": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "growingFeatureEnabled": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}",
+        "bridgeSaved": "false"
+      },
+      "version": {
+        "version": "development-local:1e200bbc-e47b-49af-a6a1-2587b7abafe7",
+        "revision": "development-local",
+        "delivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "park": {
+          "enabled": false,
+          "renderer": "retired"
+        },
+        "island": {
+          "enabled": true,
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "life": {
+            "enabled": true,
+            "discovery": false,
+            "fantasy": false,
+            "candidate": "island-life-v1",
+            "saveVersion": 21
+          },
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "residentCandidate": "patchwork-otter-v1",
+          "artDirection": "moon-garden"
+        }
+      },
+      "people": 0,
+      "homes": 0,
+      "fixtureHash": "01457c19be3d324856ea96a7108593c41a44575cdf50846f6b49956a1cd24bfc",
+      "errors": []
+    },
+    {
+      "id": "village",
+      "file": "island-village.png",
+      "sha256": "a96ac89e60b23afee3b3bdc293e186e37f68f86a9636944c3688696c16ac5947",
+      "metadata": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "growingFeatureEnabled": "true",
+        "growingBounds": "{\"minX\":-3,\"maxX\":5,\"depth\":5}",
+        "bridgeSaved": "false"
+      },
+      "version": {
+        "version": "development-local:1e200bbc-e47b-49af-a6a1-2587b7abafe7",
+        "revision": "development-local",
+        "delivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "park": {
+          "enabled": false,
+          "renderer": "retired"
+        },
+        "island": {
+          "enabled": true,
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "life": {
+            "enabled": true,
+            "discovery": false,
+            "fantasy": false,
+            "candidate": "island-life-v1",
+            "saveVersion": 21
+          },
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "residentCandidate": "patchwork-otter-v1",
+          "artDirection": "moon-garden"
+        }
+      },
+      "people": 2,
+      "homes": 2,
+      "fixtureHash": "ad7c6b61df3f60dd00c0a7fcdf7922cd9aeb5bc3571364939c4e0b759cb55e57",
+      "errors": []
+    },
+    {
+      "id": "town",
+      "file": "island-town.png",
+      "sha256": "3d39fbcbcbfb9139f0523460643cf325a78a1b293661468cd324685600aba02f",
+      "metadata": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "growingFeatureEnabled": "true",
+        "growingBounds": "{\"minX\":-6,\"maxX\":11,\"depth\":8}",
+        "bridgeSaved": "true"
+      },
+      "version": {
+        "version": "development-local:1e200bbc-e47b-49af-a6a1-2587b7abafe7",
+        "revision": "development-local",
+        "delivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "park": {
+          "enabled": false,
+          "renderer": "retired"
+        },
+        "island": {
+          "enabled": true,
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "life": {
+            "enabled": true,
+            "discovery": false,
+            "fantasy": false,
+            "candidate": "island-life-v1",
+            "saveVersion": 21
+          },
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "residentCandidate": "patchwork-otter-v1",
+          "artDirection": "moon-garden"
+        }
+      },
+      "people": 16,
+      "homes": 8,
+      "fixtureHash": "253b5d7cbddf74b0b08fbdf2fd251861fdb9081a5c0c17b7e88bc0cc19d7b640",
+      "errors": []
+    }
+  ],
+  "sourceRevision": "4db3e1a397bd8905a1bb6698861a0ec994423592",
+  "sourceMethod": "git archive HEAD, outside shared dirty checkout. No changes to game render/domain.",
+  "learning": {
+    "source": "/private/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-promo-source.OyTwb8",
+    "version": {
+      "version": "development-local:1e200bbc-e47b-49af-a6a1-2587b7abafe7",
+      "revision": "development-local",
+      "delivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "park": {
+        "enabled": false,
+        "renderer": "retired"
+      },
+      "island": {
+        "enabled": true,
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "life": {
+          "enabled": true,
+          "discovery": false,
+          "fantasy": false,
+          "candidate": "island-life-v1",
+          "saveVersion": 21
+        },
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "residentCandidate": "patchwork-otter-v1",
+        "artDirection": "moon-garden"
+      }
+    },
+    "math": {
+      "profile": "synthetic, mathStartLevel 7, mathMainLevel 8; no previous answers/memories",
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    "english": {
+      "profile": "synthetic, subject vocab; no previous answers/memories",
+      "viewport": [
+        390,
+        844
+      ]
+    }
+  },
+  "assets": {
+    "english.png": "56150b9e6c7b1799eb1c1e224025704adabf4ac94218fea1a4f4d2faff1499d4",
+    "home.png": "5379c66aa1de3b5aa2219c8b4956114f7e78b8e0c5ede98acbb2e4be65d0eb07",
+    "island-start.png": "66791cfccd817677944ff7217b9f1cbc60cf0eeaebd005622a1dc0663304a46b",
+    "island-town.png": "3d39fbcbcbfb9139f0523460643cf325a78a1b293661468cd324685600aba02f",
+    "island-village.png": "a96ac89e60b23afee3b3bdc293e186e37f68f86a9636944c3688696c16ac5947",
+    "math.png": "958e40db13136268d47d8355ea616fd49fa251e65f386f6aadb6851370e63b5c",
+    "town-homes.png": "a06b06d3b869ccecd41b42e978487ede6ba0f8156f1c642119720fee1713cb38",
+    "town-play.png": "dbbe5751ca13be9129618e2636250c1f552dcdeea8fd1f07967b21c1ec3218cd",
+    "town-square.png": "a6182b6526413cae4a0082775695df2dd47789dc7911f5ac5e62da2defeb2c7a"
+  },
+  "gates": {
+    "authorReview": "Learning first; initial/village/town contrast, variety, real close views. Replaces rejected repetitive fixture.",
+    "independentVisualAppeal": "NOT_EVALUATED",
+    "childComprehensionSafety": "NOT_EVALUATED",
+    "runtime": "Browser checks recorded separately; no gameplay changes."
+  }
+}

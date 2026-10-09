@@ -1,5 +1,7 @@
 # Shared Done Index
 
+- 2026-10-10: 宣伝サイトを学習中心へ改訂。算数/英語の実画面、ヒント/復習/記録、成熟した町の3段階と近景を掲載。現行mainのゲームコードを保持し、隔離core4,803・完成build4幅がPASS。[制作・検証](../../docs/design/2026-10-10-promotion-learning-v2/README.md)
+
 - 2026-10-10: 島の3段階・家・学習を紹介するWebを制作。coreと4幅の完成ビルド検査PASS。main公開用の `/promo/` 配信を追加。[制作記録](../../docs/design/2026-10-10-promotion-website/README.md)
 
 - 2026-10-09: [島の一周を固定ローカル候補へ仕上げる](../../docs/design/2026-10-09-local-quality/README.md)。案内・本人一覧・学習/初回の表示・描画資源とpreview更新を改善。v3のcore4,803/classic32、全主要旅程・保存故障/更新・実画面・同保存性能を確認。性能は混在を明記し、公開/実機/子ども評価は別。詳細: `docs/done/2026-10.md`。

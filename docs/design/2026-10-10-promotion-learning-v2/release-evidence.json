@@ -1,0 +1,30 @@
+{
+  "baseRevision": "4db3e1a397bd8905a1bb6698861a0ec994423592",
+  "candidate": "promotion-learning-town-v2",
+  "change": "Static promotion website only; existing game code unchanged.",
+  "inputs": {
+    "website/index.html": "5a625601a9f62f64255a7537111050df0d8c350f80d52b5bd75ee43c1b34d05b",
+    "website/main.js": "877969a163ce327dcb97c876830520b85440d0a1ed22f858f93348b1b446c989",
+    "website/style.css": "e6a1f05fd10fba1dcd122342bb243b8227e7a08c29900126fa2d4994e965c8fb",
+    "website/vite.config.js": "611e1f50a7725472e0b9768be0a6010bee29650e4c465e3a7dabc628a7029845",
+    "tools/capture-promotion-showcase.mjs": "11c6969885bd806c22a437fa25b7408945f750dfe11ad8800dc6f0ace9cf098a",
+    "tools/verify-promotion-website.mjs": "00a26d99f683e997b97497eade1f469eed56e3bc400bc479da565667aaea6d44",
+    "website/public/images/english.png": "56150b9e6c7b1799eb1c1e224025704adabf4ac94218fea1a4f4d2faff1499d4",
+    "website/public/images/home.png": "5379c66aa1de3b5aa2219c8b4956114f7e78b8e0c5ede98acbb2e4be65d0eb07",
+    "website/public/images/island-start.png": "66791cfccd817677944ff7217b9f1cbc60cf0eeaebd005622a1dc0663304a46b",
+    "website/public/images/island-town.png": "3d39fbcbcbfb9139f0523460643cf325a78a1b293661468cd324685600aba02f",
+    "website/public/images/island-village.png": "a96ac89e60b23afee3b3bdc293e186e37f68f86a9636944c3688696c16ac5947",
+    "website/public/images/math.png": "958e40db13136268d47d8355ea616fd49fa251e65f386f6aadb6851370e63b5c",
+    "website/public/images/town-homes.png": "a06b06d3b869ccecd41b42e978487ede6ba0f8156f1c642119720fee1713cb38",
+    "website/public/images/town-play.png": "dbbe5751ca13be9129618e2636250c1f552dcdeea8fd1f07967b21c1ec3218cd",
+    "website/public/images/town-square.png": "a6182b6526413cae4a0082775695df2dd47789dc7911f5ac5e62da2defeb2c7a"
+  },
+  "core": {
+    "result": "PASS",
+    "files": 544,
+    "tests": 4803
+  },
+  "preview": "http://127.0.0.1:5301/promo/",
+  "browser": "browser-checks.json",
+  "publication": "Local evidence before commit. Hosted deployment checked after push; not claimed by this snapshot."
+}
