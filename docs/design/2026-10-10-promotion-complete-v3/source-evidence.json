@@ -1,0 +1,69 @@
+{
+  "url": "http://127.0.0.1:8233/",
+  "captures": [
+    {
+      "image": "island-complete.png",
+      "delivery": "standalone-art-viewer",
+      "evidenceType": "native-3d-art-target",
+      "view": "whole",
+      "loading": "false",
+      "camera": "{\"position\":[39,43,46],\"target\":[3,3.2,-6.3],\"zoom\":1,\"frustum\":[-32.27076923076923,32.27076923076923,17.48,-17.48]}",
+      "model": "whole-island-native-3d-05",
+      "revision": "8398eda9ac084a6e",
+      "phase": "grown",
+      "lighting": "day"
+    },
+    {
+      "image": "complete-forest.png",
+      "delivery": "standalone-art-viewer",
+      "evidenceType": "native-3d-art-target",
+      "view": "grove",
+      "loading": "false",
+      "camera": "{\"position\":[8,23,8],\"target\":[-5,6.2,-15.7],\"zoom\":1,\"frustum\":[-12.627692307692309,12.627692307692309,6.84,-6.84]}",
+      "model": "whole-island-native-3d-05",
+      "revision": "8398eda9ac084a6e",
+      "phase": "grown",
+      "lighting": "day"
+    },
+    {
+      "image": "complete-water.png",
+      "delivery": "standalone-art-viewer",
+      "evidenceType": "native-3d-art-target",
+      "view": "village",
+      "loading": "false",
+      "camera": "{\"position\":[23.999999999999996,24,8],\"target\":[3.1,4.9,-15.8],\"zoom\":1,\"frustum\":[-11.224615384615385,11.224615384615385,6.08,-6.08]}",
+      "model": "whole-island-native-3d-05",
+      "revision": "8398eda9ac084a6e",
+      "phase": "grown",
+      "lighting": "day"
+    },
+    {
+      "image": "complete-harbor.png",
+      "delivery": "standalone-art-viewer",
+      "evidenceType": "native-3d-art-target",
+      "view": "harbor",
+      "loading": "false",
+      "camera": "{\"position\":[30.000000000000004,21,20.000000000000004],\"target\":[14.100000000000001,2.1000000000000005,-2],\"zoom\":1,\"frustum\":[-11.926153846153847,11.926153846153847,6.46,-6.46]}",
+      "model": "whole-island-native-3d-05",
+      "revision": "8398eda9ac084a6e",
+      "phase": "grown",
+      "lighting": "day"
+    }
+  ],
+  "errors": [],
+  "sourceModelSHA256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+  "sourceModelPath": "docs/design/2026-10-10-island-final-3d/whole-island.glb (local art; not shipped)",
+  "userReferenceSHA256": "84f4b71ed226c801562b780f2da3197dba49d5e12993964555787c2c5e88ccc0",
+  "images": {
+    "complete-harbor.png": "b12dc2203dd8e14f98ef3beb355209c433d88688c9ed8e0893ad8bca6084e3d9",
+    "island-village.png": "a96ac89e60b23afee3b3bdc293e186e37f68f86a9636944c3688696c16ac5947",
+    "home.png": "5379c66aa1de3b5aa2219c8b4956114f7e78b8e0c5ede98acbb2e4be65d0eb07",
+    "math.png": "958e40db13136268d47d8355ea616fd49fa251e65f386f6aadb6851370e63b5c",
+    "complete-forest.png": "8a3b10121661f8d8ef37c2038116c4f3f077290e3d674ed47a9806098ec83d63",
+    "complete-water.png": "37613cbf3a729cf3bae01ce7afcd62d220f4f2865c6c3c108ab34d5f86e9b1f7",
+    "island-complete.png": "d2a3ff872e3dbff7dd9d3aa90f0476e7ad0123d53042d20fe60b1df01885ff47",
+    "island-start.png": "66791cfccd817677944ff7217b9f1cbc60cf0eeaebd005622a1dc0663304a46b",
+    "english.png": "56150b9e6c7b1799eb1c1e224025704adabf4ac94218fea1a4f4d2faff1499d4"
+  },
+  "gameScreenshots": "Unchanged initial/village/home/math/English images from published main 4db3e1a3, provenance in ../2026-10-10-promotion-learning-v2/source-evidence.json."
+}

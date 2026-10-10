@@ -1,0 +1,50 @@
+{
+  "baseRevision": "7a66929c231defc59388a5cc82a58dec8ad8faee",
+  "candidate": "promotion-learning-complete-v3",
+  "target": "https://sansu-seven.vercel.app/promo/",
+  "scope": "Static promotional website only; game code, data and PWA unchanged.",
+  "testedInputsSHA256": {
+    "website/index.html": "a0e16fef56944ba7ff8c5673985e8ddc9878e4e0054c13d28e63a1e4ef2c2faf",
+    "website/vite.config.js": "611e1f50a7725472e0b9768be0a6010bee29650e4c465e3a7dabc628a7029845",
+    "website/main.js": "9dd691e554ccb8f84f9b037594b3c504e353c82f95249d9792c5d71fc9d25603",
+    "website/style.css": "add62f134e78582ab16c4ba7f1f4ebd229d30211a8d0291f85fd264e33db084a",
+    "website/public/images/complete-harbor.png": "b12dc2203dd8e14f98ef3beb355209c433d88688c9ed8e0893ad8bca6084e3d9",
+    "website/public/images/island-village.png": "a96ac89e60b23afee3b3bdc293e186e37f68f86a9636944c3688696c16ac5947",
+    "website/public/images/home.png": "5379c66aa1de3b5aa2219c8b4956114f7e78b8e0c5ede98acbb2e4be65d0eb07",
+    "website/public/images/math.png": "958e40db13136268d47d8355ea616fd49fa251e65f386f6aadb6851370e63b5c",
+    "website/public/images/complete-forest.png": "8a3b10121661f8d8ef37c2038116c4f3f077290e3d674ed47a9806098ec83d63",
+    "website/public/images/complete-water.png": "37613cbf3a729cf3bae01ce7afcd62d220f4f2865c6c3c108ab34d5f86e9b1f7",
+    "website/public/images/island-complete.png": "d2a3ff872e3dbff7dd9d3aa90f0476e7ad0123d53042d20fe60b1df01885ff47",
+    "website/public/images/island-start.png": "66791cfccd817677944ff7217b9f1cbc60cf0eeaebd005622a1dc0663304a46b",
+    "website/public/images/english.png": "56150b9e6c7b1799eb1c1e224025704adabf4ac94218fea1a4f4d2faff1499d4",
+    "website/public/fonts/OFL-ZenMaruGothic.txt": "9e20355e619c79b80faa607a8fd137d07dd6e33535d1a29ac27116dfbf88b696",
+    "website/public/fonts/zen-maru-gothic-black.woff2": "e3266aca5e0a680e2cc1e4fbb9d4320f6dfee22c11525b9d0e1f7acd56b02a55",
+    "website/public/fonts/noto-sans-jp.woff2": "539b381a6e0a5a49d299867d9ab722ad7e41d01f07bbcb6bed4518b63f8d4b0a",
+    "tools/verify-promotion-website.mjs": "5f11b01fbc5fff4f11df9f4c94296d7a61c4526097e60cc4c5adbf72c6873243"
+  },
+  "independentObserverTest": "NOT_EVALUATED",
+  "publication": "Verify exact hosted revision and image bytes after push.",
+  "core": {
+    "pass": true,
+    "testFiles": 544,
+    "tests": 4803
+  },
+  "buildFilesSHA256": {
+    "index.html": "2bd8ef7ac18cbfb1352c3be7815e39bba34aa547842db08a1bac785dea7c584a",
+    "images/complete-harbor.png": "b12dc2203dd8e14f98ef3beb355209c433d88688c9ed8e0893ad8bca6084e3d9",
+    "images/island-village.png": "a96ac89e60b23afee3b3bdc293e186e37f68f86a9636944c3688696c16ac5947",
+    "images/home.png": "5379c66aa1de3b5aa2219c8b4956114f7e78b8e0c5ede98acbb2e4be65d0eb07",
+    "images/math.png": "958e40db13136268d47d8355ea616fd49fa251e65f386f6aadb6851370e63b5c",
+    "images/complete-forest.png": "8a3b10121661f8d8ef37c2038116c4f3f077290e3d674ed47a9806098ec83d63",
+    "images/complete-water.png": "37613cbf3a729cf3bae01ce7afcd62d220f4f2865c6c3c108ab34d5f86e9b1f7",
+    "images/island-complete.png": "d2a3ff872e3dbff7dd9d3aa90f0476e7ad0123d53042d20fe60b1df01885ff47",
+    "images/island-start.png": "66791cfccd817677944ff7217b9f1cbc60cf0eeaebd005622a1dc0663304a46b",
+    "images/english.png": "56150b9e6c7b1799eb1c1e224025704adabf4ac94218fea1a4f4d2faff1499d4",
+    "fonts/OFL-ZenMaruGothic.txt": "9e20355e619c79b80faa607a8fd137d07dd6e33535d1a29ac27116dfbf88b696",
+    "fonts/zen-maru-gothic-black.woff2": "e3266aca5e0a680e2cc1e4fbb9d4320f6dfee22c11525b9d0e1f7acd56b02a55",
+    "fonts/noto-sans-jp.woff2": "539b381a6e0a5a49d299867d9ab722ad7e41d01f07bbcb6bed4518b63f8d4b0a",
+    "assets/index-4A6ZLjm3.css": "42fa7835f56dfa4ecc51e3428a0410715537d51453046d0838a403fc6fd797ce",
+    "assets/index-Ca9Y7VlY.js": "58837d01e451645356fe32aafc50222bd387eb410af9e5345b0804a290eea41d"
+  },
+  "productionPreview": "http://127.0.0.1:5301/promo/"
+}

@@ -7,7 +7,7 @@ const url = process.argv[2], output = path.resolve(process.argv[3]);
 assert(url && output);
 await fs.mkdir(output,{recursive:true});
 const browser = await chromium.launch();
-const report = {url,candidate:'promotion-learning-town-v2',cases:[],pass:false};
+const report = {url,candidate:'promotion-learning-complete-v3',cases:[],pass:false};
 const errors=[];
 try {
   for (const width of [320,390,768,1440]) {
@@ -21,13 +21,16 @@ try {
       await button.click();
       await page.waitForFunction(()=>document.querySelector('.growth-photo')?.getAttribute('aria-busy')==='false');
       assert.equal(await button.getAttribute('aria-pressed'),'true');
-      assert((await page.locator('#growth-image').getAttribute('src')).includes(`island-${stage}.png`));
+      assert((await page.locator('#growth-image').getAttribute('src')).includes(stage==='town'?'island-complete.png':`island-${stage}.png`));
       assert.equal(await selector.locator('[aria-pressed="true"]').count(),1);
+      const source=await page.locator('#stage-source').textContent();
+      assert(source.includes(stage==='town'?'現在のゲームにはまだ登場しません':'現在のゲーム画面'));
+      assert(source.includes(stage==='town'?'開発中':'紹介用'));
     }
     // A keyboard-only change and a rapid change should settle on the latest selection.
     await selector.locator('[data-stage="start"]').focus(); await page.keyboard.press('Enter');
     await selector.locator('[data-stage="village"]').click(); await selector.locator('[data-stage="town"]').click();
-    await page.waitForFunction(()=>document.querySelector('#growth-image')?.getAttribute('src')?.includes('town') && document.querySelector('.growth-photo')?.getAttribute('aria-busy')==='false');
+    await page.waitForFunction(()=>document.querySelector('#growth-image')?.getAttribute('src')?.includes('complete') && document.querySelector('.growth-photo')?.getAttribute('aria-busy')==='false');
     const summaries=page.locator('.faq summary');
     for(let n=0;n<await summaries.count();n++) {await summaries.nth(n).click(); assert(await page.locator('.faq details').nth(n).getAttribute('open')!==null);await summaries.nth(n).click();}
     const integrity=await page.evaluate(async()=>{
@@ -39,10 +42,11 @@ try {
     await page.evaluate(()=>{document.documentElement.style.scrollBehavior='auto';scrollTo(0,0);}); await page.screenshot({path:path.join(output,`${width}-hero.png`)}); await page.screenshot({path:path.join(output,`${width}-page.png`),fullPage:true});
     await page.locator('#learning').screenshot({path:path.join(output,`${width}-learning.png`)});
     await page.locator('#growth').screenshot({path:path.join(output,`${width}-growth.png`)});
+    await page.locator('#island').screenshot({path:path.join(output,`${width}-island.png`)});
     report.cases.at(-1).pass=true;await context.close();
   }
   const context=await browser.newContext({viewport:{width:390,height:844},javaScriptEnabled:false});const page=await context.newPage();await page.goto(url);
-  assert.equal(await page.locator('noscript img').count(),2);assert.equal(await page.locator('h1').count(),1);await page.locator('.faq summary').first().click();assert(await page.locator('.faq details').first().getAttribute('open')!==null);report.noJS='PASS';await context.close();
+  assert.equal(await page.locator('noscript img').count(),2);assert.equal(await page.locator('h1').count(),1);assert((await page.locator('#stage-source').textContent()).includes('開発中'));await page.locator('.faq summary').first().click();assert(await page.locator('.faq details').first().getAttribute('open')!==null);report.noJS='PASS';await context.close();
   assert.deepEqual(errors,[]);report.pass=true;
 } catch(error) {report.failure=String(error.stack||error);throw error;}
 finally {report.errors=errors;await browser.close();await fs.writeFile(path.join(output,'report.json'),JSON.stringify(report,null,2));}

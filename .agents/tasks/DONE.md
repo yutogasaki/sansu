@@ -1,5 +1,7 @@
 # Shared Done Index
 
+- 2026-10-10: 宣伝サイトに利用者指定の島の完成イメージを掲載。学習の入口を保ち、全景/森/水庭/入り江と現在の実画面を明示区別。隔離core4,803・本番形式4幅がPASS。[制作・検証](../../docs/design/2026-10-10-promotion-complete-v3/README.md)
+
 - 2026-10-10: 宣伝サイトを学習中心へ改訂。算数/英語の実画面、ヒント/復習/記録、成熟した町の3段階と近景を掲載。現行mainのゲームコードを保持し、隔離core4,803・完成build4幅がPASS。[制作・検証](../../docs/design/2026-10-10-promotion-learning-v2/README.md)
 
 - 2026-10-10: 島の3段階・家・学習を紹介するWebを制作。coreと4幅の完成ビルド検査PASS。main公開用の `/promo/` 配信を追加。[制作記録](../../docs/design/2026-10-10-promotion-website/README.md)

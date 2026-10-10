@@ -352,3 +352,15 @@ footer>a:last-child{font-size:9px}
 }
 .skip-link{position:absolute;top:0;clip-path:inset(50%);width:1px;height:1px;overflow:hidden}
 .skip-link:focus{position:fixed;clip-path:none;width:auto;height:auto;overflow:visible;top:12px}
+
+/* A single landscape, with its source visible alongside the image. */
+.hero-world>img{aspect-ratio:1000/780;object-fit:contain}
+.growth-photo img{aspect-ratio:1000/780;object-fit:contain}
+.stage-source{margin:10px auto 0;text-align:center;font-size:12px;font-weight:700;color:var(--blue);max-width:850px}
+.world-caption .image-note{font-size:12px;font-weight:700}
+.detail-photo img{aspect-ratio:1.1;object-fit:cover;object-position:center}
+.concept-note{margin-top:30px;font-size:12px}
+.current-island{display:grid;grid-template-columns:1fr 1.4fr;gap:50px;border-top:1px solid var(--line);margin-top:45px;padding-top:35px;align-items:center}
+.current-island h3{font-size:25px;margin-top:12px}
+.current-island>p{font-size:13px;color:var(--muted)}
+@media(max-width:600px){.hero-world>img,.growth-photo img{aspect-ratio:1000/780;object-fit:contain}.world-caption strong{font-size:18px}.world-caption .image-note{font-size:11px}.stage-source{font-size:11px}.current-island{grid-template-columns:1fr;gap:20px}.detail-photo img{aspect-ratio:1.25}.concept-note{font-size:11px}}
