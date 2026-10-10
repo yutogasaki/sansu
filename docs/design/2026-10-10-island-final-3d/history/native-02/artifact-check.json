@@ -1,0 +1,126 @@
+{
+  "result": "PASS",
+  "candidate": "whole-island-native-3d-02",
+  "target": "standalone editable 3D art + local GLB viewer",
+  "delivery": "standalone-art-viewer",
+  "gameFlags": "not an application build",
+  "capturedTarget": "http://127.0.0.1:8230/design/2026-10-10-island-final-3d/",
+  "gitHead": "7a66929c231defc59388a5cc82a58dec8ad8faee",
+  "sourceState": "shared dirty working tree; exact artifact inputs hashed below",
+  "meshes": 2379,
+  "triangles": 787799,
+  "materials": 53,
+  "embeddedTextures": 2,
+  "modelRevision": "1699f584c55e5644",
+  "files": {
+    "whole-island.blend": {
+      "bytes": 3244579,
+      "sha256": "23a1bcf5135f6f87bed2e94d07a073e6f5d6d18fa136d0d1caf1968defae5763"
+    },
+    "whole-island.glb": {
+      "bytes": 19557796,
+      "sha256": "1699f584c55e564472480587155f76fd768ccba78489483d582e6c441bb422a0"
+    },
+    "whole-island-render.png": {
+      "bytes": 2461040,
+      "sha256": "40b7cac85271b95b42e73080e4cecf82b3cf3f0d860172ac50e3a65918747e14"
+    },
+    "build-scene.py": {
+      "bytes": 26556,
+      "sha256": "a83c4a071dad7b4ee7daf547186f311266be608986701ed3ea9a1bfcdd8f0f09"
+    },
+    "fantasy-landscape.py": {
+      "bytes": 17330,
+      "sha256": "00d66b9547f23106075f48ce9909470581fae6527862b6c319d27e9827b7d039"
+    },
+    "editor-layout.py": {
+      "bytes": 3287,
+      "sha256": "34a188db2cd63b46cb34eae299c3e6b066ddda870a77aaa20282581d69f26b55"
+    },
+    "export-residents.ts": {
+      "bytes": 3454,
+      "sha256": "bd25d211f49795065dc7704f7a9298202c378a33cd7b4c859c971a8ead474e79"
+    },
+    "residents.json": {
+      "bytes": 2698403,
+      "sha256": "fa3169775d22fbb1ac48302fa878ff7041b0d99302f6ca980993b870c8300d0e"
+    },
+    "resident-texture-0.png": {
+      "bytes": 196192,
+      "sha256": "9d7885eb70704df7564366204fa6f023eec9bd2103d2565701cb85aa956dc20f"
+    },
+    "resident-texture-1.png": {
+      "bytes": 76114,
+      "sha256": "768b4875dfbcda6f7a375dc3735806daf49570393a4d23d0e49aa1113e1fc120"
+    },
+    "viewer.js": {
+      "bytes": 13056,
+      "sha256": "c94490b1bea915483c1e6c051228632aaf36734309fde31629626e6f7455c042"
+    },
+    "viewer.bundle.js": {
+      "bytes": 654451,
+      "sha256": "1eb158f534e19ec4367e156434920d7754398a0d1022895ad8beb7d0a3933396"
+    },
+    "index.html": {
+      "bytes": 5203,
+      "sha256": "6d9c084afd76a54d675c64af5b26e9bdf28af157760cc8c4002ca6ee9bbf3166"
+    },
+    "check-native.py": {
+      "bytes": 2131,
+      "sha256": "9f5a16431bd109512855e5ad7b2c6156c31ec18b3d7ae3a2d7e0dda2cc0d7f2e"
+    },
+    "viewer-check.json": {
+      "bytes": 11088,
+      "sha256": "0c5d01e5c8aefed474afe0fa00ad6b34dec9b9e926a5eb4de5e6e3719d3e9198"
+    },
+    "viewer-contact-sheet.png": {
+      "bytes": 773370,
+      "sha256": "be05b0859a32b3aaa02569a9f332c06dee841adbbd2a7144d7c6e223bb847bb7"
+    },
+    "viewer-day-desktop.png": {
+      "bytes": 104480,
+      "sha256": "039d291c6552ce4c3ff0cd40a5978bf242ecd3c625159aef2085ce388235ed9b"
+    },
+    "viewer-whole-desktop.png": {
+      "bytes": 100996,
+      "sha256": "c9adf39b6d111b359697f73b55ae955ecd7656b98d7de34423897351e758590e"
+    },
+    "viewer-whole-phone.png": {
+      "bytes": 34483,
+      "sha256": "466dd5b0cf2f395e9265874f40650c2ca42f79a253454be2aa25fa9e48ec850a"
+    },
+    "viewer-whole-tablet.png": {
+      "bytes": 66342,
+      "sha256": "6388f3437420a7bc3694dbb431868da9517227438239a3369243773a04a8cc6b"
+    },
+    "viewer-grove-phone.png": {
+      "bytes": 41583,
+      "sha256": "4c5cc808703da8beebfa8901bdb0905a4e678b0dc9315a83d0670d462ba57084"
+    },
+    "viewer-orbit-phone.png": {
+      "bytes": 35335,
+      "sha256": "08bc961231c4f21d62f09aa3c8894d5f5cb9cdf6da1fbde6b207d00088929545"
+    },
+    "viewer-garden-tablet.png": {
+      "bytes": 75165,
+      "sha256": "9df7fc33379b61a1b7edb4d2dac678403cb245379c9f685bed1b93a11305c06b"
+    },
+    "viewer-village-tablet.png": {
+      "bytes": 70530,
+      "sha256": "ef9f295b475a0bb896c22a4821127d5cc58e768318e3bbd4542635736a5474e2"
+    }
+  },
+  "residentSources": {
+    "src/components/island/three/islandCharacters.ts": "378bbc8127df7e0d7db61ad5428dbf412f35f6221ef16110a0d20fc329ff6da9",
+    "src/components/island/three/residentRig.ts": "efbebea3ae6b3235301dd96c66598294c6deb2ae5dbdad33bd31dfb97afd9b51",
+    "src/components/island/three/residentFabric.ts": "94aac1f3650bb7ffe82f395519370e91664d173efa868c97b95b943144ea0f87",
+    "src/components/island/three/primitives.ts": "024f55cd70eeb753dccc5610613221c29e3fddae05385b2403ee53d85dce1e24",
+    "src/components/island/three/worldPalette.ts": "00ad2759a32e5664ab88d4bde483fa261d54401ce37228368763a41b4c8b24e6"
+  },
+  "gates": {
+    "artifactIntegrity": "PASS",
+    "visualAppeal": "author inspection only; user adoption pending",
+    "silentComprehension": "NOT_EVALUATED",
+    "gameRuntime": "NOT_EVALUATED"
+  }
+}

@@ -1,0 +1,196 @@
+{
+  "result": "PASS",
+  "candidate": "whole-island-native-3d-05",
+  "target": "standalone editable 3D art + local GLB viewer",
+  "delivery": "standalone-art-viewer",
+  "gameFlags": "not an application build",
+  "capturedTarget": "http://127.0.0.1:8230/design/2026-10-10-island-final-3d/",
+  "gitHead": "7a66929c231defc59388a5cc82a58dec8ad8faee",
+  "sourceState": "shared dirty working tree; exact artifact inputs hashed below",
+  "meshes": 3690,
+  "triangles": 1396299,
+  "materials": 80,
+  "embeddedTextures": 2,
+  "modelRevision": "8398eda9ac084a6e",
+  "growthComparison": {
+    "retainedHomes": [
+      "Forest / blue home / rounded walls",
+      "Forest / yellow home / rounded walls",
+      "Garden / small home / rounded walls",
+      "Original home / rounded walls",
+      "Village / coral house / rounded walls",
+      "Village / matured common house / rounded walls",
+      "Water town / blue home / rounded walls",
+      "Water town / coral home / rounded walls"
+    ],
+    "originalTransformsAndDimensions": "PASS",
+    "preservedHomeAndOriginalResidentParts": 221,
+    "originalPositions": "EXACT_MATCH",
+    "residentPositionsUVsAndTextures": "EXACT_MATCH",
+    "unusedHomeUVs": {
+      "tolerance": 1e-7,
+      "maximumDifference": 5.960464477539063e-8
+    },
+    "areaRatio": 2.76,
+    "comparisonRevision": "1699f584c55e5644"
+  },
+  "files": {
+    "whole-island.blend": {
+      "bytes": 6585301,
+      "sha256": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a"
+    },
+    "whole-island.glb": {
+      "bytes": 34930176,
+      "sha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d"
+    },
+    "whole-island-render.png": {
+      "bytes": 2579296,
+      "sha256": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6"
+    },
+    "scene-manifest.json": {
+      "bytes": 1548,
+      "sha256": "4b5ca62447b6c27b464d1e3144aff313b342b59a48339d803a7bfd4fdb800def"
+    },
+    "native-check.json": {
+      "bytes": 2308,
+      "sha256": "0b539faf23cc1db18ed41b324fc5a48ec4917975b82e6294e5e18ea5237514ac"
+    },
+    "build-final-scene.py": {
+      "bytes": 4371,
+      "sha256": "007cb5dbaee09aa8f235641409729a71409910c9f24c03f139258af47b135234"
+    },
+    "fantasy-colour-world.py": {
+      "bytes": 7931,
+      "sha256": "91d3bbf16ee3d2d15fbe1005201675ef365221ac0a5733ce13ba3f1161ffd34c"
+    },
+    "varied-world.py": {
+      "bytes": 18522,
+      "sha256": "9090dbd0923437d449309bc95ffb27a00ec673e3252ca9f98849e8ce53611c22"
+    },
+    "build-scene.py": {
+      "bytes": 27396,
+      "sha256": "43d79677024e5cfc298eb67ddd4654677241a44ed9f11cfcff1e1a6d2a6267db"
+    },
+    "fantasy-landscape.py": {
+      "bytes": 17330,
+      "sha256": "00d66b9547f23106075f48ce9909470581fae6527862b6c319d27e9827b7d039"
+    },
+    "editor-layout.py": {
+      "bytes": 3291,
+      "sha256": "af15a6ca5bb97a5c6f4594140112b80f49c890d45d92e2ee57822212cf010b70"
+    },
+    "export-residents.ts": {
+      "bytes": 3454,
+      "sha256": "bd25d211f49795065dc7704f7a9298202c378a33cd7b4c859c971a8ead474e79"
+    },
+    "residents.json": {
+      "bytes": 2698403,
+      "sha256": "fa3169775d22fbb1ac48302fa878ff7041b0d99302f6ca980993b870c8300d0e"
+    },
+    "resident-texture-0.png": {
+      "bytes": 196192,
+      "sha256": "9d7885eb70704df7564366204fa6f023eec9bd2103d2565701cb85aa956dc20f"
+    },
+    "resident-texture-1.png": {
+      "bytes": 76114,
+      "sha256": "768b4875dfbcda6f7a375dc3735806daf49570393a4d23d0e49aa1113e1fc120"
+    },
+    "history/native-04/whole-island.blend": {
+      "bytes": 6437411,
+      "sha256": "97e9a21eec658a103843dc86264807fb4a37a4ca17d42e326c710755cbb82af1"
+    },
+    "viewer.js": {
+      "bytes": 19241,
+      "sha256": "5c0330aa9fad4df550578e5ef84226471d2eaefc085d9db5f6f3faf9106d1b5b"
+    },
+    "viewer.bundle.js": {
+      "bytes": 657795,
+      "sha256": "240ec637fd2b87381c31624314ebf81215abdbb77e160ce9bb2476c09d30412c"
+    },
+    "index.html": {
+      "bytes": 5816,
+      "sha256": "7295d5740a591c0079ae3c7f08412dd6038cf84e913a3b07f0b808c0842847dd"
+    },
+    "check-native.py": {
+      "bytes": 5566,
+      "sha256": "aab7dea7f1eb76329e00a8f4c4f811d5a72e0b51368831a8a53942509412595d"
+    },
+    "make-review-sheets.py": {
+      "bytes": 1708,
+      "sha256": "5892daf2bb5a56c1b6a769d70ddfbbdfb394230a9c63fceee54b9664b56ffa86"
+    },
+    "viewer-check.json": {
+      "bytes": 23597,
+      "sha256": "ced371533ca45d14b0581e26dc07866c742146ed2873aa568bd7ce6bc93422d9"
+    },
+    "viewer-contact-sheet.png": {
+      "bytes": 1455805,
+      "sha256": "5ac8b1923c1e8463c4070532c14cc9c41cc142ff564a9bd0b06a88472c939e9f"
+    },
+    "viewer-comparison.png": {
+      "bytes": 638576,
+      "sha256": "1002bd05008587a4e426e2532a6c8b2f123f5e48a3bbdc08cbc38514e8d505d7"
+    },
+    "viewer-previous-desktop.png": {
+      "bytes": 100986,
+      "sha256": "3a1a1abb62dfcd48442e95a5e51d36e237858ab238fbebfda8d72aa736b2c746"
+    },
+    "viewer-day-desktop.png": {
+      "bytes": 118930,
+      "sha256": "b88c47c9d73cbad798fbf2fbdfd42c81d9c3e1e8e616fd13b6b915b915e0befa"
+    },
+    "viewer-whole-desktop.png": {
+      "bytes": 114103,
+      "sha256": "3469979d6c18a910917754d5fc8b8eab1bcf308174a52c1cc22914c51e7e9e5e"
+    },
+    "viewer-whole-phone.png": {
+      "bytes": 39340,
+      "sha256": "ac90954618041f16033d10f60fdb40419ffceffa076964b5b4e632e70ed3cac1"
+    },
+    "viewer-whole-small.png": {
+      "bytes": 25261,
+      "sha256": "73c9ff047056adbf1a1d1f0c2d434250b98986c85b050e909c11718d0bdfc0d1"
+    },
+    "viewer-final.png": {
+      "bytes": 76235,
+      "sha256": "d250fd4250075d23e7ed951eee626d6c9939b24076b936fa7c28817c37193745"
+    },
+    "viewer-whole-tablet.png": {
+      "bytes": 83003,
+      "sha256": "fede20d80e9c4d2fe23dd2ae270a2aaabbc769986bf16ef5caa8cf31249425a0"
+    },
+    "viewer-grove-phone.png": {
+      "bytes": 52901,
+      "sha256": "44d30d09b23515cb20c7f35ce39cdf42fe390fb573db5de8f83b53fd48433667"
+    },
+    "viewer-orbit-phone.png": {
+      "bytes": 42217,
+      "sha256": "a6887705a44ab8f94a3c5befdca927af33873432aaa7020319314ae1512d21ee"
+    },
+    "viewer-garden-tablet.png": {
+      "bytes": 118901,
+      "sha256": "229f98835b11206b782402559640b376fe1cd4c234604e3f40fbb31dc869035c"
+    },
+    "viewer-village-tablet.png": {
+      "bytes": 97166,
+      "sha256": "663baa8f11bfb31fed2718066a1d9ac423f7a349269b721eb539a920b951c754"
+    },
+    "viewer-harbor-tablet.png": {
+      "bytes": 101701,
+      "sha256": "6924078da9ea760d2c20ee918ff823bc033a0241f58d1e9f94f82d81388e4da1"
+    }
+  },
+  "residentSources": {
+    "src/components/island/three/islandCharacters.ts": "378bbc8127df7e0d7db61ad5428dbf412f35f6221ef16110a0d20fc329ff6da9",
+    "src/components/island/three/residentRig.ts": "efbebea3ae6b3235301dd96c66598294c6deb2ae5dbdad33bd31dfb97afd9b51",
+    "src/components/island/three/residentFabric.ts": "94aac1f3650bb7ffe82f395519370e91664d173efa868c97b95b943144ea0f87",
+    "src/components/island/three/primitives.ts": "024f55cd70eeb753dccc5610613221c29e3fddae05385b2403ee53d85dce1e24",
+    "src/components/island/three/worldPalette.ts": "00ad2759a32e5664ab88d4bde483fa261d54401ce37228368763a41b4c8b24e6"
+  },
+  "gates": {
+    "artifactIntegrity": "PASS",
+    "visualAppeal": "author inspection only; user adoption pending",
+    "silentComprehension": "NOT_EVALUATED",
+    "gameRuntime": "NOT_EVALUATED"
+  }
+}

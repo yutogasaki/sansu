@@ -1,0 +1,391 @@
+{
+  "schema": "sansu-growing-place-storage-evidence-v1",
+  "generatedQA": true,
+  "realUsers": false,
+  "externalPublication": false,
+  "createdAt": "2026-10-10T07:24:16.176Z",
+  "originalEvidenceDirectory": "/private/tmp/sansu-place-update-20261010",
+  "copiedEvidenceDirectory": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-growing-place-runtime/storage-evidence",
+  "copyMethod": "Unmodified byte copy; every original and copied file compared and SHA256 verified.",
+  "scopeRelativePath": "scope.txt",
+  "originalFileCount": 20,
+  "jsonFileCount": 6,
+  "actualCaptureCount": 14,
+  "totalOriginalBytes": 5293360,
+  "originalSHA256": {
+    "final-update-audit.json": "3b469871458a2e99da7351040bf1e0fb6a56fe13636f15fdf4c9aec3d7335a2f",
+    "legacy-writer-v4.json": "845b7468cf1b4b602ce58af1848344271736dc5ef198d10e5d331dae4a65a5c9",
+    "new-manifest.json": "768f1c1022df593ceb1c5d5148dc3f15b5d3f825bac952d75dc13fdd1c4d2e8b",
+    "old-manifest.json": "68b73b1c65322f7975c448df8ad3937bc7a2ae0ce5a1a2c7597f2e46c8402596",
+    "rollback-manifest.json": "76ee0bb8bb820c18a8dc88832efc98693c017fdd9472740d03f8fc77c346d4f2",
+    "update-qa-v4-local-origin/390-interrupted-new-home.png": "e2dcc2858125dd060670482b5b18fd136cc7449009df998e3a31de25c4ab1841",
+    "update-qa-v4-local-origin/390-interrupted-old-learning.png": "e6a6b21b20a8c35f3d4083e53b24bc187056769193b79190a813239846b0da7f",
+    "update-qa-v4-local-origin/390-interrupted-old-offline.png": "8f93a7aedc0d447d93fb33020144e071f03073cd06bcf64e1664472385a8b6fb",
+    "update-qa-v4-local-origin/390-interrupted-rollback-offline.png": "293a550bddd93dc1a49bd5c80bc813f2709cd27c11d706d0d50d872189d40871",
+    "update-qa-v4-local-origin/390-normal-new-home.png": "126831268eb2d796f5079d8aeb7a7bbc5a5b31f040936255cc3224399bda7412",
+    "update-qa-v4-local-origin/390-normal-old-learning.png": "d045385f3ad0cfa2baa3ba608baef039e3ff44f5163d1c2c0ffcae183673e6c4",
+    "update-qa-v4-local-origin/390-normal-rollback-offline.png": "bf47dde1a07f550cc9075ea0eb943d1f7fb8987aebf6068243a4e936dccb5f49",
+    "update-qa-v4-local-origin/768-interrupted-new-home.png": "a6c4c162aac260d0edbe2810176effde393bfc7bfee7c2c3356d0cf828256947",
+    "update-qa-v4-local-origin/768-interrupted-old-learning.png": "466fd7a565a2cb1a34a58799ef0eaaa95df20b0b7a9bc645d6ca8be4ec332b20",
+    "update-qa-v4-local-origin/768-interrupted-old-offline.png": "1d926ff60192f3110448c397893cb69cf64b41c1a6a584d0836d47bec2d18fc4",
+    "update-qa-v4-local-origin/768-interrupted-rollback-offline.png": "227400edc7918d3de2ea51a5e563c80a660cd14427e736d893c35fa1d8d50bda",
+    "update-qa-v4-local-origin/768-normal-new-home.png": "dd27b45c256f9ed1ce2ae7ac431e4e80fbb4b46e70966c7f3f4c4a33157c69ad",
+    "update-qa-v4-local-origin/768-normal-old-learning.png": "466fd7a565a2cb1a34a58799ef0eaaa95df20b0b7a9bc645d6ca8be4ec332b20",
+    "update-qa-v4-local-origin/768-normal-rollback-offline.png": "46606d11599ec804be55c94436708f9c3f0d3fae06618e7146c1de55cbdc8d38",
+    "update-qa-v4-local-origin/report.json": "8fffebfea356f5702dedff4ddb045963221006c9e9fe7087692b24c76a54de7c"
+  },
+  "originalCollectionHash": "5eba86d4cef3efdb315faf7042e1f28b602be52652044408067f5cb046a2a838",
+  "files": [
+    {
+      "relativePath": "old-manifest.json",
+      "kind": "build-manifest",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/old-manifest.json",
+      "sha256": "68b73b1c65322f7975c448df8ad3937bc7a2ae0ce5a1a2c7597f2e46c8402596",
+      "bytes": 249410
+    },
+    {
+      "relativePath": "new-manifest.json",
+      "kind": "build-manifest",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/new-manifest.json",
+      "sha256": "768f1c1022df593ceb1c5d5148dc3f15b5d3f825bac952d75dc13fdd1c4d2e8b",
+      "bytes": 254986
+    },
+    {
+      "relativePath": "rollback-manifest.json",
+      "kind": "build-manifest",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/rollback-manifest.json",
+      "sha256": "76ee0bb8bb820c18a8dc88832efc98693c017fdd9472740d03f8fc77c346d4f2",
+      "bytes": 255016
+    },
+    {
+      "relativePath": "legacy-writer-v4.json",
+      "kind": "legacy-writer-diagnostic",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/legacy-writer-v4.json",
+      "sha256": "845b7468cf1b4b602ce58af1848344271736dc5ef198d10e5d331dae4a65a5c9",
+      "bytes": 557
+    },
+    {
+      "relativePath": "final-update-audit.json",
+      "kind": "final-byte-and-source-audit",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/final-update-audit.json",
+      "sha256": "3b469871458a2e99da7351040bf1e0fb6a56fe13636f15fdf4c9aec3d7335a2f",
+      "bytes": 2146
+    },
+    {
+      "relativePath": "update-qa-v4-local-origin/report.json",
+      "kind": "actual-sw-update-report",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/report.json",
+      "sha256": "8fffebfea356f5702dedff4ddb045963221006c9e9fe7087692b24c76a54de7c",
+      "bytes": 1032165
+    },
+    {
+      "relativePath": "update-qa-v4-local-origin/390-normal-old-learning.png",
+      "kind": "actual-browser-capture",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/390-normal-old-learning.png",
+      "sha256": "d045385f3ad0cfa2baa3ba608baef039e3ff44f5163d1c2c0ffcae183673e6c4",
+      "bytes": 55610
+    },
+    {
+      "relativePath": "update-qa-v4-local-origin/390-normal-new-home.png",
+      "kind": "actual-browser-capture",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/390-normal-new-home.png",
+      "sha256": "126831268eb2d796f5079d8aeb7a7bbc5a5b31f040936255cc3224399bda7412",
+      "bytes": 204874
+    },
+    {
+      "relativePath": "update-qa-v4-local-origin/390-normal-rollback-offline.png",
+      "kind": "actual-browser-capture",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/390-normal-rollback-offline.png",
+      "sha256": "bf47dde1a07f550cc9075ea0eb943d1f7fb8987aebf6068243a4e936dccb5f49",
+      "bytes": 205816
+    },
+    {
+      "relativePath": "update-qa-v4-local-origin/390-interrupted-old-learning.png",
+      "kind": "actual-browser-capture",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/390-interrupted-old-learning.png",
+      "sha256": "e6a6b21b20a8c35f3d4083e53b24bc187056769193b79190a813239846b0da7f",
+      "bytes": 55591
+    },
+    {
+      "relativePath": "update-qa-v4-local-origin/390-interrupted-old-offline.png",
+      "kind": "actual-browser-capture",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/390-interrupted-old-offline.png",
+      "sha256": "8f93a7aedc0d447d93fb33020144e071f03073cd06bcf64e1664472385a8b6fb",
+      "bytes": 228504
+    },
+    {
+      "relativePath": "update-qa-v4-local-origin/390-interrupted-new-home.png",
+      "kind": "actual-browser-capture",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/390-interrupted-new-home.png",
+      "sha256": "e2dcc2858125dd060670482b5b18fd136cc7449009df998e3a31de25c4ab1841",
+      "bytes": 205427
+    },
+    {
+      "relativePath": "update-qa-v4-local-origin/390-interrupted-rollback-offline.png",
+      "kind": "actual-browser-capture",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/390-interrupted-rollback-offline.png",
+      "sha256": "293a550bddd93dc1a49bd5c80bc813f2709cd27c11d706d0d50d872189d40871",
+      "bytes": 205418
+    },
+    {
+      "relativePath": "update-qa-v4-local-origin/768-normal-old-learning.png",
+      "kind": "actual-browser-capture",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/768-normal-old-learning.png",
+      "sha256": "466fd7a565a2cb1a34a58799ef0eaaa95df20b0b7a9bc645d6ca8be4ec332b20",
+      "bytes": 73110
+    },
+    {
+      "relativePath": "update-qa-v4-local-origin/768-normal-new-home.png",
+      "kind": "actual-browser-capture",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/768-normal-new-home.png",
+      "sha256": "dd27b45c256f9ed1ce2ae7ac431e4e80fbb4b46e70966c7f3f4c4a33157c69ad",
+      "bytes": 428435
+    },
+    {
+      "relativePath": "update-qa-v4-local-origin/768-normal-rollback-offline.png",
+      "kind": "actual-browser-capture",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/768-normal-rollback-offline.png",
+      "sha256": "46606d11599ec804be55c94436708f9c3f0d3fae06618e7146c1de55cbdc8d38",
+      "bytes": 431521
+    },
+    {
+      "relativePath": "update-qa-v4-local-origin/768-interrupted-old-learning.png",
+      "kind": "actual-browser-capture",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/768-interrupted-old-learning.png",
+      "sha256": "466fd7a565a2cb1a34a58799ef0eaaa95df20b0b7a9bc645d6ca8be4ec332b20",
+      "bytes": 73110
+    },
+    {
+      "relativePath": "update-qa-v4-local-origin/768-interrupted-old-offline.png",
+      "kind": "actual-browser-capture",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/768-interrupted-old-offline.png",
+      "sha256": "1d926ff60192f3110448c397893cb69cf64b41c1a6a584d0836d47bec2d18fc4",
+      "bytes": 469631
+    },
+    {
+      "relativePath": "update-qa-v4-local-origin/768-interrupted-new-home.png",
+      "kind": "actual-browser-capture",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/768-interrupted-new-home.png",
+      "sha256": "a6c4c162aac260d0edbe2810176effde393bfc7bfee7c2c3356d0cf828256947",
+      "bytes": 432174
+    },
+    {
+      "relativePath": "update-qa-v4-local-origin/768-interrupted-rollback-offline.png",
+      "kind": "actual-browser-capture",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/768-interrupted-rollback-offline.png",
+      "sha256": "227400edc7918d3de2ea51a5e563c80a660cd14427e736d893c35fa1d8d50bda",
+      "bytes": 429859
+    }
+  ],
+  "captureRelocations": [
+    {
+      "originalCaptureFile": "390-normal-old-learning.png",
+      "relativePath": "update-qa-v4-local-origin/390-normal-old-learning.png",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/390-normal-old-learning.png",
+      "originalSHA256": "d045385f3ad0cfa2baa3ba608baef039e3ff44f5163d1c2c0ffcae183673e6c4",
+      "appVersion": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb",
+      "buildRevision": "place-update-old-b61d3064"
+    },
+    {
+      "originalCaptureFile": "390-normal-new-home.png",
+      "relativePath": "update-qa-v4-local-origin/390-normal-new-home.png",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/390-normal-new-home.png",
+      "originalSHA256": "126831268eb2d796f5079d8aeb7a7bbc5a5b31f040936255cc3224399bda7412",
+      "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+      "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+    },
+    {
+      "originalCaptureFile": "390-normal-rollback-offline.png",
+      "relativePath": "update-qa-v4-local-origin/390-normal-rollback-offline.png",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/390-normal-rollback-offline.png",
+      "originalSHA256": "bf47dde1a07f550cc9075ea0eb943d1f7fb8987aebf6068243a4e936dccb5f49",
+      "appVersion": "place-update-rollback-v4-acc7dc9e4ecc:e19b2a2c-3b3c-4a60-b3d3-21d105c6a720",
+      "buildRevision": "place-update-rollback-v4-acc7dc9e4ecc"
+    },
+    {
+      "originalCaptureFile": "390-interrupted-old-learning.png",
+      "relativePath": "update-qa-v4-local-origin/390-interrupted-old-learning.png",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/390-interrupted-old-learning.png",
+      "originalSHA256": "e6a6b21b20a8c35f3d4083e53b24bc187056769193b79190a813239846b0da7f",
+      "appVersion": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb",
+      "buildRevision": "place-update-old-b61d3064"
+    },
+    {
+      "originalCaptureFile": "390-interrupted-old-offline.png",
+      "relativePath": "update-qa-v4-local-origin/390-interrupted-old-offline.png",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/390-interrupted-old-offline.png",
+      "originalSHA256": "8f93a7aedc0d447d93fb33020144e071f03073cd06bcf64e1664472385a8b6fb",
+      "appVersion": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb",
+      "buildRevision": "place-update-old-b61d3064"
+    },
+    {
+      "originalCaptureFile": "390-interrupted-new-home.png",
+      "relativePath": "update-qa-v4-local-origin/390-interrupted-new-home.png",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/390-interrupted-new-home.png",
+      "originalSHA256": "e2dcc2858125dd060670482b5b18fd136cc7449009df998e3a31de25c4ab1841",
+      "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+      "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+    },
+    {
+      "originalCaptureFile": "390-interrupted-rollback-offline.png",
+      "relativePath": "update-qa-v4-local-origin/390-interrupted-rollback-offline.png",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/390-interrupted-rollback-offline.png",
+      "originalSHA256": "293a550bddd93dc1a49bd5c80bc813f2709cd27c11d706d0d50d872189d40871",
+      "appVersion": "place-update-rollback-v4-acc7dc9e4ecc:e19b2a2c-3b3c-4a60-b3d3-21d105c6a720",
+      "buildRevision": "place-update-rollback-v4-acc7dc9e4ecc"
+    },
+    {
+      "originalCaptureFile": "768-normal-old-learning.png",
+      "relativePath": "update-qa-v4-local-origin/768-normal-old-learning.png",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/768-normal-old-learning.png",
+      "originalSHA256": "466fd7a565a2cb1a34a58799ef0eaaa95df20b0b7a9bc645d6ca8be4ec332b20",
+      "appVersion": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb",
+      "buildRevision": "place-update-old-b61d3064"
+    },
+    {
+      "originalCaptureFile": "768-normal-new-home.png",
+      "relativePath": "update-qa-v4-local-origin/768-normal-new-home.png",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/768-normal-new-home.png",
+      "originalSHA256": "dd27b45c256f9ed1ce2ae7ac431e4e80fbb4b46e70966c7f3f4c4a33157c69ad",
+      "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+      "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+    },
+    {
+      "originalCaptureFile": "768-normal-rollback-offline.png",
+      "relativePath": "update-qa-v4-local-origin/768-normal-rollback-offline.png",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/768-normal-rollback-offline.png",
+      "originalSHA256": "46606d11599ec804be55c94436708f9c3f0d3fae06618e7146c1de55cbdc8d38",
+      "appVersion": "place-update-rollback-v4-acc7dc9e4ecc:e19b2a2c-3b3c-4a60-b3d3-21d105c6a720",
+      "buildRevision": "place-update-rollback-v4-acc7dc9e4ecc"
+    },
+    {
+      "originalCaptureFile": "768-interrupted-old-learning.png",
+      "relativePath": "update-qa-v4-local-origin/768-interrupted-old-learning.png",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/768-interrupted-old-learning.png",
+      "originalSHA256": "466fd7a565a2cb1a34a58799ef0eaaa95df20b0b7a9bc645d6ca8be4ec332b20",
+      "appVersion": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb",
+      "buildRevision": "place-update-old-b61d3064"
+    },
+    {
+      "originalCaptureFile": "768-interrupted-old-offline.png",
+      "relativePath": "update-qa-v4-local-origin/768-interrupted-old-offline.png",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/768-interrupted-old-offline.png",
+      "originalSHA256": "1d926ff60192f3110448c397893cb69cf64b41c1a6a584d0836d47bec2d18fc4",
+      "appVersion": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb",
+      "buildRevision": "place-update-old-b61d3064"
+    },
+    {
+      "originalCaptureFile": "768-interrupted-new-home.png",
+      "relativePath": "update-qa-v4-local-origin/768-interrupted-new-home.png",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/768-interrupted-new-home.png",
+      "originalSHA256": "a6c4c162aac260d0edbe2810176effde393bfc7bfee7c2c3356d0cf828256947",
+      "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+      "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+    },
+    {
+      "originalCaptureFile": "768-interrupted-rollback-offline.png",
+      "relativePath": "update-qa-v4-local-origin/768-interrupted-rollback-offline.png",
+      "originalAbsolutePath": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/768-interrupted-rollback-offline.png",
+      "originalSHA256": "227400edc7918d3de2ea51a5e563c80a660cd14427e736d893c35fa1d8d50bda",
+      "appVersion": "place-update-rollback-v4-acc7dc9e4ecc:e19b2a2c-3b3c-4a60-b3d3-21d105c6a720",
+      "buildRevision": "place-update-rollback-v4-acc7dc9e4ecc"
+    }
+  ],
+  "builds": [
+    {
+      "role": "old",
+      "manifestRelativePath": "old-manifest.json",
+      "sourceDir": "/private/tmp/sansu-place-update-20261010/old-source",
+      "distDir": "/private/tmp/sansu-place-update-20261010/old-source/dist",
+      "sourceHash": "721f239c7e6abab2025f408e6438da0204757f69341cc053098679a467a7f563",
+      "version": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb",
+      "revision": "place-update-old-b61d3064",
+      "entryBundle": "/assets/index-DBTHR_z3.js"
+    },
+    {
+      "role": "new",
+      "manifestRelativePath": "new-manifest.json",
+      "sourceDir": "/private/tmp/sansu-place-update-20261010/new-source",
+      "distDir": "/private/tmp/sansu-place-update-20261010/new-source/dist",
+      "sourceHash": "acc7dc9e4eccec27e5fa30b36346e84cf52bc5ecbc8725a2e3afb05d928ee5c8",
+      "version": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+      "revision": "place-update-new-v4-acc7dc9e4ecc",
+      "entryBundle": "/assets/index-DjMk-AIk.js"
+    },
+    {
+      "role": "rollback",
+      "manifestRelativePath": "rollback-manifest.json",
+      "sourceDir": "/private/tmp/sansu-place-update-20261010/rollback-source",
+      "distDir": "/private/tmp/sansu-place-update-20261010/rollback-source/dist",
+      "sourceHash": "acc7dc9e4eccec27e5fa30b36346e84cf52bc5ecbc8725a2e3afb05d928ee5c8",
+      "version": "place-update-rollback-v4-acc7dc9e4ecc:e19b2a2c-3b3c-4a60-b3d3-21d105c6a720",
+      "revision": "place-update-rollback-v4-acc7dc9e4ecc",
+      "entryBundle": "/assets/index-CAcXpDbd.js"
+    }
+  ],
+  "updateReportRelativePath": "update-qa-v4-local-origin/report.json",
+  "legacyWriterRelativePath": "legacy-writer-v4.json",
+  "finalAuditRelativePath": "final-update-audit.json",
+  "immutableSourceHash": "acc7dc9e4eccec27e5fa30b36346e84cf52bc5ecbc8725a2e3afb05d928ee5c8",
+  "currentWorkingSourceHashAtAudit": "f92c13e3d2912e0b10ca68fd21e9062ea5859287fea1ae331c394294cb4f5099",
+  "sourceDelta": [
+    {
+      "file": "src/components/island/growing/seedHitPriority.test.ts",
+      "before": "1ffd282ac587fc7fa676c88f4648a0aa96c1c926e70a8a039a55a0bcc0e4e564",
+      "after": "c4812fc0a805ff32b383701dbcaf541e746401cb8cfb748f0718ced70d81c942",
+      "testOnly": true
+    }
+  ],
+  "runtimeInputsStillMatchAtAudit": true,
+  "scenarios": [
+    {
+      "width": 390,
+      "interrupted": false,
+      "pass": true,
+      "migration": {
+        "from": 3,
+        "to": 4
+      },
+      "earnedCount": 4,
+      "reloadCount": 2
+    },
+    {
+      "width": 390,
+      "interrupted": true,
+      "pass": true,
+      "migration": {
+        "from": 3,
+        "to": 4
+      },
+      "earnedCount": 4,
+      "reloadCount": 2
+    },
+    {
+      "width": 768,
+      "interrupted": false,
+      "pass": true,
+      "migration": {
+        "from": 3,
+        "to": 4
+      },
+      "earnedCount": 4,
+      "reloadCount": 2
+    },
+    {
+      "width": 768,
+      "interrupted": true,
+      "pass": true,
+      "migration": {
+        "from": 3,
+        "to": 4
+      },
+      "earnedCount": 4,
+      "reloadCount": 2
+    }
+  ],
+  "browser": "145.0.7632.6",
+  "cleanup": {
+    "browserClosed": true,
+    "serverClosed": true
+  }
+}

@@ -24,7 +24,7 @@ describe('fixed Growing QA saves', () => {
     });
     it('keeps the same provenance in another checkout with shared dependencies', async () => {
         const root = await fs.mkdtemp(path.join(os.tmpdir(), 'sansu-fixture-checkout-')); directories.push(root);
-        for (const file of ['src', 'node_modules', 'package-lock.json']) await fs.symlink(path.resolve(file), path.join(root, file));
+        for (const file of ['src', 'docs', 'node_modules', 'package-lock.json']) await fs.symlink(path.resolve(file), path.join(root, file));
         const other = await loadDomain(root);
         expect(other.sourceHash).toBe(loaded.sourceHash);
         expect(validatePack(pack, other)).toBe(pack);
@@ -35,7 +35,7 @@ describe('fixed Growing QA saves', () => {
         for (const item of pack.cases) {
             const result = await syncGrowingIsland(item.profile.id, [], EPOCH, database);
             expect(ownedState(result.record.state)).toEqual(ownedState(item.island.state));
-            expect(result.record.version).toBe(3);
+            expect(result.record.version).toBe(4);
             expect(result.learned).toBe(0);
         }
     });

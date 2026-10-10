@@ -1,0 +1,1026 @@
+{
+  "id": "place-goals-design-v1",
+  "version": 1,
+  "date": "2026-10-10",
+  "status": "RUNTIME_INTEGRATED",
+  "artBaseline": {
+    "candidate": "whole-island-native-3d-05",
+    "glbRevision": "8398eda9ac084a6e",
+    "decision": "利用者「いい感じ。これをもとに…」に基づく全島の美術方向。ゲーム実装の受入とは別。",
+    "image": "../design/2026-10-10-island-final-3d/whole-island-render.png"
+  },
+  "scope": "既存の材料・時計・所有から、任意の目標と場所の組み合わせを本体へ統合。独立観察・実機・実時間の自然成長は別ゲート。",
+  "common": {
+    "ownedOnly": true,
+    "consumeMembers": false,
+    "learningRewardChange": false,
+    "goalMandatory": false,
+    "additionalCurrency": false,
+    "clockResetOnReconnect": false,
+    "connection": "orthogonal-or-one-open-cell-straight-gap",
+    "memberOrder": "stable-id",
+    "requirements": "runtime v1 minimum conditions; catalog diagrams are explanations, not acquired growth evidence",
+    "attachmentMaxWalkCells": 2,
+    "relationMaxWalkCells": 3,
+    "gardenMinFreeCells": 2
+  },
+  "goals": [
+    {
+      "id": "P01",
+      "name": "木陰の庭",
+      "family": "grove",
+      "scale": "小さな目標",
+      "intent": "自分が植えた木の下に、ぽこもこと座れる庭を育てる。",
+      "focus": {
+        "x": 30,
+        "y": 46
+      },
+      "clock": "nature",
+      "image": "../design/2026-10-10-island-final-3d/viewer-grove-phone.png",
+      "inputs": [
+        {
+          "role": "tree",
+          "kind": "landmark:sapling",
+          "count": 2,
+          "state": "mature"
+        },
+        {
+          "role": "seat",
+          "kind": "landmark:bench",
+          "count": 1,
+          "state": "placed"
+        }
+      ],
+      "space": "木のつながりと席が同じ木陰に入り、歩ける入口と2マス以上の庭を残す。",
+      "variants": [
+        {
+          "id": "lane",
+          "label": "列にする",
+          "result": "枝がつながる、細長い木陰の道",
+          "demo": [
+            {
+              "role": "tree",
+              "x": 1,
+              "z": 1
+            },
+            {
+              "role": "tree",
+              "x": 3,
+              "z": 1
+            },
+            {
+              "role": "seat",
+              "x": 2,
+              "z": 2
+            }
+          ],
+          "terrain": "any"
+        },
+        {
+          "id": "corner",
+          "label": "角をつくる",
+          "result": "庭の縁を包む、L字の木陰",
+          "demo": [
+            {
+              "role": "tree",
+              "x": 1,
+              "z": 1
+            },
+            {
+              "role": "tree",
+              "x": 2,
+              "z": 1
+            },
+            {
+              "role": "seat",
+              "x": 2,
+              "z": 3
+            }
+          ],
+          "terrain": "any"
+        },
+        {
+          "id": "alcove",
+          "label": "木陰のくぼみ",
+          "result": "つながる樹冠の端にくぼみを作り、片側の木陰で座る。",
+          "demo": [
+            {
+              "role": "tree",
+              "x": 1,
+              "z": 2
+            },
+            {
+              "role": "tree",
+              "x": 3,
+              "z": 2
+            },
+            {
+              "role": "seat",
+              "x": 1,
+              "z": 3
+            }
+          ],
+          "terrain": "any"
+        }
+      ],
+      "stages": [
+        {
+          "id": "seeded",
+          "label": "しこむ",
+          "condition": "木と席を置く",
+          "changes": "苗と席の位置に、枝が寄る向きと庭の余白を予告する。",
+          "play": "元の席でくつろげる。"
+        },
+        {
+          "id": "connected",
+          "label": "つながる",
+          "condition": "苗の接続と庭への到達が成立",
+          "changes": "地面の根と足元が連続する。苗はそのまま残る。",
+          "play": "次に置く位置を変えて、庭の形を試せる。"
+        },
+        {
+          "id": "grown",
+          "label": "育つ",
+          "condition": "2本が既存の成熟段階へ到達",
+          "changes": "重なる樹冠が一つの木陰になる。追加の待ち時間は設けない。",
+          "play": "同じ影の下へ歩き、席へ座れる。"
+        },
+        {
+          "id": "lived",
+          "label": "暮らす",
+          "condition": "入口・木陰・席を実際の行動に使用",
+          "changes": "ぽこもこや既存住人がその木陰と席を使う。",
+          "play": "つまんで席へ運ぶ、座って足をゆらす。"
+        }
+      ],
+      "capability": [
+        "derived-place",
+        "shared-shade",
+        "safe-access"
+      ],
+      "next": [
+        "P02",
+        "P05"
+      ]
+    },
+    {
+      "id": "P02",
+      "name": "大樹の住まい",
+      "family": "grove",
+      "scale": "長く育てる目標",
+      "intent": "育てた木と木の家から、中へ入れる大樹と枝の回廊を育てる。",
+      "focus": {
+        "x": 50,
+        "y": 20
+      },
+      "clock": "nature-and-town",
+      "image": "../design/2026-10-10-island-final-3d/viewer-grove-phone.png",
+      "inputs": [
+        {
+          "role": "tree",
+          "kind": "landmark:sapling",
+          "count": 4,
+          "state": "mature; at least 2 big"
+        },
+        {
+          "role": "home",
+          "kind": "plot:home",
+          "count": 1,
+          "state": "stage>=2; style=tree"
+        },
+        {
+          "role": "seat",
+          "kind": "landmark:bench",
+          "count": 1,
+          "state": "placed"
+        }
+      ],
+      "space": "木は同じ接続領域。木の家の入口を残し、庭と回廊への連続した経路を確保する。普通の家は外の庭へつなぐ。",
+      "variants": [
+        {
+          "id": "lane",
+          "label": "列にする",
+          "result": "幹をつなぐ枝の回廊と、道沿いの木の家",
+          "demo": [
+            {
+              "role": "tree",
+              "x": 1,
+              "z": 1
+            },
+            {
+              "role": "tree",
+              "x": 2,
+              "z": 1
+            },
+            {
+              "role": "tree",
+              "x": 3,
+              "z": 1
+            },
+            {
+              "role": "tree",
+              "x": 4,
+              "z": 1
+            },
+            {
+              "role": "home",
+              "x": 3,
+              "z": 3
+            },
+            {
+              "role": "seat",
+              "x": 4,
+              "z": 3
+            }
+          ],
+          "terrain": "any"
+        },
+        {
+          "id": "cluster",
+          "label": "塊にする",
+          "result": "根と幹が包む住まい、周囲を回れる大きな葉の屋根",
+          "demo": [
+            {
+              "role": "tree",
+              "x": 1,
+              "z": 1
+            },
+            {
+              "role": "tree",
+              "x": 2,
+              "z": 1
+            },
+            {
+              "role": "tree",
+              "x": 1,
+              "z": 2
+            },
+            {
+              "role": "tree",
+              "x": 2,
+              "z": 2
+            },
+            {
+              "role": "home",
+              "x": 4,
+              "z": 2
+            },
+            {
+              "role": "seat",
+              "x": 3,
+              "z": 3
+            }
+          ],
+          "terrain": "any"
+        },
+        {
+          "id": "court",
+          "label": "中庭を空ける",
+          "result": "入口のある空洞と、庭を囲む枝の回廊",
+          "demo": [
+            {
+              "role": "tree",
+              "x": 1,
+              "z": 1
+            },
+            {
+              "role": "tree",
+              "x": 3,
+              "z": 1
+            },
+            {
+              "role": "tree",
+              "x": 1,
+              "z": 3
+            },
+            {
+              "role": "tree",
+              "x": 3,
+              "z": 3
+            },
+            {
+              "role": "home",
+              "x": 5,
+              "z": 3
+            },
+            {
+              "role": "seat",
+              "x": 2,
+              "z": 4
+            }
+          ],
+          "terrain": "any"
+        }
+      ],
+      "stages": [
+        {
+          "id": "seeded",
+          "label": "しこむ",
+          "condition": "木・木の家・席の位置を選ぶ",
+          "changes": "元の家を保ち、根が包む部分と入口、上へ伸びる葉の形を予告する。",
+          "play": "苗と家を置き直して、入り口の向きを試せる。"
+        },
+        {
+          "id": "connected",
+          "label": "つながる",
+          "condition": "木の接続と家への到達が成立",
+          "changes": "根・幹・庭の足元が寄る。家と木のIDは個別に残る。",
+          "play": "地上の庭と席を使える。"
+        },
+        {
+          "id": "grown",
+          "label": "育つ",
+          "condition": "4本成熟・2本大木・木の家がこや以上",
+          "changes": "青紫/翡翠の葉、琥珀の幹、開いた空洞、支えのある回廊が育つ。",
+          "play": "幹の入口から入り、枝の回廊へ歩ける。"
+        },
+        {
+          "id": "lived",
+          "label": "暮らす",
+          "condition": "実在する住人が到達できる場所を使用",
+          "changes": "実住人が回廊の席や入口を使う。架空の入居は足さない。",
+          "play": "ぽこもこを回廊の席へ運ぶ、元の家に入る。"
+        }
+      ],
+      "capability": [
+        "derived-place",
+        "shared-shade",
+        "safe-access",
+        "hollow-and-gallery"
+      ],
+      "next": [
+        "P03",
+        "P06"
+      ]
+    },
+    {
+      "id": "P03",
+      "name": "青い泉の庭",
+      "family": "spring",
+      "scale": "水をつなぐ目標",
+      "intent": "自分の水ばちとみずみちから、一続きの泉と水辺の庭を育てる。",
+      "focus": {
+        "x": 65,
+        "y": 34
+      },
+      "clock": "existing-water-and-nature",
+      "image": "../design/2026-10-10-island-final-3d/viewer-village-tablet.png",
+      "inputs": [
+        {
+          "role": "water",
+          "kind": "landmark:water-bowl",
+          "count": 3,
+          "state": "placed"
+        },
+        {
+          "role": "channel",
+          "kind": "landmark:water-channel",
+          "count": 2,
+          "state": "supplied"
+        },
+        {
+          "role": "flower",
+          "kind": "landmark:flower",
+          "count": 1,
+          "state": "bloomed"
+        },
+        {
+          "role": "seat",
+          "kind": "landmark:bench",
+          "count": 1,
+          "state": "placed"
+        }
+      ],
+      "space": "3つの水ばちを、実際に水が通る同じ領域へつなぐ。花へ水が届き、席と入口へ歩ける。段泉は共有の床高で下降する流れを作れる場所に限る。",
+      "variants": [
+        {
+          "id": "tiered",
+          "label": "段につなぐ",
+          "result": "鉱石の水源から流れる段泉と、橋で渡れる庭",
+          "demo": [
+            {
+              "role": "water",
+              "x": 1,
+              "z": 1
+            },
+            {
+              "role": "channel",
+              "x": 2,
+              "z": 1
+            },
+            {
+              "role": "water",
+              "x": 3,
+              "z": 1
+            },
+            {
+              "role": "channel",
+              "x": 4,
+              "z": 1
+            },
+            {
+              "role": "water",
+              "x": 5,
+              "z": 1
+            },
+            {
+              "role": "flower",
+              "x": 3,
+              "z": 3
+            },
+            {
+              "role": "seat",
+              "x": 5,
+              "z": 3
+            }
+          ],
+          "terrain": "slope"
+        },
+        {
+          "id": "curve",
+          "label": "曲げる",
+          "result": "青い池が曲がった岸でつながる、平地の水庭",
+          "demo": [
+            {
+              "role": "water",
+              "x": 1,
+              "z": 1
+            },
+            {
+              "role": "channel",
+              "x": 2,
+              "z": 1
+            },
+            {
+              "role": "water",
+              "x": 3,
+              "z": 1
+            },
+            {
+              "role": "channel",
+              "x": 3,
+              "z": 2
+            },
+            {
+              "role": "water",
+              "x": 3,
+              "z": 3
+            },
+            {
+              "role": "flower",
+              "x": 1,
+              "z": 3
+            },
+            {
+              "role": "seat",
+              "x": 5,
+              "z": 3
+            }
+          ],
+          "terrain": "any"
+        },
+        {
+          "id": "shore",
+          "label": "岸へ開く",
+          "result": "水の出口と海辺が見える、入り江の水庭",
+          "demo": [
+            {
+              "role": "water",
+              "x": 1,
+              "z": 2
+            },
+            {
+              "role": "channel",
+              "x": 2,
+              "z": 2
+            },
+            {
+              "role": "water",
+              "x": 3,
+              "z": 2
+            },
+            {
+              "role": "channel",
+              "x": 4,
+              "z": 2
+            },
+            {
+              "role": "water",
+              "x": 5,
+              "z": 2
+            },
+            {
+              "role": "flower",
+              "x": 3,
+              "z": 4
+            },
+            {
+              "role": "seat",
+              "x": 5,
+              "z": 4
+            }
+          ],
+          "terrain": "shore"
+        }
+      ],
+      "stages": [
+        {
+          "id": "seeded",
+          "label": "しこむ",
+          "condition": "水ばち・みずみち・花・席を置く",
+          "changes": "水の入口と出口、泉になる範囲を予告する。",
+          "play": "水ばちのいつもの返事を楽しめる。"
+        },
+        {
+          "id": "connected",
+          "label": "つながる",
+          "condition": "水源から実際に通水する",
+          "changes": "岸と水面が連続する。乾いたみずみちへ水は描かない。",
+          "play": "一か所の置き直しで、通る水を見比べられる。"
+        },
+        {
+          "id": "grown",
+          "label": "育つ",
+          "condition": "同じ通水領域・咲いた花・到達する席が成立",
+          "changes": "深い青の水、鉱石の水源、水辺の花が庭をつくる。段は床高のある場所に限る。",
+          "play": "橋や席から泉を眺める。水が好きな既存住人が岸を使える。"
+        },
+        {
+          "id": "lived",
+          "label": "暮らす",
+          "condition": "実通水と住人の水辺利用が継続",
+          "changes": "水の届く花と実住人の岸での行動が同じ場所に見える。",
+          "play": "水に触れて返事を楽しむ、席へ運ぶ。"
+        }
+      ],
+      "capability": [
+        "derived-place",
+        "shared-water",
+        "safe-access",
+        "terrain-height-for-tiered"
+      ],
+      "next": [
+        "P04",
+        "P05"
+      ]
+    },
+    {
+      "id": "P04",
+      "name": "入り江の集会所",
+      "family": "community",
+      "scale": "暮らしをまとめる目標",
+      "intent": "水辺の家とあそびばから、色を透かす殻に包まれた共同の庭を育てる。",
+      "focus": {
+        "x": 61,
+        "y": 77
+      },
+      "clock": "town",
+      "image": "../design/2026-10-10-island-final-3d/viewer-harbor-tablet.png",
+      "inputs": [
+        {
+          "role": "home",
+          "kind": "plot:home",
+          "count": 2,
+          "state": "stage>=2"
+        },
+        {
+          "role": "play",
+          "kind": "plot:play",
+          "count": 1,
+          "state": "built"
+        },
+        {
+          "role": "water",
+          "kind": "landmark:water-bowl",
+          "count": 1,
+          "state": "placed; water reaches play"
+        }
+      ],
+      "space": "取得済みの海岸付近。2軒とあそびばを囲む2マス以上の歩ける庭を残す。両玄関、あそびば、島からの入口を守る。",
+      "variants": [
+        {
+          "id": "bay",
+          "label": "向かい合う",
+          "result": "家の間に、薄い貝殻の屋根が育つ庭",
+          "demo": [
+            {
+              "role": "home",
+              "x": 1,
+              "z": 2
+            },
+            {
+              "role": "home",
+              "x": 5,
+              "z": 2
+            },
+            {
+              "role": "water",
+              "x": 3,
+              "z": 2
+            },
+            {
+              "role": "play",
+              "x": 3,
+              "z": 4
+            }
+          ],
+          "terrain": "shore"
+        },
+        {
+          "id": "lane",
+          "label": "岸に並べる",
+          "result": "家々を結ぶ、海の見える長い共同屋根",
+          "demo": [
+            {
+              "role": "home",
+              "x": 1,
+              "z": 2
+            },
+            {
+              "role": "home",
+              "x": 3,
+              "z": 2
+            },
+            {
+              "role": "water",
+              "x": 5,
+              "z": 2
+            },
+            {
+              "role": "play",
+              "x": 4,
+              "z": 3
+            }
+          ],
+          "terrain": "shore"
+        },
+        {
+          "id": "court",
+          "label": "庭を囲む",
+          "result": "片側を開けた殻と、玄関が見える中庭",
+          "demo": [
+            {
+              "role": "home",
+              "x": 1,
+              "z": 1
+            },
+            {
+              "role": "home",
+              "x": 4,
+              "z": 1
+            },
+            {
+              "role": "water",
+              "x": 5,
+              "z": 2
+            },
+            {
+              "role": "play",
+              "x": 3,
+              "z": 3
+            }
+          ],
+          "terrain": "shore"
+        }
+      ],
+      "stages": [
+        {
+          "id": "seeded",
+          "label": "しこむ",
+          "condition": "家・水・あそびばの位置を選ぶ",
+          "changes": "個々の家を保ち、集まれる床と屋根の広がりを予告する。",
+          "play": "いつもの家とあそびばを使える。"
+        },
+        {
+          "id": "connected",
+          "label": "つながる",
+          "condition": "同じ到達できる庭に玄関とあそびばが向く",
+          "changes": "共通の足元と曲がった梁がつながる。",
+          "play": "入口を空けた別の並べ方を試せる。"
+        },
+        {
+          "id": "grown",
+          "label": "育つ",
+          "condition": "2軒こや以上・完成あそびば・水辺が成立",
+          "changes": "青/紫を透かす薄い殻の屋根が共同の庭を包む。",
+          "play": "屋根の下へ運んだぽこもこが、そのあそびばを使う。"
+        },
+        {
+          "id": "lived",
+          "label": "暮らす",
+          "condition": "実際の住人と遊び場の利用",
+          "changes": "実住人が庭へ歩いて来る。家の入居枠やごはんを架空に増やさない。",
+          "play": "同じあそびばの遊びを、共同屋根の下で繰り返す。"
+        }
+      ],
+      "capability": [
+        "derived-place",
+        "shared-water",
+        "safe-access",
+        "shared-roof"
+      ],
+      "next": [
+        "P05",
+        "P06"
+      ]
+    },
+    {
+      "id": "P05",
+      "name": "花の屋根の庭",
+      "family": "flowers",
+      "scale": "色と形を試す目標",
+      "intent": "植えた花と席から、大きな花弁が包む休憩場所を育てる。",
+      "focus": {
+        "x": 52,
+        "y": 57
+      },
+      "clock": "nature",
+      "image": "../design/2026-10-10-island-final-3d/viewer-garden-tablet.png",
+      "inputs": [
+        {
+          "role": "flower",
+          "kind": "landmark:flower",
+          "count": 4,
+          "state": "bloomed"
+        },
+        {
+          "role": "seat",
+          "kind": "landmark:bench",
+          "count": 1,
+          "state": "placed"
+        }
+      ],
+      "space": "花は同じ接続領域。席と入口が到達でき、空き地を飲み込まない。基本の花色で完成できる。",
+      "variants": [
+        {
+          "id": "arch",
+          "label": "列にする",
+          "result": "花弁がつながる、色のアーチ",
+          "demo": [
+            {
+              "role": "flower",
+              "x": 1,
+              "z": 1
+            },
+            {
+              "role": "flower",
+              "x": 2,
+              "z": 1
+            },
+            {
+              "role": "flower",
+              "x": 3,
+              "z": 1
+            },
+            {
+              "role": "flower",
+              "x": 4,
+              "z": 1
+            },
+            {
+              "role": "seat",
+              "x": 3,
+              "z": 3
+            }
+          ],
+          "terrain": "any"
+        },
+        {
+          "id": "canopy",
+          "label": "塊にする",
+          "result": "複数の茎が支える、大きな花の屋根",
+          "demo": [
+            {
+              "role": "flower",
+              "x": 1,
+              "z": 1
+            },
+            {
+              "role": "flower",
+              "x": 2,
+              "z": 1
+            },
+            {
+              "role": "flower",
+              "x": 1,
+              "z": 2
+            },
+            {
+              "role": "flower",
+              "x": 2,
+              "z": 2
+            },
+            {
+              "role": "seat",
+              "x": 3,
+              "z": 3
+            }
+          ],
+          "terrain": "any"
+        },
+        {
+          "id": "court",
+          "label": "中庭を空ける",
+          "result": "花に囲まれて座れる、入口のある庭",
+          "demo": [
+            {
+              "role": "flower",
+              "x": 1,
+              "z": 1
+            },
+            {
+              "role": "flower",
+              "x": 3,
+              "z": 1
+            },
+            {
+              "role": "flower",
+              "x": 1,
+              "z": 3
+            },
+            {
+              "role": "flower",
+              "x": 3,
+              "z": 3
+            },
+            {
+              "role": "seat",
+              "x": 2,
+              "z": 4
+            }
+          ],
+          "terrain": "any"
+        }
+      ],
+      "stages": [
+        {
+          "id": "seeded",
+          "label": "しこむ",
+          "condition": "花と席の位置、好きな色を選ぶ",
+          "changes": "色のまとまりと花弁が寄る向きを予告する。",
+          "play": "同じ花を触り、色や位置を選べる。"
+        },
+        {
+          "id": "connected",
+          "label": "つながる",
+          "condition": "花と庭のつながりが成立",
+          "changes": "葉と足元が連なり、中央の余白が庭になる。",
+          "play": "列・塊・中庭へ無料で並べ直せる。"
+        },
+        {
+          "id": "grown",
+          "label": "育つ",
+          "condition": "4株が既存の開花段階へ到達",
+          "changes": "色の異なる花弁が支え合い、席の上へ屋根をつくる。",
+          "play": "花の屋根の下にぽこもこを座らせられる。"
+        },
+        {
+          "id": "lived",
+          "label": "暮らす",
+          "condition": "咲いた花と実際の席の利用",
+          "changes": "実住人が花と休憩場所を使う。",
+          "play": "花を触る、席へ運ぶ、自然に混ざった色を楽しむ。"
+        }
+      ],
+      "capability": [
+        "derived-place",
+        "safe-access",
+        "joined-petals"
+      ],
+      "next": [
+        "P03",
+        "P04",
+        "P06"
+      ]
+    },
+    {
+      "id": "P06",
+      "name": "めぐれる島",
+      "family": "island",
+      "scale": "島全体の目標",
+      "intent": "自分が選んだ複数の場所をつなぎ、景色と暮らしが変わる島へ育てる。",
+      "focus": {
+        "x": 50,
+        "y": 50
+      },
+      "clock": "existing-clocks",
+      "image": "../design/2026-10-10-island-final-3d/viewer-day-desktop.png",
+      "inputs": [],
+      "space": "育った場所が3つの異なる系列に属し、互いの入口へ歩ける。実際の家に住む仲間とぽこもこの暮らしが続く。",
+      "variants": [],
+      "stages": [
+        {
+          "id": "seeded",
+          "label": "選ぶ",
+          "condition": "好きな場所を選ぶ",
+          "changes": "全島3Dを一つの到達例として、育てたい場所を選べる。",
+          "play": "目標を選ばずに自由に遊んでもよい。"
+        },
+        {
+          "id": "connected",
+          "label": "つなぐ",
+          "condition": "複数の場所の入口へ歩ける",
+          "changes": "道・岸・木陰の継ぎ目が連続する。",
+          "play": "どこを隣へ置くか、土地をどちらへ広げるか試せる。"
+        },
+        {
+          "id": "grown",
+          "label": "育つ",
+          "condition": "3系列以上の場所が育つ",
+          "changes": "森・水辺・庭・集落が同じ床の色替えにならず、一つの島の景色になる。",
+          "play": "景色が変わる経路をぽこもこが歩ける。"
+        },
+        {
+          "id": "lived",
+          "label": "暮らす",
+          "condition": "実在する仲間が1人以上住み、使える場所がつながる",
+          "changes": "人口、家、食事、休憩が実状態に一致する。",
+          "play": "見せる・名前をつける・写真を残す。新しい地区づくりは続けられる。"
+        }
+      ],
+      "capability": [
+        "derived-place",
+        "safe-access",
+        "place-relations",
+        "repeatable-districts"
+      ],
+      "next": []
+    }
+  ],
+  "combinations": [
+    {
+      "id": "C01",
+      "families": [
+        "grove",
+        "spring"
+      ],
+      "name": "根と泉の庭",
+      "condition": "根の庭と泉の入口が近く、同じ通水/到達が成立",
+      "visible": "根の足元に青い流れと岸が連続し、木陰から泉が見える。",
+      "play": "実際に水が届く植物と、水辺/木陰の席を使う。",
+      "noStack": "木陰と水は共有計算を1回だけ使う。"
+    },
+    {
+      "id": "C02",
+      "families": [
+        "spring",
+        "flowers"
+      ],
+      "name": "水辺の花の庭",
+      "condition": "泉から花の領域へ水が届き、席へ歩ける",
+      "visible": "水の縁に花弁と低い岸が続く。",
+      "play": "元の湿りと開花の規則で花が育ち、水辺の席を使える。",
+      "noStack": "成長倍率、交配抽選、珍しい色の保証を追加しない。"
+    },
+    {
+      "id": "C03",
+      "families": [
+        "grove",
+        "community"
+      ],
+      "name": "森の集落",
+      "condition": "木の庭と家々が同じ到達領域にあり、玄関を保つ",
+      "visible": "枝の回廊と共同の足元が家々へ続く。",
+      "play": "実住人が家から木陰へ歩き、休憩する。",
+      "noStack": "入居枠、ごはん、げんきを二重に足さない。"
+    },
+    {
+      "id": "C04",
+      "families": [
+        "flowers",
+        "community"
+      ],
+      "name": "花の集会所",
+      "condition": "家/あそびばの庭と花の屋根が近く、入口へ歩ける",
+      "visible": "共同の庭へ花弁と屋根の縁が続く。",
+      "play": "既存の遊びを花と共同屋根に包まれた場所で繰り返せる。",
+      "noStack": "祭りの回数や学習報酬を増やさない。"
+    }
+  ],
+  "delivery": [
+    {
+      "id": "D1",
+      "name": "一つの木陰が育つ",
+      "goal": "P01",
+      "done": "同じ2本で離す/つなぐ/分けるを実装し、成熟と所有を保って実際の席を使う。"
+    },
+    {
+      "id": "D2",
+      "name": "大樹と花で置き方が変わる",
+      "goal": "P02 / P05",
+      "done": "同じ材料で列/塊/中庭の輪郭と入口が変わり、空洞/回廊/花の屋根を実際に使う。"
+    },
+    {
+      "id": "D3",
+      "name": "水と入り江がつながる",
+      "goal": "P03 / P04",
+      "done": "通水・床高・経路・接地を同じ計算へ揃え、段泉と殻の屋根を使える状態にする。"
+    },
+    {
+      "id": "D4",
+      "name": "島全体へ育つ",
+      "goal": "P06 / C01–C04",
+      "done": "自然な取得から複数の場所が育ち、元の庭を保ちながら地区を広げ、再読込/更新後も続く。"
+    }
+  ]
+}

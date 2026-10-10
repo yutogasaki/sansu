@@ -72,7 +72,7 @@ describe('growing island persistence', () => {
         expect(await db.islands.get('migrate')).toEqual(original);
         put.mockRestore();
         const next = await commandGrowingIsland('migrate', intent, T0 + 24 * HOUR, db);
-        expect(next.record).toMatchObject({ version: 3, revision: 8, createdAt: T0 });
+        expect(next.record).toMatchObject({ version: 4, revision: 8, createdAt: T0 });
         expect(next.record.state).toEqual({ ...state, islandName: 'みなと', applied: ['rename'], surprise: { day: 1 } });
         expect(await db.moments.toArray()).toEqual(images);
         expect(await db.gifts.toArray()).toEqual(gifts);

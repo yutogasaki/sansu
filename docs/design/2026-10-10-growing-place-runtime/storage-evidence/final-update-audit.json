@@ -1,0 +1,76 @@
+{
+  "pass": true,
+  "at": "2026-10-10T07:21:10.120Z",
+  "reportFile": "/private/tmp/sansu-place-update-20261010/update-qa-v4-local-origin/report.json",
+  "scenarios": [
+    {
+      "width": 390,
+      "interrupted": false,
+      "pass": true,
+      "migration": {
+        "from": 3,
+        "to": 4
+      },
+      "earnedCount": 4,
+      "reloadCount": 2
+    },
+    {
+      "width": 390,
+      "interrupted": true,
+      "pass": true,
+      "migration": {
+        "from": 3,
+        "to": 4
+      },
+      "earnedCount": 4,
+      "reloadCount": 2
+    },
+    {
+      "width": 768,
+      "interrupted": false,
+      "pass": true,
+      "migration": {
+        "from": 3,
+        "to": 4
+      },
+      "earnedCount": 4,
+      "reloadCount": 2
+    },
+    {
+      "width": 768,
+      "interrupted": true,
+      "pass": true,
+      "migration": {
+        "from": 3,
+        "to": 4
+      },
+      "earnedCount": 4,
+      "reloadCount": 2
+    }
+  ],
+  "captures": 14,
+  "browser": "145.0.7632.6",
+  "cleanup": {
+    "browserClosed": true,
+    "serverClosed": true
+  },
+  "sourceHash": "acc7dc9e4eccec27e5fa30b36346e84cf52bc5ecbc8725a2e3afb05d928ee5c8",
+  "candidateSourcesAndAllDistSHAPass": true,
+  "currentWorkingSourceHash": "f92c13e3d2912e0b10ca68fd21e9062ea5859287fea1ae331c394294cb4f5099",
+  "sourceDelta": [
+    {
+      "file": "src/components/island/growing/seedHitPriority.test.ts",
+      "before": "1ffd282ac587fc7fa676c88f4648a0aa96c1c926e70a8a039a55a0bcc0e4e564",
+      "after": "c4812fc0a805ff32b383701dbcaf541e746401cb8cfb748f0718ced70d81c942",
+      "testOnly": true
+    }
+  ],
+  "runtimeInputsStillMatch": true,
+  "qaInputs": {
+    "tools/e2e-growing-update.mjs": "a1810bc03471f37307c060612abce77ea045a1932d9892a51ada3c49d636cad7",
+    "tools/growing-production-helpers.mjs": "695c72cb211b1db0c96d4c27779aa05001b493432670c23457f6825195b15db4",
+    "tools/island-e2e-helpers.mjs": "b307f0506e17fa58af4a1dac0fcecca34e8d9bc3ded342f5227cd63d97d44baf",
+    "tools/verify-growing.mjs": "17b455ac3910c926f8724ad9b7be9ac4d083545f376cd0b5d466297d685d7c66"
+  },
+  "reportHash": "8fffebfea356f5702dedff4ddb045963221006c9e9fe7087692b24c76a54de7c"
+}

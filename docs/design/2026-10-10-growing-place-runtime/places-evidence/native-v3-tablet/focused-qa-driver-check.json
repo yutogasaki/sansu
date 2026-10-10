@@ -1,0 +1,93 @@
+{
+  "scope": "MOCK driver checks only; no actual browser or app runtime claimed",
+  "pass": true,
+  "wholeExactRevision": [
+    {
+      "attempt": 1,
+      "timeoutMs": 1,
+      "elapsedMs": 2,
+      "finalNativePoll": true,
+      "matched": false,
+      "actual": {
+        "milestones": {
+          "P06": {
+            "revision": "wrong"
+          }
+        },
+        "uses": {},
+        "useHistory": []
+      }
+    },
+    {
+      "attempt": 2,
+      "timeoutMs": 1,
+      "elapsedMs": 0,
+      "finalNativePoll": true,
+      "matched": true
+    }
+  ],
+  "absentEvidence": [
+    {
+      "attempt": 1,
+      "timeoutMs": 1,
+      "elapsedMs": 3,
+      "finalNativePoll": true,
+      "matched": false,
+      "actual": {
+        "milestones": {
+          "P06": {
+            "revision": "current"
+          }
+        },
+        "uses": {},
+        "useHistory": []
+      }
+    },
+    {
+      "attempt": 2,
+      "timeoutMs": 1,
+      "elapsedMs": 2,
+      "finalNativePoll": true,
+      "matched": false,
+      "actual": {
+        "milestones": {
+          "P06": {
+            "revision": "current"
+          }
+        },
+        "uses": {},
+        "useHistory": []
+      }
+    },
+    {
+      "attempt": 3,
+      "timeoutMs": 1,
+      "elapsedMs": 3,
+      "finalNativePoll": true,
+      "matched": false,
+      "actual": {
+        "milestones": {
+          "P06": {
+            "revision": "current"
+          }
+        },
+        "uses": {},
+        "useHistory": []
+      }
+    }
+  ],
+  "selectedRuns": {
+    "whole": [
+      {
+        "id": "qa-place-whole-island-v1",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        }
+      }
+    ],
+    "tablet": 20,
+    "default": 40
+  },
+  "invalidSelectionsRejected": true
+}

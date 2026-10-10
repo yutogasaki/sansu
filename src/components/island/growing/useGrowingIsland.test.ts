@@ -26,6 +26,9 @@ vi.mock('../../../domain/growingIsland/repository', () => ({
     GuidanceReceiptConflict: class extends Error {},
 }));
 import { useGrowingIsland } from './useGrowingIsland';
+import { GuidanceReceiptConflict } from '../../../domain/growingIsland/repository';
+import { newIsland } from '../../../domain/growingIsland/island';
+import { newPlaceProgress } from '../../../domain/growingIsland/placeGoals';
 function deferred<T>() { let resolve!: (value: T) => void, reject!: (error: Error) => void; const promise = new Promise<T>((yes, no) => { resolve = yes; reject = no; }); return { promise, resolve, reject }; }
 const record = { profileId: 'kid', revision: 0 } as GrowingRecord;
 const RenderGrowing = (active = true) => { hooks.begin(); const api = useGrowingIsland('kid', active); hooks.commit(); return api; };
@@ -71,4 +74,63 @@ it('restores normal protection when a saved island appears and holds explicit co
     expect(mocks.saving).toBe(1);
     command.resolve({ record, town: [] }); await saving;
     expect(mocks.saving).toBe(0);
+});
+
+function placeRecord(revision = 7): GrowingRecord {
+    const state = newIsland('kid', 0); state.placeProgress = newPlaceProgress();
+    return { profileId: 'kid', version: 4, revision, createdAt: 0, updatedAt: 0, state };
+}
+
+it('retries a rendered place receipt against the latest saved owner revision', async () => {
+    const before = placeRecord(), after = placeRecord(8);
+    mocks.sync.mockResolvedValue({ record: before, town: [], nature: [], learned: 0 });
+    mocks.read.mockResolvedValue(before);
+    const api = RenderGrowing(); await api.sync();
+    mocks.read.mockReset().mockResolvedValueOnce(before).mockResolvedValueOnce(after);
+    mocks.command.mockRejectedValueOnce(new GuidanceReceiptConflict()).mockResolvedValue({ record: placeRecord(9), town: [] });
+    const receipt = { type: 'place-used' as const, ruleId: 'P01' as const, placeId: 'P01:tree', revision: 'grown-shape', actorId: 'pokomoko', targetId: 'seat' };
+    expect(await api.acknowledgePlace(receipt)).toBe(true);
+    expect(mocks.command).toHaveBeenCalledTimes(2);
+    const first = mocks.command.mock.calls[0][1], second = mocks.command.mock.calls[1][1];
+    expect(first.id).toBe(second.id);
+    expect(first.command).toEqual({ ...receipt, profileId: 'kid', expectedRevision: 7 });
+    expect(second.command).toEqual({ ...receipt, profileId: 'kid', expectedRevision: 8 });
+    expect(mocks.saving).toBe(0);
+});
+
+it('serializes simultaneous shown receipts and avoids saving the same already-shown shape again', async () => {
+    let current = placeRecord();
+    mocks.sync.mockResolvedValue({ record: current, town: [], nature: [], learned: 0 });
+    mocks.read.mockImplementation(() => Promise.resolve(current));
+    const api = RenderGrowing(); await api.sync();
+    const firstSave = deferred<{ record: GrowingRecord; town: [] }>();
+    mocks.command.mockReturnValueOnce(firstSave.promise).mockImplementationOnce(() => {
+        current = { ...current, revision: 9 };
+        current.state.placeProgress!.shown.P05 = 'flowers';
+        return Promise.resolve({ record: current, town: [] });
+    });
+    const first = api.acknowledgePlace({ type: 'place-shown', ruleId: 'P01', revision: 'trees' });
+    const second = api.acknowledgePlace({ type: 'place-shown', ruleId: 'P05', revision: 'flowers' });
+    await vi.waitFor(() => expect(mocks.command).toHaveBeenCalledTimes(1));
+    expect(mocks.saving).toBe(1);
+    current = { ...current, revision: 8 }; current.state.placeProgress!.shown.P01 = 'trees';
+    firstSave.resolve({ record: current, town: [] });
+    expect(await first).toBe(true); expect(await second).toBe(true);
+    expect(mocks.command.mock.calls[1][1].command.expectedRevision).toBe(8);
+    expect(await api.acknowledgePlace({ type: 'place-shown', ruleId: 'P05', revision: 'flowers' })).toBe(true);
+    expect(mocks.command).toHaveBeenCalledTimes(2); expect(mocks.saving).toBe(0);
+});
+
+it('drops queued place receipts when the island leaves the foreground', async () => {
+    const current = placeRecord();
+    mocks.sync.mockResolvedValue({ record: current, town: [], nature: [], learned: 0 }); mocks.read.mockResolvedValue(current);
+    const api = RenderGrowing(); await api.sync();
+    const firstSave = deferred<{ record: GrowingRecord; town: [] }>(); mocks.command.mockReturnValue(firstSave.promise);
+    const first = api.acknowledgePlace({ type: 'place-shown', ruleId: 'P01', revision: 'trees' });
+    const queued = api.acknowledgePlace({ type: 'place-shown', ruleId: 'P05', revision: 'flowers' });
+    await vi.waitFor(() => expect(mocks.command).toHaveBeenCalledTimes(1));
+    RenderGrowing(false); firstSave.resolve({ record: current, town: [] });
+    expect(await first).toBe(true); expect(await queued).toBe(false); expect(mocks.command).toHaveBeenCalledTimes(1);
+    Object.assign(document, { visibilityState: 'hidden' });
+    expect(await api.acknowledgePlace({ type: 'place-shown', ruleId: 'P03', revision: 'water' })).toBe(false);
 });

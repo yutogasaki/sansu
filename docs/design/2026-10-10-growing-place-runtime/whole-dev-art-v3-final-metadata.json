@@ -1,0 +1,55 @@
+{
+  "app": {
+    "buildRevision": "development-local",
+    "buildVersion": "development-local:73e81e9f-2ed5-41ed-810d-e069c074ff03",
+    "configuredDeliveryId": "snap-root-v1",
+    "deliveryId": "snap-root-v1",
+    "islandFeatureEnabled": "true",
+    "natureTownFeatureEnabled": "false",
+    "uiStyleCandidate": "whole-app-atelier-v1",
+    "visualLineageId": "pokko-field-v1"
+  },
+  "capturedAt": "2026-10-10T09:12:34.655Z",
+  "island": {
+    "buildRevision": "development-local",
+    "buildVersion": "development-local:73e81e9f-2ed5-41ed-810d-e069c074ff03",
+    "busy": "false",
+    "complex": "false",
+    "deliveryId": "mystic-island-v1",
+    "discoveryCount": "0",
+    "gameId": "mystic-island-v1",
+    "homeLayout": "world-first-v2",
+    "islandFeatureEnabled": "true",
+    "islandRevision": "0",
+    "layoutVersion": "display-v1",
+    "learningCandidate": "pokomoko-pop-live-v8",
+    "lifeHome": "true",
+    "mode": "home",
+    "visualCandidateId": "mystic-island-shore-garden-v18"
+  },
+  "url": "http://127.0.0.1:5198/#/island",
+  "viewport": {
+    "height": 787,
+    "width": 640
+  },
+  "world": {
+    "artCandidate": "native-05-place-runtime-v3",
+    "bridgeSaved": "false",
+    "growingBounds": "{\"minX\":0,\"maxX\":14,\"depth\":11}",
+    "growingFeatureEnabled": "true",
+    "growingWorld": "true",
+    "placeActors": "[{\"id\":\"pokomoko\",\"x\":1,\"y\":2.213859573,\"z\":0.42101439208592595,\"screenX\":369.4834408389564,\"screenY\":288.68970684244664},{\"id\":\"qa-qa-place-whole-island-v1-friend-0\",\"x\":2,\"y\":1.066709143,\"z\":1,\"screenX\":388.9254598934692,\"screenY\":324.07734092430303},{\"id\":\"qa-qa-place-whole-island-v1-friend-1\",\"x\":5,\"y\":0.7487469374420334,\"z\":6.846935000109674,\"screenX\":401.36297093769076,\"screenY\":430.7921874098601},{\"id\":\"qa-qa-place-whole-island-v1-friend-2\",\"x\":-5,\"y\":0.08658763844203327,\"z\":2.3145899996161514,\"screenX\":203.2776765527461,\"screenY\":327.9660193517776},{\"id\":\"qa-qa-place-whole-island-v1-friend-3\",\"x\":2.114655000054835,\"y\":0.9347177474420334,\"z\":3,\"screenX\":370.0120770965166,\"screenY\":358.6060960045924},{\"id\":\"qa-qa-place-whole-island-v1-friend-4\",\"x\":7,\"y\":1.5705973354420333,\"z\":2.7718299997806684,\"screenX\":490.22827469465057,\"screenY\":367.3812953144538},{\"id\":\"qa-qa-place-whole-island-v1-friend-5\",\"x\":5,\"y\":0.700425273,\"z\":7,\"screenX\":400.86211388237314,\"screenY\":434.1633370727883},{\"id\":\"qa-qa-place-whole-island-v1-friend-6\",\"x\":1.4603039437377738,\"y\":2.307232030056512,\"z\":1,\"screenX\":374.91385629489673,\"screenY\":297.91131919049707},{\"id\":\"qa-qa-place-whole-island-v1-friend-7\",\"x\":5,\"y\":0.700425273,\"z\":7,\"screenX\":401.0956950770212,\"screenY\":432.1760888741991},{\"id\":\"visitor\",\"x\":6,\"y\":0.10928006037873923,\"z\":9.819999999999999,\"screenX\":396.72379498755504,\"screenY\":484.83257367798893}]",
+    "placeCount": "5",
+    "placeRelations": "C01,C01",
+    "placeTargets": "[{\"placeId\":\"P01:l1\",\"ruleId\":\"P01\",\"targetId\":\"l6\",\"kind\":\"seat\",\"cell\":{\"x\":8,\"z\":5},\"floorY\":0.854128057,\"entranceScreenX\":343.57158336585326,\"entranceScreenY\":365.2393975328482,\"screenX\":343.57158336585326,\"screenY\":362.59980418428233},{\"placeId\":\"P02:p5\",\"ruleId\":\"P02\",\"targetId\":\"l6\",\"kind\":\"seat\",\"cell\":{\"x\":8,\"z\":5},\"floorY\":0.854128057,\"entranceScreenX\":343.57158336585326,\"entranceScreenY\":365.2393975328482,\"screenX\":343.57158336585326,\"screenY\":362.59980418428233},{\"placeId\":\"P02:p5\",\"ruleId\":\"P02\",\"targetId\":\"p5:gallery\",\"kind\":\"gallery\",\"cell\":{\"x\":9,\"y\":1.066709143,\"z\":3},\"floorY\":2.4267091429999996,\"entranceScreenX\":387.8477211631079,\"entranceScreenY\":336.2269062666516,\"screenX\":394.54448700494277,\"screenY\":308.25461386235855},{\"placeId\":\"P03:l10\",\"ruleId\":\"P03\",\"targetId\":\"l13\",\"kind\":\"seat\",\"cell\":{\"x\":11,\"z\":9},\"floorY\":0.780442861,\"entranceScreenX\":376.7786867137943,\"entranceScreenY\":436.70432933097516,\"screenX\":376.7786867137943,\"screenY\":434.0647359824093},{\"placeId\":\"P03:l10\",\"ruleId\":\"P03\",\"targetId\":\"l10:shore\",\"kind\":\"shore\",\"cell\":{\"x\":7,\"z\":6},\"floorY\":0.478829732,\"entranceScreenX\":309.2575765729809,\"entranceScreenY\":378.75051635012255,\"screenX\":309.2575765729809,\"screenY\":378.75051635012255},{\"placeId\":\"P04:p14\",\"ruleId\":\"P04\",\"targetId\":\"p17\",\"kind\":\"play\",\"cell\":{\"x\":3,\"z\":9},\"floorY\":0.25155101,\"entranceScreenX\":181.96368040587367,\"entranceScreenY\":401.9700799156933,\"screenX\":181.96368040587367,\"screenY\":401.9700799156933},{\"placeId\":\"P05:l18\",\"ruleId\":\"P05\",\"targetId\":\"l22\",\"kind\":\"seat\",\"cell\":{\"x\":13,\"z\":5},\"floorY\":1.541130098,\"entranceScreenX\":465.3309623083036,\"entranceScreenY\":377.45798352980955,\"screenX\":465.3309623083036,\"screenY\":374.8183901812437}]",
+    "placeTopology": "P01:lane:grown|P02:court:grown|P03:tiered:grown|P04:bay:grown|P05:court:grown",
+    "visualCandidate": "growing-island-v1"
+  },
+  "scope": "Working v3 final tree DEV observation; disposable QA profile; author art review pending; actual viewport 640x787; no fixed production acceptance.",
+  "fixturePayloadHash": "a76669e943bc8acfc546dd12c2997880e1e20ef711617bd1d533b2df9afd1814",
+  "schema": "sansu-place-art-runtime-v1",
+  "synthetic": true,
+  "owner": "qa-place-preview-9a184bfe-211b-49c3-b407-ce89d6248ddd",
+  "fixture": "qa-place-whole-island-v1",
+  "domainSourceHash": "4324c502a4f0224c9c6da8ed00d7d9c74f202a322b96b823bb14011c9fafc156"
+}

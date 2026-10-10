@@ -1,0 +1,1060 @@
+{
+  "schema": "sansu-native-v3-storage-evidence-index-v1",
+  "createdAt": "2026-10-10T09:26:43.996589+00:00",
+  "artCandidate": "native-05-place-runtime-v3",
+  "technicalGate": "PASS",
+  "visualGate": "GO_LOCAL_V3_DIRECTIONAL_ONLY",
+  "nativeExactParity": false,
+  "releaseApproval": false,
+  "comprehensionSafety": "NOT_EVALUATED",
+  "implementationComplete": false,
+  "scope": "scope.txt",
+  "scopeSha256": "da3a7b98e491c55deec60257b0a21d3f1bda87cbb44d4ff8e987abfef78055a1",
+  "sourceHash": "c3ea0771d8e6af017075014e5430474393f636c86b093a640c077ec749ed99d7",
+  "fixture": {
+    "sourceHash": "4324c502a4f0224c9c6da8ed00d7d9c74f202a322b96b823bb14011c9fafc156",
+    "payloadHash": "a76669e943bc8acfc546dd12c2997880e1e20ef711617bd1d533b2df9afd1814",
+    "cases": 20
+  },
+  "rawJsonCount": 5,
+  "actualCaptureCount": 14,
+  "originalFileCount": 19,
+  "originalBytes": 5139699,
+  "originalCollectionHash": "04352d4ced2c5decaf9fca397de722912861b2a98a334ef225dea30569b7e1e1",
+  "evidenceSourceRoot": "/private/tmp/sansu-native-v3-20261010",
+  "copiedEvidenceRoot": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-growing-place-runtime/storage-evidence/native-v3",
+  "fixedBuilds": [
+    {
+      "role": "NEW",
+      "manifest": "/private/tmp/sansu-native-v3-20261010/new-manifest.json",
+      "manifestSha256": "030df0ade620d4c30a873dac8a81b16cf82b687943ee283dbbfc836c0bfd9de0",
+      "sourceDir": "/private/tmp/sansu-native-v3-20261010/new-source",
+      "distDir": "/private/tmp/sansu-native-v3-20261010/new-source/dist",
+      "sourceHash": "c3ea0771d8e6af017075014e5430474393f636c86b093a640c077ec749ed99d7",
+      "inputCount": 2024,
+      "distFileCount": 168,
+      "version": {
+        "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+        "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+        "delivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "park": {
+          "enabled": false,
+          "renderer": "retired"
+        },
+        "island": {
+          "enabled": true,
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "life": {
+            "enabled": true,
+            "discovery": false,
+            "fantasy": true,
+            "candidate": "living-fantasy-garden-v2",
+            "saveVersion": 21
+          },
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "residentCandidate": "patchwork-otter-v1",
+          "artDirection": "moon-garden"
+        }
+      },
+      "entryBundle": "/assets/index-BOrNpyM_.js",
+      "artCandidate": "native-05-place-runtime-v3",
+      "fixture": {
+        "sourceHash": "4324c502a4f0224c9c6da8ed00d7d9c74f202a322b96b823bb14011c9fafc156",
+        "payloadHash": "a76669e943bc8acfc546dd12c2997880e1e20ef711617bd1d533b2df9afd1814",
+        "cases": 20
+      },
+      "copiedManifest": "new-manifest.json"
+    },
+    {
+      "role": "ROLLBACK",
+      "manifest": "/private/tmp/sansu-native-v3-20261010/rollback-manifest.json",
+      "manifestSha256": "c64c50867e7d50e111b9047a50a9833e2dfa8e279c0c79bd74142e3939040cae",
+      "sourceDir": "/private/tmp/sansu-native-v3-20261010/rollback-source",
+      "distDir": "/private/tmp/sansu-native-v3-20261010/rollback-source/dist",
+      "sourceHash": "c3ea0771d8e6af017075014e5430474393f636c86b093a640c077ec749ed99d7",
+      "inputCount": 2024,
+      "distFileCount": 168,
+      "version": {
+        "version": "native-05-place-runtime-v3-rollback-c3ea0771d8e6:1d8daf36-83b1-47e9-8e11-9230bf9e9540",
+        "revision": "native-05-place-runtime-v3-rollback-c3ea0771d8e6",
+        "delivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "park": {
+          "enabled": false,
+          "renderer": "retired"
+        },
+        "island": {
+          "enabled": true,
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "life": {
+            "enabled": true,
+            "discovery": false,
+            "fantasy": true,
+            "candidate": "living-fantasy-garden-v2",
+            "saveVersion": 21
+          },
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "residentCandidate": "patchwork-otter-v1",
+          "artDirection": "moon-garden"
+        }
+      },
+      "entryBundle": "/assets/index-BOu2eqt0.js",
+      "artCandidate": "native-05-place-runtime-v3",
+      "fixture": {
+        "sourceHash": "4324c502a4f0224c9c6da8ed00d7d9c74f202a322b96b823bb14011c9fafc156",
+        "payloadHash": "a76669e943bc8acfc546dd12c2997880e1e20ef711617bd1d533b2df9afd1814",
+        "cases": 20
+      },
+      "copiedManifest": "rollback-manifest.json"
+    }
+  ],
+  "priorBaselines": [
+    {
+      "cohort": "place-v1",
+      "role": "old",
+      "manifest": "/private/tmp/sansu-place-update-20261010/old-manifest.json",
+      "sha256": "68b73b1c65322f7975c448df8ad3937bc7a2ae0ce5a1a2c7597f2e46c8402596",
+      "sourceHash": "721f239c7e6abab2025f408e6438da0204757f69341cc053098679a467a7f563",
+      "version": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb"
+    },
+    {
+      "cohort": "place-v1",
+      "role": "new",
+      "manifest": "/private/tmp/sansu-place-update-20261010/new-manifest.json",
+      "sha256": "768f1c1022df593ceb1c5d5148dc3f15b5d3f825bac952d75dc13fdd1c4d2e8b",
+      "sourceHash": "acc7dc9e4eccec27e5fa30b36346e84cf52bc5ecbc8725a2e3afb05d928ee5c8",
+      "version": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd"
+    },
+    {
+      "cohort": "place-v1",
+      "role": "rollback",
+      "manifest": "/private/tmp/sansu-place-update-20261010/rollback-manifest.json",
+      "sha256": "76ee0bb8bb820c18a8dc88832efc98693c017fdd9472740d03f8fc77c346d4f2",
+      "sourceHash": "acc7dc9e4eccec27e5fa30b36346e84cf52bc5ecbc8725a2e3afb05d928ee5c8",
+      "version": "place-update-rollback-v4-acc7dc9e4ecc:e19b2a2c-3b3c-4a60-b3d3-21d105c6a720"
+    },
+    {
+      "cohort": "native-v2",
+      "role": "new",
+      "manifest": "/private/tmp/sansu-native-v2-20261010/new-manifest.json",
+      "sha256": "1522c5cd8ff4efddda219b3aabaf5f10486a3cc8b71c72d77a32af87e54d258c",
+      "sourceHash": "a2a08373ca6e266dec6dfdef923e24bb6456dc36f3480ae98ad17dc25b79652d",
+      "version": "native-05-place-runtime-v2-new-a2a08373ca6e:00da88da-08d3-456c-933b-71293c6ecb05"
+    },
+    {
+      "cohort": "native-v2",
+      "role": "rollback",
+      "manifest": "/private/tmp/sansu-native-v2-20261010/rollback-manifest.json",
+      "sha256": "6434f4966e44d7d2ea62f0b0ce136ad3ae5a9c70815f15e2b2ba2403ebdd7023",
+      "sourceHash": "a2a08373ca6e266dec6dfdef923e24bb6456dc36f3480ae98ad17dc25b79652d",
+      "version": "native-05-place-runtime-v2-rollback-a2a08373ca6e:2b402592-391e-4195-99d9-d7e7510003f5"
+    }
+  ],
+  "oldBaselinesUnchanged": true,
+  "v3CandidateSourcesUnchanged": true,
+  "v3DistBytesUnchanged": true,
+  "v2Comparison": {
+    "v2Manifest": "/private/tmp/sansu-native-v2-20261010/new-manifest.json",
+    "v2ManifestSha256": "1522c5cd8ff4efddda219b3aabaf5f10486a3cc8b71c72d77a32af87e54d258c",
+    "v2Version": {
+      "version": "native-05-place-runtime-v2-new-a2a08373ca6e:00da88da-08d3-456c-933b-71293c6ecb05",
+      "revision": "native-05-place-runtime-v2-new-a2a08373ca6e",
+      "delivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "park": {
+        "enabled": false,
+        "renderer": "retired"
+      },
+      "island": {
+        "enabled": true,
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "life": {
+          "enabled": true,
+          "discovery": false,
+          "fantasy": true,
+          "candidate": "living-fantasy-garden-v2",
+          "saveVersion": 21
+        },
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "residentCandidate": "patchwork-otter-v1",
+        "artDirection": "moon-garden"
+      }
+    },
+    "v2SourceHash": "a2a08373ca6e266dec6dfdef923e24bb6456dc36f3480ae98ad17dc25b79652d",
+    "v2InputCount": 2016,
+    "v3InputCount": 2024,
+    "sharedExactPathCount": 2004,
+    "changeCount": 20,
+    "changes": [
+      {
+        "file": "src/components/island/growing/GrowingWorld.tsx",
+        "kind": "changed",
+        "v2Sha256": "fc13d1d1c6de5b1348230f955a5acbbb7bc16b028c1b7c590e5cb4b678c66730",
+        "v3Sha256": "52f1d010bc93747b5a684935cc4b80cb505b54553788e441afcc15b9534bea05"
+      },
+      {
+        "file": "src/components/island/growing/growingCamera.test.ts",
+        "kind": "changed",
+        "v2Sha256": "70e23fb82e82626f5b507b22a22dbca3ef5282b830bbd6d01c3ce16013666fb4",
+        "v3Sha256": "acd97cc8186072d78dc903afdc22b084a43ca5ec486d7715e5f5d6be7694894e"
+      },
+      {
+        "file": "src/components/island/growing/growingCamera.ts",
+        "kind": "changed",
+        "v2Sha256": "c332d9dfc638459c289d247bf29f1381df4575139ecb57a3358b4aa3e3408cd2",
+        "v3Sha256": "97fd58cf1e8959d536f4df9e58a73726bac4ec3f690544771517e741c98a0c17"
+      },
+      {
+        "file": "src/components/island/growing/placeFlowerGeometry.test.ts",
+        "kind": "added",
+        "v2Sha256": null,
+        "v3Sha256": "096f26f3e3820dae7f34ad0a0cd85e6dec12ba622f0c6bb05c494d502e524cff"
+      },
+      {
+        "file": "src/components/island/growing/placeFlowerGeometry.ts",
+        "kind": "added",
+        "v2Sha256": null,
+        "v3Sha256": "3298852a46c8aa7fd6834af5680773660b46c5af2112adea29083284a7e66899"
+      },
+      {
+        "file": "src/components/island/growing/placeGallery.test.ts",
+        "kind": "changed",
+        "v2Sha256": "e1dfe84eebcd7f68abb645385949cb60b346371fd7e1bc24dd42624dfda5dcfc",
+        "v3Sha256": "b6b7cf7ee8e1f240856be10ecb43b9d7a0524000dbe7892cff39a7f70c771c58"
+      },
+      {
+        "file": "src/components/island/growing/placeGeometry.test.ts",
+        "kind": "changed",
+        "v2Sha256": "9acc2ee1a6d8a64f832063bbdf348466765094381822fb4dadb0fc381a0d497c",
+        "v3Sha256": "bf0076e0c835ab2a325051d37e4ed2d86c8c7cabd4d644aa1fbe0c7e83352228"
+      },
+      {
+        "file": "src/components/island/growing/placeGeometry.ts",
+        "kind": "changed",
+        "v2Sha256": "37283be67b665271c5bf6893ed9749520bb5c00f0e64cf9b52ca4da1ad93595f",
+        "v3Sha256": "100068e45fa37078b2f92eafe52ea7a4d2856b65ec4537eca0949afb02a57393"
+      },
+      {
+        "file": "src/components/island/growing/placePondGeometry.test.ts",
+        "kind": "added",
+        "v2Sha256": null,
+        "v3Sha256": "dee57a023683a809cfc180fde40301580044b7018385ac743820d28cc4b4adda"
+      },
+      {
+        "file": "src/components/island/growing/placePondGeometry.ts",
+        "kind": "added",
+        "v2Sha256": null,
+        "v3Sha256": "ca54ab37f7831bf0a6a4ba3b3d5c8c5271925ba21671e195506626db2554155c"
+      },
+      {
+        "file": "src/components/island/growing/placeRootRoomGeometry.test.ts",
+        "kind": "added",
+        "v2Sha256": null,
+        "v3Sha256": "f76a4f3a4ae39a7247286585f4e8d1d6a3ee9c9d1117bbe7b78bfb94be7edcea"
+      },
+      {
+        "file": "src/components/island/growing/placeRootRoomGeometry.ts",
+        "kind": "added",
+        "v2Sha256": null,
+        "v3Sha256": "65a814ba0faaaa53bbd353d03ea3b6f88d8999325c711f8cb0c1c3f01dd76ecf"
+      },
+      {
+        "file": "src/components/island/growing/placeShellGeometry.test.ts",
+        "kind": "added",
+        "v2Sha256": null,
+        "v3Sha256": "84839bc75c1ef816656ab9a0093963d16043db267910b47b1b2b502735b61b20"
+      },
+      {
+        "file": "src/components/island/growing/placeShellGeometry.ts",
+        "kind": "added",
+        "v2Sha256": null,
+        "v3Sha256": "aafe39b49c7572b42d946d0c03754061abeacf90cf9949581e74a56bbbb5ac78"
+      },
+      {
+        "file": "src/components/island/growing/placeSpringGeometry.ts",
+        "kind": "changed",
+        "v2Sha256": "92da4dfaedbf246637dfe3cd2cad582eb5d533532bdabf2557de81547c58f42e",
+        "v3Sha256": "2bdfabb3565c6b3fd43a856e256368f73b4251822f4827f8ea1a1023855c4b5b"
+      },
+      {
+        "file": "src/components/island/growing/sceneLayout.ts",
+        "kind": "changed",
+        "v2Sha256": "f782c0d87adf3e54f26d6eaa6241e7b27d9576a414778180ba6b1d34794bb8bf",
+        "v3Sha256": "008f0897d56b1fde3ad675739199ee3c9583181fa5e0167228a4e6c0e5a99efc"
+      },
+      {
+        "file": "src/components/island/growing/worldScene.ts",
+        "kind": "changed",
+        "v2Sha256": "dd0acb7728caac2f6e844ffcb5c124fbfc3654db5b1ff5e316270c40ac3862e5",
+        "v3Sha256": "3bbe41a631c2799a310d5fd4cc999534dca6cbbd80313062dde0722d7b1db5ff"
+      },
+      {
+        "file": "tools/e2e-growing-places.mjs",
+        "kind": "changed",
+        "v2Sha256": "b91823593257e1d82dc22048eaff680f1bbe6ac60cead6725da15a6bff45c943",
+        "v3Sha256": "0816b3eaeb60b412f941fb95ad4c92b45b105004dd89c90d6538ab8b6da860cd"
+      },
+      {
+        "file": "tools/e2e-growing-places.test.mjs",
+        "kind": "changed",
+        "v2Sha256": "b0a3482fdff15e0aec3cef76210b9dba8fe3985967fa1e5958573438e84c4f4f",
+        "v3Sha256": "1844a852b2cb733bfa997461fae4b0eb735904e99e0fd8670505c5fbacd33aad"
+      },
+      {
+        "file": "tools/growing-production-helpers.mjs",
+        "kind": "changed",
+        "v2Sha256": "695c72cb211b1db0c96d4c27779aa05001b493432670c23457f6825195b15db4",
+        "v3Sha256": "0d73addbd0696a2c197052889795295c681a015491002737be6bf4eb6eab8ffa"
+      }
+    ],
+    "subsets": {
+      "applicationDomain": {
+        "comparedPathCount": 519,
+        "unchanged": true,
+        "differences": [],
+        "sharedExactPathCount": 519
+      },
+      "growingIslandDomain": {
+        "comparedPathCount": 55,
+        "unchanged": true,
+        "differences": [],
+        "sharedExactPathCount": 55
+      },
+      "storageWriters": {
+        "comparedPathCount": 3,
+        "unchanged": true,
+        "differences": [],
+        "sharedExactPathCount": 3
+      },
+      "pwaRuntimeAndBuild": {
+        "comparedPathCount": 12,
+        "unchanged": true,
+        "differences": [],
+        "sharedExactPathCount": 12
+      },
+      "updateQa": {
+        "comparedPathCount": 4,
+        "unchanged": false,
+        "differences": [
+          {
+            "file": "tools/growing-production-helpers.mjs",
+            "kind": "changed",
+            "v2Sha256": "695c72cb211b1db0c96d4c27779aa05001b493432670c23457f6825195b15db4",
+            "v3Sha256": "0d73addbd0696a2c197052889795295c681a015491002737be6bf4eb6eab8ffa"
+          }
+        ],
+        "sharedExactPathCount": 3
+      }
+    },
+    "scope": "Actual byte comparisons; no domain or PWA invariance is assumed."
+  },
+  "originalWorkingInputs": {
+    "root": "/Users/yutogasaki/Projects/sansu",
+    "sourceHash": "c62003315e76c6b4c8b72cde20272bae34dc325bc09b6a86222a77f2a3f8c07c",
+    "inputCount": 2024,
+    "frozenInputCount": 2024,
+    "unchanged": false,
+    "differences": [
+      {
+        "file": "tools/e2e-growing-places.mjs",
+        "frozenSha256": "0816b3eaeb60b412f941fb95ad4c92b45b105004dd89c90d6538ab8b6da860cd",
+        "currentSha256": "950cbf4d74a80c29c48f6d10b79c235f88715dbad0ef4466ae6e5a2624d0fae5"
+      }
+    ],
+    "appRuntimeInputsUnchanged": true,
+    "authorizedQaOnlyDifference": true,
+    "qaOnlyDifferenceReason": "Root corrected one missed cellPoint -> productionCellPoint call in its separate working full-places QA harness. Frozen app/source/dist/update QA remain unchanged."
+  },
+  "legacy": {
+    "file": "/private/tmp/sansu-native-v3-20261010/legacy-writer-v4-v3.json",
+    "sha256": "d4d8d7fa46ecf93aa4fe0c469718eca9fb58cea17d52a121788097d1b2061e9d",
+    "oldWriterIsolated": true,
+    "learningRecoveredOnce": true,
+    "relativePath": "legacy-writer-v4-v3.json",
+    "scope": "Actual old/new writer logic with isolated fake IndexedDB; distinct from browser migration"
+  },
+  "update": {
+    "target": "http://127.0.0.1:54708",
+    "browser": "145.0.7632.6",
+    "scenarios": [
+      {
+        "width": 390,
+        "interrupted": false,
+        "pass": true,
+        "earnedCount": 4,
+        "reservation": {
+          "id": "[\"island-plan-v1\",\"effde595-4924-4615-8ccd-c43aedcdf361\",1]",
+          "cursor": 1
+        },
+        "reloads": [
+          "http://127.0.0.1:54708/?__app-update=1791623918631",
+          "http://127.0.0.1:54708/?__app-update=1791623961015"
+        ],
+        "migration": {
+          "from": 3,
+          "to": 4
+        }
+      },
+      {
+        "width": 390,
+        "interrupted": true,
+        "pass": true,
+        "earnedCount": 4,
+        "reservation": {
+          "id": "[\"island-plan-v1\",\"3d4e070c-b2d0-472a-9d38-da9fb73216bb\",1]",
+          "cursor": 1
+        },
+        "reloads": [
+          "http://127.0.0.1:54708/?__app-update=1791623993966",
+          "http://127.0.0.1:54708/?__app-update=1791624007520"
+        ],
+        "migration": {
+          "from": 3,
+          "to": 4
+        }
+      },
+      {
+        "width": 768,
+        "interrupted": false,
+        "pass": true,
+        "earnedCount": 4,
+        "reservation": {
+          "id": "[\"island-plan-v1\",\"1dd668da-c7d8-464f-9b3e-b43b30b953f9\",1]",
+          "cursor": 1
+        },
+        "reloads": [
+          "http://127.0.0.1:54708/?__app-update=1791624031681",
+          "http://127.0.0.1:54708/?__app-update=1791624053173"
+        ],
+        "migration": {
+          "from": 3,
+          "to": 4
+        }
+      },
+      {
+        "width": 768,
+        "interrupted": true,
+        "pass": true,
+        "earnedCount": 4,
+        "reservation": {
+          "id": "[\"island-plan-v1\",\"fc4afffc-ad34-4217-b609-8b5fcfc6d34d\",1]",
+          "cursor": 1
+        },
+        "reloads": [
+          "http://127.0.0.1:54708/?__app-update=1791624092495",
+          "http://127.0.0.1:54708/?__app-update=1791624109803"
+        ],
+        "migration": {
+          "from": 3,
+          "to": 4
+        }
+      }
+    ],
+    "pass": true,
+    "scope": "Real onboarding/answers/ownership; real SW upgrade and safe-writer rollback on one disposable origin. Worker pin is an explicit network fault. No profile, credits, clock or update-event injection; not real-device or real-user evidence.",
+    "cleanup": {
+      "browserClosed": true,
+      "serverClosed": true
+    },
+    "qaInputs": {
+      "tools/e2e-growing-update.mjs": "a1810bc03471f37307c060612abce77ea045a1932d9892a51ada3c49d636cad7",
+      "tools/growing-production-helpers.mjs": "0d73addbd0696a2c197052889795295c681a015491002737be6bf4eb6eab8ffa",
+      "tools/island-e2e-helpers.mjs": "b307f0506e17fa58af4a1dac0fcecca34e8d9bc3ded342f5227cd63d97d44baf",
+      "tools/verify-growing.mjs": "17b455ac3910c926f8724ad9b7be9ac4d083545f376cd0b5d466297d685d7c66"
+    }
+  },
+  "qaHelperStdoutWarning": {
+    "message": "THREE.Material: parameter 'map' has value of undefined.",
+    "observedCount": 3,
+    "evidence": "Observed update-QA Node helper stdout; not an application pageerror or a failed update case."
+  },
+  "captures": [
+    {
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/390-normal-old-learning.png",
+      "relativePath": "update-qa-v4-v3-local-origin/390-normal-old-learning.png",
+      "sha256": "0f9703f9d244b63961fad1a2d2db85d5000fe17bf5259a975c21c0d9c6c1f3fb",
+      "bytes": 55590,
+      "metadata": {
+        "url": "http://127.0.0.1:54708/#/island?learn=1",
+        "revision": "place-update-old-b61d3064",
+        "version": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "learning",
+        "renderer": "live-original",
+        "artDirection": null,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "place-update-old-b61d3064",
+          "version": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      }
+    },
+    {
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/390-normal-new-home.png",
+      "relativePath": "update-qa-v4-v3-local-origin/390-normal-new-home.png",
+      "sha256": "5cc65e24b376ceb40bff2f5400bb4f30106aaa8dc8125d4e3d918f115283a527",
+      "bytes": 208427,
+      "metadata": {
+        "url": "http://127.0.0.1:54708/#/island",
+        "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+        "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "original-fallback",
+        "artDirection": null,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+          "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      }
+    },
+    {
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/390-normal-rollback-offline.png",
+      "relativePath": "update-qa-v4-v3-local-origin/390-normal-rollback-offline.png",
+      "sha256": "9708e781b8f57a93646c3a1431afe129232e625973c511afef0a749404907e81",
+      "bytes": 207315,
+      "metadata": {
+        "url": "http://127.0.0.1:54708/#/island",
+        "revision": "native-05-place-runtime-v3-rollback-c3ea0771d8e6",
+        "version": "native-05-place-runtime-v3-rollback-c3ea0771d8e6:1d8daf36-83b1-47e9-8e11-9230bf9e9540",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "original-fallback",
+        "artDirection": null,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "native-05-place-runtime-v3-rollback-c3ea0771d8e6",
+          "version": "native-05-place-runtime-v3-rollback-c3ea0771d8e6:1d8daf36-83b1-47e9-8e11-9230bf9e9540",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      }
+    },
+    {
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/390-interrupted-old-learning.png",
+      "relativePath": "update-qa-v4-v3-local-origin/390-interrupted-old-learning.png",
+      "sha256": "0f9703f9d244b63961fad1a2d2db85d5000fe17bf5259a975c21c0d9c6c1f3fb",
+      "bytes": 55590,
+      "metadata": {
+        "url": "http://127.0.0.1:54708/#/island?learn=1",
+        "revision": "place-update-old-b61d3064",
+        "version": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "learning",
+        "renderer": "live-original",
+        "artDirection": null,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "place-update-old-b61d3064",
+          "version": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      }
+    },
+    {
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/390-interrupted-old-offline.png",
+      "relativePath": "update-qa-v4-v3-local-origin/390-interrupted-old-offline.png",
+      "sha256": "b1330c35060e323b555902e552fc6bd285155098196f72d3d6837c4497439c9f",
+      "bytes": 227707,
+      "metadata": {
+        "url": "http://127.0.0.1:54708/#/island",
+        "revision": "place-update-old-b61d3064",
+        "version": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "original-fallback",
+        "artDirection": null,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "place-update-old-b61d3064",
+          "version": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      }
+    },
+    {
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/390-interrupted-new-home.png",
+      "relativePath": "update-qa-v4-v3-local-origin/390-interrupted-new-home.png",
+      "sha256": "a0adb3f872d380adbfa2d04b43af2f99f3a9ee5d570f331ba542ec22b3fab152",
+      "bytes": 207447,
+      "metadata": {
+        "url": "http://127.0.0.1:54708/#/island",
+        "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+        "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "original-fallback",
+        "artDirection": null,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+          "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      }
+    },
+    {
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/390-interrupted-rollback-offline.png",
+      "relativePath": "update-qa-v4-v3-local-origin/390-interrupted-rollback-offline.png",
+      "sha256": "f2771096fb81505e5f36f5ee538c0a3b1f97b09a1b551239867197aa75ca3e30",
+      "bytes": 207399,
+      "metadata": {
+        "url": "http://127.0.0.1:54708/#/island",
+        "revision": "native-05-place-runtime-v3-rollback-c3ea0771d8e6",
+        "version": "native-05-place-runtime-v3-rollback-c3ea0771d8e6:1d8daf36-83b1-47e9-8e11-9230bf9e9540",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "original-fallback",
+        "artDirection": null,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "native-05-place-runtime-v3-rollback-c3ea0771d8e6",
+          "version": "native-05-place-runtime-v3-rollback-c3ea0771d8e6:1d8daf36-83b1-47e9-8e11-9230bf9e9540",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      }
+    },
+    {
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/768-normal-old-learning.png",
+      "relativePath": "update-qa-v4-v3-local-origin/768-normal-old-learning.png",
+      "sha256": "466fd7a565a2cb1a34a58799ef0eaaa95df20b0b7a9bc645d6ca8be4ec332b20",
+      "bytes": 73110,
+      "metadata": {
+        "url": "http://127.0.0.1:54708/#/island?learn=1",
+        "revision": "place-update-old-b61d3064",
+        "version": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "learning",
+        "renderer": "live-original",
+        "artDirection": null,
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": true,
+        "appRoot": {
+          "revision": "place-update-old-b61d3064",
+          "version": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      }
+    },
+    {
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/768-normal-new-home.png",
+      "relativePath": "update-qa-v4-v3-local-origin/768-normal-new-home.png",
+      "sha256": "14809b4784eca4e44965b211e9a66bf341078b95af03a1c1460fae4ffc9f5af2",
+      "bytes": 436213,
+      "metadata": {
+        "url": "http://127.0.0.1:54708/#/island",
+        "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+        "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "original-fallback",
+        "artDirection": null,
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": true,
+        "appRoot": {
+          "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+          "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      }
+    },
+    {
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/768-normal-rollback-offline.png",
+      "relativePath": "update-qa-v4-v3-local-origin/768-normal-rollback-offline.png",
+      "sha256": "51548731446baa81d31c29ae10298442682fc32ced514ef16e4f6ed7b2c96d1f",
+      "bytes": 438286,
+      "metadata": {
+        "url": "http://127.0.0.1:54708/#/island",
+        "revision": "native-05-place-runtime-v3-rollback-c3ea0771d8e6",
+        "version": "native-05-place-runtime-v3-rollback-c3ea0771d8e6:1d8daf36-83b1-47e9-8e11-9230bf9e9540",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "original-fallback",
+        "artDirection": null,
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": true,
+        "appRoot": {
+          "revision": "native-05-place-runtime-v3-rollback-c3ea0771d8e6",
+          "version": "native-05-place-runtime-v3-rollback-c3ea0771d8e6:1d8daf36-83b1-47e9-8e11-9230bf9e9540",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      }
+    },
+    {
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/768-interrupted-old-learning.png",
+      "relativePath": "update-qa-v4-v3-local-origin/768-interrupted-old-learning.png",
+      "sha256": "6d50fc7c6923545cbe550d5f9a7c7e210b54ebdea46e72380d6d16c782cd994b",
+      "bytes": 73101,
+      "metadata": {
+        "url": "http://127.0.0.1:54708/#/island?learn=1",
+        "revision": "place-update-old-b61d3064",
+        "version": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "learning",
+        "renderer": "live-original",
+        "artDirection": null,
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": true,
+        "appRoot": {
+          "revision": "place-update-old-b61d3064",
+          "version": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      }
+    },
+    {
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/768-interrupted-old-offline.png",
+      "relativePath": "update-qa-v4-v3-local-origin/768-interrupted-old-offline.png",
+      "sha256": "b9924b203864cad31076d0f88857e2110af06579e4853e285fe1532a042e2c6e",
+      "bytes": 469571,
+      "metadata": {
+        "url": "http://127.0.0.1:54708/#/island",
+        "revision": "place-update-old-b61d3064",
+        "version": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "original-fallback",
+        "artDirection": null,
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": true,
+        "appRoot": {
+          "revision": "place-update-old-b61d3064",
+          "version": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      }
+    },
+    {
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/768-interrupted-new-home.png",
+      "relativePath": "update-qa-v4-v3-local-origin/768-interrupted-new-home.png",
+      "sha256": "49c6316715a446521b87da29be9ee58cd49b23bdfee573181b001ab05c7427c8",
+      "bytes": 439599,
+      "metadata": {
+        "url": "http://127.0.0.1:54708/#/island",
+        "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+        "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "original-fallback",
+        "artDirection": null,
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": true,
+        "appRoot": {
+          "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+          "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      }
+    },
+    {
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/768-interrupted-rollback-offline.png",
+      "relativePath": "update-qa-v4-v3-local-origin/768-interrupted-rollback-offline.png",
+      "sha256": "e45e784385c0b41581cbba96436879b72f38e6cd65850b9da0e0c159242fb590",
+      "bytes": 439232,
+      "metadata": {
+        "url": "http://127.0.0.1:54708/#/island",
+        "revision": "native-05-place-runtime-v3-rollback-c3ea0771d8e6",
+        "version": "native-05-place-runtime-v3-rollback-c3ea0771d8e6:1d8daf36-83b1-47e9-8e11-9230bf9e9540",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "original-fallback",
+        "artDirection": null,
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": true,
+        "appRoot": {
+          "revision": "native-05-place-runtime-v3-rollback-c3ea0771d8e6",
+          "version": "native-05-place-runtime-v3-rollback-c3ea0771d8e6:1d8daf36-83b1-47e9-8e11-9230bf9e9540",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      }
+    }
+  ],
+  "originalFiles": [
+    {
+      "kind": "raw-json",
+      "source": "/private/tmp/sansu-native-v3-20261010/new-manifest.json",
+      "relativePath": "new-manifest.json",
+      "bytes": 264564,
+      "sha256": "030df0ade620d4c30a873dac8a81b16cf82b687943ee283dbbfc836c0bfd9de0"
+    },
+    {
+      "kind": "raw-json",
+      "source": "/private/tmp/sansu-native-v3-20261010/rollback-manifest.json",
+      "relativePath": "rollback-manifest.json",
+      "bytes": 264594,
+      "sha256": "c64c50867e7d50e111b9047a50a9833e2dfa8e279c0c79bd74142e3939040cae"
+    },
+    {
+      "kind": "raw-json",
+      "source": "/private/tmp/sansu-native-v3-20261010/legacy-writer-v4-v3.json",
+      "relativePath": "legacy-writer-v4-v3.json",
+      "bytes": 568,
+      "sha256": "d4d8d7fa46ecf93aa4fe0c469718eca9fb58cea17d52a121788097d1b2061e9d"
+    },
+    {
+      "kind": "raw-json",
+      "source": "/private/tmp/sansu-native-v3-20261010/final-update-audit-v3.json",
+      "relativePath": "final-update-audit-v3.json",
+      "bytes": 19292,
+      "sha256": "937f37d8d3284e7e74ac2d9cf8e54ed5ed631ed88c1be5663ed8de445ebdb6cc"
+    },
+    {
+      "kind": "raw-json",
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/report.json",
+      "relativePath": "update-qa-v4-v3-local-origin/report.json",
+      "bytes": 1052094,
+      "sha256": "098de2390d112205e2ab30442a89c5bfbe223ff01accedcda05dc009cfed30dc"
+    },
+    {
+      "kind": "actual-capture",
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/390-normal-old-learning.png",
+      "relativePath": "update-qa-v4-v3-local-origin/390-normal-old-learning.png",
+      "bytes": 55590,
+      "sha256": "0f9703f9d244b63961fad1a2d2db85d5000fe17bf5259a975c21c0d9c6c1f3fb"
+    },
+    {
+      "kind": "actual-capture",
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/390-normal-new-home.png",
+      "relativePath": "update-qa-v4-v3-local-origin/390-normal-new-home.png",
+      "bytes": 208427,
+      "sha256": "5cc65e24b376ceb40bff2f5400bb4f30106aaa8dc8125d4e3d918f115283a527"
+    },
+    {
+      "kind": "actual-capture",
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/390-normal-rollback-offline.png",
+      "relativePath": "update-qa-v4-v3-local-origin/390-normal-rollback-offline.png",
+      "bytes": 207315,
+      "sha256": "9708e781b8f57a93646c3a1431afe129232e625973c511afef0a749404907e81"
+    },
+    {
+      "kind": "actual-capture",
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/390-interrupted-old-learning.png",
+      "relativePath": "update-qa-v4-v3-local-origin/390-interrupted-old-learning.png",
+      "bytes": 55590,
+      "sha256": "0f9703f9d244b63961fad1a2d2db85d5000fe17bf5259a975c21c0d9c6c1f3fb"
+    },
+    {
+      "kind": "actual-capture",
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/390-interrupted-old-offline.png",
+      "relativePath": "update-qa-v4-v3-local-origin/390-interrupted-old-offline.png",
+      "bytes": 227707,
+      "sha256": "b1330c35060e323b555902e552fc6bd285155098196f72d3d6837c4497439c9f"
+    },
+    {
+      "kind": "actual-capture",
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/390-interrupted-new-home.png",
+      "relativePath": "update-qa-v4-v3-local-origin/390-interrupted-new-home.png",
+      "bytes": 207447,
+      "sha256": "a0adb3f872d380adbfa2d04b43af2f99f3a9ee5d570f331ba542ec22b3fab152"
+    },
+    {
+      "kind": "actual-capture",
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/390-interrupted-rollback-offline.png",
+      "relativePath": "update-qa-v4-v3-local-origin/390-interrupted-rollback-offline.png",
+      "bytes": 207399,
+      "sha256": "f2771096fb81505e5f36f5ee538c0a3b1f97b09a1b551239867197aa75ca3e30"
+    },
+    {
+      "kind": "actual-capture",
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/768-normal-old-learning.png",
+      "relativePath": "update-qa-v4-v3-local-origin/768-normal-old-learning.png",
+      "bytes": 73110,
+      "sha256": "466fd7a565a2cb1a34a58799ef0eaaa95df20b0b7a9bc645d6ca8be4ec332b20"
+    },
+    {
+      "kind": "actual-capture",
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/768-normal-new-home.png",
+      "relativePath": "update-qa-v4-v3-local-origin/768-normal-new-home.png",
+      "bytes": 436213,
+      "sha256": "14809b4784eca4e44965b211e9a66bf341078b95af03a1c1460fae4ffc9f5af2"
+    },
+    {
+      "kind": "actual-capture",
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/768-normal-rollback-offline.png",
+      "relativePath": "update-qa-v4-v3-local-origin/768-normal-rollback-offline.png",
+      "bytes": 438286,
+      "sha256": "51548731446baa81d31c29ae10298442682fc32ced514ef16e4f6ed7b2c96d1f"
+    },
+    {
+      "kind": "actual-capture",
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/768-interrupted-old-learning.png",
+      "relativePath": "update-qa-v4-v3-local-origin/768-interrupted-old-learning.png",
+      "bytes": 73101,
+      "sha256": "6d50fc7c6923545cbe550d5f9a7c7e210b54ebdea46e72380d6d16c782cd994b"
+    },
+    {
+      "kind": "actual-capture",
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/768-interrupted-old-offline.png",
+      "relativePath": "update-qa-v4-v3-local-origin/768-interrupted-old-offline.png",
+      "bytes": 469571,
+      "sha256": "b9924b203864cad31076d0f88857e2110af06579e4853e285fe1532a042e2c6e"
+    },
+    {
+      "kind": "actual-capture",
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/768-interrupted-new-home.png",
+      "relativePath": "update-qa-v4-v3-local-origin/768-interrupted-new-home.png",
+      "bytes": 439599,
+      "sha256": "49c6316715a446521b87da29be9ee58cd49b23bdfee573181b001ab05c7427c8"
+    },
+    {
+      "kind": "actual-capture",
+      "source": "/private/tmp/sansu-native-v3-20261010/update-qa-v4-v3-local-origin/768-interrupted-rollback-offline.png",
+      "relativePath": "update-qa-v4-v3-local-origin/768-interrupted-rollback-offline.png",
+      "bytes": 439232,
+      "sha256": "e45e784385c0b41581cbba96436879b72f38e6cd65850b9da0e0c159242fb590"
+    }
+  ]
+}

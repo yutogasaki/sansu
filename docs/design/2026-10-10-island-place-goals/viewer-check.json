@@ -1,0 +1,422 @@
+{
+  "id": "place-goals-showcase-ui-v1",
+  "status": "PASS",
+  "scope": "Standalone design showcase; no game state or production rule changed.",
+  "target": "http://127.0.0.1:8230/design/2026-10-10-island-place-goals/",
+  "delivery": "standalone-design-showcase",
+  "candidate": "place-goals-design-v1",
+  "artBaseline": {
+    "candidate": "whole-island-native-3d-05",
+    "glbRevision": "8398eda9ac084a6e"
+  },
+  "sources": {
+    "index.html": "7c5b7025f2eab694b8e06570c9984285f229019baa309b3f42157ac00b5413e2",
+    "main.js": "60d5234ea4a3238ca585eb9b3646a99645d061fb571e1e5ec9849e01548e2ece",
+    "style.css": "f4b1384066320b3c916d2ec056f7fb1c7c83ecc9d7bf80eb998682519215738b",
+    "../../product/island-place-goals.json": "19375e674276e76729abb5afc757ea2f288767df86f17b079159913ae3fc919b"
+  },
+  "operations": [
+    {
+      "goal": "P01",
+      "variant": "lane",
+      "diagram": "木陰の庭、列にするの配置図",
+      "pressed": [
+        "lane"
+      ],
+      "result": "枝がつながる、細長い木陰の道"
+    },
+    {
+      "goal": "P01",
+      "variant": "corner",
+      "diagram": "木陰の庭、角をつくるの配置図",
+      "pressed": [
+        "corner"
+      ],
+      "result": "庭の縁を包む、L字の木陰"
+    },
+    {
+      "goal": "P01",
+      "variant": "alcove",
+      "diagram": "木陰の庭、木の間に座るの配置図",
+      "pressed": [
+        "alcove"
+      ],
+      "result": "左右に木陰が広がる、入口の開いた小さな庭"
+    },
+    {
+      "goal": "P01",
+      "stage": "seeded",
+      "condition": "成立する条件\n\n木と席を置く\n\n育つ形\n\n苗と席の位置に、枝が寄る向きと庭の余白を予告する。\n\nできる遊び\n\n元の席でくつろげる。"
+    },
+    {
+      "goal": "P01",
+      "stage": "connected",
+      "condition": "成立する条件\n\n苗の接続と庭への到達が成立\n\n育つ形\n\n地面の根と足元が連続する。苗はそのまま残る。\n\nできる遊び\n\n次に置く位置を変えて、庭の形を試せる。"
+    },
+    {
+      "goal": "P01",
+      "stage": "grown",
+      "condition": "成立する条件\n\n2本が既存の成熟段階へ到達\n\n育つ形\n\n重なる樹冠が一つの木陰になる。追加の待ち時間は設けない。\n\nできる遊び\n\n同じ影の下へ歩き、席へ座れる。"
+    },
+    {
+      "goal": "P01",
+      "stage": "lived",
+      "condition": "成立する条件\n\n入口・木陰・席を実際の行動に使用\n\n育つ形\n\nぽこもこや既存住人がその木陰と席を使う。\n\nできる遊び\n\nつまんで席へ運ぶ、座って足をゆらす。"
+    },
+    {
+      "goal": "P02",
+      "variant": "lane",
+      "diagram": "大樹の住まい、列にするの配置図",
+      "pressed": [
+        "lane"
+      ],
+      "result": "幹をつなぐ枝の回廊と、道沿いの木の家"
+    },
+    {
+      "goal": "P02",
+      "variant": "cluster",
+      "diagram": "大樹の住まい、塊にするの配置図",
+      "pressed": [
+        "cluster"
+      ],
+      "result": "根と幹が包む住まい、周囲を回れる大きな葉の屋根"
+    },
+    {
+      "goal": "P02",
+      "variant": "court",
+      "diagram": "大樹の住まい、中庭を空けるの配置図",
+      "pressed": [
+        "court"
+      ],
+      "result": "入口のある空洞と、庭を囲む枝の回廊"
+    },
+    {
+      "goal": "P02",
+      "stage": "seeded",
+      "condition": "成立する条件\n\n木・木の家・席の位置を選ぶ\n\n育つ形\n\n元の家を保ち、根が包む部分と入口、上へ伸びる葉の形を予告する。\n\nできる遊び\n\n苗と家を置き直して、入り口の向きを試せる。"
+    },
+    {
+      "goal": "P02",
+      "stage": "connected",
+      "condition": "成立する条件\n\n木の接続と家への到達が成立\n\n育つ形\n\n根・幹・庭の足元が寄る。家と木のIDは個別に残る。\n\nできる遊び\n\n地上の庭と席を使える。"
+    },
+    {
+      "goal": "P02",
+      "stage": "grown",
+      "condition": "成立する条件\n\n4本成熟・2本大木・木の家がこや以上\n\n育つ形\n\n青紫/翡翠の葉、琥珀の幹、開いた空洞、支えのある回廊が育つ。\n\nできる遊び\n\n幹の入口から入り、枝の回廊へ歩ける。"
+    },
+    {
+      "goal": "P02",
+      "stage": "lived",
+      "condition": "成立する条件\n\n実在する住人が到達できる場所を使用\n\n育つ形\n\n実住人が回廊の席や入口を使う。架空の入居は足さない。\n\nできる遊び\n\nぽこもこを回廊の席へ運ぶ、元の家に入る。"
+    },
+    {
+      "goal": "P03",
+      "variant": "tiered",
+      "diagram": "青い泉の庭、段につなぐの配置図",
+      "pressed": [
+        "tiered"
+      ],
+      "result": "鉱石の水源から流れる段泉と、橋で渡れる庭"
+    },
+    {
+      "goal": "P03",
+      "variant": "curve",
+      "diagram": "青い泉の庭、曲げるの配置図",
+      "pressed": [
+        "curve"
+      ],
+      "result": "青い池が曲がった岸でつながる、平地の水庭"
+    },
+    {
+      "goal": "P03",
+      "variant": "shore",
+      "diagram": "青い泉の庭、岸へ開くの配置図",
+      "pressed": [
+        "shore"
+      ],
+      "result": "水の出口と海辺が見える、入り江の水庭"
+    },
+    {
+      "goal": "P03",
+      "stage": "seeded",
+      "condition": "成立する条件\n\n水ばち・みずみち・花・席を置く\n\n育つ形\n\n水の入口と出口、泉になる範囲を予告する。\n\nできる遊び\n\n水ばちのいつもの返事を楽しめる。"
+    },
+    {
+      "goal": "P03",
+      "stage": "connected",
+      "condition": "成立する条件\n\n水源から実際に通水する\n\n育つ形\n\n岸と水面が連続する。乾いたみずみちへ水は描かない。\n\nできる遊び\n\n一か所の置き直しで、通る水を見比べられる。"
+    },
+    {
+      "goal": "P03",
+      "stage": "grown",
+      "condition": "成立する条件\n\n同じ通水領域・咲いた花・到達する席が成立\n\n育つ形\n\n深い青の水、鉱石の水源、水辺の花が庭をつくる。段は床高のある場所に限る。\n\nできる遊び\n\n橋や席から泉を眺める。水が好きな既存住人が岸を使える。"
+    },
+    {
+      "goal": "P03",
+      "stage": "lived",
+      "condition": "成立する条件\n\n実通水と住人の水辺利用が継続\n\n育つ形\n\n水の届く花と実住人の岸での行動が同じ場所に見える。\n\nできる遊び\n\n水に触れて返事を楽しむ、席へ運ぶ。"
+    },
+    {
+      "goal": "P04",
+      "variant": "bay",
+      "diagram": "入り江の集会所、向かい合うの配置図",
+      "pressed": [
+        "bay"
+      ],
+      "result": "家の間に、薄い貝殻の屋根が育つ庭"
+    },
+    {
+      "goal": "P04",
+      "variant": "lane",
+      "diagram": "入り江の集会所、岸に並べるの配置図",
+      "pressed": [
+        "lane"
+      ],
+      "result": "家々を結ぶ、海の見える長い共同屋根"
+    },
+    {
+      "goal": "P04",
+      "variant": "court",
+      "diagram": "入り江の集会所、庭を囲むの配置図",
+      "pressed": [
+        "court"
+      ],
+      "result": "片側を開けた殻と、玄関が見える中庭"
+    },
+    {
+      "goal": "P04",
+      "stage": "seeded",
+      "condition": "成立する条件\n\n家・水・あそびばの位置を選ぶ\n\n育つ形\n\n個々の家を保ち、集まれる床と屋根の広がりを予告する。\n\nできる遊び\n\nいつもの家とあそびばを使える。"
+    },
+    {
+      "goal": "P04",
+      "stage": "connected",
+      "condition": "成立する条件\n\n同じ到達できる庭に玄関とあそびばが向く\n\n育つ形\n\n共通の足元と曲がった梁がつながる。\n\nできる遊び\n\n入口を空けた別の並べ方を試せる。"
+    },
+    {
+      "goal": "P04",
+      "stage": "grown",
+      "condition": "成立する条件\n\n2軒こや以上・完成あそびば・水辺が成立\n\n育つ形\n\n青/紫を透かす薄い殻の屋根が共同の庭を包む。\n\nできる遊び\n\n屋根の下へ運んだぽこもこが、そのあそびばを使う。"
+    },
+    {
+      "goal": "P04",
+      "stage": "lived",
+      "condition": "成立する条件\n\n実際の住人と遊び場の利用\n\n育つ形\n\n実住人が庭へ歩いて来る。家の入居枠やごはんを架空に増やさない。\n\nできる遊び\n\n同じあそびばの遊びを、共同屋根の下で繰り返す。"
+    },
+    {
+      "goal": "P05",
+      "variant": "arch",
+      "diagram": "花の屋根の庭、列にするの配置図",
+      "pressed": [
+        "arch"
+      ],
+      "result": "花弁がつながる、色のアーチ"
+    },
+    {
+      "goal": "P05",
+      "variant": "canopy",
+      "diagram": "花の屋根の庭、塊にするの配置図",
+      "pressed": [
+        "canopy"
+      ],
+      "result": "複数の茎が支える、大きな花の屋根"
+    },
+    {
+      "goal": "P05",
+      "variant": "court",
+      "diagram": "花の屋根の庭、中庭を空けるの配置図",
+      "pressed": [
+        "court"
+      ],
+      "result": "花に囲まれて座れる、入口のある庭"
+    },
+    {
+      "goal": "P05",
+      "stage": "seeded",
+      "condition": "成立する条件\n\n花と席の位置、好きな色を選ぶ\n\n育つ形\n\n色のまとまりと花弁が寄る向きを予告する。\n\nできる遊び\n\n同じ花を触り、色や位置を選べる。"
+    },
+    {
+      "goal": "P05",
+      "stage": "connected",
+      "condition": "成立する条件\n\n花と庭のつながりが成立\n\n育つ形\n\n葉と足元が連なり、中央の余白が庭になる。\n\nできる遊び\n\n列・塊・中庭へ無料で並べ直せる。"
+    },
+    {
+      "goal": "P05",
+      "stage": "grown",
+      "condition": "成立する条件\n\n4株が既存の開花段階へ到達\n\n育つ形\n\n色の異なる花弁が支え合い、席の上へ屋根をつくる。\n\nできる遊び\n\n花の屋根の下にぽこもこを座らせられる。"
+    },
+    {
+      "goal": "P05",
+      "stage": "lived",
+      "condition": "成立する条件\n\n咲いた花と実際の席の利用\n\n育つ形\n\n実住人が花と休憩場所を使う。\n\nできる遊び\n\n花を触る、席へ運ぶ、自然に混ざった色を楽しむ。"
+    },
+    {
+      "goal": "P06",
+      "stage": "seeded",
+      "condition": "成立する条件\n\n好きな場所を選ぶ\n\n育つ形\n\n全島3Dを一つの到達例として、育てたい場所を選べる。\n\nできる遊び\n\n目標を選ばずに自由に遊んでもよい。"
+    },
+    {
+      "goal": "P06",
+      "stage": "connected",
+      "condition": "成立する条件\n\n複数の場所の入口へ歩ける\n\n育つ形\n\n道・岸・木陰の継ぎ目が連続する。\n\nできる遊び\n\nどこを隣へ置くか、土地をどちらへ広げるか試せる。"
+    },
+    {
+      "goal": "P06",
+      "stage": "grown",
+      "condition": "成立する条件\n\n3系列以上の場所が育つ\n\n育つ形\n\n森・水辺・庭・集落が同じ床の色替えにならず、一つの島の景色になる。\n\nできる遊び\n\n景色が変わる経路をぽこもこが歩ける。"
+    },
+    {
+      "goal": "P06",
+      "stage": "lived",
+      "condition": "成立する条件\n\n実在する仲間が1人以上住み、使える場所がつながる\n\n育つ形\n\n人口、家、食事、休憩が実状態に一致する。\n\nできる遊び\n\n見せる・名前をつける・写真を残す。新しい地区づくりは続けられる。"
+    }
+  ],
+  "viewports": [
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 1000,
+      "goal": "P02",
+      "variant": "court",
+      "buttonMinHeight": 44,
+      "buttonMinWidth": 70,
+      "documentHeight": 4309,
+      "images": [
+        {
+          "complete": true,
+          "src": "http://127.0.0.1:8230/design/2026-10-10-island-final-3d/whole-island-render.png",
+          "width": 1600
+        },
+        {
+          "complete": true,
+          "src": "http://127.0.0.1:8230/design/2026-10-10-island-final-3d/viewer-grove-phone.png",
+          "width": 390
+        }
+      ],
+      "innerHeight": 1000,
+      "innerWidth": 1440,
+      "layoutWidth": 1425,
+      "scrollWidth": 1425,
+      "stage": "grown",
+      "capture": "showcase-desktop.png"
+    },
+    {
+      "name": "tablet",
+      "width": 768,
+      "height": 1024,
+      "goal": "P05",
+      "variant": "canopy",
+      "buttonMinHeight": 44,
+      "buttonMinWidth": 70,
+      "documentHeight": 4142,
+      "images": [
+        {
+          "complete": true,
+          "src": "http://127.0.0.1:8230/design/2026-10-10-island-final-3d/whole-island-render.png",
+          "width": 1600
+        },
+        {
+          "complete": true,
+          "src": "http://127.0.0.1:8230/design/2026-10-10-island-final-3d/viewer-garden-tablet.png",
+          "width": 768
+        }
+      ],
+      "innerHeight": 1024,
+      "innerWidth": 768,
+      "layoutWidth": 753,
+      "scrollWidth": 753,
+      "stage": "grown",
+      "capture": "showcase-tablet.png"
+    },
+    {
+      "name": "phone",
+      "width": 390,
+      "height": 844,
+      "goal": "P03",
+      "variant": "curve",
+      "buttonMinHeight": 44,
+      "buttonMinWidth": 52,
+      "documentHeight": 5399,
+      "images": [
+        {
+          "complete": true,
+          "src": "http://127.0.0.1:8230/design/2026-10-10-island-final-3d/whole-island-render.png",
+          "width": 1600
+        },
+        {
+          "complete": true,
+          "src": "http://127.0.0.1:8230/design/2026-10-10-island-final-3d/viewer-village-tablet.png",
+          "width": 768
+        }
+      ],
+      "innerHeight": 844,
+      "innerWidth": 390,
+      "layoutWidth": 375,
+      "scrollWidth": 375,
+      "stage": "grown",
+      "capture": "showcase-phone.png"
+    },
+    {
+      "name": "small",
+      "width": 320,
+      "height": 568,
+      "goal": "P01",
+      "variant": "corner",
+      "buttonMinHeight": 44,
+      "buttonMinWidth": 53.25,
+      "documentHeight": 5564,
+      "images": [
+        {
+          "complete": true,
+          "src": "http://127.0.0.1:8230/design/2026-10-10-island-final-3d/whole-island-render.png",
+          "width": 1600
+        },
+        {
+          "complete": true,
+          "src": "http://127.0.0.1:8230/design/2026-10-10-island-final-3d/viewer-grove-phone.png",
+          "width": 390
+        }
+      ],
+      "innerHeight": 568,
+      "innerWidth": 320,
+      "layoutWidth": 305,
+      "scrollWidth": 305,
+      "stage": "grown",
+      "capture": "showcase-small.png"
+    }
+  ],
+  "keyboard": {
+    "goal": "P02",
+    "variant": "cluster",
+    "key": "Enter",
+    "pass": true
+  },
+  "links": {
+    "hotspot": {
+      "articleTop": -0.453125,
+      "goal": "P03",
+      "title": "青い泉の庭"
+    },
+    "nextGoal": {
+      "goal": "P05",
+      "title": "花の屋根の庭"
+    }
+  },
+  "logs": [],
+  "final": {
+    "goal": "P02",
+    "height": 720,
+    "layoutWidth": 1265,
+    "scrollWidth": 1265,
+    "stage": "grown",
+    "title": "この島を、どう育てるか — Sansu",
+    "url": "http://127.0.0.1:8230/design/2026-10-10-island-place-goals/",
+    "variant": "court",
+    "width": 1280,
+    "capture": "showcase-final.png",
+    "viewportOverride": false
+  },
+  "gameRuntime": "NOT_IMPLEMENTED",
+  "independentComprehension": "NOT_EVALUATED"
+}

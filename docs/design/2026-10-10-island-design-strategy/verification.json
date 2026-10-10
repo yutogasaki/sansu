@@ -1,0 +1,107 @@
+{
+  "artifact": "island-art-strategy-v3",
+  "date": "2026-10-10",
+  "target": "http://127.0.0.1:8230/design/2026-10-10-island-design-strategy/#foundation",
+  "evidenceType": "static-internal-showcase",
+  "baseRevision": "7a66929c231defc59388a5cc82a58dec8ad8faee",
+  "uncommitted": true,
+  "artifactHashes": {
+    "index.html": "127a524db82c160de2cce06846a6cbbd727043db5b7e2715f36becb6869e373e",
+    "style.css": "c0ca593d9db199f4b23ed826e2fbf96c8a83078afadab6fc954e8fa87db24d63",
+    "main.js": "d36a64ca87e04bbf0c288c0397bd1fa4058fc347f199ceade8696694e416c65d",
+    "references.json": "275569a85eda04b637fd25032ddab034fabe86684d122f5f5844abf87c7dad00",
+    "reference-data.js": "3605c15a8d8b82fcbddd0752e7e9fd13ac081d69601ad1d56dda9bc4f800d84f",
+    "build.mjs": "d0029a05a963ff9260c6fc19d3886e432d3e825e2ae3e762160b444c7c9cef27",
+    "construction-audit.md": "85a8b3e2d5a6575cb03d8ac9cbd25ee09bd201aaf696bba5a2972c780d4fbbb2",
+    "construction-audit-sources.json": "0e5c977ca5c530b3ee30148596538a4d0f28e299a875757a8b227927799d4d9a"
+  },
+  "referenceCounts": {
+    "total": 32,
+    "littleHabitats": 9,
+    "tinyGlade": 4,
+    "townscaper": 4,
+    "sansuRuntime": 10,
+    "generated": 4,
+    "userProvidedRuntime": 1
+  },
+  "checks": {
+    "referenceIdFieldsFilesHashes": "PASS / node build.mjs",
+    "imageDecode": "PASS / 32 PNG-JPEG source files verified",
+    "javascriptSyntax": "PASS / node --check main.js",
+    "docs": "PASS / existing Review By warnings",
+    "responsive": [
+      {
+        "width": 320,
+        "height": 568,
+        "horizontalOverflow": false
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "horizontalOverflow": false
+      },
+      {
+        "width": 768,
+        "height": 1024,
+        "horizontalOverflow": false
+      },
+      {
+        "width": 1440,
+        "height": 1000,
+        "horizontalOverflow": false
+      }
+    ],
+    "themeFilter": "PASS / 場所の成長: 10 of 32",
+    "kindFilter": "PASS / 場所の成長 + 利用者提供実画面: 1 reference U-01",
+    "search": "PASS / LH-08 1 image, Tiny Glade 4 images",
+    "detail": "PASS / U-01 loaded with user-provided type and unknown build scope",
+    "compare": "PASS / LH-01 + U-01, 2 decoded images, native Escape, selection cleared",
+    "escape": "PASS / native comparison and detail dialogs close",
+    "noteSaveReload": "PASS / candidate status and exact text restored",
+    "notesFilter": "PASS / 1 test memo",
+    "jsonExport": "PASS / downloaded JSON parsed, referenceId and exact text matched",
+    "noteDelete": "PASS / test memo removed, 0 memo chips",
+    "growthStates": "PASS / connected and grown switches update selected visible stage and caption",
+    "localShowcaseLinks": "PASS / 19 local targets exist",
+    "sourceAudit": "PASS / 9 source hashes unchanged",
+    "foundation": "PASS / 5 world layers, 3 distinct mechanisms, A-F production stages",
+    "foundationImages": "PASS / Little Habitats, Townscaper, Tiny Glade images decode in browser",
+    "arrangementDiagram": "PASS / 3 columns at 768/1440; readable stacked diagrams at 320/390",
+    "browserConsole": "PASS / no errors returned"
+  },
+  "screenshots": [
+    "showcase-desktop.jpg",
+    "showcase-gallery.jpg",
+    "showcase-comparison.jpg",
+    "showcase-mobile.jpg",
+    "showcase-growth.jpg",
+    "showcase-growth-comparison.jpg",
+    "showcase-v2-mobile.jpg",
+    "showcase-v2-desktop.jpg",
+    "showcase-v3-construction.jpg",
+    "showcase-v3-mobile.jpg"
+  ],
+  "appGates": {
+    "visual": "NOT_EVALUATED / no new runtime candidate",
+    "silentComprehensionSafety": "NOT_EVALUATED / no participants",
+    "runtime": "NOT_APPLICABLE / no app source, routing, learning, storage or PWA changes in this deliverable"
+  },
+  "limits": [
+    "Responsive checks are browser viewport overrides, not physical devices.",
+    "Reference views differ in camera and state; this is a research comparison, not runtime acceptance.",
+    "External images are internal references; no competitor asset is integrated into the game.",
+    "The browser test memo was removed. No product adoption was inferred.",
+    "No public deployment, commit or push in this deliverable.",
+    "Growth SVG is a design schematic, not a new runtime art candidate. Exact adjacency, thresholds, timing and effects remain unadopted."
+  ],
+  "retainedV1Checks": [
+    "search",
+    "noteSaveReload",
+    "notesFilter",
+    "jsonExport",
+    "noteDelete",
+    "imageDecode"
+  ],
+  "retainedEvidence": "verification-v1.json and verification-v2.json. Persistence, note export/delete and image decode results remain tied to those versions; main.js unchanged since v2.",
+  "changes": "Fundamental construction/art strategy, source/spec structural audit, ADR and SSOT routing; five world layers, three growth mechanisms, same-material arrangement comparisons and A-F implementation sequence. Static showcase only; no new game mechanics or source changes."
+}

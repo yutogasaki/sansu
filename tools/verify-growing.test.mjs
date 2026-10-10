@@ -37,9 +37,11 @@ describe('Growing verification candidate boundary', () => {
 
     it('retains manifests imported by the source while omitting unshipped authoring meshes', () => {
         const manifest = 'assets/pipeline/island-design-v2/runtime-manifest.json';
+        const placeCatalog = 'docs/product/island-place-goals.json';
+        const placeDiagnostics = 'prototypes/place-qa/fixtures.json';
         expect(buildArchiveFiles(['vite.config.ts', 'src/prototypes/assetLab/main.ts', manifest,
-            'assets/pipeline/island-design-v2/raw/model.glb', 'docs/design/screenshot.png']))
-            .toEqual(['vite.config.ts', 'src/prototypes/assetLab/main.ts', manifest]);
+            placeCatalog, placeDiagnostics, 'assets/pipeline/island-design-v2/raw/model.glb', 'docs/design/screenshot.png']))
+            .toEqual(['vite.config.ts', 'src/prototypes/assetLab/main.ts', manifest, placeCatalog, placeDiagnostics]);
     });
 
     it('rejects source changes between fingerprint and copy', async () => {

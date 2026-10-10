@@ -9,6 +9,7 @@
 
 - アプリ全体の方向は[CONSTITUTION §1の北極星「育つ島」](../../CONSTITUTION.md)（2026-09-29改訂、[ADR](../adr/2026-09-29-north-star-growing-island.md)）。
 - 次期の遊びの規則は[52 育つ島 ゲーム仕様](52_growing_island_game_spec.md)。置くと島が育ち、学ぶと島の時間が進む。実装・公開状況は[現在のタスク](../../.agents/tasks/TASKS.md)を参照。
+- 2026-10-10の採用美術を遊びへつなぐ[育つ場所の目標と組み合わせ](island-place-goals.md)。6目標・15配置・4関係を本体v1へ統合。保存4/共有地形/実利用は[実装ADR](../adr/2026-10-10-growing-place-runtime.md)へ。
 - アプリ全体の約束は[親仕様01](01_app_spec.md)。迷ったら最初に読む。
 - 現在の標準画面は「ぽこもこと不思議な島」。旧探索・2人遊びは島の入口から外し、直接URLと保存データを維持する。
 - 「仕様がある」ことと「実装済み・公開済み」は同じではない。進み具合は[現在のタスク](../../.agents/tasks/TASKS.md)で確認する。
@@ -173,8 +174,11 @@
 
 ## 6. 提案・未決事項
 
+島づくりの制作方針は[根本の構築戦略](island-construction-strategy.md)、形・素材・光は[美術戦略](island-art-strategy.md)を使う。native-05を美術方向に採用し、[育つ場所の目標と組み合わせ](island-place-goals.md)で接続・成熟・分離の具体条件を設計v1へまとめた。[成長系列](island-place-growth-proposal.md)はその背景。美術方向と、規則/保存/配信の本体適用を分ける。[構造監査と32枚の参考](../design/2026-10-10-island-design-strategy/index.html#foundation)。
+
 | 仕様 | 何の話か | 位置づけ |
 |---|---|---|
+| [育つ場所の目標と組み合わせ](island-place-goals.md) | 全島の美術方向を、6目標・15配置・4つの場所の関係へ | 本体v1へ統合。実機/独立観察は別ゲート |
 | [17 探索転換の未決事項](17_open_questions.md) | 旧Exploreで判断が残った点 | 未決。推奨だけを確定扱いしない |
 | [18 コアゲーム再設計案](18_core_game_redesign_proposal.md) | 面白さの定義と代替案 | 提案資料 |
 | [19 問題起点のコア設計案](19_problem_first_core_design.md) | 学習範囲から遊びを設計する案 | 提案資料 |

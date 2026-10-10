@@ -1,0 +1,69 @@
+{
+  "date": "2026-10-10",
+  "scope": "whole-island art and static comparison page; not game runtime",
+  "mode": "built-in image_gen",
+  "assets": [
+    {
+      "file": "WI-A-cove-island.png",
+      "dimensions": [
+        2173,
+        724
+      ],
+      "bytes": 2330834,
+      "sha256": "8e3885e4553b59ade498e8d717dc0bddad23288cf302aeaba633e8aa167110ae",
+      "evidence": "generated source art",
+      "status": "unselected whole-island art direction"
+    },
+    {
+      "file": "WI-B-terraced-island.png",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "bytes": 2375019,
+      "sha256": "81c69dfa144a4c1e97b3ae0779db46474536a7fc6de270394c17da3193d74ffb",
+      "evidence": "generated source art",
+      "status": "unselected whole-island art direction"
+    },
+    {
+      "file": "WI-C-district-island.png",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "bytes": 2491079,
+      "sha256": "b843bbac33146e98474f27f6bb69212756a975da640676922ba00cc064c6090f",
+      "evidence": "generated source art",
+      "status": "unselected whole-island art direction"
+    },
+    {
+      "file": "WI-C-r1-unequal-panels.png",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "bytes": 2530653,
+      "sha256": "f47a87f8d7edf0e265f8b54991ce52891b82d2f960a77948e41601b7c17a352f",
+      "evidence": "generated source art",
+      "status": "previous unequal-panel draft"
+    }
+  ],
+  "checks": {
+    "png_decode": "PASS 4 incl preserved C draft",
+    "local_links": "PASS",
+    "docs_check": "PASS, 12 existing Review By warnings",
+    "diff_check": "PASS scoped documents",
+    "static_ui": "PASS; see ui-verification.json",
+    "viewport_override": "reset"
+  },
+  "art_status": {
+    "selection": "unselected",
+    "camera_and_owned_land_continuity": "not yet locked; recorded mismatches",
+    "independent_silent_comprehension_and_safety": "NOT_EVALUATED",
+    "runtime_integrity": "NOT_EVALUATED"
+  },
+  "screenshots": [
+    "showcase-1440.png",
+    "showcase-390.png"
+  ]
+}

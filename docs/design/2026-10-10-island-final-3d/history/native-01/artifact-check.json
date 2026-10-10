@@ -1,0 +1,109 @@
+{
+  "result": "PASS",
+  "candidate": "whole-island-native-3d-01",
+  "target": "standalone editable 3D art + local GLB viewer",
+  "delivery": "standalone-art-viewer",
+  "gameFlags": "not an application build",
+  "capturedTarget": "http://127.0.0.1:8230/design/2026-10-10-island-final-3d/",
+  "gitHead": "7a66929c231defc59388a5cc82a58dec8ad8faee",
+  "sourceState": "shared dirty working tree; exact artifact inputs hashed below",
+  "meshes": 1344,
+  "triangles": 402792,
+  "materials": 41,
+  "embeddedTextures": 2,
+  "files": {
+    "whole-island.blend": {
+      "bytes": 1270288,
+      "sha256": "2c6d42c5b4f7dd62d602c1f24f1c2b5db3f1a041b354070a373516dfb0f46393"
+    },
+    "whole-island.glb": {
+      "bytes": 11091300,
+      "sha256": "638bcb379609ff86ec30ba1d26ac846ded520006a227f107230012fff65263bf"
+    },
+    "whole-island-render.png": {
+      "bytes": 2312422,
+      "sha256": "d9d6ab458d6bb4e73de9d2f234a2da4c5f188dd1ae17c18433614c8003a0b2a1"
+    },
+    "build-scene.py": {
+      "bytes": 24023,
+      "sha256": "f30b5ad8dc9422ea84c31d5eb908afd99c786af28cbe1bbe104ba516a0ade8a4"
+    },
+    "editor-layout.py": {
+      "bytes": 3265,
+      "sha256": "172325b9b146d663cdb7546c3b42b0e9eec6a8c1fdfa55ea2c003d606d977a54"
+    },
+    "export-residents.ts": {
+      "bytes": 3454,
+      "sha256": "bd25d211f49795065dc7704f7a9298202c378a33cd7b4c859c971a8ead474e79"
+    },
+    "residents.json": {
+      "bytes": 2698403,
+      "sha256": "fa3169775d22fbb1ac48302fa878ff7041b0d99302f6ca980993b870c8300d0e"
+    },
+    "resident-texture-0.png": {
+      "bytes": 196192,
+      "sha256": "9d7885eb70704df7564366204fa6f023eec9bd2103d2565701cb85aa956dc20f"
+    },
+    "resident-texture-1.png": {
+      "bytes": 76114,
+      "sha256": "768b4875dfbcda6f7a375dc3735806daf49570393a4d23d0e49aa1113e1fc120"
+    },
+    "viewer.js": {
+      "bytes": 6698,
+      "sha256": "ddad3cb320bc29d965afdc8de06f61582a2b12615bd87a2d7fa95cd95a7941c3"
+    },
+    "viewer.bundle.js": {
+      "bytes": 631162,
+      "sha256": "4f9a071d1f11f5056393e4cebfc15234ce0eeff34f2d516b0cd1d4f94b998cd8"
+    },
+    "index.html": {
+      "bytes": 4755,
+      "sha256": "4498332f94f73061dfe0a0a5470dda0b0a9a50d359feeb831c428e465ff88a66"
+    },
+    "check-native.py": {
+      "bytes": 1560,
+      "sha256": "fa8742b967f4e50d2b588fd62841019944e06aa0116ec610c2c8eee31e05ff34"
+    },
+    "viewer-whole-desktop.png": {
+      "bytes": 96552,
+      "sha256": "c134ce6fa26a59c802135c3a0e4cef56111bf2a2bf36a9377e971486688e558d"
+    },
+    "viewer-whole-phone.png": {
+      "bytes": 35705,
+      "sha256": "d1014d74d35130bbd6dc652b116eb69bfb65a3e4a50a26b8d7e76ebfad8c8721"
+    },
+    "viewer-whole-tablet.png": {
+      "bytes": 69723,
+      "sha256": "b33381a3f91707d89e19d1861b51e0b066ade938143925a18068b3fa0c871de9"
+    },
+    "viewer-grove-phone.png": {
+      "bytes": 49233,
+      "sha256": "616c3c41d0a0e14e62247b76a69e6d328aac6ea2e354eb9cd6e3c8ed4cc046df"
+    },
+    "viewer-orbit-phone.png": {
+      "bytes": 38022,
+      "sha256": "66bdc80314df16fb85a9290ffa4ef4c794a6623efc86e47d771f050cac8ebef4"
+    },
+    "viewer-garden-tablet.png": {
+      "bytes": 88441,
+      "sha256": "ecdff98a40982a4cf6f591228093d5922218784029417c2069229ebb4dedee30"
+    },
+    "viewer-village-tablet.png": {
+      "bytes": 81053,
+      "sha256": "315883c70853d01bff0c0232bc31288e35b571d4eacd14b06a0a8a7b234efa5d"
+    }
+  },
+  "residentSources": {
+    "src/components/island/three/islandCharacters.ts": "378bbc8127df7e0d7db61ad5428dbf412f35f6221ef16110a0d20fc329ff6da9",
+    "src/components/island/three/residentRig.ts": "efbebea3ae6b3235301dd96c66598294c6deb2ae5dbdad33bd31dfb97afd9b51",
+    "src/components/island/three/residentFabric.ts": "94aac1f3650bb7ffe82f395519370e91664d173efa868c97b95b943144ea0f87",
+    "src/components/island/three/primitives.ts": "024f55cd70eeb753dccc5610613221c29e3fddae05385b2403ee53d85dce1e24",
+    "src/components/island/three/worldPalette.ts": "00ad2759a32e5664ab88d4bde483fa261d54401ce37228368763a41b4c8b24e6"
+  },
+  "gates": {
+    "artifactIntegrity": "PASS",
+    "visualAppeal": "author inspection only; user adoption pending",
+    "silentComprehension": "NOT_EVALUATED",
+    "gameRuntime": "NOT_EVALUATED"
+  }
+}

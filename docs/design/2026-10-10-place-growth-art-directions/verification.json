@@ -1,0 +1,90 @@
+{
+  "date": "2026-10-10",
+  "scope": "art proposals and static comparison page; not runtime",
+  "mode": "built-in image_gen",
+  "assets": [
+    {
+      "file": "PG-A-canopy-court.png",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "sha256": "39781787f69b7b7a3c1f128787ed3638376f4aadbea0e162f2128c5f018b231e",
+      "bytes": 2055486,
+      "evidence": "generated source art",
+      "selection": "unselected"
+    },
+    {
+      "file": "PG-B-branch-walk.png",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "sha256": "a8bec3cf166eef1b1036d38bec8b6a7ce9886b1b50bba4a39bbadbe2a6ca661e",
+      "bytes": 1912849,
+      "evidence": "generated source art",
+      "selection": "unselected"
+    },
+    {
+      "file": "PG-C-open-courtyard.png",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "sha256": "0e91b754fc170826f4d59250b09e9ff148f503698934e9884c77b117b104d032",
+      "bytes": 2132898,
+      "evidence": "generated source art",
+      "selection": "unselected"
+    },
+    {
+      "file": "PG-W-whole-island.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "sha256": "5fbd91c8db8135ad38e8c3120fd66b7984cb19c889bbda57cd3cf023c660609b",
+      "bytes": 2807866,
+      "evidence": "generated source art",
+      "selection": "unselected"
+    }
+  ],
+  "checks": {
+    "png_decode": "PASS 4",
+    "local_links": "PASS",
+    "docs_check": "PASS with 12 pre-existing Review By warnings",
+    "diff_whitespace": "PASS",
+    "responsive": [
+      {
+        "width": 320,
+        "horizontal_overflow": false,
+        "whole_island_loaded": true
+      },
+      {
+        "width": 390,
+        "horizontal_overflow": false,
+        "whole_island_loaded": true
+      },
+      {
+        "width": 768,
+        "horizontal_overflow": false,
+        "whole_island_loaded": true
+      },
+      {
+        "width": 1440,
+        "horizontal_overflow": false,
+        "whole_island_loaded": true
+      }
+    ],
+    "boards_loaded": "PASS 3",
+    "native_details": "PASS 3 expanded, 9 stages",
+    "silhouette_width": "64px each",
+    "browser_console_errors": [],
+    "viewport_override": "reset"
+  },
+  "art_review": {
+    "selection": "HOLD/unselected; quantity, positions, character and house details require locked revision",
+    "silent_comprehension_and_safety": "NOT_EVALUATED",
+    "runtime_integrity": "NOT_EVALUATED"
+  },
+  "screenshot": "showcase-review.png"
+}

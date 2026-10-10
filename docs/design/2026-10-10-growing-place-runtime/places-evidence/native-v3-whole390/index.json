@@ -1,0 +1,411 @@
+{
+  "schema": "sansu-native-v3-places-evidence-index-v1",
+  "createdAt": "2026-10-10T10:35:46.858591+00:00",
+  "runScope": "mature-diagnostics-only",
+  "selectedDiagnosticRuns": [
+    {
+      "id": "qa-place-whole-island-v1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    }
+  ],
+  "originalSourceRoot": "/private/tmp/sansu-places-native-v3-whole390-20261010-v8",
+  "copiedEvidenceRoot": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-growing-place-runtime/places-evidence/native-v3-whole390",
+  "artCandidate": "native-05-place-runtime-v3",
+  "overallPass": true,
+  "runtimeGate": "PASS",
+  "visualGate": "SEPARATE_LOCAL_V3_DIRECTION_ONLY",
+  "implementationComplete": false,
+  "scope": "scope.txt",
+  "scopeSha256": "60d767cca37bfaa2af675c7706db10d1a1b9602259788a066b0feb799632df73",
+  "originalFileCount": 4,
+  "actualCaptureCount": 2,
+  "originalBytes": 934936,
+  "originalCollectionHash": "f8c47f1c966a419883fa9e9748e478db9841d6a701611127210ade87b8651831",
+  "build": {
+    "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+    "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": true,
+        "candidate": "living-fantasy-garden-v2",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "target": "http://127.0.0.1:5289",
+  "flags": {
+    "VITE_ISLAND_ENABLED": "true",
+    "VITE_ISLAND_LIFE_ENABLED": "true",
+    "VITE_GROWING_ISLAND_ENABLED": "true",
+    "VITE_ISLAND_FANTASY_ENABLED": "true",
+    "VITE_ISLAND_LIFE_PREVIEW": "false",
+    "VITE_NATURE_TOWN_ENABLED": "false",
+    "VITE_HOME_JOURNEY_PREVIEW": "false",
+    "VITE_ISLAND_LIFE_DISCOVERY_ENABLED": "false",
+    "VITE_BUILD_PLAY_ENABLED": "false",
+    "VITE_EXPLORE_EXPERIENCE": "snap-root-v1"
+  },
+  "packHash": "a76669e943bc8acfc546dd12c2997880e1e20ef711617bd1d533b2df9afd1814",
+  "domainSourceHash": "4324c502a4f0224c9c6da8ed00d7d9c74f202a322b96b823bb14011c9fafc156",
+  "coverage": {
+    "actualAcquisitionJourneys": {
+      "count": 0,
+      "pass": false,
+      "journeys": [],
+      "scope": "NOT_RUN_IN_THIS_COMMAND",
+      "separateEvidence": "../native-v3-autonomous-use-failed/report.json"
+    },
+    "explicitMatureDiagnostics": {
+      "count": 1,
+      "selectedCount": 1,
+      "selectedDiagnosticRuns": [
+        {
+          "id": "qa-place-whole-island-v1",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          }
+        }
+      ],
+      "selectionSource": "raw-report",
+      "pass": true,
+      "fullFortyCoverage": false,
+      "byViewport": {
+        "390x844": [
+          {
+            "id": "qa-place-whole-island-v1",
+            "pass": true
+          }
+        ]
+      }
+    },
+    "wholeIsland": [
+      {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "pass": true,
+        "P06MilestonePresent": true,
+        "actualReceipts": [
+          {
+            "ruleId": null,
+            "placeId": null,
+            "actorId": null,
+            "targetId": null
+          }
+        ],
+        "nativeLatestReceipts": {
+          "P03": {
+            "villager": {
+              "at": 1791169200000,
+              "ruleId": "P03",
+              "anchorId": "l10",
+              "memberIds": [
+                "l10",
+                "l11",
+                "l12",
+                "l13",
+                "l7",
+                "l8",
+                "l9"
+              ],
+              "variant": "tiered",
+              "actorId": "qa-qa-place-whole-island-v1-friend-5",
+              "targetId": "l10:shore",
+              "revisionSha256": "9f3c458d88872a1eff33e5c62b1858f5bfe632ab413068d3706115e1220c8057"
+            }
+          },
+          "P01": {
+            "pokomoko": {
+              "at": 1791169200000,
+              "ruleId": "P01",
+              "anchorId": "l1",
+              "memberIds": [
+                "l1",
+                "l2",
+                "l3",
+                "l4",
+                "l6"
+              ],
+              "variant": "lane",
+              "actorId": "pokomoko",
+              "targetId": "l6",
+              "revisionSha256": "f5936f6f0c1bdea39106e8c337628f7b4341066d880251d2d28d636a11e7ff40"
+            },
+            "villager": {
+              "at": 1791169200000,
+              "ruleId": "P01",
+              "anchorId": "l1",
+              "memberIds": [
+                "l1",
+                "l2",
+                "l3",
+                "l4",
+                "l6"
+              ],
+              "variant": "lane",
+              "actorId": "qa-qa-place-whole-island-v1-friend-3",
+              "targetId": "l6",
+              "revisionSha256": "f5936f6f0c1bdea39106e8c337628f7b4341066d880251d2d28d636a11e7ff40"
+            }
+          },
+          "P02": {
+            "pokomoko": {
+              "at": 1791169200000,
+              "ruleId": "P02",
+              "anchorId": "p5",
+              "memberIds": [
+                "l1",
+                "l2",
+                "l3",
+                "l4",
+                "l6",
+                "p5"
+              ],
+              "variant": "court",
+              "actorId": "pokomoko",
+              "targetId": "l6",
+              "revisionSha256": "4d2340d5ef54f7e13450222b2ddba9baa18a0b93aaed2814b6f0602e67cdbce1"
+            }
+          }
+        },
+        "nativeSavedUseHistory": [
+          {
+            "at": 1791169200000,
+            "ruleId": "P03",
+            "anchorId": "l10",
+            "memberIds": [
+              "l10",
+              "l11",
+              "l12",
+              "l13",
+              "l7",
+              "l8",
+              "l9"
+            ],
+            "variant": "tiered",
+            "actorId": "qa-qa-place-whole-island-v1-friend-5",
+            "targetId": "l10:shore",
+            "revisionSha256": "9f3c458d88872a1eff33e5c62b1858f5bfe632ab413068d3706115e1220c8057"
+          },
+          {
+            "at": 1791169200000,
+            "ruleId": "P01",
+            "anchorId": "l1",
+            "memberIds": [
+              "l1",
+              "l2",
+              "l3",
+              "l4",
+              "l6"
+            ],
+            "variant": "lane",
+            "actorId": "pokomoko",
+            "targetId": "l6",
+            "revisionSha256": "f5936f6f0c1bdea39106e8c337628f7b4341066d880251d2d28d636a11e7ff40"
+          },
+          {
+            "at": 1791169200000,
+            "ruleId": "P02",
+            "anchorId": "p5",
+            "memberIds": [
+              "l1",
+              "l2",
+              "l3",
+              "l4",
+              "l6",
+              "p5"
+            ],
+            "variant": "court",
+            "actorId": "pokomoko",
+            "targetId": "l6",
+            "revisionSha256": "4d2340d5ef54f7e13450222b2ddba9baa18a0b93aaed2814b6f0602e67cdbce1"
+          },
+          {
+            "at": 1791169200000,
+            "ruleId": "P01",
+            "anchorId": "l1",
+            "memberIds": [
+              "l1",
+              "l2",
+              "l3",
+              "l4",
+              "l6"
+            ],
+            "variant": "lane",
+            "actorId": "qa-qa-place-whole-island-v1-friend-3",
+            "targetId": "l6",
+            "revisionSha256": "f5936f6f0c1bdea39106e8c337628f7b4341066d880251d2d28d636a11e7ff40"
+          }
+        ]
+      }
+    ],
+    "naturalSevenDayGrowth": "NOT_DONE",
+    "realDevice": "NOT_DONE",
+    "realChildComprehensionSafety": "NOT_DONE",
+    "combinedThreePlusFortySingleCommandClaim": false
+  },
+  "runtimeQa": {
+    "sourceRoot": "/private/tmp/sansu-native-v3-fixed-qa-20261010-v6",
+    "sourceHash": "a836a61f5b8db3e2c62996a5134ab2fa5b7626e4b3efdff6731746a16d6e8b25",
+    "harnessSha256": "2073a22a0d01c1da117bd7272ad9fb435ebe95851065d229348d964a5c6e537d",
+    "separateCorrectedQa": true,
+    "sourceInputs": {
+      "root": "/private/tmp/sansu-native-v3-fixed-qa-20261010-v6",
+      "fileCount": 2024,
+      "allExact": true,
+      "collectionHash": "0293fbc26bdcee9e2f6d126f002c37080944b98d47dbb216c3d4dbfce42eafa2"
+    },
+    "audit": "qa-byte-audit.json",
+    "auditSha256": "03fdf7ff365e18de91707ebcadbd7d5dc5a1555e6be0b9208f3e53fd24eca151",
+    "changes": [
+      {
+        "file": "tools/e2e-growing-places.mjs",
+        "frozenSha256": "0816b3eaeb60b412f941fb95ad4c92b45b105004dd89c90d6538ab8b6da860cd",
+        "qaSha256": "2073a22a0d01c1da117bd7272ad9fb435ebe95851065d229348d964a5c6e537d"
+      }
+    ],
+    "appAllOtherInputsExact": true,
+    "correctionScope": "QA driver only. At most3 real90s normal-reload observation windows for P06; unchanged current exact-use/revision predicate. Explicit diagnostic case/viewport selection reported. Actual acquisition and owner/goal confirmation bodies byte identical to QA v5. No app/clock/state/random/receipt changes. Other2023 original inputs exact; immutableNEW unchanged.",
+    "previousFailureEvidence": "../native-v3-harness-failed/report.json",
+    "confirmationDriver": {
+      "realVisibleEnabledTapsMaximum": 4,
+      "deadlineMs": 15000,
+      "deadlineScope": "loop-start deadline; not a hard cap on an individual tap wait",
+      "originalOwnerFieldsExceptNumericGrowth": "exact",
+      "naturalGrowth": "monotonic and bounded by saved nature.hours delta * existing maximum modifier 1.25",
+      "storedMatureFixedClock": "strict",
+      "ownerRightsAndTargetCell": "exact",
+      "directApplicationOrSaveWritesFromDriver": false,
+      "clockManipulationInAcquisition": false
+    },
+    "verifiedDriverCorrespondence": {
+      "acquiredJourney": {
+        "byteIdenticalToQaV5": true,
+        "sha256": "3e029f1a2da9eafcb497c1a655f2ff504274cce412aba4e62c11a88a991b3bf5",
+        "bytes": 6159
+      },
+      "ownerConfirmation": {
+        "byteIdenticalToQaV5": true,
+        "sha256": "c0060f84e89a4d3ff88a6f808293ada4c232223984248d141391ab21c7b348b4",
+        "bytes": 14440
+      },
+      "currentWholeEvidence": {
+        "byteIdenticalToQaV5": true,
+        "sha256": "fea907e84c2cb85567f6a864de3258901be94f208e865f9a58005aa8a5ec707e",
+        "bytes": 1837
+      }
+    },
+    "previousQaAudit": {
+      "source": "/private/tmp/sansu-native-v3-fixed-qa-audit-v5.json",
+      "sha256": "b38282fb25af59f2937668a5c9c4c96bc247df5e1ebfa4cfaa507c8671ed3846",
+      "sourceHash": "9f8877a2aed6eed3eae69d01d532584d5dc2a0924bd2a8d92ffc3470e4af232b"
+    },
+    "autonomousObservationDriver": {
+      "maximumWindows": 3,
+      "windowTimeoutMs": 90000,
+      "retryInput": "normal page reload only",
+      "recordEveryMissedWindowAndNativeFacts": true,
+      "exactActorTargetRevisionPredicate": "unchanged",
+      "physicalGestureWindows": 1,
+      "appClockDbReceiptOrAcceptanceInjection": false,
+      "wholeConditionMaximumWindows": 3,
+      "currentWholeFamiliesActorAndP06RevisionPredicate": "unchanged"
+    }
+  },
+  "originalGates": {
+    "runtime": "PASS",
+    "visualAppeal": "NOT_EVALUATED",
+    "comprehensionSafety": "NOT_EVALUATED",
+    "naturalSevenDayGrowth": "NOT_EVALUATED",
+    "realDevice": "NOT_EVALUATED"
+  },
+  "separateFocusedQaEvidence": {
+    "file": "focused-qa-driver-check.json",
+    "source": "/private/tmp/sansu-native-v3-whole-driver-check.json",
+    "sha256": "9b95b65aa219bf106bd3a284869f4b937bcf7516d238e6373584f8134d65b362",
+    "bytes": 1753,
+    "kind": "separate-focused-qa-evidence",
+    "scope": "MOCK driver checks only; no actual browser or app runtime claimed"
+  },
+  "fixedCandidate": {
+    "sourceHash": "c3ea0771d8e6af017075014e5430474393f636c86b093a640c077ec749ed99d7",
+    "manifest": "new-manifest.json",
+    "manifestSha256": "030df0ade620d4c30a873dac8a81b16cf82b687943ee283dbbfc836c0bfd9de0",
+    "inputs": {
+      "root": "/private/tmp/sansu-native-v3-20261010/new-source",
+      "fileCount": 2024,
+      "allExact": true,
+      "collectionHash": "d4838d3504004f1eccfaf87eb8c2ab2348a8e51c823b0a8f6abff9f1fd776820"
+    },
+    "outputs": {
+      "root": "/private/tmp/sansu-native-v3-20261010/new-source/dist",
+      "fileCount": 168,
+      "allExact": true,
+      "collectionHash": "4728c422dbb4b95cb56e4e7c999316787cacafd31258bedc132fae2fa419eda3"
+    },
+    "qaHarnessSha256": "0816b3eaeb60b412f941fb95ad4c92b45b105004dd89c90d6538ab8b6da860cd"
+  },
+  "files": [
+    {
+      "file": "report.json",
+      "source": "/private/tmp/sansu-places-native-v3-whole390-20261010-v8/report.json",
+      "sha256": "e5950adcf7aba665c8c09b7c3de0d54444b28b320670efd030df037b85262e9e",
+      "bytes": 580014,
+      "kind": "original-report"
+    },
+    {
+      "file": "contact-sheet.html",
+      "source": "/private/tmp/sansu-places-native-v3-whole390-20261010-v8/contact-sheet.html",
+      "sha256": "ea896a02d24bee7c72e1383bc6be40bf0882300b762a0765ff8d029a73a44893",
+      "bytes": 835,
+      "kind": "original-contact-sheet"
+    },
+    {
+      "file": "qa-place-whole-island-v1-390-grown-real-3d.png",
+      "source": "/private/tmp/sansu-places-native-v3-whole390-20261010-v8/qa-place-whole-island-v1-390-grown-real-3d.png",
+      "sha256": "c280dd613075ddb1be95225ecb1c1a0800c7582589dc167952a3ecd35f30690b",
+      "bytes": 177006,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 390,
+        "height": 844
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "c280dd613075ddb1be95225ecb1c1a0800c7582589dc167952a3ecd35f30690b"
+    },
+    {
+      "file": "qa-place-whole-island-v1-390-whole-island-used.png",
+      "source": "/private/tmp/sansu-places-native-v3-whole390-20261010-v8/qa-place-whole-island-v1-390-whole-island-used.png",
+      "sha256": "9d8333576085046b4e8e064ed627a07af82b2cbabbf428189b5195df4a637b39",
+      "bytes": 177081,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 390,
+        "height": 844
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "9d8333576085046b4e8e064ed627a07af82b2cbabbf428189b5195df4a637b39"
+    }
+  ]
+}

@@ -8,14 +8,19 @@ import { DROP_PLAY_MS, sampleDropPlay, type DropPlayKind } from './growingDropPl
 import type { ObjectLayer, Seat } from './objectLayer';
 import type { SceneLayout } from './sceneLayout';
 import { besideOpen, nearestOpen, walkRoute } from './walkers';
+import type { DerivedPlace, PlacePoint, PlaceUseTarget } from '../../../domain/growingIsland/placeTypes';
 
-type Mode = 'idle' | 'walk' | 'seat' | 'held' | 'boat' | 'pier' | 'sailing' | 'sleep';
+type Mode = 'idle' | 'walk' | 'seat' | 'held' | 'boat' | 'pier' | 'sailing' | 'sleep' | 'gallery' | 'shore';
+export interface PlaceUseReceipt { ruleId: DerivedPlace['ruleId']; placeId: string; revision: string; actorId: string; targetId: string }
 interface Walker {
     actor: Actor; at: { x: number; z: number }; path: Cell[]; mode: Mode; until: number;
     seat?: { cell: Cell; kind: Seat }; hopAt?: number; heading: number; home: Cell;
     /** How a friend answers a touch: lively ones spin, shy ones turn away, others wave. */
     react?: { kind: 'wave' | 'spin' | 'shy'; at: number };
     play?: { kind: DropPlayKind; cell: Cell; exit: Cell; at: number };
+    placeTarget?: { place: DerivedPlace; target: PlaceUseTarget };
+    gallery?: { route: PlacePoint[]; index: number; point: PlacePoint };
+    useAt?: number;
 }
 
 export const VISIBLE_WALKERS = 12;
@@ -35,6 +40,8 @@ export class GrowingLife {
     private layout?: SceneLayout;
     private layer?: ObjectLayer;
     private concert?: { cell: Cell; until: number };
+    private uses: PlaceUseReceipt[] = [];
+    private observedUses = new Set<string>();
 
     constructor(private readonly m: IslandMaterials, pokomoko: Actor) {
         this.root.name = 'growing-life';
@@ -63,6 +70,17 @@ export class GrowingLife {
         }
         for (const id of this.walkers.keys()) {
             const walker = this.walkers.get(id)!, villager = villagers.get(id);
+            if (walker.placeTarget) {
+                const current = layer.places.find(p => p.id === walker.placeTarget!.place.id && p.revision === walker.placeTarget!.place.revision);
+                if (!current) {
+                    // Exit before the old topology is closed. No actor remains on an
+                    // invisible gallery, even if its tree was moved while climbing.
+                    const oldEntry = walker.placeTarget.place.entrances[0] ?? walker.at;
+                    walker.at = nearestOpen(this.homePaths, oldEntry) ?? { ...HOME_CELL };
+                    walker.gallery = undefined; walker.placeTarget = undefined; walker.path = [];
+                    walker.seat = undefined; walker.play = undefined; walker.mode = 'idle'; walker.until = 0; walker.useAt = undefined;
+                }
+            }
             if (walker.play && this.seats.get(key(walker.play.cell)) !== (walker.play.kind === 'bench' ? 'sit' : 'swing')) {
                 walker.play = undefined; walker.seat = undefined; walker.mode = 'idle'; walker.until = 0;
             }
@@ -73,7 +91,7 @@ export class GrowingLife {
             const seatedOnExisting = walker.mode === 'seat' && walker.seat && this.seats.get(key(walker.seat.cell)) === walker.seat.kind;
             if ((!this.walkable.has(key({ x: Math.round(walker.at.x), z: Math.round(walker.at.z) }))
                 || walker.path.some(cell => !this.walkable.has(key(cell))))
-                && walker.mode !== 'boat' && walker.mode !== 'sailing' && walker.mode !== 'pier' && walker.mode !== 'held' && !seatedOnExisting) {
+                && walker.mode !== 'boat' && walker.mode !== 'sailing' && walker.mode !== 'pier' && walker.mode !== 'held' && walker.mode !== 'gallery' && !seatedOnExisting) {
                 walker.at = nearestOpen(this.walkable, walker.at) ?? { ...HOME_CELL };
                 walker.path = []; walker.mode = 'idle'; walker.until = 0;
             }
@@ -97,6 +115,7 @@ export class GrowingLife {
     }
 
     private goHome(walker: Walker) {
+        walker.gallery = undefined; walker.placeTarget = undefined;
         walker.mode = 'idle'; walker.until = 0;
         const from = nearestOpen(this.walkable, walker.at) ?? HOME_CELL;
         walker.at = { ...from };
@@ -107,6 +126,21 @@ export class GrowingLife {
 
     private chooseTarget(walker: Walker): Cell | undefined {
         const roll = Math.random();
+        if (roll < .45 && this.layer) {
+            const targets = this.layer.places.filter(p => p.stage === 'grown' || p.stage === 'lived')
+                .flatMap(place => place.useTargets.map(target => ({ place, target })));
+            // Prefer places this real actor has not used yet. This only changes its
+            // destination, never creates residents or increments a simulation count.
+            const fresh = targets.filter(({ place, target }) => !this.observedUses.has(this.receiptKey(place, walker.actor.id, target.id)));
+            const choices = fresh.length ? fresh : targets;
+            const chosen = choices[Math.floor(Math.random() * choices.length)];
+            if (chosen) {
+                const cell = chosen.target.kind === 'gallery' || chosen.target.kind === 'shore' ? chosen.target.cell
+                    : besideOpen(this.walkable, chosen.target.cell, this.homePaths);
+                if (cell && this.homePaths.has(key(cell))) { walker.placeTarget = chosen; return cell; }
+            }
+        }
+        walker.placeTarget = undefined;
         if (this.state?.bridge && roll < .15) return bridgeEnd(this.state);
         if (roll < .35) return besideOpen(this.walkable, walker.home, this.homePaths);
         if (roll < .75 && this.seats.size) {
@@ -160,9 +194,11 @@ export class GrowingLife {
         arms.forEach((arm, i) => {
             const side = i === 0 ? -1 : 1;
             let x = 0, z = 0;
-            if (w.mode === 'walk' && !reduced) x = Math.sin(now / 110 + i * Math.PI) * .6;
+            if ((w.mode === 'walk' || w.mode === 'gallery') && !reduced) x = Math.sin(now / 110 + i * Math.PI) * .6;
             if (w.mode === 'seat' && w.seat?.kind === 'eat' && !reduced) x = Math.max(0, Math.sin(now / 350 + i * Math.PI)) * -1.7;
             if (w.mode === 'seat' && w.seat?.kind === 'tend') x = reduced ? -.8 : -.8 + Math.sin(now / 300 + i) * .4;
+            if (w.mode === 'seat' && w.seat?.kind === 'play') z = side * (.55 + (reduced ? 0 : Math.sin(now / 240 + i) * .22));
+            if (w.mode === 'shore') x = reduced ? -.25 : -.25 + Math.sin(now / 550 + i) * .18;
             if (w.mode === 'seat' && w.seat?.kind === 'slide') z = side * .9;
             // Rotating a hanging arm about z by side × angle lifts it outward on its own side.
             if (concert) z = side * (1.2 + (reduced ? 0 : Math.sin(now / 260 + i) * .5));
@@ -202,7 +238,7 @@ export class GrowingLife {
     pick(id: string) {
         const w = this.walkers.get(id);
         if (!w || id === 'visitor' || w.mode === 'boat' || w.mode === 'sailing') return false;
-        w.mode = 'held'; w.path = []; w.seat = undefined; w.play = undefined; return true;
+        w.mode = 'held'; w.path = []; w.seat = undefined; w.play = undefined; w.placeTarget = undefined; w.gallery = undefined; w.useAt = undefined; return true;
     }
 
     drag(id: string, point: T.Vector3) {
@@ -214,12 +250,16 @@ export class GrowingLife {
     drop(id: string, now: number): { kind: DropPlayKind; cell: Cell } | undefined {
         const w = this.walkers.get(id); if (!w || w.mode !== 'held') return;
         const cell = { x: Math.round(w.at.x), z: Math.round(w.at.z) }, seat = this.seats.get(key(cell));
+        const gallery = this.layer?.places.filter(p => p.stage === 'grown' || p.stage === 'lived')
+            .flatMap(place => place.useTargets.filter(target => target.kind === 'gallery' && key(target.cell) === key(cell)).map(target => ({ place, target })))[0];
+        if (gallery?.target.route?.length) { w.at = { ...cell }; w.placeTarget = gallery; this.enterPlace(w, now); return; }
         if (seat && !this.seatOccupied(cell, w)) {
             w.mode = 'seat'; w.seat = { cell, kind: seat }; w.at = { ...cell };
             const kind = seat === 'sit' ? 'bench' : seat === 'swing' ? 'swing' : undefined;
             const exit = kind ? this.playExit(cell, kind) : HOME_CELL;
             w.play = kind ? { kind, cell, exit, at: now } : undefined;
             w.until = now + (kind ? DROP_PLAY_MS : 7000);
+            w.useAt = now;
             return kind ? { kind, cell } : undefined;
         }
         const open = nearestOpen(this.walkable, w.at) ?? HOME_CELL;
@@ -231,6 +271,54 @@ export class GrowingLife {
         const w = this.walkers.get(id); if (!w || w.mode !== 'held') return;
         const open = nearestOpen(this.walkable, w.at) ?? HOME_CELL;
         w.at = { ...open }; w.mode = 'idle'; w.seat = undefined; w.play = undefined; w.until = now + 1500;
+    }
+
+    private receiptKey(place: DerivedPlace, actorId: string, targetId: string) { return `${place.id}:${place.revision}:${actorId}:${targetId}`; }
+
+    private observeUse(walker: Walker, place: DerivedPlace, target: PlaceUseTarget) {
+        if (walker.actor.id === 'visitor' || !walker.actor.root.visible || !this.state) return;
+        if (walker.actor.id !== 'pokomoko' && !this.state.villagers.some(v => v.id === walker.actor.id && !v.away)) return;
+        const receipt = this.receiptKey(place, walker.actor.id, target.id);
+        if (this.observedUses.has(receipt)) return;
+        this.observedUses.add(receipt);
+        this.uses.push({ ruleId: place.ruleId, placeId: place.id, revision: place.revision, actorId: walker.actor.id, targetId: target.id });
+    }
+
+    /** Drained only after the frame containing the action was successfully rendered. */
+    takePlaceUses() { const uses = this.uses; this.uses = []; return uses; }
+
+    /** A use outside the camera was real life, but it was not a shown action. Permit
+     * a fresh receipt when this target is actually used in a visible frame. */
+    deferPlaceUse(receipt: PlaceUseReceipt) {
+        const place = this.layer?.places.find(p => p.id === receipt.placeId && p.revision === receipt.revision);
+        if (place) this.observedUses.delete(this.receiptKey(place, receipt.actorId, receipt.targetId));
+    }
+
+    retryPlaceUse(receipt: PlaceUseReceipt) {
+        const place = this.layer?.places.find(p => p.id === receipt.placeId && p.revision === receipt.revision);
+        if (place && this.walkers.get(receipt.actorId)?.actor.root.visible) this.uses.push(receipt);
+    }
+
+    /** Touching a real gallery sends the existing hero to its reachable stair foot. */
+    visitGallery(actorId: string, placeId: string, now: number) {
+        const walker = this.walkers.get(actorId), place = this.layer?.places.find(p => p.id === placeId), target = place?.useTargets.find(t => t.kind === 'gallery');
+        if (!walker || !place || !target || walker.mode === 'boat' || walker.mode === 'sailing' || walker.mode === 'held') return false;
+        const from = nearestOpen(this.homePaths, walker.at), path = from ? walkRoute(this.homePaths, from, target.cell) : undefined;
+        if (!path?.length) return false;
+        walker.at = { ...from! }; walker.seat = undefined; walker.play = undefined; walker.gallery = undefined;
+        walker.placeTarget = { place, target }; walker.path = path.slice(1);
+        if (walker.path.length) walker.mode = 'walk'; else this.enterPlace(walker, now);
+        return true;
+    }
+
+    private enterPlace(walker: Walker, now: number) {
+        const destination = walker.placeTarget; if (!destination) return false;
+        const { target } = destination;
+        if (target.kind === 'gallery' && target.route?.length) {
+            walker.mode = 'gallery'; walker.gallery = { route: target.route, index: 1, point: { ...target.route[0] } }; walker.path = []; walker.useAt = now; return true;
+        }
+        if (target.kind === 'shore') { walker.mode = 'shore'; walker.path = []; walker.until = now + 4200; walker.useAt = now; return true; }
+        return false;
     }
 
     tick(now: number, delta: number, reduced: boolean, night: boolean) {
@@ -287,7 +375,8 @@ export class GrowingLife {
             if (w.mode === 'idle' && now > w.until) {
                 const target = this.chooseTarget(w), from = nearestOpen(this.walkable, w.at);
                 const path = target && from ? walkRoute(this.walkable, from, target) : undefined;
-                if (path && path.length > 1) { w.path = path.slice(1); w.mode = 'walk'; } else w.until = now + 3000;
+                if (path && path.length > 1) { w.path = path.slice(1); w.mode = 'walk'; }
+                else if (!path || !this.enterPlace(w, now)) w.until = now + 3000;
             }
             if (w.mode === 'walk') {
                 let budget = delta * SPEED;
@@ -298,14 +387,36 @@ export class GrowingLife {
                     if (d > 1e-6) w.heading = Math.atan2(dx, dz);
                 }
                 if (!w.path.length) {
+                    if (this.enterPlace(w, now)) continue;
                     const seat = this.seatBeside({ x: Math.round(w.at.x), z: Math.round(w.at.z) });
-                    if (seat && Math.random() < .6) { w.mode = 'seat'; w.seat = seat; w.until = now + 6000; }
+                    if (seat && Math.random() < .6) { w.mode = 'seat'; w.seat = seat; w.until = now + 6000; w.useAt = now; }
                     else { w.mode = 'idle'; w.until = now + 2500 + Math.random() * 5000; }
                 }
             }
+            if (w.mode === 'gallery' && w.gallery) {
+                let budget = delta * SPEED;
+                const gallery = w.gallery;
+                while (budget > 0 && gallery.index < gallery.route.length) {
+                    const next = gallery.route[gallery.index], dx = next.x - gallery.point.x, dz = next.z - gallery.point.z, dy = next.y - gallery.point.y;
+                    const distance = Math.hypot(dx, dy, dz);
+                    if (distance <= budget) { gallery.point = { ...next }; gallery.index++; budget -= distance; }
+                    else { const t = budget / distance; gallery.point = { x: gallery.point.x + dx * t, z: gallery.point.z + dz * t, y: gallery.point.y + dy * t }; budget = 0; }
+                    if (Math.hypot(dx, dz) > 1e-5) w.heading = Math.atan2(dx, dz);
+                }
+                w.at = { x: gallery.point.x, z: gallery.point.z };
+                if (w.placeTarget && gallery.point.y - layout.heightAt(gallery.point) > .8) this.observeUse(w, w.placeTarget.place, w.placeTarget.target);
+                actor.root.position.copy(layout.floorPoint(gallery.point)); actor.root.rotation.set(0, w.heading, 0);
+                actor.body.rotation.x = 0;
+                actor.feet.forEach((foot, i) => { foot.rotation.x = reduced ? 0 : Math.sin(now / 110 + i * Math.PI) * .5; });
+                this.poseArms(w, now, reduced, false);
+                if (gallery.index >= gallery.route.length) { w.gallery = undefined; w.placeTarget = undefined; w.mode = 'idle'; w.until = now + 3000; }
+                continue;
+            }
+            if (w.mode === 'shore' && w.useAt !== undefined && now - w.useAt >= 700 && w.placeTarget) this.observeUse(w, w.placeTarget.place, w.placeTarget.target);
+            if (w.mode === 'shore' && now > w.until) { w.mode = 'idle'; w.placeTarget = undefined; w.useAt = undefined; w.until = now + 2000; }
             if (w.mode === 'seat' && now > w.until) {
                 if (w.play) w.at = { ...w.play.exit };
-                w.mode = 'idle'; w.seat = undefined; w.play = undefined; w.until = now + 1500;
+                w.mode = 'idle'; w.seat = undefined; w.play = undefined; w.placeTarget = undefined; w.useAt = undefined; w.until = now + 1500;
             }
             const position = w.mode === 'seat' && w.seat ? layout.point(w.seat.kind === 'tend' ? w.at : w.seat.cell) : layout.point(w.at);
             const play = w.play && w.mode === 'seat' ? sampleDropPlay(w.play.kind, now - w.play.at, reduced) : undefined;
@@ -330,7 +441,7 @@ export class GrowingLife {
             }
             if (w.mode === 'seat' && w.seat?.kind === 'tend') lean = reduced ? .35 : .35 + Math.sin(now / 400) * .12;
             if (w.mode === 'seat' && w.seat) y = w.seat.kind === 'sit' ? .16 : w.seat.kind === 'swing' ? .2 : w.seat.kind === 'slide' || w.seat.kind === 'tend' ? 0
-                : w.seat.kind === 'bounce' ? .2 + (reduced ? 0 : Math.abs(Math.sin(now / 260)) * .4) : .05;
+                : w.seat.kind === 'bounce' ? .2 + (reduced ? 0 : Math.abs(Math.sin(now / 260)) * .4) : w.seat.kind === 'play' ? .04 : .05;
             if (play) y *= 1 - leaving * leaving * (3 - 2 * leaving);
             if (w.mode === 'held') y = .55 + (reduced ? 0 : Math.sin(now / 120) * .03);
             if (w.mode === 'walk' && !reduced) y = Math.abs(Math.sin(now / 110)) * .035;
@@ -339,6 +450,12 @@ export class GrowingLife {
                 if (t >= 1) w.hopAt = undefined; else y += Math.sin(Math.PI * t) * (reduced ? .08 : .35);
             }
             actor.root.position.set(position.x, position.y + y + (play?.lift ?? 0), position.z + (play?.travel ?? 0));
+            if (w.mode === 'seat' && w.seat && w.useAt !== undefined && now - w.useAt >= 700 && !leaving) {
+                for (const place of layer.places.filter(p => p.stage === 'grown' || p.stage === 'lived')) {
+                    const target = place.useTargets.find(t => (t.kind === 'seat' || t.kind === 'play') && key(t.cell) === key(w.seat!.cell));
+                    if (target) this.observeUse(w, place, target);
+                }
+            }
             actor.root.rotation.y = w.mode === 'seat' ? (w.seat?.kind === 'tend' && w.seat ? Math.atan2(w.seat.cell.x - w.at.x, w.seat.cell.z - w.at.z) : 0) : w.heading;
             if (w.react && now - w.react.at < 1400 && !reduced) {
                 const t = (now - w.react.at) / 1400;

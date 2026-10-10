@@ -10,6 +10,7 @@ import type { GrowingState } from '../../../domain/growingIsland';
 import { wrapPokomoko } from './actors';
 import { GrowingLife } from './growingLife';
 import { sceneLayout, type SceneLayout } from './sceneLayout';
+import { buildPlaceGround } from './placeGround';
 
 /** Lights, sea, garden ground, Pokomoko's cottage and the living layer, shared by one world. */
 export function createWorldScene(renderer: T.WebGLRenderer) {
@@ -27,17 +28,29 @@ export function createWorldScene(renderer: T.WebGLRenderer) {
     scene.add(life.root);
     const cottage = buildGardenCottage();
     let ground: ReturnType<typeof buildGardenGround> | undefined, groundKey = '';
+    let terrain: ReturnType<typeof buildPlaceGround> | undefined;
     let time: GardenTime = 'day';
 
     const setGround = (state: GrowingState, layout: SceneLayout) => {
         if (layout.key === groundKey && ground) return;
         ground?.root.removeFromParent(); ground?.dispose();
-        ground = buildGardenGround({ bounds: layout.bounds, moisture: cell => soilAt(state, cell) }, layout.point);
+        terrain?.root.removeFromParent(); terrain?.dispose();
+        ground = buildGardenGround({ bounds: layout.bounds, moisture: cell => soilAt(state, cell), shelterTree: layout.artMargin <= 1.1, heightAt: layout.heightAt }, layout.point);
+        terrain = buildPlaceGround(layout); scene.add(terrain.root);
+        if (layout.artMargin > 1.1) {
+            // The named decorative pedestal is separate from sea and floor planting.
+            // The shared triangulated floor and its irregular bank now carry the island.
+            ground.root.getObjectByName('garden-island-pedestal')!.visible = false;
+
+        }
+        const shadowSpan = Math.max(9, layout.width / 2 + layout.artMargin, layout.depth / 2 + layout.artMargin);
+        Object.assign(sun.shadow.camera, { left: -shadowSpan, right: shadowSpan, top: shadowSpan, bottom: -shadowSpan });
+        sun.shadow.camera.updateProjectionMatrix();
         // The shared garden's 40-unit sea was sized for the old five expansions.
         // Larger districts still need sea behind the whole zoomed-out camera.
-        if (layout.width + layout.depth > 26) {
+        if (layout.artMargin > 1.1 || layout.width + layout.depth > 26) {
             const sea = ground.root.getObjectByName('life-sea') as T.Mesh<T.PlaneGeometry, T.ShaderMaterial>;
-            const size = (layout.width + layout.depth) * 12;
+            const size = Math.max(160, (layout.width + layout.depth + layout.artMargin * 2) * 12);
             sea.geometry.dispose(); sea.geometry = new T.PlaneGeometry(size, size);
             // Keep waves at the original world scale when widening the water plane.
             sea.material.vertexShader = sea.material.vertexShader.replace('p=uv;', 'p=position.xy/40.+.5;');
@@ -51,14 +64,23 @@ export function createWorldScene(renderer: T.WebGLRenderer) {
 
     return {
         scene, m, life, hemi, sun,
-        layout: (state: GrowingState) => { const layout = sceneLayout(state); setGround(state, layout); return layout; },
+        groundAt(ray: T.Raycaster) { return terrain ? ray.intersectObject(terrain.floor, false)[0]?.point : undefined; },
+        layout: (state: GrowingState) => {
+            const layout = sceneLayout(state); setGround(state, layout);
+            // ObjectLayer is attached immediately after layout(). Resolve it lazily
+            // so this new frame contains the newly built owners and derived rooms.
+            layout.cameraObjects = () => [terrain?.root, cottage.root,
+                ground?.root.getObjectByName('garden-ground-details'), scene.getObjectByName('growing-objects')]
+                .filter((object): object is T.Object3D => Boolean(object));
+            return layout;
+        },
         setTime(next: GardenTime) {
             time = next; applyGardenLight(scene, renderer, hemi, sun, next);
             ground?.setTime(next); cottage.setTime(next);
         },
         animate(at: number, reduced: boolean) { ground?.animate(at, reduced); },
         dispose() {
-            life.dispose(); ground?.dispose(); cottage.dispose(); m.dispose();
+            life.dispose(); ground?.dispose(); terrain?.dispose(); cottage.dispose(); m.dispose();
         },
     };
 }

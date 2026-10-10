@@ -265,3 +265,9 @@ Growing balanceの行に従う。`tools/e2e-growing-balance.mjs`は390/768幅で
 ### 成長の全体整合（2026-10-04）
 
 Growing balanceの行に従う。`pacing.test.ts`は建設/装飾に加え、実すみごこちを改善する配置を3種類の島と6/20/40問で比較し、人口・レベル・解放・土地・残高・bankを併記する。合計あそび点は入居条件ではない。旧/新航行の見た目は保存済みdockAtと最後のarrivedAtを使う純粋回帰で検査する。`tools/e2e-growing-balance.mjs`は実回答の旅程後、13住人/7家の明示fixtureで表示枠外の本人を一覧から選び、実カメラを本人の家へ寄せ、名前の操作/所有・時間不変/同学習への復帰を両幅で検査する。夜の室内と表示人数の保持はGrowingLife回帰で確認する。人口fixtureを実入居・子どもの再訪の証拠としない。
+
+### 育つ場所v1（2026-10-10）
+
+[6目標・15配置・4関係](../product/island-place-goals.md)は`places.test.ts`、`placeRelations.test.ts`、`placeGeometry.test.ts`と`placeGoals.repository.test.ts`で領域/通水/木陰/共有床高/実足と床/現在利用/保存4・旧writer隔離を検査する。`tools/e2e-growing-places.mjs`は[検証入口](../runbooks/growing-verification.md#育つ場所v1の追加検証)の固定candidateを使用する。390/768/320幅の通常回答・苗取得・接続/分離/再接続を実操作し、20件の明示成熟配置は390/768幅で別に記録する。全島P06は本物のぽこもこと住人のrenderer利用から記録し、fixtureに利用事実を注入しない。
+
+版3→4は`tools/check-growing-legacy-writer.mjs`と`tools/e2e-growing-update.mjs`の実OLD→NEW→保存4を読めるROLLBACKで確認する。全所有・育成・本人の家/見た目と学習の予約を比較し、通常更新・中断復旧・offlineを分ける。実時間で数日待つ成熟、実機、独立した無文字理解/再訪、公開は別ゲート。最新runtime全景をnative-05の全島3Dと比較し、source/revision/version/flag/候補IDとcritical-path contact sheetを残す。

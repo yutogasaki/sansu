@@ -22,7 +22,7 @@ export async function loadDomain(root = process.cwd()) {
     `, resolveDir: root }, absWorkingDir: root, preserveSymlinks: true,
     bundle: true, platform: 'node', format: 'esm', write: false, metafile: true, logLevel: 'silent' });
     const files = [...Object.keys(compiled.metafile.inputs).filter(file => file !== '<stdin>'), 'package-lock.json'].sort();
-    const roots = await Promise.all(['src', 'node_modules'].map(async name => [name, await fs.realpath(path.join(root, name))]));
+    const roots = await Promise.all(['src', 'docs', 'node_modules'].map(async name => [name, await fs.realpath(path.join(root, name))]));
     const sources = Object.fromEntries(await Promise.all(files.map(async file => {
         const actual = await fs.realpath(path.resolve(root, file));
         let key = file === 'package-lock.json' ? file : undefined;
@@ -94,7 +94,7 @@ function makeCase(domain, id, name) {
     }
     return { id, label: name, synthetic: true, conditions: id === 'starter' ? ['new owner, no answers']
         : ['synthetic credit/unlocks', 'explicit maturity/population/clock, no earned learning'], profile,
-    island: { profileId, version: 3, revision: 0, createdAt: EPOCH, updatedAt: EPOCH, state } };
+    island: { profileId, version: 4, revision: 0, createdAt: EPOCH, updatedAt: EPOCH, state } };
 }
 
 export function validatePack(pack, loaded) {
@@ -109,7 +109,7 @@ export function validatePack(pack, loaded) {
         const { profile, island } = item, state = island.state;
         assert.equal(item.synthetic, true);
         assert.equal(profile.id, `qa-fixed-growing-${item.id}-v1`); assert.equal(island.profileId, profile.id);
-        assert.equal(state.seed, profile.id); assert.equal(island.version, 3); assert.equal(state.rules, 'growing-island-v1');
+        assert.equal(state.seed, profile.id); assert.equal(island.version, 4); assert.equal(state.rules, 'growing-island-v1');
         assert.deepEqual(state.learned, []); assert.deepEqual(profile.recentAttempts, []);
         assert.deepEqual(profile.mathSkills, {}); assert.deepEqual(profile.vocabWords, {});
         assert.equal(profile.todayCount, 0); assert.equal(profile.streak, 0); assert.equal(profile.lastStudyDate, '');

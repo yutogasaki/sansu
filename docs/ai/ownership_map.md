@@ -15,6 +15,8 @@
 
 | 話題 | 正本 | 補助文書 | 更新するタイミング |
 |---|---|---|---|
+| 育つ場所の目標と組み合わせ | [product/island-place-goals.md](/docs/product/island-place-goals.md)（規則の意味）、[product/island-place-goals.json](/docs/product/island-place-goals.json)（初期値/配置） | 01、52 §0.5、構築/美術戦略、設計ショーケース | native-05を到達方向として目標・接続・成熟・分離・場所の関係を具体化するとき。D1〜D4を52の規則/保存4/共有表示へ統合済み。ローカルの実取得・成熟診断・保存/更新の証拠は実装ADRから参照し、全景美術の完成・独立観察/実機/公開は別ゲートにする |
+| 島構築・美術の制作戦略 | [product/island-construction-strategy.md](/docs/product/island-construction-strategy.md)（体験・制作順）、[product/island-art-strategy.md](/docs/product/island-art-strategy.md)（造形）、成長系列案 | 01、52 §0.4、51の美術章、参考ショーケース、ADR | 配置から場所が育つ制作方針と比較単位を改めるとき。実装規則は52、保存は13、画面/入口は43/44へ反映し、戦略だけでruntimeを切り替えない |
 | 次期の幻想の暮らし・包括再設計 | [product/51_living_fantasy_island_spec.md](/docs/product/51_living_fantasy_island_spec.md) と担当8章 | 憲法、01、07、13、43、48、49、50、デザイン憲章、MASTER | living-fantasy-v1 の世界・経済・発見・画面・移行・共有・受入を変えるとき。現行挙動は現行正本、次期差分は51へ集約する |
 | 今の島とNature Townの統合・旧試作の扱い | [product/island-nature-integration.md](/docs/product/island-nature-integration.md) | 01、48、50、nature-town/00、統合タスク | 統合範囲、引き継ぐ機能、現在の絵・学習・保存の保護、旧試作の扱いが変わるとき |
 | 仕様書を人向けに探す分類 | [product/README.md](/docs/product/README.md) | [index.md](/docs/index.md) | 仕様の追加・削除、現行/旧モード/試作/提案の位置づけ、主要な入口が変わるとき。個別仕様の内容は各正本へ書く |

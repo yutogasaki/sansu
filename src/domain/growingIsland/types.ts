@@ -1,6 +1,7 @@
 import type { Cell, ItemKind, LifeItem } from '../islandLife/model';
 import type { RoomDecor, WallPatternId, WordGroupId } from './room';
 import type { FlowerColor } from './flowers';
+import type { PlaceGoalId, PlaceProgress } from './placeTypes';
 
 export type { Cell, ItemKind };
 
@@ -126,6 +127,8 @@ export interface GrowingState {
     arrivals: string[];
     tutorial: 'first-home' | 'done';
     guidance?: GrowingGuidance;
+    /** Optional island goals and renderer receipts. Owners, clocks and rewards remain separate. */
+    placeProgress?: PlaceProgress;
     learned: string[];
     /** Completions at or before this time were counted and their ids pruned (§18.1). */
     learnedFloor?: number;
@@ -172,6 +175,9 @@ export type Command =
     | { type: 'emblem'; image: string; glyph: string }
     | { type: 'ack-moment'; day: number }
     | { type: 'choose-goal'; id?: AchievementId }
+    | { type: 'choose-place-goal'; id?: PlaceGoalId }
+    | { type: 'place-used'; profileId: string; expectedRevision: number; ruleId: PlaceGoalId; placeId: string; revision: string; actorId: string; targetId: string }
+    | { type: 'place-shown'; profileId: string; expectedRevision: number; ruleId: PlaceGoalId; revision: string }
     | { type: 'choose-starter-play'; id: 'A3' | 'A4' }
     | { type: 'starter-guide'; automatic: boolean }
     | { type: 'ack-revisit-flower'; id: string }

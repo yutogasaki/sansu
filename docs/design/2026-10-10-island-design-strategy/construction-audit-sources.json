@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-10",
+  "evidenceType": "working-tree-source-audit",
+  "baseRevision": "7a66929c231defc59388a5cc82a58dec8ad8faee",
+  "uncommitted": true,
+  "runtimeTarget": "NOT_CAPTURED / U-01 user-provided target unknown",
+  "files": [
+    {
+      "path": "src/domain/growingIsland/environment.ts",
+      "sha256": "c30932435e641c77598b762bea4c1bc654d27c4cd78a347f141018338e901c70"
+    },
+    {
+      "path": "src/domain/growingIsland/space.ts",
+      "sha256": "ff45383fd6270928ad52811af20495d4fb22541a5ddc06b42c79ee1c1ee2b21c"
+    },
+    {
+      "path": "src/domain/growingIsland/town.ts",
+      "sha256": "c0d49aa8bb35c15fe0f2d1ccdd3d3d899ef4ca525097392f4027e8a937adf723"
+    },
+    {
+      "path": "src/domain/growingIsland/types.ts",
+      "sha256": "b8bf92fd6271065b9835fe58cdce57366ddb1e6c58ed8585117d363740bbb378"
+    },
+    {
+      "path": "src/components/island/growing/objectLayer.ts",
+      "sha256": "45c0ea87e0f525d7f02653b74330badac42ca360861189b0d899d324776025fb"
+    },
+    {
+      "path": "src/components/island/growing/plotGeometry.ts",
+      "sha256": "87819d84f27a4716651c72899de665fbc19c3ec3145cc2314794a720ffe61aaa"
+    },
+    {
+      "path": "src/components/island/growing/sceneLayout.ts",
+      "sha256": "2b12d004773ee46f882b89174aca018d2ae6e3b6a2bbbbaa9153f1b77864ce9e"
+    },
+    {
+      "path": "src/components/island/growing/worldScene.ts",
+      "sha256": "90466a9b8204c1dd65a0550088e2466cc16828af93e02e295c24d3fcfe2d3697"
+    },
+    {
+      "path": "src/components/island/three/garden/garden.ts",
+      "sha256": "ad1c5bf60c8205247dea974007b89617781c292ff835bf7746eda97a766f7911"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+この追記は、固定NEW candidateを使ったGrowing guidance/balanceの本番形式QAです。すべてQAのために生成した隔離プロフィールと実UI回答で、実利用者のデータ・端末・PWAを使用していません。外部公開・配信は行っていません。
+
+http://127.0.0.1:5286が固定NEWのversion/revisionを配信していることを起動前に照合し、新しいChromium contextで390×844/通常motionと768×1024/reduced motionを検証しました。各旅程23問の実回答、有料配置、実service workerによるoffline再読込・同予約の再開・offline回答・保存版4保持を確認しています。guidanceは案内・色目標・本人の本・farm購入も確認します。DB fixtureや時間加速は使用していません。実機iOS/Android、実利用者、子どもの理解・再訪、美術の合格を測った証拠ではありません。
+
+原reportとactual captureは原bytesのままコピーし、原絶対pathと内容を保持しました。新しいrelative pathと原SHA256はこのディレクトリのindex.jsonを参照してください。既存storage-evidence/index.jsonと既存raw証拠は変更していません。
+
+fixed sourceHash: acc7dc9e4eccec27e5fa30b36346e84cf52bc5ecbc8725a2e3afb05d928ee5c8
+version: place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd
+全source inputs 2011件と全dist files 168件を、両CLI終了後に元manifestと再照合し一致しました。両CLIはexit 0で完了し、それぞれbrowser.close()をawaitしてから終了します。既存preview serverはroot管理です。

@@ -1,0 +1,48 @@
+{
+  "id": "place-goals-design-verification-v1",
+  "status": "PASS",
+  "scope": "Docs and standalone design showcase only",
+  "checks": {
+    "catalog": "catalog-check.json",
+    "browser": "viewer-check.json",
+    "docs": {
+      "command": "npm run docs:check",
+      "result": "PASS",
+      "existingReviewByWarnings": 12
+    },
+    "syntax": {
+      "command": "node --check docs/design/2026-10-10-island-place-goals/main.js",
+      "result": "PASS"
+    },
+    "whitespace": {
+      "command": "git diff --check",
+      "result": "PASS"
+    }
+  },
+  "imageEvidence": {
+    "showcase-desktop.png": {
+      "bytes": 78784,
+      "sha256": "0aff9c9a30a9f120cf44b67ca6a2d264723d751962422b0c3f72022eef5cc43b"
+    },
+    "showcase-tablet.png": {
+      "bytes": 65710,
+      "sha256": "da2410c0c636d3a9477e3efb58ab89d255f25d74e07b0fd52b3d608223f61d6a"
+    },
+    "showcase-phone.png": {
+      "bytes": 32644,
+      "sha256": "a581a822c183ec9543241a2f06e16b855bdd83d9a741f6493736f77397d309fa"
+    },
+    "showcase-small.png": {
+      "bytes": 18167,
+      "sha256": "1f522c726b8c0d4321a6a4ef6a1fe150db8ad52c7155b7d67c893114b09e61c1"
+    },
+    "showcase-final.png": {
+      "bytes": 56487,
+      "sha256": "eebb313ce0f627f2af5975ba00133f7d93b4229a543c04fe12138719d3f9de25"
+    }
+  },
+  "artDirection": "ACCEPTED_FOR_MECHANISM_DESIGN",
+  "gameMechanics": "DESIGN_ONLY",
+  "naturalAcquisitionAndGrowth": "NOT_EVALUATED",
+  "independentComprehension": "NOT_EVALUATED"
+}

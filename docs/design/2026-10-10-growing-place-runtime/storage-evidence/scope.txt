@@ -1,0 +1,9 @@
+この資料は、今回の保存版4のために生成した隔離QAの証拠です。全プロフィール・回答・所有データはQAのために生成し、実利用者のデータ・端末・PWAを使用していません。外部公開・配信は行っていません。
+
+OLD/NEW/ROLLBACKのmanifestは独立ビルドのsource/dist/versionを識別します。NEWとROLLBACKは同じ固定source inputsから作った保存版4対応のビルドです。JSONは原bytesをそのままコピーし、原本の絶対path、版、source hash、dist hashを変更していません。原pathは実際に検証した一時candidate/evidenceの保存先を示し、このdocsディレクトリへの移設先を示す値ではありません。移設後のrelative pathと原SHA256はindex.jsonを参照してください。
+
+legacy-writer-v4.jsonは実際の旧/新source writerを隔離fake IndexedDBで実行した診断です。実ブラウザの利用者移行の証拠とは区別します。update-qa-v4-local-origin/report.jsonと14枚のcaptureは、隔離localhost origin・新しいChromium contextで実UIと実service workerを使用した4ケース（390/768幅、通常/更新中断）の証拠です。学習中の更新延期、版3→4、学習/予約/所有保持、offline実回答・再開、保存版4対応のsafe rollbackを検証しました。通常sandboxのlocalhost listen制約による初回停止後、同じ固定candidateを権限付きの隔離localhost実行で検証しました。アプリ到達前の初回環境停止を合格ケースへ置き換えていません。実iOS/Android、実利用者、子どもの理解・再訪、美術評価の証拠は含みません。
+
+immutable candidate sourceHash: acc7dc9e4eccec27e5fa30b36346e84cf52bc5ecbc8725a2e3afb05d928ee5c8
+最終作業ツリーsourceHash（監査時点）: f92c13e3d2912e0b10ca68fd21e9062ea5859287fea1ae331c394294cb4f5099
+差分はsrc/components/island/growing/seedHitPriority.test.tsの1件のみで、runtime/QA/fixture inputsは一致しています。before/after SHAとtest-only判定は原final-update-audit.jsonとindex.jsonに固定しています。

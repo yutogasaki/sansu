@@ -8,6 +8,8 @@ import type { LoadingStep } from './GrowingLoading';
 import { prepareIslandOpening } from '../../../domain/growingIsland/openingPreparation';
 
 export interface Reveal { id: number; town: TownEvent[]; nature: NatureEvent[] }
+export type PlaceReceipt = Omit<Extract<Command, { type: 'place-used' }>, 'profileId' | 'expectedRevision'>
+    | Omit<Extract<Command, { type: 'place-shown' }>, 'profileId' | 'expectedRevision'>;
 
 /** Another tab saved this island: reload the saved state instead of showing a stale one. */
 const channelName = 'sansu-growing-island';
@@ -29,6 +31,7 @@ export function useGrowingIsland(profileId: string, active: boolean) {
     const [saving, setSaving] = useState(false);
     const [step, setStep] = useState<LoadingStep>('learning');
     const running = useRef<Promise<void> | undefined>(undefined), revealId = useRef(0);
+    const placeReceipts = useRef<Promise<unknown>>(Promise.resolve());
     const caller = useRef({ profileId, active });
     useEffect(() => { caller.current = { profileId, active }; return () => { caller.current.active = false; }; }, [profileId, active]);
     // A failed opening is still not a playable session. Keep update recovery available
@@ -61,6 +64,41 @@ export function useGrowingIsland(profileId: string, active: boolean) {
             finally { running.current = undefined; setSyncing(false); setSaving(false); }
         })();
         return running.current;
+    }, [profileId]);
+
+    // Serialize renderer observations so several newly grown places do not race each
+    // other. Each retry re-reads the owner's saved revision; hidden/visiting worlds
+    // cannot record another island's shown shape or somebody else's play.
+    const acknowledgePlace = useCallback((receipt: PlaceReceipt): Promise<boolean> => {
+        const live = () => caller.current.profileId === profileId && caller.current.active && document.visibilityState === 'visible';
+        const save = async () => {
+            if (!live()) return false;
+            if (running.current) await running.current;
+            if (!live()) return false;
+            const intentId = crypto.randomUUID(), release = holdPwaUpdateForCriticalPersistence();
+            try {
+                for (let attempt = 0; attempt < 3 && live(); attempt++) {
+                    const current = await readGrowingIsland(profileId);
+                    if (!current || !live()) return false;
+                    if (receipt.type === 'place-shown' && current.state.placeProgress?.shown[receipt.ruleId] === receipt.revision) return true;
+                    if (receipt.type === 'place-used') {
+                        const used = current.state.placeProgress?.uses[receipt.ruleId]?.[receipt.actorId === 'pokomoko' ? 'pokomoko' : 'villager'];
+                        if (used?.actorId === receipt.actorId && used.targetId === receipt.targetId && used.revision === receipt.revision) return true;
+                    }
+                    const command: Command = { ...receipt, profileId, expectedRevision: current.revision };
+                    try {
+                        const result = await commandGrowingIsland(profileId, { id: intentId, command });
+                        if (live()) { setRecord(current => current?.profileId === result.record.profileId && current.revision > result.record.revision ? current : result.record); setError(undefined); announce(profileId); }
+                        return true;
+                    } catch (error) { if (!(error instanceof GuidanceReceiptConflict)) throw error; }
+                }
+                return false;
+            } catch (error) { if (live()) setError(message(error)); return false; }
+            finally { release(); }
+        };
+        const queued = placeReceipts.current.then(save, save);
+        placeReceipts.current = queued;
+        return queued;
     }, [profileId]);
 
     // Only an actually rendered foreground experience can issue these receipts. A normal
@@ -124,6 +162,6 @@ export function useGrowingIsland(profileId: string, active: boolean) {
         return () => { live = false; clearInterval(id); document.removeEventListener('visibilitychange', visible); };
     }, [active, profileId, sync]);
 
-    return { record: record?.profileId === profileId ? record : undefined, reveal, error, busy, syncing, saving, dispatch, acknowledge, sync, step,
+    return { record: record?.profileId === profileId ? record : undefined, reveal, error, busy, syncing, saving, dispatch, acknowledge, acknowledgePlace, sync, step,
         clearError: () => setError(undefined) };
 }

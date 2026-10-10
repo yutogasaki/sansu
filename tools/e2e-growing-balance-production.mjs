@@ -17,7 +17,7 @@ const read = (page, id) => page.evaluate(async id => {
     const request = indexedDB.open('SansuGrowingIslandV1');
     const db = await new Promise((ok, no) => { request.onsuccess = () => ok(request.result); request.onerror = () => no(request.error); });
     try {
-        const get = db.transaction('guidedIslands').objectStore('guidedIslands').get(id);
+        const get = db.transaction('placedIslands').objectStore('placedIslands').get(id);
         return await new Promise((ok, no) => { get.onsuccess = () => ok(get.result); get.onerror = () => no(get.error); });
     } finally { db.close(); }
 }, id);

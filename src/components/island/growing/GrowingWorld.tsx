@@ -11,13 +11,15 @@ import { createWorldScene } from './worldScene';
 import { WorldEffects } from './worldEffects';
 import type { SceneLayout } from './sceneLayout';
 import { menuPictureMaker, type MenuPictures } from './menuMiniatures';
-import { growingHitTarget } from './growingHitTarget';
+import { chooseGrowingFingerTarget, updateGrowingFingerTargets } from './growingFingerTargets';
 import type { DropPlayKind } from './growingDropPlay';
 import { DROP_PLAY_MS } from './growingDropPlay';
 import { AdaptiveIslandQuality } from '../three/adaptiveIslandQuality';
 import { createIslandRenderer } from '../three/createIslandRenderer';
 import { retainSharedRendererCache } from '../three/sharedRendererCache';
 import { bridgeAnchor, bridgeEnd } from '../../../domain/growingIsland/space';
+import type { DerivedPlace } from '../../../domain/growingIsland/placeTypes';
+import type { PlaceUseReceipt } from './growingLife';
 
 export interface WorldHandlers {
     onCell: (cell: Cell) => void;
@@ -33,6 +35,8 @@ export interface WorldHandlers {
     onQualityFallback?: (ceiling: number) => void;
     onFailure?: (detail: string) => void;
     onConcertStarted?: (receipt: number) => void;
+    onPlaceShown?: (receipt: { ruleId: DerivedPlace['ruleId']; revision: string }) => boolean | void | Promise<boolean | void>;
+    onPlaceUse?: (receipt: PlaceUseReceipt) => boolean | void | Promise<boolean | void>;
 }
 /** Pictures of the island for the card and the island's story; never uploaded anywhere. */
 export interface WorldCamera {
@@ -265,6 +269,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             const now = performance.now(), delta = Math.min(64, now - last); last = now;
             const current = latest.current.state;
             if (layer) {
+                updateGrowingFingerTargets(layer.fingerTargets, camera, width);
                 const sailing = !docked(current);
                 layer.visitorBoat.visible = sailing;
                 if (sailing) layer.visitorBoat.position.lerpVectors(layout.far, layout.dock, boatProgress(current));
@@ -315,11 +320,11 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
                 const shore = layout.point(bridgeAnchor(current)), end = layout.point(bridgeEnd(current));
                 const poko = world.life.root.getObjectByName('growing-pokomoko');
                 const friend = world.life.root.getObjectByName(`growing-villager-${resident}`);
-                if (poko) { poko.visible = true; poko.position.set(shore.x - .38, .14 + (reduced ? 0 : Math.abs(Math.sin(now / 150)) * .06), shore.z + .35 + progress * 1.8); poko.rotation.y = .3; }
+                if (poko) { poko.visible = true; poko.position.set(shore.x - .38, shore.y + .10 + (reduced ? 0 : Math.abs(Math.sin(now / 150)) * .06), shore.z + .35 + progress * 1.8); poko.rotation.y = .3; }
                 if (friend) {
                     friend.visible = true;
                     const crossing = Math.min(1, Math.max(0, (elapsed - buildTime) / crossTime));
-                    friend.position.set(shore.x + .12, .16 + (reduced ? 0 : Math.abs(Math.sin(now / 170)) * .04), shore.z + crossing * (end.z - shore.z));
+                    friend.position.set(shore.x + .12, shore.y + .12 + (reduced ? 0 : Math.abs(Math.sin(now / 170)) * .04), shore.z + crossing * (end.z - shore.z));
                     friend.rotation.y = 0;
                 }
                 if (elapsed >= buildTime && !bridgeWork.crossing) { bridgeWork.crossing = true; setBridgeStage('crossing'); }
@@ -342,6 +347,52 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
                 renderer.render(world.scene, camera);
             } catch (error) { fail('render', error); return; }
             if (renderer.getContext().isContextLost()) { fail('context-lost'); return; }
+            if (layer && latest.current.active && document.visibilityState === 'visible') {
+                const frustum = new T.Frustum().setFromProjectionMatrix(new T.Matrix4().multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse));
+                const shownHandler = handlerRef.current.onPlaceShown;
+                if (shownHandler) for (const place of layer.places) {
+                    if (place.stage !== 'grown' && place.stage !== 'lived') continue;
+                    const placeObject = layer.placeRoot.children.find(child => child.userData.placeId === place.id)
+                        ?? (place.ruleId === 'P01' ? layer.placeRoot.children.find(child => {
+                            const larger = layer!.places.find(p => p.id === child.userData.placeId && p.ruleId === 'P02');
+                            return larger && place.mainIds.every(id => larger.mainIds.includes(id));
+                        }) : undefined);
+                    const receiptKey = `${place.ruleId}:${place.revision}`;
+                    if (!placeObject || !frustum.intersectsBox(new T.Box3().setFromObject(placeObject)) || placeShown.has(receiptKey) || (shownRetry.get(receiptKey) ?? 0) > now) continue;
+                    placeShown.add(receiptKey);
+                    Promise.resolve(shownHandler({ ruleId: place.ruleId, revision: place.revision })).then(saved => {
+                        if (saved === false) { placeShown.delete(receiptKey); shownRetry.set(receiptKey, performance.now() + 1500); }
+                    }).catch(() => { placeShown.delete(receiptKey); shownRetry.set(receiptKey, performance.now() + 1500); });
+                }
+                const actionHandler = handlerRef.current.onPlaceUse;
+                if (actionHandler) {
+                    const due = useRetry.filter(retry => retry.at <= now); useRetry = useRetry.filter(retry => retry.at > now);
+                    due.forEach(retry => world.life.retryPlaceUse(retry.receipt));
+                    for (const receipt of world.life.takePlaceUses()) {
+                        const position = world.life.positionOf(receipt.actorId);
+                        if (!position || !frustum.containsPoint(position)) { world.life.deferPlaceUse(receipt); continue; }
+                        Promise.resolve(actionHandler(receipt)).then(saved => {
+                            if (saved === false) useRetry.push({ receipt, at: performance.now() + 1500 });
+                        }).catch(() => useRetry.push({ receipt, at: performance.now() + 1500 }));
+                    }
+                }
+                node.dataset.placeCount = String(layer.places.filter(place => place.stage === 'grown' || place.stage === 'lived').length);
+                node.dataset.placeRelations = layer.relations.map(relation => relation.id).join(',');
+                node.dataset.placeTopology = layer.places.map(place => `${place.ruleId}:${place.variant}:${place.stage}`).join('|');
+                if (import.meta.env.DEV && now >= nextTelemetry) {
+                    nextTelemetry = now + 250;
+                    const rect = renderer.domElement.getBoundingClientRect();
+                    const screen = (position: T.Vector3) => { const p = position.clone().project(camera); return { screenX: rect.left + (p.x + 1) * rect.width / 2, screenY: rect.top + (1 - p.y) * rect.height / 2 }; };
+                    node.dataset.placeActors = JSON.stringify(world.life.objects().map(actor => ({ id: actor.userData.actorId, x: actor.position.x, y: actor.position.y, z: actor.position.z, ...screen(new T.Box3().setFromObject(actor).getCenter(new T.Vector3())) })));
+                    node.dataset.placeTargets = JSON.stringify(layer.places.flatMap(place => place.useTargets.map(target => {
+                        const floor = target.kind === 'gallery' ? target.route?.reduce((highest, point) => point.y > highest.y ? point : highest, target.route[0]) : undefined;
+                        const position = floor ? layout.floorPoint(floor).add(new T.Vector3(0, .01, 0)) : layout.point(target.cell, target.kind === 'seat' ? .18 : .06);
+                        const entrance = screen(layout.point(target.cell, .06));
+                        return { placeId: place.id, ruleId: place.ruleId, targetId: target.id, kind: target.kind, cell: target.cell,
+                            floorY: position.y, entranceScreenX: entrance.screenX, entranceScreenY: entrance.screenY, ...screen(position) };
+                    })));
+                }
+            }
             if (pendingConcert !== undefined && document.visibilityState === 'visible') {
                 const receipt = pendingConcert; pendingConcert = undefined;
                 if (world.life.concertActive(now)) handlerRef.current.onConcertStarted?.(receipt);
@@ -349,6 +400,9 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             if (!shown) { shown = true; handlerRef.current.onStage?.('ready'); }
         };
         let shown = false;
+        const placeShown = new Set<string>(), shownRetry = new Map<string, number>();
+        let useRetry: { receipt: PlaceUseReceipt; at: number }[] = [];
+        let nextTelemetry = 0;
         loop();
         if (lost) return release;
 
@@ -358,10 +412,11 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
         const ray = new T.Raycaster(), ndc = new T.Vector2(), plane = new T.Plane(new T.Vector3(0, 1, 0), -.04);
         const cast = (event: PointerEvent) => {
             const rect = renderer.domElement.getBoundingClientRect();
+            if (layer) updateGrowingFingerTargets(layer.fingerTargets, camera, rect.width);
             ndc.set((event.clientX - rect.left) / rect.width * 2 - 1, -(event.clientY - rect.top) / rect.height * 2 + 1);
             ray.setFromCamera(ndc, camera); return ray;
         };
-        const ground = (event: PointerEvent) => cast(event).ray.intersectPlane(plane, new T.Vector3());
+        const ground = (event: PointerEvent) => world.groundAt(cast(event)) ?? ray.ray.intersectPlane(plane, new T.Vector3());
         const actorAt = (event: PointerEvent) => {
             const actors = world.life.objects();
             const direct = cast(event).intersectObjects(actors, true)[0]?.object.userData.actorId as string | undefined;
@@ -436,13 +491,16 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             const hits = cast(event).intersectObjects([...(layer ? [layer.root] : []), ...world.life.objects(), world.scene], true);
             // The invisible finger target of a tiny seed must never steal a visible
             // neighboring flower, bench, home, friend, or bud at an oblique angle.
-            const target = growingHitTarget(hits, Boolean(layer?.arrivalBoat.visible));
+            const rect = renderer.domElement.getBoundingClientRect();
+            const target = chooseGrowingFingerTarget(hits, camera, rect.width, rect.height,
+                event.clientX - rect.left, event.clientY - rect.top, Boolean(layer?.arrivalBoat.visible));
             if (target) {
                 const hit = target;
                 const data = hit.object.userData;
                 if (data.budId) { h.onOpen(data.budId); return; }
                 if (data.boat === 'arrival' && layer?.arrivalBoat.visible) { h.onDisembark(); return; }
                 if (data.actorId) { world.life.hop(data.actorId, performance.now()); h.onActorTap(data.actorId); return; }
+                if (data.galleryTarget && data.placeId && world.life.visitGallery('pokomoko', data.placeId, performance.now())) return;
                 if (data.objectId) { h.onSelect(data.objectId); return; }
             }
             const nearbyActor = actorAt(event);
@@ -488,7 +546,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
     const lastTurn = useRef(turn);
     useEffect(() => { if (turn !== lastTurn.current) { api.current?.turn(turn - lastTurn.current); lastTurn.current = turn; } }, [turn]);
 
-    return <div className="growing-world" ref={host} data-growing-world data-visual-candidate="growing-island-v1" data-growing-feature-enabled="true">
+    return <div className="growing-world" ref={host} data-growing-world data-visual-candidate="growing-island-v1" data-art-candidate="native-05-place-runtime-v3" data-growing-feature-enabled="true">
         {failed && <p className="growing-world-failed">しまを ひょうじ できなかったよ。よみなおしてみてね。</p>}
         {bridgeStage && <div className="growing-bridge-caption" data-bridge-stage={bridgeStage} role="status">
             {bridgeStage === 'building' ? 'ぽこもこが はしを つくっているよ' : bridgeStage === 'crossing' ? 'なかまが わたっているよ' : 'むこうまで いけた！'}

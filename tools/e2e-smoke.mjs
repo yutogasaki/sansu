@@ -550,7 +550,9 @@ const scenarioOnboardingShown = async (browser) => {
   const page = await context.newPage();
   await clearClientStorage(page);
 
-  await page.goto("/#/", { waitUntil: "domcontentloaded" });
+  // The first request also compiles the isolated Vite server's dependencies.
+  // Use the existing server-start budget here; interaction budgets stay fixed.
+  await page.goto("/#/", { waitUntil: "domcontentloaded", timeout: DEV_START_TIMEOUT_MS });
   await waitForHash(page, /#\/onboarding/);
   await page.getByRole("button", { name: "はじめる" }).waitFor({ timeout: STEP_TIMEOUT_MS });
 

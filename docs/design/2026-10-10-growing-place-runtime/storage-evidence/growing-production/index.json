@@ -1,0 +1,776 @@
+{
+  "schema": "sansu-growing-production-evidence-v1",
+  "generatedQA": true,
+  "realUsers": false,
+  "externalPublication": false,
+  "createdAt": "2026-10-10T07:34:20.321Z",
+  "scopeRelativePath": "scope.txt",
+  "fixedManifestRelativePath": "../new-manifest.json",
+  "fixedManifestOriginalAbsolutePath": "/private/tmp/sansu-place-update-20261010/new-manifest.json",
+  "fixedManifestSHA256": "768f1c1022df593ceb1c5d5148dc3f15b5d3f825bac952d75dc13fdd1c4d2e8b",
+  "fixedSourceDirectory": "/private/tmp/sansu-place-update-20261010/new-source",
+  "fixedDistDirectory": "/private/tmp/sansu-place-update-20261010/new-source/dist",
+  "fixedSourceHash": "acc7dc9e4eccec27e5fa30b36346e84cf52bc5ecbc8725a2e3afb05d928ee5c8",
+  "fixedVersion": {
+    "version": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+    "revision": "place-update-new-v4-acc7dc9e4ecc",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": true,
+        "candidate": "living-fantasy-garden-v2",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "candidateIntegrity": {
+    "pass": true,
+    "sourceInputs": 2011,
+    "distFiles": 168,
+    "sourceAndDistSHARemainedUnchanged": true,
+    "checkedAt": "2026-10-10T07:34:20.326Z"
+  },
+  "previousEvidenceIndexRelativePath": "../index.json",
+  "previousEvidenceIndexSHA256": "2cccc0a92955ecc0e168e136c3d9dc7bd2fc8cbacd1cffd071a98ce6b18d750f",
+  "previousEvidenceUnchanged": true,
+  "originalFileCount": 38,
+  "rawReportCount": 2,
+  "actualCaptureCount": 36,
+  "totalOriginalBytes": 8568413,
+  "originalSHA256": {
+    "balance/390-first-home.png": "abab21be172beed576b2af455c77144c8af0d69f132f9e8232e9e128ab2f4ca5",
+    "balance/390-learning.png": "d67294100051152b2eecc16c1b7d346597e334c993fbcc0913abc7acd87b40ff",
+    "balance/390-offline-saved.png": "4404ef9382d4fe5a6635b78c198d3e4504b3ac913ad3e37dcbcc618457c58605",
+    "balance/390-offline.png": "e64916d2be6fca4ae4cbf18073908c04fba0a510cd51f8371df6df4eef1b3d66",
+    "balance/390-planted.png": "1a8e1a278eaaff24308819d93f277b13616f3fd10f1bdaaa01e8a7c8d1972b43",
+    "balance/390-welcome.png": "a4f8b7c3009181dd84fdf30074132ff008663f737306b7c72512516c7ec117bf",
+    "balance/768-first-home.png": "18ff8248de6e1c6e65c38f7d5c036658e772632a612a44463c5b6e03e752ba96",
+    "balance/768-learning.png": "9f978d1888e24c8a659be855b48cd779e263a195e011a5fa550a1827d6065670",
+    "balance/768-offline-saved.png": "6700ea8d4db0bdd621ccec740f1c39752b5a79639fab39da5f2af24927ee75b0",
+    "balance/768-offline.png": "7879b2dc5217ea1d11b683681fbaa8d4e9c22687c58dc44a6e7dd610d0648e24",
+    "balance/768-planted.png": "220493f20921d53a1f9f03703e70d943ab425818b66dc89122b8713c4f3dbca4",
+    "balance/768-welcome.png": "ed00f7d6fbbacfc7f0f3316d86d81d51f17c0d2da46cb390e83497347bd6f8e1",
+    "balance/report.json": "ce8501b2fa1afb6d9fc47b9b4cafb9a4fdaf66e085c807e6f4f160a20d00776a",
+    "guidance/390-book.png": "05501600cb97bbbcf5d6cf3a15ee3952d1493ae1c9f780a3221fc7a2811c2950",
+    "guidance/390-first-home.png": "d735646ebd50c8770813f293465aaa3c7a3db991985e409286dec1a89bcd3a64",
+    "guidance/390-house-book.png": "bd0f32873c942d044560ed3a45e2bcc8f50ede169314ff653a9618953bc2c3cd",
+    "guidance/390-house.png": "2a94201b292c51a6e4a450a24dc97f0af7ad6279db60f99476052ddadb5dfe88",
+    "guidance/390-learning.png": "659909057e278802fe6ac4b759205cfa828586365cfa67dad49f76a5b540df13",
+    "guidance/390-menu.png": "4731e9b01042821ef1c59d2d901fe221982ac0f1394958ecf735e251a0bd6fb0",
+    "guidance/390-offline-house-book.png": "8b1c9e4274e11476febe569cb9ff9f72ba5de2bcdddadfaf9261ae94ce7ad064",
+    "guidance/390-offline-memories.png": "cb66897e33a1febae5bed645a3ae41b714467cc7f1440f13ac48d8f3996a7756",
+    "guidance/390-offline-saved.png": "3a40f5a149dd20c2de7feb3c81355bcda27eb2ea8c87e2a25b6486d4ee0a0d2f",
+    "guidance/390-offline.png": "c84a1e69540c35f33da4320affdb5d594b1e9619612a2303a51d533e71395ea6",
+    "guidance/390-planted.png": "9c4533eafdfc6a7059323eb25597acad333e4e64fd9b8e906f498b5016739426",
+    "guidance/390-welcome.png": "5d2d9e09f6c4274b8905464e9e804b1305e8c7574a906ad89d47a2c5d3a68a28",
+    "guidance/768-book.png": "2640e8d9b119a42cf28f03406c09cca93324ae558efb15c0a39c75d3fbf4d062",
+    "guidance/768-first-home.png": "ef12526eb14e45305fdadfce091e72906c35b8892a0fbcdbc651c2f7935919d1",
+    "guidance/768-house-book.png": "c9822171c45304aad4e255b0f28519e5a4571d4ed22697b2b578e3aef94844b3",
+    "guidance/768-house.png": "35ddf26a5e5d89da90e74cee26331d4bf7d114ec6b013667b0d8a047d8f933c5",
+    "guidance/768-learning.png": "c2c90ddc62ab86f6ed743316bd75b6e9ac7cee1ef82b1d3d3634247892e48596",
+    "guidance/768-menu.png": "1bdf39ecb3bab3dd9162a7d0c5c1b4360d72e4e7d4d8607265d12a957f06150e",
+    "guidance/768-offline-house-book.png": "35054573cf3bb888268da6ccad124607edd3cb85fdc44326b56e7507e767d6ab",
+    "guidance/768-offline-memories.png": "768df92819a8f0770bf670524f25ac68e80e2096fe7d78a24933a79fbb134eb7",
+    "guidance/768-offline-saved.png": "6b170298877e42f4f16379c0568ea1cfafb6ea7d196dee0ded3f708f861a3be0",
+    "guidance/768-offline.png": "86b7ca9ddadf2e1382a622a0d7c40f462c4752a42ff5d66bde526bfef0d255eb",
+    "guidance/768-planted.png": "ec12b04a7ca04e8937c96a4c413a9889c5ae8180ed2ce9c9639895ca30bfcc09",
+    "guidance/768-welcome.png": "ed00f7d6fbbacfc7f0f3316d86d81d51f17c0d2da46cb390e83497347bd6f8e1",
+    "guidance/report.json": "282a07de1bafedc0c3d3e8a703ef7478a7ea2691bf0e8a6f71b213a5afada33c"
+  },
+  "originalCollectionHash": "0a56c7483d9a89d40b634dc145337343ad506fbd738e8e83bdd23bdafed29c29",
+  "files": [
+    {
+      "kind": "raw-production-report",
+      "run": "guidance",
+      "relativePath": "guidance/report.json",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-guidance-fixed-20261010-final-v1/report.json",
+      "sha256": "282a07de1bafedc0c3d3e8a703ef7478a7ea2691bf0e8a6f71b213a5afada33c",
+      "bytes": 451658
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "guidance",
+      "relativePath": "guidance/390-welcome.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-guidance-fixed-20261010-final-v1/390-welcome.png",
+      "sha256": "5d2d9e09f6c4274b8905464e9e804b1305e8c7574a906ad89d47a2c5d3a68a28",
+      "bytes": 14629
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "guidance",
+      "relativePath": "guidance/390-first-home.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-guidance-fixed-20261010-final-v1/390-first-home.png",
+      "sha256": "d735646ebd50c8770813f293465aaa3c7a3db991985e409286dec1a89bcd3a64",
+      "bytes": 199831
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "guidance",
+      "relativePath": "guidance/390-learning.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-guidance-fixed-20261010-final-v1/390-learning.png",
+      "sha256": "659909057e278802fe6ac4b759205cfa828586365cfa67dad49f76a5b540df13",
+      "bytes": 92208
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "guidance",
+      "relativePath": "guidance/390-menu.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-guidance-fixed-20261010-final-v1/390-menu.png",
+      "sha256": "4731e9b01042821ef1c59d2d901fe221982ac0f1394958ecf735e251a0bd6fb0",
+      "bytes": 117309
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "guidance",
+      "relativePath": "guidance/390-book.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-guidance-fixed-20261010-final-v1/390-book.png",
+      "sha256": "05501600cb97bbbcf5d6cf3a15ee3952d1493ae1c9f780a3221fc7a2811c2950",
+      "bytes": 152364
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "guidance",
+      "relativePath": "guidance/390-house.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-guidance-fixed-20261010-final-v1/390-house.png",
+      "sha256": "2a94201b292c51a6e4a450a24dc97f0af7ad6279db60f99476052ddadb5dfe88",
+      "bytes": 114434
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "guidance",
+      "relativePath": "guidance/390-house-book.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-guidance-fixed-20261010-final-v1/390-house-book.png",
+      "sha256": "bd0f32873c942d044560ed3a45e2bcc8f50ede169314ff653a9618953bc2c3cd",
+      "bytes": 140945
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "guidance",
+      "relativePath": "guidance/390-planted.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-guidance-fixed-20261010-final-v1/390-planted.png",
+      "sha256": "9c4533eafdfc6a7059323eb25597acad333e4e64fd9b8e906f498b5016739426",
+      "bytes": 204796
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "guidance",
+      "relativePath": "guidance/390-offline.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-guidance-fixed-20261010-final-v1/390-offline.png",
+      "sha256": "c84a1e69540c35f33da4320affdb5d594b1e9619612a2303a51d533e71395ea6",
+      "bytes": 201944
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "guidance",
+      "relativePath": "guidance/390-offline-house-book.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-guidance-fixed-20261010-final-v1/390-offline-house-book.png",
+      "sha256": "8b1c9e4274e11476febe569cb9ff9f72ba5de2bcdddadfaf9261ae94ce7ad064",
+      "bytes": 138621
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "guidance",
+      "relativePath": "guidance/390-offline-saved.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-guidance-fixed-20261010-final-v1/390-offline-saved.png",
+      "sha256": "3a40f5a149dd20c2de7feb3c81355bcda27eb2ea8c87e2a25b6486d4ee0a0d2f",
+      "bytes": 205626
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "guidance",
+      "relativePath": "guidance/390-offline-memories.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-guidance-fixed-20261010-final-v1/390-offline-memories.png",
+      "sha256": "cb66897e33a1febae5bed645a3ae41b714467cc7f1440f13ac48d8f3996a7756",
+      "bytes": 162685
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "guidance",
+      "relativePath": "guidance/768-welcome.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-guidance-fixed-20261010-final-v1/768-welcome.png",
+      "sha256": "ed00f7d6fbbacfc7f0f3316d86d81d51f17c0d2da46cb390e83497347bd6f8e1",
+      "bytes": 21934
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "guidance",
+      "relativePath": "guidance/768-first-home.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-guidance-fixed-20261010-final-v1/768-first-home.png",
+      "sha256": "ef12526eb14e45305fdadfce091e72906c35b8892a0fbcdbc651c2f7935919d1",
+      "bytes": 415624
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "guidance",
+      "relativePath": "guidance/768-learning.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-guidance-fixed-20261010-final-v1/768-learning.png",
+      "sha256": "c2c90ddc62ab86f6ed743316bd75b6e9ac7cee1ef82b1d3d3634247892e48596",
+      "bytes": 121802
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "guidance",
+      "relativePath": "guidance/768-menu.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-guidance-fixed-20261010-final-v1/768-menu.png",
+      "sha256": "1bdf39ecb3bab3dd9162a7d0c5c1b4360d72e4e7d4d8607265d12a957f06150e",
+      "bytes": 330681
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "guidance",
+      "relativePath": "guidance/768-book.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-guidance-fixed-20261010-final-v1/768-book.png",
+      "sha256": "2640e8d9b119a42cf28f03406c09cca93324ae558efb15c0a39c75d3fbf4d062",
+      "bytes": 368092
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "guidance",
+      "relativePath": "guidance/768-house.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-guidance-fixed-20261010-final-v1/768-house.png",
+      "sha256": "35ddf26a5e5d89da90e74cee26331d4bf7d114ec6b013667b0d8a047d8f933c5",
+      "bytes": 221448
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "guidance",
+      "relativePath": "guidance/768-house-book.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-guidance-fixed-20261010-final-v1/768-house-book.png",
+      "sha256": "c9822171c45304aad4e255b0f28519e5a4571d4ed22697b2b578e3aef94844b3",
+      "bytes": 216707
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "guidance",
+      "relativePath": "guidance/768-planted.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-guidance-fixed-20261010-final-v1/768-planted.png",
+      "sha256": "ec12b04a7ca04e8937c96a4c413a9889c5ae8180ed2ce9c9639895ca30bfcc09",
+      "bytes": 425858
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "guidance",
+      "relativePath": "guidance/768-offline.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-guidance-fixed-20261010-final-v1/768-offline.png",
+      "sha256": "86b7ca9ddadf2e1382a622a0d7c40f462c4752a42ff5d66bde526bfef0d255eb",
+      "bytes": 417984
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "guidance",
+      "relativePath": "guidance/768-offline-house-book.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-guidance-fixed-20261010-final-v1/768-offline-house-book.png",
+      "sha256": "35054573cf3bb888268da6ccad124607edd3cb85fdc44326b56e7507e767d6ab",
+      "bytes": 218209
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "guidance",
+      "relativePath": "guidance/768-offline-saved.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-guidance-fixed-20261010-final-v1/768-offline-saved.png",
+      "sha256": "6b170298877e42f4f16379c0568ea1cfafb6ea7d196dee0ded3f708f861a3be0",
+      "bytes": 429235
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "guidance",
+      "relativePath": "guidance/768-offline-memories.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-guidance-fixed-20261010-final-v1/768-offline-memories.png",
+      "sha256": "768df92819a8f0770bf670524f25ac68e80e2096fe7d78a24933a79fbb134eb7",
+      "bytes": 305290
+    },
+    {
+      "kind": "raw-production-report",
+      "run": "balance",
+      "relativePath": "balance/report.json",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-balance-fixed-20261010-final-v1/report.json",
+      "sha256": "ce8501b2fa1afb6d9fc47b9b4cafb9a4fdaf66e085c807e6f4f160a20d00776a",
+      "bytes": 17386
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "balance",
+      "relativePath": "balance/390-welcome.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-balance-fixed-20261010-final-v1/390-welcome.png",
+      "sha256": "a4f8b7c3009181dd84fdf30074132ff008663f737306b7c72512516c7ec117bf",
+      "bytes": 13764
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "balance",
+      "relativePath": "balance/390-first-home.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-balance-fixed-20261010-final-v1/390-first-home.png",
+      "sha256": "abab21be172beed576b2af455c77144c8af0d69f132f9e8232e9e128ab2f4ca5",
+      "bytes": 208623
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "balance",
+      "relativePath": "balance/390-learning.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-balance-fixed-20261010-final-v1/390-learning.png",
+      "sha256": "d67294100051152b2eecc16c1b7d346597e334c993fbcc0913abc7acd87b40ff",
+      "bytes": 113516
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "balance",
+      "relativePath": "balance/390-planted.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-balance-fixed-20261010-final-v1/390-planted.png",
+      "sha256": "1a8e1a278eaaff24308819d93f277b13616f3fd10f1bdaaa01e8a7c8d1972b43",
+      "bytes": 208257
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "balance",
+      "relativePath": "balance/390-offline.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-balance-fixed-20261010-final-v1/390-offline.png",
+      "sha256": "e64916d2be6fca4ae4cbf18073908c04fba0a510cd51f8371df6df4eef1b3d66",
+      "bytes": 204101
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "balance",
+      "relativePath": "balance/390-offline-saved.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-balance-fixed-20261010-final-v1/390-offline-saved.png",
+      "sha256": "4404ef9382d4fe5a6635b78c198d3e4504b3ac913ad3e37dcbcc618457c58605",
+      "bytes": 204097
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "balance",
+      "relativePath": "balance/768-welcome.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-balance-fixed-20261010-final-v1/768-welcome.png",
+      "sha256": "ed00f7d6fbbacfc7f0f3316d86d81d51f17c0d2da46cb390e83497347bd6f8e1",
+      "bytes": 21934
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "balance",
+      "relativePath": "balance/768-first-home.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-balance-fixed-20261010-final-v1/768-first-home.png",
+      "sha256": "18ff8248de6e1c6e65c38f7d5c036658e772632a612a44463c5b6e03e752ba96",
+      "bytes": 494386
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "balance",
+      "relativePath": "balance/768-learning.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-balance-fixed-20261010-final-v1/768-learning.png",
+      "sha256": "9f978d1888e24c8a659be855b48cd779e263a195e011a5fa550a1827d6065670",
+      "bytes": 99988
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "balance",
+      "relativePath": "balance/768-planted.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-balance-fixed-20261010-final-v1/768-planted.png",
+      "sha256": "220493f20921d53a1f9f03703e70d943ab425818b66dc89122b8713c4f3dbca4",
+      "bytes": 433121
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "balance",
+      "relativePath": "balance/768-offline.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-balance-fixed-20261010-final-v1/768-offline.png",
+      "sha256": "7879b2dc5217ea1d11b683681fbaa8d4e9c22687c58dc44a6e7dd610d0648e24",
+      "bytes": 432076
+    },
+    {
+      "kind": "actual-browser-capture",
+      "run": "balance",
+      "relativePath": "balance/768-offline-saved.png",
+      "originalAbsolutePath": "/private/tmp/sansu-growing-balance-fixed-20261010-final-v1/768-offline-saved.png",
+      "sha256": "6700ea8d4db0bdd621ccec740f1c39752b5a79639fab39da5f2af24927ee75b0",
+      "bytes": 427250
+    }
+  ],
+  "runs": [
+    {
+      "id": "guidance",
+      "target": "http://127.0.0.1:5286",
+      "originalOutputDirectory": "/private/tmp/sansu-growing-guidance-fixed-20261010-final-v1",
+      "reportRelativePath": "guidance/report.json",
+      "reportSHA256": "282a07de1bafedc0c3d3e8a703ef7478a7ea2691bf0e8a6f71b213a5afada33c",
+      "exitCode": 0,
+      "pass": true,
+      "sourceStable": true,
+      "scenarios": [
+        {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "source": "Real onboarding, starter, goal/color, paid farm, ordinary UI answers and actual SW offline reload; no fixture writes",
+          "sound": "off",
+          "answers": 23,
+          "saveVersion": 4,
+          "pass": true
+        },
+        {
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "source": "Real onboarding, starter, goal/color, paid farm, ordinary UI answers and actual SW offline reload; no fixture writes",
+          "sound": "off",
+          "answers": 23,
+          "saveVersion": 4,
+          "pass": true
+        }
+      ],
+      "captures": 24,
+      "version": {
+        "version": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+        "revision": "place-update-new-v4-acc7dc9e4ecc",
+        "delivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "park": {
+          "enabled": false,
+          "renderer": "retired"
+        },
+        "island": {
+          "enabled": true,
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "life": {
+            "enabled": true,
+            "discovery": false,
+            "fantasy": true,
+            "candidate": "living-fantasy-garden-v2",
+            "saveVersion": 21
+          },
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "residentCandidate": "patchwork-otter-v1",
+          "artDirection": "moon-garden"
+        }
+      },
+      "captureRelocations": [
+        {
+          "originalCaptureFile": "390-welcome.png",
+          "relativePath": "guidance/390-welcome.png",
+          "originalSHA256": "5d2d9e09f6c4274b8905464e9e804b1305e8c7574a906ad89d47a2c5d3a68a28",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "390-first-home.png",
+          "relativePath": "guidance/390-first-home.png",
+          "originalSHA256": "d735646ebd50c8770813f293465aaa3c7a3db991985e409286dec1a89bcd3a64",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "390-learning.png",
+          "relativePath": "guidance/390-learning.png",
+          "originalSHA256": "659909057e278802fe6ac4b759205cfa828586365cfa67dad49f76a5b540df13",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "390-menu.png",
+          "relativePath": "guidance/390-menu.png",
+          "originalSHA256": "4731e9b01042821ef1c59d2d901fe221982ac0f1394958ecf735e251a0bd6fb0",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "390-book.png",
+          "relativePath": "guidance/390-book.png",
+          "originalSHA256": "05501600cb97bbbcf5d6cf3a15ee3952d1493ae1c9f780a3221fc7a2811c2950",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "390-house.png",
+          "relativePath": "guidance/390-house.png",
+          "originalSHA256": "2a94201b292c51a6e4a450a24dc97f0af7ad6279db60f99476052ddadb5dfe88",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "390-house-book.png",
+          "relativePath": "guidance/390-house-book.png",
+          "originalSHA256": "bd0f32873c942d044560ed3a45e2bcc8f50ede169314ff653a9618953bc2c3cd",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "390-planted.png",
+          "relativePath": "guidance/390-planted.png",
+          "originalSHA256": "9c4533eafdfc6a7059323eb25597acad333e4e64fd9b8e906f498b5016739426",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "390-offline.png",
+          "relativePath": "guidance/390-offline.png",
+          "originalSHA256": "c84a1e69540c35f33da4320affdb5d594b1e9619612a2303a51d533e71395ea6",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "390-offline-house-book.png",
+          "relativePath": "guidance/390-offline-house-book.png",
+          "originalSHA256": "8b1c9e4274e11476febe569cb9ff9f72ba5de2bcdddadfaf9261ae94ce7ad064",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "390-offline-saved.png",
+          "relativePath": "guidance/390-offline-saved.png",
+          "originalSHA256": "3a40f5a149dd20c2de7feb3c81355bcda27eb2ea8c87e2a25b6486d4ee0a0d2f",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "390-offline-memories.png",
+          "relativePath": "guidance/390-offline-memories.png",
+          "originalSHA256": "cb66897e33a1febae5bed645a3ae41b714467cc7f1440f13ac48d8f3996a7756",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "768-welcome.png",
+          "relativePath": "guidance/768-welcome.png",
+          "originalSHA256": "ed00f7d6fbbacfc7f0f3316d86d81d51f17c0d2da46cb390e83497347bd6f8e1",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "768-first-home.png",
+          "relativePath": "guidance/768-first-home.png",
+          "originalSHA256": "ef12526eb14e45305fdadfce091e72906c35b8892a0fbcdbc651c2f7935919d1",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "768-learning.png",
+          "relativePath": "guidance/768-learning.png",
+          "originalSHA256": "c2c90ddc62ab86f6ed743316bd75b6e9ac7cee1ef82b1d3d3634247892e48596",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "768-menu.png",
+          "relativePath": "guidance/768-menu.png",
+          "originalSHA256": "1bdf39ecb3bab3dd9162a7d0c5c1b4360d72e4e7d4d8607265d12a957f06150e",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "768-book.png",
+          "relativePath": "guidance/768-book.png",
+          "originalSHA256": "2640e8d9b119a42cf28f03406c09cca93324ae558efb15c0a39c75d3fbf4d062",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "768-house.png",
+          "relativePath": "guidance/768-house.png",
+          "originalSHA256": "35ddf26a5e5d89da90e74cee26331d4bf7d114ec6b013667b0d8a047d8f933c5",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "768-house-book.png",
+          "relativePath": "guidance/768-house-book.png",
+          "originalSHA256": "c9822171c45304aad4e255b0f28519e5a4571d4ed22697b2b578e3aef94844b3",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "768-planted.png",
+          "relativePath": "guidance/768-planted.png",
+          "originalSHA256": "ec12b04a7ca04e8937c96a4c413a9889c5ae8180ed2ce9c9639895ca30bfcc09",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "768-offline.png",
+          "relativePath": "guidance/768-offline.png",
+          "originalSHA256": "86b7ca9ddadf2e1382a622a0d7c40f462c4752a42ff5d66bde526bfef0d255eb",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "768-offline-house-book.png",
+          "relativePath": "guidance/768-offline-house-book.png",
+          "originalSHA256": "35054573cf3bb888268da6ccad124607edd3cb85fdc44326b56e7507e767d6ab",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "768-offline-saved.png",
+          "relativePath": "guidance/768-offline-saved.png",
+          "originalSHA256": "6b170298877e42f4f16379c0568ea1cfafb6ea7d196dee0ded3f708f861a3be0",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "768-offline-memories.png",
+          "relativePath": "guidance/768-offline-memories.png",
+          "originalSHA256": "768df92819a8f0770bf670524f25ac68e80e2096fe7d78a24933a79fbb134eb7",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        }
+      ]
+    },
+    {
+      "id": "balance",
+      "target": "http://127.0.0.1:5286",
+      "originalOutputDirectory": "/private/tmp/sansu-growing-balance-fixed-20261010-final-v1",
+      "reportRelativePath": "balance/report.json",
+      "reportSHA256": "ce8501b2fa1afb6d9fc47b9b4cafb9a4fdaf66e085c807e6f4f160a20d00776a",
+      "exitCode": 0,
+      "pass": true,
+      "sourceStable": null,
+      "scenarios": [
+        {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "source": "Real onboarding, UI home/learning/seed, real SW offline reload and answers; no fixture writes",
+          "answers": 23,
+          "saveVersion": 4,
+          "pass": true
+        },
+        {
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "source": "Real onboarding, UI home/learning/seed, real SW offline reload and answers; no fixture writes",
+          "answers": 23,
+          "saveVersion": 4,
+          "pass": true
+        }
+      ],
+      "captures": 12,
+      "version": {
+        "version": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+        "revision": "place-update-new-v4-acc7dc9e4ecc",
+        "delivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "park": {
+          "enabled": false,
+          "renderer": "retired"
+        },
+        "island": {
+          "enabled": true,
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "life": {
+            "enabled": true,
+            "discovery": false,
+            "fantasy": true,
+            "candidate": "living-fantasy-garden-v2",
+            "saveVersion": 21
+          },
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "residentCandidate": "patchwork-otter-v1",
+          "artDirection": "moon-garden"
+        }
+      },
+      "captureRelocations": [
+        {
+          "originalCaptureFile": "390-welcome.png",
+          "relativePath": "balance/390-welcome.png",
+          "originalSHA256": "a4f8b7c3009181dd84fdf30074132ff008663f737306b7c72512516c7ec117bf",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "390-first-home.png",
+          "relativePath": "balance/390-first-home.png",
+          "originalSHA256": "abab21be172beed576b2af455c77144c8af0d69f132f9e8232e9e128ab2f4ca5",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "390-learning.png",
+          "relativePath": "balance/390-learning.png",
+          "originalSHA256": "d67294100051152b2eecc16c1b7d346597e334c993fbcc0913abc7acd87b40ff",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "390-planted.png",
+          "relativePath": "balance/390-planted.png",
+          "originalSHA256": "1a8e1a278eaaff24308819d93f277b13616f3fd10f1bdaaa01e8a7c8d1972b43",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "390-offline.png",
+          "relativePath": "balance/390-offline.png",
+          "originalSHA256": "e64916d2be6fca4ae4cbf18073908c04fba0a510cd51f8371df6df4eef1b3d66",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "390-offline-saved.png",
+          "relativePath": "balance/390-offline-saved.png",
+          "originalSHA256": "4404ef9382d4fe5a6635b78c198d3e4504b3ac913ad3e37dcbcc618457c58605",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "768-welcome.png",
+          "relativePath": "balance/768-welcome.png",
+          "originalSHA256": "ed00f7d6fbbacfc7f0f3316d86d81d51f17c0d2da46cb390e83497347bd6f8e1",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "768-first-home.png",
+          "relativePath": "balance/768-first-home.png",
+          "originalSHA256": "18ff8248de6e1c6e65c38f7d5c036658e772632a612a44463c5b6e03e752ba96",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "768-learning.png",
+          "relativePath": "balance/768-learning.png",
+          "originalSHA256": "9f978d1888e24c8a659be855b48cd779e263a195e011a5fa550a1827d6065670",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "768-planted.png",
+          "relativePath": "balance/768-planted.png",
+          "originalSHA256": "220493f20921d53a1f9f03703e70d943ab425818b66dc89122b8713c4f3dbca4",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "768-offline.png",
+          "relativePath": "balance/768-offline.png",
+          "originalSHA256": "7879b2dc5217ea1d11b683681fbaa8d4e9c22687c58dc44a6e7dd610d0648e24",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        },
+        {
+          "originalCaptureFile": "768-offline-saved.png",
+          "relativePath": "balance/768-offline-saved.png",
+          "originalSHA256": "6700ea8d4db0bdd621ccec740f1c39752b5a79639fab39da5f2af24927ee75b0",
+          "appVersion": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+          "buildRevision": "place-update-new-v4-acc7dc9e4ecc"
+        }
+      ]
+    }
+  ]
+}

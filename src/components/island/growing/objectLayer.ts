@@ -16,10 +16,14 @@ import { buildColorFlower } from './flowerGeometry';
 import { buildBoat, buildPier } from './pierGeometry';
 import type { SceneLayout } from './sceneLayout';
 import { buildBridge } from './bridgeGeometry';
+import { derivePlaces } from '../../../domain/growingIsland/places';
+import { derivePlaceRelations } from '../../../domain/growingIsland/placeRelations';
+import { buildPlaceGeometry } from './placeGeometry';
+import { buildPlacePaths } from './placePaths';
 
-export interface Ghost { kind: SeedKind | LandmarkKind; seed: boolean; cell?: Cell; valid: boolean; style: PlotStyle; allowed: Cell[]; keepsake?: string; color?: FlowerColor }
+export interface Ghost { kind: SeedKind | LandmarkKind; seed: boolean; cell?: Cell; valid: boolean; style: PlotStyle; allowed: Cell[]; keepsake?: string; color?: FlowerColor; ownerId?: string }
 
-export type Seat = 'sit' | 'swing' | 'eat' | 'bounce' | 'slide' | 'tend';
+export type Seat = 'sit' | 'swing' | 'eat' | 'bounce' | 'slide' | 'tend' | 'play';
 const SEATS: Partial<Record<LandmarkKind, Seat>> = { bench: 'sit', swing: 'swing', 'picnic-table': 'eat', slide: 'slide', trampoline: 'bounce' };
 const OWN_MODELS: Partial<Record<LandmarkKind, (m: IslandMaterials) => T.Group>> = {
     slide: buildSlide, trampoline: buildTrampoline, fountain: buildFountain, bakery: buildBakery, postbox: buildPostbox,
@@ -104,7 +108,14 @@ function disposeRoots(roots: readonly T.Object3D[]) {
 export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout: SceneLayout, ghost?: Ghost, selectedId?: string, hints: readonly Cell[] = []) {
     const root = new T.Group(); root.name = 'growing-objects';
     const objects = new Map<string, T.Object3D>(), buds = new Map<string, T.Object3D>(), seats = new Map<string, Seat>();
-    const swingPivots = new Map<string, T.Object3D>();
+    const swingPivots = new Map<string, T.Object3D>(), fingerTargets: T.Mesh[] = [];
+    const places = derivePlaces(state), relations = derivePlaceRelations(state, places);
+    const visiblePlaces = places.filter(place => !(place.ruleId === 'P01' && places.some(other => other.ruleId === 'P02'
+        && (other.stage === 'grown' || other.stage === 'lived') && other.mainIds.some(id => place.mainIds.includes(id)))));
+    const grownBasins = new Set(visiblePlaces.filter(place => place.ruleId === 'P03' && (place.stage === 'grown' || place.stage === 'lived'))
+        .flatMap(place => [...place.mainIds, ...place.waterRefs]));
+    const grownTrees = new Set(visiblePlaces.filter(place => (place.ruleId === 'P01' || place.ruleId === 'P02') && (place.stage === 'grown' || place.stage === 'lived'))
+        .flatMap(place => place.mainIds));
     const reached = connectedWaterChannels(waterLayout(state));
     const add = (id: string, model: T.Object3D, cell: Cell) => {
         const holder = new T.Group(); holder.position.copy(layout.point(cell)); holder.add(model);
@@ -114,7 +125,21 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
     for (const l of state.landmarks) {
         if (!l.cell) continue;
         const holder = add(l.id, landmarkModel(m, state, l, reached), l.cell);
+        // The same owned water grows into a shallow pool and stream. Old raised
+        // rims/strips must not protrude through it; holder and owner ID stay selectable.
+        if ((l.kind === 'water-bowl' || l.kind === 'water-channel') && grownBasins.has(l.id)) holder.children[0].visible = false;
         if (l.kind === 'sapling') ageTree(m, state, l, holder);
+        // The connected grove supplies the actual selectable tree meshes under
+        // these same owner IDs. Avoid stacking the solitary crown over them.
+        if (l.kind === 'sapling' && grownTrees.has(l.id)) holder.children[0].visible = false;
+        if ((l.kind === 'sapling' || l.kind === 'flower') && l.growth < 6) {
+            // Young plants keep their real silhouette. This invisible sphere scales
+            // with the camera to remain reachable with a finger at the whole-island view.
+            const hit = new T.Mesh(new T.SphereGeometry(1, 16, 12), new T.MeshBasicMaterial({ colorWrite: false, depthWrite: false }));
+            hit.position.y = l.kind === 'sapling' ? .26 : .15;
+            hit.userData = { objectId: l.id, ownMaterial: true, placementHitOnly: true };
+            hit.name = 'growing-young-plant-finger-target'; holder.add(hit); fingerTargets.push(hit);
+        }
         if (l.from) {
             // A gift flower wears a small ribbon.
             const bow = new T.Mesh(new T.TorusGeometry(.07, .022, 6, 14), m.surface('#e58ea3', .7));
@@ -144,10 +169,13 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
         add(p.id, model, p.cell);
         // Friends stop by built fields to tend them.
         if ((p.kind === 'farm' || p.kind === 'market') && p.stage > 0 && !seats.has(key(p.cell))) seats.set(key(p.cell), 'tend');
+        if (p.kind === 'play' && p.stage > 0) seats.set(key(p.cell), 'play');
     }
     for (const k of state.keepsakes) if (k.cell) add(k.id, buildKeepsake(m, keepsakeKind(k.unitId)), k.cell);
+    const placeRoot = buildPlaceGeometry(state, layout, visiblePlaces, relations); root.add(placeRoot);
+    root.add(buildPlacePaths(state, layout, visiblePlaces));
     if (state.bridge) add('bridge', buildBridge(m), bridgeAnchor(state));
-    const pier = buildPier(m); pier.position.copy(layout.pierRoot); root.add(pier);
+    const pier = buildPier(m, layout.pierRoot.y - .02); pier.position.copy(layout.pierRoot); root.add(pier);
     const flag = buildFlag(m, state.flagColor ?? 0, state.flagPattern ?? 0, state.emblem?.image);
     flag.position.copy(layout.pierRoot).add(new T.Vector3(-.36, .02, .1));
     flag.traverse(o => { o.userData.objectId = 'flag'; }); root.add(flag);
@@ -198,12 +226,29 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
             if (nextGhost.cell) {
                 const preview = new T.Group(); preview.name = 'growing-ghost'; preview.position.copy(layout.point(nextGhost.cell)); addPreview(preview);
                 preview.add(ghostModel(m, nextGhost), ring(nextGhost.valid ? '#fff5ac' : '#8a5a3a'));
+                if (nextGhost.valid && !nextGhost.keepsake) {
+                    // Predict the same owned IDs/ages used by confirmation. A purchase
+                    // is shown as young; it never pretends to have earned maturity.
+                    const future = { ...state, plots: state.plots.map(p => p.id === nextGhost.ownerId ? { ...p, cell: nextGhost.cell } : p),
+                        landmarks: state.landmarks.map(l => l.id === nextGhost.ownerId ? { ...l, cell: nextGhost.cell } : l) };
+                    if (!nextGhost.ownerId) {
+                        if (nextGhost.seed) future.plots = [...future.plots, { id: 'place-preview', kind: nextGhost.kind as SeedKind, cell: nextGhost.cell,
+                            plantedAt: state.town.clock, stage: 0, style: nextGhost.style, growth: 0, origin: 'seed', paid: 0 }];
+                        else future.landmarks = [...future.landmarks, { id: 'place-preview', kind: nextGhost.kind as LandmarkKind, cell: nextGhost.cell, growth: 0, color: nextGhost.color }];
+                    }
+                    const predicted = derivePlaces(future);
+                    const changes = predicted.filter(place => !places.some(before => before.id === place.id && before.revision === place.revision));
+                    if (changes.length) {
+                        const projection = buildPlaceGeometry(future, layout, changes, derivePlaceRelations(future, predicted), true);
+                        projection.userData.previewRevisions = changes.map(place => place.revision); addPreview(projection);
+                    }
+                }
             }
         }
     };
     updatePreview(ghost, selectedId, hints);
     return {
-        root, objects, buds, seats, swingPivots, arrivalBoat, visitorBoat, nextBoat, glows, flag, updatePreview,
+        root, objects, buds, seats, swingPivots, fingerTargets, arrivalBoat, visitorBoat, nextBoat, glows, flag, places, relations, placeRoot, updatePreview,
         dispose() {
             if (disposed) return;
             disposed = true;

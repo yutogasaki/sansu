@@ -1,0 +1,26 @@
+{
+  "candidate": "whole-island-native-3d-02",
+  "native": "whole-island.blend",
+  "portable": "whole-island.glb",
+  "renderer": "CYCLES",
+  "objects": 2379,
+  "triangles": 787799,
+  "houses": 8,
+  "districts": [
+    "willow court",
+    "spring and inlet",
+    "village",
+    "flower pavilion"
+  ],
+  "residents": "existing project mesh + UV + authored fabric atlas",
+  "generation": "none; native geometry built in Blender",
+  "landscape": "stepped spring / connected waterfall / weeping foliage / shared flower pavilion / depth-colored rippling sea",
+  "camera": {
+    "location": [
+      24.0,
+      -36.0,
+      29.0
+    ],
+    "orthographic_scale": 29.399999618530273
+  }
+}

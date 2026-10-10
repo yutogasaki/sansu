@@ -1,0 +1,82 @@
+{
+  "result": "PASS",
+  "candidate": "whole-island-native-3d-04",
+  "evidence": "reopened saved native .blend; not builder memory",
+  "blender_version": "5.2.1 LTS",
+  "objects": 3711,
+  "editable_curves": 752,
+  "houses": 15,
+  "collections": [
+    "01 Coast and ground",
+    "02 Water and bridges",
+    "03 Living grove",
+    "04 Flower garden",
+    "05 Homes and courts",
+    "06 Original residents",
+    "07 Camera and daylight"
+  ],
+  "packed_resident_textures": 2,
+  "spring_cutout": true,
+  "connected_waterfall_strands": 7,
+  "depth_colored_water": true,
+  "sculpted_terrain_vertices": 45097,
+  "terrain_max_height": 5.735349178314209,
+  "growth_area_ratio": 2.7602876698181413,
+  "original_home_centers": {
+    "Original home / rounded walls": [
+      -7.0,
+      -3.4000000953674316,
+      1.534999966621399
+    ],
+    "Village / coral house / rounded walls": [
+      -3.799999952316284,
+      -3.0,
+      1.534999966621399
+    ],
+    "Village / matured common house / rounded walls": [
+      -5.099999904632568,
+      -0.5,
+      1.934999942779541
+    ],
+    "Forest / blue home / rounded walls": [
+      -7.0,
+      4.599999904632568,
+      1.975000023841858
+    ],
+    "Forest / yellow home / rounded walls": [
+      -3.5999999046325684,
+      7.800000190734863,
+      3.1549999713897705
+    ],
+    "Water town / coral home / rounded walls": [
+      5.400000095367432,
+      -3.5,
+      1.934999942779541
+    ],
+    "Water town / blue home / rounded walls": [
+      8.25,
+      -1.899999976158142,
+      1.534999966621399
+    ],
+    "Garden / small home / rounded walls": [
+      7.599999904632568,
+      1.7999999523162842,
+      1.975000023841858
+    ]
+  },
+  "hollow_trunk_entry_ray": "PASS",
+  "joined_water_terrace_levels": [
+    5.42,
+    4.76,
+    3.74
+  ],
+  "water_terraces_clear_of_dry_land": "PASS",
+  "translucent_shell_transmission": 0.7200000286102295,
+  "new_home_outlines": [
+    "round scalloped cap",
+    "folded leaf roof"
+  ],
+  "native_sha256": "97e9a21eec658a103843dc86264807fb4a37a4ca17d42e326c710755cbb82af1",
+  "game_runtime": "NOT_EVALUATED",
+  "visual_adoption": "NOT_APPROVED_BY_USER"
+}

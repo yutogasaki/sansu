@@ -1,4 +1,6 @@
 export * from './types';
+export * from './placeTypes';
+export { placeStatuses, newPlaceProgress, syncPlaceMilestones, validatePlaceProgress, recordPlaceUse, recordPlaceShown, placeRevisionForGoal } from './placeGoals';
 export { RULES, SEED_PRICE, LANDMARK_PRICE, LAND_PRICE, LIKES, likesOf, STYLE_LEVEL, FLAG_PATTERNS, HATS } from './rules';
 export { applyIntent, canPlace, landQuote, type Intent } from './commands';
 export { openTown } from './town';

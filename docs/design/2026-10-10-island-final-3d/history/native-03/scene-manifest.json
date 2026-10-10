@@ -1,0 +1,52 @@
+{
+  "candidate": "whole-island-native-3d-03",
+  "native": "whole-island.blend",
+  "portable": "whole-island.glb",
+  "renderer": "CYCLES",
+  "objects": 3613,
+  "triangles": 1233951,
+  "houses": 15,
+  "districts": [
+    "original willow court",
+    "original spring and village",
+    "shared flower pavilion",
+    "terraced hill village",
+    "silver birch and spire forest",
+    "sheltered harbor and water garden"
+  ],
+  "residents": "existing project mesh + UV + authored fabric atlas; illustrative positions",
+  "generation": "none; native geometry built in Blender",
+  "landscape": "continuous sculpted hills / two connected bays / stream-fed spring / terraced joined homes / varied tree silhouettes / shared root architecture / reflective water",
+  "growth_comparison": {
+    "previous_candidate": "whole-island-native-3d-02",
+    "previous_model": "history/native-02/whole-island.glb",
+    "existing_home_scale": "unchanged",
+    "existing_home_positions": "unchanged",
+    "land_area": 735.0,
+    "previous_land_area": 266.28,
+    "area_ratio": 2.76,
+    "terrain_height_range": [
+      0.79,
+      5.83
+    ],
+    "land_bounds_xy": [
+      -14,
+      -7.5,
+      20,
+      22
+    ]
+  },
+  "camera": {
+    "location": [
+      39.0,
+      -46.0,
+      43.0
+    ],
+    "target": [
+      3,
+      6.3,
+      2.5
+    ],
+    "orthographic_scale": 43.0
+  }
+}

@@ -1,0 +1,48 @@
+Native05 place runtime v3 — storage/update QA evidence scope
+
+All 5 copied JSON reports/manifests and 14 PNG captures retain their original
+bytes. Raw JSON keeps its original absolute source/build/evidence paths. This
+index adds relative capture paths and original SHA-256 hashes; original evidence
+identity is not rewritten. Earlier proof and immutable candidates are untouched.
+
+Technical verdict for this scope: independently built fixed NEW/ROLLBACK v3,
+legacy-writer isolation and actual Service Worker update/rollback checks PASS.
+All 4 generated-profile scenarios passed: 390x844 and 768x1024, each with normal
+and interrupted update. They exercise actual onboarding, answers and ownership,
+record v3-to-v4 migration, safe update checkpoints, offline answer continuation,
+and safe same-writer v4 rollback. Worker pinning is an explicit network fault.
+The legacy-writer report is an isolated fake IndexedDB diagnostic using actual
+old/new source writers; it is separate from the real-browser migration proof.
+
+The 14 captures document the OLD/NEW/ROLLBACK lifecycle. Their renderer metadata
+includes original-fallback; they are not proof of mature v3 place geometry or
+final visual acceptance. Full-place production journeys and core verification
+are separate evidence owned by other checks.
+
+Art verdict is GO_LOCAL_V3_DIRECTIONAL_ONLY as reported by the independent art
+review: a direction accepted locally, not exact native05 parity. Deep-bay shape,
+waterfalls and density remain differences. Storage/code PASS is not release
+approval, silent-child comprehension approval or implementation completion.
+No real-device, child/user trial or seven-day retention claim is made.
+
+Only disposable generated QA owners/profiles on a fresh desktop Chromium
+localhost origin were used. No actual users participated, no personal profile
+or existing user's PWA was touched, and no external publication/deployment
+occurred. The dedicated QA browser and server closed at completion.
+
+Both fixed v3 source inventories (2024 inputs), dist bytes (168 files each),
+versions and all 5 older fixed candidates stayed unchanged. v2-to-v3 actual-byte
+comparison is in the audit/index: 20 source paths differ, with 8 additions and
+12 changes. Domain, Growing domain, storage writer and PWA runtime/build subsets
+are byte-identical; the update QA helper changed and was actually retested.
+
+The working source inventory differs from frozen NEW in exactly one QA-only
+file, tools/e2e-growing-places.mjs: root corrected the missed cellPoint call to
+productionCellPoint in a separate full-place harness. The frozen NEW/ROLLBACK
+source, app, dist and update QA were not changed. Current-working identity is not
+claimed. The exact frozen/current hashes are retained in the original audit.
+
+Observed update-QA Node helper stdout included 3 warnings:
+THREE.Material: parameter 'map' has value of undefined.
+The warning belongs to the Node helper, not an application pageerror or failed
+scenario. It is recorded without modifying the fixed candidate.

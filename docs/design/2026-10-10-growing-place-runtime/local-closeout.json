@@ -1,0 +1,79 @@
+{
+  "schema": "sansu-native-v3-local-closeout-v1",
+  "recordedAt": "2026-10-10T10:47:27.507571+00:00",
+  "localImplementation": "D1-D4_INTEGRATED_AND_VERIFIED",
+  "buildVersion": {
+    "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+    "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": true,
+        "candidate": "living-fantasy-garden-v2",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "runtimeCandidate": "native-05-place-runtime-v3",
+  "workingInputs": {
+    "originalInputs": 2024,
+    "byteExact": 2023,
+    "qaOnlyChange": "tools/e2e-growing-places.mjs",
+    "qaHash": "2073a22a0d01c1da117bd7272ad9fb435ebe95851065d229348d964a5c6e537d"
+  },
+  "coverage": {
+    "actual21AnswerAcquisitionJourneys": 3,
+    "explicitSyntheticMatureDiagnosticPairs": 40,
+    "uniqueDiagnosticCaseIds": 20,
+    "completedByRun": [
+      3,
+      19,
+      1,
+      20
+    ],
+    "grownFrames": 40,
+    "acquisitionCriticalFrames": 24,
+    "wholeP06ActualUses": 2,
+    "individualActualUses": 6,
+    "criticalCaptures": 74
+  },
+  "singleCommandThreePlusFortyPass": false,
+  "rawVerdictsUnchanged": true,
+  "finalChecks": {
+    "docsCheck": "PASS;12 preexisting overdue-review warnings",
+    "diffCheck": "PASS",
+    "core": "PASS scoped checks;564files4966tests/classic32/guidance24/balance12; separate build UUID and enclosing release PARTIAL preserved",
+    "storage": "PASS isolated source writer fake-IDB plus actual SW4cases14captures",
+    "qaFocused": "8 tests PASS;whole observer/scope mock checks separate",
+    "showcaseManual": "CUA actual1280x720 comparison and6matureimages loaded;390x844 nooverflow/broken visibleimages;viewport reset,QA tab closed,showcase marked deliverable"
+  },
+  "visualAppeal": "GO_LOCAL_V3_DIRECTION_ONLY",
+  "remainingArt": [
+    "native05 forest/garden density",
+    "deep irregular bay",
+    "multi-level waterfall composition"
+  ],
+  "externalGates": "Child/device/natural18h7d/public not performed",
+  "artifacts": {
+    "README.md": "4385fb1db77bbd5187cb143449482796873e813b0a03c939489c6704c0b23857",
+    "index.html": "79843890ee23f2f1e39a235010c85177d61f3c3ac0977a20034d3110b40009fc",
+    "gate-review.json": "99b832e26e1e59c5a5e199856e64c06cfa6c966831e51b350b7d6e931c8c78a0",
+    "native05-v3-final-comparison.png": "2d4d5665209218bcd647289e8934ac3ce92abc114c286dc365ceac8d219be98a",
+    "places-evidence/combined-summary.json": "45e78765d76060e307a6520307d096e909c419715b2a0b59a595b80ea3771458",
+    "places-evidence/critical-path-contact-sheet.html": "1e0c4b4da52d1bb4ebf118269a3fb2b6a4eac42a35ce07722a3d31179818de35",
+    "places-evidence/final-runtime-correspondence-v6.json": "17b169c1505b9919d610184d46e4099830f7c9bd5f09205e47a5d2814d933a8f"
+  }
+}

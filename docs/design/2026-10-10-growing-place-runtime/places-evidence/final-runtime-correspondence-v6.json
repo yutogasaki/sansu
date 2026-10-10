@@ -1,0 +1,477 @@
+{
+  "schema": "sansu-native-v3-final-runtime-correspondence-v6-v1",
+  "auditedAt": "2026-10-10T10:35:19.356Z",
+  "pass": true,
+  "scope": "Read-only application/runtime input correspondence audit. No application, documentation, frozen build or old proof was modified; no core, browser or PWA tests rerun.",
+  "workingRoot": "/Users/yutogasaki/Projects/sansu",
+  "immutableNewManifest": "/private/tmp/sansu-native-v3-20261010/new-manifest.json",
+  "immutableNewManifestSha256": "030df0ade620d4c30a873dac8a81b16cf82b687943ee283dbbfc836c0bfd9de0",
+  "immutableInputCount": 2024,
+  "immutableSourceHash": "c3ea0771d8e6af017075014e5430474393f636c86b093a640c077ec749ed99d7",
+  "comparison": {
+    "scopedPathCount": 2024,
+    "byteExactPathCount": 2023,
+    "allowedQaOnlyDifferenceCount": 1,
+    "differences": [
+      {
+        "file": "tools/e2e-growing-places.mjs",
+        "kind": "changed",
+        "frozenSha256": "0816b3eaeb60b412f941fb95ad4c92b45b105004dd89c90d6538ab8b6da860cd",
+        "currentSha256": "2073a22a0d01c1da117bd7272ad9fb435ebe95851065d229348d964a5c6e537d"
+      }
+    ],
+    "currentScopedSourceHash": "a836a61f5b8db3e2c62996a5134ab2fa5b7626e4b3efdff6731746a16d6e8b25",
+    "frozenScopedSourceHash": "c3ea0771d8e6af017075014e5430474393f636c86b093a640c077ec749ed99d7",
+    "currentManifestInventoryInputCount": 2024,
+    "currentManifestInventorySourceHash": "a836a61f5b8db3e2c62996a5134ab2fa5b7626e4b3efdff6731746a16d6e8b25",
+    "fullInventoryDifferences": [
+      {
+        "file": "tools/e2e-growing-places.mjs",
+        "kind": "changed",
+        "frozenSha256": "0816b3eaeb60b412f941fb95ad4c92b45b105004dd89c90d6538ab8b6da860cd",
+        "currentSha256": "2073a22a0d01c1da117bd7272ad9fb435ebe95851065d229348d964a5c6e537d"
+      }
+    ],
+    "workingFullSourceIdentityClaimed": false,
+    "appRuntimeCorrespondence": true,
+    "subsets": {
+      "applicationSource": {
+        "pathCount": 1482,
+        "byteExactPathCount": 1482,
+        "differences": []
+      },
+      "publicAssets": {
+        "pathCount": 77,
+        "byteExactPathCount": 77,
+        "differences": []
+      },
+      "tools": {
+        "pathCount": 273,
+        "byteExactPathCount": 272,
+        "differences": [
+          {
+            "file": "tools/e2e-growing-places.mjs",
+            "kind": "changed",
+            "frozenSha256": "0816b3eaeb60b412f941fb95ad4c92b45b105004dd89c90d6538ab8b6da860cd",
+            "currentSha256": "2073a22a0d01c1da117bd7272ad9fb435ebe95851065d229348d964a5c6e537d"
+          }
+        ]
+      },
+      "placeQaPrototype": {
+        "pathCount": 2,
+        "byteExactPathCount": 2,
+        "differences": []
+      },
+      "rootConfigurationAndPackages": {
+        "pathCount": 19,
+        "byteExactPathCount": 19,
+        "differences": []
+      },
+      "goalCatalog": {
+        "pathCount": 1,
+        "byteExactPathCount": 1,
+        "differences": []
+      },
+      "assetJson": {
+        "pathCount": 143,
+        "byteExactPathCount": 143,
+        "differences": []
+      },
+      "website": {
+        "pathCount": 27,
+        "byteExactPathCount": 27,
+        "differences": []
+      }
+    }
+  },
+  "exclusions": {
+    "rootDocumentPaths": [],
+    "rootDocumentDifferences": [],
+    "outsideInventory": [
+      "docs/** except docs/product/island-place-goals.json",
+      "design-system/**",
+      ".agents/**",
+      ".codex/**",
+      "prototypes/** except prototypes/place-qa/**",
+      "repository dist/ build output",
+      "node_modules/",
+      "non-development .env files"
+    ],
+    "reason": "Main docs, showcase and closeout are outside the immutable manifest except the goal catalog. Only affected root text documents, if any, are excluded from acceptance; unaffected root text documents are compared as well. The audit includes all immutable-manifest non-documentation inputs, including website and assets JSON, and detects added/removed files in those selected inventory roots."
+  },
+  "fixedQa": {
+    "root": "/private/tmp/sansu-native-v3-fixed-qa-20261010-v6",
+    "audit": "/private/tmp/sansu-native-v3-fixed-qa-audit-v6.json",
+    "auditSha256": "03fdf7ff365e18de91707ebcadbd7d5dc5a1555e6be0b9208f3e53fd24eca151",
+    "sourceHash": "a836a61f5b8db3e2c62996a5134ab2fa5b7626e4b3efdff6731746a16d6e8b25",
+    "inputCount": 2024,
+    "script": "/private/tmp/sansu-native-v3-fixed-qa-20261010-v6/tools/e2e-growing-places.mjs",
+    "scriptSha256": "2073a22a0d01c1da117bd7272ad9fb435ebe95851065d229348d964a5c6e537d",
+    "onlyChangedInput": "tools/e2e-growing-places.mjs",
+    "allOther2023InputsExact": true,
+    "currentWorkingScriptExact": true,
+    "naturalGrowthScope": {
+      "savedNatureHoursDeltaOnly": true,
+      "maxExistingModifier": 1.25,
+      "numericTolerance": 1e-7,
+      "allOtherOwnerFieldsAndIdsAndRightsExact": true,
+      "storedOwnerStrict": true,
+      "allowanceChangesAssertionsOnly": true,
+      "evidence": "Read original helper source and existing focused check report; no new tests executed",
+      "focusedCheckFile": "/private/tmp/sansu-native-v3-whole-driver-check.json",
+      "focusedCheckSha256": "9b95b65aa219bf106bd3a284869f4b937bcf7516d238e6373584f8134d65b362",
+      "focusedChecks": {
+        "scope": "MOCK driver checks only; no actual browser or app runtime claimed",
+        "pass": true,
+        "wholeExactRevision": [
+          {
+            "attempt": 1,
+            "timeoutMs": 1,
+            "elapsedMs": 2,
+            "finalNativePoll": true,
+            "matched": false,
+            "actual": {
+              "milestones": {
+                "P06": {
+                  "revision": "wrong"
+                }
+              },
+              "uses": {},
+              "useHistory": []
+            }
+          },
+          {
+            "attempt": 2,
+            "timeoutMs": 1,
+            "elapsedMs": 0,
+            "finalNativePoll": true,
+            "matched": true
+          }
+        ],
+        "absentEvidence": [
+          {
+            "attempt": 1,
+            "timeoutMs": 1,
+            "elapsedMs": 3,
+            "finalNativePoll": true,
+            "matched": false,
+            "actual": {
+              "milestones": {
+                "P06": {
+                  "revision": "current"
+                }
+              },
+              "uses": {},
+              "useHistory": []
+            }
+          },
+          {
+            "attempt": 2,
+            "timeoutMs": 1,
+            "elapsedMs": 2,
+            "finalNativePoll": true,
+            "matched": false,
+            "actual": {
+              "milestones": {
+                "P06": {
+                  "revision": "current"
+                }
+              },
+              "uses": {},
+              "useHistory": []
+            }
+          },
+          {
+            "attempt": 3,
+            "timeoutMs": 1,
+            "elapsedMs": 3,
+            "finalNativePoll": true,
+            "matched": false,
+            "actual": {
+              "milestones": {
+                "P06": {
+                  "revision": "current"
+                }
+              },
+              "uses": {},
+              "useHistory": []
+            }
+          }
+        ],
+        "selectedRuns": {
+          "whole": [
+            {
+              "id": "qa-place-whole-island-v1",
+              "viewport": {
+                "width": 390,
+                "height": 844
+              }
+            }
+          ],
+          "tablet": 20,
+          "default": 40
+        },
+        "invalidSelectionsRejected": true
+      }
+    }
+  },
+  "fixedCandidates": [
+    {
+      "cohort": "native-v3",
+      "role": "new",
+      "manifest": "/private/tmp/sansu-native-v3-20261010/new-manifest.json",
+      "manifestSha256": "030df0ade620d4c30a873dac8a81b16cf82b687943ee283dbbfc836c0bfd9de0",
+      "sourceDir": "/private/tmp/sansu-native-v3-20261010/new-source",
+      "distDir": "/private/tmp/sansu-native-v3-20261010/new-source/dist",
+      "inputCount": 2024,
+      "sourceHash": "c3ea0771d8e6af017075014e5430474393f636c86b093a640c077ec749ed99d7",
+      "distFileCount": 168,
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "sourceHashesExact": true,
+      "distHashesExact": true,
+      "versionExact": true
+    },
+    {
+      "cohort": "native-v3",
+      "role": "rollback",
+      "manifest": "/private/tmp/sansu-native-v3-20261010/rollback-manifest.json",
+      "manifestSha256": "c64c50867e7d50e111b9047a50a9833e2dfa8e279c0c79bd74142e3939040cae",
+      "sourceDir": "/private/tmp/sansu-native-v3-20261010/rollback-source",
+      "distDir": "/private/tmp/sansu-native-v3-20261010/rollback-source/dist",
+      "inputCount": 2024,
+      "sourceHash": "c3ea0771d8e6af017075014e5430474393f636c86b093a640c077ec749ed99d7",
+      "distFileCount": 168,
+      "version": "native-05-place-runtime-v3-rollback-c3ea0771d8e6:1d8daf36-83b1-47e9-8e11-9230bf9e9540",
+      "sourceHashesExact": true,
+      "distHashesExact": true,
+      "versionExact": true
+    },
+    {
+      "cohort": "place-v1",
+      "role": "old",
+      "manifest": "/private/tmp/sansu-place-update-20261010/old-manifest.json",
+      "manifestSha256": "68b73b1c65322f7975c448df8ad3937bc7a2ae0ce5a1a2c7597f2e46c8402596",
+      "sourceDir": "/private/tmp/sansu-place-update-20261010/old-source",
+      "distDir": "/private/tmp/sansu-place-update-20261010/old-source/dist",
+      "inputCount": 1965,
+      "sourceHash": "721f239c7e6abab2025f408e6438da0204757f69341cc053098679a467a7f563",
+      "distFileCount": 168,
+      "version": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb",
+      "sourceHashesExact": true,
+      "distHashesExact": true,
+      "versionExact": true
+    },
+    {
+      "cohort": "place-v1",
+      "role": "new",
+      "manifest": "/private/tmp/sansu-place-update-20261010/new-manifest.json",
+      "manifestSha256": "768f1c1022df593ceb1c5d5148dc3f15b5d3f825bac952d75dc13fdd1c4d2e8b",
+      "sourceDir": "/private/tmp/sansu-place-update-20261010/new-source",
+      "distDir": "/private/tmp/sansu-place-update-20261010/new-source/dist",
+      "inputCount": 2011,
+      "sourceHash": "acc7dc9e4eccec27e5fa30b36346e84cf52bc5ecbc8725a2e3afb05d928ee5c8",
+      "distFileCount": 168,
+      "version": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd",
+      "sourceHashesExact": true,
+      "distHashesExact": true,
+      "versionExact": true
+    },
+    {
+      "cohort": "place-v1",
+      "role": "rollback",
+      "manifest": "/private/tmp/sansu-place-update-20261010/rollback-manifest.json",
+      "manifestSha256": "76ee0bb8bb820c18a8dc88832efc98693c017fdd9472740d03f8fc77c346d4f2",
+      "sourceDir": "/private/tmp/sansu-place-update-20261010/rollback-source",
+      "distDir": "/private/tmp/sansu-place-update-20261010/rollback-source/dist",
+      "inputCount": 2011,
+      "sourceHash": "acc7dc9e4eccec27e5fa30b36346e84cf52bc5ecbc8725a2e3afb05d928ee5c8",
+      "distFileCount": 168,
+      "version": "place-update-rollback-v4-acc7dc9e4ecc:e19b2a2c-3b3c-4a60-b3d3-21d105c6a720",
+      "sourceHashesExact": true,
+      "distHashesExact": true,
+      "versionExact": true
+    },
+    {
+      "cohort": "native-v2",
+      "role": "new",
+      "manifest": "/private/tmp/sansu-native-v2-20261010/new-manifest.json",
+      "manifestSha256": "1522c5cd8ff4efddda219b3aabaf5f10486a3cc8b71c72d77a32af87e54d258c",
+      "sourceDir": "/private/tmp/sansu-native-v2-20261010/new-source",
+      "distDir": "/private/tmp/sansu-native-v2-20261010/new-source/dist",
+      "inputCount": 2016,
+      "sourceHash": "a2a08373ca6e266dec6dfdef923e24bb6456dc36f3480ae98ad17dc25b79652d",
+      "distFileCount": 168,
+      "version": "native-05-place-runtime-v2-new-a2a08373ca6e:00da88da-08d3-456c-933b-71293c6ecb05",
+      "sourceHashesExact": true,
+      "distHashesExact": true,
+      "versionExact": true
+    },
+    {
+      "cohort": "native-v2",
+      "role": "rollback",
+      "manifest": "/private/tmp/sansu-native-v2-20261010/rollback-manifest.json",
+      "manifestSha256": "6434f4966e44d7d2ea62f0b0ce136ad3ae5a9c70815f15e2b2ba2403ebdd7023",
+      "sourceDir": "/private/tmp/sansu-native-v2-20261010/rollback-source",
+      "distDir": "/private/tmp/sansu-native-v2-20261010/rollback-source/dist",
+      "inputCount": 2016,
+      "sourceHash": "a2a08373ca6e266dec6dfdef923e24bb6456dc36f3480ae98ad17dc25b79652d",
+      "distFileCount": 168,
+      "version": "native-05-place-runtime-v2-rollback-a2a08373ca6e:2b402592-391e-4195-99d9-d7e7510003f5",
+      "sourceHashesExact": true,
+      "distHashesExact": true,
+      "versionExact": true
+    }
+  ],
+  "fixedManifestIdentityAnchor": {
+    "audit": "/private/tmp/sansu-native-v3-20261010/final-update-audit-v3.json",
+    "auditSha256": "937f37d8d3284e7e74ac2d9cf8e54ed5ed631ed88c1be5663ed8de445ebdb6cc",
+    "allSevenManifestHashesExact": true
+  },
+  "driverBodyCorrespondence": {
+    "acquiredJourney": {
+      "byteIdenticalToQaV5": true,
+      "sha256": "3e029f1a2da9eafcb497c1a655f2ff504274cce412aba4e62c11a88a991b3bf5",
+      "bytes": 6159,
+      "startByte": 15982,
+      "actualV6HashVerified": true,
+      "actualV5ByteIdentical": true,
+      "currentWorkingBodyIdentical": true
+    },
+    "ownerConfirmation": {
+      "byteIdenticalToQaV5": true,
+      "sha256": "c0060f84e89a4d3ff88a6f808293ada4c232223984248d141391ab21c7b348b4",
+      "bytes": 14440,
+      "startByte": 7701,
+      "actualV6HashVerified": true,
+      "actualV5ByteIdentical": true,
+      "currentWorkingBodyIdentical": true
+    },
+    "currentWholeEvidence": {
+      "byteIdenticalToQaV5": true,
+      "sha256": "fea907e84c2cb85567f6a864de3258901be94f208e865f9a58005aa8a5ec707e",
+      "bytes": 1837,
+      "startByte": 24371,
+      "actualV6HashVerified": true,
+      "actualV5ByteIdentical": true,
+      "currentWorkingBodyIdentical": true
+    }
+  },
+  "corePwaEvidence": {
+    "core": {
+      "index": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-growing-place-runtime/verification-evidence/native-v3/index.json",
+      "indexSha256": "3cd9e52cbd2cfe447edbcefb250aab3e3ba53315002558ecf6c6fa1d9859f866",
+      "originalFiles": 45,
+      "originalBytes": 11508779,
+      "originalAndCopiedEvidenceExact": true,
+      "archive": "/private/tmp/sansu-growing-native-v3-20261010-v1/build-inputs.tar.gz",
+      "archiveSha256": "5da9b1193c3e1b8a1b4767288998dbaa0f551323aaad9e836508c99f0fb33a76",
+      "sourceBridge": "/private/tmp/sansu-native-v3-verification-common-byte-audit.json",
+      "sourceBridgeSha256": "eba9a41cf405fc632be2e045d53717802992a2f867933dbfe959aa9d11eeb0f6",
+      "coreInputCount": 17298,
+      "sharedFrozenHashesExact": 2012,
+      "missingFromCore": [
+        {
+          "file": ".env.development",
+          "immutableSha256": "098de04465bd65cb9c34e66439cbc7089573661c1fab821ab5fedf0de129f414",
+          "reason": "development-only environment file excluded from explicit production verifier inputs"
+        },
+        {
+          "file": "website/dist/assets/index-D_pKjlI3.js",
+          "immutableSha256": "54038cae2b3e00695904494720aafdd2ea326b56ae1550a859da6f320ea4ab8c",
+          "reason": "generated website/dist output excluded from application source mapping"
+        },
+        {
+          "file": "website/dist/assets/index-Qt7YR9dY.css",
+          "immutableSha256": "accb0cf9f775a502391bc9a453e8bc3d25fa4d620d339c38beca92392303e53a",
+          "reason": "generated website/dist output excluded from application source mapping"
+        },
+        {
+          "file": "website/dist/fonts/OFL-ZenMaruGothic.txt",
+          "immutableSha256": "2a20cf7ce1909d8ee1e949095d340f7d7656705f7c810a2d6faf56800ad0cb3d",
+          "reason": "generated website/dist output excluded from application source mapping"
+        },
+        {
+          "file": "website/dist/fonts/noto-sans-jp.woff2",
+          "immutableSha256": "539b381a6e0a5a49d299867d9ab722ad7e41d01f07bbcb6bed4518b63f8d4b0a",
+          "reason": "generated website/dist output excluded from application source mapping"
+        },
+        {
+          "file": "website/dist/fonts/zen-maru-gothic-black.woff2",
+          "immutableSha256": "e3266aca5e0a680e2cc1e4fbb9d4320f6dfee22c11525b9d0e1f7acd56b02a55",
+          "reason": "generated website/dist output excluded from application source mapping"
+        },
+        {
+          "file": "website/dist/images/home.png",
+          "immutableSha256": "33aa94318d7e4e99d548f5323950fc3553bca559485d71a7b46c2a0b102111c4",
+          "reason": "generated website/dist output excluded from application source mapping"
+        },
+        {
+          "file": "website/dist/images/island-growing.png",
+          "immutableSha256": "bd3b7474553daf36068cf3fa5c5078fa33311241a0c2771164ccddf6d3a4c3b6",
+          "reason": "generated website/dist output excluded from application source mapping"
+        },
+        {
+          "file": "website/dist/images/island-start.png",
+          "immutableSha256": "d9ca50cc21c383f24782df805eb8e422cb238383bd60565cb331951630b79e0f",
+          "reason": "generated website/dist output excluded from application source mapping"
+        },
+        {
+          "file": "website/dist/images/island-thriving.png",
+          "immutableSha256": "bfb1c5b3179d167efded39be977b37b5d884197465cb263f012b8f9e83738a42",
+          "reason": "generated website/dist output excluded from application source mapping"
+        },
+        {
+          "file": "website/dist/images/learning.png",
+          "immutableSha256": "958e40db13136268d47d8355ea616fd49fa251e65f386f6aadb6851370e63b5c",
+          "reason": "generated website/dist output excluded from application source mapping"
+        },
+        {
+          "file": "website/dist/index.html",
+          "immutableSha256": "3374e86fd53dd069d4ab347b4522725cfc2fce591b853b0f43a561a9f5dcdf9b",
+          "reason": "generated website/dist output excluded from application source mapping"
+        }
+      ],
+      "originalArchiveToNewByteExact": 1837,
+      "archiveToCurrentByteExact": 1836,
+      "currentQaOnlyDifference": "tools/e2e-growing-places.mjs",
+      "version": "b61d3064323dd75552cfbf3808fade083e2bef07-candidate-fa3229edef0e:b06a2aeb-b77d-4fa4-baee-1e84ef0b8314",
+      "distinctFromUpdateNew": true,
+      "distByteIdentityWithNewAsserted": false,
+      "coreDistInputs": {
+        "file": "dist-inputs.json",
+        "source": "/private/tmp/sansu-growing-native-v3-20261010-v1/dist-inputs.json",
+        "sha256": "b7414e7c1010cf8a7b2fc0847b4cf3b101a33a8e4088b484d387b41744524317",
+        "bytes": 17744,
+        "kind": "original-report-or-log"
+      },
+      "testsRerun": false
+    },
+    "pwa": {
+      "index": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-growing-place-runtime/storage-evidence/native-v3/index.json",
+      "indexSha256": "0616aad9547e3b4079f1e460eb4db64f898cf61caaefe7e50d94d17376f71591",
+      "originalFiles": 19,
+      "originalBytes": 5139699,
+      "originalAndCopiedEvidenceExact": true,
+      "sourceHash": "c3ea0771d8e6af017075014e5430474393f636c86b093a640c077ec749ed99d7",
+      "scenarios": 4,
+      "captures": 14,
+      "currentDriverAndHelperHashesExact": 4,
+      "buildVersions": {
+        "OLD": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb",
+        "NEW": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+        "ROLLBACK": "native-05-place-runtime-v3-rollback-c3ea0771d8e6:1d8daf36-83b1-47e9-8e11-9230bf9e9540"
+      },
+      "testsRerun": false
+    },
+    "scope": "Original Core archive and original fixed PWA evidence remain unchanged. Original core is a separately versioned build; neither equal dist nor full 17298/2024 inventory identity is claimed. The one current QA-only driver change was not imported by the app or PWA checks."
+  },
+  "previousCorrespondenceAudit": {
+    "file": "/private/tmp/sansu-native-v3-final-runtime-correspondence.json",
+    "sha256": "5155221f844afaf9611d91e031312be3af7d6517cd1eb84bda51a56f4f7fef94",
+    "unchanged": true
+  },
+  "oldFiveCandidatesPreserved": true,
+  "v3NewRollbackPreserved": true,
+  "releaseApproval": false,
+  "implementationComplete": false
+}

@@ -1,16 +1,21 @@
-/* Only the growing home collapses chrome; reading and learning keep their layouts. */
-.island-shell .island-shell-nav--home {
-    position: absolute; z-index: 6; right: max(12px, env(safe-area-inset-right));
-    bottom: max(12px, env(safe-area-inset-bottom)); width: auto; min-height: 0;
-    display: block; padding: 0; border: 0; background: transparent; pointer-events: none;
+/* Home uses the same five destinations as the other ordinary screens. */
+.island-shell .island-shell-nav--home .island-shell-tab { min-height: 48px; }
+/* The menu stays within reach above the tabs; the rest of the HUD sits above it. */
+.growing-island[data-home-ui-candidate][data-growing-island="ready"] .growing-hud-top {
+    top: auto; right: auto; left: max(12px, env(safe-area-inset-left));
+    bottom: max(12px, env(safe-area-inset-bottom)); pointer-events: none;
 }
-.island-shell .island-shell-nav--home .island-shell-tab--learn {
-    flex-direction: row; min-width: 104px; min-height: 48px; gap: 7px; padding: 10px 14px;
-    font-size: 14px; border-radius: 18px; pointer-events: auto;
+.growing-island[data-home-ui-candidate] .growing-menu-button {
+    min-width: 104px; min-height: 48px; justify-content: center; padding: 10px 14px;
+    font-size: 14px; font-weight: 700; pointer-events: auto;
 }
-.growing-island[data-home-ui-candidate][data-growing-island="ready"] .growing-hud-top { top: max(12px, env(safe-area-inset-top)); }
-.growing-island[data-home-ui-candidate] .growing-menu-button { min-height: 44px; font-size: 13px; font-weight: 700; }
-.growing-island[data-home-ui-candidate][data-growing-island="ready"] .growing-hud-bottom { right: auto; left: 12px; bottom: max(12px, env(safe-area-inset-bottom)); }
+.growing-island[data-home-ui-candidate][data-growing-island="ready"] .growing-hud-bottom {
+    right: auto; left: max(12px, env(safe-area-inset-left));
+    bottom: max(76px, calc(env(safe-area-inset-bottom) + 64px));
+}
+.growing-island[data-home-ui-candidate][data-growing-island="ready"]:has(.growing-hud-bottom .growing-open-all) .growing-bubble {
+    bottom: max(136px, calc(env(safe-area-inset-bottom) + 124px));
+}
 .growing-island[data-home-ui-candidate][data-growing-island="ready"] .growing-bubble { bottom: 76px; max-width: min(300px, calc(100% - 24px)); }
 .growing-island[data-home-ui-candidate] .growing-placing { bottom: max(76px, calc(env(safe-area-inset-bottom) + 64px)); }
 .growing-island[data-home-ui-candidate][data-growing-island="visit"] .growing-hud-bottom { margin-bottom: max(76px, calc(env(safe-area-inset-bottom) + 64px)); }

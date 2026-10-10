@@ -130,7 +130,7 @@ try {
             await growingDb.islands.put(record);
         }, id);
         await page.reload(); await ready(page);
-        assert.equal((await read(page, id)).version, 3);
+        assert.equal((await read(page, id)).version, 4);
         // Explicit mastery fixture tests discoverability; it is not proof of learning acquisition.
         await tapSeed(page);
         await page.getByRole('tab', { name: 'しまってある', exact: true }).tap();

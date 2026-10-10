@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>小物から、そだつ場所へ — 島の実装ショーケース</title>
+    <meta name="description" content="育った島全体の実3D、承認した美術、4つの場所、通常取得から接続・分離・再接続までの実画面を見返すショーケース。" />
+    <link rel="stylesheet" href="./showcase.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">内容へ</a>
+    <header class="topbar">
+      <a class="brand" href="../../index.html">SANSU <span>島の美術と実装</span></a>
+      <nav aria-label="ページ内の見どころ">
+        <a href="#comparison">全島</a><a href="#places">4つの景色</a><a href="#journey">遊ぶ流れ</a><a href="#evidence">確認の範囲</a>
+      </nav>
+    </header>
+    <main id="main">
+      <section class="intro" aria-labelledby="title">
+        <p class="eyebrow">2026.10.10 · GROWING ISLAND</p>
+        <h1 id="title">小物から、<br class="phone-break" />そだつ場所へ。</h1>
+        <p class="lead">森、水辺、入り江、花の庭。持っている木や家のつながりが、島全体の景色を変えていく。</p>
+        <p class="scope-note">目標はnative05の全景です。下はその方向へ進めた本体v3の実画面。森と庭の密度、深い入り江、段差と滝は、現在も見本よりかなり単純です。作者の方向GOと、ローカル実装の技術検証を分けて記録しています。</p>
+        <figure class="hero">
+          <a class="image-link" href="./whole-dev-art-v3-final.png" target="_blank" rel="noopener"><img src="./whole-dev-art-v3-final.png" width="640" height="787" alt="実装した成熟島の全景。奥の青紫の森、右の花の天蓋、中央の一続きの浅い水辺、左の厚い青紫の集会所の屋根が、緩い丘と岸に広がる。" /></a>
+          <figcaption><span class="badge">実アプリの3D</span><span>DEV診断 · 成熟状態の全島 · 画像を開くと原寸で確認できます</span></figcaption>
+        </figure>
+      </section>
+
+      <section id="comparison" aria-labelledby="comparison-title">
+        <div class="section-heading"><p class="eyebrow">WHOLE ISLAND</p><h2 id="comparison-title">目標と、いまの島。</h2><p>同じ方向を見て改善できるように、承認した全島美術と実画面を並べています。</p></div>
+        <div class="comparison">
+          <figure class="panel">
+            <a class="comparison-image image-link" href="../2026-10-10-island-final-3d/whole-island-render.png" target="_blank" rel="noopener"><img src="../2026-10-10-island-final-3d/whole-island-render.png" width="1600" height="1200" loading="lazy" alt="承認したnative05の全島美術。大きな中空の樹の住まい、段泉、花の中庭、入り江の集会所が丸い島の地形とつながる。" /></a>
+            <figcaption><span class="badge reference">目標の美術</span><h3>承認した全島3D · native05</h3><p>大樹を中心に、丘・泉・入り江へ空間が広がる。</p><a href="../2026-10-10-island-final-3d/">3Dの見本を見回す <span aria-hidden="true">↗</span></a></figcaption>
+          </figure>
+          <figure class="panel">
+            <a class="comparison-image image-link" href="./whole-dev-art-v3-final.png" target="_blank" rel="noopener"><img src="./whole-dev-art-v3-final.png" width="640" height="787" loading="lazy" alt="現在の成熟島を実アプリで描画した全景。葉のまとまり、浅い水辺、曲面屋根、花の天蓋が、それぞれ実際の所有物から育つ。" /></a>
+            <figcaption><span class="badge">現在の実装</span><h3>動く島全体 · DEV診断</h3><p>所有物と入口を保ち、通れる床と使える場所へ。</p><a href="./whole-dev-art-v3-final-metadata.json">この画像の撮影情報 <span aria-hidden="true">↗</span></a></figcaption>
+          </figure>
+        </div>
+        <p class="comparison-note">小物の集合から、中空の大樹、使える回廊、広い浅水、厚い共同屋根、花の中庭へ変えました。完成見本の密な森・深い入り江・段差と滝の構成は未再現です。現在地と残る差を、実全景で見返します。</p>
+      </section>
+
+      <section id="places" aria-labelledby="places-title">
+        <div class="section-heading"><p class="eyebrow">FOUR LANDSCAPES</p><h2 id="places-title">同じ島に、違う居場所。</h2><p>大きさだけでなく、屋根・地面・水・歩く高さで、4つの景色を分けています。</p></div>
+        <div class="place-grid">
+          <figure class="place-card">
+            <a class="detail-image image-link" style="--picture-width:280%;--picture-left:-101%;--picture-top:-116%;" href="./whole-dev-art-v3-final.png" target="_blank" rel="noopener"><img src="./whole-dev-art-v3-final.png" width="640" height="787" loading="lazy" alt="奥の森の部分。丸い青紫の葉と、空洞のある琥珀色の幹が高い木陰を作る。" /></a>
+            <figcaption><small>森 · P01 / P02 · DEV全景の一部</small><h3>木陰と、大樹の住まい</h3><p>木のまとまりが屋根になり、実階段から枝の高床を歩ける。</p></figcaption>
+          </figure>
+          <figure class="place-card">
+            <a class="detail-image image-link" style="--picture-width:400%;--picture-left:-162%;--picture-top:-292%;" href="./whole-dev-art-v3-final.png" target="_blank" rel="noopener"><img src="./whole-dev-art-v3-final.png" width="640" height="787" loading="lazy" alt="中央の水辺の部分。淡い青の水面が石の岸とつながり、浅い渡り石を挟んで一続きになる。" /></a>
+            <figcaption><small>水辺 · P03 · DEV全景の一部</small><h3>青い泉の庭</h3><p>水ばちと通水したみずみちが、地形に沿う広い水辺へ育つ。</p></figcaption>
+          </figure>
+          <figure class="place-card">
+            <a class="detail-image image-link" style="--picture-width:280%;--picture-left:-38%;--picture-top:-160%;" href="./whole-dev-art-v3-final.png" target="_blank" rel="noopener"><img src="./whole-dev-art-v3-final.png" width="640" height="787" loading="lazy" alt="左の入り江の部分。家と遊び場の上に、肋骨と厚い縁を持つ厚い青紫の曲面屋根がかかる。" /></a>
+            <figcaption><small>入り江 · P04 · DEV全景の一部</small><h3>入り江の集会所</h3><p>家と遊び場を、入口を開けた丸い貝屋根がまとめる。</p></figcaption>
+          </figure>
+          <figure class="place-card">
+            <a class="detail-image image-link" style="--picture-width:350%;--picture-left:-218%;--picture-top:-198%;" href="./whole-dev-art-v3-final.png" target="_blank" rel="noopener"><img src="./whole-dev-art-v3-final.png" width="640" height="787" loading="lazy" alt="右の花の庭の部分。同じ所有花の色を使った大きな花びらが、席のある中庭を囲う天蓋になる。" /></a>
+            <figcaption><small>花の庭 · P05 · DEV全景の一部</small><h3>花の中庭</h3><p>育った花と席の配置が、門や中庭の形を決める。</p></figcaption>
+          </figure>
+        </div>
+        <p class="caption-note">4枚は上の実全景を切り出して表示しています。別の生成画像や、固定の背景モデルではありません。</p>
+      </section>
+
+      <section id="journey" aria-labelledby="journey-title">
+        <div class="section-heading"><p class="eyebrow">ACTUAL PLAY</p><h2 id="journey-title">手に入れて、つないで、戻ってくる。</h2><p>通常の初回登録と学習から木を手に入れた、固定ビルドの実画面。390幅を中心に、同じ木を離して戻すところまで並べています。</p></div>
+        <div class="journey-status"><span class="badge">固定v3 · 通常取得3旅程</span><p>320・390・768幅で各21回答、取得・接続・分離・再接続・同じ学習への復帰が完了。原report全体は後続の成熟待機でFAILのままです。時刻操作とfixture書込みはありません。実時間18時間/7日の自然成熟は未確認です。</p></div>
+        <ol class="contact-list">
+          <li><figure><a class="journey-image image-link" href="./places-evidence/native-v3-autonomous-use-failed/acquired-390-first-home.png" target="_blank" rel="noopener"><img src="./places-evidence/native-v3-autonomous-use-failed/acquired-390-first-home.png" width="390" height="844" loading="lazy" alt="通常の初回登録後の小さな島。虹色の屋根の家、花、ベンチと桟橋がある。" /></a><figcaption><small>01 · 390幅 · 通常取得</small><h3>はじめの島</h3><p>初回の島を開き、学習へ進む。</p></figcaption></figure></li>
+          <li><figure><a class="journey-image image-link" href="./places-evidence/native-v3-autonomous-use-failed/acquired-390-twenty-real-answers.png" target="_blank" rel="noopener"><img src="./places-evidence/native-v3-autonomous-use-failed/acquired-390-twenty-real-answers.png" width="390" height="844" loading="lazy" alt="実際の学習入力で20連続の演出が出ている足し算の画面。" /></a><figcaption><small>02 · 390幅 · 実際の学習入力</small><h3>学習を進める</h3><p>答えて、木を手に入れる流れへ。</p></figcaption></figure></li>
+          <li><figure><a class="journey-image image-link" href="./places-evidence/native-v3-autonomous-use-failed/acquired-390-optional-six-goals.png" target="_blank" rel="noopener"><img src="./places-evidence/native-v3-autonomous-use-failed/acquired-390-optional-six-goals.png" width="390" height="844" loading="lazy" alt="そだつ場所の本。木陰の庭、大樹の住まい、泉、集会所などの任意の目標を選べる。" /></a><figcaption><small>03 · 390幅 · 目標の本</small><h3>目標を選ぶ</h3><p>好きな場所を選び、材料と形を見る。</p></figcaption></figure></li>
+          <li><figure><a class="journey-image image-link" href="./places-evidence/native-v3-autonomous-use-failed/acquired-390-young-connected-garden.png" target="_blank" rel="noopener"><img src="./places-evidence/native-v3-autonomous-use-failed/acquired-390-young-connected-garden.png" width="390" height="844" loading="lazy" alt="手に入れた若い木を置き、木陰の庭がつながってきたよと表示された島。" /></a><figcaption><small>04 · 390幅 · connected</small><h3>なえをつなぐ</h3><p>まだ若い木で、場所のつながりができる。</p></figcaption></figure></li>
+          <li><figure><a class="journey-image image-link" href="./places-evidence/native-v3-autonomous-use-failed/acquired-390-split-same-owner.png" target="_blank" rel="noopener"><img src="./places-evidence/native-v3-autonomous-use-failed/acquired-390-split-same-owner.png" width="390" height="844" loading="lazy" alt="同じ所有の木を離した後の島。接続前の状態へ変わっている。" /></a><figcaption><small>05 · 390幅 · split</small><h3>同じ木を離す</h3><p>材料をなくさず、つながりをほどく。</p></figcaption></figure></li>
+          <li><figure><a class="journey-image image-link" href="./places-evidence/native-v3-autonomous-use-failed/acquired-390-reconnected-same-tree.png" target="_blank" rel="noopener"><img src="./places-evidence/native-v3-autonomous-use-failed/acquired-390-reconnected-same-tree.png" width="390" height="844" loading="lazy" alt="離した同じ木を戻して再接続した島。木の所有IDを保っている。" /></a><figcaption><small>06 · 390幅 · reconnect</small><h3>同じ木を戻す</h3><p>別の木を買わず、同じ所有物でつなぎ直す。</p></figcaption></figure></li>
+          <li><figure><a class="journey-image image-link" href="./places-evidence/native-v3-autonomous-use-failed/acquired-390-same-plan-return.png" target="_blank" rel="noopener"><img src="./places-evidence/native-v3-autonomous-use-failed/acquired-390-same-plan-return.png" width="390" height="844" loading="lazy" alt="同じ学習へ戻った後、木陰の庭の接続表示がある島へ復帰した画面。" /></a><figcaption><small>07 · 390幅 · 同じ学習へ復帰</small><h3>学習から戻る</h3><p>遊んだ島と、進めていた学習を保つ。</p></figcaption></figure></li>
+          <li><figure><a class="journey-image image-link" href="./places-evidence/native-v3-autonomous-use-failed/acquired-768-young-connected-garden.png" target="_blank" rel="noopener"><img src="./places-evidence/native-v3-autonomous-use-failed/acquired-768-young-connected-garden.png" width="768" height="1024" loading="lazy" alt="768幅でも、若い木とベンチを置いた同じ接続旅程が見える島。" /></a><figcaption><small>08 · 768幅 · 通常取得</small><h3>広い画面でも</h3><p>同じ接続を、タブレット幅で確認。</p></figcaption></figure></li>
+        </ol>
+      </section>
+
+      <section id="mature" aria-labelledby="mature-title" data-evidence-state="completed-subset-aggregate">
+        <div class="section-heading"><p class="eyebrow">MATURE RUNTIME</p><h2 id="mature-title">育った場所を、実際に使う。</h2><p>同じ固定v3の実画面。390幅の19件、全島390幅の1件、768幅の20件を、完了した原記録から集約しました。</p></div>
+        <div class="journey-status"><span class="badge">成熟診断 · 40件の集約</span><p>15配置・4関係・全島を2幅で確認。単一runの全行程PASSではありません。固定Dateと成熟fixtureを明示し、過去の原FAILも残しています。指定した実利用を保存から確認した画像です。自律行動の観察をpointer操作の証拠にはしません。</p></div>
+        <ol class="contact-list">
+          <li><figure><a class="journey-image image-link" href="./places-evidence/native-v3-whole390/qa-place-whole-island-v1-390-whole-island-used.png" target="_blank" rel="noopener"><img src="./places-evidence/native-v3-whole390/qa-place-whole-island-v1-390-whole-island-used.png" width="390" height="844" loading="lazy" alt="固定v3の成熟島全景。森・水庭・共同屋根・花の庭を描画し、実際の本人と住人の利用が保存された。" /></a><figcaption><small>01 · 390幅 · 全島 / P06</small><h3>成熟した島全体</h3><p>現在の成熟場所で、ぽこもこと住人の実利用を受領。</p></figcaption></figure></li>
+          <li><figure><a class="journey-image image-link" href="./places-evidence/native-v3-tablet/qa-place-whole-island-v1-768-whole-island-used.png" target="_blank" rel="noopener"><img src="./places-evidence/native-v3-tablet/qa-place-whole-island-v1-768-whole-island-used.png" width="768" height="1024" loading="lazy" alt="768幅の固定v3成熟島全景。3系列以上の現在の成熟場所と、本人と住人の実利用を確認した画面。" /></a><figcaption><small>02 · 768幅 · 全島 / P06</small><h3>広い画面の全島</h3><p>同じ20配置を768幅でも独立して確認。</p></figcaption></figure></li>
+          <li><figure><a class="journey-image image-link" href="./places-evidence/native-v3-whole-observation-failed/qa-place-p02-court-v1-390-grown-real-3d.png" target="_blank" rel="noopener"><img src="./places-evidence/native-v3-whole-observation-failed/qa-place-p02-court-v1-390-grown-real-3d.png" width="390" height="844" loading="lazy" alt="固定v3の大樹court配置。所有の木からできる木の部屋と枝の回廊を実アプリで描画した。" /></a><figcaption><small>03 · P02 / court · 実描画</small><h3>大樹と回廊</h3><p>同じ所有の木と家から、木の部屋と高床を描画。</p></figcaption></figure></li>
+          <li><figure><a class="journey-image image-link" href="./places-evidence/native-v3-whole-observation-failed/qa-place-p03-tiered-v1-390-physical-use.png" target="_blank" rel="noopener"><img src="./places-evidence/native-v3-whole-observation-failed/qa-place-p03-tiered-v1-390-physical-use.png" width="390" height="844" loading="lazy" alt="固定v3のtiered水庭。通水した浅い水面を描き、現在の対象をぽこもこが実際に利用した。" /></a><figcaption><small>04 · P03 / tiered · 実利用</small><h3>広い浅水の庭</h3><p>現在の水辺で、指定した実利用を受領。</p></figcaption></figure></li>
+          <li><figure><a class="journey-image image-link" href="./places-evidence/native-v3-whole-observation-failed/qa-place-p04-bay-v1-390-physical-use.png" target="_blank" rel="noopener"><img src="./places-evidence/native-v3-whole-observation-failed/qa-place-p04-bay-v1-390-physical-use.png" width="390" height="844" loading="lazy" alt="固定v3のbay集会所。厚い青紫の共同屋根と既存の家を描き、実際の遊び場利用を保存した。" /></a><figcaption><small>05 · P04 / bay · 実利用</small><h3>貝屋根の集会所</h3><p>家と遊び場を保ち、現在の遊び場の利用を受領。</p></figcaption></figure></li>
+          <li><figure><a class="journey-image image-link" href="./places-evidence/native-v3-whole-observation-failed/qa-place-p05-arch-v1-390-physical-use.png" target="_blank" rel="noopener"><img src="./places-evidence/native-v3-whole-observation-failed/qa-place-p05-arch-v1-390-physical-use.png" width="390" height="844" loading="lazy" alt="固定v3のarch花の庭。所有花による門と席を描き、ぽこもこの同じ席の実利用を確認した。" /></a><figcaption><small>06 · P05 / arch · 実利用</small><h3>花の門と席</h3><p>花の配置が作る場所で、指定した席の利用を受領。</p></figcaption></figure></li>
+        </ol>
+        <p class="caption-note">画像は固定NEWの実描画です。各実利用はactor・対象・完全revisionを照合。<a href="./places-evidence/critical-path-contact-sheet.html">重要経路の全画像</a>と<a href="./places-evidence/combined-summary.json">集約の根拠</a>を残しています。自然成長・子どもの理解・実機の観察とは分けます。</p>
+      </section>
+
+      <section id="evidence" aria-labelledby="evidence-title">
+        <div class="section-heading"><p class="eyebrow">EVIDENCE</p><h2 id="evidence-title">見た目と、確認した範囲を分けて残す。</h2><p>DEVの成熟見本、通常取得、固定版の成熟診断は、それぞれ違う証拠です。</p></div>
+        <details class="evidence-details">
+          <summary>撮影情報・実行結果・原記録を見る</summary>
+          <div class="evidence-body">
+            <table><caption>このショーケースの証拠区分</caption><thead><tr><th scope="col">区分</th><th scope="col">確認したこと</th><th scope="col">制限・結果</th></tr></thead><tbody>
+              <tr><th scope="row">目標の美術</th><td>native05の全島3D</td><td>到達目標。森/庭の密度、深い湾、段差と滝は未再現。</td></tr>
+              <tr><th scope="row">作者のDEV全景</th><td>実際の640×787で全島を比較。</td><td>GO_LOCAL_V3_DIRECTION。成熟fixtureの見本で、完全再現や参加者評価ではない。</td></tr>
+              <tr><th scope="row">通常取得 · 固定v3</th><td>320/390/768幅、各21回答と通常購入・学習往復。</td><td>3旅程完了。原run全体は後続でFAILのまま。fixture書込み/時刻操作なし。</td></tr>
+              <tr><th scope="row">成熟診断 · 固定v3</th><td>390幅19件＋全島390幅1件＋768幅20件。</td><td>複数runの40件集約。明示fixtureと固定Date。単一コマンド全PASSではない。</td></tr>
+              <tr><th scope="row">core / 既存旅程</th><td>564 files / 4,966 tests、classic32、案内24画面、balance12画面。</td><td>独立build UUID。元archive対immutable NEWの1,837共通入力がbyte一致。distや最終QAの同一性は主張しない。</td></tr>
+              <tr><th scope="row">保存 / 実SW</th><td>生成QAの通常/中断4ケース・14画面。</td><td>正確なNEW/ROLLBACKを使うローカル検証。旧writer隔離は別のfake-IDB診断。14画面は成熟美術の証拠ではない。</td></tr>
+            </tbody></table>
+            <dl class="metadata"><div><dt>DEV全景の対象</dt><dd><code>http://127.0.0.1:5198/#/island</code> · 明示成熟診断 · 実際の640 × 787</dd></div><div><dt>実候補</dt><dd><code>native-05-place-runtime-v3</code> · Island/Growing ON · Nature Town OFF</dd></div><div><dt>固定NEWの版</dt><dd><code>native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb</code></dd></div><div><dt>固定NEWの対象</dt><dd><code>http://127.0.0.1:5289</code> · ローカルproduction build</dd></div><div><dt>観察の待機方針</dt><dd>自律利用は最大3回 × 90秒＋通常reload/ready。失敗窓と実保存を残す。初回成功の保証はない。</dd></div><div><dt>未確認</dt><dd>子どもの無説明理解・再訪、実機、実時間18時間/7日の自然成熟、公開。core checksはPASS、元の検証ラッパーのrelease判定PARTIALと全raw FAILを保持。</dd></div></dl>
+            <div class="evidence-links"><a href="./places-evidence/combined-summary.json">3旅程・40件の集約</a><a href="./places-evidence/critical-path-contact-sheet.html">重要経路の全画像</a><a href="./places-evidence/native-v3-autonomous-use-failed/report.json">取得3旅程 / 原全体FAIL</a><a href="./places-evidence/native-v3-whole-observation-failed/report.json">390幅19件 / 原全体FAIL</a><a href="./places-evidence/native-v3-whole390/report.json">全島390幅 / 選択1件PASS</a><a href="./places-evidence/native-v3-tablet/report.json">768幅 / 選択20件PASS</a><a href="./places-evidence/native-v3-whole390/new-manifest.json">固定NEWのsource manifest</a><a href="./verification-evidence/native-v3/index.json">coreと既存旅程</a><a href="./verification-evidence/native-v3/source-correspondence.json">元archiveとの共通byte比較</a><a href="./storage-evidence/native-v3/index.json">保存・実SW更新</a><a href="./places-evidence/final-runtime-correspondence-v6.json">本体と最終QAの対応監査</a><a href="./whole-dev-art-v3-final-metadata.json">DEV全景の原metadata</a><a href="./gate-review.json">美術の方向レビュー</a><a href="./README.md">記録の案内</a></div>
+          </div>
+        </details>
+      </section>
+    </main>
+    <footer><p>画像を開いて、原寸で見比べられます。</p><div><a href="../2026-10-10-island-final-3d/">承認した全島3D</a><a href="../../product/island-place-goals.md">場所の目標と組み合わせ</a><a href="../../product/island-construction-strategy.md">島の構築戦略</a></div></footer>
+  </body>
+</html>

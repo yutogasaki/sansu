@@ -1,0 +1,86 @@
+{
+  "schema": "sansu-place-runtime-gates-v1",
+  "reviewedAt": "2026-10-10T08:41:35.099Z",
+  "scope": "Local runtime art v2; actual DEV whole island. Fixed v2 core/classic/guidance/balance and storage/update passed; mature place harness stopped at an over-constrained whole-island P05 check. Native05 art remains HOLD; working renderer v3 is in progress.",
+  "artCandidate": "native-05-place-runtime-v2",
+  "benchmark": {
+    "file": "../2026-10-10-island-final-3d/whole-island-render.png",
+    "hash": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6"
+  },
+  "runtime": {
+    "file": "whole-dev-art-v2-final.png",
+    "hash": "eefca3ce86bbeeac965cc678691358d5e382517a0656431cd8f2697db62af085",
+    "metadata": "whole-dev-art-v2-final-metadata.json",
+    "diagnostic": true
+  },
+  "visualAppeal": {
+    "status": "HOLD_NATIVE_05_ALIGNMENT",
+    "reviewers": [
+      "implementation author",
+      "independent UI worker",
+      "geometry worker"
+    ],
+    "resolved": [
+      "Whole sea fills the enlarged overview",
+      "Rounded full-width cottages preserve saved styles and roofs",
+      "Irregular coast and shared north forest hills roll into low southern banks",
+      "Amber great-tree body, actual round gallery floor and shared reachable paving are visible"
+    ],
+    "residuals": [
+      "Wide water and a bay-centred community are not yet the living centre: the spring reads as one narrow line and the shell as a land tunnel",
+      "Great tree and its gallery remain separate forms; flower roof and garden floor need one coherent mature space"
+    ],
+    "limits": "Implementation team agrees v2 is moving toward native05, but does not accept it as the completed whole-island art. Pixel cloning is not the criterion.",
+    "previousStatus": "GO_LOCAL_V1",
+    "latestUserDirection": "2026-10-10: user attached native-05 whole-island image and asked if implementation is heading there; root acknowledged rectangular shore, weak hero tree, spring and home silhouettes are still materially different.",
+    "required": [
+      "Irregular hilly shore and bay silhouette while retaining owned floor",
+      "Dominant hollow great tree and real branch gallery",
+      "Organic deep-colour spring and distinct shell/flower districts",
+      "Compact curved-roof cottages consistent with native-05"
+    ]
+  },
+  "comprehensionSafety": {
+    "status": "INDEPENDENT_OBSERVATION_NOT_EVALUATED",
+    "limits": "Input, undo, storage and silent routing are audited separately; no child or real device observation"
+  },
+  "runtimeIntegrity": {
+    "status": "V2_PARTIAL_WHOLE_HARNESS_FAILURE",
+    "core": {
+      "checks": "PASS",
+      "release": "PARTIAL",
+      "testFiles": 560,
+      "tests": 4943,
+      "classicSmoke": "32/32 PASS",
+      "guidance": "PASS",
+      "balance": "PASS",
+      "evidence": "verification-evidence/native-v2/index.json"
+    },
+    "storage": {
+      "status": "PASS",
+      "evidence": "storage-evidence/native-v2/index.json"
+    },
+    "places": {
+      "pass": false,
+      "acquiredJourneys": 3,
+      "acquiredAnswerCountEach": 21,
+      "matureCompleted": 19,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "failure": "qa-place-whole-island-v1: artificial exact P05 pokomoko/seat requirement timed out. The raw record contains actual P03 Poco/resident uses and P06 already achieved; this is not a 40-case pass.",
+      "evidence": "places-evidence/native-v2-failed/report.json",
+      "followup": "Correct only the P06 harness to current three-family + actual actor-class contract and rerun on the next fixed build. Preserve raw failed evidence."
+    }
+  },
+  "naturalSevenDayGrowth": {
+    "status": "NOT_EVALUATED"
+  },
+  "realDevice": {
+    "status": "NOT_EVALUATED"
+  },
+  "publication": {
+    "status": "NOT_PERFORMED"
+  }
+}

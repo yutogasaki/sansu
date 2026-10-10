@@ -2,10 +2,10 @@ import * as T from 'three';
 import type { GardenTime } from './presentation';
 
 export const gardenLight = {
-    morning: { sky:'#c5d9d0',hemisphere:'#fff5e5',ground:'#839e92',ambient:2.0,sun:'#ffe4b7',power:1.9,exposure:.96 },
-    day: { sky:'#b7cec0',hemisphere:'#fff6df',ground:'#789690',ambient:2.0,sun:'#fff0d2',power:2.2,exposure:.96 },
-    dusk: { sky:'#98aead',hemisphere:'#d9e5dc',ground:'#3d6870',ambient:1.45,sun:'#ffd399',power:2.6,exposure:.96 },
-    night: { sky:'#344f63',hemisphere:'#b8d6e6',ground:'#3e655e',ambient:1.30,sun:'#a0c4d6',power:1.0,exposure:1.02 },
+    morning: { sky:'#d3edff',hemisphere:'#ffffff',ground:'#a5c4b5',ambient:2.2,sun:'#fff1d6',power:1.9,exposure:1.04 },
+    day: { sky:'#c4e9ff',hemisphere:'#ffffff',ground:'#9dbdad',ambient:2.2,sun:'#fff6e8',power:2.2,exposure:1.04 },
+    dusk: { sky:'#f4d5e4',hemisphere:'#f5eaff',ground:'#839bc0',ambient:1.9,sun:'#ffdcad',power:2.0,exposure:1.04 },
+    night: { sky:'#829dd1',hemisphere:'#dceaff',ground:'#789bb4',ambient:1.8,sun:'#c7dfff',power:1.2,exposure:1.08 },
 } as const;
 export function applyGardenLight(scene:T.Scene,renderer:T.WebGLRenderer,hemisphere:T.HemisphereLight,sun:T.DirectionalLight,time:GardenTime){
     const light=gardenLight[time];scene.background=new T.Color(light.sky);

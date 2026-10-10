@@ -1,0 +1,1281 @@
+{
+  "schema": "sansu-native-v3-places-evidence-index-v1",
+  "createdAt": "2026-10-10T10:42:13.137323+00:00",
+  "runScope": "mature-diagnostics-only",
+  "selectedDiagnosticRuns": [
+    {
+      "id": "qa-place-p01-lane-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-p01-corner-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-p01-alcove-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-p02-lane-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-p02-cluster-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-p02-court-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-p03-tiered-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-p03-curve-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-p03-shore-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-p04-bay-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-p04-lane-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-p04-court-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-p05-arch-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-p05-canopy-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-p05-court-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-c01-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-c02-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-c03-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-c04-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-whole-island-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    }
+  ],
+  "originalSourceRoot": "/private/tmp/sansu-places-native-v3-tablet-20261010-v9",
+  "copiedEvidenceRoot": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-growing-place-runtime/places-evidence/native-v3-tablet",
+  "artCandidate": "native-05-place-runtime-v3",
+  "overallPass": true,
+  "runtimeGate": "PASS",
+  "visualGate": "SEPARATE_LOCAL_V3_DIRECTION_ONLY",
+  "implementationComplete": false,
+  "scope": "scope.txt",
+  "scopeSha256": "bb959cf762db6620c200b4fa5e265b69c73e16dd395e90da34f60253ef8fddcb",
+  "originalFileCount": 24,
+  "actualCaptureCount": 22,
+  "originalBytes": 8678579,
+  "originalCollectionHash": "38f3581d8ce5a672286a1bbc6dcbeb58b33f068fb1adb061b575550761cb24f3",
+  "build": {
+    "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+    "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": true,
+        "candidate": "living-fantasy-garden-v2",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "target": "http://127.0.0.1:5289",
+  "flags": {
+    "VITE_ISLAND_ENABLED": "true",
+    "VITE_ISLAND_LIFE_ENABLED": "true",
+    "VITE_GROWING_ISLAND_ENABLED": "true",
+    "VITE_ISLAND_FANTASY_ENABLED": "true",
+    "VITE_ISLAND_LIFE_PREVIEW": "false",
+    "VITE_NATURE_TOWN_ENABLED": "false",
+    "VITE_HOME_JOURNEY_PREVIEW": "false",
+    "VITE_ISLAND_LIFE_DISCOVERY_ENABLED": "false",
+    "VITE_BUILD_PLAY_ENABLED": "false",
+    "VITE_EXPLORE_EXPERIENCE": "snap-root-v1"
+  },
+  "packHash": "a76669e943bc8acfc546dd12c2997880e1e20ef711617bd1d533b2df9afd1814",
+  "domainSourceHash": "4324c502a4f0224c9c6da8ed00d7d9c74f202a322b96b823bb14011c9fafc156",
+  "coverage": {
+    "actualAcquisitionJourneys": {
+      "count": 0,
+      "pass": false,
+      "journeys": [],
+      "scope": "NOT_RUN_IN_THIS_COMMAND",
+      "separateEvidence": "../native-v3-autonomous-use-failed/report.json"
+    },
+    "explicitMatureDiagnostics": {
+      "count": 20,
+      "selectedCount": 20,
+      "selectedDiagnosticRuns": [
+        {
+          "id": "qa-place-p01-lane-v1",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          }
+        },
+        {
+          "id": "qa-place-p01-corner-v1",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          }
+        },
+        {
+          "id": "qa-place-p01-alcove-v1",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          }
+        },
+        {
+          "id": "qa-place-p02-lane-v1",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          }
+        },
+        {
+          "id": "qa-place-p02-cluster-v1",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          }
+        },
+        {
+          "id": "qa-place-p02-court-v1",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          }
+        },
+        {
+          "id": "qa-place-p03-tiered-v1",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          }
+        },
+        {
+          "id": "qa-place-p03-curve-v1",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          }
+        },
+        {
+          "id": "qa-place-p03-shore-v1",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          }
+        },
+        {
+          "id": "qa-place-p04-bay-v1",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          }
+        },
+        {
+          "id": "qa-place-p04-lane-v1",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          }
+        },
+        {
+          "id": "qa-place-p04-court-v1",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          }
+        },
+        {
+          "id": "qa-place-p05-arch-v1",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          }
+        },
+        {
+          "id": "qa-place-p05-canopy-v1",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          }
+        },
+        {
+          "id": "qa-place-p05-court-v1",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          }
+        },
+        {
+          "id": "qa-place-c01-v1",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          }
+        },
+        {
+          "id": "qa-place-c02-v1",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          }
+        },
+        {
+          "id": "qa-place-c03-v1",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          }
+        },
+        {
+          "id": "qa-place-c04-v1",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          }
+        },
+        {
+          "id": "qa-place-whole-island-v1",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          }
+        }
+      ],
+      "selectionSource": "raw-report",
+      "pass": true,
+      "fullFortyCoverage": false,
+      "byViewport": {
+        "768x1024": [
+          {
+            "id": "qa-place-p01-lane-v1",
+            "pass": true
+          },
+          {
+            "id": "qa-place-p01-corner-v1",
+            "pass": true
+          },
+          {
+            "id": "qa-place-p01-alcove-v1",
+            "pass": true
+          },
+          {
+            "id": "qa-place-p02-lane-v1",
+            "pass": true
+          },
+          {
+            "id": "qa-place-p02-cluster-v1",
+            "pass": true
+          },
+          {
+            "id": "qa-place-p02-court-v1",
+            "pass": true
+          },
+          {
+            "id": "qa-place-p03-tiered-v1",
+            "pass": true
+          },
+          {
+            "id": "qa-place-p03-curve-v1",
+            "pass": true
+          },
+          {
+            "id": "qa-place-p03-shore-v1",
+            "pass": true
+          },
+          {
+            "id": "qa-place-p04-bay-v1",
+            "pass": true
+          },
+          {
+            "id": "qa-place-p04-lane-v1",
+            "pass": true
+          },
+          {
+            "id": "qa-place-p04-court-v1",
+            "pass": true
+          },
+          {
+            "id": "qa-place-p05-arch-v1",
+            "pass": true
+          },
+          {
+            "id": "qa-place-p05-canopy-v1",
+            "pass": true
+          },
+          {
+            "id": "qa-place-p05-court-v1",
+            "pass": true
+          },
+          {
+            "id": "qa-place-c01-v1",
+            "pass": true
+          },
+          {
+            "id": "qa-place-c02-v1",
+            "pass": true
+          },
+          {
+            "id": "qa-place-c03-v1",
+            "pass": true
+          },
+          {
+            "id": "qa-place-c04-v1",
+            "pass": true
+          },
+          {
+            "id": "qa-place-whole-island-v1",
+            "pass": true
+          }
+        ]
+      }
+    },
+    "wholeIsland": [
+      {
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "pass": true,
+        "P06MilestonePresent": true,
+        "actualReceipts": [
+          {
+            "ruleId": null,
+            "placeId": null,
+            "actorId": null,
+            "targetId": null
+          }
+        ],
+        "nativeLatestReceipts": {
+          "P05": {
+            "villager": {
+              "at": 1791169200000,
+              "ruleId": "P05",
+              "anchorId": "l18",
+              "memberIds": [
+                "l18",
+                "l19",
+                "l20",
+                "l21",
+                "l22"
+              ],
+              "variant": "court",
+              "actorId": "qa-qa-place-whole-island-v1-friend-4",
+              "targetId": "l22",
+              "revisionSha256": "08e822ed262653e58a48eaaaea88f6aa6c7c7eab1d3cbcf774f581d7f5ba54f6"
+            }
+          },
+          "P04": {
+            "villager": {
+              "at": 1791169200000,
+              "ruleId": "P04",
+              "anchorId": "p14",
+              "memberIds": [
+                "l16",
+                "p14",
+                "p15",
+                "p17"
+              ],
+              "variant": "bay",
+              "actorId": "qa-qa-place-whole-island-v1-friend-2",
+              "targetId": "p17",
+              "revisionSha256": "b95647859715e0e86bd02b466707d223bed6be667276ca7c5c256ffdcc68e70d"
+            },
+            "pokomoko": {
+              "at": 1791169200000,
+              "ruleId": "P04",
+              "anchorId": "p14",
+              "memberIds": [
+                "l16",
+                "p14",
+                "p15",
+                "p17"
+              ],
+              "variant": "bay",
+              "actorId": "pokomoko",
+              "targetId": "p17",
+              "revisionSha256": "b95647859715e0e86bd02b466707d223bed6be667276ca7c5c256ffdcc68e70d"
+            }
+          },
+          "P03": {
+            "villager": {
+              "at": 1791169200000,
+              "ruleId": "P03",
+              "anchorId": "l10",
+              "memberIds": [
+                "l10",
+                "l11",
+                "l12",
+                "l13",
+                "l7",
+                "l8",
+                "l9"
+              ],
+              "variant": "tiered",
+              "actorId": "qa-qa-place-whole-island-v1-friend-4",
+              "targetId": "l10:shore",
+              "revisionSha256": "9f3c458d88872a1eff33e5c62b1858f5bfe632ab413068d3706115e1220c8057"
+            }
+          },
+          "P01": {
+            "villager": {
+              "at": 1791169200000,
+              "ruleId": "P01",
+              "anchorId": "l1",
+              "memberIds": [
+                "l1",
+                "l2",
+                "l3",
+                "l4",
+                "l6"
+              ],
+              "variant": "lane",
+              "actorId": "qa-qa-place-whole-island-v1-friend-0",
+              "targetId": "l6",
+              "revisionSha256": "f5936f6f0c1bdea39106e8c337628f7b4341066d880251d2d28d636a11e7ff40"
+            }
+          },
+          "P02": {
+            "villager": {
+              "at": 1791169200000,
+              "ruleId": "P02",
+              "anchorId": "p5",
+              "memberIds": [
+                "l1",
+                "l2",
+                "l3",
+                "l4",
+                "l6",
+                "p5"
+              ],
+              "variant": "court",
+              "actorId": "qa-qa-place-whole-island-v1-friend-6",
+              "targetId": "p5:gallery",
+              "revisionSha256": "4d2340d5ef54f7e13450222b2ddba9baa18a0b93aaed2814b6f0602e67cdbce1"
+            }
+          }
+        },
+        "nativeSavedUseHistory": [
+          {
+            "at": 1791169200000,
+            "ruleId": "P05",
+            "anchorId": "l18",
+            "memberIds": [
+              "l18",
+              "l19",
+              "l20",
+              "l21",
+              "l22"
+            ],
+            "variant": "court",
+            "actorId": "qa-qa-place-whole-island-v1-friend-0",
+            "targetId": "l22",
+            "revisionSha256": "08e822ed262653e58a48eaaaea88f6aa6c7c7eab1d3cbcf774f581d7f5ba54f6"
+          },
+          {
+            "at": 1791169200000,
+            "ruleId": "P04",
+            "anchorId": "p14",
+            "memberIds": [
+              "l16",
+              "p14",
+              "p15",
+              "p17"
+            ],
+            "variant": "bay",
+            "actorId": "qa-qa-place-whole-island-v1-friend-1",
+            "targetId": "p17",
+            "revisionSha256": "b95647859715e0e86bd02b466707d223bed6be667276ca7c5c256ffdcc68e70d"
+          },
+          {
+            "at": 1791169200000,
+            "ruleId": "P03",
+            "anchorId": "l10",
+            "memberIds": [
+              "l10",
+              "l11",
+              "l12",
+              "l13",
+              "l7",
+              "l8",
+              "l9"
+            ],
+            "variant": "tiered",
+            "actorId": "qa-qa-place-whole-island-v1-friend-7",
+            "targetId": "l13",
+            "revisionSha256": "9f3c458d88872a1eff33e5c62b1858f5bfe632ab413068d3706115e1220c8057"
+          },
+          {
+            "at": 1791169200000,
+            "ruleId": "P01",
+            "anchorId": "l1",
+            "memberIds": [
+              "l1",
+              "l2",
+              "l3",
+              "l4",
+              "l6"
+            ],
+            "variant": "lane",
+            "actorId": "qa-qa-place-whole-island-v1-friend-2",
+            "targetId": "l6",
+            "revisionSha256": "f5936f6f0c1bdea39106e8c337628f7b4341066d880251d2d28d636a11e7ff40"
+          },
+          {
+            "at": 1791169200000,
+            "ruleId": "P02",
+            "anchorId": "p5",
+            "memberIds": [
+              "l1",
+              "l2",
+              "l3",
+              "l4",
+              "l6",
+              "p5"
+            ],
+            "variant": "court",
+            "actorId": "qa-qa-place-whole-island-v1-friend-2",
+            "targetId": "l6",
+            "revisionSha256": "4d2340d5ef54f7e13450222b2ddba9baa18a0b93aaed2814b6f0602e67cdbce1"
+          },
+          {
+            "at": 1791169200000,
+            "ruleId": "P02",
+            "anchorId": "p5",
+            "memberIds": [
+              "l1",
+              "l2",
+              "l3",
+              "l4",
+              "l6",
+              "p5"
+            ],
+            "variant": "court",
+            "actorId": "qa-qa-place-whole-island-v1-friend-6",
+            "targetId": "p5:gallery",
+            "revisionSha256": "4d2340d5ef54f7e13450222b2ddba9baa18a0b93aaed2814b6f0602e67cdbce1"
+          },
+          {
+            "at": 1791169200000,
+            "ruleId": "P01",
+            "anchorId": "l1",
+            "memberIds": [
+              "l1",
+              "l2",
+              "l3",
+              "l4",
+              "l6"
+            ],
+            "variant": "lane",
+            "actorId": "qa-qa-place-whole-island-v1-friend-0",
+            "targetId": "l6",
+            "revisionSha256": "f5936f6f0c1bdea39106e8c337628f7b4341066d880251d2d28d636a11e7ff40"
+          },
+          {
+            "at": 1791169200000,
+            "ruleId": "P02",
+            "anchorId": "p5",
+            "memberIds": [
+              "l1",
+              "l2",
+              "l3",
+              "l4",
+              "l6",
+              "p5"
+            ],
+            "variant": "court",
+            "actorId": "qa-qa-place-whole-island-v1-friend-0",
+            "targetId": "l6",
+            "revisionSha256": "4d2340d5ef54f7e13450222b2ddba9baa18a0b93aaed2814b6f0602e67cdbce1"
+          },
+          {
+            "at": 1791169200000,
+            "ruleId": "P04",
+            "anchorId": "p14",
+            "memberIds": [
+              "l16",
+              "p14",
+              "p15",
+              "p17"
+            ],
+            "variant": "bay",
+            "actorId": "qa-qa-place-whole-island-v1-friend-2",
+            "targetId": "p17",
+            "revisionSha256": "b95647859715e0e86bd02b466707d223bed6be667276ca7c5c256ffdcc68e70d"
+          },
+          {
+            "at": 1791169200000,
+            "ruleId": "P05",
+            "anchorId": "l18",
+            "memberIds": [
+              "l18",
+              "l19",
+              "l20",
+              "l21",
+              "l22"
+            ],
+            "variant": "court",
+            "actorId": "qa-qa-place-whole-island-v1-friend-7",
+            "targetId": "l22",
+            "revisionSha256": "08e822ed262653e58a48eaaaea88f6aa6c7c7eab1d3cbcf774f581d7f5ba54f6"
+          },
+          {
+            "at": 1791169200000,
+            "ruleId": "P03",
+            "anchorId": "l10",
+            "memberIds": [
+              "l10",
+              "l11",
+              "l12",
+              "l13",
+              "l7",
+              "l8",
+              "l9"
+            ],
+            "variant": "tiered",
+            "actorId": "qa-qa-place-whole-island-v1-friend-5",
+            "targetId": "l10:shore",
+            "revisionSha256": "9f3c458d88872a1eff33e5c62b1858f5bfe632ab413068d3706115e1220c8057"
+          },
+          {
+            "at": 1791169200000,
+            "ruleId": "P02",
+            "anchorId": "p5",
+            "memberIds": [
+              "l1",
+              "l2",
+              "l3",
+              "l4",
+              "l6",
+              "p5"
+            ],
+            "variant": "court",
+            "actorId": "qa-qa-place-whole-island-v1-friend-3",
+            "targetId": "p5:gallery",
+            "revisionSha256": "4d2340d5ef54f7e13450222b2ddba9baa18a0b93aaed2814b6f0602e67cdbce1"
+          },
+          {
+            "at": 1791169200000,
+            "ruleId": "P02",
+            "anchorId": "p5",
+            "memberIds": [
+              "l1",
+              "l2",
+              "l3",
+              "l4",
+              "l6",
+              "p5"
+            ],
+            "variant": "court",
+            "actorId": "qa-qa-place-whole-island-v1-friend-1",
+            "targetId": "p5:gallery",
+            "revisionSha256": "4d2340d5ef54f7e13450222b2ddba9baa18a0b93aaed2814b6f0602e67cdbce1"
+          },
+          {
+            "at": 1791169200000,
+            "ruleId": "P05",
+            "anchorId": "l18",
+            "memberIds": [
+              "l18",
+              "l19",
+              "l20",
+              "l21",
+              "l22"
+            ],
+            "variant": "court",
+            "actorId": "qa-qa-place-whole-island-v1-friend-4",
+            "targetId": "l22",
+            "revisionSha256": "08e822ed262653e58a48eaaaea88f6aa6c7c7eab1d3cbcf774f581d7f5ba54f6"
+          },
+          {
+            "at": 1791169200000,
+            "ruleId": "P02",
+            "anchorId": "p5",
+            "memberIds": [
+              "l1",
+              "l2",
+              "l3",
+              "l4",
+              "l6",
+              "p5"
+            ],
+            "variant": "court",
+            "actorId": "qa-qa-place-whole-island-v1-friend-7",
+            "targetId": "p5:gallery",
+            "revisionSha256": "4d2340d5ef54f7e13450222b2ddba9baa18a0b93aaed2814b6f0602e67cdbce1"
+          },
+          {
+            "at": 1791169200000,
+            "ruleId": "P03",
+            "anchorId": "l10",
+            "memberIds": [
+              "l10",
+              "l11",
+              "l12",
+              "l13",
+              "l7",
+              "l8",
+              "l9"
+            ],
+            "variant": "tiered",
+            "actorId": "qa-qa-place-whole-island-v1-friend-4",
+            "targetId": "l10:shore",
+            "revisionSha256": "9f3c458d88872a1eff33e5c62b1858f5bfe632ab413068d3706115e1220c8057"
+          },
+          {
+            "at": 1791169200000,
+            "ruleId": "P04",
+            "anchorId": "p14",
+            "memberIds": [
+              "l16",
+              "p14",
+              "p15",
+              "p17"
+            ],
+            "variant": "bay",
+            "actorId": "pokomoko",
+            "targetId": "p17",
+            "revisionSha256": "b95647859715e0e86bd02b466707d223bed6be667276ca7c5c256ffdcc68e70d"
+          }
+        ]
+      }
+    ],
+    "naturalSevenDayGrowth": "NOT_DONE",
+    "realDevice": "NOT_DONE",
+    "realChildComprehensionSafety": "NOT_DONE",
+    "combinedThreePlusFortySingleCommandClaim": false
+  },
+  "runtimeQa": {
+    "sourceRoot": "/private/tmp/sansu-native-v3-fixed-qa-20261010-v6",
+    "sourceHash": "a836a61f5b8db3e2c62996a5134ab2fa5b7626e4b3efdff6731746a16d6e8b25",
+    "harnessSha256": "2073a22a0d01c1da117bd7272ad9fb435ebe95851065d229348d964a5c6e537d",
+    "separateCorrectedQa": true,
+    "sourceInputs": {
+      "root": "/private/tmp/sansu-native-v3-fixed-qa-20261010-v6",
+      "fileCount": 2024,
+      "allExact": true,
+      "collectionHash": "0293fbc26bdcee9e2f6d126f002c37080944b98d47dbb216c3d4dbfce42eafa2"
+    },
+    "audit": "qa-byte-audit.json",
+    "auditSha256": "03fdf7ff365e18de91707ebcadbd7d5dc5a1555e6be0b9208f3e53fd24eca151",
+    "changes": [
+      {
+        "file": "tools/e2e-growing-places.mjs",
+        "frozenSha256": "0816b3eaeb60b412f941fb95ad4c92b45b105004dd89c90d6538ab8b6da860cd",
+        "qaSha256": "2073a22a0d01c1da117bd7272ad9fb435ebe95851065d229348d964a5c6e537d"
+      }
+    ],
+    "appAllOtherInputsExact": true,
+    "correctionScope": "QA driver only. At most3 real90s normal-reload observation windows for P06; unchanged current exact-use/revision predicate. Explicit diagnostic case/viewport selection reported. Actual acquisition and owner/goal confirmation bodies byte identical to QA v5. No app/clock/state/random/receipt changes. Other2023 original inputs exact; immutableNEW unchanged.",
+    "previousFailureEvidence": "../native-v3-harness-failed/report.json",
+    "confirmationDriver": {
+      "realVisibleEnabledTapsMaximum": 4,
+      "deadlineMs": 15000,
+      "deadlineScope": "loop-start deadline; not a hard cap on an individual tap wait",
+      "originalOwnerFieldsExceptNumericGrowth": "exact",
+      "naturalGrowth": "monotonic and bounded by saved nature.hours delta * existing maximum modifier 1.25",
+      "storedMatureFixedClock": "strict",
+      "ownerRightsAndTargetCell": "exact",
+      "directApplicationOrSaveWritesFromDriver": false,
+      "clockManipulationInAcquisition": false
+    },
+    "verifiedDriverCorrespondence": {
+      "acquiredJourney": {
+        "byteIdenticalToQaV5": true,
+        "sha256": "3e029f1a2da9eafcb497c1a655f2ff504274cce412aba4e62c11a88a991b3bf5",
+        "bytes": 6159
+      },
+      "ownerConfirmation": {
+        "byteIdenticalToQaV5": true,
+        "sha256": "c0060f84e89a4d3ff88a6f808293ada4c232223984248d141391ab21c7b348b4",
+        "bytes": 14440
+      },
+      "currentWholeEvidence": {
+        "byteIdenticalToQaV5": true,
+        "sha256": "fea907e84c2cb85567f6a864de3258901be94f208e865f9a58005aa8a5ec707e",
+        "bytes": 1837
+      }
+    },
+    "previousQaAudit": {
+      "source": "/private/tmp/sansu-native-v3-fixed-qa-audit-v5.json",
+      "sha256": "b38282fb25af59f2937668a5c9c4c96bc247df5e1ebfa4cfaa507c8671ed3846",
+      "sourceHash": "9f8877a2aed6eed3eae69d01d532584d5dc2a0924bd2a8d92ffc3470e4af232b"
+    },
+    "autonomousObservationDriver": {
+      "maximumWindows": 3,
+      "windowTimeoutMs": 90000,
+      "retryInput": "normal page reload only",
+      "recordEveryMissedWindowAndNativeFacts": true,
+      "exactActorTargetRevisionPredicate": "unchanged",
+      "physicalGestureWindows": 1,
+      "appClockDbReceiptOrAcceptanceInjection": false,
+      "wholeConditionMaximumWindows": 3,
+      "currentWholeFamiliesActorAndP06RevisionPredicate": "unchanged"
+    }
+  },
+  "originalGates": {
+    "runtime": "PASS",
+    "visualAppeal": "NOT_EVALUATED",
+    "comprehensionSafety": "NOT_EVALUATED",
+    "naturalSevenDayGrowth": "NOT_EVALUATED",
+    "realDevice": "NOT_EVALUATED"
+  },
+  "separateFocusedQaEvidence": {
+    "file": "focused-qa-driver-check.json",
+    "source": "/private/tmp/sansu-native-v3-whole-driver-check.json",
+    "sha256": "9b95b65aa219bf106bd3a284869f4b937bcf7516d238e6373584f8134d65b362",
+    "bytes": 1753,
+    "kind": "separate-focused-qa-evidence",
+    "scope": "MOCK driver checks only; no actual browser or app runtime claimed"
+  },
+  "fixedCandidate": {
+    "sourceHash": "c3ea0771d8e6af017075014e5430474393f636c86b093a640c077ec749ed99d7",
+    "manifest": "new-manifest.json",
+    "manifestSha256": "030df0ade620d4c30a873dac8a81b16cf82b687943ee283dbbfc836c0bfd9de0",
+    "inputs": {
+      "root": "/private/tmp/sansu-native-v3-20261010/new-source",
+      "fileCount": 2024,
+      "allExact": true,
+      "collectionHash": "d4838d3504004f1eccfaf87eb8c2ab2348a8e51c823b0a8f6abff9f1fd776820"
+    },
+    "outputs": {
+      "root": "/private/tmp/sansu-native-v3-20261010/new-source/dist",
+      "fileCount": 168,
+      "allExact": true,
+      "collectionHash": "4728c422dbb4b95cb56e4e7c999316787cacafd31258bedc132fae2fa419eda3"
+    },
+    "qaHarnessSha256": "0816b3eaeb60b412f941fb95ad4c92b45b105004dd89c90d6538ab8b6da860cd"
+  },
+  "files": [
+    {
+      "file": "report.json",
+      "source": "/private/tmp/sansu-places-native-v3-tablet-20261010-v9/report.json",
+      "sha256": "af2100b6581bbdacfc2b3217ac9b243dccc142958692745448ced5221c37181d",
+      "bytes": 1440777,
+      "kind": "original-report"
+    },
+    {
+      "file": "contact-sheet.html",
+      "source": "/private/tmp/sansu-places-native-v3-tablet-20261010-v9/contact-sheet.html",
+      "sha256": "75588510fb9a7e34d9477ed0485486b5ffc91ce845ed9cd5220834e9ea1b332f",
+      "bytes": 3605,
+      "kind": "original-contact-sheet"
+    },
+    {
+      "file": "qa-place-c01-v1-768-grown-real-3d.png",
+      "source": "/private/tmp/sansu-places-native-v3-tablet-20261010-v9/qa-place-c01-v1-768-grown-real-3d.png",
+      "sha256": "d53fe23b10a6c7615902618956c692c3032f9f6589004cbe74f7c07e8970dbb7",
+      "bytes": 328624,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "d53fe23b10a6c7615902618956c692c3032f9f6589004cbe74f7c07e8970dbb7"
+    },
+    {
+      "file": "qa-place-c02-v1-768-grown-real-3d.png",
+      "source": "/private/tmp/sansu-places-native-v3-tablet-20261010-v9/qa-place-c02-v1-768-grown-real-3d.png",
+      "sha256": "0d614e5c304f46625fa6519c80e69d3e36f4c4779a41556ad7c013219e9776cf",
+      "bytes": 331357,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "0d614e5c304f46625fa6519c80e69d3e36f4c4779a41556ad7c013219e9776cf"
+    },
+    {
+      "file": "qa-place-c03-v1-768-grown-real-3d.png",
+      "source": "/private/tmp/sansu-places-native-v3-tablet-20261010-v9/qa-place-c03-v1-768-grown-real-3d.png",
+      "sha256": "228f6cca72ec9efd3d648e3832c428cc32e3141f1a28fa4a1d5ef1df89de7057",
+      "bytes": 345212,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "228f6cca72ec9efd3d648e3832c428cc32e3141f1a28fa4a1d5ef1df89de7057"
+    },
+    {
+      "file": "qa-place-c04-v1-768-grown-real-3d.png",
+      "source": "/private/tmp/sansu-places-native-v3-tablet-20261010-v9/qa-place-c04-v1-768-grown-real-3d.png",
+      "sha256": "6962bd29cb5b08d1359908a49ac54c37fd69c8fc8b2d180ebbc72dbeffe283a3",
+      "bytes": 342178,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "6962bd29cb5b08d1359908a49ac54c37fd69c8fc8b2d180ebbc72dbeffe283a3"
+    },
+    {
+      "file": "qa-place-p01-alcove-v1-768-grown-real-3d.png",
+      "source": "/private/tmp/sansu-places-native-v3-tablet-20261010-v9/qa-place-p01-alcove-v1-768-grown-real-3d.png",
+      "sha256": "bdc0b34c43f8935b420e104c05abae86f3bae6c7d1e66492780caacb2b6bcb72",
+      "bytes": 311062,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "bdc0b34c43f8935b420e104c05abae86f3bae6c7d1e66492780caacb2b6bcb72"
+    },
+    {
+      "file": "qa-place-p01-corner-v1-768-grown-real-3d.png",
+      "source": "/private/tmp/sansu-places-native-v3-tablet-20261010-v9/qa-place-p01-corner-v1-768-grown-real-3d.png",
+      "sha256": "6bd32f50f97697908222de972c8d3520d759ff3bc2cefa591216a5c5eaa6e362",
+      "bytes": 310305,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "6bd32f50f97697908222de972c8d3520d759ff3bc2cefa591216a5c5eaa6e362"
+    },
+    {
+      "file": "qa-place-p01-lane-v1-768-grown-real-3d.png",
+      "source": "/private/tmp/sansu-places-native-v3-tablet-20261010-v9/qa-place-p01-lane-v1-768-grown-real-3d.png",
+      "sha256": "3cf633bc852890524c19f4a33b0d834c2da8a91e3475056abbea0720a117bd97",
+      "bytes": 309925,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "3cf633bc852890524c19f4a33b0d834c2da8a91e3475056abbea0720a117bd97"
+    },
+    {
+      "file": "qa-place-p01-lane-v1-768-stored-rejoined-history.png",
+      "source": "/private/tmp/sansu-places-native-v3-tablet-20261010-v9/qa-place-p01-lane-v1-768-stored-rejoined-history.png",
+      "sha256": "69189d23191464e084c8ea804cb66f9f077c35c3c040658fd3697eb3a3f269b5",
+      "bytes": 310745,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "69189d23191464e084c8ea804cb66f9f077c35c3c040658fd3697eb3a3f269b5"
+    },
+    {
+      "file": "qa-place-p02-cluster-v1-768-grown-real-3d.png",
+      "source": "/private/tmp/sansu-places-native-v3-tablet-20261010-v9/qa-place-p02-cluster-v1-768-grown-real-3d.png",
+      "sha256": "faa1c038d3360a21f6fbbb3a8d9ac7e64f34b996a6a8afed6fa775e6d32fa107",
+      "bytes": 334469,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "faa1c038d3360a21f6fbbb3a8d9ac7e64f34b996a6a8afed6fa775e6d32fa107"
+    },
+    {
+      "file": "qa-place-p02-court-v1-768-grown-real-3d.png",
+      "source": "/private/tmp/sansu-places-native-v3-tablet-20261010-v9/qa-place-p02-court-v1-768-grown-real-3d.png",
+      "sha256": "e1b42d281d3baee953dc30dcce0241cef9f967d2bdc77bea43e329a19c1525c6",
+      "bytes": 339658,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "e1b42d281d3baee953dc30dcce0241cef9f967d2bdc77bea43e329a19c1525c6"
+    },
+    {
+      "file": "qa-place-p02-lane-v1-768-grown-real-3d.png",
+      "source": "/private/tmp/sansu-places-native-v3-tablet-20261010-v9/qa-place-p02-lane-v1-768-grown-real-3d.png",
+      "sha256": "4a2265a3a1f38f171fddc6b10a1699377b7ee540ca59207ff48d6c258216be18",
+      "bytes": 331849,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "4a2265a3a1f38f171fddc6b10a1699377b7ee540ca59207ff48d6c258216be18"
+    },
+    {
+      "file": "qa-place-p03-curve-v1-768-grown-real-3d.png",
+      "source": "/private/tmp/sansu-places-native-v3-tablet-20261010-v9/qa-place-p03-curve-v1-768-grown-real-3d.png",
+      "sha256": "f627e063a4d030d5d6239109acf63c568da4724cd435fe2a8dcd9268003e3ea3",
+      "bytes": 322437,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "f627e063a4d030d5d6239109acf63c568da4724cd435fe2a8dcd9268003e3ea3"
+    },
+    {
+      "file": "qa-place-p03-shore-v1-768-grown-real-3d.png",
+      "source": "/private/tmp/sansu-places-native-v3-tablet-20261010-v9/qa-place-p03-shore-v1-768-grown-real-3d.png",
+      "sha256": "220082a22f7599f7b2a7d69b66aa92de66c8d7dfdfd90e880c2c0c6796cbe333",
+      "bytes": 322775,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "220082a22f7599f7b2a7d69b66aa92de66c8d7dfdfd90e880c2c0c6796cbe333"
+    },
+    {
+      "file": "qa-place-p03-tiered-v1-768-grown-real-3d.png",
+      "source": "/private/tmp/sansu-places-native-v3-tablet-20261010-v9/qa-place-p03-tiered-v1-768-grown-real-3d.png",
+      "sha256": "3182429b5e07bb045e2424c59ab9b2f93e5fda875c201c4206b087b38de2da28",
+      "bytes": 319917,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "3182429b5e07bb045e2424c59ab9b2f93e5fda875c201c4206b087b38de2da28"
+    },
+    {
+      "file": "qa-place-p04-bay-v1-768-grown-real-3d.png",
+      "source": "/private/tmp/sansu-places-native-v3-tablet-20261010-v9/qa-place-p04-bay-v1-768-grown-real-3d.png",
+      "sha256": "19bf1fa86910703663e342b43706d1ba348e269f9d33f58818bc7f514c199ddf",
+      "bytes": 321001,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "19bf1fa86910703663e342b43706d1ba348e269f9d33f58818bc7f514c199ddf"
+    },
+    {
+      "file": "qa-place-p04-court-v1-768-grown-real-3d.png",
+      "source": "/private/tmp/sansu-places-native-v3-tablet-20261010-v9/qa-place-p04-court-v1-768-grown-real-3d.png",
+      "sha256": "6e054fad99714fd9186de6190fa7e1c36a19dba49c285dfb9cb6a637aac6395f",
+      "bytes": 326021,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "6e054fad99714fd9186de6190fa7e1c36a19dba49c285dfb9cb6a637aac6395f"
+    },
+    {
+      "file": "qa-place-p04-lane-v1-768-grown-real-3d.png",
+      "source": "/private/tmp/sansu-places-native-v3-tablet-20261010-v9/qa-place-p04-lane-v1-768-grown-real-3d.png",
+      "sha256": "210756e94e38666ab4691a8943291d7b264352e7919a956a09f31600a2c9d202",
+      "bytes": 325612,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "210756e94e38666ab4691a8943291d7b264352e7919a956a09f31600a2c9d202"
+    },
+    {
+      "file": "qa-place-p05-arch-v1-768-grown-real-3d.png",
+      "source": "/private/tmp/sansu-places-native-v3-tablet-20261010-v9/qa-place-p05-arch-v1-768-grown-real-3d.png",
+      "sha256": "507fd449f498ab620ce617343a712e9406f0efe85c3f7dd0eb3af165e6344d7d",
+      "bytes": 320851,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "507fd449f498ab620ce617343a712e9406f0efe85c3f7dd0eb3af165e6344d7d"
+    },
+    {
+      "file": "qa-place-p05-canopy-v1-768-grown-real-3d.png",
+      "source": "/private/tmp/sansu-places-native-v3-tablet-20261010-v9/qa-place-p05-canopy-v1-768-grown-real-3d.png",
+      "sha256": "a9478bb2d688d5be50004bb2ca0e7769c8db105e712b8a103a8773eebdbc8cb8",
+      "bytes": 320516,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "a9478bb2d688d5be50004bb2ca0e7769c8db105e712b8a103a8773eebdbc8cb8"
+    },
+    {
+      "file": "qa-place-p05-court-v1-768-grown-real-3d.png",
+      "source": "/private/tmp/sansu-places-native-v3-tablet-20261010-v9/qa-place-p05-court-v1-768-grown-real-3d.png",
+      "sha256": "6d149fabb9aa8cf3cadb0956557f2f361c6fc8b4cac176b57d6d84577ebe1fcf",
+      "bytes": 322200,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "6d149fabb9aa8cf3cadb0956557f2f361c6fc8b4cac176b57d6d84577ebe1fcf"
+    },
+    {
+      "file": "qa-place-whole-island-v1-768-grown-real-3d.png",
+      "source": "/private/tmp/sansu-places-native-v3-tablet-20261010-v9/qa-place-whole-island-v1-768-grown-real-3d.png",
+      "sha256": "7f42cbb390cfc3f7466d7fe9e88fa77c691119391de146e49320f87c19db038d",
+      "bytes": 368416,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "7f42cbb390cfc3f7466d7fe9e88fa77c691119391de146e49320f87c19db038d"
+    },
+    {
+      "file": "qa-place-whole-island-v1-768-whole-island-used.png",
+      "source": "/private/tmp/sansu-places-native-v3-tablet-20261010-v9/qa-place-whole-island-v1-768-whole-island-used.png",
+      "sha256": "50cf2f1c0ca5706245ca28efee3861705ca1833ace6d6df27793dbc0d3dc3422",
+      "bytes": 369067,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "50cf2f1c0ca5706245ca28efee3861705ca1833ace6d6df27793dbc0d3dc3422"
+    }
+  ]
+}

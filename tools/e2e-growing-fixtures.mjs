@@ -47,10 +47,10 @@ async function islandRecord(page, profileId, value) {
         const open = indexedDB.open('SansuGrowingIslandV1');
         const database = await new Promise((resolve, reject) => { open.onsuccess = () => resolve(open.result); open.onerror = () => reject(open.error); });
         try {
-            if (!database.objectStoreNames.contains('guidedIslands')) throw Error('Current Growing schema not initialized');
-            const transaction = database.transaction('guidedIslands', value ? 'readwrite' : 'readonly');
+            if (!database.objectStoreNames.contains('placedIslands')) throw Error('Current Growing schema not initialized');
+            const transaction = database.transaction('placedIslands', value ? 'readwrite' : 'readonly');
             const done = new Promise((resolve, reject) => { transaction.oncomplete = resolve; transaction.onabort = () => reject(transaction.error); });
-            const request = value ? transaction.objectStore('guidedIslands').put(value) : transaction.objectStore('guidedIslands').get(profileId);
+            const request = value ? transaction.objectStore('placedIslands').put(value) : transaction.objectStore('placedIslands').get(profileId);
             const result = await new Promise((resolve, reject) => { request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error); });
             await done; return value ?? result;
         } finally { database.close(); }

@@ -210,7 +210,7 @@ try {
             await growingDb.islands.put({ profileId: id, version: 2, revision: 1, createdAt: now, updatedAt: now, state });
         }, oldId);
         await oldPage.reload(); await ready(oldPage);
-        const old = await read(oldPage, oldId); assert.equal(old.version, 3);
+        const old = await read(oldPage, oldId); assert.equal(old.version, 4);
         assert.equal(old.state.guidance.starter.automatic, false); assert.equal(old.state.tutorial, 'done');
         assert.deepEqual(Object.keys(old.state.guidance.achievements).sort(), ['A1', 'A6']);
         assert.deepEqual([...old.state.guidance.notified].sort(), ['A1', 'A6']);

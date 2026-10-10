@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>この島を、どう育てるか — Sansu</title>
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./main.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="wordmark" href="../../index.html">SAN<span>SU</span> <small>島づくりの設計</small></a>
+    <a class="plain-link" href="../2026-10-10-island-final-3d/">実3Dをひらく <span aria-hidden="true">↗</span></a>
+  </header>
+  <main>
+    <section class="intro">
+      <p class="eyebrow">育つ場所の設計 v1 · 2026.10.10</p>
+      <h1>この島を、<br class="mobile-break">どう育てるか。</h1>
+      <p class="lead">置き方が形を変え、育った場所で暮らしが変わる。<br>この全島3Dを、目標と組み合わせの仕組みへ。</p>
+      <div class="summary-strip"><span><b>6</b> 育てる目標</span><span><b>15</b> 同じ材料の配置</span><span><b>4</b> 場所の組み合わせ</span></div>
+    </section>
+
+    <section class="island-board" aria-labelledby="island-heading">
+      <div class="section-heading"><div><p class="eyebrow">01 · 島全体の到達点</p><h2 id="island-heading">どこを育てたい？</h2></div><span class="status-pill">美術方向を採用 · native-05</span></div>
+      <div class="hero-image">
+        <img id="island-image" alt="青紫の大樹、鉱石の青い泉、透ける集会所、花の庭がつながる、成熟した島の実3D" width="1600" height="1200">
+        <div id="hotspots" class="hotspots"></div>
+        <span class="image-note">成熟した島の一例 · Blender実モデルの描画</span>
+      </div>
+      <p class="caption">固定の完成配置ではなく、自分の置き方から、この豊かさが育つ仕組みを目指す。</p>
+    </section>
+
+    <section class="goals-section" aria-labelledby="goals-heading">
+      <div class="section-heading"><div><p class="eyebrow">02 · 好きな場所から始める</p><h2 id="goals-heading">育てる目標を選ぶ</h2></div><p class="small-note">順番は自由。選ばなくても育つ。</p></div>
+      <div id="goal-buttons" class="goal-buttons" aria-label="育てる目標"></div>
+      <article id="goal-detail" class="goal-detail" aria-labelledby="goal-name">
+        <div class="goal-title"><div><p id="goal-kicker" class="eyebrow"></p><h3 id="goal-name"></h3><p id="goal-intent"></p></div><a id="goal-art-link" class="art-link" href="../2026-10-10-island-final-3d/" aria-label="この場所の成熟実3Dを見る"><img id="goal-art" alt="" loading="lazy"><span>成熟の実3Dを見る ↗</span></a></div>
+        <div id="inputs" class="inputs"></div>
+        <div class="design-grid">
+          <div class="layout-panel">
+            <div class="panel-heading"><h4>同じ材料で、置き方を変える</h4><span class="label">配置の設計図</span></div>
+            <div id="variant-buttons" class="variant-buttons" aria-label="置き方"></div>
+            <div id="layout-diagram" class="layout-diagram"></div>
+            <p id="variant-result" class="variant-result"></p>
+            <p id="terrain-note" class="small-note"></p>
+            <div id="legend" class="legend"></div>
+          </div>
+          <div class="stage-panel">
+            <h4>何が育ち、何ができる？</h4>
+            <div id="stage-buttons" class="stage-buttons" aria-label="成長の段階"></div>
+            <div id="stage-detail" aria-live="polite" aria-atomic="true"></div>
+            <div class="space-rule"><span>庭と入口</span><p id="space-rule"></p></div>
+          </div>
+        </div>
+        <div class="next-goals"><span>この場所から、次に</span><div id="next-goals"></div></div>
+      </article>
+      <p class="catalog-note">個数は最小成立条件の試作初期値。配置図は仕組みの説明で、成熟3Dとは別の資料です。場所の規則は本体v1へ統合。図は配置の説明です。</p>
+    </section>
+
+    <section class="relations-section" aria-labelledby="relations-heading">
+      <div class="section-heading"><div><p class="eyebrow">03 · 場所どうしをつなぐ</p><h2 id="relations-heading">隣の場所が、次の楽しみになる。</h2></div></div>
+      <p class="section-intro">入口へ歩けて、水や木陰も実際につながると、別々の場所が一つの景色になる。</p>
+      <div id="combination-cards" class="combination-cards"></div>
+    </section>
+
+    <section class="principles" aria-labelledby="principles-heading">
+      <p class="eyebrow">04 · 育てる楽しさを守る</p><h2 id="principles-heading">つなぐ。分ける。また試す。</h2>
+      <div class="principle-cards">
+        <article><span class="principle-number">01</span><h3>消費せず、育ちを重ねる</h3><p>合体しても木や家は自分のもの。木の年齢、家の成長、思い出はそのまま続く。</p></article>
+        <article><span class="principle-number">02</span><h3>大きな形を、使える場所へ</h3><p>入れる大樹、渡れる泉、集まれる屋根。形の変化が、ぽこもこと住人の遊びにつながる。</p></article>
+        <article><span class="principle-number">03</span><h3>完成しても、島は続く</h3><p>三つの違う系列をつないだら、次の地区へ。決まった配置や、すべて集める義務はない。</p></article>
+      </div>
+      <p class="clock-note">いつもの学習で材料とまち時間が届き、しぜん時間で植物が育つ。場所のための新しい通貨や待ち時間は増やさない。</p>
+    </section>
+
+    <section class="delivery-section" aria-labelledby="delivery-heading">
+      <div class="section-heading"><div><p class="eyebrow">05 · 全島へつながる実装順</p><h2 id="delivery-heading">最初の木陰から、一周ずつ。</h2></div></div>
+      <div id="delivery-cards" class="delivery-cards"></div>
+      <p class="caption">各段階でこの全島3Dと本体の実画面を並べ、形・使い方・保存を確かめる。</p>
+    </section>
+
+    <div id="load-status" role="status">設計カタログを読み込んでいます…</div>
+  </main>
+  <footer><p>設計の正本 <a href="../../product/island-place-goals.md">目標・組み合わせ・実装契約</a><a href="../../product/island-place-goals.json">初期値と配置カタログ</a><a href="./README.md">資料の検証</a></p><small>SANSU · place-goals-design-v1 · 本体v1へD1〜D4を統合</small></footer>
+</body>
+</html>
+

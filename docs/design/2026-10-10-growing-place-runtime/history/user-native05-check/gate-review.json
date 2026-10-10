@@ -1,0 +1,59 @@
+{
+  "schema": "sansu-place-runtime-gates-v1",
+  "reviewedAt": "2026-10-10T07:42:54.142Z",
+  "scope": "Local runtime v1; source and delivery checks recorded in the fixed QA manifest",
+  "artCandidate": "native-05-place-runtime-v1",
+  "benchmark": {
+    "file": "../2026-10-10-island-final-3d/whole-island-render.png",
+    "hash": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6"
+  },
+  "runtime": {
+    "file": "whole-dev-final.png",
+    "hash": "397ec1cc59a823beb4e570884210b9098aa7ff8bc8a1e4c092cb9018c7ee50d7",
+    "metadata": "whole-dev-final-metadata.json",
+    "diagnostic": true
+  },
+  "visualAppeal": {
+    "status": "HOLD_NATIVE_05_ALIGNMENT",
+    "reviewers": [
+      "implementation author",
+      "independent UI worker",
+      "geometry worker"
+    ],
+    "resolved": [
+      "Raised rectangular bank now rolls from forest into a low bay",
+      "Flat radial umbrella now an enterable curved vault",
+      "Three blue dishes now continuous shallow aqua water with real stepping stones",
+      "Rounded leaf volumes and distinct forest/water/bay/flower space silhouettes"
+    ],
+    "residuals": [
+      "Owned floor remains more regular than native-05",
+      "Water is shallow and the giant tree/branch gallery is less central than the fixed art model"
+    ],
+    "limits": "Author/implementation team comparison, not participant acceptance or pixel-identical native model reproduction",
+    "previousStatus": "GO_LOCAL_V1",
+    "latestUserDirection": "2026-10-10: user attached native-05 whole-island image and asked if implementation is heading there; root acknowledged rectangular shore, weak hero tree, spring and home silhouettes are still materially different.",
+    "required": [
+      "Irregular hilly shore and bay silhouette while retaining owned floor",
+      "Dominant hollow great tree and real branch gallery",
+      "Organic deep-colour spring and distinct shell/flower districts",
+      "Compact curved-roof cottages consistent with native-05"
+    ]
+  },
+  "comprehensionSafety": {
+    "status": "INDEPENDENT_OBSERVATION_NOT_EVALUATED",
+    "limits": "Input, undo, storage and silent routing are audited separately; no child or real device observation"
+  },
+  "runtimeIntegrity": {
+    "status": "BASELINE_CHECKED_NEW_ART_QA_PENDING"
+  },
+  "naturalSevenDayGrowth": {
+    "status": "NOT_EVALUATED"
+  },
+  "realDevice": {
+    "status": "NOT_EVALUATED"
+  },
+  "publication": {
+    "status": "NOT_PERFORMED"
+  }
+}

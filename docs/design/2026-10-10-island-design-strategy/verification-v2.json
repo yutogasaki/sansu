@@ -1,0 +1,96 @@
+{
+  "artifact": "island-art-strategy-v2",
+  "date": "2026-10-10",
+  "target": "http://127.0.0.1:8230/design/2026-10-10-island-design-strategy/",
+  "evidenceType": "static-internal-showcase",
+  "baseRevision": "7a66929c231defc59388a5cc82a58dec8ad8faee",
+  "uncommitted": true,
+  "artifactHashes": {
+    "index.html": "b375c1b77264ba40d9f2cd1e047d1db03f331aa8d91ff2b1d2413401ff9188b3",
+    "style.css": "fcc4053eb5fc3d34fcd0b88239089cfd9fdecf99645223fdcb22c6cbb81e868f",
+    "main.js": "d36a64ca87e04bbf0c288c0397bd1fa4058fc347f199ceade8696694e416c65d",
+    "references.json": "b20c9f4edb068e53a0e0326713c2bc55bfd80d7146f1c87f1a4ab4050ec6156f",
+    "reference-data.js": "cd2aa4af9ad55f64bdfde93955de626c345c57a4ec32451440591479cd636b19",
+    "build.mjs": "d0029a05a963ff9260c6fc19d3886e432d3e825e2ae3e762160b444c7c9cef27"
+  },
+  "referenceCounts": {
+    "total": 32,
+    "littleHabitats": 9,
+    "tinyGlade": 4,
+    "townscaper": 4,
+    "sansuRuntime": 10,
+    "generated": 4,
+    "userProvidedRuntime": 1
+  },
+  "checks": {
+    "referenceIdFieldsFilesHashes": "PASS / node build.mjs",
+    "imageDecode": "PASS / 32 PNG-JPEG source files verified",
+    "javascriptSyntax": "PASS / node --check main.js",
+    "docs": "PASS / existing Review By warnings",
+    "responsive": [
+      {
+        "width": 320,
+        "height": 568,
+        "horizontalOverflow": false
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "horizontalOverflow": false
+      },
+      {
+        "width": 768,
+        "height": 1024,
+        "horizontalOverflow": false
+      },
+      {
+        "width": 1440,
+        "height": 1000,
+        "horizontalOverflow": false
+      }
+    ],
+    "themeFilter": "PASS / new 場所の成長 filter: 10 references",
+    "kindFilter": "PASS / 場所の成長 + 利用者提供実画面: 1 reference U-01",
+    "search": "PASS / LH-08 1 image, Tiny Glade 4 images",
+    "detail": "PASS / U-01 loaded with user-provided type and unknown build scope",
+    "compare": "PASS / LH-01 + U-01, 2 images with types and captions",
+    "escape": "PASS / native comparison and detail dialogs close",
+    "noteSaveReload": "PASS / candidate status and exact text restored",
+    "notesFilter": "PASS / 1 test memo",
+    "jsonExport": "PASS / downloaded JSON parsed, referenceId and exact text matched",
+    "noteDelete": "PASS / test memo removed, 0 memo chips",
+    "growthStates": "PASS / separate → connected → grown; only corresponding SVG group visible; caption and accessible title update; one selected button"
+  },
+  "screenshots": [
+    "showcase-desktop.jpg",
+    "showcase-gallery.jpg",
+    "showcase-comparison.jpg",
+    "showcase-mobile.jpg",
+    "showcase-growth.jpg",
+    "showcase-growth-comparison.jpg",
+    "showcase-v2-mobile.jpg",
+    "showcase-v2-desktop.jpg"
+  ],
+  "appGates": {
+    "visual": "NOT_EVALUATED / no new runtime candidate",
+    "silentComprehensionSafety": "NOT_EVALUATED / no participants",
+    "runtime": "NOT_APPLICABLE / no app source, routing, learning, storage or PWA changes in this deliverable"
+  },
+  "limits": [
+    "Responsive checks are browser viewport overrides, not physical devices.",
+    "Reference views differ in camera and state; this is a research comparison, not runtime acceptance.",
+    "External images are internal references; no competitor asset is integrated into the game.",
+    "The browser test memo was removed. No product adoption was inferred.",
+    "No public deployment, commit or push in this deliverable.",
+    "Growth SVG is a design schematic, not a new runtime art candidate. Exact adjacency, thresholds, timing and effects remain unadopted."
+  ],
+  "retainedV1Checks": [
+    "search",
+    "noteSaveReload",
+    "notesFilter",
+    "jsonExport",
+    "noteDelete"
+  ],
+  "retainedEvidence": "verification-v1.json and original showcase screenshots; note persistence/export code unchanged",
+  "changes": "User-provided current image U-01; central adjacency/place-growth strategy and schematic; four growth series; official Little Habitats and SimCity 2013 mechanic references; no new runtime mechanic"
+}

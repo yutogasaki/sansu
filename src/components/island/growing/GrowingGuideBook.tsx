@@ -23,10 +23,11 @@ export interface GrowingGuideBookProps {
     onStarterAction: () => void;
     onStarterChoose: (id: 'A3' | 'A4') => void;
     onTarget: (evidence: GuidanceEvidence) => void;
+    onPlaces?: () => void;
 }
 
 /** An optional, illustrated book leaves the actual island visible above the page. */
-export function GrowingGuideBook({ state, busy, initialMemory, onClose, onChoose, onClear, onTry, onResumeStarter, onStarterAction, onStarterChoose, onTarget }: GrowingGuideBookProps) {
+export function GrowingGuideBook({ state, busy, initialMemory, onClose, onChoose, onClear, onTry, onResumeStarter, onStarterAction, onStarterChoose, onTarget, onPlaces }: GrowingGuideBookProps) {
     const [tab, setTab] = useState<'try' | 'done'>(initialMemory ? 'done' : 'try');
     const [detail, setDetail] = useState<AchievementId | undefined>(initialMemory ?? state.guidance?.selected);
     const uid = useId(), heading = useRef<HTMLHeadingElement>(null);
@@ -89,6 +90,7 @@ export function GrowingGuideBook({ state, busy, initialMemory, onClose, onChoose
                 data-guide-tab={value} onKeyDown={tabKey} onClick={() => switchTab(value)}>{value === 'try' ? 'ためしてみる' : 'できたこと'}</button>)}
         </div>
         <div className="growing-guide-page" id={`${uid}-${tab}-page`} role="tabpanel" aria-labelledby={`${uid}-${tab}-tab`}>
+            {onPlaces && <button onClick={onPlaces}>そだつ場所を みる</button>}
             {tab === 'try' && <>
                 {step && starter && !opened && <article className="growing-guide-starter" data-guidance-starter={step}>
                     <GrowingGuideArt id={STARTER_ART[step]} />

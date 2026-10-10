@@ -5,6 +5,8 @@ import { CAPE_LEVEL, DISTRICT_PRICE_STEP, isKid, FLAG_PATTERNS, HATS, LAND_PRICE
 import { bridgeAnchor, bridgeSite, canBuildBridge, isReachable, isVacant, key, occupant, onLand, reachableFromHome } from './space';
 import { DEFAULT_DECOR, patternOpen, RUG_COLORS, WORD_GROUPS } from './room';
 import { noteColor, PLANTED_COLORS } from './flowers';
+import { newPlaceProgress, recordPlaceShown, recordPlaceUse, syncPlaceMilestones } from './placeGoals';
+import { PLACE_GOAL_IDS } from './placeTypes';
 import { openTown, welcome } from './town';
 import type { Cell, Command, GrowingState, Side, TownEvent } from './types';
 
@@ -66,6 +68,12 @@ function find(state: GrowingState, id: string) {
 function apply(state: GrowingState, command: Command): TownEvent[] {
     const events: TownEvent[] = [];
     switch (command.type) {
+        case 'choose-place-goal': {
+            if (command.id !== undefined && !PLACE_GOAL_IDS.includes(command.id)) fail('もういちど えらんでね。');
+            (state.placeProgress ??= newPlaceProgress()).selected = command.id;
+            break;
+        }
+        case 'place-used': case 'place-shown': break;
         case 'choose-goal': {
             if (!state.guidance || (command.id !== undefined && !ACHIEVEMENTS.includes(command.id))) fail('もういちど えらんでね。');
             state.guidance.selected = command.id;
@@ -280,6 +288,10 @@ export function applyIntent(previous: GrowingState, intent: Intent, at?: number)
         events.push(...openTown(state));
     noteTownBuilds(state, events);
     noteGuidanceIntent(previous, state, intent.command, intent.id, at);
+    const now = at ?? state.nature.realAt;
+    if (intent.command.type === 'place-used') recordPlaceUse(state, intent.command, now);
+    if (intent.command.type === 'place-shown') recordPlaceShown(state, intent.command);
+    syncPlaceMilestones(state, now);
     state.applied = [...state.applied, intent.id].slice(-RULES.appliedMemory);
     return { state, events };
 }

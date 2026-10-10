@@ -4,11 +4,15 @@ import { box, mesh, WOOD, type Paint } from './plotParts';
 import { wonder } from './wonderPaint';
 
 /** A short wooden pier from the south shore; the waiting friend stands at its end (§7.2). */
-export function buildPier(m: IslandMaterials) {
+export function buildPier(m: IslandMaterials, drop = 0) {
     const paint: Paint = (color, roughness = .85) => m.surface(color, roughness);
     const root = new T.Group(); root.name = 'growing-pier';
-    for (let i = 0; i < 5; i++) box(root, paint, i % 2 ? '#b08a62' : '#a07a55', [0, .02, i * .3], [.62, .05, .27]);
-    for (const x of [-.3, .3]) for (const z of [.15, .75, 1.35]) box(root, paint, WOOD, [x, -.12, z], [.06, .36, .06]);
+    const count = Math.max(5, Math.ceil(drop / .14) + 1), run = 1.2 / (count - 1);
+    for (let i = 0; i < count; i++) box(root, paint, i % 2 ? '#b08a62' : '#a07a55', [0, .02 - drop * i / (count - 1), i * run], [.62, .05, run * .9]);
+    for (const x of [-.3, .3]) for (const z of [.15, .75, 1.2]) {
+        const top = .015 - drop * Math.min(1, z / 1.2), bottom = -.30 - drop;
+        box(root, paint, WOOD, [x, (top + bottom) / 2, z], [.06, top - bottom, .06]);
+    }
     return root;
 }
 

@@ -1,0 +1,56 @@
+.growing-place-book { position: absolute; z-index: 8; inset: auto 0 0; max-height: 77%; display: flex; flex-direction: column; padding: 14px 16px max(14px, env(safe-area-inset-bottom)); background: var(--pokomoko-paper); color: var(--pokomoko-ink); border-radius: 24px 24px 0 0; border-top: 4px solid var(--pokomoko-lavender); box-shadow: 0 -8px 28px rgb(48 54 79 / 18%); }
+.growing-place-book button { min-width: 44px; min-height: 44px; padding: 9px 12px; border: 1px solid var(--pokomoko-edge); border-radius: 12px; background: var(--pokomoko-paper); color: var(--pokomoko-ink); font-weight: 800; }
+.growing-place-book button:disabled { opacity: .55; }
+.growing-place-book :is(button, summary):focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 3px; }
+.growing-place-header { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.growing-place-header h2 { font-size: 20px; line-height: 1.4; margin: 1px 0; }
+.growing-place-header h2:focus { outline: none; }
+.growing-place-header > div > span { font-size: 11px; font-weight: 800; color: var(--pokomoko-muted); }
+.growing-place-header > button { flex: none; font-size: 13px; }
+.growing-place-header button span { font-size: 20px; margin-left: 4px; }
+.growing-place-tabs { display: flex; flex: none; gap: 8px; padding: 9px 0; border-bottom: 1px solid var(--pokomoko-edge); }
+.growing-place-tabs button { flex: 1; font-size: 13px; }
+.growing-place-tabs button[aria-selected="true"] { background: var(--pokomoko-lavender); border-color: var(--pokomoko-stitch); }
+.growing-place-page { min-height: 0; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; padding: 8px 2px; }
+.growing-place-page h3 { margin: 0 0 8px; font-size: 18px; line-height: 1.5; }
+.growing-place-page p { margin: 6px 0; font-size: 14px; line-height: 1.65; overflow-wrap: anywhere; }
+.growing-place-page p.growing-place-note { font-size: 12px; color: var(--pokomoko-muted); }
+.growing-place-detail { display: grid; gap: 9px; grid-template-columns: 1fr; }
+.growing-place-detail > figure { width: min(100%, 230px); margin: 0 auto; }
+.growing-place-art { width: 100%; height: auto; display: block; }
+.growing-place-detail figcaption { text-align: center; font-size: 10px; color: var(--pokomoko-muted); margin-top: -6px; }
+.growing-place-stages { display: flex; gap: 3px; padding: 0; list-style: none; margin: 0 0 7px; }
+.growing-place-stages li { flex: 1; display: grid; place-items: center; min-height: 26px; font-size: 11px; font-weight: 800; border-bottom: 3px solid var(--pokomoko-edge); color: var(--pokomoko-muted); }
+.growing-place-stages li[data-reached] { border-color: var(--pokomoko-stitch); color: var(--pokomoko-ink); }
+.growing-place-stages li[aria-current] { border-color: var(--pokomoko-blue); }
+.growing-place-live { font-weight: 800; }
+.growing-place-actions { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+.growing-place-book button.growing-place-primary { background: var(--pokomoko-blue); border-color: var(--pokomoko-blue-deep); color: var(--pokomoko-paper); box-shadow: 0 3px 0 var(--pokomoko-blue-deep); }
+.growing-place-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; padding-top: 14px; }
+.growing-place-cards button { min-width: 0; display: flex; flex-direction: column; align-items: center; padding: 0 5px 9px; border-color: transparent; }
+.growing-place-cards button[aria-pressed="true"] { border-color: var(--pokomoko-blue); }
+.growing-place-cards .growing-place-art { max-width: 165px; }
+.growing-place-cards strong { font-size: 13px; line-height: 1.4; }
+.growing-place-cards span { font-size: 11px; color: var(--pokomoko-muted); margin-top: 3px; }
+.growing-place-book details { margin: 10px 0 0; border-top: 1px solid var(--pokomoko-edge); }
+.growing-place-book summary { min-height: 44px; padding: 12px 2px; cursor: pointer; font-size: 13px; font-weight: 800; }
+.growing-place-layout-choices { display: flex; gap: 5px; }
+.growing-place-layout-choices button { flex: 1; min-width: 0; font-size: 11px; padding: 7px 5px; }
+.growing-place-layout-choices button[aria-pressed="true"] { background: var(--pokomoko-lavender); border-color: var(--pokomoko-stitch); }
+.growing-place-layout { display: block; width: min(100%, 320px); max-height: 210px; margin: 6px auto; }
+.growing-place-layouts small { font-size: 11px; color: var(--pokomoko-muted); }
+.growing-place-inputs { font-weight: 800; }
+.growing-place-combos article { padding: 8px 10px; margin: 7px 0; background: #f0f2f8; border-radius: 12px; }
+.growing-place-combos strong, .growing-place-combos span { display: block; font-size: 13px; line-height: 1.6; }
+.growing-place-combos span { color: var(--pokomoko-muted); font-size: 12px; }
+.growing-place-current { display: flex; align-items: center; gap: 7px; min-height: 44px; max-width: min(220px, calc(100% - 120px)); padding: 6px 10px; border: 1px solid var(--pokomoko-edge); border-radius: 14px; background: var(--pokomoko-paper); color: var(--pokomoko-ink); font-size: 12px; font-weight: 800; pointer-events: auto; }
+.growing-place-current .growing-place-art { width: 42px; flex: none; }
+.growing-island[data-home-ui-candidate][data-growing-island="ready"] .growing-hud-top:has(.growing-place-current) { right: max(12px, env(safe-area-inset-right)); }
+.growing-hud-top > .growing-place-current { flex-shrink: 1; }
+.growing-place-current:focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 3px; }
+.growing-place-current span { min-width: 0; }
+.growing-place-current strong, .growing-place-current small { display: block; text-align: left; line-height: 1.4; }
+.growing-place-current small { font-size: 10px; color: var(--pokomoko-muted); font-weight: 500; }
+@media (min-width: 640px) { .growing-place-book { width: min(640px, calc(100% - 32px)); left: 50%; right: auto; transform: translateX(-50%); padding: 16px 22px; } .growing-place-detail { grid-template-columns: 190px minmax(0, 1fr); align-items: center; gap: 18px; } .growing-place-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-height: 700px) and (max-width: 639px) { .growing-place-book { max-height: 86%; } .growing-place-detail > figure { width: 150px; } }
+@media (prefers-reduced-motion: reduce) { .growing-place-book *, .growing-place-current { scroll-behavior: auto; transition: none; animation: none; } }

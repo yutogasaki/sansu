@@ -13,7 +13,7 @@ import type { GrowingState, NatureEvent, TownEvent } from './types';
 
 export interface GrowingRecord {
     profileId: string;
-    version: 1 | 2 | 3;
+    version: 1 | 2 | 3 | 4;
     revision: number;
     createdAt: number;
     updatedAt: number;
@@ -36,6 +36,7 @@ export class GrowingIslandDatabase extends Dexie {
     /** Source at cutover; older builds can only write their own lineage. */
     legacyIslands!: Table<GrowingRecord, string>;
     balancedIslands!: Table<GrowingRecord, string>;
+    guidedIslands!: Table<GrowingRecord, string>;
     constructor(name = growingDatabaseName()) {
         super(name);
         this.version(1).stores({ islands: '&profileId' });
@@ -49,9 +50,14 @@ export class GrowingIslandDatabase extends Dexie {
         this.version(4).stores({ guidedIslands: '&profileId' }).upgrade(async tx => {
             await tx.table('guidedIslands').bulkAdd(await tx.table('balancedIslands').toArray());
         });
+        // Old guidance writers cannot discard place history or renderer-use receipts.
+        this.version(5).stores({ placedIslands: '&profileId' }).upgrade(async tx => {
+            await tx.table('placedIslands').bulkAdd(await tx.table('guidedIslands').toArray());
+        });
         this.legacyIslands = this.table('islands');
         this.balancedIslands = this.table('balancedIslands');
-        this.islands = this.table('guidedIslands');
+        this.guidedIslands = this.table('guidedIslands');
+        this.islands = this.table('placedIslands');
     }
 }
 export const growingDb = new GrowingIslandDatabase();
@@ -65,10 +71,11 @@ async function withGrowingPersistence<T>(save: () => Promise<T>): Promise<T> {
 
 export async function deleteGrowingOwner(profileId: string, database = growingDb) {
     if (!await Dexie.exists(database.name)) return;
-    await withGrowingPersistence(() => database.transaction('rw', [database.islands, database.balancedIslands, database.legacyIslands, database.moments, database.gifts], async () => {
+    await withGrowingPersistence(() => database.transaction('rw', [database.islands, database.guidedIslands, database.balancedIslands, database.legacyIslands, database.moments, database.gifts], async () => {
         await database.islands.delete(profileId);
         await database.legacyIslands.delete(profileId);
         await database.balancedIslands.delete(profileId);
+        await database.guidedIslands.delete(profileId);
         await database.moments.where('profileId').equals(profileId).delete();
         await database.gifts.where('to').equals(profileId).delete();
         await database.gifts.where('from').equals(profileId).delete();
@@ -142,7 +149,8 @@ export async function commandGrowingIsland(profileId: string, intent: Intent, no
         const upgraded = upgrade(current, now);
         if (current.state.applied.includes(intent.id) && current.version === upgraded.version) return { record: current, town: [] };
         const command = intent.command;
-        if (command.type === 'concert-started' || command.type === 'learning-returned' || command.type === 'ack-achievements') {
+        if (command.type === 'concert-started' || command.type === 'learning-returned' || command.type === 'ack-achievements'
+            || command.type === 'place-used' || command.type === 'place-shown') {
             if (command.profileId !== profileId || current.state.seed !== profileId) throw new Error('じぶんの しまを もういちど ひらいてね。');
             if (command.expectedRevision !== current.revision) throw new GuidanceReceiptConflict();
         }

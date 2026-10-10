@@ -21,6 +21,8 @@ If the information would still matter after several unrelated tasks, it belongs 
 
 ## Durable Memory
 
+- Island construction/art strategy (2026-10-10): [decision](../adr/2026-10-10-place-first-island-strategy.md), [construction strategy](../product/island-construction-strategy.md). Build places from placement, maturity and real resident use. Compare identical materials in different arrangements, not only more objects or stronger lighting. Preserve the bright rounded initial appeal and Pokomoko identity. Immediate shape adaptation, timed maturity and contextual discoveries are separate mechanisms. The [place contract](../product/island-place-goals.md) and [runtime ADR](../adr/2026-10-10-growing-place-runtime.md) now implement six optional goals,15 arrangements and four relations in D1–D4. record4/schema5 uses the isolated placedIslands table; rendered current-revision use and first-history are distinct. Local runtime evidence does not certify native05 dense forests, deep bays/waterfalls, independent child/device observation or natural seven-day growth.
+
 - Single island runtime (2026-10-06): [ADR](../adr/2026-10-06-single-island-runtime.md). Growing is the only island home; retired Life/Home Journey/Nature Town flags cannot select another home. Preserve old stores, verified Life migration, learning and shared character meshes. Independent prototype UI is retired; do not recreate its dev commands.
 
 ### 1. Source of Truth

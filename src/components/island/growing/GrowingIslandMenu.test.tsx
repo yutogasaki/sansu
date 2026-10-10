@@ -16,6 +16,12 @@ function props(overrides: Partial<GrowingIslandMenuProps> = {}): GrowingIslandMe
         onRotate: vi.fn(), onExpand: vi.fn(), ...overrides };
 }
 describe('Growing Island menu destinations and actual island identity', () => {
+    it('opens the optional place book as its own destination', () => {
+        const onPlaces = vi.fn(), p = props({ onPlaces });
+        buttons(GrowingIslandMenuContents(p)).find(button => button.props['aria-label'] === 'そだつ場所')!.props.onClick();
+        expect(onPlaces).toHaveBeenCalledTimes(1);
+        expect(renderToStaticMarkup(GrowingIslandMenuContents(p))).toContain('そだつ場所');
+    });
     it('keeps empty population honest and limits portraits while showing the actual full count', () => {
         const empty = renderToStaticMarkup(GrowingIslandMenuContents(props()));
         expect(empty).toContain('0にん'); expect(empty).toContain('これからの なかま'); expect(empty).not.toContain('<img');

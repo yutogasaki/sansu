@@ -1,5 +1,11 @@
 # Sansu 文書の入口
 
+2026-10-10：採用した全島3Dを[育つ場所の目標と組み合わせ](product/island-place-goals.md)へ具体化。[目標・配置の設計ショーケース](design/2026-10-10-island-place-goals/index.html)で6目標、同じ材料の15配置、4つの場所の関係と実装順を確認できます。D1〜D4を本体へ統合し、実3D・目標・保存4を同じ規則へつなぎ、通常取得3旅程・成熟40組・coreと保存/更新のローカル検証を完了しました。[最新の実画面と検証](design/2026-10-10-growing-place-runtime/index.html)で目標との比較を見返せます。実機・独立観察・公開は別ゲートです。
+
+島全体の到達点を実物で確認：[編集可能な全島3D美術1案](design/2026-10-10-island-final-3d/README.md)。Blenderの実モデル・GLB・回転できる表示で、岸・起伏・水辺・森・庭・街区を同時に確認します。画像生成から実造形へ制作方式を変更。単調さと「白いだけ」の指摘を受け、青紫の大樹と枝の回廊、鉱石を源とする青い段泉、色を透かす貝殻状の集会所、傘屋根/葉屋根の家へ改訂しました。元の庭と同じ縮尺で切り替えられます。native-05を利用者の好評価に基づく美術方向として採用。配置から育つ場所の本体統合は[実装ショーケース](design/2026-10-10-growing-place-runtime/README.md)を参照。見本の森/庭の密度、深い入り江、段差と滝の構成は本体v3へ未再現です。[以前の全景生成画像](design/2026-10-10-whole-island-art-directions/index.html)は制作履歴。
+
+島の根本再設計：[島構築戦略](product/island-construction-strategy.md) · [美術戦略](product/island-art-strategy.md) · [成長系列](product/island-place-growth-proposal.md) · [32枚の参考と戦略ショーケース](design/2026-10-10-island-design-strategy/index.html)。現行構造を監査し、土地・水辺・植物・集落・不思議を、同じ材料の置き方から育つ場所として設計します。
+
 **島の現行実装はひとつ：[実装と保存の境界](architecture/island-runtime.md)。** 育つ島を本体にし、旧Life/Home Journey/Nature Townの独立画面を撤去。家・本・学習と旧保存の互換処理は共用して保持します。公開状態は現在のタスクを参照。
 
 **2026-09-29 北極星を改訂：** [CONSTITUTION](../CONSTITUTION.md)の北極星を旧探索（地底）から「育つ島」（くふう・にぎわい・ふしぎ＋愛着）へ。人口は地区ごとに増やし、学習は材料と道具をもたらす。[決定の記録](adr/2026-09-29-north-star-growing-island.md)。仕様51の住人上限3などは無効で、[整合表](product/51_living_fantasy_island_spec.md#北極星との整合2026-09-29)に従う。次期の遊びの規則は[52 育つ島 ゲーム仕様](product/52_growing_island_game_spec.md)（しこむ→まなぶ→ひらく。実装・公開状況はタスク参照）。

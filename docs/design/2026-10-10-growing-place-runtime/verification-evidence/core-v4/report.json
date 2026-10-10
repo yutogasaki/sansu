@@ -1,0 +1,99 @@
+{
+  "schema": "sansu-growing-verification-v1",
+  "startedAt": "2026-10-10T07:18:56.699Z",
+  "output": "/private/tmp/sansu-growing-places-fixed-20261010-v4",
+  "checks": "FAIL",
+  "release": "PARTIAL",
+  "gaps": [
+    "Growing実two-build更新・更新中断復旧・旧writer/rollback",
+    "既存利用者の実保存引き継ぎ・本人切替の故障診断",
+    "実iOS/Android・音/写真・人口と物が増えた島の性能",
+    "採用美術とのcritical-path比較・子どもの無説明理解/安全・翌日の再訪"
+  ],
+  "steps": [
+    {
+      "id": "core",
+      "status": "PASS",
+      "command": [
+        "run",
+        "verify:core"
+      ],
+      "startedAt": "2026-10-10T07:19:51.524Z",
+      "durationMs": 201862
+    },
+    {
+      "id": "classic-smoke",
+      "status": "FAIL",
+      "command": [
+        "run",
+        "e2e:smoke"
+      ],
+      "startedAt": "2026-10-10T07:23:13.389Z",
+      "error": "Error: npm run e2e:smoke failed (1); see classic-smoke.log\n    at ChildProcess.<anonymous> (file:///Users/yutogasaki/Projects/sansu/tools/verify-growing.mjs:160:29)\n    at Object.onceWrapper (node:events:631:26)\n    at ChildProcess.emit (node:events:509:28)\n    at maybeClose (node:internal/child_process:1124:16)\n    at Socket.<anonymous> (node:internal/child_process:481:11)\n    at Socket.emit (node:events:509:28)\n    at Pipe.<anonymous> (node:net:351:12)",
+      "durationMs": 179122
+    },
+    {
+      "id": "growing-guidance-production",
+      "status": "NOT_RUN",
+      "script": "tools/e2e-growing-guidance-production.mjs"
+    },
+    {
+      "id": "growing-balance-production",
+      "status": "NOT_RUN",
+      "script": "tools/e2e-growing-balance-production.mjs"
+    }
+  ],
+  "gates": {
+    "runtime": "FAIL",
+    "visualAppeal": "NOT_EVALUATED",
+    "comprehensionSafety": "NOT_EVALUATED"
+  },
+  "candidate": {
+    "head": "b61d3064323dd75552cfbf3808fade083e2bef07",
+    "sourceHash": "0c5c2bca14d85be0e5c7e355f1aa0c94350061c6748a76bbdbaf51a08824b1a2",
+    "status": " M .agents/tasks/DONE.md\n M docs/ai/ownership_map.md\n M docs/ai/verification_matrix.md\n M docs/done/2026-10.md\n M docs/index.html\n M docs/index.md\n M docs/product/01_app_spec.md\n M docs/product/13_data_storage_migration_spec.md\n M docs/product/43_island_navigation_spec.md\n M docs/product/44_display_layout_spec.md\n M docs/product/52_growing_island_game_spec.md\n M docs/product/README.md\n M docs/product/living-fantasy/01-world-and-art.md\n M docs/runbooks/growing-verification.md\n M docs/tasks/active/2026-09-27-living-fantasy-first-playable.md\n M docs/wiki/memory.md\n M src/components/Footer.test.tsx\n M src/components/Footer.tsx\n M src/components/island/growing/GrowingGuideBook.tsx\n M src/components/island/growing/GrowingIsland.tsx\n M src/components/island/growing/GrowingIslandMenu.test.tsx\n M src/components/island/growing/GrowingIslandMenu.tsx\n M src/components/island/growing/GrowingWorld.tsx\n M src/components/island/growing/growing.css\n M src/components/island/growing/growingCamera.ts\n M src/components/island/growing/growingLife.ts\n M src/components/island/growing/objectLayer.test.ts\n M src/components/island/growing/objectLayer.ts\n M src/components/island/growing/pierGeometry.ts\n M src/components/island/growing/quietHome.css\n M src/components/island/growing/sceneLayout.ts\n M src/components/island/growing/seedHitPriority.test.ts\n M src/components/island/growing/useGrowingIsland.test.ts\n M src/components/island/growing/useGrowingIsland.ts\n M src/components/island/growing/worldScene.ts\n M src/components/island/three/garden/cottage.ts\n M src/components/island/three/garden/garden.ts\n M src/components/island/three/garden/lighting.ts\n M src/domain/growingIsland/commands.ts\n M src/domain/growingIsland/guidance.repository.test.ts\n M src/domain/growingIsland/index.ts\n M src/domain/growingIsland/island.ts\n M src/domain/growingIsland/repository.test.ts\n M src/domain/growingIsland/repository.ts\n M src/domain/growingIsland/syncProjection.ts\n M src/domain/growingIsland/types.ts\n M tools/capture-promotion-showcase.mjs\n M tools/check-growing-legacy-writer.mjs\n M tools/e2e-growing-balance-production.mjs\n M tools/e2e-growing-balance.mjs\n M tools/e2e-growing-fixtures.mjs\n M tools/e2e-growing-guidance-production.mjs\n M tools/e2e-growing-guidance.mjs\n M tools/e2e-growing-update.mjs\n M tools/growing-fixture-data.mjs\n M tools/growing-fixture-data.test.mjs\n M tools/verify-growing.mjs\n M tools/verify-growing.test.mjs\n?? docs/adr/2026-10-10-growing-place-runtime.md\n?? docs/adr/2026-10-10-place-first-island-strategy.md\n?? docs/design/2026-10-10-bright-round-fantasy/\n?? docs/design/2026-10-10-bright-round-island/\n?? docs/design/2026-10-10-fantasy-world-directions/\n?? docs/design/2026-10-10-growing-place-runtime/\n?? docs/design/2026-10-10-island-design-strategy/\n?? docs/design/2026-10-10-island-final-3d/\n?? docs/design/2026-10-10-island-place-goals/\n?? docs/design/2026-10-10-place-growth-art-directions/\n?? docs/design/2026-10-10-whole-island-art-directions/\n?? docs/product/island-art-strategy.md\n?? docs/product/island-construction-strategy.md\n?? docs/product/island-place-goals.json\n?? docs/product/island-place-goals.md\n?? docs/product/island-place-growth-proposal.md\n?? prototypes/place-qa/\n?? src/components/island/growing/GrowingPlaceBook.test.tsx\n?? src/components/island/growing/GrowingPlaceBook.tsx\n?? src/components/island/growing/growingFingerTargets.test.ts\n?? src/components/island/growing/growingFingerTargets.ts\n?? src/components/island/growing/growingPlaceBook.css\n?? src/components/island/growing/placeGallery.test.ts\n?? src/components/island/growing/placeGeometry.test.ts\n?? src/components/island/growing/placeGeometry.ts\n?? src/components/island/growing/placeGround.ts\n?? src/components/island/growing/placeLeafGeometry.test.ts\n?? src/components/island/growing/placeLeafGeometry.ts\n?? src/components/island/growing/placeSpringGeometry.test.ts\n?? src/components/island/growing/placeSpringGeometry.ts\n?? src/domain/growingIsland/placeCatalog.ts\n?? src/domain/growingIsland/placeGoals.repository.test.ts\n?? src/domain/growingIsland/placeGoals.ts\n?? src/domain/growingIsland/placeRelations.test.ts\n?? src/domain/growingIsland/placeRelations.ts\n?? src/domain/growingIsland/placeTerrain.test.ts\n?? src/domain/growingIsland/placeTerrain.ts\n?? src/domain/growingIsland/placeTypes.ts\n?? src/domain/growingIsland/places.test.ts\n?? src/domain/growingIsland/places.ts\n?? src/prototypes/placeQa/\n?? tools/e2e-growing-places.mjs\n?? tools/e2e-growing-places.test.mjs\n?? tools/growing-place-fixtures.mjs\n?? tools/growing-place-fixtures.test.mjs\n?? tools/place-qa.test.mjs\n",
+    "node": "v24.18.0",
+    "lockHash": "5c476bc2c1ede88ecc98441158df82dc139464d21ca5b3b3bf3ddaf9a416b92d",
+    "revision": "b61d3064323dd75552cfbf3808fade083e2bef07-candidate-0c5c2bca14d8"
+  },
+  "flags": {
+    "VITE_ISLAND_ENABLED": "true",
+    "VITE_ISLAND_LIFE_ENABLED": "true",
+    "VITE_GROWING_ISLAND_ENABLED": "true",
+    "VITE_ISLAND_FANTASY_ENABLED": "true",
+    "VITE_ISLAND_LIFE_PREVIEW": "false",
+    "VITE_NATURE_TOWN_ENABLED": "false",
+    "VITE_HOME_JOURNEY_PREVIEW": "false",
+    "VITE_ISLAND_LIFE_DISCOVERY_ENABLED": "false",
+    "VITE_BUILD_PLAY_ENABLED": "false",
+    "VITE_EXPLORE_EXPERIENCE": "snap-root-v1"
+  },
+  "version": {
+    "version": "b61d3064323dd75552cfbf3808fade083e2bef07-candidate-0c5c2bca14d8:d2e4f7ae-7f21-4a40-a29b-34f31cbe3955",
+    "revision": "b61d3064323dd75552cfbf3808fade083e2bef07-candidate-0c5c2bca14d8",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": true,
+        "candidate": "living-fantasy-garden-v2",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "error": "Error: npm run e2e:smoke failed (1); see classic-smoke.log\n    at ChildProcess.<anonymous> (file:///Users/yutogasaki/Projects/sansu/tools/verify-growing.mjs:160:29)\n    at Object.onceWrapper (node:events:631:26)\n    at ChildProcess.emit (node:events:509:28)\n    at maybeClose (node:internal/child_process:1124:16)\n    at Socket.<anonymous> (node:internal/child_process:481:11)\n    at Socket.emit (node:events:509:28)\n    at Pipe.<anonymous> (node:net:351:12)",
+  "cleanupErrors": [],
+  "finishedAt": "2026-10-10T07:26:13.246Z"
+}

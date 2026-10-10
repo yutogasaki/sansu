@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>小物から、そだつ場所へ — 島の実装ショーケース</title>
+    <meta name="description" content="育った島全体の実3D、承認した美術、4つの場所、通常取得から接続・分離・再接続までの実画面を見返すショーケース。" />
+    <link rel="stylesheet" href="./showcase.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">内容へ</a>
+    <header class="topbar">
+      <a class="brand" href="../../index.html">SANSU <span>島の美術と実装</span></a>
+      <nav aria-label="ページ内の見どころ">
+        <a href="#comparison">全島</a><a href="#places">4つの景色</a><a href="#journey">遊ぶ流れ</a><a href="#evidence">確認の範囲</a>
+      </nav>
+    </header>
+    <main id="main">
+      <section class="intro" aria-labelledby="title">
+        <p class="eyebrow">2026.10.10 · GROWING ISLAND</p>
+        <h1 id="title">小物から、<br class="phone-break" />そだつ場所へ。</h1>
+        <p class="lead">森、水辺、入り江、花の庭。持っている木や家のつながりが、島全体の景色を変えていく。</p>
+        <p class="scope-note">目標はnative05の全景です。下は造形v2の実画面です。丸い家、丘、大樹と実回廊、道は近づきました。広い水辺と入り江、地区が一体になる美術はまだ調整が必要です。</p>
+        <figure class="hero">
+          <a class="image-link" href="./whole-dev-art-v2-final.png" target="_blank" rel="noopener"><img src="./whole-dev-art-v2-final.png" width="1280" height="720" alt="実装した成熟島の全景。奥の青紫の森、右の花の天蓋、中央の一続きの浅い水辺、左の透明な入り江の屋根が、緩い丘と岸に広がる。" /></a>
+          <figcaption><span class="badge">実アプリの3D</span><span>DEV診断 · 成熟状態の全島 · 画像を開くと原寸で確認できます</span></figcaption>
+        </figure>
+      </section>
+
+      <section id="comparison" aria-labelledby="comparison-title">
+        <div class="section-heading"><p class="eyebrow">WHOLE ISLAND</p><h2 id="comparison-title">目標と、いまの島。</h2><p>同じ方向を見て改善できるように、承認した全島美術と実画面を並べています。</p></div>
+        <div class="comparison">
+          <figure class="panel">
+            <a class="comparison-image image-link" href="../2026-10-10-island-final-3d/whole-island-render.png" target="_blank" rel="noopener"><img src="../2026-10-10-island-final-3d/whole-island-render.png" width="1600" height="1200" loading="lazy" alt="承認したnative05の全島美術。大きな中空の樹の住まい、段泉、花の中庭、入り江の集会所が丸い島の地形とつながる。" /></a>
+            <figcaption><span class="badge reference">目標の美術</span><h3>承認した全島3D · native05</h3><p>大樹を中心に、丘・泉・入り江へ空間が広がる。</p><a href="../2026-10-10-island-final-3d/">3Dの見本を見回す <span aria-hidden="true">↗</span></a></figcaption>
+          </figure>
+          <figure class="panel">
+            <a class="comparison-image image-link" href="./whole-dev-art-v2-final.png" target="_blank" rel="noopener"><img src="./whole-dev-art-v2-final.png" width="1280" height="720" loading="lazy" alt="現在の成熟島を実アプリで描画した全景。葉のまとまり、浅い水辺、曲面屋根、花の天蓋が、それぞれ実際の所有物から育つ。" /></a>
+            <figcaption><span class="badge">現在の実装</span><h3>動く島全体 · DEV診断</h3><p>所有物と入口を保ち、通れる床と使える場所へ。</p><a href="./whole-dev-art-v2-final-metadata.json">この画像の撮影情報 <span aria-hidden="true">↗</span></a></figcaption>
+          </figure>
+        </div>
+        <p class="comparison-note">岸の箱のような断崖、尖った星形の葉、平たい傘、小さな水皿の列を改めました。参考より泉は浅く、大樹と高床の中心性は控えめです。ここを次の美術改善でも見返します。</p>
+      </section>
+
+      <section id="places" aria-labelledby="places-title">
+        <div class="section-heading"><p class="eyebrow">FOUR LANDSCAPES</p><h2 id="places-title">同じ島に、違う居場所。</h2><p>大きさだけでなく、屋根・地面・水・歩く高さで、4つの景色を分けています。</p></div>
+        <div class="place-grid">
+          <figure class="place-card">
+            <a class="detail-image image-link" style="--picture-width:280%;--picture-left:-121%;--picture-top:-8%;" href="./whole-dev-art-v2-final.png" target="_blank" rel="noopener"><img src="./whole-dev-art-v2-final.png" width="1280" height="720" loading="lazy" alt="奥の森の部分。丸い青紫の葉と、空洞のある琥珀色の幹が高い木陰を作る。" /></a>
+            <figcaption><small>森 · P01 / P02 · DEV全景の一部</small><h3>木陰と、大樹の住まい</h3><p>木のまとまりが屋根になり、実階段から枝の高床を歩ける。</p></figcaption>
+          </figure>
+          <figure class="place-card">
+            <a class="detail-image image-link" style="--picture-width:400%;--picture-left:-175%;--picture-top:-102%;" href="./whole-dev-art-v2-final.png" target="_blank" rel="noopener"><img src="./whole-dev-art-v2-final.png" width="1280" height="720" loading="lazy" alt="中央の水辺の部分。淡い青の水面が石の岸とつながり、浅い渡り石を挟んで一続きになる。" /></a>
+            <figcaption><small>水辺 · P03 · DEV全景の一部</small><h3>青い泉の庭</h3><p>水ばちと通水したみずみちが、地形に沿う広い水辺へ育つ。</p></figcaption>
+          </figure>
+          <figure class="place-card">
+            <a class="detail-image image-link" style="--picture-width:280%;--picture-left:-40%;--picture-top:-34%;" href="./whole-dev-art-v2-final.png" target="_blank" rel="noopener"><img src="./whole-dev-art-v2-final.png" width="1280" height="720" loading="lazy" alt="左の入り江の部分。家と遊び場の上に、肋骨と厚い縁を持つ青い半透明の曲面屋根がかかる。" /></a>
+            <figcaption><small>入り江 · P04 · DEV全景の一部</small><h3>入り江の集会所</h3><p>家と遊び場を、湾に沿って曲がる透けた屋根がまとめる。</p></figcaption>
+          </figure>
+          <figure class="place-card">
+            <a class="detail-image image-link" style="--picture-width:350%;--picture-left:-204%;--picture-top:-65%;" href="./whole-dev-art-v2-final.png" target="_blank" rel="noopener"><img src="./whole-dev-art-v2-final.png" width="1280" height="720" loading="lazy" alt="右の花の庭の部分。大きなピンクと紫の花びらが、席のある中庭を囲う天蓋になる。" /></a>
+            <figcaption><small>花の庭 · P05 · DEV全景の一部</small><h3>花の中庭</h3><p>育った花と席の配置が、門や中庭の形を決める。</p></figcaption>
+          </figure>
+        </div>
+        <p class="caption-note">4枚は上の実全景を切り出して表示しています。別の生成画像や、固定の背景モデルではありません。</p>
+      </section>
+
+      <section id="journey" aria-labelledby="journey-title">
+        <div class="section-heading"><p class="eyebrow">ACTUAL PLAY</p><h2 id="journey-title">手に入れて、つないで、戻ってくる。</h2><p>通常の初回登録と学習から木を手に入れた、固定ビルドの実画面。390幅を中心に、同じ木を離して戻すところまで並べています。</p></div>
+        <div class="journey-status"><span class="badge">通常取得の旅程</span><p>320・390・768幅で、取得・接続・分離・再接続・同じ学習への復帰を確認。自然な長時間成長はこの旅程の確認範囲に含みません。</p></div>
+        <ol class="contact-list">
+          <li><figure><a class="journey-image image-link" href="./places-evidence/acquired-v1/acquired-390-first-home.png" target="_blank" rel="noopener"><img src="./places-evidence/acquired-v1/acquired-390-first-home.png" width="390" height="844" loading="lazy" alt="通常の初回登録後の小さな島。虹色の屋根の家、花、ベンチと桟橋がある。" /></a><figcaption><small>01 · 390幅 · 通常取得</small><h3>はじめの島</h3><p>初回の島を開き、学習へ進む。</p></figcaption></figure></li>
+          <li><figure><a class="journey-image image-link" href="./places-evidence/acquired-v1/acquired-390-twenty-real-answers.png" target="_blank" rel="noopener"><img src="./places-evidence/acquired-v1/acquired-390-twenty-real-answers.png" width="390" height="844" loading="lazy" alt="実際の学習入力で20連続の演出が出ている足し算の画面。" /></a><figcaption><small>02 · 390幅 · 実際の学習入力</small><h3>学習を進める</h3><p>答えて、木を手に入れる流れへ。</p></figcaption></figure></li>
+          <li><figure><a class="journey-image image-link" href="./places-evidence/acquired-v1/acquired-390-optional-six-goals.png" target="_blank" rel="noopener"><img src="./places-evidence/acquired-v1/acquired-390-optional-six-goals.png" width="390" height="844" loading="lazy" alt="そだつ場所の本。木陰の庭、大樹の住まい、泉、集会所などの任意の目標を選べる。" /></a><figcaption><small>03 · 390幅 · 目標の本</small><h3>目標を選ぶ</h3><p>好きな場所を選び、材料と形を見る。</p></figcaption></figure></li>
+          <li><figure><a class="journey-image image-link" href="./places-evidence/acquired-v1/acquired-390-young-connected-garden.png" target="_blank" rel="noopener"><img src="./places-evidence/acquired-v1/acquired-390-young-connected-garden.png" width="390" height="844" loading="lazy" alt="手に入れた若い木を置き、木陰の庭がつながってきたよと表示された島。" /></a><figcaption><small>04 · 390幅 · connected</small><h3>なえをつなぐ</h3><p>まだ若い木で、場所のつながりができる。</p></figcaption></figure></li>
+          <li><figure><a class="journey-image image-link" href="./places-evidence/acquired-v1/acquired-390-split-same-owner.png" target="_blank" rel="noopener"><img src="./places-evidence/acquired-v1/acquired-390-split-same-owner.png" width="390" height="844" loading="lazy" alt="同じ所有の木を離した後の島。接続前の状態へ変わっている。" /></a><figcaption><small>05 · 390幅 · split</small><h3>同じ木を離す</h3><p>材料をなくさず、つながりをほどく。</p></figcaption></figure></li>
+          <li><figure><a class="journey-image image-link" href="./places-evidence/acquired-v1/acquired-390-reconnected-same-tree.png" target="_blank" rel="noopener"><img src="./places-evidence/acquired-v1/acquired-390-reconnected-same-tree.png" width="390" height="844" loading="lazy" alt="離した同じ木を戻して再接続した島。木の所有IDを保っている。" /></a><figcaption><small>06 · 390幅 · reconnect</small><h3>同じ木を戻す</h3><p>別の木を買わず、同じ所有物でつなぎ直す。</p></figcaption></figure></li>
+          <li><figure><a class="journey-image image-link" href="./places-evidence/acquired-v1/acquired-390-same-plan-return.png" target="_blank" rel="noopener"><img src="./places-evidence/acquired-v1/acquired-390-same-plan-return.png" width="390" height="844" loading="lazy" alt="同じ学習へ戻った後、木陰の庭の接続表示がある島へ復帰した画面。" /></a><figcaption><small>07 · 390幅 · 同じ学習へ復帰</small><h3>学習から戻る</h3><p>遊んだ島と、進めていた学習を保つ。</p></figcaption></figure></li>
+          <li><figure><a class="journey-image image-link" href="./places-evidence/acquired-v1/acquired-768-young-connected-garden.png" target="_blank" rel="noopener"><img src="./places-evidence/acquired-v1/acquired-768-young-connected-garden.png" width="768" height="1024" loading="lazy" alt="768幅でも、若い木とベンチを置いた同じ接続旅程が見える島。" /></a><figcaption><small>08 · 768幅 · 通常取得</small><h3>広い画面でも</h3><p>同じ接続を、タブレット幅で確認。</p></figcaption></figure></li>
+        </ol>
+      </section>
+
+      <section id="mature" aria-labelledby="mature-title">
+        <div class="section-heading"><p class="eyebrow">MATURE RUNTIME</p><h2 id="mature-title">育った場所を、実際に使う。</h2></div>
+        <!-- Root updates this slot after final-v2 raw captures and the completed report are byte-copied. -->
+        <div class="pending-panel" id="mature-status" data-evidence-state="pending">
+          <span class="badge pending">固定版の最終診断待ち</span><p>美術の再調整後に、成熟状態の40ケースを新しい固定版で検証します。上のDEV実画面は造形v2の成熟見本です。自然成長の確認とは分けて扱います。</p>
+          <p class="small">初回診断は、成熟P01の実表示・実利用まで到達した後、同じ育った木をしまい直す harness 操作で停止しました。全体の結果は FAIL のため、成熟旅程の合格とはしていません。</p>
+        </div>
+      </section>
+
+      <section id="evidence" aria-labelledby="evidence-title">
+        <div class="section-heading"><p class="eyebrow">EVIDENCE</p><h2 id="evidence-title">見た目と、確認した範囲を分けて残す。</h2><p>DEVの成熟見本、通常取得、固定版の成熟診断は、それぞれ違う証拠です。</p></div>
+        <details class="evidence-details">
+          <summary>撮影情報・実行結果・原記録を見る</summary>
+          <div class="evidence-body">
+            <table><caption>このショーケースの証拠区分</caption><thead><tr><th scope="col">区分</th><th scope="col">確認したこと</th><th scope="col">制限・結果</th></tr></thead><tbody>
+              <tr><th scope="row">承認した美術</th><td>native05 の全島3D</td><td>実装の目標。通常取得や固定版QAの合格証拠ではない。</td></tr>
+              <tr><th scope="row">DEV実全景</th><td>P01〜P05 の成熟状態を実アプリで描画</td><td>診断用state。固定ビルドの完成検証や自然成長を証明しない。</td></tr>
+              <tr><th scope="row">通常取得 · acquired-v1</th><td>320 / 390 / 768幅、各21回答。接続・分離・再接続・同じ学習への復帰。</td><td>fixture書込みなし、時刻操作なし。18時間/7日などの成熟は未確認。</td></tr>
+              <tr><th scope="row">初回の成熟診断</th><td>P01の実表示・実利用の画像まで取得。</td><td>report全体は FAIL。harness の同じ成熟木の unstore 操作で停止。最終40ケースは別途再実行中。</td></tr>
+            </tbody></table>
+            <dl class="metadata"><div><dt>全景の対象</dt><dd><code>http://127.0.0.1:5198/#/island</code> · DEV診断</dd></div><div><dt>全景の撮影</dt><dd>2026-10-10 17:12 JST · 1280 × 720</dd></div><div><dt>全景候補</dt><dd><code>native-05-place-runtime-v2</code> · <code>growing-island-v1</code> · feature enabled</dd></div><div><dt>通常取得の固定版</dt><dd><code>place-update-new-v4-acc7dc9e4ecc</code> · <code>mystic-island-v1</code> · feature enabled</dd></div><div><dt>通常取得の対象</dt><dd><code>http://127.0.0.1:5286</code> · service worker controlled</dd></div><div><dt>初回reportの全体 gate</dt><dd>runtime: FAIL / visual appeal・comprehension safety・自然7日成長・実機: NOT_EVALUATED</dd></div></dl>
+            <div class="evidence-links"><a href="./whole-dev-art-v2-final-metadata.json">DEV全景の原metadata</a><a href="./places-evidence/acquired-v1/report.json">取得・初回診断の原report</a><a href="./gate-review.json">全島の美術レビュー</a><a href="./README.md">記録の案内</a></div>
+          </div>
+        </details>
+      </section>
+    </main>
+    <footer><p>画像を開いて、原寸で見比べられます。</p><div><a href="../2026-10-10-island-final-3d/">承認した全島3D</a><a href="../../product/island-place-goals.md">場所の目標と組み合わせ</a><a href="../../product/island-construction-strategy.md">島の構築戦略</a></div></footer>
+  </body>
+</html>

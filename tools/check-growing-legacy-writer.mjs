@@ -29,21 +29,21 @@ try {
     await old.syncGrowingIsland('kid', [], 1000, priorDb, life);
     await old.syncGrowingIsland('kid', [{ id: 'answer-1', at: 1001 }], 1002, priorDb, life);
     const owned = await old.commandGrowingIsland('kid', { id: 'first-home', command: { type: 'plant', kind: 'home', cell: { x: 1, z: 3 } } }, 1003, priorDb);
-    const before = structuredClone(owned.record); assert.equal(before.version, 1);
+    const before = structuredClone(owned.record); assert([1, 2, 3].includes(before.version), 'Specify a real pre-place writer source');
     priorDb.close();
     const migrated = (await current.syncGrowingIsland('kid', [{ id: 'answer-1', at: 1001 }], 1003, nextDb, life)).record;
-    assert.equal(migrated.version, 3);
+    assert.equal(migrated.version, 4);
     assert.deepEqual(migrated.state.plots, before.state.plots);
     assert.deepEqual(migrated.state.villagers, before.state.villagers);
     nextDb.close();
     // Dexie can reopen without its old schema version. Its actual commands must
-    // remain in the old table and never overwrite the current guided lineage.
+    // remain in the old table and never overwrite the current placed lineage.
     await priorDb.open();
     await old.commandGrowingIsland('kid', { id: 'old-flag', command: { type: 'flag', color: 2 } }, 1004, priorDb);
     await old.syncGrowingIsland('kid', [{ id: 'answer-1', at: 1001 }, { id: 'old-tab-answer', at: 1004 }], 1005, priorDb, life);
     priorDb.close();
     await nextDb.open();
-    assert.deepEqual(await nextDb.islands.get('kid'), migrated, 'Actual old writer must not overwrite guidedIslands');
+    assert.deepEqual(await nextDb.islands.get('kid'), migrated, 'Actual old writer must not overwrite placedIslands');
     const recovered = (await current.syncGrowingIsland('kid', [{ id: 'answer-1', at: 1001 }, { id: 'old-tab-answer', at: 1004 }], 1005, nextDb, life)).record;
     assert.deepEqual(recovered.state.learned, ['answer-1', 'old-tab-answer']);
     const repeated = (await current.syncGrowingIsland('kid', [{ id: 'answer-1', at: 1001 }, { id: 'old-tab-answer', at: 1004 }], 1005, nextDb, life)).record;

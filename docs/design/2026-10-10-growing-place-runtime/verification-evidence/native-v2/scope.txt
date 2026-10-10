@@ -1,0 +1,31 @@
+Native05 place runtime v2 — verify:growing evidence scope
+
+Original bytes of report/summary/logs/input hashes, the classic smoke report and
+36 actual guidance/balance captures are retained. Original absolute paths and
+the report's project Git status remain unchanged. This is local project evidence;
+no report is rewritten, no external publication or deployment occurred.
+
+Checks PASS: core 560 test files / 4943 tests, classic smoke 32 scenarios,
+guidance production and balance production at 390x844 and 768x1024. Captures
+come from the separate c7e0fec0 verify:growing build, NOT the independently
+versioned v2 update-QA NEW build. Both exact versions are recorded in index.json.
+
+Source correspondence is scoped: core inventory 17159 versus immutable v2
+manifest inventory 2016 has 2004 shared paths with identical original SHA values.
+The other 12 immutable paths are .env.development and 11 generated website/dist
+files. .env.development is development-only and does not affect this explicit
+production build; generated website/dist is excluded from the application
+source correspondence. Every src/public/package/prototype/tools input matches.
+This does NOT assert all 2016 inputs are identical or that both builds' dist
+bytes/versions are identical. The mapping retains every shared SHA and exclusion.
+
+The original verification verdict remains Release PARTIAL. Its raw gaps are not
+erased by separate update evidence. Native05 place runtime v2 art remains HOLD,
+v3 is being developed. Technical PASS is not art GO or implementation completion.
+There is no independent child comprehension/safety observation, actual child
+device study, seven-day retention evidence, real-user migration or public release
+claim. Existing React refresh / review-date / bundle warnings remain in raw logs.
+
+All browser owners/profiles are generated QA, not actual users. No personal
+profile or existing user's PWA session was touched. Desktop Chromium production
+checks are not real iOS/Android or real-user evidence. Prior evidence is retained.

@@ -1,0 +1,28 @@
+Native05 place runtime v2 — storage/update QA evidence scope
+
+All copied JSON and PNG files are original bytes from generated QA. The copy
+preserves original absolute source/build/evidence paths inside raw JSON. This
+index adds relative capture paths and original byte hashes; it does not rewrite
+or relocate the original evidence identity.
+
+Technical verdict: fixed NEW/ROLLBACK builds, storage writer isolation and actual
+Service Worker update/rollback checks PASS. Four generated-profile scenarios use
+390x844 and 768x1024 viewports, normal and interrupted update, with actual offline
+answer continuation. Legacy-writer output is an isolated fake IndexedDB diagnostic
+using actual old/new source writers; it is not real-browser migration evidence.
+
+Visual verdict: native-05-place-runtime-v2 remains HOLD. Structural unity is still
+insufficient, and v3 is being considered. Code/storage PASS is not art GO, silent
+comprehension approval, or completion of the implementation goal. The 14 captures
+show the OLD/NEW/ROLLBACK update lifecycle and are not final visual acceptance.
+
+No actual users participated. Only disposable generated QA owners/profiles and a
+fresh Chromium localhost origin were used. No personal profile or existing user's
+PWA session was touched. No external publication or deployment occurred. Browser
+and dedicated QA server were closed at completion. This is desktop Chromium QA,
+not real-device or real-user testing.
+
+Frozen v2 source inputs and dist bytes remain unchanged; final audit records an
+exact match with the working input set at audit time and zero test-only/current
+source differences. Earlier OLD/NEW/ROLLBACK baselines and prior evidence remain
+unchanged. Their historical reports are not overwritten by these v2 results.

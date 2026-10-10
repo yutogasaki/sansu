@@ -21,6 +21,7 @@ export interface GrowingIslandMenuProps {
     onShow: () => void;
     onFlowers: () => void;
     onGuide: () => void;
+    onPlaces?: () => void;
     onSettings: () => void;
     onRecords?: () => void;
     onName?: () => void;
@@ -58,6 +59,7 @@ export function GrowingIslandMenuContents(props: GrowingIslandMenuProps) {
             <button onClick={props.onShow}><Camera size={20} aria-hidden="true" /><span>みせる</span></button>
             <button onClick={props.onFlowers}><Flower2 size={20} aria-hidden="true" /><span>はなずかん</span></button>
         </div>
+        {props.onPlaces && <div className="growing-pocket-memories"><button aria-label="そだつ場所" onClick={props.onPlaces}><Waypoints size={20} aria-hidden="true" /><span>そだつ場所</span></button></div>}
         {props.onRecords && <div className="growing-pocket-memories"><button onClick={props.onRecords}><BarChart3 size={20} aria-hidden="true" /><span>きろく</span></button><button onClick={props.onSettings}><Settings2 size={20} aria-hidden="true" /><span>設定</span></button></div>}
         {props.utilities && <div className="growing-pocket-utilities">{props.utilities}</div>}
         <div className="growing-pocket-footer">

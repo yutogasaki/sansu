@@ -111,7 +111,7 @@ describe('guidance save boundary', () => {
         await old.table('balancedIslands').put(source); old.close();
         await db.open(); expect(await db.islands.get('kid')).toEqual(source);
         const guided = await commandGrowingIsland('kid', { id: 'select', command: { type: 'choose-goal', id: 'A3' } }, 5, db);
-        expect(guided.record.version).toBe(3); expect(guided.record.state.guidance?.starter.automatic).toBe(false);
+        expect(guided.record.version).toBe(4); expect(guided.record.state.guidance?.starter.automatic).toBe(false);
         db.close(); await old.open();
         await old.table('balancedIslands').put({ ...source, state: { ...state, drops: 999 } }); old.close();
         await db.open(); expect(await db.islands.get('kid')).toEqual(guided.record);

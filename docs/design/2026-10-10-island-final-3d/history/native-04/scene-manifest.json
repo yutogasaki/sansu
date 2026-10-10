@@ -1,0 +1,55 @@
+{
+  "candidate": "whole-island-native-3d-04",
+  "native": "whole-island.blend",
+  "portable": "whole-island.glb",
+  "renderer": "CYCLES",
+  "objects": 3685,
+  "triangles": 1409755,
+  "houses": 15,
+  "districts": [
+    "original willow court and village",
+    "hollow tree dwelling and bough gallery",
+    "tiered headwater garden",
+    "sheltered inlet shell hall",
+    "round cap and leaf-roof homes"
+  ],
+  "residents": "existing project mesh + UV + authored fabric atlas; illustrative positions",
+  "generation": "none; native geometry built in Blender",
+  "landscape": "hollow grown trunk / broad fan leaves / spiral bough gallery / three joined water terraces and falls / translucent ribbed shell hall / distinct grown-home shapes",
+  "growth_comparison": {
+    "previous_candidate": "whole-island-native-3d-02",
+    "previous_model": "history/native-02/whole-island.glb",
+    "existing_home_scale": "unchanged",
+    "existing_home_positions": "unchanged",
+    "land_area": 735.0,
+    "previous_land_area": 266.28,
+    "area_ratio": 2.76,
+    "terrain_height_range": [
+      0.79,
+      5.83
+    ],
+    "land_bounds_xy": [
+      -14,
+      -7.5,
+      20,
+      22
+    ]
+  },
+  "camera": {
+    "location": [
+      39.0,
+      -46.0,
+      43.0
+    ],
+    "target": [
+      3.0,
+      6.300000190734863,
+      3.200000047683716
+    ],
+    "orthographic_scale": 46.0
+  },
+  "base_art_input": {
+    "path": "history/native-03/whole-island.blend",
+    "sha256": "aa0b0252297345d4894c57870f8d936083d736986d1cf9c9c682c8f3336c941f"
+  }
+}

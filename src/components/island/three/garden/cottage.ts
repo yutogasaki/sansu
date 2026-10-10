@@ -19,9 +19,9 @@ export function buildGardenCottage() {
     profile.bezierCurveTo(.47, 2.33, .63, 1.55, 1.28, 1.54);
     profile.lineTo(1.28, 1.40); profile.bezierCurveTo(.49, 1.40, .37, 2.17, -.20, 2.34);
     profile.bezierCurveTo(-.73, 2.12, -.72, 1.34, -1.27, 1.36); profile.closePath();
-    const roof = g.mesh(new T.ExtrudeGeometry(profile, { depth: 2.12, bevelEnabled: true, bevelThickness: .035, bevelSize: .035, bevelSegments: 2, steps: 1 }), g.paint('#a2644e'), [0, 0, -1.06], body);
+    const roof = g.mesh(new T.ExtrudeGeometry(profile, { depth: 2.12, bevelEnabled: true, bevelThickness: .035, bevelSize: .035, bevelSegments: 2, steps: 1 }), g.paint('#76b9de'), [0, 0, -1.06], body);
     roof.name = 'garden-curved-roof';
-    // Soft clay tiles follow the original curled roof; one warm palette, no extra lights/textures.
+    // Pastel toy tiles recall the first island, while keeping the curled roof and doorway.
     const slopes = [
         new T.CubicBezierCurve(new T.Vector2(-1.27,1.49),new T.Vector2(-.90,1.48),new T.Vector2(-.88,2.34),new T.Vector2(-.20,2.52)),
         new T.CubicBezierCurve(new T.Vector2(-.20,2.52),new T.Vector2(.47,2.33),new T.Vector2(.63,1.55),new T.Vector2(1.28,1.54)),
@@ -33,7 +33,7 @@ export function buildGardenCottage() {
         for(const point of [...points].reverse())tile.lineTo(point.x,point.y+.025);
         tile.closePath();
         g.mesh(new T.ExtrudeGeometry(tile,{depth:.32,bevelEnabled:true,bevelThickness:.012,bevelSize:.012,bevelSegments:1,steps:1}),
-            g.paint(['#ad7254','#b17a59','#a66b50'][(row+column+side)%3]),[0,0,-1.065+column*.355],body);
+            g.paint(['#77bce3','#eea0a5','#f4d276'][(row+side)%3]),[0,0,-1.065+column*.355],body);
     }});
     g.box('#b6a68b', [.68, 2.22, -.49], [.30, .84, .35], body);
     g.box('#d6c6a6', [.68, 2.65, -.49], [.43, .11, .47], body);
@@ -45,8 +45,8 @@ export function buildGardenCottage() {
     g.mesh(new T.ExtrudeGeometry(surround,{depth:.11,bevelEnabled:true,bevelThickness:.015,bevelSize:.015,bevelSegments:1}),g.paint('#c9af80'),[-.24,.10,.87],body);
     const door = new T.Shape(); door.moveTo(-.34, 0); door.lineTo(.34, 0); door.lineTo(.34, .75);
     door.absarc(0, .75, .34, 0, Math.PI, false); door.closePath();
-    g.mesh(new T.ExtrudeGeometry(door, { depth: .06, bevelEnabled: true, bevelThickness: .02, bevelSize: .025, bevelSegments: 2 }), g.paint('#865a3f'), [-.24,.10,.84], body);
-    for (const x of [-.47,-.25,-.03]) g.box('#ae8054',[x,.54,.915],[.012,.77,.014],body,.002);
+    g.mesh(new T.ExtrudeGeometry(door, { depth: .06, bevelEnabled: true, bevelThickness: .02, bevelSize: .025, bevelSegments: 2 }), g.paint('#6caed4'), [-.24,.10,.84], body);
+    for (const x of [-.47,-.25,-.03]) g.box('#99cbe4',[x,.54,.915],[.012,.77,.014],body,.002);
     g.pebble('#dcba6c',[-.02,.58,.943],[.035,.035,.023],body);
     const window = (x: number, y: number, z: number, radius: number) => {
         g.mesh(new T.CylinderGeometry(radius,radius,.065,24),g.paint('#795b3d'),[x,y,z],body).rotation.x=Math.PI/2;

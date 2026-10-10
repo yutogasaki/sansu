@@ -1,0 +1,25 @@
+{
+  "candidate": "whole-island-native-3d-01",
+  "native": "whole-island.blend",
+  "portable": "whole-island.glb",
+  "renderer": "CYCLES",
+  "objects": 1344,
+  "triangles": 402792,
+  "houses": 8,
+  "districts": [
+    "grove court",
+    "flower court",
+    "village",
+    "water town"
+  ],
+  "residents": "existing project mesh + UV + authored fabric atlas",
+  "generation": "none; native geometry built in Blender",
+  "camera": {
+    "location": [
+      26.0,
+      -35.0,
+      30.0
+    ],
+    "orthographic_scale": 30.0
+  }
+}

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>泉を囲む島 — 全島3D美術</title>
+    <style>
+      * { box-sizing: border-box; }
+      :root { color-scheme: light; font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", sans-serif; color: #26364b; background: #f5f7fa; }
+      body { margin: 0; }
+      header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 24px; background: #fff; border-bottom: 1px solid #e3e8ef; }
+      h1 { font-size: 18px; margin: 0 0 4px; font-weight: 650; }
+      p { margin: 0; font-size: 12px; line-height: 1.7; }
+      .meta { color: #6a7687; font-size: 11px; }
+      main { position: relative; height: min(78vh, 880px); min-height: 460px; overflow: hidden; background: #9fdbe9; }
+      canvas { display: block; width: 100%; height: 100%; touch-action: none; outline-offset: -4px; }
+      .loading { position: absolute; top: 45%; width: 100%; text-align: center; pointer-events: none; color: #294a62; }
+      .views { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 4px; padding: 5px; border: 1px solid #ffffffc9; background: #ffffffed; border-radius: 18px; box-shadow: 0 3px 18px #37658722; white-space: nowrap; }
+      button { font: inherit; color: #38495f; background: transparent; border: 0; border-radius: 12px; min-width: 60px; min-height: 44px; padding: 9px 13px; cursor: pointer; font-size: 13px; }
+      button[aria-pressed="true"] { background: #3d71b2; color: white; }
+      button:hover { background: #e7eef7; }
+      button[aria-pressed="true"]:hover { background: #34649f; }
+      button:focus-visible, a:focus-visible { outline: 3px solid #3d71b2; outline-offset: 3px; }
+      .zoom { position: absolute; right: 18px; top: 18px; display: grid; gap: 3px; background: #ffffffed; border-radius: 15px; padding: 4px; }
+      .zoom button { font-size: 21px; min-width: 44px; padding: 6px; }
+      .light { position: absolute; left: 16px; top: 44px; display: flex; padding: 3px; border-radius: 15px; background: #ffffffdc; }
+      .light button { min-width: 48px; min-height: 44px; padding: 7px 12px; font-size: 12px; }
+      .hint { position: absolute; left: 20px; top: 22px; font-size: 12px; color: #315366; pointer-events: none; }
+      footer { padding: 17px 24px; display: flex; justify-content: space-between; align-items: center; gap: 18px; background: #fff; }
+      footer p { color: #667488; }
+      a { color: #3767aa; text-underline-offset: 3px; font-size: 12px; }
+      .files { display: flex; gap: 20px; white-space: nowrap; }
+      @media(max-width: 650px) { header { padding: 14px 16px; } .meta { display: none; } main { height: 72vh; min-height: 440px; } .hint { left: 14px; top: 16px; font-size: 11px; } .zoom { right: 10px; top: 12px; } .views { bottom: 15px; gap: 0; } .views button { padding: 9px 11px; min-width: 58px; } footer { align-items: flex-start; flex-direction: column; padding: 16px; gap: 12px; } }
+      @media(prefers-reduced-motion:reduce) { * { scroll-behavior: auto; } }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div><h1>泉を囲む島</h1><p>垂れる葉の庭、流れる水、大きな花の屋根。島全体の完成見本。</p></div>
+      <span class="meta">全島3D美術 · 02</span>
+    </header>
+    <main id="stage" data-delivery="standalone-art-viewer" data-evidence-type="native-3d-art-target">
+      <canvas tabindex="0" aria-label="島全体の3Dモデル。ドラッグまたは矢印キーで回転、プラス・マイナスで拡大縮小できます。"></canvas>
+      <div class="loading" role="status">3Dの島を読み込んでいます…</div>
+      <p class="hint">ドラッグで見回す · ピンチで拡大</p>
+      <nav class="light" aria-label="島の光">
+        <button data-light="day" aria-pressed="false">昼</button>
+        <button data-light="dusk" aria-pressed="true">夕</button>
+      </nav>
+      <div class="zoom" aria-label="拡大縮小">
+        <button data-zoom="in" aria-label="拡大">＋</button>
+        <button data-zoom="out" aria-label="縮小">−</button>
+      </div>
+      <nav class="views" aria-label="島を見る場所">
+        <button data-view="whole" aria-pressed="true">島全体</button>
+        <button data-view="grove" aria-pressed="false">森の庭</button>
+        <button data-view="village" aria-pressed="false">集落</button>
+        <button data-view="garden" aria-pressed="false">花の庭</button>
+      </nav>
+    </main>
+    <footer>
+      <p>泉から滝、入り江へ。枝と花が育ち、庭を包む世界。<br>回転して裏側まで見られる、編集可能な3Dモデルです。</p>
+      <div class="files"><a id="native-file" href="./whole-island.blend" download>Blenderファイル</a><a id="model-file" href="./whole-island.glb" download>3Dモデル</a><a id="render-file" href="./whole-island-render.png" target="_blank" rel="noopener">全景レンダー</a></div>
+    </footer>
+    <script type="module" src="./viewer.bundle.js?v=native-02-final"></script>
+  </body>
+</html>

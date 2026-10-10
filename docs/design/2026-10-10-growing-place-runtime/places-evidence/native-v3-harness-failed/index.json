@@ -1,0 +1,184 @@
+{
+  "schema": "sansu-native-v3-places-evidence-index-v1",
+  "createdAt": "2026-10-10T09:22:41.130098+00:00",
+  "originalSourceRoot": "/private/tmp/sansu-places-native-v3-20261010-v1",
+  "copiedEvidenceRoot": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-growing-place-runtime/places-evidence/native-v3-harness-failed",
+  "artCandidate": "native-05-place-runtime-v3",
+  "overallPass": false,
+  "runtimeGate": "FAIL",
+  "visualGate": "SEPARATE_LOCAL_V3_DIRECTION_ONLY",
+  "implementationComplete": false,
+  "scope": "scope.txt",
+  "scopeSha256": "a4af5884be752fd849a5c9051312197574964a9cdf5da840b7f10d0041b54364",
+  "originalFileCount": 7,
+  "actualCaptureCount": 5,
+  "originalBytes": 890045,
+  "originalCollectionHash": "cefa4392aafd1855e9bd4051ccd6fe361f8373a32757d278c8146d2628cf81a1",
+  "build": {
+    "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+    "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": true,
+        "candidate": "living-fantasy-garden-v2",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "target": "http://127.0.0.1:5289",
+  "flags": {
+    "VITE_ISLAND_ENABLED": "true",
+    "VITE_ISLAND_LIFE_ENABLED": "true",
+    "VITE_GROWING_ISLAND_ENABLED": "true",
+    "VITE_ISLAND_FANTASY_ENABLED": "true",
+    "VITE_ISLAND_LIFE_PREVIEW": "false",
+    "VITE_NATURE_TOWN_ENABLED": "false",
+    "VITE_HOME_JOURNEY_PREVIEW": "false",
+    "VITE_ISLAND_LIFE_DISCOVERY_ENABLED": "false",
+    "VITE_BUILD_PLAY_ENABLED": "false",
+    "VITE_EXPLORE_EXPERIENCE": "snap-root-v1"
+  },
+  "packHash": "a76669e943bc8acfc546dd12c2997880e1e20ef711617bd1d533b2df9afd1814",
+  "domainSourceHash": "4324c502a4f0224c9c6da8ed00d7d9c74f202a322b96b823bb14011c9fafc156",
+  "coverage": {
+    "actualAcquisitionJourneys": {
+      "count": 0,
+      "pass": false,
+      "journeys": []
+    },
+    "explicitMatureDiagnostics": {
+      "count": 0,
+      "pass": false,
+      "byViewport": {}
+    },
+    "wholeIsland": [],
+    "naturalSevenDayGrowth": "NOT_DONE",
+    "realDevice": "NOT_DONE",
+    "realChildComprehensionSafety": "NOT_DONE"
+  },
+  "originalGates": {
+    "runtime": "FAIL",
+    "visualAppeal": "NOT_EVALUATED",
+    "comprehensionSafety": "NOT_EVALUATED",
+    "naturalSevenDayGrowth": "NOT_EVALUATED",
+    "realDevice": "NOT_EVALUATED"
+  },
+  "fixedCandidate": {
+    "sourceHash": "c3ea0771d8e6af017075014e5430474393f636c86b093a640c077ec749ed99d7",
+    "manifest": "new-manifest.json",
+    "manifestSha256": "030df0ade620d4c30a873dac8a81b16cf82b687943ee283dbbfc836c0bfd9de0",
+    "inputs": {
+      "root": "/private/tmp/sansu-native-v3-20261010/new-source",
+      "fileCount": 2024,
+      "allExact": true,
+      "collectionHash": "d4838d3504004f1eccfaf87eb8c2ab2348a8e51c823b0a8f6abff9f1fd776820"
+    },
+    "outputs": {
+      "root": "/private/tmp/sansu-native-v3-20261010/new-source/dist",
+      "fileCount": 168,
+      "allExact": true,
+      "collectionHash": "4728c422dbb4b95cb56e4e7c999316787cacafd31258bedc132fae2fa419eda3"
+    },
+    "qaHarnessSha256": "0816b3eaeb60b412f941fb95ad4c92b45b105004dd89c90d6538ab8b6da860cd"
+  },
+  "files": [
+    {
+      "file": "report.json",
+      "source": "/private/tmp/sansu-places-native-v3-20261010-v1/report.json",
+      "sha256": "8d49999834641151d62978208cc91c7018696b339280666de6b0dcca748aef63",
+      "bytes": 209356,
+      "kind": "original-report"
+    },
+    {
+      "file": "contact-sheet.html",
+      "source": "/private/tmp/sansu-places-native-v3-20261010-v1/contact-sheet.html",
+      "sha256": "289784a4de967306e6327f46a25fc5fdb94ac6e0b9c17b15699e49747a10318a",
+      "bytes": 1109,
+      "kind": "original-contact-sheet"
+    },
+    {
+      "file": "acquired-390-first-failure.png",
+      "source": "/private/tmp/sansu-places-native-v3-20261010-v1/acquired-390-first-failure.png",
+      "sha256": "3af2de3fca6bba581f8e2cc6f2d9eaa2d3f54fb8d183095177c379fad0df39bd",
+      "bytes": 211673,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 390,
+        "height": 844
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "3af2de3fca6bba581f8e2cc6f2d9eaa2d3f54fb8d183095177c379fad0df39bd"
+    },
+    {
+      "file": "acquired-390-first-home.png",
+      "source": "/private/tmp/sansu-places-native-v3-20261010-v1/acquired-390-first-home.png",
+      "sha256": "b05440fbc28ad20f37749021191e1facb861a7efdf0ca65610d665b98d8d77c8",
+      "bytes": 204119,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 390,
+        "height": 844
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "b05440fbc28ad20f37749021191e1facb861a7efdf0ca65610d665b98d8d77c8"
+    },
+    {
+      "file": "acquired-390-optional-six-goals.png",
+      "source": "/private/tmp/sansu-places-native-v3-20261010-v1/acquired-390-optional-six-goals.png",
+      "sha256": "6cef68453a709ab4345de2db224beda96d09e8aeb0618a5cc12e343ecd0d1bbc",
+      "bytes": 113849,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 390,
+        "height": 844
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "6cef68453a709ab4345de2db224beda96d09e8aeb0618a5cc12e343ecd0d1bbc"
+    },
+    {
+      "file": "acquired-390-twenty-real-answers.png",
+      "source": "/private/tmp/sansu-places-native-v3-20261010-v1/acquired-390-twenty-real-answers.png",
+      "sha256": "8cae36e658e3891cc296dc8d0b31541999eb6e5724ca475c6ce3c6e81bd08266",
+      "bytes": 136239,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 390,
+        "height": 844
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "8cae36e658e3891cc296dc8d0b31541999eb6e5724ca475c6ce3c6e81bd08266"
+    },
+    {
+      "file": "acquired-390-welcome.png",
+      "source": "/private/tmp/sansu-places-native-v3-20261010-v1/acquired-390-welcome.png",
+      "sha256": "82326ede2e4895b266f9a82a874b01bbeceb864ee91ab407da4ec7d3b02718be",
+      "bytes": 13700,
+      "kind": "actual-browser-capture",
+      "imagePixels": {
+        "width": 390,
+        "height": 844
+      },
+      "revision": "native-05-place-runtime-v3-new-c3ea0771d8e6",
+      "version": "native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb",
+      "reportedOriginalSha256": "82326ede2e4895b266f9a82a874b01bbeceb864ee91ab407da4ec7d3b02718be"
+    }
+  ]
+}

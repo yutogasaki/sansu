@@ -322,3 +322,16 @@ owner行の1→2は同一transactionで行い、既存所有・座標・住人�
 - 本人削除は `guidedIslands`・`balancedIslands`・旧 `islands` と本人の写真/贈り物を同一transactionで消去する。他プロフィールや訪問先へ案内・記念を書き込まない。
 
 版1/2から3の保持、旧writerによる新正本の不変、破損/未知版拒否、再送・CAS・保存失敗・削除をrepository回帰で確認する。PWA/offline・実two-build・実機・利用者観察は[実装タスク](../tasks/active/2026-10-01-island-guidance.md)で証拠を分けて記録する。
+
+
+## 育つ場所の目標と利用（2026-10-10）
+
+[育つ場所v1](island-place-goals.md)は保存4、Growing DB schema5の `placedIslands` を正本にする。schema4の `guidedIslands` をupgrade transactionで一度複製し、元のguided/balanced/islandsを保持する。旧writerは旧tableだけを更新し、新正本の目標・達成・実利用を書き換えない。再取り込み・合算はせず、既存の学習原本から未反映の完了だけを通常同期する。復旧buildも保存4と新tableを読めること。
+
+- `placeProgress` v1に選択目標、最初の達成根拠、実表示revision、実利用の actor/target/場所revisionと履歴を持つ。領域meshを所有物として保存しない。
+- 保存1/2/3は個体/価格/clock/style/案内/学習を保ち、空の任意目標/受領へ移行する。条件から成熟の事実は導けるが、利用した住人/表示は捏造しない。未知版・壊れた受領は保護する。
+- 前景の本人だけが実利用/実表示を送れる。profile、CAS revision、現行の場所/役割/対象/在島actorを再確認し、競合時は同じ意図を現行recordへ再試行する。別本人・hidden・古い空間の受領は記録しない。
+- 目標選択/解除と受領は無料。時計、抽選、学習報酬を進めず、合体/分離/再接続で通貨を再発行しない。最初の達成原本は保持し、現在の利用は現在の形と在島actorの有効な履歴から判定する。
+- 本人削除はplaced/guided/balanced/islandsの4系列と本人写真/贈り物を既存のwrite hold内の同一transactionで削除する。別本人の島へ作用しない。
+
+[実装ADR](../adr/2026-10-10-growing-place-runtime.md)。単体の移行/CAS/削除/旧writer診断と、実SW更新/offline/実利用者の引き継ぎは別の証拠として記録する。

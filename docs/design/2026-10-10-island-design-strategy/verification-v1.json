@@ -1,0 +1,80 @@
+{
+  "artifact": "island-art-strategy-v1",
+  "date": "2026-10-10",
+  "target": "http://127.0.0.1:8230/design/2026-10-10-island-design-strategy/",
+  "evidenceType": "static-internal-showcase",
+  "baseRevision": "7a66929c231defc59388a5cc82a58dec8ad8faee",
+  "uncommitted": true,
+  "artifactHashes": {
+    "index.html": "70c65ebde2c318c1bc366466524e20da08c2c4a0538ae944ee79d6bbb7fdaed1",
+    "style.css": "dbb26e7de72fb1964fdcafac7870f93a3d7bc02594a760c24fbf91d020f7b550",
+    "main.js": "ac8a496af4cadac8f86ec8e6dc3cf653ae61bd5513c8c793a23b8527b44e0295",
+    "references.json": "dc1e4b65aba85561c562c10bab7ef825eed4c2aee97097b44ae5075474194ee9",
+    "reference-data.js": "d3aa57c72a9608117dfb88f5cd44aa163de42bb4f4069965891dfdc516d35f71",
+    "build.mjs": "d0029a05a963ff9260c6fc19d3886e432d3e825e2ae3e762160b444c7c9cef27"
+  },
+  "referenceCounts": {
+    "total": 31,
+    "littleHabitats": 9,
+    "tinyGlade": 4,
+    "townscaper": 4,
+    "sansuRuntime": 10,
+    "generated": 4
+  },
+  "checks": {
+    "referenceIdFieldsFilesHashes": "PASS / node build.mjs",
+    "imageDecode": "PASS / 31 PNG-JPEG source files verified",
+    "javascriptSyntax": "PASS / node --check main.js",
+    "docs": "PASS / existing Review By warnings",
+    "responsive": [
+      {
+        "width": 320,
+        "height": 568,
+        "horizontalOverflow": false
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "horizontalOverflow": false
+      },
+      {
+        "width": 768,
+        "height": 1024,
+        "horizontalOverflow": false
+      },
+      {
+        "width": 1440,
+        "height": 1000,
+        "horizontalOverflow": false
+      }
+    ],
+    "themeFilter": "PASS / 地形 7 images",
+    "kindFilter": "PASS / 地形 + 外部実画面 2 images",
+    "search": "PASS / LH-08 1 image, Tiny Glade 4 images",
+    "detail": "PASS / image, source, annotations, next/previous controls",
+    "compare": "PASS / LH-01 + S-02, 2 images with types and captions",
+    "escape": "PASS / native dialog closes",
+    "noteSaveReload": "PASS / candidate status and exact text restored",
+    "notesFilter": "PASS / 1 test memo",
+    "jsonExport": "PASS / downloaded JSON parsed, referenceId and exact text matched",
+    "noteDelete": "PASS / test memo removed, 0 memo chips"
+  },
+  "screenshots": [
+    "showcase-desktop.jpg",
+    "showcase-gallery.jpg",
+    "showcase-comparison.jpg",
+    "showcase-mobile.jpg"
+  ],
+  "appGates": {
+    "visual": "NOT_EVALUATED / no new runtime candidate",
+    "silentComprehensionSafety": "NOT_EVALUATED / no participants",
+    "runtime": "NOT_APPLICABLE / no app source, routing, learning, storage or PWA changes in this deliverable"
+  },
+  "limits": [
+    "Responsive checks are browser viewport overrides, not physical devices.",
+    "Reference views differ in camera and state; this is a research comparison, not runtime acceptance.",
+    "External images are internal references; no competitor asset is integrated into the game.",
+    "The browser test memo was removed. No product adoption was inferred.",
+    "No public deployment, commit or push in this deliverable."
+  ]
+}

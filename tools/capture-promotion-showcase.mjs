@@ -112,7 +112,7 @@ try {
     await put(page,'SansuDatabase',['profiles','appData'],[['profiles',item.profile],['appData',{id:'app',schemaVersion:1,activeProfileId:item.profile.id,profiles:{[item.profile.id]:item.profile}}]]);
     await page.evaluate(id=>localStorage.setItem('sansu_active_profile',id),item.profile.id);
     await page.goto(`${target.origin}/#/island`); await ready(page);
-    await put(page,'SansuGrowingIslandV1',['guidedIslands'],[['guidedIslands',item.island]]);
+    await put(page,'SansuGrowingIslandV1',['placedIslands'],[['placedIslands',item.island]]);
     await page.reload(); await ready(page);
     const canvas=page.locator('[data-growing-world] canvas');
     await show(page);

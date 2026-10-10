@@ -1,0 +1,263 @@
+{
+  "target": "http://127.0.0.1:4173",
+  "harnessHash": "e43d09f0b4f8bc63eb4dc351a9d601714d43b4296d14f6934f869b054e9fe326",
+  "pass": true,
+  "scenarios": [
+    {
+      "name": "redirects to onboarding when no profile",
+      "startedAt": "2026-10-10T09:18:44.721Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 37667,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "completes onboarding, chooses a route, and opens Makimodon",
+      "startedAt": "2026-10-10T09:19:22.390Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 2104,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the classic opening playable with expanded mobile browser chrome",
+      "startedAt": "2026-10-10T09:19:24.495Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 2215,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the direct study route working",
+      "startedAt": "2026-10-10T09:19:26.711Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 2605,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the direct review route working",
+      "startedAt": "2026-10-10T09:19:29.320Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 1361,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the direct settings route working",
+      "startedAt": "2026-10-10T09:19:30.682Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 1301,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps legacy fuwafuwa album out of child records",
+      "startedAt": "2026-10-10T09:19:31.984Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 2067,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "completes confirmation test from parent settings and opens results",
+      "startedAt": "2026-10-10T09:19:34.052Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 29372,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "launches explore immediately and safely returns at a route break",
+      "startedAt": "2026-10-10T09:20:03.424Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 3029,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the 390x800 route boundary fully visible",
+      "startedAt": "2026-10-10T09:20:06.454Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 3052,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "runs Root Pull v2 inline with reduced motion and the numeric keypad",
+      "startedAt": "2026-10-10T09:20:09.507Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 2943,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "runs the Snap Root breakthrough loop at 390px",
+      "startedAt": "2026-10-10T09:20:12.451Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 5107,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the Snap Root breakthrough loop playable on tablet",
+      "startedAt": "2026-10-10T09:20:17.558Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 2899,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "can exit safely after explore start persistence fails",
+      "startedAt": "2026-10-10T09:20:20.459Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 1827,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "safely exits and retries from a pending explore problem",
+      "startedAt": "2026-10-10T09:20:22.287Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 2078,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "commits one explore answer under rapid double submit",
+      "startedAt": "2026-10-10T09:20:24.366Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 2084,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "retries the same explore attempt after a save failure",
+      "startedAt": "2026-10-10T09:20:26.451Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 2006,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "resumes fixed-ten explore across retry, route, discovery, and partial-input boundaries",
+      "startedAt": "2026-10-10T09:20:28.458Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 7270,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "finishes last-light rescue without blocking on an ordinary clue",
+      "startedAt": "2026-10-10T09:20:35.728Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 1986,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "retries voluntary return without early terminal progress",
+      "startedAt": "2026-10-10T09:20:37.715Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 3029,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "grows the immersive light bridge from an addition answer",
+      "startedAt": "2026-10-10T09:20:40.745Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 4698,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the light bridge playable on tablet",
+      "startedAt": "2026-10-10T09:20:45.444Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 4680,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the light bridge connected on a landscape tablet",
+      "startedAt": "2026-10-10T09:20:50.125Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 4949,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the light bridge playable on a 1024px portrait tablet",
+      "startedAt": "2026-10-10T09:20:55.075Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 4778,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the light bridge playable on a wide portrait tablet",
+      "startedAt": "2026-10-10T09:20:59.855Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 4675,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "retains root observation after the first same-problem retry",
+      "startedAt": "2026-10-10T09:21:04.531Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 5420,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "opens the root tangle with profile-near subtraction",
+      "startedAt": "2026-10-10T09:21:09.953Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 5933,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the root tangle playable on tablet",
+      "startedAt": "2026-10-10T09:21:15.887Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 5972,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the root tangle playable on a landscape tablet",
+      "startedAt": "2026-10-10T09:21:21.860Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 5957,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the root tangle playable on a 1024px portrait tablet",
+      "startedAt": "2026-10-10T09:21:27.818Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 6206,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the root tangle playable on a wide portrait tablet",
+      "startedAt": "2026-10-10T09:21:34.024Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 6045,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "opens /parents directly without arithmetic",
+      "startedAt": "2026-10-10T09:21:40.071Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 1457,
+      "remainingNewContexts": 0
+    }
+  ]
+}

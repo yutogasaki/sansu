@@ -37,10 +37,10 @@ export const Footer: React.FC = () => {
             { to: "/settings", icon: Icons.Settings, label: "設定", tab: "settings" },
         ];
 
-        const compactHome = navigation?.active && navigation.view === 'home' && !navigation.learning;
+        const onIslandHome = navigation?.active && navigation.view === 'home' && !navigation.learning;
         return (
-            <nav className={`island-shell-nav${compactHome ? ' island-shell-nav--home' : ''}`} aria-label="メインメニュー">
-                {tabs.filter(item => !compactHome || item.to === '/study').map(item => {
+            <nav className={`island-shell-nav${onIslandHome ? ' island-shell-nav--home' : ''}`} aria-label="メインメニュー">
+                {tabs.map(item => {
                     const active = item.to === "/study" && currentPath === "/learn"
                         ? true : currentPath === "/learn" ? false : navigation ? item.tab === navigation.tab : currentPath === item.to;
                     const primary = item.to === "/study";

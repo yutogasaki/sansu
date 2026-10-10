@@ -1,0 +1,395 @@
+{
+  "schema": "sansu-native-v2-storage-evidence-index-v1",
+  "createdAt": "2026-10-10T08:23:13.261137+00:00",
+  "artCandidate": "native-05-place-runtime-v2",
+  "technicalGate": "PASS",
+  "visualGate": "HOLD",
+  "implementationComplete": false,
+  "scope": "scope.txt",
+  "scopeSha256": "45b587d5fa1affee0f65d5b378649ce749e025a434d479e1d28ff60159e4ae29",
+  "sourceHash": "a2a08373ca6e266dec6dfdef923e24bb6456dc36f3480ae98ad17dc25b79652d",
+  "fixture": {
+    "sourceHash": "4324c502a4f0224c9c6da8ed00d7d9c74f202a322b96b823bb14011c9fafc156",
+    "payloadHash": "a76669e943bc8acfc546dd12c2997880e1e20ef711617bd1d533b2df9afd1814",
+    "cases": 20
+  },
+  "rawJsonCount": 5,
+  "actualCaptureCount": 14,
+  "originalFileCount": 19,
+  "originalBytes": 5093418,
+  "originalCollectionHash": "1849c7bd19cf9b084b559af4ddd12ac0826d6c918cc698e8156203f73458cabd",
+  "evidenceSourceRoot": "/private/tmp/sansu-native-v2-20261010",
+  "copiedEvidenceRoot": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-growing-place-runtime/storage-evidence/native-v2",
+  "fixedBuilds": [
+    {
+      "role": "NEW",
+      "manifest": "/private/tmp/sansu-native-v2-20261010/new-manifest.json",
+      "manifestSha256": "1522c5cd8ff4efddda219b3aabaf5f10486a3cc8b71c72d77a32af87e54d258c",
+      "sourceDir": "/private/tmp/sansu-native-v2-20261010/new-source",
+      "distDir": "/private/tmp/sansu-native-v2-20261010/new-source/dist",
+      "sourceHash": "a2a08373ca6e266dec6dfdef923e24bb6456dc36f3480ae98ad17dc25b79652d",
+      "inputCount": 2016,
+      "distFileCount": 168,
+      "version": {
+        "version": "native-05-place-runtime-v2-new-a2a08373ca6e:00da88da-08d3-456c-933b-71293c6ecb05",
+        "revision": "native-05-place-runtime-v2-new-a2a08373ca6e",
+        "delivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "park": {
+          "enabled": false,
+          "renderer": "retired"
+        },
+        "island": {
+          "enabled": true,
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "life": {
+            "enabled": true,
+            "discovery": false,
+            "fantasy": true,
+            "candidate": "living-fantasy-garden-v2",
+            "saveVersion": 21
+          },
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "residentCandidate": "patchwork-otter-v1",
+          "artDirection": "moon-garden"
+        }
+      },
+      "entryBundle": "/assets/index-B0nTRL22.js",
+      "artCandidate": "native-05-place-runtime-v2",
+      "fixture": {
+        "sourceHash": "4324c502a4f0224c9c6da8ed00d7d9c74f202a322b96b823bb14011c9fafc156",
+        "payloadHash": "a76669e943bc8acfc546dd12c2997880e1e20ef711617bd1d533b2df9afd1814",
+        "cases": 20
+      },
+      "copiedManifest": "new-manifest.json"
+    },
+    {
+      "role": "ROLLBACK",
+      "manifest": "/private/tmp/sansu-native-v2-20261010/rollback-manifest.json",
+      "manifestSha256": "6434f4966e44d7d2ea62f0b0ce136ad3ae5a9c70815f15e2b2ba2403ebdd7023",
+      "sourceDir": "/private/tmp/sansu-native-v2-20261010/rollback-source",
+      "distDir": "/private/tmp/sansu-native-v2-20261010/rollback-source/dist",
+      "sourceHash": "a2a08373ca6e266dec6dfdef923e24bb6456dc36f3480ae98ad17dc25b79652d",
+      "inputCount": 2016,
+      "distFileCount": 168,
+      "version": {
+        "version": "native-05-place-runtime-v2-rollback-a2a08373ca6e:2b402592-391e-4195-99d9-d7e7510003f5",
+        "revision": "native-05-place-runtime-v2-rollback-a2a08373ca6e",
+        "delivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "park": {
+          "enabled": false,
+          "renderer": "retired"
+        },
+        "island": {
+          "enabled": true,
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "life": {
+            "enabled": true,
+            "discovery": false,
+            "fantasy": true,
+            "candidate": "living-fantasy-garden-v2",
+            "saveVersion": 21
+          },
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "residentCandidate": "patchwork-otter-v1",
+          "artDirection": "moon-garden"
+        }
+      },
+      "entryBundle": "/assets/index-BQ_a2M45.js",
+      "artCandidate": "native-05-place-runtime-v2",
+      "fixture": {
+        "sourceHash": "4324c502a4f0224c9c6da8ed00d7d9c74f202a322b96b823bb14011c9fafc156",
+        "payloadHash": "a76669e943bc8acfc546dd12c2997880e1e20ef711617bd1d533b2df9afd1814",
+        "cases": 20
+      },
+      "copiedManifest": "rollback-manifest.json"
+    }
+  ],
+  "priorBaselines": [
+    {
+      "role": "old",
+      "manifest": "/private/tmp/sansu-place-update-20261010/old-manifest.json",
+      "sha256": "68b73b1c65322f7975c448df8ad3937bc7a2ae0ce5a1a2c7597f2e46c8402596",
+      "sourceHash": "721f239c7e6abab2025f408e6438da0204757f69341cc053098679a467a7f563",
+      "version": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb"
+    },
+    {
+      "role": "new",
+      "manifest": "/private/tmp/sansu-place-update-20261010/new-manifest.json",
+      "sha256": "768f1c1022df593ceb1c5d5148dc3f15b5d3f825bac952d75dc13fdd1c4d2e8b",
+      "sourceHash": "acc7dc9e4eccec27e5fa30b36346e84cf52bc5ecbc8725a2e3afb05d928ee5c8",
+      "version": "place-update-new-v4-acc7dc9e4ecc:5edd5ae7-61d5-42fc-9544-b739caa9b7dd"
+    },
+    {
+      "role": "rollback",
+      "manifest": "/private/tmp/sansu-place-update-20261010/rollback-manifest.json",
+      "sha256": "76ee0bb8bb820c18a8dc88832efc98693c017fdd9472740d03f8fc77c346d4f2",
+      "sourceHash": "acc7dc9e4eccec27e5fa30b36346e84cf52bc5ecbc8725a2e3afb05d928ee5c8",
+      "version": "place-update-rollback-v4-acc7dc9e4ecc:e19b2a2c-3b3c-4a60-b3d3-21d105c6a720"
+    }
+  ],
+  "originalWorkingInputs": {
+    "root": "/Users/yutogasaki/Projects/sansu",
+    "sourceHash": "a2a08373ca6e266dec6dfdef923e24bb6456dc36f3480ae98ad17dc25b79652d",
+    "inputCount": 2016,
+    "frozenInputCount": 2016,
+    "unchanged": true,
+    "differences": []
+  },
+  "updateTarget": "http://127.0.0.1:61019",
+  "browser": "145.0.7632.6",
+  "cleanup": {
+    "browserClosed": true,
+    "serverClosed": true
+  },
+  "files": [
+    {
+      "file": "new-manifest.json",
+      "source": "/private/tmp/sansu-native-v2-20261010/new-manifest.json",
+      "sha256": "1522c5cd8ff4efddda219b3aabaf5f10486a3cc8b71c72d77a32af87e54d258c",
+      "bytes": 255852,
+      "kind": "raw-json"
+    },
+    {
+      "file": "rollback-manifest.json",
+      "source": "/private/tmp/sansu-native-v2-20261010/rollback-manifest.json",
+      "sha256": "6434f4966e44d7d2ea62f0b0ce136ad3ae5a9c70815f15e2b2ba2403ebdd7023",
+      "bytes": 255882,
+      "kind": "raw-json"
+    },
+    {
+      "file": "legacy-writer-v4-v2.json",
+      "source": "/private/tmp/sansu-native-v2-20261010/legacy-writer-v4-v2.json",
+      "sha256": "ba18952c393c5e1a94bcbeb34668a79bfbeb566bc0ed5f7c2d02627a085e0837",
+      "bytes": 568,
+      "kind": "raw-json"
+    },
+    {
+      "file": "final-update-audit-v2.json",
+      "source": "/private/tmp/sansu-native-v2-20261010/final-update-audit-v2.json",
+      "sha256": "c21d442c5fd4b8dcf38ff7364a36bc296674edc5f7d2edeb9625087cee5fa798",
+      "bytes": 9739,
+      "kind": "raw-json"
+    },
+    {
+      "file": "update-qa/report.json",
+      "source": "/private/tmp/sansu-native-v2-20261010/update-qa-v4-v2-local-origin/report.json",
+      "sha256": "b1f2a430300af3102343a9935c49d716fab43a5fc27add38050f54f8b84d803e",
+      "bytes": 1033752,
+      "kind": "raw-json"
+    },
+    {
+      "file": "update-qa/390-normal-old-learning.png",
+      "source": "/private/tmp/sansu-native-v2-20261010/update-qa-v4-v2-local-origin/390-normal-old-learning.png",
+      "sha256": "065a091b081eae7b11fb40586c31905b47bfb90eb2fa1448c7eaae41e19f6457",
+      "bytes": 62302,
+      "kind": "actual-browser-capture",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "revision": "place-update-old-b61d3064",
+      "version": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb",
+      "serviceWorkerControlled": true,
+      "reducedMotion": false
+    },
+    {
+      "file": "update-qa/390-normal-new-home.png",
+      "source": "/private/tmp/sansu-native-v2-20261010/update-qa-v4-v2-local-origin/390-normal-new-home.png",
+      "sha256": "59988c8d3c612b5abbcba61f9f5679936a2632bc3667d75f2a6f90cc62e4dab1",
+      "bytes": 207217,
+      "kind": "actual-browser-capture",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "revision": "native-05-place-runtime-v2-new-a2a08373ca6e",
+      "version": "native-05-place-runtime-v2-new-a2a08373ca6e:00da88da-08d3-456c-933b-71293c6ecb05",
+      "serviceWorkerControlled": true,
+      "reducedMotion": false
+    },
+    {
+      "file": "update-qa/390-normal-rollback-offline.png",
+      "source": "/private/tmp/sansu-native-v2-20261010/update-qa-v4-v2-local-origin/390-normal-rollback-offline.png",
+      "sha256": "57a8ac1211fb5ef29cb47f9edc0ff1725500079e93a2b33d8548291bf451c682",
+      "bytes": 206744,
+      "kind": "actual-browser-capture",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "revision": "native-05-place-runtime-v2-rollback-a2a08373ca6e",
+      "version": "native-05-place-runtime-v2-rollback-a2a08373ca6e:2b402592-391e-4195-99d9-d7e7510003f5",
+      "serviceWorkerControlled": true,
+      "reducedMotion": false
+    },
+    {
+      "file": "update-qa/390-interrupted-old-learning.png",
+      "source": "/private/tmp/sansu-native-v2-20261010/update-qa-v4-v2-local-origin/390-interrupted-old-learning.png",
+      "sha256": "7ae5521ee93a41c8aa878761b67c8ff84867ee04c2f31babc35d7989af7a6ff7",
+      "bytes": 61129,
+      "kind": "actual-browser-capture",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "revision": "place-update-old-b61d3064",
+      "version": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb",
+      "serviceWorkerControlled": true,
+      "reducedMotion": false
+    },
+    {
+      "file": "update-qa/390-interrupted-old-offline.png",
+      "source": "/private/tmp/sansu-native-v2-20261010/update-qa-v4-v2-local-origin/390-interrupted-old-offline.png",
+      "sha256": "e845a21e9e9818385a189450c96b39d902beeee25b668341f0b5153f145ef175",
+      "bytes": 229406,
+      "kind": "actual-browser-capture",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "revision": "place-update-old-b61d3064",
+      "version": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb",
+      "serviceWorkerControlled": true,
+      "reducedMotion": false
+    },
+    {
+      "file": "update-qa/390-interrupted-new-home.png",
+      "source": "/private/tmp/sansu-native-v2-20261010/update-qa-v4-v2-local-origin/390-interrupted-new-home.png",
+      "sha256": "0c4333a023eb28163ee71c69b0859ece57d58c1aa7f695deddd951ad08256e10",
+      "bytes": 207420,
+      "kind": "actual-browser-capture",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "revision": "native-05-place-runtime-v2-new-a2a08373ca6e",
+      "version": "native-05-place-runtime-v2-new-a2a08373ca6e:00da88da-08d3-456c-933b-71293c6ecb05",
+      "serviceWorkerControlled": true,
+      "reducedMotion": false
+    },
+    {
+      "file": "update-qa/390-interrupted-rollback-offline.png",
+      "source": "/private/tmp/sansu-native-v2-20261010/update-qa-v4-v2-local-origin/390-interrupted-rollback-offline.png",
+      "sha256": "f8b9cb8461995cef511eb2bd22f595bc062a54634de084ba574aed69c0cb91a9",
+      "bytes": 206529,
+      "kind": "actual-browser-capture",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "revision": "native-05-place-runtime-v2-rollback-a2a08373ca6e",
+      "version": "native-05-place-runtime-v2-rollback-a2a08373ca6e:2b402592-391e-4195-99d9-d7e7510003f5",
+      "serviceWorkerControlled": true,
+      "reducedMotion": false
+    },
+    {
+      "file": "update-qa/768-normal-old-learning.png",
+      "source": "/private/tmp/sansu-native-v2-20261010/update-qa-v4-v2-local-origin/768-normal-old-learning.png",
+      "sha256": "466fd7a565a2cb1a34a58799ef0eaaa95df20b0b7a9bc645d6ca8be4ec332b20",
+      "bytes": 73110,
+      "kind": "actual-browser-capture",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "place-update-old-b61d3064",
+      "version": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb",
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "update-qa/768-normal-new-home.png",
+      "source": "/private/tmp/sansu-native-v2-20261010/update-qa-v4-v2-local-origin/768-normal-new-home.png",
+      "sha256": "8f288d9a672f19fce023edf7f8e93e303d6f705dff8f6ff6c5ac97865383d63d",
+      "bytes": 431587,
+      "kind": "actual-browser-capture",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "native-05-place-runtime-v2-new-a2a08373ca6e",
+      "version": "native-05-place-runtime-v2-new-a2a08373ca6e:00da88da-08d3-456c-933b-71293c6ecb05",
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "update-qa/768-normal-rollback-offline.png",
+      "source": "/private/tmp/sansu-native-v2-20261010/update-qa-v4-v2-local-origin/768-normal-rollback-offline.png",
+      "sha256": "aefb3804b0dd848964bee3c916d351f5c7fe403f7482ed17df065584e349c139",
+      "bytes": 436775,
+      "kind": "actual-browser-capture",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "native-05-place-runtime-v2-rollback-a2a08373ca6e",
+      "version": "native-05-place-runtime-v2-rollback-a2a08373ca6e:2b402592-391e-4195-99d9-d7e7510003f5",
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "update-qa/768-interrupted-old-learning.png",
+      "source": "/private/tmp/sansu-native-v2-20261010/update-qa-v4-v2-local-origin/768-interrupted-old-learning.png",
+      "sha256": "6d50fc7c6923545cbe550d5f9a7c7e210b54ebdea46e72380d6d16c782cd994b",
+      "bytes": 73101,
+      "kind": "actual-browser-capture",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "place-update-old-b61d3064",
+      "version": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb",
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "update-qa/768-interrupted-old-offline.png",
+      "source": "/private/tmp/sansu-native-v2-20261010/update-qa-v4-v2-local-origin/768-interrupted-old-offline.png",
+      "sha256": "87a610cac0af32902f24a9c8873bb6d98f1a04bac10728e8128064d59ae7f92e",
+      "bytes": 470467,
+      "kind": "actual-browser-capture",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "place-update-old-b61d3064",
+      "version": "place-update-old-b61d3064:218be703-946f-439f-981c-a6eb7ec3ebbb",
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "update-qa/768-interrupted-new-home.png",
+      "source": "/private/tmp/sansu-native-v2-20261010/update-qa-v4-v2-local-origin/768-interrupted-new-home.png",
+      "sha256": "1f8b50c0ef55584b33ec4ff57a50b53e031b3af1dd8471130f522e4b55206b39",
+      "bytes": 437055,
+      "kind": "actual-browser-capture",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "native-05-place-runtime-v2-new-a2a08373ca6e",
+      "version": "native-05-place-runtime-v2-new-a2a08373ca6e:00da88da-08d3-456c-933b-71293c6ecb05",
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "update-qa/768-interrupted-rollback-offline.png",
+      "source": "/private/tmp/sansu-native-v2-20261010/update-qa-v4-v2-local-origin/768-interrupted-rollback-offline.png",
+      "sha256": "9111ca8b17b002e775952a551c43e77cacf61342a50015860cee1bed9aeef34e",
+      "bytes": 434783,
+      "kind": "actual-browser-capture",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "native-05-place-runtime-v2-rollback-a2a08373ca6e",
+      "version": "native-05-place-runtime-v2-rollback-a2a08373ca6e:2b402592-391e-4195-99d9-d7e7510003f5",
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    }
+  ]
+}

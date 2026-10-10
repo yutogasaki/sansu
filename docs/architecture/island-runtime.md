@@ -22,9 +22,13 @@
 | 島・家・学習の共用キャラクター | `src/components/island/three/islandCharacters.ts` |
 | 共用の庭・家・光・景色の時計と描画計算 | `src/components/island/three/garden/` |
 | 島の規則と保存 | `src/domain/growingIsland/` |
+| 接続・成熟から育つ場所、関係、任意目標と実利用の受領 | `src/domain/growingIsland/places.ts`、`placeRelations.ts`、`placeGoals.ts` |
+| 同じ地形・床・道・大形と、住人の実際の歩行と利用 | `placeTerrain.ts`、`placeGeometry.ts`、`placePaths.ts`、`growingLife.ts` |
 | 家、取得済みの記念・所有と学習 | 共用の `src/components/island/` と `src/domain/island/` |
 
 `npm run dev`と`npm run dev:growing-island`は同じport5198の育つ島を開く。旧Growing/Life/Home Journey/Nature Townの画面選択flagは別ホームの入口を作らない。`/nature-town`は通常ホームへ転送する。
+
+2026-10-10の[育つ場所v1](../product/island-place-goals.md)は、本人の配置から6目標・15配置・4関係を導く。完成模型を固定背景へ貼らず、本・予告・実3D・歩行・利用が同じ派生結果を読む。record4/schema5の`placedIslands`へ一度コピーし、旧tableと旧writerを隔離する。[保存と空間のADR](../adr/2026-10-10-growing-place-runtime.md)と[同じ版の実画面・検証](../design/2026-10-10-growing-place-runtime/README.md)を参照。
 
 ## 残す互換性と共用素材
 
