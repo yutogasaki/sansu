@@ -1,0 +1,1204 @@
+{
+  "candidate": "native05-owned-runtime-v1",
+  "version": {
+    "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+    "revision": "native05-owned-runtime-v1-a6",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": true,
+        "candidate": "living-fantasy-garden-v2",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "nativeArtStudy": {
+        "enabled": false,
+        "candidate": "native-05-art-transfer-v1",
+        "gameplayMapped": false
+      },
+      "nativeOwnedArt": {
+        "enabled": true,
+        "candidate": "native05-owned-runtime-v1",
+        "gameplayMapped": true
+      },
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "deliveryFlag": "VITE_NATIVE_GROWING_ART=true",
+  "actualTarget": "http://127.0.0.1:5316",
+  "modeTransitions": [
+    "Growing owned world native05-owned-runtime-v1",
+    "Existing learning panel pokomoko-pop-live-v8"
+  ],
+  "sourceCorrespondence": true,
+  "canonicalViewports": [
+    390,
+    768
+  ],
+  "extraNarrowViewport": 320,
+  "fixtureWrites": false,
+  "clockManipulation": false,
+  "captures": [
+    {
+      "file": "acquired-390-welcome.png",
+      "hash": "024f081d733c3402417e003fe910726da8d7cd801f39dcb77f31048348ceb034",
+      "metadata": {
+        "url": "http://127.0.0.1:5316/#/onboarding",
+        "onboarding": true,
+        "appRoot": {
+          "revision": "native05-owned-runtime-v1-a6",
+          "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "cache": {
+        "controlled": false,
+        "online": true
+      }
+    },
+    {
+      "file": "acquired-390-first-home.png",
+      "hash": "a94bda6ec87a738ccabe3c0f2575f7e6880a830717f911aac547e7dab4f8437d",
+      "metadata": {
+        "url": "http://127.0.0.1:5316/#/island",
+        "revision": "native05-owned-runtime-v1-a6",
+        "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "drawCalls": 0,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "native05-owned-runtime-v1-a6",
+          "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "artCandidate": "native05-owned-runtime-v1",
+        "nativeGrowingArt": "true",
+        "growingFeatureEnabled": "true",
+        "nativeKitSha256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+        "nativeSourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+        "nativeKitGzipBytes": "2554378",
+        "gameplayMapped": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}",
+        "bridgeSaved": "false",
+        "growingCamera": "{\"matrixWorld\":[0.7912850013921671,0,-0.6114475010757654,0,-0.3570591477298898,0.8117844741035437,-0.4620765441210338,0,0.4963635881027162,0.5839571624737837,0.6423528787211622,0,17.202549561126624,19.901162340622484,22.16234064182809,1],\"projectionMatrix\":[0.16167629462903987,0,0,0,0,0.08083814731451994,0,0,0,0,-0.019688535829764018,0,0,0,-1.0019688535829763,1],\"center\":2.5}",
+        "placeCount": "0",
+        "placeRelations": "",
+        "placeTopology": ""
+      },
+      "cache": {
+        "controlled": true,
+        "online": true
+      }
+    },
+    {
+      "file": "acquired-390-twenty-real-answers.png",
+      "hash": "407031be475e1d9dfa6585ee29f6dcdcc820148204f74d75285d695b8e172488",
+      "metadata": {
+        "url": "http://127.0.0.1:5316/#/island?learn=1",
+        "revision": "native05-owned-runtime-v1-a6",
+        "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "learning",
+        "renderer": "live-original",
+        "artDirection": null,
+        "drawCalls": 0,
+        "expanded": null,
+        "residentAction": null,
+        "residentItemId": null,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "native05-owned-runtime-v1-a6",
+          "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "cache": {
+        "controlled": true,
+        "online": true
+      }
+    },
+    {
+      "file": "acquired-390-optional-six-goals.png",
+      "hash": "a9328e3fd883a7deb8e1724f01977bf0e6dc703f3c7f2cb68911dd069ddc8c31",
+      "metadata": {
+        "url": "http://127.0.0.1:5316/#/island",
+        "revision": "native05-owned-runtime-v1-a6",
+        "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "original-fallback",
+        "artDirection": null,
+        "drawCalls": 0,
+        "expanded": null,
+        "residentAction": null,
+        "residentItemId": null,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "native05-owned-runtime-v1-a6",
+          "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "artCandidate": "native05-owned-runtime-v1",
+        "nativeGrowingArt": "true",
+        "growingFeatureEnabled": "true",
+        "nativeKitSha256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+        "nativeSourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+        "nativeKitGzipBytes": "2554378",
+        "gameplayMapped": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}",
+        "bridgeSaved": "false",
+        "growingCamera": "{\"matrixWorld\":[0.7912850013921671,0,-0.6114475010757654,0,-0.3570591477298898,0.8117844741035437,-0.4620765441210338,0,0.4963635881027162,0.5839571624737837,0.6423528787211622,0,17.202549561126624,19.901162340622484,22.16234064182809,1],\"projectionMatrix\":[0.16167629462903987,0,0,0,0,0.08083814731451994,0,0,0,0,-0.019688535829764018,0,0,0,-1.0019688535829763,1],\"center\":2.5}",
+        "placeCount": "0",
+        "placeRelations": "",
+        "placeTopology": ""
+      },
+      "cache": {
+        "controlled": true,
+        "online": true
+      }
+    },
+    {
+      "file": "acquired-390-young-connected-garden.png",
+      "hash": "91d9af2920acb54683f47d814d67a5a415358227b537c75d821ce29f0b553ddb",
+      "metadata": {
+        "url": "http://127.0.0.1:5316/#/island",
+        "revision": "native05-owned-runtime-v1-a6",
+        "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "original-fallback",
+        "artDirection": null,
+        "drawCalls": 0,
+        "expanded": null,
+        "residentAction": null,
+        "residentItemId": null,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "native05-owned-runtime-v1-a6",
+          "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "artCandidate": "native05-owned-runtime-v1",
+        "nativeGrowingArt": "true",
+        "growingFeatureEnabled": "true",
+        "nativeKitSha256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+        "nativeSourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+        "nativeKitGzipBytes": "2554378",
+        "gameplayMapped": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}",
+        "bridgeSaved": "false",
+        "growingCamera": "{\"matrixWorld\":[0.7912850013921671,0,-0.6114475010757654,0,-0.3570591477298898,0.8117844741035437,-0.4620765441210338,0,0.4963635881027162,0.5839571624737837,0.6423528787211622,0,17.202549561126624,19.901162340622484,22.16234064182809,1],\"projectionMatrix\":[0.16167629462903987,0,0,0,0,0.08083814731451994,0,0,0,0,-0.019688535829764018,0,0,0,-1.0019688535829763,1],\"center\":2.5}",
+        "placeCount": "0",
+        "placeRelations": "",
+        "placeTopology": "P01:lane:connected"
+      },
+      "cache": {
+        "controlled": true,
+        "online": true
+      }
+    },
+    {
+      "file": "acquired-390-split-same-owner.png",
+      "hash": "f87edd573d35227f38d5f884da0019d9d73e7d16a1546c70bb4fa7bd783fbcae",
+      "metadata": {
+        "url": "http://127.0.0.1:5316/#/island",
+        "revision": "native05-owned-runtime-v1-a6",
+        "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "original-fallback",
+        "artDirection": null,
+        "drawCalls": 0,
+        "expanded": null,
+        "residentAction": null,
+        "residentItemId": null,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "native05-owned-runtime-v1-a6",
+          "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "artCandidate": "native05-owned-runtime-v1",
+        "nativeGrowingArt": "true",
+        "growingFeatureEnabled": "true",
+        "nativeKitSha256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+        "nativeSourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+        "nativeKitGzipBytes": "2554378",
+        "gameplayMapped": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}",
+        "bridgeSaved": "false",
+        "growingCamera": "{\"matrixWorld\":[0.7912850013921671,0,-0.6114475010757654,0,-0.3570591477298898,0.8117844741035437,-0.4620765441210338,0,0.4963635881027162,0.5839571624737837,0.6423528787211622,0,17.202549561126624,19.901162340622484,22.16234064182809,1],\"projectionMatrix\":[0.16167629462903987,0,0,0,0,0.08083814731451994,0,0,0,0,-0.019688535829764018,0,0,0,-1.0019688535829763,1],\"center\":2.5}",
+        "placeCount": "0",
+        "placeRelations": "",
+        "placeTopology": "P01:alcove:seeded|P01:lane:seeded"
+      },
+      "cache": {
+        "controlled": true,
+        "online": true
+      }
+    },
+    {
+      "file": "acquired-390-reconnected-same-tree.png",
+      "hash": "e16e24f88e102542544bf0beae3a3de49b98beafb5f3c38e15271937a2ed471b",
+      "metadata": {
+        "url": "http://127.0.0.1:5316/#/island",
+        "revision": "native05-owned-runtime-v1-a6",
+        "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "original-fallback",
+        "artDirection": null,
+        "drawCalls": 0,
+        "expanded": null,
+        "residentAction": null,
+        "residentItemId": null,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "native05-owned-runtime-v1-a6",
+          "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "artCandidate": "native05-owned-runtime-v1",
+        "nativeGrowingArt": "true",
+        "growingFeatureEnabled": "true",
+        "nativeKitSha256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+        "nativeSourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+        "nativeKitGzipBytes": "2554378",
+        "gameplayMapped": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}",
+        "bridgeSaved": "false",
+        "growingCamera": "{\"matrixWorld\":[0.7912850013921671,0,-0.6114475010757654,0,-0.3570591477298898,0.8117844741035437,-0.4620765441210338,0,0.4963635881027162,0.5839571624737837,0.6423528787211622,0,17.202549561126624,19.901162340622484,22.16234064182809,1],\"projectionMatrix\":[0.16167629462903987,0,0,0,0,0.08083814731451994,0,0,0,0,-0.019688535829764018,0,0,0,-1.0019688535829763,1],\"center\":2.5}",
+        "placeCount": "0",
+        "placeRelations": "",
+        "placeTopology": "P01:lane:connected"
+      },
+      "cache": {
+        "controlled": true,
+        "online": true
+      }
+    },
+    {
+      "file": "acquired-390-same-plan-return.png",
+      "hash": "06ba63d669104eec1587ab2c2beb7f606b652bc74c09093049e5af54ffb12251",
+      "metadata": {
+        "url": "http://127.0.0.1:5316/#/island",
+        "revision": "native05-owned-runtime-v1-a6",
+        "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "original-fallback",
+        "artDirection": null,
+        "drawCalls": 0,
+        "expanded": null,
+        "residentAction": null,
+        "residentItemId": null,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "native05-owned-runtime-v1-a6",
+          "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "artCandidate": "native05-owned-runtime-v1",
+        "nativeGrowingArt": "true",
+        "growingFeatureEnabled": "true",
+        "nativeKitSha256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+        "nativeSourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+        "nativeKitGzipBytes": "2554378",
+        "gameplayMapped": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}",
+        "bridgeSaved": "false",
+        "growingCamera": "{\"matrixWorld\":[0.7912850013921671,0,-0.6114475010757654,0,-0.3570591477298898,0.8117844741035437,-0.4620765441210338,0,0.4963635881027162,0.5839571624737837,0.6423528787211622,0,17.202549561126624,19.901162340622484,22.16234064182809,1],\"projectionMatrix\":[0.16167629462903987,0,0,0,0,0.08083814731451994,0,0,0,0,-0.019688535829764018,0,0,0,-1.0019688535829763,1],\"center\":2.5}",
+        "placeCount": "0",
+        "placeRelations": "",
+        "placeTopology": "P01:lane:connected"
+      },
+      "cache": {
+        "controlled": true,
+        "online": true
+      }
+    },
+    {
+      "file": "acquired-768-welcome.png",
+      "hash": "f8b514593dbb7f5162cc3e2a3903d4df532974fb419a9a1f567786f086273ff0",
+      "metadata": {
+        "url": "http://127.0.0.1:5316/#/island",
+        "onboarding": true,
+        "appRoot": {
+          "revision": "native05-owned-runtime-v1-a6",
+          "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "cache": {
+        "controlled": false,
+        "online": true
+      }
+    },
+    {
+      "file": "acquired-768-first-home.png",
+      "hash": "4f05d3b572547f1bd09c5ffc05107ccaa853cbb7b507ec3e0f4f2b7aef00e28b",
+      "metadata": {
+        "url": "http://127.0.0.1:5316/#/island",
+        "revision": "native05-owned-runtime-v1-a6",
+        "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "drawCalls": 0,
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": true,
+        "appRoot": {
+          "revision": "native05-owned-runtime-v1-a6",
+          "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "artCandidate": "native05-owned-runtime-v1",
+        "nativeGrowingArt": "true",
+        "growingFeatureEnabled": "true",
+        "nativeKitSha256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+        "nativeSourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+        "nativeKitGzipBytes": "2554378",
+        "gameplayMapped": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}",
+        "bridgeSaved": "false",
+        "growingCamera": "{\"matrixWorld\":[0.7912850013921671,5.551115123125783e-17,-0.6114475010757655,0,-0.3570591477298898,0.8117844741035437,-0.462076544121034,0,0.4963635881027163,0.5839571624737838,0.6423528787211623,0,10.893646933562385,12.478923955252789,13.997878417921427,1],\"projectionMatrix\":[0.16167629462903987,0,0,0,0,0.12934103570323188,0,0,0,0,-0.02002002002002002,0,0,0,-1.002002002002002,1],\"center\":2.5}",
+        "placeCount": "0",
+        "placeRelations": "",
+        "placeTopology": ""
+      },
+      "cache": {
+        "controlled": true,
+        "online": true
+      }
+    },
+    {
+      "file": "acquired-768-twenty-real-answers.png",
+      "hash": "e67907b670877a263785fe434e9007e151cbf0d784c53546b424bd1e22d9411c",
+      "metadata": {
+        "url": "http://127.0.0.1:5316/#/island?learn=1",
+        "revision": "native05-owned-runtime-v1-a6",
+        "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "learning",
+        "renderer": "live-original",
+        "artDirection": null,
+        "drawCalls": 0,
+        "expanded": null,
+        "residentAction": null,
+        "residentItemId": null,
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": true,
+        "appRoot": {
+          "revision": "native05-owned-runtime-v1-a6",
+          "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "cache": {
+        "controlled": true,
+        "online": true
+      }
+    },
+    {
+      "file": "acquired-768-optional-six-goals.png",
+      "hash": "f9c54188be94c92d15df9f37c02cb415cc07923d8598db04324d27699341c8ac",
+      "metadata": {
+        "url": "http://127.0.0.1:5316/#/island",
+        "revision": "native05-owned-runtime-v1-a6",
+        "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "original-fallback",
+        "artDirection": null,
+        "drawCalls": 0,
+        "expanded": null,
+        "residentAction": null,
+        "residentItemId": null,
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": true,
+        "appRoot": {
+          "revision": "native05-owned-runtime-v1-a6",
+          "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "artCandidate": "native05-owned-runtime-v1",
+        "nativeGrowingArt": "true",
+        "growingFeatureEnabled": "true",
+        "nativeKitSha256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+        "nativeSourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+        "nativeKitGzipBytes": "2554378",
+        "gameplayMapped": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}",
+        "bridgeSaved": "false",
+        "growingCamera": "{\"matrixWorld\":[0.7912850013921671,5.551115123125783e-17,-0.6114475010757655,0,-0.3570591477298898,0.8117844741035437,-0.462076544121034,0,0.4963635881027163,0.5839571624737838,0.6423528787211623,0,10.893646933562385,12.478923955252789,13.997878417921427,1],\"projectionMatrix\":[0.16167629462903987,0,0,0,0,0.12934103570323188,0,0,0,0,-0.02002002002002002,0,0,0,-1.002002002002002,1],\"center\":2.5}",
+        "placeCount": "0",
+        "placeRelations": "",
+        "placeTopology": ""
+      },
+      "cache": {
+        "controlled": true,
+        "online": true
+      }
+    },
+    {
+      "file": "acquired-768-young-connected-garden.png",
+      "hash": "6f371478be5fdf5b54103218548304e201a9c68edef5fb2e0247ba0f6684bbcc",
+      "metadata": {
+        "url": "http://127.0.0.1:5316/#/island",
+        "revision": "native05-owned-runtime-v1-a6",
+        "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "original-fallback",
+        "artDirection": null,
+        "drawCalls": 0,
+        "expanded": null,
+        "residentAction": null,
+        "residentItemId": null,
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": true,
+        "appRoot": {
+          "revision": "native05-owned-runtime-v1-a6",
+          "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "artCandidate": "native05-owned-runtime-v1",
+        "nativeGrowingArt": "true",
+        "growingFeatureEnabled": "true",
+        "nativeKitSha256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+        "nativeSourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+        "nativeKitGzipBytes": "2554378",
+        "gameplayMapped": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}",
+        "bridgeSaved": "false",
+        "growingCamera": "{\"matrixWorld\":[0.7912850013921671,5.551115123125783e-17,-0.6114475010757655,0,-0.3570591477298898,0.8117844741035437,-0.462076544121034,0,0.4963635881027163,0.5839571624737838,0.6423528787211623,0,10.893646933562385,12.478923955252789,13.997878417921427,1],\"projectionMatrix\":[0.16167629462903987,0,0,0,0,0.12934103570323188,0,0,0,0,-0.02002002002002002,0,0,0,-1.002002002002002,1],\"center\":2.5}",
+        "placeCount": "0",
+        "placeRelations": "",
+        "placeTopology": "P01:lane:connected"
+      },
+      "cache": {
+        "controlled": true,
+        "online": true
+      }
+    },
+    {
+      "file": "acquired-768-split-same-owner.png",
+      "hash": "1fc4dbd5f680053193564eddcc88d00b4da6656ea1635828aa31d50fcfb6c6d8",
+      "metadata": {
+        "url": "http://127.0.0.1:5316/#/island",
+        "revision": "native05-owned-runtime-v1-a6",
+        "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "original-fallback",
+        "artDirection": null,
+        "drawCalls": 0,
+        "expanded": null,
+        "residentAction": null,
+        "residentItemId": null,
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": true,
+        "appRoot": {
+          "revision": "native05-owned-runtime-v1-a6",
+          "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "artCandidate": "native05-owned-runtime-v1",
+        "nativeGrowingArt": "true",
+        "growingFeatureEnabled": "true",
+        "nativeKitSha256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+        "nativeSourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+        "nativeKitGzipBytes": "2554378",
+        "gameplayMapped": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}",
+        "bridgeSaved": "false",
+        "growingCamera": "{\"matrixWorld\":[0.7912850013921671,5.551115123125783e-17,-0.6114475010757655,0,-0.3570591477298898,0.8117844741035437,-0.462076544121034,0,0.4963635881027163,0.5839571624737838,0.6423528787211623,0,10.893646933562385,12.478923955252789,13.997878417921427,1],\"projectionMatrix\":[0.16167629462903987,0,0,0,0,0.12934103570323188,0,0,0,0,-0.02002002002002002,0,0,0,-1.002002002002002,1],\"center\":2.5}",
+        "placeCount": "0",
+        "placeRelations": "",
+        "placeTopology": "P01:alcove:seeded|P01:lane:seeded"
+      },
+      "cache": {
+        "controlled": true,
+        "online": true
+      }
+    },
+    {
+      "file": "acquired-768-reconnected-same-tree.png",
+      "hash": "4de3df1cfefe7f7336ee9b4c575d748c2e80dbee635412d0d93bb7c881756f8c",
+      "metadata": {
+        "url": "http://127.0.0.1:5316/#/island",
+        "revision": "native05-owned-runtime-v1-a6",
+        "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "original-fallback",
+        "artDirection": null,
+        "drawCalls": 0,
+        "expanded": null,
+        "residentAction": null,
+        "residentItemId": null,
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": true,
+        "appRoot": {
+          "revision": "native05-owned-runtime-v1-a6",
+          "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "artCandidate": "native05-owned-runtime-v1",
+        "nativeGrowingArt": "true",
+        "growingFeatureEnabled": "true",
+        "nativeKitSha256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+        "nativeSourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+        "nativeKitGzipBytes": "2554378",
+        "gameplayMapped": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}",
+        "bridgeSaved": "false",
+        "growingCamera": "{\"matrixWorld\":[0.7912850013921671,5.551115123125783e-17,-0.6114475010757655,0,-0.3570591477298898,0.8117844741035437,-0.462076544121034,0,0.4963635881027163,0.5839571624737838,0.6423528787211623,0,10.893646933562385,12.478923955252789,13.997878417921427,1],\"projectionMatrix\":[0.16167629462903987,0,0,0,0,0.12934103570323188,0,0,0,0,-0.02002002002002002,0,0,0,-1.002002002002002,1],\"center\":2.5}",
+        "placeCount": "0",
+        "placeRelations": "",
+        "placeTopology": "P01:lane:connected"
+      },
+      "cache": {
+        "controlled": true,
+        "online": true
+      }
+    },
+    {
+      "file": "acquired-768-same-plan-return.png",
+      "hash": "2e2a31804c59124055eb527d846491e06038b31da7c2f0a6426d29f90b5e366d",
+      "metadata": {
+        "url": "http://127.0.0.1:5316/#/island",
+        "revision": "native05-owned-runtime-v1-a6",
+        "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "original-fallback",
+        "artDirection": null,
+        "drawCalls": 0,
+        "expanded": null,
+        "residentAction": null,
+        "residentItemId": null,
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": true,
+        "appRoot": {
+          "revision": "native05-owned-runtime-v1-a6",
+          "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "artCandidate": "native05-owned-runtime-v1",
+        "nativeGrowingArt": "true",
+        "growingFeatureEnabled": "true",
+        "nativeKitSha256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+        "nativeSourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+        "nativeKitGzipBytes": "2554378",
+        "gameplayMapped": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}",
+        "bridgeSaved": "false",
+        "growingCamera": "{\"matrixWorld\":[0.7912850013921671,5.551115123125783e-17,-0.6114475010757655,0,-0.3570591477298898,0.8117844741035437,-0.462076544121034,0,0.4963635881027163,0.5839571624737838,0.6423528787211623,0,10.893646933562385,12.478923955252789,13.997878417921427,1],\"projectionMatrix\":[0.16167629462903987,0,0,0,0,0.12934103570323188,0,0,0,0,-0.02002002002002002,0,0,0,-1.002002002002002,1],\"center\":2.5}",
+        "placeCount": "0",
+        "placeRelations": "",
+        "placeTopology": "P01:lane:connected"
+      },
+      "cache": {
+        "controlled": true,
+        "online": true
+      }
+    },
+    {
+      "file": "acquired-320-welcome.png",
+      "hash": "834fbc98b60e9e7df2398008ebc1f89198def662200cae7b9e595201bf212348",
+      "metadata": {
+        "url": "http://127.0.0.1:5316/#/island",
+        "onboarding": true,
+        "appRoot": {
+          "revision": "native05-owned-runtime-v1-a6",
+          "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "cache": {
+        "controlled": false,
+        "online": true
+      }
+    },
+    {
+      "file": "acquired-320-first-home.png",
+      "hash": "a062d7aff00c170dae6167fabd4ebde50d6de5ae16fbeda7c4485bd5c623d19c",
+      "metadata": {
+        "url": "http://127.0.0.1:5316/#/island",
+        "revision": "native05-owned-runtime-v1-a6",
+        "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "drawCalls": 0,
+        "viewport": {
+          "width": 320,
+          "height": 568
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "native05-owned-runtime-v1-a6",
+          "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "artCandidate": "native05-owned-runtime-v1",
+        "nativeGrowingArt": "true",
+        "growingFeatureEnabled": "true",
+        "nativeKitSha256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+        "nativeSourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+        "nativeKitGzipBytes": "2554378",
+        "gameplayMapped": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}",
+        "bridgeSaved": "false",
+        "growingCamera": "{\"matrixWorld\":[0.791285001392167,-5.551115123125783e-17,-0.6114475010757654,0,-0.35705914772988995,0.8117844741035436,-0.46207654412103394,0,0.49636358810271614,0.5839571624737838,0.642352878721162,0,13.627504738840223,15.695227255579656,17.53581204828098,1],\"projectionMatrix\":[0.16167629462903987,0,0,0,0,0.10265161563748564,0,0,0,0,-0.02002002002002002,0,0,0,-1.002002002002002,1],\"center\":2.5}",
+        "placeCount": "0",
+        "placeRelations": "",
+        "placeTopology": ""
+      },
+      "cache": {
+        "controlled": true,
+        "online": true
+      }
+    },
+    {
+      "file": "acquired-320-twenty-real-answers.png",
+      "hash": "8828698218457554224f48fb43db80050c8c8b7706c7a361cd7d5d056c7f45f5",
+      "metadata": {
+        "url": "http://127.0.0.1:5316/#/island?learn=1",
+        "revision": "native05-owned-runtime-v1-a6",
+        "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "learning",
+        "renderer": "live-original",
+        "artDirection": null,
+        "drawCalls": 0,
+        "expanded": null,
+        "residentAction": null,
+        "residentItemId": null,
+        "viewport": {
+          "width": 320,
+          "height": 568
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "native05-owned-runtime-v1-a6",
+          "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "cache": {
+        "controlled": true,
+        "online": true
+      }
+    },
+    {
+      "file": "acquired-320-optional-six-goals.png",
+      "hash": "d733f3c52e2ca175268237dd8166dda76c32806ce3081955feb3dc1f931cb7e7",
+      "metadata": {
+        "url": "http://127.0.0.1:5316/#/island",
+        "revision": "native05-owned-runtime-v1-a6",
+        "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "original-fallback",
+        "artDirection": null,
+        "drawCalls": 0,
+        "expanded": null,
+        "residentAction": null,
+        "residentItemId": null,
+        "viewport": {
+          "width": 320,
+          "height": 568
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "native05-owned-runtime-v1-a6",
+          "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "artCandidate": "native05-owned-runtime-v1",
+        "nativeGrowingArt": "true",
+        "growingFeatureEnabled": "true",
+        "nativeKitSha256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+        "nativeSourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+        "nativeKitGzipBytes": "2554378",
+        "gameplayMapped": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}",
+        "bridgeSaved": "false",
+        "growingCamera": "{\"matrixWorld\":[0.791285001392167,-5.551115123125783e-17,-0.6114475010757654,0,-0.35705914772988995,0.8117844741035436,-0.46207654412103394,0,0.49636358810271614,0.5839571624737838,0.642352878721162,0,13.627504738840223,15.695227255579656,17.53581204828098,1],\"projectionMatrix\":[0.16167629462903987,0,0,0,0,0.10265161563748564,0,0,0,0,-0.02002002002002002,0,0,0,-1.002002002002002,1],\"center\":2.5}",
+        "placeCount": "0",
+        "placeRelations": "",
+        "placeTopology": ""
+      },
+      "cache": {
+        "controlled": true,
+        "online": true
+      }
+    },
+    {
+      "file": "acquired-320-young-connected-garden.png",
+      "hash": "36eca1a7cd78fa67f80e90fe96f26affd6ca4e7fbffb5a4729c5c797dd9257fd",
+      "metadata": {
+        "url": "http://127.0.0.1:5316/#/island",
+        "revision": "native05-owned-runtime-v1-a6",
+        "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "original-fallback",
+        "artDirection": null,
+        "drawCalls": 0,
+        "expanded": null,
+        "residentAction": null,
+        "residentItemId": null,
+        "viewport": {
+          "width": 320,
+          "height": 568
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "native05-owned-runtime-v1-a6",
+          "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "artCandidate": "native05-owned-runtime-v1",
+        "nativeGrowingArt": "true",
+        "growingFeatureEnabled": "true",
+        "nativeKitSha256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+        "nativeSourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+        "nativeKitGzipBytes": "2554378",
+        "gameplayMapped": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}",
+        "bridgeSaved": "false",
+        "growingCamera": "{\"matrixWorld\":[0.791285001392167,-5.551115123125783e-17,-0.6114475010757654,0,-0.35705914772988995,0.8117844741035436,-0.46207654412103394,0,0.49636358810271614,0.5839571624737838,0.642352878721162,0,13.627504738840223,15.695227255579656,17.53581204828098,1],\"projectionMatrix\":[0.16167629462903987,0,0,0,0,0.10265161563748564,0,0,0,0,-0.02002002002002002,0,0,0,-1.002002002002002,1],\"center\":2.5}",
+        "placeCount": "0",
+        "placeRelations": "",
+        "placeTopology": "P01:lane:connected"
+      },
+      "cache": {
+        "controlled": true,
+        "online": true
+      }
+    },
+    {
+      "file": "acquired-320-split-same-owner.png",
+      "hash": "a82656f1c80212969a18e7c0aceda6dd2dfe3ebd341571a7e6fa94e2cfb800bc",
+      "metadata": {
+        "url": "http://127.0.0.1:5316/#/island",
+        "revision": "native05-owned-runtime-v1-a6",
+        "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "original-fallback",
+        "artDirection": null,
+        "drawCalls": 0,
+        "expanded": null,
+        "residentAction": null,
+        "residentItemId": null,
+        "viewport": {
+          "width": 320,
+          "height": 568
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "native05-owned-runtime-v1-a6",
+          "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "artCandidate": "native05-owned-runtime-v1",
+        "nativeGrowingArt": "true",
+        "growingFeatureEnabled": "true",
+        "nativeKitSha256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+        "nativeSourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+        "nativeKitGzipBytes": "2554378",
+        "gameplayMapped": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}",
+        "bridgeSaved": "false",
+        "growingCamera": "{\"matrixWorld\":[0.791285001392167,-5.551115123125783e-17,-0.6114475010757654,0,-0.35705914772988995,0.8117844741035436,-0.46207654412103394,0,0.49636358810271614,0.5839571624737838,0.642352878721162,0,13.627504738840223,15.695227255579656,17.53581204828098,1],\"projectionMatrix\":[0.16167629462903987,0,0,0,0,0.10265161563748564,0,0,0,0,-0.02002002002002002,0,0,0,-1.002002002002002,1],\"center\":2.5}",
+        "placeCount": "0",
+        "placeRelations": "",
+        "placeTopology": "P01:alcove:seeded|P01:lane:seeded"
+      },
+      "cache": {
+        "controlled": true,
+        "online": true
+      }
+    },
+    {
+      "file": "acquired-320-reconnected-same-tree.png",
+      "hash": "512902b208c918078e4aca6cee085053518fcb826c4ca876d5dfe940fea44ff6",
+      "metadata": {
+        "url": "http://127.0.0.1:5316/#/island",
+        "revision": "native05-owned-runtime-v1-a6",
+        "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "original-fallback",
+        "artDirection": null,
+        "drawCalls": 0,
+        "expanded": null,
+        "residentAction": null,
+        "residentItemId": null,
+        "viewport": {
+          "width": 320,
+          "height": 568
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "native05-owned-runtime-v1-a6",
+          "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "artCandidate": "native05-owned-runtime-v1",
+        "nativeGrowingArt": "true",
+        "growingFeatureEnabled": "true",
+        "nativeKitSha256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+        "nativeSourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+        "nativeKitGzipBytes": "2554378",
+        "gameplayMapped": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}",
+        "bridgeSaved": "false",
+        "growingCamera": "{\"matrixWorld\":[0.791285001392167,-5.551115123125783e-17,-0.6114475010757654,0,-0.35705914772988995,0.8117844741035436,-0.46207654412103394,0,0.49636358810271614,0.5839571624737838,0.642352878721162,0,13.627504738840223,15.695227255579656,17.53581204828098,1],\"projectionMatrix\":[0.16167629462903987,0,0,0,0,0.10265161563748564,0,0,0,0,-0.02002002002002002,0,0,0,-1.002002002002002,1],\"center\":2.5}",
+        "placeCount": "0",
+        "placeRelations": "",
+        "placeTopology": "P01:lane:connected"
+      },
+      "cache": {
+        "controlled": true,
+        "online": true
+      }
+    },
+    {
+      "file": "acquired-320-same-plan-return.png",
+      "hash": "30a79285f15a58db87aee0de31e1e4da0ce770ef3780559ae6f96a417c04288c",
+      "metadata": {
+        "url": "http://127.0.0.1:5316/#/island",
+        "revision": "native05-owned-runtime-v1-a6",
+        "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "renderer": "original-fallback",
+        "artDirection": null,
+        "drawCalls": 0,
+        "expanded": null,
+        "residentAction": null,
+        "residentItemId": null,
+        "viewport": {
+          "width": 320,
+          "height": 568
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "native05-owned-runtime-v1-a6",
+          "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "world": {
+        "growingWorld": "true",
+        "visualCandidate": "growing-island-v1",
+        "artCandidate": "native05-owned-runtime-v1",
+        "nativeGrowingArt": "true",
+        "growingFeatureEnabled": "true",
+        "nativeKitSha256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+        "nativeSourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+        "nativeKitGzipBytes": "2554378",
+        "gameplayMapped": "true",
+        "growingBounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}",
+        "bridgeSaved": "false",
+        "growingCamera": "{\"matrixWorld\":[0.791285001392167,-5.551115123125783e-17,-0.6114475010757654,0,-0.35705914772988995,0.8117844741035436,-0.46207654412103394,0,0.49636358810271614,0.5839571624737838,0.642352878721162,0,13.627504738840223,15.695227255579656,17.53581204828098,1],\"projectionMatrix\":[0.16167629462903987,0,0,0,0,0.10265161563748564,0,0,0,0,-0.02002002002002002,0,0,0,-1.002002002002002,1],\"center\":2.5}",
+        "placeCount": "0",
+        "placeRelations": "",
+        "placeTopology": "P01:lane:connected"
+      },
+      "cache": {
+        "controlled": true,
+        "online": true
+      }
+    }
+  ],
+  "visualAcceptance": "HOLD; prototype, not a child-flow release approval"
+}

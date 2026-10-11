@@ -1,0 +1,320 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+ ✓ tools/verify-growing.test.mjs (17 tests) 237ms
+stdout | tools/e2e-growing-places.test.mjs > plan prepares exact reusable diagnostics while explicitly declining to claim runtime or external gates
+{
+  "prepared": true,
+  "runtimeExecuted": false,
+  "schema": "sansu-growing-place-e2e-v1",
+  "diagnosticCases": 20,
+  "catalogLayouts": 15,
+  "combinations": 4,
+  "recordVersion": 4,
+  "currentTable": "placedIslands",
+  "diagnosticPayloadHash": "a76669e943bc8acfc546dd12c2997880e1e20ef711617bd1d533b2df9afd1814",
+  "sourceHash": "4324c502a4f0224c9c6da8ed00d7d9c74f202a322b96b823bb14011c9fafc156",
+  "selectedDiagnosticRuns": [
+    {
+      "id": "qa-place-p01-lane-v1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "qa-place-p01-corner-v1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "qa-place-p01-alcove-v1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "qa-place-p02-lane-v1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "qa-place-p02-cluster-v1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "qa-place-p02-court-v1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "qa-place-p03-tiered-v1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "qa-place-p03-curve-v1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "qa-place-p03-shore-v1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "qa-place-p04-bay-v1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "qa-place-p04-lane-v1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "qa-place-p04-court-v1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "qa-place-p05-arch-v1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "qa-place-p05-canopy-v1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "qa-place-p05-court-v1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "qa-place-c01-v1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "qa-place-c02-v1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "qa-place-c03-v1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "qa-place-c04-v1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "qa-place-whole-island-v1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "qa-place-p01-lane-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-p01-corner-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-p01-alcove-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-p02-lane-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-p02-cluster-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-p02-court-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-p03-tiered-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-p03-curve-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-p03-shore-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-p04-bay-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-p04-lane-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-p04-court-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-p05-arch-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-p05-canopy-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-p05-court-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-c01-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-c02-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-c03-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-c04-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "qa-place-whole-island-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    }
+  ],
+  "actualJourneys": [
+    "Real onboarding/21 answers/2 bought young trees/free six goals/connect/split/rejoin/same-plan return at390/768/320",
+    "15 mature diagnostic layouts,4 relations,whole-island with actual rendered use at390/768; fixed Date and synthetic resources are explicit"
+  ],
+  "gates": {
+    "runtime": "NOT_EXECUTED",
+    "visualAppeal": "NOT_EVALUATED",
+    "comprehensionSafety": "NOT_EVALUATED",
+    "naturalSevenDayGrowth": "NOT_EVALUATED",
+    "realDevice": "NOT_EVALUATED"
+  }
+}
+
+ ✓ tools/e2e-growing-places.test.mjs (8 tests) 1674ms
+   ✓ plan prepares exact reusable diagnostics while explicitly declining to claim runtime or external gates 668ms
+   ✓ stored-owner driver waits through a busy control and a missed confirmation, then verifies the original mature owner 809ms
+
+ Test Files  2 passed (2)
+      Tests  25 passed (25)
+   Start at  08:32:55
+   Duration  2.47s (transform 108ms, setup 0ms, collect 555ms, tests 1.91s, environment 0ms, prepare 71ms)
+

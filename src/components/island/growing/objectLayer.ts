@@ -20,6 +20,7 @@ import { derivePlaces } from '../../../domain/growingIsland/places';
 import { derivePlaceRelations } from '../../../domain/growingIsland/placeRelations';
 import { buildPlaceGeometry } from './placeGeometry';
 import { buildPlacePaths } from './placePaths';
+import type { NativeGrowingKit } from './native/nativeGrowingKit';
 
 export interface Ghost { kind: SeedKind | LandmarkKind; seed: boolean; cell?: Cell; valid: boolean; style: PlotStyle; allowed: Cell[]; keepsake?: string; color?: FlowerColor; ownerId?: string }
 
@@ -29,8 +30,8 @@ const OWN_MODELS: Partial<Record<LandmarkKind, (m: IslandMaterials) => T.Group>>
     slide: buildSlide, trampoline: buildTrampoline, fountain: buildFountain, bakery: buildBakery, postbox: buildPostbox,
 };
 
-function landmarkModel(m: IslandMaterials, state: GrowingState, landmark: Landmark, reached: Set<string>) {
-    if (landmark.kind === 'sapling') return buildGrowingTree(m, landmark.id, landmark.growth);
+function landmarkModel(m: IslandMaterials, state: GrowingState, landmark: Landmark, reached: Set<string>, native?: NativeGrowingKit) {
+    if (landmark.kind === 'sapling') return native ? native.tree(landmark.id, landmark.growth) : buildGrowingTree(m, landmark.id, landmark.growth);
     if (landmark.kind === 'lighthouse') return buildLighthouse(m);
     if (landmark.kind === 'bandstand') return buildBandstand(m);
     const own = OWN_MODELS[landmark.kind]; if (own) return own(m);
@@ -46,8 +47,11 @@ function landmarkModel(m: IslandMaterials, state: GrowingState, landmark: Landma
     return buildLifeItem(item, m).root;
 }
 
-function ghostModel(m: IslandMaterials, ghost: Ghost) {
-    const model = ghost.keepsake ? buildKeepsake(m, keepsakeKind(ghost.keepsake))
+function ghostModel(m: IslandMaterials, ghost: Ghost, state: GrowingState, native?: NativeGrowingKit) {
+    const ownedHome = ghost.seed && ghost.kind === 'home' ? state.plots.find(owner => owner.id === ghost.ownerId) : undefined;
+    const model = native && !ghost.seed && ghost.kind === 'sapling' ? native.tree(ghost.ownerId ?? 'place-preview', state.landmarks.find(owner => owner.id === ghost.ownerId)?.growth ?? 0)
+        : native && ownedHome && ownedHome.stage >= 2 ? native.home(ownedHome.stage, ownedHome.style ?? 'plain', ownedHome.roof)
+        : ghost.keepsake ? buildKeepsake(m, keepsakeKind(ghost.keepsake))
         : ghost.seed ? buildPlot(m, ghost.kind as SeedKind, 1, ghost.style, 6)
         : ghost.kind === 'lighthouse' ? buildLighthouse(m)
             : ghost.kind === 'bandstand' ? buildBandstand(m)
@@ -56,9 +60,10 @@ function ghostModel(m: IslandMaterials, ghost: Ghost) {
             : buildLifeItem({ id: 'ghost', kind: ghost.kind as ItemKind, growth: 18, style: 'original' }, m).root;
     model.traverse(o => {
         if (!(o instanceof T.Mesh)) return;
-        const material = (o.material as T.Material).clone();
+        const previous = o.material as T.Material, material = previous.clone();
+        if (o.userData.ownMaterial && !o.userData.nativeSharedMaterial) previous.dispose();
         material.transparent = true; material.opacity = .5; material.depthWrite = false;
-        o.material = material; o.castShadow = false; o.userData.ownMaterial = true;
+        o.material = material; o.castShadow = false; o.userData.ownMaterial = true; o.userData.nativeSharedMaterial = false;
     });
     return model;
 }
@@ -72,7 +77,7 @@ function ring(color: string, radius = .44) {
 function ageTree(m: IslandMaterials, state: GrowingState, landmark: Landmark, holder: T.Object3D) {
     const age = treeAge(state, landmark.id);
     if (age !== 'big' && age !== 'lord') return;
-    const model = holder.children[0]; model.scale.setScalar(age === 'lord' ? 1.75 : 1.3);
+    const model = holder.children[0]; model.scale.multiplyScalar(age === 'lord' ? 1.75 : 1.3);
     if (age !== 'lord') return;
     const colors = ['#f6c6d4', '#fff1b0', '#b9d9ef'];
     for (let i = 0; i < 10; i++) {
@@ -93,7 +98,7 @@ function disposeRoots(roots: readonly T.Object3D[]) {
     for (const root of roots) {
         root.traverse(object => {
             if (!(object instanceof T.Mesh)) return;
-            geometries.add(object.geometry);
+            if (!object.userData.nativeSharedGeometry) geometries.add(object.geometry);
             if (object.userData.ownMaterial) for (const material of Array.isArray(object.material) ? object.material : [object.material]) materials.add(material);
             if (object.userData.ownTexture) textures.add(object.userData.ownTexture as T.Texture);
         });
@@ -105,7 +110,7 @@ function disposeRoots(roots: readonly T.Object3D[]) {
 }
 
 /** Saved objects persist while selection, placement and hints change. */
-export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout: SceneLayout, ghost?: Ghost, selectedId?: string, hints: readonly Cell[] = []) {
+export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout: SceneLayout, ghost?: Ghost, selectedId?: string, hints: readonly Cell[] = [], native?: NativeGrowingKit) {
     const root = new T.Group(); root.name = 'growing-objects';
     const objects = new Map<string, T.Object3D>(), buds = new Map<string, T.Object3D>(), seats = new Map<string, Seat>();
     const swingPivots = new Map<string, T.Object3D>(), fingerTargets: T.Mesh[] = [];
@@ -124,7 +129,7 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
     };
     for (const l of state.landmarks) {
         if (!l.cell) continue;
-        const holder = add(l.id, landmarkModel(m, state, l, reached), l.cell);
+        const holder = add(l.id, landmarkModel(m, state, l, reached, native), l.cell);
         // The same owned water grows into a shallow pool and stream. Old raised
         // rims/strips must not protrude through it; holder and owner ID stay selectable.
         if ((l.kind === 'water-bowl' || l.kind === 'water-channel') && grownBasins.has(l.id)) holder.children[0].visible = false;
@@ -159,7 +164,7 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
             holder.traverse(o => { o.userData.budId = p.id; });
             continue;
         }
-        const model = buildPlot(m, p.kind, p.stage, p.style ?? 'plain', p.growth, p.roof);
+        const model = native && p.kind === 'home' && p.stage >= 2 ? native.home(p.stage, p.style ?? 'plain', p.roof) : buildPlot(m, p.kind, p.stage, p.style ?? 'plain', p.growth, p.roof);
         if (p.stage === 0) {
             // A new seed can be just a few narrow stakes. Keep its refund/move sheet
             // reachable with a finger without changing the visible model.
@@ -172,7 +177,7 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
         if (p.kind === 'play' && p.stage > 0) seats.set(key(p.cell), 'play');
     }
     for (const k of state.keepsakes) if (k.cell) add(k.id, buildKeepsake(m, keepsakeKind(k.unitId)), k.cell);
-    const placeRoot = buildPlaceGeometry(state, layout, visiblePlaces, relations); root.add(placeRoot);
+    const placeRoot = buildPlaceGeometry(state, layout, visiblePlaces, relations, false, native); root.add(placeRoot);
     root.add(buildPlacePaths(state, layout, visiblePlaces));
     if (state.bridge) add('bridge', buildBridge(m), bridgeAnchor(state));
     const pier = buildPier(m, layout.pierRoot.y - .02); pier.position.copy(layout.pierRoot); root.add(pier);
@@ -225,7 +230,7 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
             }
             if (nextGhost.cell) {
                 const preview = new T.Group(); preview.name = 'growing-ghost'; preview.position.copy(layout.point(nextGhost.cell)); addPreview(preview);
-                preview.add(ghostModel(m, nextGhost), ring(nextGhost.valid ? '#fff5ac' : '#8a5a3a'));
+                preview.add(ghostModel(m, nextGhost, state, native), ring(nextGhost.valid ? '#fff5ac' : '#8a5a3a'));
                 if (nextGhost.valid && !nextGhost.keepsake) {
                     // Predict the same owned IDs/ages used by confirmation. A purchase
                     // is shown as young; it never pretends to have earned maturity.
@@ -239,7 +244,7 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
                     const predicted = derivePlaces(future);
                     const changes = predicted.filter(place => !places.some(before => before.id === place.id && before.revision === place.revision));
                     if (changes.length) {
-                        const projection = buildPlaceGeometry(future, layout, changes, derivePlaceRelations(future, predicted), true);
+                        const projection = buildPlaceGeometry(future, layout, changes, derivePlaceRelations(future, predicted), true, native);
                         projection.userData.previewRevisions = changes.map(place => place.revision); addPreview(projection);
                     }
                 }

@@ -12,6 +12,7 @@ import { disposeGeometry, IslandMaterials } from '../three/primitives';
 import { wrapPokomoko } from './actors';
 import { buildPlaceGeometry } from './placeGeometry';
 import { sceneLayout } from './sceneLayout';
+import { ROOT_ROOM_ACTOR_HEIGHT } from './placeRootRoomGeometry';
 
 // Mature owned layouts isolate physical support. They are not elapsed-time or acquisition evidence.
 function fixture(variant: 'lane' | 'court'): GrowingState {
@@ -241,14 +242,18 @@ describe('owned tree-home physical gallery', () => {
                     const floor = physicalFloor(root.getObjectByName('place-physical-gallery')!);
                     const hit = new T.Raycaster(end.clone().add(new T.Vector3(0, 1, 0)), new T.Vector3(0, -1, 0)).intersectObject(floor)[0];
                     expect(hit).toBeDefined(); expect(hit.point.y - end.y).toBeCloseTo(.030, 5); release(floor);
-                } else expect(ring.distanceTo(layout.point(origin, 1.1))).toBeLessThan(1e-5);
+                } else {
+                    const owner = layout.point(origin);
+                    expect(Math.hypot(ring.x - owner.x, ring.z - owner.z)).toBeLessThan(1e-5);
+                    expect(ring.y - owner.y).toBeGreaterThan(ROOT_ROOM_ACTOR_HEIGHT);
+                }
                 for (let vertex = 0; vertex < positions.count; vertex++) {
                     const point = new T.Vector3().fromBufferAttribute(positions, vertex).applyMatrix4(branch.matrixWorld);
                     const cell = { x: point.x + layout.center, z: point.z + 2 };
                     // Even where a branch crosses an open ground cell it stays high:
                     // there is no new support column down through a walking lane.
                     expect(point.y - terrainHeightAt(state, cell)).toBeGreaterThan(.8);
-                    if (room && open.has(key(layout.cellAt(point)))) expect(point.y - layout.point(cell).y).toBeGreaterThanOrEqual(1.166671391 + .10);
+                    if (open.has(key(layout.cellAt(point)))) expect(point.y - layout.point(cell).y).toBeGreaterThanOrEqual(ROOT_ROOM_ACTOR_HEIGHT);
                 }
             }
             expect(state).toEqual(saved);

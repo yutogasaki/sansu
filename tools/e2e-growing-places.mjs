@@ -8,7 +8,8 @@ import { hash } from './growing-fixture-data.mjs';
 import { answerUI, appRootMetadata, openGrowingMenu, readNative, runtimeMetadata, seedNative } from './island-e2e-helpers.mjs';
 import { disposeProductionProjection, plantProduction, productionCellPoint } from './growing-production-helpers.mjs';
 
-const CANDIDATE = 'native-05-place-runtime-v3';
+const CANDIDATE = process.env.SANSU_GROWING_PLACE_CANDIDATE ?? 'native-05-place-runtime-v3';
+assert(['native-05-place-runtime-v3', 'native05-owned-runtime-v1'].includes(CANDIDATE), 'Identify the actual owned rendering lineage');
 const VIEWPORTS = [{ width: 390, height: 844 }, { width: 768, height: 1024 }];
 export function parseOptions(args) {
     const result = { plan: false, diagnosticOnly: false, development: false };
@@ -41,7 +42,8 @@ async function sourceManifest(root = process.cwd()) {
     const walk = async directory => (await Promise.all((await fs.readdir(directory, { withFileTypes: true })).map(async item => item.isDirectory()
         ? walk(path.join(directory, item.name)) : item.isFile() ? [path.join(directory, item.name)] : []))).flat();
     const files = [...await walk(path.join(root, 'src')), ...await walk(path.join(root, 'public')), ...await walk(path.join(root, 'prototypes/place-qa')),
-        ...['tools/e2e-growing-places.mjs', 'tools/growing-place-fixtures.mjs', 'tools/growing-production-helpers.mjs', 'tools/island-e2e-helpers.mjs', 'docs/product/island-place-goals.json', 'package.json', 'package-lock.json'].map(file => path.join(root, file))];
+        ...['tools/e2e-growing-places.mjs', 'tools/growing-place-fixtures.mjs', 'tools/growing-production-helpers.mjs', 'tools/island-e2e-helpers.mjs', 'docs/product/island-place-goals.json', 'package.json', 'package-lock.json', 'vite.config.ts',
+            'docs/design/2026-10-11-native-owned-island/kit-manifest.json', 'docs/design/2026-10-11-native-owned-island/native05-owned-kit.glb.gz'].map(file => path.join(root, file))];
     return Object.fromEntries(await Promise.all(files.sort().map(async file => [path.relative(root, file), hash(await fs.readFile(file))])));
 }
 const stateKernel = state => ({ owners: [...state.plots, ...state.landmarks, ...state.keepsakes].map(item => ({ id: item.id, kind: item.kind, paid: item.paid, origin: item.origin, plantedAt: item.plantedAt, builtAt: item.builtAt, stagedAt: item.stagedAt, stage: item.stage, style: item.style })),
@@ -205,7 +207,10 @@ async function exerciseGoalChoices(page, read, capture) {
     const bookmark = await confirmGoalChoice(page, read, book, 'P01');
     confirmations.push({ id: 'P01', confirmationTaps: bookmark.confirmationTaps });
     await page.keyboard.press('Escape'); assert.equal(await book.isVisible(), false);
-    assert.equal(await page.locator('.growing-menu-button').evaluate(button => button === document.activeElement), true);
+    // Closing restores focus on the next rendered frame. Visibility may settle
+    // before that scheduled focus, especially on the reduced-motion tablet.
+    await until(page, () => page.locator('.growing-menu-button').evaluate(button => button === document.activeElement),
+        value => value === true, 'closed place book returns focus to its actual menu trigger');
     await page.reload(); await ready(page); assert.equal((await read()).state.placeProgress.selected, 'P01');
     return confirmations;
 }
@@ -434,7 +439,11 @@ async function diagnosticJourney(browser, options, report, pack, captureFactory)
                 await page.reload(); await ready(page); // A preceding seat play focuses its camera temporarily.
                 const place = fixture.projection.places.find(place => place.ruleId === 'P01'), ownerId = place.mainIds[0], owner = before.state.landmarks.find(item => item.id === ownerId);
                 const originalEvidence = (await read()).state.placeProgress.milestones.P01;
-                await tapCell(page, (await read()).state, owner.cell); await page.locator('.growing-sheet').getByRole('button', { name: 'しまう', exact: true }).tap();
+                // Aim at the visible saved tree's trunk. Its floor projection can
+                // lie behind the neighboring bench in the new oblique camera.
+                await tapCell(page, (await read()).state, owner.cell, CANDIDATE === 'native05-owned-runtime-v1' ? 1.0 : .04);
+                const treeSheet = page.locator('.growing-sheet[aria-label="木の なえ"]');
+                await treeSheet.waitFor(); await treeSheet.getByRole('button', { name: 'しまう', exact: true }).tap();
                 const stored = await until(page, read, record => !record.state.landmarks.find(item => item.id === ownerId).cell, 'store original tree');
                 assert.deepEqual(stored.state.placeProgress.milestones.P01, originalEvidence);
                 const menu = await openGrowingMenu(page, { touch: true }); await menu.getByRole('button', { name: 'もちもの', exact: true }).tap();
@@ -483,8 +492,12 @@ export async function main(args = process.argv.slice(2)) {
         report.build = JSON.parse(await fs.readFile(path.join(options['build-dir'], 'version.json')));
         assert.deepEqual(await fetch(`${options.url}/version.json`).then(response => response.json()), report.build, 'Actual server must serve the specified fixed build');
         assert.equal(report.build.island?.enabled, true);
+        if (CANDIDATE === 'native05-owned-runtime-v1') assert.equal(report.build.island?.nativeOwnedArt?.enabled, true);
     }
-    const browser = await chromium.launch();
+    const channel = process.env.SANSU_GROWING_BROWSER_CHANNEL;
+    assert(!channel || ['chrome', 'chromium'].includes(channel), 'Use an installed Chromium browser channel');
+    const browser = await chromium.launch(channel ? { channel } : {});
+    report.browser = { version: browser.version(), channel: channel ?? 'headless-shell' };
     const captureFactory = (page, prefix) => async label => {
         const file = `${prefix}-${label}.png`;
         await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
@@ -495,8 +508,13 @@ export async function main(args = process.argv.slice(2)) {
         if (report.build) { assert.equal(metadata.appRoot.version, report.build.version); assert.equal(metadata.appRoot.revision, report.build.revision); }
         const world = await page.locator('[data-growing-world]').count() ? await page.locator('[data-growing-world]').evaluate(world => ({ ...world.dataset })) : undefined;
         if (world) assert.equal(world.artCandidate, CANDIDATE);
+        if (world && CANDIDATE === 'native05-owned-runtime-v1') {
+            const kit = JSON.parse(await fs.readFile('docs/design/2026-10-11-native-owned-island/kit-manifest.json'));
+            assert.equal(world.nativeKitSha256, kit.sha256); assert.equal(world.nativeSourceSha256, kit.sourceSha256); assert.equal(world.gameplayMapped, 'true');
+        }
         const pixels = await page.screenshot({ path: path.join(out, file), animations: 'disabled' });
         report.captures.push({ file, hash: hash(pixels), metadata, world, cache: await page.evaluate(() => ({ controlled: Boolean(navigator.serviceWorker.controller), online: navigator.onLine })) });
+        console.log(`Captured ${file}`);
     };
     try {
         if (!options.diagnosticOnly) await acquiredJourney(browser, options, report, captureFactory);

@@ -1,0 +1,37 @@
+{
+  "app": {
+    "buildRevision": "development-local",
+    "buildVersion": "development-local:881ab7c6-d5ce-49d7-94bf-b69fde33221f",
+    "configuredDeliveryId": "snap-root-v1",
+    "deliveryId": "snap-root-v1",
+    "islandFeatureEnabled": "true",
+    "natureTownFeatureEnabled": "false",
+    "uiStyleCandidate": "whole-app-atelier-v1",
+    "visualLineageId": "pokko-field-v1"
+  },
+  "stage": {
+    "artCandidate": "native-05-art-transfer-v1",
+    "artStage": "whole-island-transfer",
+    "camera": "{\"position\":[39,43,46],\"target\":[3,3.2,-6.3],\"zoom\":1,\"frustum\":[-23,23,22.2453125,-22.2453125]}",
+    "gameplayMapped": "false",
+    "lighting": "day",
+    "loading": "false",
+    "materialBatches": "80",
+    "modelSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "modulePackSha256": "b5dc4172a6ff4be0c55452a06dcbf12c790d387e041d236882a7b53926bc1fbe",
+    "nativeArtStage": "true",
+    "nativeModules": "30",
+    "renderStats": "{\"scope\":\"resources-only\",\"materialBatches\":80,\"geometries\":80,\"textures\":9,\"ratio\":1.100000023841858}",
+    "renderedLight": "day",
+    "renderedView": "whole",
+    "sourceMeshes": "3690",
+    "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "sourceTriangles": "1396299",
+    "view": "whole"
+  },
+  "url": "http://127.0.0.1:5198/?islandArt=native05#/island",
+  "viewport": {
+    "height": 786,
+    "width": 640
+  }
+}

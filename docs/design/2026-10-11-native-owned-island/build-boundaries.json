@@ -1,0 +1,154 @@
+{
+  "schema": "sansu-native-owned-build-boundaries-v1",
+  "date": "2026-10-11T00:03:45.112Z",
+  "scope": "Final A6 and two real independent flag-off builds; same record4. Art-distribution boundary, not schema3-to4 migration/device/user acceptance.",
+  "artifacts": {
+    "old": {
+      "version": {
+        "version": "native05-owned-rollback-a2:64966682-38c5-4dca-a36f-695e788e549d",
+        "revision": "native05-owned-rollback-a2",
+        "delivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "park": {
+          "enabled": false,
+          "renderer": "retired"
+        },
+        "island": {
+          "enabled": true,
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "life": {
+            "enabled": true,
+            "discovery": false,
+            "fantasy": true,
+            "candidate": "living-fantasy-garden-v2",
+            "saveVersion": 21
+          },
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "nativeArtStudy": {
+            "enabled": false,
+            "candidate": "native-05-art-transfer-v1",
+            "gameplayMapped": false
+          },
+          "nativeOwnedArt": {
+            "enabled": false,
+            "candidate": "native05-owned-runtime-v1",
+            "gameplayMapped": true
+          },
+          "residentCandidate": "patchwork-otter-v1",
+          "artDirection": "moon-garden"
+        }
+      },
+      "sourceHash": "af01017b2466852021e716414a21caeb31439c16b600347c1fec1ec435d199a7",
+      "sourceFileCount": 2036,
+      "distFileCount": 169,
+      "nativeKitIncluded": [],
+      "kitPrecached": false,
+      "largeStudyModelsIncluded": [],
+      "precacheFiles": 143,
+      "precacheBytes": 8593115,
+      "precacheMiB": 8.195033073425293,
+      "limitMiB": 12,
+      "sourceAndDistManifestVerified": true
+    },
+    "new": {
+      "version": {
+        "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+        "revision": "native05-owned-runtime-v1-a6",
+        "delivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "park": {
+          "enabled": false,
+          "renderer": "retired"
+        },
+        "island": {
+          "enabled": true,
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "life": {
+            "enabled": true,
+            "discovery": false,
+            "fantasy": true,
+            "candidate": "living-fantasy-garden-v2",
+            "saveVersion": 21
+          },
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "nativeArtStudy": {
+            "enabled": false,
+            "candidate": "native-05-art-transfer-v1",
+            "gameplayMapped": false
+          },
+          "nativeOwnedArt": {
+            "enabled": true,
+            "candidate": "native05-owned-runtime-v1",
+            "gameplayMapped": true
+          },
+          "residentCandidate": "patchwork-otter-v1",
+          "artDirection": "moon-garden"
+        }
+      },
+      "sourceHash": "40624089afbd358e1097d13c8980d5acca520d6ec902acffb531189d9725078c",
+      "sourceFileCount": 2036,
+      "distFileCount": 170,
+      "nativeKitIncluded": [
+        "assets/native05-owned-kit.glb-KFLD7hPA.gz"
+      ],
+      "kitPrecached": true,
+      "largeStudyModelsIncluded": [],
+      "precacheFiles": 144,
+      "precacheBytes": 11247844,
+      "precacheMiB": 10.72677993774414,
+      "limitMiB": 12,
+      "sourceAndDistManifestVerified": true
+    },
+    "rollback": {
+      "version": {
+        "version": "native05-owned-rollback-a4:1890a6d2-9969-46e7-8ce6-58956bed0489",
+        "revision": "native05-owned-rollback-a4",
+        "delivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "park": {
+          "enabled": false,
+          "renderer": "retired"
+        },
+        "island": {
+          "enabled": true,
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "life": {
+            "enabled": true,
+            "discovery": false,
+            "fantasy": true,
+            "candidate": "living-fantasy-garden-v2",
+            "saveVersion": 21
+          },
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "nativeArtStudy": {
+            "enabled": false,
+            "candidate": "native-05-art-transfer-v1",
+            "gameplayMapped": false
+          },
+          "nativeOwnedArt": {
+            "enabled": false,
+            "candidate": "native05-owned-runtime-v1",
+            "gameplayMapped": true
+          },
+          "residentCandidate": "patchwork-otter-v1",
+          "artDirection": "moon-garden"
+        }
+      },
+      "sourceHash": "40624089afbd358e1097d13c8980d5acca520d6ec902acffb531189d9725078c",
+      "sourceFileCount": 2036,
+      "distFileCount": 169,
+      "nativeKitIncluded": [],
+      "kitPrecached": false,
+      "largeStudyModelsIncluded": [],
+      "precacheFiles": 143,
+      "precacheBytes": 8603364,
+      "precacheMiB": 8.20480728149414,
+      "limitMiB": 12,
+      "sourceAndDistManifestVerified": true
+    }
+  },
+  "pass": true
+}

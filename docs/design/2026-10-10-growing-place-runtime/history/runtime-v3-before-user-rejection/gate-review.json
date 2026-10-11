@@ -1,0 +1,83 @@
+{
+  "schema": "sansu-place-runtime-gates-v1",
+  "reviewedAt": "2026-10-10T10:44:06.009480+00:00",
+  "scope": "Local D1–D4 mechanism/runtime integration verified against fixed v3. Art direction locally reviewed; native05 full-island completion, child/device/natural-growth observation and public release remain open.",
+  "artCandidate": "native-05-place-runtime-v3",
+  "benchmark": {
+    "file": "../2026-10-10-island-final-3d/whole-island-render.png",
+    "hash": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6"
+  },
+  "runtime": {
+    "file": "whole-dev-art-v3-final.png",
+    "hash": "d34c26d52d9f3cc11498f0cd2621ab743ce78d8bdf67a76ab06f89ef209e363a",
+    "metadata": "whole-dev-art-v3-final-metadata.json",
+    "diagnostic": true,
+    "viewport": {
+      "width": 640,
+      "height": 787
+    }
+  },
+  "visualAppeal": {
+    "status": "GO_LOCAL_V3_DIRECTION",
+    "reviewers": [
+      "implementation author",
+      "independent UI worker (author visual comparison)"
+    ],
+    "resolved": [
+      "Same four owned trees form an amber hollow room with real gallery, asymmetric window and returned jade outer crowns",
+      "Rounded cottages, organic shallow supplied water, opaque thick blue pearl vault and one plump flower canopy distinguish four districts",
+      "Shared hilly ground, real reachable paths and camera frame follow actual owned geometry"
+    ],
+    "residuals": [
+      "Native05 dense forest and garden composition is not reproduced",
+      "Deep irregular bay and the multi-level waterfall water composition remain materially simpler"
+    ],
+    "limits": "Directional local v3 approval only, not exact completed benchmark reproduction. Author observation at actual 640x787; no child or real device study.",
+    "previousStatus": "HOLD_NATIVE_05_ALIGNMENT",
+    "previousEvidence": "history/runtime-v2/gate-review.json",
+    "latestUserDirection": "2026-10-10: user attached adopted full native05 island image and asked whether implementation is heading toward it."
+  },
+  "comprehensionSafety": {
+    "status": "INDEPENDENT_OBSERVATION_NOT_EVALUATED",
+    "limits": "Input, undo, storage and silent routing are audited separately; no child or real device observation"
+  },
+  "runtimeIntegrity": {
+    "status": "PASS_LOCAL_VERIFIED_SCOPES",
+    "previousV2Evidence": "history/runtime-v2/gate-review.json",
+    "core": {
+      "status": "PASS_LOCAL",
+      "evidence": "verification-evidence/native-v3/index.json",
+      "scope": "564 files/4966 tests, classic32, guidance24 and balance12 captures. Independent core build UUID;1837 actual source/public/tools/prototypes/package/goal files byte equal to immutable NEW. Dist/version are not identical."
+    },
+    "places": {
+      "status": "PASS_LOCAL_AGGREGATED_COVERAGE",
+      "previousFailures": [
+        "places-evidence/native-v3-harness-failed/report.json",
+        "places-evidence/native-v3-move-confirmation-failed/report.json",
+        "places-evidence/native-v3-goal-confirmation-failed/report.json",
+        "places-evidence/native-v3-natural-growth-check-failed/report.json",
+        "places-evidence/native-v3-autonomous-use-failed/report.json",
+        "places-evidence/native-v3-mature-observation-failed/report.json",
+        "places-evidence/native-v3-whole-observation-failed/report.json"
+      ],
+      "evidence": "places-evidence/combined-summary.json",
+      "criticalPath": "places-evidence/critical-path-contact-sheet.html",
+      "scope": "3 completed acquired journeys and40 unique mature case/viewport pairs on one fixedNEW, aggregated from distinct original runs. Original failed-run pass:false retained; this does not claim one full run PASS. Explicit synthetic maturity, real renderer use. Final QA only changes bounded observation/diagnostic scope; app/fixtures exact."
+    },
+    "storage": {
+      "status": "PASS_LOCAL",
+      "evidence": "storage-evidence/native-v3/index.json",
+      "scope": "Actual source old/new writers in isolated fake-IDB diagnostic plus generated-profile actual service-worker normal/interrupted390/768 four cases14 captures; exact fixed NEW/ROLLBACK. SW original-fallback captures do not prove mature geometry or real-user migration."
+    },
+    "sourceCorrespondence": "places-evidence/final-runtime-correspondence-v6.json"
+  },
+  "naturalSevenDayGrowth": {
+    "status": "NOT_EVALUATED"
+  },
+  "realDevice": {
+    "status": "NOT_EVALUATED"
+  },
+  "publication": {
+    "status": "NOT_PERFORMED"
+  }
+}

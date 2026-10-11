@@ -1,0 +1,64 @@
+{
+  "sourceGlbSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+  "sourceBlendSha256": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+  "states": [
+    {
+      "state": "small",
+      "sha256": "a8c32a569702b9fc34c54c26f7fd9572cfd748003a0618e896468bc0a721d43c",
+      "bytes": 19492120,
+      "meshes": 1475,
+      "triangles": 712832,
+      "coastArea": 337.237,
+      "referenceHouses": 3,
+      "retainedHomeMeshes": 62,
+      "retainedFigureMeshes": 29,
+      "homeGeometryExact": true,
+      "figureGeometryAndClothUvExact": true,
+      "unusedHomeUvMaxDelta": 5.960464477539063e-8,
+      "clothTextureBytesExact": true,
+      "downhillSpring": true,
+      "landmarkAnchors": {
+        "greatTree": [
+          -4.8,
+          17
+        ],
+        "lowerSpring": [
+          0.95,
+          13.15
+        ],
+        "shellHall": null
+      }
+    },
+    {
+      "state": "young",
+      "sha256": "2fe00bec4b57f41108fb23b8a91ac915dbf7ac219fe9e7ce733124e195561c25",
+      "bytes": 31421236,
+      "meshes": 2697,
+      "triangles": 1178544,
+      "coastArea": 651.181,
+      "referenceHouses": 9,
+      "retainedHomeMeshes": 172,
+      "retainedFigureMeshes": 45,
+      "homeGeometryExact": true,
+      "figureGeometryAndClothUvExact": true,
+      "unusedHomeUvMaxDelta": 5.960464477539063e-8,
+      "clothTextureBytesExact": true,
+      "downhillSpring": true,
+      "landmarkAnchors": {
+        "greatTree": [
+          -4.8,
+          17
+        ],
+        "lowerSpring": [
+          0.95,
+          13.15
+        ],
+        "shellHall": [
+          13.9,
+          -1.2
+        ]
+      }
+    }
+  ],
+  "pass": true
+}

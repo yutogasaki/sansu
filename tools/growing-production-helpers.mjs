@@ -12,6 +12,7 @@ async function project() {
             import { createWorldScene } from './src/components/island/growing/worldScene.ts';
             import { buildObjectLayer } from './src/components/island/growing/objectLayer.ts';
             import { frameCamera, initialView } from './src/components/island/growing/growingCamera.ts';
+            import { sceneLayout } from './src/components/island/growing/sceneLayout.ts';
             let world, layer, layout, stateKey;
             export function dispose(){layer?.dispose();world?.dispose();world=layer=layout=stateKey=undefined;}
             export function point(state, cell, width, height, elevation) {
@@ -26,6 +27,13 @@ async function project() {
                 const p = layout.point(cell, elevation).project(camera);
                 return { x: (p.x + 1) / 2 * width, y: (1 - p.y) / 2 * height };
             }
+            export function actualPoint(state, cell, width, height, elevation, pose) {
+                const layout = sceneLayout(state), camera = new T.OrthographicCamera();
+                camera.matrixWorld.fromArray(pose.matrixWorld); camera.matrixWorldInverse.copy(camera.matrixWorld).invert();
+                camera.projectionMatrix.fromArray(pose.projectionMatrix);
+                const p = layout.point(cell, elevation).project(camera);
+                return { x: (p.x + 1) / 2 * width, y: (1 - p.y) / 2 * height };
+            }
         `, resolveDir: process.cwd() }, bundle: true, platform: 'node', format: 'esm', write: false });
         projection = await import(`data:text/javascript;base64,${Buffer.from(compiled.outputFiles[0].text).toString('base64')}`);
     }
@@ -36,7 +44,9 @@ export function disposeProductionProjection() { projection?.dispose(); projectio
 
 export async function productionCellPoint(page, state, cell, elevation = .04) {
     const box = await page.locator('[data-growing-world] canvas').boundingBox(); assert(box);
-    const point = (await project()).point(state, cell, box.width, box.height, elevation);
+    const pose = await page.locator('[data-growing-world]').evaluate(world => world.dataset.growingCamera ? JSON.parse(world.dataset.growingCamera) : undefined);
+    const projection = await project();
+    const point = pose ? projection.actualPoint(state, cell, box.width, box.height, elevation, pose) : projection.point(state, cell, box.width, box.height, elevation);
     return { x: box.x + point.x, y: box.y + point.y };
 }
 

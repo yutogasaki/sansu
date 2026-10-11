@@ -1,7 +1,7 @@
 {
   "schema": "sansu-place-runtime-gates-v1",
-  "reviewedAt": "2026-10-10T10:44:06.009480+00:00",
-  "scope": "Local D1–D4 mechanism/runtime integration verified against fixed v3. Art direction locally reviewed; native05 full-island completion, child/device/natural-growth observation and public release remain open.",
+  "reviewedAt": "2026-10-10T11:11:42.101182+00:00",
+  "scope": "User rejected current visual result as not reaching approved native05. Visual HOLD; prior technical scoped verification remains historical and valid. No runtime implementation changed.",
   "artCandidate": "native-05-place-runtime-v3",
   "benchmark": {
     "file": "../2026-10-10-island-final-3d/whole-island-render.png",
@@ -18,7 +18,7 @@
     }
   },
   "visualAppeal": {
-    "status": "GO_LOCAL_V3_DIRECTION",
+    "status": "HOLD_USER_REJECTED_NATIVE05_GAP",
     "reviewers": [
       "implementation author",
       "independent UI worker (author visual comparison)"
@@ -29,13 +29,15 @@
       "Shared hilly ground, real reachable paths and camera frame follow actual owned geometry"
     ],
     "residuals": [
-      "Native05 dense forest and garden composition is not reproduced",
-      "Deep irregular bay and the multi-level waterfall water composition remain materially simpler"
+      "Whole-island silhouette, deep bays and real terrain layers are missing",
+      "Dense forest/garden canopy and large-to-small scale rhythm are missing",
+      "Landmark geometry/materials were independently simplified instead of transferring approved native05 art",
+      "Completed mechanism verification cannot compensate for rejected art"
     ],
-    "limits": "Directional local v3 approval only, not exact completed benchmark reproduction. Author observation at actual 640x787; no child or real device study.",
-    "previousStatus": "HOLD_NATIVE_05_ALIGNMENT",
-    "previousEvidence": "history/runtime-v2/gate-review.json",
-    "latestUserDirection": "2026-10-10: user attached adopted full native05 island image and asked whether implementation is heading toward it."
+    "limits": "Prior author direction GO withdrawn after explicit user rejection. Current art does not reproduce approved full-island composition, density, terrain or landmark forms.",
+    "previousStatus": "GO_LOCAL_V3_DIRECTION",
+    "previousEvidence": "history/runtime-v3-before-user-rejection/gate-review.json",
+    "latestUserDirection": "2026-10-10: 全く届いてないけどどうしたらいい？"
   },
   "comprehensionSafety": {
     "status": "INDEPENDENT_OBSERVATION_NOT_EVALUATED",
@@ -79,5 +81,6 @@
   },
   "publication": {
     "status": "NOT_PERFORMED"
-  }
+  },
+  "artRecovery": "art-recovery.md"
 }

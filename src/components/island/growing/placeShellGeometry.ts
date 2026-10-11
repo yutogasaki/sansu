@@ -3,6 +3,7 @@ import type { GrowingState, Cell } from '../../../domain/growingIsland';
 import type { DerivedPlace } from '../../../domain/growingIsland/placeTypes';
 import { GardenGeometry, type V3 } from '../three/garden/geometry';
 import type { SceneLayout } from './sceneLayout';
+import type { NativeGrowingKit } from './native/nativeGrowingKit';
 
 const tuple = (point: T.Vector3): V3 => [point.x, point.y, point.z];
 const LENGTH_STEPS = 32, WIDTH_STEPS = 24, THICKNESS = .14;
@@ -39,7 +40,7 @@ function panelGeometry(pointAt: (u: number, v: number) => T.Vector3, from: numbe
 
 /** Homes retain their exact owners, front doors and roofs. The shared pearl body
  * sits above the real head-clear common ground rather than enclosing it in glass. */
-export function buildPlaceShell(g: GardenGeometry, state: GrowingState, layout: SceneLayout, place: DerivedPlace) {
+export function buildPlaceShell(g: GardenGeometry, state: GrowingState, layout: SceneLayout, place: DerivedPlace, native?: NativeGrowingKit) {
     const ownedHomes = state.plots.filter(plot => place.mainIds.includes(plot.id) && plot.kind === 'home' && plot.cell);
     const cells = place.mainIds.map(id => state.plots.find(plot => plot.id === id)?.cell).filter((cell): cell is Cell => Boolean(cell));
     const homes = cells.map(cell => layout.point(cell));
@@ -58,6 +59,19 @@ export function buildPlaceShell(g: GardenGeometry, state: GrowingState, layout: 
     const halfWidth = Math.max(1.25, ...homes.map(point => Math.abs(point.clone().sub(center).dot(across)) + .80));
     const eaves = Math.max(...[...cells, ...place.entrances].map(cell => layout.point(cell).y)) + 1.40;
     const rise = Math.min(1.35, 1.04 + halfWidth * .16);
+    if (native) {
+        const roof = native.instance('shell-roof'); roof.name = 'place-native-shell';
+        roof.position.copy(center); roof.position.y = eaves;
+        // Source arch has a real open mouth. Lift its eaves above standing heads
+        // and leave all new support bases in the original blocked home cells.
+        roof.scale.set(halfWidth / 2.405, .45, halfLength / 1.728);
+        roof.rotation.y = Math.atan2(along.x, along.z); g.root.add(roof);
+        for (const p of homes) for (const side of [-1, 1]) {
+            const base = p.clone().add(new T.Vector3(side * .25, .04, -.15)), top = base.clone().setY(eaves + .08);
+            g.branch([tuple(base), tuple(top)], .045, '#a6a6cd').name = 'place-shell-owner-support';
+        }
+        return;
+    }
     const vaultPoint = (u: number, v: number) => {
         const taper = .44 + .56 * Math.sin(Math.PI * u / 2), bend = place.variant === 'bay' ? Math.sin(Math.PI * u) * Math.min(.42, halfWidth * .24) : 0;
         const scallop = .10 * Math.cos(u * Math.PI * 5) * Math.pow(Math.abs(v), 4);

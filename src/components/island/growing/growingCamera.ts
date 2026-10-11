@@ -53,11 +53,11 @@ function framingSamples(layout: SceneLayout): ArtSamples {
 export function frameCamera(camera: T.OrthographicCamera, layout: SceneLayout, view: CameraView, aspect: number) {
     const halfWidth = layout.width / 2 + layout.artMargin, shoreDepth = layout.depth / 2 + layout.artMargin;
     const halfHeight = layout.artMargin > 1.1 ? (shoreDepth + 1.15 + layout.maxHeight * .4) * .82 : (layout.depth + 4.2 + layout.maxHeight * .8) / 2 * .82;
-    const offset = BASE.clone().applyAxisAngle(new T.Vector3(0, 1, 0), view.azimuth);
+    const offset = (layout.nativeArt ? new T.Vector3(8.5, 10, 11) : BASE.clone()).applyAxisAngle(new T.Vector3(0, 1, 0), view.azimuth);
     let fit = Math.max(halfHeight, halfWidth / aspect);
     const target = new T.Vector3(0, .2, (layout.depth - 5) / 2 + .6);
     const hasOwnedHero = layout.cameraObjects?.().some(root => root.getObjectByName('place-root-room') || root.getObjectByName('place-hollow-tree-home'));
-    if (layout.artMargin > 1.1 || hasOwnedHero) {
+    if (layout.nativeArt || layout.artMargin > 1.1 || hasOwnedHero) {
         const forward = offset.clone().normalize(), right = new T.Vector3(forward.z, 0, -forward.x).normalize();
         const up = new T.Vector3().crossVectors(forward, right);
         const samples = framingSamples(layout), angle = view.azimuth;
@@ -78,12 +78,15 @@ export function frameCamera(camera: T.OrthographicCamera, layout: SceneLayout, v
     }
     const half = fit / view.zoom;
     camera.left = -half * aspect; camera.right = half * aspect; camera.top = half; camera.bottom = -half;
-    camera.far = Math.max(100, (layout.width + layout.depth) * 2);
     const limitX = layout.width / 2, limitZ = layout.depth / 2 + 1;
     view.pan.x = Math.max(-limitX, Math.min(limitX, view.pan.x));
     view.pan.z = Math.max(-limitZ, Math.min(limitZ, view.pan.z));
     target.add(new T.Vector3(view.pan.x, 0, view.pan.z));
-    offset.multiplyScalar(Math.max(1, (layout.width + layout.depth) / 30));
+    // In a tall viewport, an orthographic camera's lower ray can otherwise
+    // start below the sea. Moving its eye back keeps the exact same framing
+    // while leaving water under every part of the screen.
+    offset.multiplyScalar(Math.max(1, (layout.width + layout.depth) / 30, layout.nativeArt ? half * 1.6 / offset.y : 0));
+    camera.far = Math.max(100, (layout.width + layout.depth) * 2, offset.length() * 3);
     camera.position.copy(target).add(offset); camera.lookAt(target);
     camera.updateProjectionMatrix();
     return target;

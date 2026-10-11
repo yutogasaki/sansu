@@ -1,0 +1,18 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+stderr | src/components/island/growing/native/nativeOwnedGeometry.test.ts > native art on the actual owned floor > renders P01/lane from actual owners and keeps the gallery floor and free entrances
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+
+ ✓ src/components/island/growing/native/nativeOwnedGeometry.test.ts (16 tests) 1187ms
+   ✓ native art on the actual owned floor > renders P02/court from actual owners and keeps the gallery floor and free entrances 649ms
+ ✓ src/components/island/growing/placeGallery.test.ts (8 tests) 1976ms
+   ✓ owned tree-home physical gallery > court: follows multiple connected free cells and every walking sample has a real floor 1038ms
+
+ Test Files  2 passed (2)
+      Tests  24 passed (24)
+   Start at  08:51:58
+   Duration  2.63s (transform 304ms, setup 0ms, collect 546ms, tests 3.16s, environment 0ms, prepare 86ms)
+

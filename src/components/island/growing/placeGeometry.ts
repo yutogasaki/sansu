@@ -12,6 +12,8 @@ import { buildPlaceFlowerRoof } from './placeFlowerGeometry';
 import { buildPlaceRootRoom, ROOT_ROOM_ACTOR_HEIGHT } from './placeRootRoomGeometry';
 import { disposeGeometry } from '../three/primitives';
 import { walkableCells } from '../../../domain/growingIsland/space';
+import type { NativeGrowingKit } from './native/nativeGrowingKit';
+import { buildNativePlaceGrove } from './native/nativePlaceGrove';
 
 const LEAVES = ['#6779cf', '#8f79d6', '#6bc5b5', '#92cfae', '#a395e6'];
 const JADE = ['#5c9c80', '#74ba94', '#9acbab', '#80bcae', '#639e9b'];
@@ -235,15 +237,17 @@ function buildGallery(g: GardenGeometry, state: GrowingState, layout: SceneLayou
         board.position.sub(new T.Vector3(0, .0275, 0).applyQuaternion(board.quaternion));
         board.userData.walkSurface = true;
         boards.push(board);
-        if (!room && i > 28 && route[i].y - layout.heightAt(route[i]) > 1 && i % 3 === 0) {
+        if (!room && i > 28 && route[i].y - layout.heightAt(route[i]) > ROOT_ROOM_ACTOR_HEIGHT + .08 && i % 3 === 0) {
             // Supports grow from existing blocked tree/home cells. There is no new
             // column in a walkable ground cell beneath this upper branch path.
             const owners = [place.anchorId, ...place.mainIds].map(id => cellOf(state, id)).filter((cell): cell is Cell => Boolean(cell));
             const owner = owners.sort((left, right) => Math.hypot(left.x - route[i].x, left.z - route[i].z) - Math.hypot(right.x - route[i].x, right.z - route[i].z))[0];
             if (owner) {
-                const base = layout.point(owner, 1.1), middle = base.clone().lerp(b, .65); middle.y = Math.max(base.y, b.y) - .10;
+                const base = layout.point(owner, ROOT_ROOM_ACTOR_HEIGHT + .22), middle = base.clone().lerp(b, .65); middle.y = Math.max(base.y, b.y) - .04;
                 supportOrigins.push({ ...owner });
-                g.taperedBranch([tuple(base), tuple(middle), [b.x, b.y - .055, b.z]], .095, .052, WOOD, supports).name = 'place-gallery-branch-support';
+                // The thin tip enters the board's actual .055 thickness. A thick
+                // sagging tip would occupy the ground actor's hat clearance.
+                g.taperedBranch([tuple(base), tuple(middle), [b.x, b.y - .03, b.z]], .095, .025, WOOD, supports).name = 'place-gallery-branch-support';
             }
         }
     }
@@ -291,20 +295,21 @@ function buildGallery(g: GardenGeometry, state: GrowingState, layout: SceneLayou
 
 
 /** Derived structures contain no purchased objects and consume no game random draw. */
-export function buildPlaceGeometry(state: GrowingState, layout: SceneLayout, places: readonly DerivedPlace[], relations: readonly PlaceRelation[] = [], preview = false) {
+export function buildPlaceGeometry(state: GrowingState, layout: SceneLayout, places: readonly DerivedPlace[], relations: readonly PlaceRelation[] = [], preview = false, native?: NativeGrowingKit) {
     const root = new T.Group(); root.name = preview ? 'growing-place-preview' : 'growing-derived-places';
-    root.userData.artCandidate = 'native-05-place-runtime-v3';
+    root.userData.artCandidate = native ? 'native05-owned-runtime-v1' : 'native-05-place-runtime-v3';
     for (const place of places) {
         const g = new GardenGeometry();
         g.root.name = `growing-place-${place.ruleId}-${place.variant}`;
         g.root.userData.placeId = place.id; g.root.userData.placeRevision = place.revision; g.root.userData.placeRule = place.ruleId;
-        if (place.family === 'grove') grove(g, state, layout, place);
-        else if (place.family === 'flowers') buildPlaceFlowerRoof(g, state, layout, place);
+        if (place.family === 'grove' && native) buildNativePlaceGrove(g, state, layout, place, native, room => buildGallery(g, state, layout, place, room));
+        else if (place.family === 'grove') grove(g, state, layout, place);
+        else if (place.family === 'flowers') buildPlaceFlowerRoof(g, state, layout, place, native);
         else if (place.family === 'spring') buildPlaceSpring(g, state, layout, place, places);
-        else if (place.family === 'community') buildPlaceShell(g, state, layout, place);
+        else if (place.family === 'community') buildPlaceShell(g, state, layout, place, native);
         // Batch opaque components per place. Floor metadata is reassigned afterwards
         // and remains raycastable; owner selection resolves to this place's anchor.
-        for (const child of [...g.root.children]) if (child instanceof T.Group) g.batch(child);
+        for (const child of [...g.root.children]) if (child instanceof T.Group && !child.userData.nativePart) g.batch(child);
         g.batch(g.root);
         g.root.traverse(object => {
             let owner: T.Object3D | null = object;
@@ -315,9 +320,13 @@ export function buildPlaceGeometry(state: GrowingState, layout: SceneLayout, pla
             while (gallery && gallery.name !== 'place-physical-gallery' && gallery !== g.root) gallery = gallery.parent;
             if (gallery?.name === 'place-physical-gallery') object.userData.galleryTarget = true;
             if (!(object instanceof T.Mesh)) return;
-            object.userData.ownMaterial = true;
+            object.userData.ownMaterial = !object.userData.nativeSharedMaterial;
             if (preview) {
                 object.castShadow = false;
+                if (object.userData.nativeSharedMaterial) {
+                    object.material = Array.isArray(object.material) ? object.material.map(material => material.clone()) : object.material.clone();
+                    object.userData.nativeSharedMaterial = false; object.userData.ownMaterial = true;
+                }
                 const materials = Array.isArray(object.material) ? object.material : [object.material];
                 for (const material of materials) { material.transparent = true; material.opacity = .32; material.depthWrite = false; }
             }

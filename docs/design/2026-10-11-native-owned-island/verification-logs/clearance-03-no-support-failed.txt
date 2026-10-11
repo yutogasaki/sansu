@@ -1,0 +1,38 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+stderr | src/components/island/growing/native/nativeOwnedGeometry.test.ts > native art on the actual owned floor > renders P01/lane from actual owners and keeps the gallery floor and free entrances
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+
+ ✓ src/components/island/growing/native/nativeOwnedGeometry.test.ts (16 tests) 2698ms
+   ✓ native art on the actual owned floor > renders P02/court from actual owners and keeps the gallery floor and free entrances 1442ms
+ ❯ src/components/island/growing/placeGallery.test.ts (8 tests | 1 failed) 4620ms
+   ✓ owned tree-home physical gallery > lane: follows multiple connected free cells and every walking sample has a real floor 657ms
+   ✓ owned tree-home physical gallery > lane: supports both actual 0.7-scale Pokomoko feet across the high straight deck 465ms
+   × owned tree-home physical gallery > lane: keeps the staircase inside its free entrance and grows supports from blocked owners 220ms
+     → expected 0 to be greater than 0
+   ✓ owned tree-home physical gallery > court: follows multiple connected free cells and every walking sample has a real floor 2418ms
+   ✓ owned tree-home physical gallery > court: supports both actual 0.7-scale Pokomoko feet across the high straight deck 515ms
+   ✓ owned tree-home physical gallery > court: keeps the staircase inside its free entrance and grows supports from blocked owners 318ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/island/growing/placeGallery.test.ts > owned tree-home physical gallery > lane: keeps the staircase inside its free entrance and grows supports from blocked owners
+AssertionError: expected 0 to be greater than 0
+ ❯ src/components/island/growing/placeGallery.test.ts:223:36
+    221|             const room = root.getObjectByName('place-root-room'), join…
+    222|             const branches = joints ? joints.children : supports.child…
+    223|             expect(origins.length).toBeGreaterThan(0); expect(branches…
+       |                                    ^
+    224|             if (room) expect(branches).toHaveLength(4);
+    225|             const ownerCells = new Set([...state.landmarks, ...state.p…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 23 passed (24)
+   Start at  08:19:30
+   Duration  5.91s (transform 781ms, setup 0ms, collect 1.43s, tests 7.32s, environment 0ms, prepare 178ms)
+

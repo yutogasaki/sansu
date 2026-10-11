@@ -56,11 +56,13 @@ const server = createServer(async (req, res) => {
 });
 await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
 const base = `http://127.0.0.1:${server.address().port}`;
-const browser = await chromium.launch().catch(async error => {
+const channel = process.env.SANSU_GROWING_BROWSER_CHANNEL;
+assert(!channel || ['chrome', 'chromium'].includes(channel), 'Use an installed Chromium browser channel');
+const browser = await chromium.launch(channel ? { channel } : {}).catch(async error => {
     await new Promise(resolve => server.close(resolve));
     throw error;
 });
-const report = { target: base, builds, browser: browser.version(), scenarios: [], captures: [], pass: false,
+const report = { target: base, builds, browser: browser.version(), browserChannel: channel ?? 'headless-shell', scenarios: [], captures: [], pass: false,
     scope: 'Real onboarding/answers/ownership; real SW upgrade and safe-writer rollback on one disposable origin. Worker pin is an explicit network fault. No profile, credits, clock or update-event injection; not real-device or real-user evidence.' };
 const qaFiles = ['tools/e2e-growing-update.mjs', 'tools/island-e2e-helpers.mjs', 'tools/growing-production-helpers.mjs', 'tools/verify-growing.mjs'];
 const qaInputs = await digestFiles(process.cwd(), qaFiles);
@@ -104,7 +106,14 @@ async function capture(page, label, build) {
     const metadata = await runtimeMetadata(page);
     assert.equal(metadata.appRoot.version, builds[build].version.version);
     assert.equal(metadata.appRoot.revision, builds[build].version.revision);
-    report.captures.push({ file, ...metadata, growing: await growing(page) });
+    const world = await page.locator('[data-growing-world]').count() ? await page.locator('[data-growing-world]').evaluate(world => ({ ...world.dataset })) : undefined;
+    const nativeEnabled = builds[build].version.island.nativeOwnedArt?.enabled === true;
+    if (world && nativeEnabled) {
+        assert.equal(world.artCandidate, 'native05-owned-runtime-v1');
+        assert.equal(world.gameplayMapped, 'true');
+        assert(world.nativeKitSha256 && world.nativeSourceSha256);
+    }
+    report.captures.push({ file, ...metadata, world, growing: await growing(page) });
 }
 async function updateProbe(page) {
     await page.evaluate(async () => {
@@ -174,7 +183,15 @@ try {
             const oldCapture = report.captures.find(c => c.file === `${label}-old-learning.png`).growing;
             assertOwnershipKept(oldCapture.record, migrated.record);
             await capture(page, `${label}-new-home`, 'NEW');
+            if (builds.NEW.version.island.nativeOwnedArt?.enabled) {
+                const kit = Object.keys(builds.NEW.distFiles).find(file => /^assets\/native05-owned-kit.*\.gz$/.test(file));
+                assert(kit, 'Native kit missing from the fixed build');
+                const cached = await page.evaluate(async url => Boolean(await caches.match(url)), `${base}/${kit}`);
+                assert(cached, 'The actual controlling SW must precache the native kit');
+                scenario.nativeKit = { path: kit, distSha256: builds.NEW.distFiles[kit], actualCacheMatch: cached };
+            }
             await context.setOffline(true); await page.reload(); await ready(page);
+            await capture(page, `${label}-new-offline`, 'NEW');
             assertLearningKept(before, await readNative(page, id));
             await page.locator('.island-shell-tab--learn').tap(); await page.locator('[data-input-ready="true"]').waitFor();
             const resumed = await readNative(page, id); assert.deepEqual({ id: resumed.plan.id, cursor: resumed.plan.cursor }, reservation);

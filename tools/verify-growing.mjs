@@ -34,8 +34,11 @@ export async function digestFiles(directory, files) {
 }
 
 export function buildArchiveFiles(files) {
-    return files.filter(file => !file.includes('/') || /^(src|public|tools)\//.test(file)
-        || /^assets\/.*\.json$/.test(file) || file.startsWith('prototypes/place-qa/') || file === 'docs/product/island-place-goals.json');
+    return files.filter(file => !file.includes('/') || /^(src|public|tools|website)\//.test(file)
+        || /^assets\/.*\.json$/.test(file) || file.startsWith('prototypes/place-qa/') || file === 'docs/product/island-place-goals.json'
+        || file === 'docs/design/2026-10-10-native-art-transfer/runtime-manifest.json'
+        || /^docs\/design\/2026-10-11-island-growth-art\/(small|young)-manifest\.json$/.test(file)
+        || /^docs\/design\/2026-10-11-native-owned-island\/(kit-manifest\.json|native05-owned-kit\.glb\.gz)$/.test(file));
 }
 
 export async function copyCandidate(source, target, files, expected) {

@@ -1,0 +1,117 @@
+{
+  "artDeliverable": "COMPLETE_LOCAL_ART_AND_DISPLAY",
+  "overallGameRelease": "HOLD_GAMEPLAY_MAPPING_AND_ACCEPTANCE",
+  "target": "http://127.0.0.1:5292",
+  "version": {
+    "version": "native05-growth-art-a3:3d3d0889-5a9b-4c8a-977c-a65e7764c77e",
+    "revision": "native05-growth-art-a3",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": false,
+        "discovery": false,
+        "fantasy": false,
+        "candidate": "island-life-v1",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "nativeArtStudy": {
+        "enabled": true,
+        "candidate": "native-05-art-transfer-v1",
+        "gameplayMapped": false
+      },
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "deliveryFlags": {
+    "VITE_ISLAND_ENABLED": true,
+    "VITE_ISLAND_ART_STUDY": true
+  },
+  "stageCandidates": [
+    "native-05-art-transfer-v1",
+    "native05-growth-art-v3-small",
+    "native05-growth-art-v3-young"
+  ],
+  "gates": {
+    "visualAppeal": {
+      "status": "AUTHOR_REVIEWED_USER_PENDING",
+      "benchmark": "whole-island-native-3d-05 / approved direction",
+      "matureSourceUnchanged": true,
+      "newStages": [
+        "small",
+        "young"
+      ],
+      "observations": [
+        "Same whole camera and cottage scale; real coast/relief growth",
+        "Fan tree, rooted flower crowns, open mineral springs and tinted shell remain distinct in daylight",
+        "Unsupported petals, uphill water, large terrain stripes and the cove seam repaired",
+        "Very fine terrain edge grain remains in some headless closeups; full frames preserved for later renderer refinement"
+      ],
+      "evidence": [
+        "verification/growth-comparison.png",
+        "verification/390-small-contact.png",
+        "verification/390-young-contact.png",
+        "verification/390-grown-contact.png",
+        "verification/768-small-contact.png",
+        "verification/768-young-contact.png",
+        "verification/768-grown-contact.png"
+      ]
+    },
+    "silentComprehensionAndSafety": {
+      "status": "NOT_OBSERVED",
+      "independentParticipants": 0,
+      "scope": "explicit art study; figures and houses are illustrative; no earned population or dynamic growth claim"
+    },
+    "runtimeIntegrity": {
+      "status": "PASS_ART_STUDY_WITH_UNRELATED_CLASSIC_SMOKE_GAP",
+      "core": {
+        "files": 564,
+        "tests": 4966,
+        "pass": true
+      },
+      "growthFrames": 60,
+      "matchedMaturePairs": 10,
+      "captureEntries": 72,
+      "rawPngFrames": 88,
+      "ownershipUnchanged": true,
+      "normalIslandAndLearningReturn": true,
+      "loadFailureRetry": true,
+      "actualContextLossRetry": true,
+      "singleCanvasAfterSwitchAndRetry": true,
+      "loadedModelShaVerified": true,
+      "normalBuildExcludesThreeArtGlbs": true,
+      "sourceCorrespondenceFiles": 1577,
+      "classicSmoke": {
+        "pass": false,
+        "passed": 31,
+        "total": 32,
+        "failures": [
+          {
+            "name": "retries the same explore attempt after a save failure",
+            "error": "Error: expected a numeric addition/subtraction expression; got 1, 2, □, 4, 5\n    at getExploreNumericAnswer (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:1565:9)\n    at async scenarioExploreCommitRetry (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:2255:18)\n    at async runScenario (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:418:5)\n    at async main (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:6689:18)"
+          }
+        ],
+        "classification": "unchanged classic smoke answer helper cannot parse a number-sequence blank; no learning/domain or classic-renderer changes in this art task"
+      }
+    }
+  },
+  "remaining": [
+    "map actual owned modules and terrain/floors/entries to this art",
+    "adopt the new small/young art stages",
+    "independent child comprehension and appeal observations",
+    "real-device/PWA/offline and release acceptance"
+  ],
+  "priorDiagnostics": [
+    "diagnostics/verification-a1-shadow/report.json",
+    "diagnostics/verification-a2-shore/report.json"
+  ]
+}

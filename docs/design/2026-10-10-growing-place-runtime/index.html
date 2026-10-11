@@ -20,7 +20,7 @@
         <p class="eyebrow">2026.10.10 · GROWING ISLAND</p>
         <h1 id="title">小物から、<br class="phone-break" />そだつ場所へ。</h1>
         <p class="lead">森、水辺、入り江、花の庭。持っている木や家のつながりが、島全体の景色を変えていく。</p>
-        <p class="scope-note">目標はnative05の全景です。下はその方向へ進めた本体v3の実画面。森と庭の密度、深い入り江、段差と滝は、現在も見本よりかなり単純です。作者の方向GOと、ローカル実装の技術検証を分けて記録しています。</p>
+        <p class="scope-note">目標はnative05の全景です。下はその方向へ進めた本体v3の実画面。森と庭の密度、深い入り江、段差と滝は、現在も見本よりかなり単純です。現在の美術は利用者から差し戻され、HOLDです。制作順を完成全島からの転写へ変更しました。<a href="../2026-10-10-native-art-transfer/">本体内の完成美術と、新しい制作順を見る →</a></p>
         <figure class="hero">
           <a class="image-link" href="./whole-dev-art-v3-final.png" target="_blank" rel="noopener"><img src="./whole-dev-art-v3-final.png" width="640" height="787" alt="実装した成熟島の全景。奥の青紫の森、右の花の天蓋、中央の一続きの浅い水辺、左の厚い青紫の集会所の屋根が、緩い丘と岸に広がる。" /></a>
           <figcaption><span class="badge">実アプリの3D</span><span>DEV診断 · 成熟状態の全島 · 画像を開くと原寸で確認できます</span></figcaption>
@@ -101,14 +101,14 @@
           <div class="evidence-body">
             <table><caption>このショーケースの証拠区分</caption><thead><tr><th scope="col">区分</th><th scope="col">確認したこと</th><th scope="col">制限・結果</th></tr></thead><tbody>
               <tr><th scope="row">目標の美術</th><td>native05の全島3D</td><td>到達目標。森/庭の密度、深い湾、段差と滝は未再現。</td></tr>
-              <tr><th scope="row">作者のDEV全景</th><td>実際の640×787で全島を比較。</td><td>GO_LOCAL_V3_DIRECTION。成熟fixtureの見本で、完全再現や参加者評価ではない。</td></tr>
+              <tr><th scope="row">作者のDEV全景</th><td>実際の640×787で全島を比較。</td><td>HOLD。利用者が完成像へ届いていないと判断。作者の方向GOは撤回。</td></tr>
               <tr><th scope="row">通常取得 · 固定v3</th><td>320/390/768幅、各21回答と通常購入・学習往復。</td><td>3旅程完了。原run全体は後続でFAILのまま。fixture書込み/時刻操作なし。</td></tr>
               <tr><th scope="row">成熟診断 · 固定v3</th><td>390幅19件＋全島390幅1件＋768幅20件。</td><td>複数runの40件集約。明示fixtureと固定Date。単一コマンド全PASSではない。</td></tr>
               <tr><th scope="row">core / 既存旅程</th><td>564 files / 4,966 tests、classic32、案内24画面、balance12画面。</td><td>独立build UUID。元archive対immutable NEWの1,837共通入力がbyte一致。distや最終QAの同一性は主張しない。</td></tr>
               <tr><th scope="row">保存 / 実SW</th><td>生成QAの通常/中断4ケース・14画面。</td><td>正確なNEW/ROLLBACKを使うローカル検証。旧writer隔離は別のfake-IDB診断。14画面は成熟美術の証拠ではない。</td></tr>
             </tbody></table>
             <dl class="metadata"><div><dt>DEV全景の対象</dt><dd><code>http://127.0.0.1:5198/#/island</code> · 明示成熟診断 · 実際の640 × 787</dd></div><div><dt>実候補</dt><dd><code>native-05-place-runtime-v3</code> · Island/Growing ON · Nature Town OFF</dd></div><div><dt>固定NEWの版</dt><dd><code>native-05-place-runtime-v3-new-c3ea0771d8e6:631708c0-ffb5-476e-bf4f-864977d70cfb</code></dd></div><div><dt>固定NEWの対象</dt><dd><code>http://127.0.0.1:5289</code> · ローカルproduction build</dd></div><div><dt>観察の待機方針</dt><dd>自律利用は最大3回 × 90秒＋通常reload/ready。失敗窓と実保存を残す。初回成功の保証はない。</dd></div><div><dt>未確認</dt><dd>子どもの無説明理解・再訪、実機、実時間18時間/7日の自然成熟、公開。core checksはPASS、元の検証ラッパーのrelease判定PARTIALと全raw FAILを保持。</dd></div></dl>
-            <div class="evidence-links"><a href="./places-evidence/combined-summary.json">3旅程・40件の集約</a><a href="./places-evidence/critical-path-contact-sheet.html">重要経路の全画像</a><a href="./places-evidence/native-v3-autonomous-use-failed/report.json">取得3旅程 / 原全体FAIL</a><a href="./places-evidence/native-v3-whole-observation-failed/report.json">390幅19件 / 原全体FAIL</a><a href="./places-evidence/native-v3-whole390/report.json">全島390幅 / 選択1件PASS</a><a href="./places-evidence/native-v3-tablet/report.json">768幅 / 選択20件PASS</a><a href="./places-evidence/native-v3-whole390/new-manifest.json">固定NEWのsource manifest</a><a href="./verification-evidence/native-v3/index.json">coreと既存旅程</a><a href="./verification-evidence/native-v3/source-correspondence.json">元archiveとの共通byte比較</a><a href="./storage-evidence/native-v3/index.json">保存・実SW更新</a><a href="./places-evidence/final-runtime-correspondence-v6.json">本体と最終QAの対応監査</a><a href="./whole-dev-art-v3-final-metadata.json">DEV全景の原metadata</a><a href="./gate-review.json">美術の方向レビュー</a><a href="./README.md">記録の案内</a></div>
+            <div class="evidence-links"><a href="./places-evidence/combined-summary.json">3旅程・40件の集約</a><a href="./places-evidence/critical-path-contact-sheet.html">重要経路の全画像</a><a href="./places-evidence/native-v3-autonomous-use-failed/report.json">取得3旅程 / 原全体FAIL</a><a href="./places-evidence/native-v3-whole-observation-failed/report.json">390幅19件 / 原全体FAIL</a><a href="./places-evidence/native-v3-whole390/report.json">全島390幅 / 選択1件PASS</a><a href="./places-evidence/native-v3-tablet/report.json">768幅 / 選択20件PASS</a><a href="./places-evidence/native-v3-whole390/new-manifest.json">固定NEWのsource manifest</a><a href="./verification-evidence/native-v3/index.json">coreと既存旅程</a><a href="./verification-evidence/native-v3/source-correspondence.json">元archiveとの共通byte比較</a><a href="./storage-evidence/native-v3/index.json">保存・実SW更新</a><a href="./places-evidence/final-runtime-correspondence-v6.json">本体と最終QAの対応監査</a><a href="./whole-dev-art-v3-final-metadata.json">DEV全景の原metadata</a><a href="./gate-review.json">美術の差し戻し記録</a><a href="./art-recovery.md">全島の再制作方針</a><a href="./README.md">記録の案内</a></div>
           </div>
         </details>
       </section>

@@ -5,6 +5,7 @@ import type { DerivedPlace } from '../../../domain/growingIsland/placeTypes';
 import { key, occupant, walkableCells } from '../../../domain/growingIsland/space';
 import type { SceneLayout } from './sceneLayout';
 import { placeLeafGeometry } from './placeLeafGeometry';
+import type { NativeGrowingKit } from './native/nativeGrowingKit';
 
 const PETALS = ['#e9a0c7', '#ae9de1', '#91cbd8', '#f1ca90'];
 const TINTS: Record<string, string> = { red: '#e69bbf', pink: '#efafcc', yellow: '#efd09b', orange: '#edb29a', blue: '#99bddf',
@@ -48,7 +49,7 @@ function petal(g: GardenGeometry, center: T.Vector3, length: number, angle: numb
 }
 
 /** Same four plants grow one supported flower room; no extra owned flowers or floor. */
-export function buildPlaceFlowerRoof(g: GardenGeometry, state: GrowingState, layout: SceneLayout, place: DerivedPlace) {
+export function buildPlaceFlowerRoof(g: GardenGeometry, state: GrowingState, layout: SceneLayout, place: DerivedPlace, native?: NativeGrowingKit) {
     const owners = place.mainIds.map(id => state.landmarks.find(owner => owner.id === id && owner.kind === 'flower' && owner.cell))
         .filter((owner): owner is NonNullable<typeof owner> => Boolean(owner));
     if (!owners.length) return;
@@ -81,7 +82,18 @@ export function buildPlaceFlowerRoof(g: GardenGeometry, state: GrowingState, lay
         g.branch([tuple(stemTop), tuple(stemTop.clone().lerp(roofCenter, .5).add(new T.Vector3(0, .10, 0))), tuple(roofCenter)], .035, '#83bca6', roof)
             .name = 'place-flower-high-support';
     }
-    if (place.variant === 'arch') {
+    if (native) {
+        const blossom = (at: T.Vector3, span: number) => {
+            const crown = native.instance('flower-crown'); crown.position.copy(at); crown.scale.setScalar(span / 2.57); roof.add(crown);
+        };
+        if (place.variant === 'arch') {
+            for (let i = 0; i < cells.length; i++) for (let j = i + 1; j < cells.length; j++) {
+                const a = cells[i], b = cells[j];
+                if (Math.abs(a.x - b.x) + Math.abs(a.z - b.z) > 2 || (a.x !== b.x && a.z !== b.z)) continue;
+                const middle = points[i].clone().lerp(points[j], .5); middle.y = roofY; blossom(middle, .90);
+            }
+        } else blossom(roofCenter, radius * 1.1);
+    } else if (place.variant === 'arch') {
         // A row remains a sequence of linked blossoms, with openings between its
         // owner stems, rather than forcing every arrangement into a round canopy.
         for (let i = 0; i < cells.length; i++) for (let j = i + 1; j < cells.length; j++) {

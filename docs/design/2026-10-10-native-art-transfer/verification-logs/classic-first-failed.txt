@@ -1,0 +1,76 @@
+
+> pokko-fushigi-zukan-app@0.0.0 e2e:smoke
+> node tools/e2e-smoke.mjs
+
+Starting dev server on http://127.0.0.1:4173...
+
+> pokko-fushigi-zukan-app@0.0.0 dev:test-server
+> vite --host 127.0.0.1 --port 4173 --strictPort
+
+
+  VITE v7.3.1  ready in 929 ms
+
+  ➜  Local:   http://127.0.0.1:4173/
+Browserslist: browsers data (caniuse-lite) is 9 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+Dev server ready on http://127.0.0.1:4173.
+FAIL redirects to onboarding when no profile: page.goto: Timeout 45000ms exceeded.
+Call log:
+[2m  - navigating to "http://127.0.0.1:4173/#/", waiting until "domcontentloaded"[22m
+
+    at scenarioOnboardingShown (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:555:14)
+    at async runScenario (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:418:5)
+    at async main (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:6663:18)
+FAIL completes onboarding, chooses a route, and opens Makimodon: page.goto: Timeout 30000ms exceeded.
+Call log:
+[2m  - navigating to "http://127.0.0.1:4173/#/onboarding", waiting until "domcontentloaded"[22m
+
+    at completeOnboarding (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:481:14)
+    at scenarioOnboardingToExploreProblem (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:571:9)
+    at async runScenario (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:418:5)
+    at async main (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:6664:18)
+PASS keeps the classic opening playable with expanded mobile browser chrome (2173ms)
+PASS keeps the direct study route working (1975ms)
+PASS keeps the direct review route working (1374ms)
+PASS keeps the direct settings route working (1361ms)
+PASS keeps legacy fuwafuwa album out of child records (2138ms)
+PASS completes confirmation test from parent settings and opens results (29189ms)
+PASS launches explore immediately and safely returns at a route break (3306ms)
+PASS keeps the 390x800 route boundary fully visible (3088ms)
+PASS runs Root Pull v2 inline with reduced motion and the numeric keypad (2980ms)
+Snap Root measured ms { firstIncorrect: 430, secondIncorrect: 529, correct: [ 121, 128 ] }
+PASS runs the Snap Root breakthrough loop at 390px (5082ms)
+PASS keeps the Snap Root breakthrough loop playable on tablet (3037ms)
+PASS can exit safely after explore start persistence fails (1840ms)
+PASS safely exits and retries from a pending explore problem (2114ms)
+PASS commits one explore answer under rapid double submit (2171ms)
+9:38:12 PM [vite] (client) page reload docs/design/2026-10-10-growing-place-runtime/index.html
+9:38:12 PM [vite] (client) hmr update /src/index.css
+9:38:13 PM [vite] (client) page reload dist-website/index.html
+FAIL retries the same explore attempt after a save failure: locator.waitFor: Timeout 15000ms exceeded.
+Call log:
+[2m  - waiting for locator('#explore-problem-title') to be visible[22m
+[2m    - waiting for" http://127.0.0.1:4173/" navigation to finish...[22m
+[2m    - navigated to "http://127.0.0.1:4173/#/explore"[22m
+
+    at waitForExploreFirstProblemReady (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:497:48)
+    at async openFirstExploreAttempt (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:1889:3)
+    at async scenarioExploreCommitRetry (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:2244:3)
+    at async runScenario (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:418:5)
+    at async main (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:6689:18)
+PASS resumes fixed-ten explore across retry, route, discovery, and partial-input boundaries (7544ms)
+PASS finishes last-light rescue without blocking on an ordinary clue (1963ms)
+PASS retries voluntary return without early terminal progress (3080ms)
+PASS grows the immersive light bridge from an addition answer (4631ms)
+PASS keeps the light bridge playable on tablet (4647ms)
+PASS keeps the light bridge connected on a landscape tablet (4622ms)
+PASS keeps the light bridge playable on a 1024px portrait tablet (4692ms)
+PASS keeps the light bridge playable on a wide portrait tablet (4682ms)
+PASS retains root observation after the first same-problem retry (5285ms)
+PASS opens the root tangle with profile-near subtraction (5741ms)
+PASS keeps the root tangle playable on tablet (5851ms)
+PASS keeps the root tangle playable on a landscape tablet (5977ms)
+PASS keeps the root tangle playable on a 1024px portrait tablet (5917ms)
+PASS keeps the root tangle playable on a wide portrait tablet (5846ms)
+PASS opens /parents directly without arithmetic (1516ms)

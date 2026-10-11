@@ -1,0 +1,75 @@
+{
+  "scope": "Stage A: completed-island art transfer, not completed owner-dependent growth or public release",
+  "artCandidate": "native-05-art-transfer-v1",
+  "artBuild": {
+    "version": "native05-art-transfer-a2-f10a43c4222a:864a0d3a-bffe-4047-a1d8-29fd59cf8a11",
+    "revision": "native05-art-transfer-a2-f10a43c4222a",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": false,
+        "candidate": "island-life-v1",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "nativeArtStudy": {
+        "enabled": true,
+        "candidate": "native-05-art-transfer-v1",
+        "gameplayMapped": false
+      },
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "artQA": {
+    "pass": true,
+    "report": "verification-a2/report.json",
+    "captures": 32,
+    "viewports": [
+      "390x844",
+      "768x1024"
+    ],
+    "renderedDayEveningScreens": 20,
+    "matchedSourcePairs": 10,
+    "ownershipUnchanged": true,
+    "loadFailureRetry": true,
+    "contextLossRetry": true
+  },
+  "core": {
+    "command": "npm run verify:core",
+    "pass": true,
+    "files": 564,
+    "tests": 4966,
+    "log": "verification-logs/core-final.log"
+  },
+  "classic": {
+    "command": "npm run e2e:smoke",
+    "pass": true,
+    "scenarios": 32,
+    "report": "classic-sequential-report.json"
+  },
+  "normalBuildBoundary": {
+    "pass": true,
+    "report": "normal-build-boundary.json"
+  },
+  "gates": {
+    "visual": "Transfer available for review; normal owned v3 remains HOLD_USER_REJECTED_NATIVE05_GAP",
+    "comprehension": "QA controls/return/recovery only; child silent comprehension not evaluated",
+    "runtime": "Scoped local checks passed; full growth, release, SW offline/update and device performance not evaluated"
+  },
+  "next": [
+    "B: authored terrain, entrance and actual walking floor",
+    "C: same authored parts for young/connected/mature/split/reconnected ownership",
+    "D: relationships and whole-island life"
+  ]
+}

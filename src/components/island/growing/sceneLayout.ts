@@ -25,7 +25,7 @@ export function sceneLayout(state: Pick<GrowingState, 'land'> & Partial<Pick<Gro
     const key = `${bounds.minX},${bounds.maxX},${bounds.depth}`;
     let maxHeight = 0;
     for (let z = 0; z < bounds.depth; z++) maxHeight = Math.max(maxHeight, heightAt({ x: bounds.minX, z }), heightAt({ x: bounds.maxX, z }));
-    return { bounds, center, point, floorPoint, heightAt, maxHeight, cellAt, pierRoot, pierEnd, dock, far, farther, key,
+    return { bounds, center, point, floorPoint, heightAt, maxHeight, cellAt, pierRoot, pierEnd, dock, far, farther, key, nativeArt: false,
         // The world supplies the actual static models after rebuilding. Camera fit
         // uses their vertices rather than placing a tall imaginary tree on every shore.
         cameraObjects: undefined as (() => readonly T.Object3D[]) | undefined,

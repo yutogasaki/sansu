@@ -20,6 +20,7 @@ import { retainSharedRendererCache } from '../three/sharedRendererCache';
 import { bridgeAnchor, bridgeEnd } from '../../../domain/growingIsland/space';
 import type { DerivedPlace } from '../../../domain/growingIsland/placeTypes';
 import type { PlaceUseReceipt } from './growingLife';
+import type { NativeGrowingKit } from './native/nativeGrowingKit';
 
 export interface WorldHandlers {
     onCell: (cell: Cell) => void;
@@ -50,6 +51,7 @@ type Props = WorldHandlers & { state: GrowingState; time: GardenTime; ghost?: Gh
     hints?: readonly Cell[]; moment?: ShownMoment; show?: boolean; active?: boolean; compact?: boolean; qualityCeiling?: number; focus?: { id: string; n: number }; concert?: { cell: Cell; n: number }; bridgeBuild?: number; onCamera?: (camera?: WorldCamera) => void };
 
 const reducedMotion = () => typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+const nativeArtEnabled = import.meta.env.DEV || import.meta.env.VITE_NATIVE_GROWING_ART === 'true';
 
 export default function GrowingWorld({ state, time, ghost, selectedId, turn, cheer, festival, hints, moment, show, active = true, compact, qualityCeiling = 1.25, focus, concert, bridgeBuild, onCamera, ...handlers }: Props) {
     const host = useRef<HTMLDivElement>(null);
@@ -76,10 +78,11 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
         }
         const quality = light ? new AdaptiveIslandQuality(Math.min(qualityCeiling, window.devicePixelRatio || 1)) : undefined;
         let frame = 0, lost = false, released = false;
+        const abort = new AbortController();
         const disposers: (() => void)[] = [() => { renderer.dispose(); renderer.forceContextLoss(); renderer.domElement.remove(); }];
         const release = () => {
             if (released) return;
-            released = true; cancelAnimationFrame(frame); api.current = undefined; cameraRef.current?.(undefined);
+            released = true; abort.abort(); cancelAnimationFrame(frame); api.current = undefined; cameraRef.current?.(undefined);
             for (const dispose of disposers.reverse()) { try { dispose(); } catch { /* Continue releasing the remaining GPU resources. */ } }
         };
         const fail = (stage: string, error?: unknown) => {
@@ -96,7 +99,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
         const contextLost = (event: Event) => { event.preventDefault(); fail('context-lost'); };
         renderer.domElement.addEventListener('webglcontextlost', contextLost);
         disposers.push(() => renderer.domElement.removeEventListener('webglcontextlost', contextLost));
-        try {
+        void (async () => { try {
         renderer.setPixelRatio(quality?.ratio ?? Math.min(window.devicePixelRatio || 1, 1.5));
         renderer.domElement.dataset.pixelRatio = String(renderer.getPixelRatio());
         renderer.domElement.dataset.qualityCeiling = String(qualityCeiling);
@@ -107,7 +110,20 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
         renderer.domElement.style.touchAction = 'none';
         node.append(renderer.domElement);
         handlerRef.current.onStage?.('scene');
-        const world = createWorldScene(renderer); disposers.push(() => world.dispose());
+        let native: NativeGrowingKit | undefined;
+        if (nativeArtEnabled) {
+            const { loadNativeGrowingKit } = await import('./native/nativeGrowingAssets');
+            abort.signal.throwIfAborted(); native = await loadNativeGrowingKit(abort.signal);
+            if (native) {
+                disposers.push(() => native?.dispose());
+                node.dataset.nativeKitSha256 = native.manifest.sha256;
+                node.dataset.nativeSourceSha256 = native.manifest.sourceSha256;
+                node.dataset.nativeKitGzipBytes = String(native.manifest.gzipBytes);
+                node.dataset.gameplayMapped = 'true';
+            }
+        }
+        if (released) return;
+        const world = createWorldScene(renderer, native); disposers.push(() => world.dispose());
         const releaseSharedCache = retainSharedRendererCache(world.m.residentFabric());
         disposers.push(releaseSharedCache);
         let bridgeWork: { at: number; resident: string; owner: string; parts: T.Object3D[]; crossing?: boolean } | undefined;
@@ -141,6 +157,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
         disposers.push(() => layer?.dispose());
         const reduced = reducedMotion();
         let pendingConcert: number | undefined;
+        let publishedCamera = '';
         let rebuilt: { state: GrowingState; ghost?: Ghost; selected?: string; hints?: readonly Cell[] } | undefined;
 
         const rebuild = (next: GrowingState, nextGhost?: Ghost, selected?: string, nextHints?: readonly Cell[]) => {
@@ -158,7 +175,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             node.dataset.growingBounds = JSON.stringify(layout.bounds);
             node.dataset.bridgeSaved = String(Boolean(next.bridge));
             layer?.dispose();
-            layer = buildObjectLayer(world.m, next, layout, nextGhost, selected, nextHints);
+            layer = buildObjectLayer(world.m, next, layout, nextGhost, selected, nextHints, native);
             world.scene.add(layer.root);
             const now = performance.now();
             for (const id of unopened) if (!next.unopened.includes(id)) {
@@ -345,6 +362,11 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
                 renderer.domElement.dataset.pixelRatio = String(renderer.getPixelRatio());
                 if (quality) renderer.domElement.dataset.qualityLimit = String(quality.ceilingRatio);
                 renderer.render(world.scene, camera);
+                const pose = `${camera.matrixWorld.elements.join(',')}:${camera.projectionMatrix.elements.join(',')}`;
+                if (pose !== publishedCamera) {
+                    publishedCamera = pose;
+                    node.dataset.growingCamera = JSON.stringify({ matrixWorld: camera.matrixWorld.toArray(), projectionMatrix: camera.projectionMatrix.toArray(), center: layout.center });
+                }
             } catch (error) { fail('render', error); return; }
             if (renderer.getContext().isContextLost()) { fail('context-lost'); return; }
             if (layer && latest.current.active && document.visibilityState === 'visible') {
@@ -530,7 +552,9 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             canvas.removeEventListener('wheel', wheel);
         });
         return release;
-        } catch (error) { fail('scene-initialization', error); return release; }
+        } catch (error) { if (!released) fail('scene-initialization', error); }
+        })();
+        return release;
     // A retry mounts a fresh world; its graphics profile is fixed for that lifetime.
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -546,7 +570,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
     const lastTurn = useRef(turn);
     useEffect(() => { if (turn !== lastTurn.current) { api.current?.turn(turn - lastTurn.current); lastTurn.current = turn; } }, [turn]);
 
-    return <div className="growing-world" ref={host} data-growing-world data-visual-candidate="growing-island-v1" data-art-candidate="native-05-place-runtime-v3" data-growing-feature-enabled="true">
+    return <div className="growing-world" ref={host} data-growing-world data-visual-candidate="growing-island-v1" data-art-candidate={nativeArtEnabled ? 'native05-owned-runtime-v1' : 'native-05-place-runtime-v3'} data-native-growing-art={String(nativeArtEnabled)} data-growing-feature-enabled="true">
         {failed && <p className="growing-world-failed">しまを ひょうじ できなかったよ。よみなおしてみてね。</p>}
         {bridgeStage && <div className="growing-bridge-caption" data-bridge-stage={bridgeStage} role="status">
             {bridgeStage === 'building' ? 'ぽこもこが はしを つくっているよ' : bridgeStage === 'crossing' ? 'なかまが わたっているよ' : 'むこうまで いけた！'}

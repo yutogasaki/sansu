@@ -1,0 +1,15 @@
+{
+  "scope": "Fixed art build to current renderer/source files; distribution boundary is a separate config change",
+  "artBuildRevision": "native05-art-transfer-a2-f10a43c4222a",
+  "unchangedFiles": 1571,
+  "changes": [
+    {
+      "file": "vite.config.ts",
+      "testedSha256": "3ecc485e8c6bdf32a88c3d2f5db7a1f07133bf05b7d1bf7b003605066a0e8d0e",
+      "currentSha256": "0dcc26aee271aacc104398ab748326131f0b345a0cdeadee3d8a35a093475003"
+    }
+  ],
+  "exception": "The final Vite hook runs before core resolution and also matches the absolute module path. It only substitutes the disabled study; enabled art uses the same original module.",
+  "testedConfig": "verification-a2/tested-vite-config.txt",
+  "generatorSha256": "ba3776cf528f3ca58eea839a4ecd16bcaacf126fe7e4ef4b887a2b32a77a8dab"
+}

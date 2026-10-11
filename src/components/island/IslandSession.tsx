@@ -104,6 +104,9 @@ import './IslandHouseOverview.css';
 
 type Screen = IslandScreen;
 const GrowingIsland = lazy(() => import('./growing/GrowingIsland'));
+// A deliberately gated art transfer inside the app. Standard builds exclude its model.
+const NativeIslandArt = (import.meta.env.DEV || import.meta.env.VITE_ISLAND_ART_STUDY === 'true')
+    ? lazy(() => import('./growing/native/NativeIslandArt')) : undefined;
 const GrowingHouseGuide = lazy(() => import('./growing/GrowingHouseGuide'));
 const IslandAlbum = lazy(() => import('./IslandAlbum').then(module => ({ default: module.IslandAlbum })));
 const IslandCustomization = lazy(() => import('./IslandCustomization').then(module => ({ default: module.IslandCustomization })));
@@ -114,6 +117,7 @@ const IslandExpression = lazy(() => import('./IslandExpression').then(module => 
 const IslandSharedMemories = lazy(() => import('./IslandSharedMemories').then(module => ({ default: module.IslandSharedMemories })));
 
 export function IslandSession({ profile }: { profile: UserProfile }) {
+    const [nativeArt, setNativeArt] = useState(() => Boolean(NativeIslandArt) && new URLSearchParams(window.location.search).get('islandArt') === 'native05');
     const [growingProfileSwitchBlocked, setGrowingProfileSwitchBlocked] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
@@ -514,8 +518,9 @@ export function IslandSession({ profile }: { profile: UserProfile }) {
         {roomWord && screen === 'keepsakes' && <p className="room-word" role="status" key={roomWord.at}><strong>{roomWord.text}</strong>{roomWord.japanese && <span>{roomWord.japanese}</span>}</p>}
         {screen === 'placement' && preview && <IslandPlacementActions valid={valid} disabled={busy} onSave={savePlacement} onCancel={cancelPlacement} />}
         {active && screen === 'home' && <Suspense fallback={<GrowingLoading step="screen" />}>
-            <GrowingIsland onProfileSwitchBlockedChange={setGrowingProfileSwitchBlocked} key={profile.id} profileId={profile.id} profileName={profile.name} active={active} sound={Boolean(profile.soundEnabled)} onHome={enterHouse} onLearn={() => void begin()}
+            {nativeArt && NativeIslandArt ? <NativeIslandArt onClose={() => setNativeArt(false)} /> : <GrowingIsland onProfileSwitchBlockedChange={setGrowingProfileSwitchBlocked} key={profile.id} profileId={profile.id} profileName={profile.name} active={active} sound={Boolean(profile.soundEnabled)} onHome={enterHouse} onLearn={() => void begin()}
                 menuUtilities={homeUtilities} guideRequest={growingGuideRequest} onGuideRequestConsumed={() => setGrowingGuideRequest(undefined)} />
+            }
         </Suspense>}
         {/* Learning hides the world. Do not create a legacy WebGL world
             behind the questions just to destroy it when returning home. */}

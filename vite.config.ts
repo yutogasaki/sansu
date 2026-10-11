@@ -47,6 +47,16 @@ const resolveBuildMetadata = (mode: string) => {
             saveVersion: 21,
         },
         learningCandidate: 'pokomoko-pop-live-v8',
+        nativeArtStudy: {
+            enabled: mode === 'development' || env.VITE_ISLAND_ART_STUDY === 'true',
+            candidate: 'native-05-art-transfer-v1',
+            gameplayMapped: false,
+        },
+        nativeOwnedArt: {
+            enabled: mode === 'development' || env.VITE_NATIVE_GROWING_ART === 'true',
+            candidate: 'native05-owned-runtime-v1',
+            gameplayMapped: true,
+        },
         residentCandidate: 'patchwork-otter-v1',
         artDirection: ['festival', 'moon-garden', 'prism'].includes(env.VITE_ISLAND_ART_DIRECTION)
             ? env.VITE_ISLAND_ART_DIRECTION : 'moon-garden',
@@ -111,6 +121,34 @@ const appVersionManifestPlugin = ({
     }
 })
 
+// Vite emits ?url assets before Rollup removes a disabled dynamic import.
+// Resolve the disabled study to an empty module so the 35 MB reference cannot
+// enter an ordinary distribution, even as an unreachable asset.
+const nativeArtStudyBoundaryPlugin = (enabled: boolean) => ({
+    name: 'native-art-study-boundary',
+    enforce: 'pre' as const,
+    resolveId(source: string, importer?: string) {
+        const study = source === './growing/native/NativeIslandArt'
+            || source === path.resolve(__dirname, 'src/components/island/growing/native/NativeIslandArt.tsx')
+        return !enabled && study
+            && importer?.endsWith('/IslandSession.tsx') ? '\0native-art-study-disabled' : null
+    },
+    load(id: string) {
+        return id === '\0native-art-study-disabled' ? 'export default function NativeArtStudyDisabled() { return null }' : null
+    },
+})
+
+const nativeOwnedArtBoundaryPlugin = (enabled: boolean) => ({
+    name: 'native-owned-art-boundary',
+    enforce: 'pre' as const,
+    resolveId(source: string, importer?: string) {
+        const kit = source === './native/nativeGrowingAssets'
+            || source === path.resolve(__dirname, 'src/components/island/growing/native/nativeGrowingAssets.ts')
+        return !enabled && kit && importer?.endsWith('/GrowingWorld.tsx') ? '\0native-owned-art-disabled' : null
+    },
+    load(id: string) { return id === '\0native-owned-art-disabled' ? 'export async function loadNativeGrowingKit() { return undefined }' : null },
+})
+
 export default defineConfig(({ mode }) => {
     const buildMetadata = resolveBuildMetadata(mode)
 
@@ -123,6 +161,8 @@ export default defineConfig(({ mode }) => {
             __VISUAL_LINEAGE_ID__: JSON.stringify(buildMetadata.visualLineage),
         },
         plugins: [
+            nativeArtStudyBoundaryPlugin(buildMetadata.island.nativeArtStudy.enabled),
+            nativeOwnedArtBoundaryPlugin(buildMetadata.island.nativeOwnedArt.enabled),
             appVersionManifestPlugin(buildMetadata),
             react(),
             VitePWA({
@@ -140,6 +180,9 @@ export default defineConfig(({ mode }) => {
                 ],
                 manifest: false, // We use public/manifest.json
                 workbox: {
+                    // The verified native kit has a separate 3 MiB ceiling. It
+                    // must be in this build's precache before offline reload.
+                    maximumFileSizeToCacheInBytes: 3 * 1024 * 1024,
                     skipWaiting: true,
                     clientsClaim: true,
                     // A drift recovery must fetch the new HTML from the host,
@@ -147,7 +190,7 @@ export default defineConfig(({ mode }) => {
                     navigateFallbackDenylist: [/[?&]__app-update=/, /^\/promo(?:\/|$)/],
                     // Explicit includeAssets above owns approved offline media;
                     // this glob covers the app shell, Life control stills and learning character poses.
-                    globPatterns: ['**/*.{js,css,html,ico,woff,woff2}', 'assets/flower-bloom-original-*.png', 'assets/pokomoko-original-*.png', 'assets/pokomoko-learning-poses-*.webp', 'assets/pokomoko-arcade-poses-*.webp', 'assets/pokomoko-arcade-rim-*.webp', 'assets/town-*.png'],
+                    globPatterns: ['**/*.{js,css,html,ico,woff,woff2}', 'assets/flower-bloom-original-*.png', 'assets/pokomoko-original-*.png', 'assets/pokomoko-learning-poses-*.webp', 'assets/pokomoko-arcade-poses-*.webp', 'assets/pokomoko-arcade-rim-*.webp', 'assets/town-*.png', 'assets/native05-owned-kit*.gz'],
                     // The public Japanese WOFF2 is not referenced by the app. Keep
                     // the bundled UI font, but do not download this PDF-era copy
                     // during every fresh PWA installation.

@@ -1,0 +1,163 @@
+{
+  "schema": "sansu-native-owned-art-gate-v1",
+  "reviewedAt": "2026-10-11T00:16:00.178Z",
+  "candidate": "native05-owned-runtime-v1",
+  "deliveryFlag": "VITE_NATIVE_GROWING_ART=true; normal production default false",
+  "actualTarget": "http://127.0.0.1:5316",
+  "build": {
+    "version": "native05-owned-runtime-v1-a6:adcc5b46-df3a-4870-b18d-7f555a537252",
+    "revision": "native05-owned-runtime-v1-a6",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": true,
+        "candidate": "living-fantasy-garden-v2",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "nativeArtStudy": {
+        "enabled": false,
+        "candidate": "native-05-art-transfer-v1",
+        "gameplayMapped": false
+      },
+      "nativeOwnedArt": {
+        "enabled": true,
+        "candidate": "native05-owned-runtime-v1",
+        "gameplayMapped": true
+      },
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "benchmark": {
+    "candidate": "whole-island-native-3d-05",
+    "modelSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "image": "../2026-10-10-island-final-3d/whole-island-render.png",
+    "userAdoptedDirection": true
+  },
+  "evidenceType": "actual-runtime-screenshots; source image is a separate benchmark",
+  "viewports": [
+    {
+      "width": 390,
+      "height": 844
+    },
+    {
+      "width": 768,
+      "height": 1024
+    }
+  ],
+  "visualAppeal": {
+    "verdict": "HOLD_NATIVE05_WHOLE_GEOMETRY_GAP",
+    "score": 41,
+    "outOf": 60,
+    "authorOnly": true,
+    "independentObservers": 0,
+    "axes": [
+      {
+        "axis": "Enter the world",
+        "score": 7,
+        "reason": "Native forms make distinct places, but a broad rectangular plateau and sparse district edges remain."
+      },
+      {
+        "axis": "Character attachment",
+        "score": 7,
+        "reason": "Original real bodies, UV and fabric are retained; whole-island character scale remains small."
+      },
+      {
+        "axis": "Material touch",
+        "score": 8,
+        "reason": "Original tiles, leaf curves, petals and colored transmission survive. Functional court body is still a derived substitute."
+      },
+      {
+        "axis": "Composition and depth",
+        "score": 5,
+        "reason": "Deep inlets, raised mineral springs and authored foreground/middle/background density do not yet match the source."
+      },
+      {
+        "axis": "Pop and focal color",
+        "score": 8,
+        "reason": "Teal/lilac fan leaves, warm wood and pink petals work in day light."
+      },
+      {
+        "axis": "Incident and payoff",
+        "score": 6,
+        "reason": "Real owned places are used by actors; the still whole-island frame has limited anticipation and spatial payoff."
+      }
+    ],
+    "evidence": [
+      "verification-a6/qa-place-whole-island-v1-390-grown-real-3d.png",
+      "verification-a6/qa-place-whole-island-v1-768-grown-real-3d.png"
+    ],
+    "approvedSourceParity": false,
+    "remaining": [
+      "Deep inlet and narrow shore settlement geometry",
+      "Raised mineral three-tier spring and downward water",
+      "Original hollow court stem proportion and exact source body",
+      "District density, negative space and foreground/middle/background composition"
+    ]
+  },
+  "comprehensionSafety": {
+    "verdict": "NOT_EVALUATED_INDEPENDENTLY",
+    "independentChildren": 0,
+    "physicalFloorClearanceChecks": "PASS",
+    "understandingAndDesireToReturnNotInferred": true,
+    "dangerInterpretations": "Not measured; zero must not be assumed"
+  },
+  "runtimeIntegrity": {
+    "verdict": "PASS_SCOPED_A6",
+    "core": {
+      "files": 566,
+      "tests": 4984,
+      "log": "verification-logs/core-a6.txt"
+    },
+    "acquired": {
+      "journeys": 3,
+      "answersPerJourney": 21,
+      "fixtureWrites": false,
+      "clockManipulation": false,
+      "report": "verification-a6/report.json"
+    },
+    "mature": {
+      "caseViewportPairs": 40,
+      "syntheticMaturity": true,
+      "actualOwnedActorUse": true,
+      "p06BothActorTypesAtBothWidths": true,
+      "storedRejoinedOwnerHistory": true
+    },
+    "faults": {
+      "scenarios": 2,
+      "report": "faults-a6/report.json"
+    },
+    "pwa": {
+      "scenarios": 4,
+      "captures": 18,
+      "saveVersionFrom": 4,
+      "saveVersionTo": 4,
+      "report": "update-a6/report.json"
+    },
+    "assetBudget": {
+      "kitGzipBytes": 2554378,
+      "precacheBytes": 11247844,
+      "limitBytes": 12582912,
+      "offBuildExcludesKitAndStudyModels": true
+    },
+    "qaBuildSourceMatches": true,
+    "learningLoopSourceUnchanged": true,
+    "coldOpenP95AndFixedTen": "Not remeasured in this art-only scope; no claim of a fresh whole-product release pass",
+    "realDevice": "NOT_EVALUATED",
+    "natural18HourSevenDayGrowth": "NOT_EVALUATED"
+  },
+  "criticalPath": "critical-path.html",
+  "verdict": "HOLD_FULL_ISLAND_ACCEPTANCE",
+  "completionUnit": "Lossless source parts mapped to actual owned objects and real floors, verified local prototype. Whole-island target is still open."
+}
