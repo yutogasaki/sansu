@@ -5,7 +5,7 @@
   "candidate": "native05-authored-runtime-m1",
   "fixtureCandidate": "native05-authored-editable-m1-v1",
   "worldId": "native05-authored-world-m0-v2",
-  "gitParent": "1069b43294a10d37d92de612f33f51c0af27dbb0",
+  "gitParent": "e11811ad065754871132a2c930073cc240114340",
   "appSourceHash": "6f4d07a8188d25bab7edb8712f0e2c89de290d339175917aa5e85d843c8f7a7a",
   "inputClosure": "runtime/report.json initialInputs=finalInputs",
   "configuredFlags": {
@@ -40,5 +40,8 @@
       "captures": 22,
       "inputs": 1532
     }
-  }
+  },
+  "sourceBaseline": "1069b43294a10d37d92de612f33f51c0af27dbb0",
+  "implementationCommit": "1b010636772f476e36c70d87edf010c94c502aab",
+  "implementationTree": "7eccbd993c6527c3c3c11651908c91187e3ce12c"
 }
