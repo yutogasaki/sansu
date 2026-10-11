@@ -92,7 +92,7 @@ describe('GrowingWorld preview inputs', () => {
         expect(growingScenePreviewKey(structuredClone(input), 'flower', structuredClone(hints))).toBe(initial);
         for (const next of [{ ...input, kind: 'sapling' as const }, { ...input, seed: true }, { ...input, cell: { x: 2, z: 3 } },
             { ...input, valid: false }, { ...input, style: 'water' as const }, { ...input, keepsake: 'unit-1' },
-            { ...input, color: 'blue' as const }, { ...input, ownerId: 'another' }, { ...input, allowed: [...input.allowed].reverse() }])
+            { ...input, color: 'blue' as const }, { ...input, ownerId: 'another' }, { ...input, prospectiveOwnerId: 'l28' }, { ...input, allowed: [...input.allowed].reverse() }])
             expect(growingScenePreviewKey(next, 'flower', hints)).not.toBe(initial);
         expect(growingScenePreviewKey(input, 'another', hints)).not.toBe(initial);
         expect(growingScenePreviewKey(input, 'flower', [...hints].reverse())).not.toBe(initial);

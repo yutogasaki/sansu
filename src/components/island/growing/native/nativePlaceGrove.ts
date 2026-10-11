@@ -5,6 +5,10 @@ import type { DerivedPlace } from '../../../../domain/growingIsland/placeTypes';
 import type { SceneLayout } from '../sceneLayout';
 import type { NativeGrowingKit } from './nativeGrowingKit';
 import { buildPlaceRootRoom } from '../placeRootRoomGeometry';
+import { TREE_MATURE_HOURS } from '../../../../domain/growingIsland/environment';
+import { placeConnected } from '../../../../domain/growingIsland/places';
+import { walkableCells } from '../../../../domain/growingIsland/space';
+import { treeAge } from '../../../../domain/growingIsland/nature';
 
 const tuple = (point: T.Vector3): V3 => [point.x, point.y, point.z];
 const AUTHORED_SOURCE_SCALE = .45;
@@ -43,6 +47,38 @@ function buildAuthoredCompactGrove(g: GardenGeometry, state: GrowingState, layou
     g.root.add(shared); return true;
 }
 
+/** A wider authored forest keeps each purchased tree's source form and age. A
+ * mature place does not turn its new members into mature replacement trunks. */
+function buildAuthoredForest(g: GardenGeometry, state: GrowingState, layout: SceneLayout, place: DerivedPlace, kit: NativeGrowingKit) {
+    if (!layout.authored || !['P01', 'P02'].includes(place.ruleId) || !['grown', 'lived'].includes(place.stage)) return false;
+    const owners = place.mainIds.map(id => state.landmarks.find(owner => owner.id === id && owner.kind === 'sapling' && owner.cell))
+        .filter(owner => owner?.cell && layout.world.owns(owner.cell) && layout.world.floorAt(owner.cell));
+    const trees = owners.map(owner => {
+        const root = new T.Group(), tree = kit.tree(owner!.id, owner!.growth, AUTHORED_SOURCE_SCALE);
+        const age = treeAge(state, owner!.id);
+        tree.scale.multiplyScalar(age === 'lord' ? 1.75 : age === 'big' ? 1.3 : 1);
+        root.name = 'place-native-owned-tree'; root.position.copy(layout.point(owner!.cell!));
+        root.userData.ownerId = owner!.id; root.userData.sourceScale = AUTHORED_SOURCE_SCALE;
+        root.userData.growth = owner!.growth;
+        tree.traverse(object => { object.userData.ownerId = owner!.id; object.userData.sourceScale = AUTHORED_SOURCE_SCALE; });
+        root.add(tree); g.root.add(root);
+        return { owner: owner!, point: root.position, height: new T.Box3().setFromObject(tree).getSize(new T.Vector3()).y };
+    });
+    const open = walkableCells(state, layout.world);
+    for (let i = 0; i < trees.length; i++) for (let j = i + 1; j < trees.length; j++) {
+        const a = trees[i], b = trees[j];
+        if (a.owner.growth < TREE_MATURE_HOURS || b.owner.growth < TREE_MATURE_HOURS
+            || !placeConnected(a.owner.cell!, b.owner.cell!, open, layout.world)) continue;
+        const from = a.point.clone().add(new T.Vector3(0, a.height * .5, 0)), to = b.point.clone().add(new T.Vector3(0, b.height * .5, 0));
+        const branch = g.branch([tuple(from), tuple(from.clone().lerp(to, .5).add(new T.Vector3(0, .12, 0))), tuple(to)], .045, '#ad7948');
+        branch.name = 'place-native-mature-branch'; branch.userData.ownerId = a.owner.id;
+        branch.userData.ownerIds = [a.owner.id, b.owner.id]; branch.userData.visualOnly = true;
+    }
+    // There is no authored gallery construction or supporting floor here yet.
+    if (place.ruleId === 'P02') g.root.userData.authoredGalleryArt = 'pending';
+    return true;
+}
+
 /** Native crowns above the same owned stems and actual route. The source model's
  * fixed balcony/stairs are deliberately absent; this gallery is the real route. */
 export function buildNativePlaceGrove(g: GardenGeometry, state: GrowingState, layout: SceneLayout, place: DerivedPlace,
@@ -51,6 +87,7 @@ export function buildNativePlaceGrove(g: GardenGeometry, state: GrowingState, la
         if (place.walkSurface.length) gallery().userData.authoredGalleryArt = 'pending';
         return;
     }
+    if (buildAuthoredForest(g, state, layout, place, kit)) return;
     const owners = place.mainIds.map(id => ({ id, owner: state.landmarks.find(l => l.id === id && l.cell) })).filter(item => Boolean(item.owner));
     if (!owners.length) return;
     const grown = place.stage === 'grown' || place.stage === 'lived', large = place.ruleId === 'P02';

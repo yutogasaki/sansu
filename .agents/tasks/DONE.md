@@ -1,5 +1,7 @@
 # Shared Done Index
 
+- 2026-10-11: [全島の尺度・購入・成熟preflight](../../docs/design/2026-10-11-authored-whole-preflight/README.md)。actor `.45`・実高さfocus・原本樹種/成長を修正。27→32所有物/家8軒を実購入・診断18hで確認、core5,199/編集/水庭/normal学習保存/classic32 PASS。美術31/60 HOLD・N=0・性能未達・M1/包括ゴールは継続。次はP05の全景制作。詳細: `docs/done/2026-10.md`。
+
 - 2026-10-11: [M1水底と岸の制作基盤](../../docs/design/2026-10-11-authored-water-world/README.md)。固定anchorと現在の支持を分離し、実水面/水底/岸/流れと編集予告・収納/復元を接続。27所有物・73権利を保持。水庭の美術・全島M1・保存/配布・実機と独立理解は継続。詳細: `docs/done/2026-10.md`。
 
 - 2026-10-11: [編集できる全島の計算と初回描画を改善](../../docs/design/2026-10-11-authored-world-performance/README.md)。形・床・道等13項目一致、Node全layer7,386→174 ms。receipt保持とshader準備、最終core5,093/classic32/編集6操作/既存島touch8旅程PASS。改善単位を完了、software preview約8.6秒・M1水庭/deck/森林・美術HOLD・独立観察N=0・包括ゴールは継続。詳細: `docs/done/2026-10.md`。

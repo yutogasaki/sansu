@@ -202,9 +202,9 @@ M1の島は診断用であることを明示し、模型の家や住人を本人
 
 本書は制作方針と順序、美術戦略は形・素材・光、[育つ場所v1](island-place-goals.md)は現行の場所条件、52は遊び、13は保存、43／44は操作と画面の正本。数値を戦略文書へ複製しない。
 
-現在は、共通床のM0基盤から[編集できる全島のM1診断](../design/2026-10-11-authored-island-runtime/README.md)へ進み、採用地形と27所有物を本体の配置・歩行へ接続した。[床・道・初回描画の改善](../design/2026-10-11-authored-world-performance/README.md)、[水底・岸・流れの制作基盤](../design/2026-10-11-authored-water-world/README.md)に続き、[水庭b6](../design/2026-10-11-authored-water-garden/README.md)の機能単位を完了した。原本由来の凹輪郭・斜面岸・鉱石洞・下降する流れと実際に渡れる橋を、固定anchorと同じ世界の床へ構成する。水への新配置/歩行を拒否し、乾いた岸から接近し、収納で原本へ戻す。実browserの編集確認はPASSだが、全島美術はHOLD、独立理解/安全はN=0、runtimeはPARTIAL。配置予告に12〜13秒の待ちが残り、操作性能と実機性能は未達。
+現在は、共通床のM0基盤から[編集できる全島のM1診断](../design/2026-10-11-authored-island-runtime/README.md)へ進み、[床・道・初回描画](../design/2026-10-11-authored-world-performance/README.md)、[水庭b6](../design/2026-10-11-authored-water-garden/README.md)を経て、[全島の尺度・購入・成熟preflight](../design/2026-10-11-authored-whole-preflight/README.md)を実施した。永続actor `.45`、実3D高さのcamera focus、個々の原本樹種/growthとbig/lord倍率を保持した森林を実装。通常の5購入で27→32所有物、診断18時間で若木と白花が育つ実画面を確認した。家は8軒のままで、M4の32軒への拡張ではない。元27owner・73権利・P02/P03を保持し、背景の無所有植栽・家・人物で密度を作らない。
 
-次は現在の27所有ID・73配置権とP02大樹の主景を保ち、地形・大樹・森・水庭・集落・住人の尺度を同じ全景で評価するpreflightを先に行う。位置・大きな塊・密度・入口・余白を一枚で決め、その案の支持可能性を確かめてから大樹の内床・階段・共有galleryと森林の面を詳細化する。住人全体の永続visual倍率`.45`は未実装の候補で、入口利用だけの一時縮小ではない。共有galleryも未実装、P01/P03/P05が両立する採用配置も未解決。原本の無所有植栽・家・人物を背景へ足して密度を作らない。
+全島美術は成熟後31/60・HOLD。細い長茎と同花冠の列、家を覆う殻、白い矩形床、森の薄さが未達で、独立理解/安全N=0、runtime PARTIAL。購入予告9〜23秒、成熟後のfocus約20〜35秒を性能未達として残す。次はP05を『4株が支える一つの主花・低い周辺花・その下の生活空間』として、元のID/growth/実床/入口を保って全景の粗形から作る。現在条件・成熟・useを弱めない。続いてP04の湾の内空間、森の厚み、大樹の実内床・階段・共有galleryへ進む。galleryは未実装で、上床をdefault groundへ混ぜず、同じworldの明示したowner-use床と支持のある物理経路が必要。[次の制作順と契約案](../design/2026-10-11-authored-whole-preflight/next-production.md)。局所の詳細を先に完成させず、毎段階で全景の構図と照合する。
 
 水庭の機能完了は包括ゴールとM1の完了ではない。以前の[拡張runtime契約](island-expanding-runtime.md)と[実画面・検証](../design/2026-10-11-expanding-island-runtime/README.md)は旧土地の互換と履歴として有効で、新工程の通過証拠へ置き換えない。三配置・成長・地区拡張、次期の本人保存/配布、M0〜M5全体、美術の再採用、独立観察、実機、公開は未完。
 

@@ -1,0 +1,34 @@
+{
+  "phase": "purchase-l28-sapling",
+  "steps": [
+    "initial 27 owners, 8 homes and actual 73 rights",
+    "wet purchase stays invalid and valid preview cancel preserves all owners, prices and clocks"
+  ],
+  "operationTimings": [
+    {
+      "name": "initial-load",
+      "elapsedMs": 15033.87525,
+      "success": true
+    },
+    {
+      "name": "whole-view-reset",
+      "elapsedMs": 15147.330709000002,
+      "success": true
+    },
+    {
+      "name": "purchase-invalid-water-pointer",
+      "elapsedMs": 7101.5762500000055,
+      "success": true
+    },
+    {
+      "name": "purchase-valid-cancel-preview",
+      "elapsedMs": 15465.683833000003,
+      "success": true
+    },
+    {
+      "name": "purchase-preview-cancel",
+      "elapsedMs": 6097.2539169999945,
+      "success": true
+    }
+  ]
+}

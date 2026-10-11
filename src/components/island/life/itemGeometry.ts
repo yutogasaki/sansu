@@ -94,6 +94,7 @@ export function buildLifeItem(item: LifeItem, materials: IslandMaterials, showSo
         for (const x of [-.27, .27]) box(g, '#98714e', x, .23, 0, .075, .46, .34);
         const seats = [1, -1].map(side => {
             const seat = box(g, color, 0, .29, side * .38, .70, .10, .16);
+            seat.name = `life-picnic-seat-${side}`;
             for (const x of [-.25, .25]) box(g, '#a88056', x, .12, side * .38, .06, .24, .14);
             return seat;
         });
@@ -105,7 +106,7 @@ export function buildLifeItem(item: LifeItem, materials: IslandMaterials, showSo
         });
         result.seat = seats[0]; result.picnic = { seats, snacks };
     } else if (item.kind === 'bench') {
-        const seat = box(g, '#b48258', 0, .29, 0, .7, .10, .35); result.seat = seat; box(g, color, 0, .49, -.14, .7, .33, .08);
+        const seat = box(g, '#b48258', 0, .29, 0, .7, .10, .35); seat.name = 'life-bench-seat'; result.seat = seat; box(g, color, 0, .49, -.14, .7, .33, .08);
         for (const x of [-.26, .26]) box(g, '#b48258', x, .12, 0, .07, .24, .3);
     } else if (item.kind === 'swing') {
         for (const x of [-.31, .31]) for (const z of [-.23, .23]) {

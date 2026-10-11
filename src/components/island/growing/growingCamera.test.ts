@@ -1,8 +1,9 @@
 import * as T from 'three';
 import { describe, expect, it } from 'vitest';
-import { cameraArtPoints, frameCamera, initialView } from './growingCamera';
+import { cameraArtPoints, frameCamera, initialView, panToFocus } from './growingCamera';
 import { sceneLayout } from './sceneLayout';
 import { buildPlaceGround } from './placeGround';
+import { compileWorldDefinition } from '../../../domain/growingIsland/worldDefinition';
 
 describe('district coordinates and camera clipping', () => {
     it('fits actual curved shore, houses and hero geometry at every azimuth without the uniform empty sky allowance', () => {
@@ -57,10 +58,45 @@ describe('district coordinates and camera clipping', () => {
             }
         }
         const original = sceneLayout({ land: { expanded: null, extra: [], capes: [] } });
-        frameCamera(camera, original, initialView(), 1280 / 720);
+        const home = frameCamera(camera, original, initialView(), 1280 / 720);
         expect(camera.top).toBeCloseTo(Math.max((original.depth + 4.2 + original.maxHeight * .8) / 2 * .82,
             (original.width / 2 + original.artMargin) / (1280 / 720)), 10);
+        expect(home.toArray()).toEqual([0, .2, (original.depth - 5) / 2 + .6]);
+        expect(camera.position.clone().sub(home).toArray()).toEqual(new T.Vector3(4.5, 7.8, 11)
+            .multiplyScalar(Math.max(1, (original.width + original.depth) / 30)).toArray());
         ground.dispose(); body.geometry.dispose(); (body.material as T.Material).dispose();
+    });
+    it('centers actual low water and high hero positions on negative-z authored land at every azimuth and aspect', () => {
+        const world = compileWorldDefinition({ version: 1, id: 'camera-authored', districts: [{
+            id: 'camera', templateId: 'camera-test', logicalOrigin: { x: 0, z: 0 }, worldOrigin: { x: 0, y: 0, z: 0 }, turn: 0,
+            floors: [{ id: 'ground', kind: 'ground', color: '#9cc8e4',
+                vertices: [[0, -16], [0, 0], [12, -16], [12, 0]].map(([x, z]) => ({ cell: { x, z }, point: { x, y: .2, z } })),
+                indices: [0, 1, 2, 2, 1, 3] }],
+            sites: [{ id: 'home', cell: { x: 2, z: 0 }, floorId: 'ground', placement: true }], ports: [],
+        }], edges: [] });
+        const layout = sceneLayout({ land: { expanded: null, extra: [], capes: [] } }, false, world);
+        const art = new T.Group(), material = new T.MeshStandardMaterial();
+        const ground = new T.Mesh(new T.BoxGeometry(12, .2, 16), material); ground.position.set(0, .1, -10); art.add(ground);
+        const hero = new T.Mesh(new T.BoxGeometry(3, 7, 3), material); hero.position.set(-4, 3.5, -14); art.add(hero);
+        const water = new T.Mesh(new T.BoxGeometry(2, .02, 2), material); water.position.set(4, .02, -16); art.add(water);
+        layout.cameraObjects = () => [art];
+        const camera = new T.OrthographicCamera(), targets = [new T.Vector3(-4, 6.5, -14), water.position.clone(), new T.Vector3(0, .2, -10)];
+        for (const nativeArt of [false, true]) {
+            layout.nativeArt = nativeArt;
+            for (const aspect of [390 / 844, 768 / 1024, 1280 / 720]) for (let step = 0; step < 24; step++) for (const target of targets) {
+                const view = { ...initialView(), zoom: 2.2, azimuth: step * Math.PI / 12 };
+                const home = frameCamera(camera, layout, view, aspect), eye = camera.position.clone(), homeBefore = home.clone(), targetBefore = target.clone();
+                const pan = panToFocus(camera, home, target);
+                expect(panToFocus(camera, home, home)).toEqual({ x: 0, z: 0 });
+                expect(camera.position.toArray()).toEqual(eye.toArray()); expect(home.toArray()).toEqual(homeBefore.toArray()); expect(target.toArray()).toEqual(targetBefore.toArray());
+                const expectedPan = { ...pan };
+                view.pan = pan; frameCamera(camera, layout, view, aspect); camera.updateMatrixWorld();
+                expect(view.pan).toEqual(expectedPan);
+                const point = target.clone().project(camera);
+                expect(point.x).toBeCloseTo(0, 10); expect(point.y).toBeCloseTo(0, 10); expect(Math.abs(point.z)).toBeLessThanOrEqual(1);
+            }
+        }
+        for (const model of [ground, hero, water]) model.geometry.dispose(); material.dispose();
     });
     it('keeps saved cells selectable and inside the clipping distance on a large island', () => {
         const layout = sceneLayout({ land: { expanded: 'east', extra: ['west', 'south'], capes: ['east', 'west'],

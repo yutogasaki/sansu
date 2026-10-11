@@ -13,6 +13,7 @@ import { sceneLayout } from '../sceneLayout';
 import { buildObjectLayer } from '../objectLayer';
 import { makeNativeGrowingKit, type NativeGrowingKit, type NativeGrowingPart } from './nativeGrowingKit';
 import { buildNativePlaceGrove } from './nativePlaceGrove';
+import { treeForm } from '../treeSilhouettes';
 
 let kit: NativeGrowingKit, world: IslandWorld, diagnostic: GrowingState;
 beforeAll(async () => {
@@ -95,14 +96,24 @@ describe('the authored compact four-owner grove uses one source construction', (
         expect(state).toEqual(before); expect(moved.nature).toEqual(before.nature); expect(moved.town).toEqual(before.town); expect(moved.placeProgress).toEqual(before.placeProgress);
         joined.dispose(); split.dispose(); materials.dispose();
     });
-    it('keeps legacy compact groves and the other authored variants on their existing construction', () => {
+    it('keeps legacy construction while an authored court retains individual source trees', () => {
         const { state, place, layout } = fixture();
-        for (const [candidateLayout, candidate] of [[sceneLayout(state), place], [layout, { ...place, variant: 'court', walkSurface: [] }]] as const) {
-            const g = new GardenGeometry(); buildNativePlaceGrove(g, state, candidateLayout, candidate, kit, () => new T.Group());
-            expect(g.root.getObjectByName('place-native-shared-tree')).toBeUndefined();
-            expect(parts(g.root, 'hollow-trunk')).toHaveLength(4);
-            expect(parts(g.root, 'hollow-trunk').every(trunk => trunk.scale.y === .39)).toBe(true);
-            g.dispose();
+        const legacy = new GardenGeometry(); buildNativePlaceGrove(legacy, state, sceneLayout(state), place, kit, () => new T.Group());
+        expect(legacy.root.getObjectByName('place-native-shared-tree')).toBeUndefined();
+        expect(parts(legacy.root, 'hollow-trunk')).toHaveLength(4);
+        expect(parts(legacy.root, 'hollow-trunk').every(trunk => trunk.scale.y === .39)).toBe(true); legacy.dispose();
+        // This fixed diagnostic has mature owners already. Changing its variant
+        // exercises the renderer boundary; it is not elapsed-time growth evidence.
+        const authored = new GardenGeometry(); buildNativePlaceGrove(authored, state, layout, { ...place, variant: 'court', walkSurface: [] }, kit, () => new T.Group());
+        expect(authored.root.getObjectByName('place-native-shared-tree')).toBeUndefined();
+        expect(parts(authored.root, 'hollow-trunk')).toHaveLength(0); expect(parts(authored.root, 'fan-crown')).toHaveLength(0);
+        const trees = authored.root.getObjectsByProperty('name', 'place-native-owned-tree');
+        expect(trees.map(tree => tree.userData.ownerId)).toEqual(place.mainIds);
+        for (const tree of trees) {
+            const id = tree.userData.ownerId, owner = state.landmarks.find(owner => owner.id === id)!;
+            expect(tree.userData.sourceScale).toBe(.45); expect(tree.userData.growth).toBe(owner.growth);
+            expect(tree.children[0].userData.treeForm).toBe(treeForm(id)); expect(tree.children[0].scale.toArray()).toEqual([.45 * 1.3, .45 * 1.3, .45 * 1.3]);
         }
+        authored.dispose();
     });
 });

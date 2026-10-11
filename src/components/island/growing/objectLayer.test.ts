@@ -5,7 +5,11 @@ import { HOME_CELL, key } from '../../../domain/growingIsland/space';
 import { placeGoalCatalog } from '../../../domain/growingIsland/placeCatalog';
 import type { LandmarkKind } from '../../../domain/growingIsland/types';
 import { IslandMaterials } from '../three/primitives';
-import { buildObjectLayer, type Ghost } from './objectLayer';
+import { buildObjectLayer, previewGrowingState, type Ghost } from './objectLayer';
+import { applyIntent, canPlace } from '../../../domain/growingIsland/commands';
+import { landCells } from '../../../domain/growingIsland/space';
+import { authoredAccessWorld } from '../../../domain/growingIsland/authoredWorldAccess.fixture';
+import { buildColorFlower } from './flowerGeometry';
 import { sceneLayout } from './sceneLayout';
 import { chooseGrowingFingerTarget, updateGrowingFingerTargets } from './growingFingerTargets';
 
@@ -28,6 +32,36 @@ function outline(holder: T.Object3D) {
 }
 
 describe('growing object previews', () => {
+    it('shows new authored flowers as young and moved flowers at their saved growth', () => {
+        const state = newIsland('flower-preview-age', 1000), { world } = authoredAccessWorld();
+        const m = new IslandMaterials('moon-garden'), layout = sceneLayout(state, false, world), cell = { x: 0, z: -2 };
+        const input: Ghost = { kind: 'flower', seed: false, prospectiveOwnerId: `l${state.nextId}`, color: 'white', cell, valid: true, style: 'plain', allowed: [cell] };
+        const size = (model: T.Object3D) => new T.Box3().setFromObject(model).getSize(new T.Vector3()).toArray();
+        const layer = buildObjectLayer(m, state, layout, input), saved = structuredClone(state);
+        expect(size(layer.root.getObjectByName('growing-ghost')!.children[0])).toEqual(size(buildColorFlower(m, 'white', 0)));
+        expect(previewGrowingState(state, input)!.landmarks.at(-1)?.growth).toBe(0); expect(state).toEqual(saved);
+        layer.dispose();
+        for (const growth of [0, 2, 6]) {
+            state.landmarks.push({ id: 'moving-flower', kind: 'flower', color: 'white', cell, growth });
+            const next = buildObjectLayer(m, state, layout, { ...input, ownerId: 'moving-flower', prospectiveOwnerId: undefined, cell: { x: 1, z: -2 } });
+            expect(size(next.root.getObjectByName('growing-ghost')!.children[0])).toEqual(size(buildColorFlower(m, 'white', growth)));
+            next.dispose(); state.landmarks.pop();
+        }
+        m.dispose();
+    });
+    it('previews a new permanent tree ID without treating it as an owned move or advancing its growth', () => {
+        const state = newIsland('prospective-tree', 1000);
+        state.drops = 100; state.unlocked.push('landmark:sapling');
+        const saved = structuredClone(state), cell = landCells(state).find(at => canPlace(state, at))!;
+        const id = `l${state.nextId}`, input: Ghost = { kind: 'sapling', seed: false, prospectiveOwnerId: id, cell, valid: true, style: 'plain', allowed: [cell] };
+        const future = previewGrowingState(state, input)!;
+        const committed = applyIntent(state, { id: 'purchase-tree', command: { type: 'place', kind: 'sapling', cell } }, 1000).state;
+        expect(future.landmarks.find(owner => owner.id === id)).toStrictEqual(committed.landmarks.find(owner => owner.id === id));
+        expect(future.landmarks).toHaveLength(state.landmarks.length + 1);
+        expect(future.nextId).toBe(state.nextId); expect(future.drops).toBe(state.drops); expect(state).toEqual(saved);
+        expect(previewGrowingState(state, { ...input, prospectiveOwnerId: undefined })!.landmarks.at(-1)?.id).toBe('place-preview');
+        expect(previewGrowingState(state, { ...input, valid: false })).toBeUndefined();
+    });
     it('replaces connected mature crowns under the same owner IDs and restores solitary trees after separation', () => {
         const state = newIsland('native-owned-grove', 1000);
         state.land = { expanded: 'east', extra: ['south'], capes: ['east'] }; state.landmarks = []; state.plots = []; state.unopened = []; state.villagers = [];

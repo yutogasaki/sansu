@@ -296,3 +296,5 @@ Growing balanceの行に従う。`pacing.test.ts`は建設/装飾に加え、実
 実SWのOLD→NEW→ROLLBACK、中断／offlineは更新driver、破損kit／context lossは故障driverへ分ける。通常false buildのasset予算とkit除外も確認する。Tailwindの探索は`src`と本体HTML、Viteの依存入口は本体と開発prototypeに限定し、記録用美術bundleを本体CSSへ取り込まない。
 
 [全島素材](../design/2026-10-11-expanding-island-runtime/README.md)は`check-artifacts.mjs`で七つの実所有GLBとBlenderのSHA、8／16／32軒、置いた所有物のID、収納物の非描画、原本kit／exporter sourceを検証する。static GLBは実床・所有物だけで、動く住人・海・UIは本体renderer。保存fixtureを実入居や数日かけた自然成熟に読み替えない。最新の同じ固定buildでcritical-path contact sheetを作り、native-05の原本と比べる。独立した理解／安全、実機性能、公開をこの検査だけで合格にしない。
+
+DEVの全島preflightは`SANSU_AUTHORED_WHOLE_OUTPUT`の新規directoryと実buildを`SANSU_AUTHORED_WHOLE_BUILD`へ指定し、`node tools/e2e-authored-whole-preflight.mjs`で`?water=wide&grow=1`の通常5購入・予告取消/無効配置・診断18時間・旧owner/権利/時計・同world・全景/近景/昼夕/phone/tabletを検査する。32は所有物数で家は8軒。通常の本人取得/保存、実時間成熟、32軒拡張、性能や美術の合格へ流用しない。固定coreに加え、元の全島編集・水庭分離/収納/再接続、通常Growingの実回答/保存、classic smokeを同app入力へ照合する。通常Growing接続先は`VITE_ISLAND_ENABLED=true`を明示し、native診断とnormal false buildのtargetを分ける。初回FAILを保持してから環境・harness・アプリの原因を分類し、新しい出力で再実行する。

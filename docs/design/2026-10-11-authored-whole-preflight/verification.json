@@ -1,0 +1,118 @@
+{
+  "scope": "DEV synthetic authored whole preflight; 27 to 32 possessions, 8 homes throughout. Not 32-home expansion or personal save/acquisition acceptance.",
+  "identity": {
+    "target": "http://127.0.0.1:5350/prototypes/place-qa/authored.html?water=wide&grow=1",
+    "build": "authored-whole-preflight-c2",
+    "nativeArt": true,
+    "candidate": "native05-authored-whole-preflight-v1",
+    "fixtureCandidate": "native05-authored-water-garden-v2",
+    "worldId": "native05-authored-world-m0-v2",
+    "inputs": 1578,
+    "inputHash": "b15429ca69ef81e42ff8438538064945317065dc857eb89fd9d1da4ffa1f8af5"
+  },
+  "frames": {
+    "initial-27": {
+      "revision": "authored-water-v2:3f6b964a9069c5f0:eb41954202b1926a",
+      "definitionHash": "f452caf83cadd9e17e8c39229ca0e2db65b61346ef9c09f95c8fec293e06724d",
+      "stateHash": "3b776f84c55ca88c6ef5c1caf538c4842baf81197d2f6e1ff25459955014801e",
+      "approaches": 27,
+      "dryFootprints": 22,
+      "rights": 73
+    },
+    "young-32": {
+      "revision": "authored-water-v2:3c5f4ee9f492cc25:eb41954202b1926a",
+      "definitionHash": "7b15852ce3baf659933103223e7ce90ddc0139b5a936c766b9ebf0f0a692d430",
+      "stateHash": "afbad4fa06b59325b5a8dfcd91a5fdb097cfeec735c9cef27ab5348bd71588c2",
+      "approaches": 32,
+      "dryFootprints": 27,
+      "rights": 73
+    },
+    "mature-32": {
+      "revision": "authored-water-v2:3c5f4ee9f492cc25:eb41954202b1926a",
+      "definitionHash": "7b15852ce3baf659933103223e7ce90ddc0139b5a936c766b9ebf0f0a692d430",
+      "stateHash": "0593897ea073f817fbdee7f445491ccde12b9e2c083542aa19d320454c40cd2a",
+      "approaches": 32,
+      "dryFootprints": 27,
+      "rights": 73
+    }
+  },
+  "runtimeJourney": {
+    "pass": true,
+    "steps": 8,
+    "captures": 27,
+    "focuses": 10,
+    "errors": [],
+    "sourceFixed": true,
+    "report": "runtime/report.json"
+  },
+  "core": {
+    "exitCode": 0,
+    "sourceFixed": true,
+    "inputCount": 1878,
+    "commonRuntimeInputs": 1578,
+    "files": 597,
+    "tests": 5199,
+    "build": "authored-whole-preflight-c2-core-2e2d2a7d6fe0",
+    "report": "core/report.json"
+  },
+  "regressions": {
+    "baseline-regression": {
+      "pass": true,
+      "sourceFixed": true,
+      "commonCoreInputs": 1567,
+      "report": "baseline-regression/report.json"
+    },
+    "legacy-regression": {
+      "pass": true,
+      "sourceFixed": true,
+      "commonCoreInputs": 1566,
+      "report": "legacy-regression/report.json"
+    },
+    "water-regression": {
+      "pass": true,
+      "sourceFixed": true,
+      "commonCoreInputs": 1571,
+      "report": "water-regression/report.json"
+    },
+    "classic-smoke": {
+      "exitCode": 0,
+      "sourceFixed": true,
+      "commonCoreInputs": 1878,
+      "report": "classic-smoke/report.json"
+    }
+  },
+  "gates": {
+    "art": {
+      "status": "HOLD",
+      "authorScore": 31,
+      "maximum": 60,
+      "axes": [
+        5,
+        7,
+        5,
+        4,
+        6,
+        4
+      ]
+    },
+    "independentComprehensionSafety": {
+      "status": "NOT_EVALUATED",
+      "participants": 0
+    },
+    "runtime": {
+      "status": "PARTIAL",
+      "functionalDiagnostic": "PASS",
+      "operationPerformance": "UNMET",
+      "productionPlayerSaveLearningPwa": "NOT_IN_SCOPE",
+      "physicalDevice": "NOT_EVALUATED"
+    },
+    "wholeGoalAndM1": "INCOMPLETE"
+  },
+  "firstFailure": {
+    "build": "authored-whole-preflight-c1",
+    "report": "first-failure/report.json",
+    "cause": "Optional color:undefined on preview versus absent optional color on actual purchase; strict representation parity failed after successful synthetic purchase; corrected source and fresh c2 journey."
+  },
+  "implementationCommit": null,
+  "implementationTree": null
+}

@@ -6,7 +6,7 @@ import type { Cell, GrowingState, Moment, Villager } from '../../../domain/growi
 import { disposeActor, makeVillagerActor } from './actors';
 import { MomentEffects } from './momentEffects';
 import { buildObjectLayer, previewGrowingState, type Ghost, type ObjectLayer } from './objectLayer';
-import { frameCamera, initialView, panFromDrag } from './growingCamera';
+import { frameCamera, initialView, panFromDrag, panToFocus } from './growingCamera';
 import { createWorldScene } from './worldScene';
 import { WorldEffects } from './worldEffects';
 import type { SceneLayout } from './sceneLayout';
@@ -273,7 +273,7 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
                 const target = world.life.focusPositionOf(id) ?? layer?.objects.get(id)?.position.clone().add(new T.Vector3(0, 0, id === 'bridge' ? 1.1 : 0)); if (!target) return;
                 view.zoom = Math.max(view.zoom, id === 'bridge' ? 1.35 : 2.2);
                 const home = frameCamera(camera, layout, { ...view, pan: { x: 0, z: 0 } }, width / height);
-                view.pan = { x: target.x - home.x, z: target.z - home.z };
+                view.pan = panToFocus(camera, home, target);
                 frameCamera(camera, layout, view, width / height);
                 node.dataset.growingFocus = id;
                 node.dataset.growingFocusCell = JSON.stringify(layout.cellAt(target));
@@ -310,7 +310,7 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
                 const key = new T.DirectionalLight('#ffffff', 1.4); key.position.set(1, 2, 3); scene.add(key);
                 const lens = new T.PerspectiveCamera(30, 1, .1, 20);
                 for (const villager of villagers) {
-                    const actor = makeVillagerActor(world.m, villager); scene.add(actor.root);
+                    const actor = makeVillagerActor(world.m, villager, layout.actorVisualScale); scene.add(actor.root);
                     actor.root.rotation.y = .3;
                     lens.position.set(.18, .7, 1.25); lens.lookAt(0, .6, 0);
                     try { out[villager.id] = snap(lens, scene, size, size).toDataURL('image/png'); } catch { /* A missing face falls back to its initial. */ }
@@ -629,7 +629,7 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
     const lastTurn = useRef(turn);
     useEffect(() => { if (turn !== lastTurn.current) { api.current?.turn(turn - lastTurn.current); lastTurn.current = turn; } }, [turn]);
 
-    return <div className="growing-world" ref={host} data-growing-world data-visual-candidate="growing-island-v1" data-art-candidate={authoredWorld ? authoredWater ? 'native05-authored-water-garden-v2' : 'native05-authored-runtime-m1' : nativeArtEnabled ? 'native05-expanding-runtime-v2' : 'native-05-place-runtime-v3'} data-landscape-projection={authoredWorld ? 'authored-floor-v1' : nativeArtEnabled ? 'curved-owned-v1' : 'linear'} data-native-growing-art={String(nativeArtEnabled)} data-growing-feature-enabled="true">
+    return <div className="growing-world" ref={host} data-growing-world data-visual-candidate="growing-island-v1" data-art-candidate={authoredWorld ? 'native05-authored-whole-preflight-v1' : nativeArtEnabled ? 'native05-expanding-runtime-v2' : 'native-05-place-runtime-v3'} data-landscape-projection={authoredWorld ? 'authored-floor-v1' : nativeArtEnabled ? 'curved-owned-v1' : 'linear'} data-native-growing-art={String(nativeArtEnabled)} data-growing-feature-enabled="true">
         {failed && <p className="growing-world-failed">しまを ひょうじ できなかったよ。よみなおしてみてね。</p>}
         {bridgeStage && <div className="growing-bridge-caption" data-bridge-stage={bridgeStage} role="status">
             {bridgeStage === 'building' ? 'ぽこもこが はしを つくっているよ' : bridgeStage === 'crossing' ? 'なかまが わたっているよ' : 'むこうまで いけた！'}

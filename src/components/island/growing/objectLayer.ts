@@ -26,7 +26,7 @@ import { curveGroundGeometry } from './curvedGeometry';
 import type { IslandWorld } from '../../../domain/growingIsland/worldDefinition';
 import { cloneGrowingPreviewMaterial } from './growingShaderWarmup';
 
-export interface Ghost { kind: SeedKind | LandmarkKind; seed: boolean; cell?: Cell; valid: boolean; style: PlotStyle; allowed: Cell[]; keepsake?: string; color?: FlowerColor; ownerId?: string }
+export interface Ghost { kind: SeedKind | LandmarkKind; seed: boolean; cell?: Cell; valid: boolean; style: PlotStyle; allowed: Cell[]; keepsake?: string; color?: FlowerColor; ownerId?: string; prospectiveOwnerId?: string }
 
 export type Seat = 'sit' | 'swing' | 'eat' | 'bounce' | 'slide' | 'tend' | 'play';
 const SEATS: Partial<Record<LandmarkKind, Seat>> = { bench: 'sit', swing: 'swing', 'picnic-table': 'eat', slide: 'slide', trampoline: 'bounce' };
@@ -53,14 +53,15 @@ function landmarkModel(m: IslandMaterials, state: GrowingState, landmark: Landma
 
 function ghostModel(m: IslandMaterials, ghost: Ghost, state: GrowingState, native?: NativeGrowingKit, authored = false) {
     const ownedHome = ghost.seed && ghost.kind === 'home' ? state.plots.find(owner => owner.id === ghost.ownerId) : undefined;
-    const model = native && !ghost.seed && ghost.kind === 'sapling' ? native.tree(ghost.ownerId ?? 'place-preview', state.landmarks.find(owner => owner.id === ghost.ownerId)?.growth ?? 0, authored ? .45 : undefined)
+    const flowerGrowth = authored ? state.landmarks.find(owner => owner.id === ghost.ownerId)?.growth ?? 0 : ghost.prospectiveOwnerId ? 0 : 6;
+    const model = native && !ghost.seed && ghost.kind === 'sapling' ? native.tree(ghost.ownerId ?? ghost.prospectiveOwnerId ?? 'place-preview', state.landmarks.find(owner => owner.id === ghost.ownerId)?.growth ?? 0, authored ? .45 : undefined)
         : native && ownedHome && ownedHome.stage >= 2 ? native.home(ownedHome.stage, ownedHome.style ?? 'plain', ownedHome.roof, authored ? .45 : undefined)
         : ghost.keepsake ? buildKeepsake(m, keepsakeKind(ghost.keepsake))
         : ghost.seed ? buildPlot(m, ghost.kind as SeedKind, 1, ghost.style, 6)
         : ghost.kind === 'lighthouse' ? buildLighthouse(m)
             : ghost.kind === 'bandstand' ? buildBandstand(m)
             : OWN_MODELS[ghost.kind as LandmarkKind] ? OWN_MODELS[ghost.kind as LandmarkKind]!(m)
-            : ghost.kind === 'flower' && ghost.color ? buildColorFlower(m, ghost.color, 6)
+            : ghost.kind === 'flower' && ghost.color ? buildColorFlower(m, ghost.color, flowerGrowth)
             : buildLifeItem({ id: 'ghost', kind: ghost.kind as ItemKind, growth: 18, style: 'original' }, m).root;
     model.traverse(o => {
         if (!(o instanceof T.Mesh)) return;
@@ -119,9 +120,10 @@ export function previewGrowingState(state: GrowingState, ghost?: Ghost): Growing
     const future = { ...state, plots: state.plots.map(p => p.id === ghost.ownerId ? { ...p, cell: ghost.cell } : p),
         landmarks: state.landmarks.map(l => l.id === ghost.ownerId ? { ...l, cell: ghost.cell } : l) };
     if (!ghost.ownerId) {
-        if (ghost.seed) future.plots = [...future.plots, { id: 'place-preview', kind: ghost.kind as SeedKind, cell: ghost.cell,
+        const id = ghost.prospectiveOwnerId ?? 'place-preview';
+        if (ghost.seed) future.plots = [...future.plots, { id, kind: ghost.kind as SeedKind, cell: ghost.cell,
             plantedAt: state.town.clock, stage: 0, style: ghost.style, growth: 0, origin: 'seed', paid: 0 }];
-        else future.landmarks = [...future.landmarks, { id: 'place-preview', kind: ghost.kind as LandmarkKind, cell: ghost.cell, growth: 0, color: ghost.color }];
+        else future.landmarks = [...future.landmarks, { id, kind: ghost.kind as LandmarkKind, cell: ghost.cell, growth: 0, ...(ghost.color ? { color: ghost.color } : {}) }];
     }
     return future;
 }

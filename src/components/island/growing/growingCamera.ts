@@ -9,6 +9,13 @@ const OMIT = new Set(['life-sea', 'growing-next-boat', 'growing-boat', 'growing-
 interface ArtSamples { roots: string; points: T.Vector3[]; bounds: T.Box3; projections: Map<number, { minX: number; maxX: number; minY: number; maxY: number }> }
 const artSamples = new WeakMap<SceneLayout, ArtSamples>();
 
+/** Moves the camera's ground-plane aim so an actual 3D target lies on its central ray. */
+export function panToFocus(camera: T.OrthographicCamera, home: T.Vector3, target: T.Vector3): CameraView['pan'] {
+    const height = (target.y - home.y) / (camera.position.y - home.y);
+    return { x: target.x - home.x - height * (camera.position.x - home.x),
+        z: target.z - home.z - height * (camera.position.z - home.z) };
+}
+
 /** Samples visible static geometry, including curved leaves and the real shoreline.
  * The sea, boats approaching from afar and placement controls do not shrink the world. */
 export function cameraArtPoints(roots: readonly T.Object3D[]): T.Vector3[] {
@@ -78,16 +85,29 @@ export function frameCamera(camera: T.OrthographicCamera, layout: SceneLayout, v
     }
     const half = fit / view.zoom;
     camera.left = -half * aspect; camera.right = half * aspect; camera.top = half; camera.bottom = -half;
-    const art = layout.curved ? framingSamples(layout).bounds : undefined;
-    const limitX = art ? Math.max(Math.abs(art.min.x - target.x), Math.abs(art.max.x - target.x)) : layout.width / 2;
-    const limitZ = art ? Math.max(Math.abs(art.min.z - target.z), Math.abs(art.max.z - target.z)) : layout.depth / 2 + 1;
+    const art = layout.curved || layout.authored ? framingSamples(layout).bounds : undefined;
+    const panLimit = (axis: 'x' | 'z') => {
+        if (!art) return axis === 'x' ? layout.width / 2 : layout.depth / 2 + 1;
+        if (!layout.authored) return Math.max(Math.abs(art.min[axis] - target[axis]), Math.abs(art.max[axis] - target[axis]));
+        // Tall and low art needs a different ground-plane aim at each azimuth.
+        // Project the actual 3D bounds onto that plane rather than clipping a
+        // valid focus to the terrain's horizontal dimensions.
+        const low = (art.min.y - target.y) * offset[axis] / offset.y;
+        const high = (art.max.y - target.y) * offset[axis] / offset.y;
+        return Math.max(Math.abs(art.min[axis] - Math.max(low, high) - target[axis]),
+            Math.abs(art.max[axis] - Math.min(low, high) - target[axis]));
+    };
+    const limitX = panLimit('x'), limitZ = panLimit('z');
     view.pan.x = Math.max(-limitX, Math.min(limitX, view.pan.x));
     view.pan.z = Math.max(-limitZ, Math.min(limitZ, view.pan.z));
     target.add(new T.Vector3(view.pan.x, 0, view.pan.z));
     // In a tall viewport, an orthographic camera's lower ray can otherwise
     // start below the sea. Moving its eye back keeps the exact same framing
     // while leaving water under every part of the screen.
-    offset.multiplyScalar(Math.max(1, (layout.width + layout.depth) / 30, layout.nativeArt ? half * 1.6 / offset.y : 0));
+    // The same retreat keeps a high authored focus ahead of the near plane
+    // when rotation places the zero-pan aim below the actual art.
+    const authoredClearance = layout.authored && art ? (art.max.y - target.y) / offset.y + camera.near / offset.length() + .000001 : 0;
+    offset.multiplyScalar(Math.max(1, (layout.width + layout.depth) / 30, layout.nativeArt ? half * 1.6 / offset.y : 0, authoredClearance));
     camera.far = Math.max(100, (layout.width + layout.depth) * 2, offset.length() * 3);
     camera.position.copy(target).add(offset); camera.lookAt(target);
     camera.updateProjectionMatrix();

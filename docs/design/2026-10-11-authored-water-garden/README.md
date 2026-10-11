@@ -1,5 +1,7 @@
 # 実床と原本素材から育てる水庭
 
+後続の[全島preflight c2](../2026-10-11-authored-whole-preflight/README.md)でactor `.45`と実高さfocusを実装し、取得から成熟の全景を確認した。以下はb6時点の制作・検証と次工程案。現在の進捗は構築方針とpreflightを参照する。
+
 [全島の完成ゴール](../../product/island-construction-strategy.md)に向けたM1の部分実装。27所有ID・73取得権・固定anchorを保持して、非対称の池、厚みのある岸、下降する水路、鉱石洞、原本素材の木橋を同じ世界へ構成した。[原本と実画面の比較](contact-sheet.html)を先に見る。
 
 **全島美術HOLD／独立理解・安全は未評価N=0／runtime PARTIAL。M1と全ゴールは未完。** 機能試験のPASSを完成像への到達に読み替えない。

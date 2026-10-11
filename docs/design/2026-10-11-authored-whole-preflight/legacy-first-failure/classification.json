@@ -1,0 +1,16 @@
+{
+  "classification": "Environment target mismatch",
+  "firstError": "Growing ready locator timed out; failure.png shows classic exploration base, not Growing",
+  "target": "http://127.0.0.1:5350/#/island",
+  "correctedTarget": "http://127.0.0.1:5351/#/island",
+  "correction": "Dedicated server with explicit VITE_ISLAND_ENABLED=true and normal VITE_NATIVE_GROWING_ART=false. No app or harness changes.",
+  "pass": false,
+  "correctedObservedIdentity": {
+    "islandEnabled": true,
+    "build": "authored-whole-preflight-c2-legacy",
+    "nativeGrowingArt": true,
+    "world": "legacy-world-v1",
+    "artCandidate": "native05-expanding-runtime-v2",
+    "scope": "Actual successful DEV capture; VITE_NATIVE_GROWING_ART=false was requested in environment but DEV enables native. Normal production false build is separate."
+  }
+}

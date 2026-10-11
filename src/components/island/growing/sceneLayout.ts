@@ -7,6 +7,7 @@ import { landscapeCell, landscapePoint, landscapeRise } from '../../../domain/gr
 import { legacyIslandWorld } from '../../../domain/growingIsland/legacyWorldDefinition';
 import type { IslandWorld as CompiledWorld } from '../../../domain/growingIsland/worldDefinition';
 import type { AuthoredWaterPlan } from '../../../domain/growingIsland/authoredWaterWorld';
+import { AUTHORED_ACTOR_VISUAL_SCALE } from './actorScale';
 
 /** The same cell-to-world mapping as the current garden, so saved coordinates look the same. */
 export function sceneLayout(state: Pick<GrowingState, 'land'> & Partial<Pick<GrowingState, 'bridge'>>, curved = false, authored?: CompiledWorld, waterPlan?: AuthoredWaterPlan, baseWorld?: CompiledWorld) {
@@ -52,7 +53,7 @@ export function sceneLayout(state: Pick<GrowingState, 'land'> & Partial<Pick<Gro
     const key = `${bounds.minX},${bounds.maxX},${bounds.depth}:${curved ? 'curved-owned-v1' : 'linear'}`;
     let maxHeight = 0;
     for (let z = 0; z < bounds.depth; z++) maxHeight = Math.max(maxHeight, heightAt({ x: bounds.minX, z }), heightAt({ x: bounds.maxX, z }));
-    return { bounds, center, world, point, floorPoint, heightAt, maxHeight, cellAt, logicalAt, projected, curved, authored: false, pierRoot, pierEnd, dock, far, farther, key, nativeArt: false,
+    return { bounds, center, world, point, floorPoint, heightAt, maxHeight, cellAt, logicalAt, projected, curved, authored: false, actorVisualScale: 1, pierRoot, pierEnd, dock, far, farther, key, nativeArt: false,
         // The world supplies the actual static models after rebuilding. Camera fit
         // uses their vertices rather than placing a tall imaginary tree on every shore.
         cameraObjects: undefined as (() => readonly T.Object3D[]) | undefined,
@@ -108,7 +109,7 @@ function authoredSceneLayout(world: CompiledWorld, waterPlan?: AuthoredWaterPlan
     const pierEnd = pierRoot.clone().add(new T.Vector3(0, 0, 1.2)); pierEnd.y = .09;
     const dock = pierRoot.clone().add(new T.Vector3(.62, 0, 1.3)); dock.y = -.16;
     const far = dock.clone().add(new T.Vector3(3.4, 0, 3.2)), farther = dock.clone().add(new T.Vector3(5.6, 0, 5.2));
-    return { bounds, center, world, point, floorPoint, heightAt, maxHeight: world.bounds.max.y, cellAt, logicalAt, projected, curved: false, authored: true,
+    return { bounds, center, world, point, floorPoint, heightAt, maxHeight: world.bounds.max.y, cellAt, logicalAt, projected, curved: false, authored: true, actorVisualScale: AUTHORED_ACTOR_VISUAL_SCALE,
         pierRoot, pierEnd, dock, far, farther, key: `${world.id}:${world.definition.revision ?? 'base'}`, nativeArt: false,
         authoredWaterPlan: waterPlan, authoredBaseWorld: baseWorld,
         cameraObjects: undefined as (() => readonly T.Object3D[]) | undefined, artMargin: .1,

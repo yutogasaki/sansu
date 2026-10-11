@@ -5,6 +5,7 @@ import { wonder } from './wonderPaint';
 import { disposeGeometry, type IslandMaterials } from '../three/primitives';
 import type { Villager } from '../../../domain/growingIsland';
 import { buildSparkle } from './pierGeometry';
+import { setActorVisualScale } from './actorScale';
 
 /** Accessory colours tell same-species friends apart (spec 52 §7.1). */
 export const ACCENT_COLORS = ['#d77a86', '#5f9ec4', '#e0b454', '#78a86a', '#9a7cc4', '#e59a58'] as const;
@@ -12,6 +13,8 @@ export const ACCENT_COLORS = ['#d77a86', '#5f9ec4', '#e0b454', '#78a86a', '#9a7c
 export interface Actor {
     id: string;
     root: T.Group;
+    /** Visual units live inside the unchanged world-position root. */
+    visual?: T.Group;
     body: T.Object3D;
     feet: T.Object3D[];
     sparkle?: T.Object3D;
@@ -83,7 +86,7 @@ export function buildHat(m: IslandMaterials, hat: number, top: number) {
     return group;
 }
 
-export function makeVillagerActor(m: IslandMaterials, villager: Villager): Actor {
+export function makeVillagerActor(m: IslandMaterials, villager: Villager, visualScale = 1): Actor {
     const clothes = isKid(villager.species) && villager.outfit?.color !== undefined ? ACCENT_COLORS[villager.outfit.color] : undefined;
     const rig = makeFriendRig(villager.species, m, clothes);
     accessory(rig, m, villager);
@@ -92,12 +95,14 @@ export function makeVillagerActor(m: IslandMaterials, villager: Villager): Actor
     let sparkle: T.Object3D | undefined;
     if (villager.variant.sparkle) { sparkle = buildSparkle(); sparkle.position.set(0, 1.25, 0); root.add(sparkle); }
     root.traverse(o => { o.userData.actorId = villager.id; });
-    return { id: villager.id, root, body: rig.body, feet: rig.feet, sparkle, arms: rig.arms, trait: villager.trait };
+    const actor: Actor = { id: villager.id, root, body: rig.body, feet: rig.feet, sparkle, arms: rig.arms, trait: villager.trait };
+    setActorVisualScale(actor, visualScale); return actor;
 }
 
 export function wrapPokomoko(hero: T.Group, heroBody: T.Object3D, heroFeet: T.Object3D[]): Actor {
     const root = new T.Group(); root.name = 'growing-pokomoko';
     hero.removeFromParent(); hero.position.set(0, 0, 0); hero.scale.setScalar(.7); root.add(hero);
     root.traverse(o => { o.userData.actorId = 'pokomoko'; });
-    return { id: 'pokomoko', root, body: heroBody, feet: heroFeet };
+    const actor: Actor = { id: 'pokomoko', root, body: heroBody, feet: heroFeet };
+    setActorVisualScale(actor, 1); return actor;
 }
