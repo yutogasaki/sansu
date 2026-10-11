@@ -23,6 +23,7 @@ import type { PlaceUseReceipt } from './growingLife';
 import type { NativeGrowingKit } from './native/nativeGrowingKit';
 import type { IslandWorld as CompiledWorld } from '../../../domain/growingIsland/worldDefinition';
 import type { AuthoredCoastSkin } from './native/authoredGrowingGround';
+import type { AuthoredWaterBridgeSkin } from './native/authoredWaterBridgeArt';
 import { makeGrowingInteractionWarmBank, warmGrowingShaders } from './growingShaderWarmup';
 import { growingSceneStateKey, growingScenePreviewKey } from './growingSceneInputs';
 
@@ -128,13 +129,19 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
         }
         if (released) return;
         let coast: AuthoredCoastSkin | undefined;
+        let waterBridgeSkin: AuthoredWaterBridgeSkin | undefined;
         if (authoredWorld) {
-            const { loadAuthoredCoastSkin } = await import('./native/authoredGrowingAssets');
+            const { loadAuthoredCoastSkin, loadAuthoredWaterBridgeSkin } = await import('./native/authoredGrowingAssets');
             coast = await loadAuthoredCoastSkin(abort.signal);
             node.dataset.authoredCoastSource = coast.source.sha256;
+            if (authoredWater) {
+                waterBridgeSkin = await loadAuthoredWaterBridgeSkin(abort.signal);
+                node.dataset.authoredWaterBridgeSource = waterBridgeSkin.source.sha256;
+                node.dataset.authoredWaterBridgeId = waterBridgeSkin.source.id;
+            }
         }
         if (released) return;
-        const world = createWorldScene(renderer, native, authoredWorld, coast, authoredWater); disposers.push(() => world.dispose());
+        const world = createWorldScene(renderer, native, authoredWorld, coast, authoredWater, waterBridgeSkin); disposers.push(() => world.dispose());
         const releaseSharedCache = retainSharedRendererCache(world.m.residentFabric());
         disposers.push(releaseSharedCache);
         let bridgeWork: { at: number; resident: string; owner: string; parts: T.Object3D[]; crossing?: boolean } | undefined;
@@ -622,7 +629,7 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
     const lastTurn = useRef(turn);
     useEffect(() => { if (turn !== lastTurn.current) { api.current?.turn(turn - lastTurn.current); lastTurn.current = turn; } }, [turn]);
 
-    return <div className="growing-world" ref={host} data-growing-world data-visual-candidate="growing-island-v1" data-art-candidate={authoredWorld ? authoredWater ? 'native05-authored-water-m1-v1' : 'native05-authored-runtime-m1' : nativeArtEnabled ? 'native05-expanding-runtime-v2' : 'native-05-place-runtime-v3'} data-landscape-projection={authoredWorld ? 'authored-floor-v1' : nativeArtEnabled ? 'curved-owned-v1' : 'linear'} data-native-growing-art={String(nativeArtEnabled)} data-growing-feature-enabled="true">
+    return <div className="growing-world" ref={host} data-growing-world data-visual-candidate="growing-island-v1" data-art-candidate={authoredWorld ? authoredWater ? 'native05-authored-water-garden-v2' : 'native05-authored-runtime-m1' : nativeArtEnabled ? 'native05-expanding-runtime-v2' : 'native-05-place-runtime-v3'} data-landscape-projection={authoredWorld ? 'authored-floor-v1' : nativeArtEnabled ? 'curved-owned-v1' : 'linear'} data-native-growing-art={String(nativeArtEnabled)} data-growing-feature-enabled="true">
         {failed && <p className="growing-world-failed">しまを ひょうじ できなかったよ。よみなおしてみてね。</p>}
         {bridgeStage && <div className="growing-bridge-caption" data-bridge-stage={bridgeStage} role="status">
             {bridgeStage === 'building' ? 'ぽこもこが はしを つくっているよ' : bridgeStage === 'crossing' ? 'なかまが わたっているよ' : 'むこうまで いけた！'}

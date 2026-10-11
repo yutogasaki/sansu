@@ -18,9 +18,10 @@ import { curveGroundGeometry } from './curvedGeometry';
 import type { IslandWorld as CompiledWorld } from '../../../domain/growingIsland/worldDefinition';
 import { buildAuthoredGrowingGround, buildAuthoredGrowingSea, type AuthoredCoastSkin } from './native/authoredGrowingGround';
 import { authoredWaterFrame } from '../../../domain/growingIsland/authoredWaterFrame';
+import type { AuthoredWaterBridgeSkin } from './native/authoredWaterBridgeArt';
 
 /** Lights, sea, garden ground, Pokomoko's cottage and the living layer, shared by one world. */
-export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowingKit, authored?: CompiledWorld, coast?: AuthoredCoastSkin, waterAssembly = false) {
+export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowingKit, authored?: CompiledWorld, coast?: AuthoredCoastSkin, waterAssembly = false, bridgeSkin?: AuthoredWaterBridgeSkin) {
     const scene = new T.Scene();
     const hemi = new T.HemisphereLight('#fff7ea', '#63806c', 1.15); scene.add(hemi);
     const sun = new T.DirectionalLight('#fff4e0', 2.3); sun.castShadow = true;
@@ -54,7 +55,7 @@ export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowi
         terrain?.root.removeFromParent(); terrain?.dispose();
         if (layout.authored) {
             ground = buildAuthoredGrowingSea(layout);
-            terrain = buildAuthoredGrowingGround(layout, coast);
+            terrain = buildAuthoredGrowingGround(layout, coast, bridgeSkin);
         } else {
             ground = buildGardenGround({ bounds: layout.bounds, moisture: cell => soilAt(state, cell), shelterTree: !native && layout.artMargin <= 1.1, heightAt: layout.heightAt }, layout.point);
             curveGroundGeometry(ground.root.getObjectByName('garden-ground-details')!, layout);
@@ -110,7 +111,7 @@ export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowi
             if (previewKey === frame.plan.revision) return previewKey;
             clearPreview();
             const layout = sceneLayout(future, Boolean(native), frame.world, frame.plan, authored);
-            previewTerrain = buildAuthoredGrowingGround(layout, coast); previewKey = frame.plan.revision;
+            previewTerrain = buildAuthoredGrowingGround(layout, coast, bridgeSkin); previewKey = frame.plan.revision;
             scene.add(previewTerrain.root); if (terrain) terrain.root.visible = false;
             // A prospective floor is a static editing view. Live visitors retain
             // their committed routes and receipts and return unchanged on cancel.

@@ -31,6 +31,10 @@ export interface WorldSurface {
     material: { color: string; roughness: number; metalness: number; opacity?: number };
 }
 export interface WorldPort { id: string; siteId: string }
+/** Authoring permission over existing original ground; never a planting or passage grant. */
+export interface WorldWaterCarvingScope { id: string; floorIds: readonly string[]; envelope: readonly Cell[] }
+/** Existing graph entries beside this owner's actual active water surfaces. */
+export interface WorldShoreAccess { ownerSiteId: string; waterFloorIds: readonly string[]; entrySiteIds: readonly string[] }
 export interface WorldDistrict {
     id: string;
     templateId: string;
@@ -41,6 +45,8 @@ export interface WorldDistrict {
     /** Original geometry proves acquired anchors without entering hit, bounds or footing. */
     anchorFloors?: readonly WorldFloor[];
     surfaces?: readonly WorldSurface[];
+    waterCarvingScopes?: readonly WorldWaterCarvingScope[];
+    shoreAccess?: readonly WorldShoreAccess[];
     sites: readonly WorldSite[];
     ports: readonly WorldPort[];
 }

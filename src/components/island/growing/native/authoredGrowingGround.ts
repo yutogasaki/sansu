@@ -1,6 +1,8 @@
 import * as T from 'three';
 import type { SceneLayout } from '../sceneLayout';
 import type { GardenTime } from '../../three/garden/presentation';
+import { buildAuthoredPoolRipples, colorAuthoredWater } from './authoredWaterAppearance';
+import { buildAuthoredWaterBridgeArt, type AuthoredWaterBridgeSkin } from './authoredWaterBridgeArt';
 
 export interface AuthoredCoastSkin {
     version: 1;
@@ -19,18 +21,21 @@ export interface AuthoredCoastSkin {
  * pond. Their bottoms live in the same dry mesh used by groundAt(). */
 export function buildAuthoredGrowingWater(layout: SceneLayout) {
     const root = new T.Group(); root.name = 'authored-shared-water';
-    const geometries: T.BufferGeometry[] = [], materials: T.Material[] = [];
+    const geometries: T.BufferGeometry[] = [], materials: T.Material[] = [], rippleDisposers: (() => void)[] = [];
     const geometryAt = (points: readonly { x: number; y: number; z: number }[], indices: readonly number[]) => {
         const geometry = new T.BufferGeometry();
         geometry.setAttribute('position', new T.Float32BufferAttribute(points.flatMap(point => [point.x - layout.center, point.y, point.z - 2]), 3));
         geometry.setIndex([...indices]); geometry.computeVertexNormals(); geometries.push(geometry); return geometry;
     };
     for (const surface of layout.world.floors.filter(floor => floor.kind === 'water')) {
-        const material = new T.MeshPhysicalMaterial({ color: surface.color, roughness: .17, metalness: .04,
-            transparent: true, opacity: .82, clearcoat: .88, clearcoatRoughness: .14, side: T.DoubleSide });
-        const mesh = new T.Mesh(geometryAt(surface.vertices.map(vertex => vertex.point), surface.indices), material);
-        mesh.name = 'authored-water-floor'; mesh.userData.worldFloor = surface.id;
         const pool = layout.authoredWaterPlan?.pools.find(pool => pool.waterFloorId === surface.id);
+        const geometry = geometryAt(surface.vertices.map(vertex => vertex.point), surface.indices);
+        const graduated = colorAuthoredWater(geometry, surface, pool);
+        const material = new T.MeshPhysicalMaterial({ color: graduated ? '#ffffff' : surface.color, vertexColors: graduated, roughness: .16, metalness: .04,
+            transparent: true, opacity: .9, clearcoat: .88, clearcoatRoughness: .14, side: T.DoubleSide });
+        const mesh = new T.Mesh(geometry, material);
+        mesh.name = 'authored-water-floor'; mesh.userData.worldFloor = surface.id;
+        mesh.receiveShadow = true;
         if (pool) mesh.userData.objectId = pool.ownerId;
         else if (layout.authoredWaterPlan) {
             const plan = layout.authoredWaterPlan;
@@ -46,6 +51,10 @@ export function buildAuthoredGrowingWater(layout: SceneLayout) {
             if (owner) mesh.userData.objectId = owner.id;
         }
         root.add(mesh); materials.push(material);
+        if (pool) {
+            const ripples = buildAuthoredPoolRipples(layout, pool, surface);
+            root.add(ripples.strokes); rippleDisposers.push(ripples.dispose);
+        }
     }
     for (const surface of layout.world.surfaces) {
         const material = new T.MeshStandardMaterial({ color: surface.material.color, roughness: surface.material.roughness,
@@ -53,15 +62,18 @@ export function buildAuthoredGrowingWater(layout: SceneLayout) {
             transparent: (surface.material.opacity ?? 1) < 1, side: T.DoubleSide });
         const mesh = new T.Mesh(geometryAt(surface.vertices, surface.indices), material);
         mesh.name = `authored-${surface.kind}`; mesh.userData.worldSurface = surface.id;
-        mesh.receiveShadow = surface.kind === 'bank'; root.add(mesh); materials.push(material);
+        mesh.receiveShadow = surface.kind === 'bank'; mesh.castShadow = surface.kind === 'bank';
+        // The bank's minerals are part of the owned water shape, and remain
+        // outside the dry pointer support just like its other vertical faces.
+        mesh.raycast = () => {}; root.add(mesh); materials.push(material);
     }
     root.userData.worldRevision = layout.world.definition.revision;
-    return { root, dispose() { geometries.forEach(value => value.dispose()); materials.forEach(value => value.dispose()); } };
+    return { root, dispose() { rippleDisposers.forEach(dispose => dispose()); geometries.forEach(value => value.dispose()); materials.forEach(value => value.dispose()); } };
 }
 
 /** The actual dry triangles are both the visible floor and the pointer target.
  * Authored stone sides are skin only: they grant no planting or walking right. */
-export function buildAuthoredGrowingGround(layout: SceneLayout, skin?: AuthoredCoastSkin) {
+export function buildAuthoredGrowingGround(layout: SceneLayout, skin?: AuthoredCoastSkin, bridgeSkin?: AuthoredWaterBridgeSkin) {
     if (!layout.authored) throw Error('Authored ground requires an authored world');
     if (skin && (skin.worldId !== layout.world.id || skin.source.sha256 !== layout.world.definition.source?.sha256)) throw Error('Authored coast and floor sources differ');
     const root = new T.Group(); root.name = 'authored-shared-terrain';
@@ -72,7 +84,7 @@ export function buildAuthoredGrowingGround(layout: SceneLayout, skin?: AuthoredC
             positions.push(point.x - layout.center, point.y, point.z - 2);
             colors.push(color.r, color.g, color.b);
         }
-        indices.push(...surface.indices.map(index => index + offset));
+        for (const index of surface.indices) indices.push(index + offset);
     }
     const geometry = new T.BufferGeometry(); geometry.setAttribute('position', new T.Float32BufferAttribute(positions, 3));
     geometry.setAttribute('color', new T.Float32BufferAttribute(colors, 3)); geometry.setIndex(indices); geometry.computeVertexNormals();
@@ -91,8 +103,9 @@ export function buildAuthoredGrowingGround(layout: SceneLayout, skin?: AuthoredC
         mesh.userData.authoredCoastSkin = true; root.add(mesh); geometries.push(coastGeometry); materials.push(coastMaterial);
     }
     const water = buildAuthoredGrowingWater(layout); if (water.root.children.length) root.add(water.root);
+    const bridges = buildAuthoredWaterBridgeArt(layout, bridgeSkin); if (bridges.root.children.length) root.add(bridges.root);
     root.userData.worldDefinition = layout.world.id; root.userData.worldRevision = layout.world.definition.revision; root.userData.sourceSha256 = skin?.source.sha256;
-    return { root, floor, dispose() { water.dispose(); geometries.forEach(value => value.dispose()); materials.forEach(value => value.dispose()); } };
+    return { root, floor, dispose() { bridges.dispose(); water.dispose(); geometries.forEach(value => value.dispose()); materials.forEach(value => value.dispose()); } };
 }
 
 /** Water uses world units and leaves the authored inlet open. No ellipse or

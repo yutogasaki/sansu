@@ -1,0 +1,68 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+ ✓ src/domain/growingIsland/authoredWaterRim.test.ts (2 tests) 7ms
+ ✓ src/domain/growingIsland/authoredWaterCarvingParity.test.ts (5 tests) 42ms
+ ✓ src/domain/growingIsland/authoredWaterContour.test.ts (4 tests) 59ms
+ ✓ src/domain/growingIsland/authoredWorldAccessParity.test.ts (5 tests) 165ms
+ ✓ src/domain/growingIsland/authoredWaterBridge.test.ts (6 tests) 163ms
+ ✓ src/domain/growingIsland/authoredWorldAccess.test.ts (11 tests) 933ms
+   ✓ authored planting and walking access > rejects unproven water/entry references and leaves explicit empty entries unavailable 359ms
+ ✓ src/domain/growingIsland/authoredWaterCarving.test.ts (5 tests) 1907ms
+   ✓ explicit water carving uses original ground without granting acquired sites > adds the native05 DEV scope without changing any floor, site, anchor or explicit passage 1549ms
+ ✓ src/domain/growingIsland/authoredWaterWorld.test.ts (18 tests) 7488ms
+   ✓ pure authored water geometry composition > cuts real source triangles and keeps fixed acquired anchors over three different water/bed floors 502ms
+   ✓ pure authored water geometry composition > retains only actually dry foot-band edges while leaving joining/water grants unchanged 442ms
+   ✓ pure authored water geometry composition > joins every organic pool mouth and adjacent channel cuts with actual continuous water 333ms
+   ✓ pure authored water geometry composition > resolves the existing cut floors at L/T junctions without duplicating water or creating support 334ms
+   ✓ pure authored water geometry composition > keeps pool mouths and the whole shared junction level before the actual falling strips 322ms
+   ✓ pure authored water geometry composition > starts from the original ground on store/split and restores the same revision and geometry 846ms
+   ✓ pure authored water geometry composition > derives the terminal bridge from the same cut world and removes it with its supplying owner 1024ms
+   ✓ pure authored water geometry composition > does not remove existing pools when a fourth bowl and a third fed channel join 465ms
+   ✓ pure authored water geometry composition > does not cut a distant trench for a nonadjacent explicit water grant 716ms
+   ✓ pure authored water geometry composition > reduces a pool around another owner and its doorstep without changing acquired rights 695ms
+   ✓ pure authored water geometry composition > preserves each original anchor and floor interpolation in a rotated/translated district 306ms
+   ✓ pure authored water geometry composition > adapts only the connection axis between nearby bowls while retaining wide transverse wings 368ms
+ ❯ src/components/island/growing/native/authoredWaterIntegration.test.ts (4 tests | 2 failed) 37653ms
+   × actual 27-owner hill water frame > keeps all acquired anchors and owner approaches while rendering the exact evaluated water and bed 9087ms
+     → Maximum call stack size exceeded
+   ✓ actual 27-owner hill water frame > stores and reconnects through real commands, restoring original dry ground and exactly the same water revision 1511ms
+   ✓ actual 27-owner hill water frame > uses the same future geometry for preview and confirmation without changing the committed frame 17336ms
+   × actual 27-owner hill water frame > shows separate prospective terrain, keeps committed pointer support, and restores scene resources on cancel 8617ms
+     → Maximum call stack size exceeded
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/island/growing/native/authoredWaterIntegration.test.ts > actual 27-owner hill water frame > keeps all acquired anchors and owner approaches while rendering the exact evaluated water and bed
+RangeError: Maximum call stack size exceeded
+ ❯ Module.buildAuthoredGrowingGround src/components/island/growing/native/authoredGrowingGround.ts:87:17
+     85|             colors.push(color.r, color.g, color.b);
+     86|         }
+     87|         indices.push(...surface.indices.map(index => index + offset));
+       |                 ^
+     88|     }
+     89|     const geometry = new T.BufferGeometry(); geometry.setAttribute('po…
+ ❯ src/components/island/growing/native/authoredWaterIntegration.test.ts:43:92
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/components/island/growing/native/authoredWaterIntegration.test.ts > actual 27-owner hill water frame > shows separate prospective terrain, keeps committed pointer support, and restores scene resources on cancel
+RangeError: Maximum call stack size exceeded
+ ❯ Module.buildAuthoredGrowingGround src/components/island/growing/native/authoredGrowingGround.ts:87:17
+     85|             colors.push(color.r, color.g, color.b);
+     86|         }
+     87|         indices.push(...surface.indices.map(index => index + offset));
+       |                 ^
+     88|     }
+     89|     const geometry = new T.BufferGeometry(); geometry.setAttribute('po…
+ ❯ setGround src/components/island/growing/worldScene.ts:58:23
+ ❯ Object.layout src/components/island/growing/worldScene.ts:125:150
+ ❯ src/components/island/growing/native/authoredWaterIntegration.test.ts:113:128
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+ Test Files  1 failed | 8 passed (9)
+      Tests  2 failed | 58 passed (60)
+   Start at  20:55:35
+   Duration  38.72s (transform 1.06s, setup 0ms, collect 2.23s, tests 48.42s, environment 1ms, prepare 475ms)
+

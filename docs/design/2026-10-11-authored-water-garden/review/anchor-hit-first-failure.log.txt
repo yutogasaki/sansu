@@ -1,0 +1,36 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+stderr | src/components/island/growing/native/authoredWaterIntegration.test.ts > actual 27-owner hill water frame > keeps all acquired anchors and owner approaches while rendering the exact evaluated water and bed
+THREE.Material: parameter 'map' has value of undefined.
+
+ ❯ src/components/island/growing/native/authoredWaterIntegration.test.ts (4 tests | 1 failed) 38463ms
+   × actual 27-owner hill water frame > keeps all acquired anchors and owner approaches while rendering the exact evaluated water and bed 8348ms
+     → expected 'authored-water-floor' to be 'authored-water-bridge' // Object.is equality
+   ✓ actual 27-owner hill water frame > stores and reconnects through real commands, restoring original dry ground and exactly the same water revision 1499ms
+   ✓ actual 27-owner hill water frame > uses the same future geometry for preview and confirmation without changing the committed frame 17415ms
+   ✓ actual 27-owner hill water frame > shows separate prospective terrain, keeps committed pointer support, and restores scene resources on cancel 10141ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/island/growing/native/authoredWaterIntegration.test.ts > actual 27-owner hill water frame > keeps all acquired anchors and owner approaches while rendering the exact evaluated water and bed
+AssertionError: expected 'authored-water-floor' to be 'authored-water-bridge' // Object.is equality
+
+Expected: "authored-water-bridge"
+Received: "authored-water-floor"
+
+ ❯ src/components/island/growing/native/authoredWaterIntegration.test.ts:76:43
+     74|             const hits = new T.Raycaster(layout.point(owner.cell!, 3),…
+     75|             const selected = chooseGrowingFingerTarget(hits, camera, 1…
+     76|             expect(selected?.object.name).toBe(frame.plan.bridges.some…
+       |                                           ^
+     77|             expect(selected?.object.userData.objectId).toBe(owner.id);
+     78|             expect(hits.some(hit => hit.object.name === 'life-bowl-wat…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  20:56:55
+   Duration  39.34s (transform 376ms, setup 0ms, collect 532ms, tests 38.46s, environment 0ms, prepare 33ms)
+

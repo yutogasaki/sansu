@@ -9,6 +9,7 @@ import { applyIntent, canPlace, canReachHomePlacement } from '../../domain/growi
 import { key, landCells } from '../../domain/growingIsland/space';
 import { derivePlaces } from '../../domain/growingIsland/places';
 import { authoredWaterFrame } from '../../domain/growingIsland/authoredWaterFrame';
+import { withNative05WaterCarvingScope } from '../../domain/growingIsland/authoredWaterCarving';
 import type { GrowingState, Cell, Plot, Landmark } from '../../domain/growingIsland/types';
 import './authored.css';
 interface Fixture { schema: string; candidate: string; synthetic: boolean; worldId: string; state: GrowingState }
@@ -68,7 +69,8 @@ if (!import.meta.env.DEV) root.render(<p>この制作中の島は開発環境で
 else void Promise.all([fetch('/prototypes/place-qa/native05-world.json.gz', { cache: 'no-store' }).then(async response => {
     if (!response.ok) throw Error('共通地形がありません。');
     const bytes = await decodeNativeGrowingKit(await response.arrayBuffer(), { sha256: worldManifest.artifact.expandedSha256, gzipSha256: worldManifest.artifact.sha256, bytes: worldManifest.artifact.expandedBytes });
-    return compileWorldDefinition(JSON.parse(new TextDecoder().decode(bytes)));
+    const base = compileWorldDefinition(JSON.parse(new TextDecoder().decode(bytes)));
+    return waterAssembly ? withNative05WaterCarvingScope(base) : base;
 }), fetch(waterAssembly ? '/prototypes/place-qa/authored-water-fixture.json' : '/prototypes/place-qa/authored-fixture.json', { cache: 'no-store' }).then(response => { if (!response.ok) throw Error('診断入力がありません。'); return response.json() as Promise<Fixture>; })])
     .then(([world, fixture]) => { if (fixture.schema !== 'sansu-authored-whole-diagnostic-v1' || !fixture.synthetic || fixture.worldId !== world.id) throw Error('診断と地形が一致しません。'); root.render(<AuthoredIsland world={world} fixture={fixture} />); })
     .catch(error => root.render(<p role="alert">{String(error)}</p>));

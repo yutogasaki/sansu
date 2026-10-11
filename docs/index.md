@@ -1,6 +1,6 @@
 # Sansu 文書の入口
 
-**現在の島制作方針：[美術で設計した場所を、配置から育てる](product/island-construction-strategy.md)。** 地形・森・水庭・集落を入口と床まで一緒に設計し、美術表示と本体が同じ世界を組み立てます。[編集できる全島のM1診断](design/2026-10-11-authored-island-runtime/README.md)で採用地形・27所有物・配置・歩行を接続し、[水底・岸・流れの制作基盤](design/2026-10-11-authored-water-world/README.md)を加えました。水庭の美術、渡れる床、大樹の回廊、森の面と描画性能が残り、M1は未完です。[最新の原本と実画面の比較](design/2026-10-11-authored-water-world/contact-sheet.html)、[決定の理由](adr/2026-10-11-authored-place-world-policy.md)。全島一例を仕上げてから配置差→成長→地区拡張へ進みます。技術検証を美術到達の代用にはしません。
+**現在の島制作方針：[美術で設計した場所を、配置から育てる](product/island-construction-strategy.md)。** 地形・森・水庭・集落を入口と床まで一緒に設計し、美術表示と本体が同じ世界を組み立てます。[編集できる全島のM1診断](design/2026-10-11-authored-island-runtime/README.md)に、[実床と原本素材から育てる水庭](design/2026-10-11-authored-water-garden/README.md)を加えました。27所有物・73権利を保ち、曲がる池・厚い岸・鉱石洞・木橋を同じ世界へ構成。次は全島の大きな形・尺度・密度・余白を先に決め、大樹の回廊と森を詳細化します。全島美術と操作性能が未達でM1は未完です。[最新の原本と実画面の比較](design/2026-10-11-authored-water-garden/contact-sheet.html)、[決定の理由](adr/2026-10-11-authored-place-world-policy.md)。全島一例を仕上げてから配置差→成長→地区拡張へ進みます。技術検証を美術到達の代用にはしません。
 
 2026-10-11 広がり方を本体へ実装：[8・16・32軒、三方向の実3D展示](design/2026-10-11-expanding-island-runtime/index.html) · [検証と編集素材](design/2026-10-11-expanding-island-runtime/README.md) · [実装契約](product/island-expanding-runtime.md)。土地の選択と配置から、湾を抱く岸・横へ続く森の回廊・南へ連なる低い丘を描きます。所有セル、道、分数位置の足、配置操作を同じ床へ接続。通常productionの美術flagはfalseを保持し、美術の到達・実機・独立理解／再訪は継続課題です。
 

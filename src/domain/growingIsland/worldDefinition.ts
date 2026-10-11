@@ -1,5 +1,7 @@
 import type { Cell } from './types';
 import type { WorldDefinition, WorldDistrict, WorldFloor, WorldPassage, WorldPoint, WorldSiteRef, WorldSurface } from './worldTypes';
+import { isAuthoredShoreEntrySupported } from './authoredWorldAccess';
+import { polygonArea, triangulateWaterPolygon } from './authoredWaterGeometry';
 
 const EPSILON = 1e-7;
 const stable = (value: number) => Math.round(value * 1e9) / 1e9 || 0;
@@ -120,6 +122,19 @@ export function compileWorldDefinition(input: WorldDefinition) {
         requireWorld(district.id && !districtIds.has(district.id), 'duplicate district'); districtIds.add(district.id);
         requireWorld(finite(district.logicalOrigin) && Number.isInteger(district.logicalOrigin.x) && Number.isInteger(district.logicalOrigin.z)
             && finite(district.worldOrigin) && Number.isFinite(district.worldOrigin.y) && [0, 1, 2, 3].includes(district.turn), 'district origin or turn');
+        requireWorld(district.waterCarvingScopes === undefined || Array.isArray(district.waterCarvingScopes), 'water carving scopes');
+        const scopeIds = new Set<string>(), originals = district.anchorFloors?.length ? district.anchorFloors : district.floors;
+        for (const scope of district.waterCarvingScopes ?? []) {
+            requireWorld(typeof scope.id === 'string' && scope.id.length && !scopeIds.has(scope.id), 'duplicate or missing water carving scope'); scopeIds.add(scope.id);
+            requireWorld(Array.isArray(scope.floorIds) && scope.floorIds.length && new Set(scope.floorIds).size === scope.floorIds.length
+                && scope.floorIds.every((id: string) => originals.some(floor => floor.id === id && floor.kind === 'ground')), 'water carving original ground');
+            requireWorld(Array.isArray(scope.envelope) && triangulateWaterPolygon(scope.envelope), 'water carving envelope');
+            const orientation = Math.sign(polygonArea(scope.envelope));
+            requireWorld(scope.envelope.every((a: Cell, i: number) => {
+                const b = scope.envelope[(i + 1) % scope.envelope.length], c = scope.envelope[(i + 2) % scope.envelope.length];
+                return orientation * ((b.x - a.x) * (c.z - b.z) - (b.z - a.z) * (c.x - b.x)) >= -1e-12;
+            }), 'water carving envelope must be convex');
+        }
         const compileFloor = (floor: WorldFloor, anchor: boolean) => {
             const id = floorKey(district.id, floor.id);
             const ids = anchor ? allAnchorFloors : allFloors;
@@ -298,6 +313,25 @@ export function compileWorldDefinition(input: WorldDefinition) {
     };
     const owns = (cell: Cell) => cells.get(cellKey(cell))?.placement === true;
     const floorKinds = new Map(floors.map(floor => [floor.id, floor.kind]));
+    const walkSites = sites.filter(site => site.support), shoreApproaches = new Map<string, Cell[]>();
+    const shoreGeometry = { floors, walkSites, floorAt: (cell: Cell) => sample(cell, false), anchorFloorAt: (cell: Cell) => sampleOriginal(cell, false) };
+    for (const district of definition.districts) {
+        requireWorld(district.shoreAccess === undefined || Array.isArray(district.shoreAccess), 'shore access');
+        for (const access of district.shoreAccess ?? []) {
+            const owner = refs.get(refKey({ districtId: district.id, siteId: access.ownerSiteId }));
+            requireWorld(owner?.placement && !shoreApproaches.has(cellKey(owner.cell)), 'shore owner');
+            requireWorld(Array.isArray(access.waterFloorIds) && access.waterFloorIds.length && new Set(access.waterFloorIds).size === access.waterFloorIds.length, 'shore water floors');
+            const waterIds: string[] = access.waterFloorIds.map((id: string) => floorKey(district.id, id));
+            requireWorld(waterIds.every(id => floorKinds.get(id) === 'water') && waterIds.some(id => {
+                const water = sample(owner.cell, false, id, undefined, true);
+                return water && Math.hypot(water.point.x - owner.point.x, water.point.z - owner.point.z) < .00001;
+            }), 'shore water does not cover its original owner');
+            requireWorld(Array.isArray(access.entrySiteIds) && new Set(access.entrySiteIds).size === access.entrySiteIds.length, 'shore entries');
+            const entries: (CompiledWorldSite | undefined)[] = access.entrySiteIds.map((id: string) => refs.get(refKey({ districtId: district.id, siteId: id })));
+            requireWorld(entries.every(entry => entry && isAuthoredShoreEntrySupported(shoreGeometry, entry.cell, waterIds)), 'shore entry has no actual bank support');
+            shoreApproaches.set(cellKey(owner.cell), entries.map(entry => ({ ...entry!.cell })));
+        }
+    }
     const siteAt = (point: WorldPoint): CompiledWorldSite | undefined => {
         const floor = sample(point, true, undefined, point.y); if (!floor || Math.abs(floor.point.y - point.y) > .025) return undefined;
         const site = cells.get(cellKey({ x: Math.round(floor.cell.x), z: Math.round(floor.cell.z) }));
@@ -330,7 +364,8 @@ export function compileWorldDefinition(input: WorldDefinition) {
     }), { min: { ...points[0] }, max: { ...points[0] } });
     const isWalkEdgeSupported = (from: Cell, to: Cell) => !walkEdgeError(cells.get(cellKey(from)), cells.get(cellKey(to)), cell => sample(cell, false));
     return Object.freeze({ id: definition.id, revision: definition.revision, definition: freeze(definition), floors: freeze(floors), anchorFloors: freeze(anchorFloors), surfaces: freeze(surfaces),
-        sites: freeze(sites), walkSites: freeze(sites.filter(site => site.support)), bounds: freeze(bounds), owns, neighbors, route, siteAt, isWalkEdgeSupported,
+        sites: freeze(sites), walkSites: freeze(walkSites), bounds: freeze(bounds), owns, neighbors, route, siteAt, isWalkEdgeSupported,
+        shoreApproachCells: (cell: Cell) => shoreApproaches.get(cellKey(cell))?.map(entry => ({ ...entry })),
         anchorAt: (cell: Cell) => { const point = cells.get(cellKey(cell))?.point; return point ? { ...point } : undefined; },
         anchorFloorAt: (cell: Cell) => sampleOriginal(cell, false),
         sampleFloorAt: (cell: Cell, floorId: string) => allFloors.has(floorId) ? sample(cell, false, floorId, undefined, true) : undefined,

@@ -1,12 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { composeAuthoredWaterWorld } from './authoredWaterWorld';
+import { decomposeWaterOutline, outlineArea, pointInWaterOutline } from './authoredWaterContour';
 import { newIsland } from './island';
 import { key } from './space';
 import type { Cell, GrowingState } from './types';
 import { compileWorldDefinition, isWorldWalkEdgeSupported, type IslandWorld } from './worldDefinition';
 import type { WorldDefinition, WorldPoint } from './worldTypes';
 
-function source({ water = true, rotated = false, narrowAcquisition = false, groundGap = false, longWaterEdge = false } = {}): IslandWorld {
+function source({ water = true, rotated = false, narrowAcquisition = false, groundGap = false, longWaterEdge = false, carvingScope = false, sheared = false } = {}): IslandWorld {
     const sites = [];
     for (let z = -4; z <= -1; z += .25) for (let x = -1; x <= 7; x += .25) sites.push({
         id: `${x},${z}`, cell: { x, z }, floorId: groundGap ? x <= 1.28 ? 'left-ground' : 'right-ground' : 'source-ground',
@@ -16,9 +17,10 @@ function source({ water = true, rotated = false, narrowAcquisition = false, grou
     const definition: WorldDefinition = { version: 1, id: 'water-source', source: { artifact: 'test-source.glb', sha256: 'a'.repeat(64) },
         districts: [{ id: 'shore', templateId: 'actual-source', logicalOrigin: { x: rotated ? 10 : 0, z: 0 },
             worldOrigin: { x: rotated ? 20 : 0, y: rotated ? 2 : 0, z: rotated ? -10 : 0 }, turn: rotated ? 1 : 0,
-            sites, ports: [], floors: (groundGap ? [['left-ground', -1.5, 1.28], ['right-ground', 1.46, 7.5]] as const
+            sites, ports: [], waterCarvingScopes: carvingScope ? [{ id: 'explicit-test-hill', floorIds: ['source-ground'],
+                envelope: [{ x: -1.5, z: -4.5 }, { x: 7.5, z: -4.5 }, { x: 7.5, z: -.5 }, { x: -1.5, z: -.5 }] }] : undefined, floors: (groundGap ? [['left-ground', -1.5, 1.28], ['right-ground', 1.46, 7.5]] as const
                 : [['source-ground', -1.5, 7.5]] as const).map(([id, left, right]) => ({ id, kind: 'ground', color: '#b0c69a',
-                vertices: [[left, -4.5], [right, -4.5], [right, -.5], [left, -.5]].map(([x, z]) => ({ cell: { x, z }, point: { x: x * 1.1, y: x * .08, z: z * (narrowAcquisition ? .45 : 1) } })),
+                vertices: [[left, -4.5], [right, -4.5], [right, -.5], [left, -.5]].map(([x, z]) => ({ cell: { x, z }, point: { x: x * 1.1 + (sheared ? .85 * (z + 2) : 0), y: x * .08, z: z * (narrowAcquisition ? .45 : sheared ? .45 : 1) } })),
                 indices: [0, 2, 1, 0, 3, 2] })),
         }], edges: [] };
     for (const site of sites) for (const [dx, dz] of [[.25, 0], [0, .25], [1, 0], [0, 1]]) {
@@ -48,7 +50,7 @@ function samePoint(actual: { x: number; y: number; z: number } | undefined, expe
 }
 // Independent convex-footprint intersection for continuity assertions. Retain
 // zero-area intersections so two adjacent trenches may share a real full mouth.
-function intersection(a: readonly WorldPoint[], b: readonly WorldPoint[]) {
+function convexIntersection(a: readonly WorldPoint[], b: readonly WorldPoint[]) {
     let out = [...a];
     for (let i = 0; i < b.length; i++) {
         const edge0 = b[i], edge1 = b[(i + 1) % b.length], input = out; out = [];
@@ -62,9 +64,14 @@ function intersection(a: readonly WorldPoint[], b: readonly WorldPoint[]) {
             }
         }
     }
-    return { area: Math.abs(out.reduce((sum, p, i) => {
+    return { points: out, area: Math.abs(out.reduce((sum, p, i) => {
         const q = out[(i + 1) % out.length]; return sum + p.x * q.z - p.z * q.x;
     }, 0)) / 2, span: Math.max(0, ...out.flatMap(p => out.map(q => Math.hypot(p.x - q.x, p.z - q.z)))) };
+}
+
+function intersection(a: readonly WorldPoint[], b: readonly WorldPoint[]) {
+    const intersections = decomposeWaterOutline(a).flatMap(left => decomposeWaterOutline(b).map(right => convexIntersection(left, right)));
+    return { area: intersections.reduce((sum, result) => sum + result.area, 0), span: Math.max(0, ...intersections.map(result => result.span)) };
 }
 
 describe('pure authored water geometry composition', () => {
@@ -72,7 +79,9 @@ describe('pure authored water geometry composition', () => {
         const base = source(), state = owners(base), definition = structuredClone(base.definition), saved = structuredClone(state);
         const { world, plan } = composeAuthoredWaterWorld(state, base);
         expect(plan.pools).toHaveLength(3); expect([...plan.ownerIds].sort()).toEqual(['b0', 'b2', 'b4', 'c1', 'c3']);
-        expect(new Set(plan.pools.map(pool => pool.color)).size).toBe(3);
+        expect(plan.pools.every(pool => pool.color === '#287ca6')).toBe(true);
+        expect(plan.pools.map(pool => pool.sourceRole)).toEqual(['upper', 'middle', 'lower']);
+        expect(plan.pools.every(pool => pool.outline.length === 72)).toBe(true);
         expect(new Set(plan.pools.map(pool => pool.radius)).size).toBeGreaterThan(1);
         expect(world.id).toBe(base.id); expect(world.definition.source).toEqual(base.definition.source);
         expect(world.revision).toBe(plan.revision);
@@ -162,13 +171,81 @@ describe('pure authored water geometry composition', () => {
             const cell = base.logicalAt(point)!;
             expect(stream.waterFloorIds.some(id => !!world.sampleFloorAt(cell, id))).toBe(true);
             expect(stream.bedFloorIds.some(id => !!world.sampleFloorAt(cell, id))).toBe(true);
-            expect(world.floorAt(cell)).toBeUndefined();
+            const support = world.floorAt(cell);
+            if (support) expect(plan.bridges.some(bridge => bridge.deckFloorId === support.floorId)).toBe(true);
         }
         expect(world.floors.filter(floor => floor.kind === 'water').length).toBeLessThan(plan.streams.reduce((sum, stream) => sum + stream.waterFloorIds.length, 0));
         const junction = positions.c1;
         const generatedHere = world.floors.filter(floor => floor.kind === 'water' && world.sampleFloorAt(junction, floor.id));
         expect(generatedHere).toHaveLength(2); // two meeting arms; no new vertical duplicate
         expect(world.sites.filter(site => site.placement).map(site => site.cell)).toEqual(base.sites.filter(site => site.placement).map(site => site.cell));
+    });
+
+    it('keeps pool mouths and the whole shared junction level before the actual falling strips', () => {
+        const base = source({ carvingScope: true }), state = owners(base);
+        const positions: Record<string, Cell> = { b0: { x: 0, z: -2 }, b2: { x: 1, z: -2 }, b4: { x: 3, z: -2 },
+            c1: { x: 2, z: -2 }, c3: { x: 2, z: -3 } };
+        state.landmarks.forEach(owner => { owner.cell = cellAt(base, positions[owner.id]); });
+        const { world, plan } = composeAuthoredWaterWorld(state, base);
+        expect(plan.pools).toHaveLength(3); expect(plan.streams).toHaveLength(4);
+        let flatPoolSamples = 0, fallingSamples = 0;
+        for (const stream of plan.streams) {
+            const vx = stream.to.x - stream.from.x, vz = stream.to.z - stream.from.z, length = Math.hypot(vx, vz);
+            for (const p of stream.centerline) {
+                // Height knots subdivide the accepted original eight XZ
+                // segments; they never shrink or widen their physical outline.
+                const t = ((p.x - stream.from.x) * vx + (p.z - stream.from.z) * vz) / (length * length), i = Math.min(7, Math.floor(t * 8 + 1e-8)), u = t * 8 - i;
+                const bend = .035 * (Math.sin(Math.PI * i / 8) + (Math.sin(Math.PI * (i + 1) / 8) - Math.sin(Math.PI * i / 8)) * u);
+                expect(p.x).toBeCloseTo(stream.from.x + vx * t + vz / length * bend, 8);
+                expect(p.z).toBeCloseTo(stream.from.z + vz * t - vx / length * bend, 8);
+            }
+            for (let segment = 0; segment + 1 < stream.centerline.length; segment++) for (let i = 0; i <= 20; i++) {
+                const a = stream.centerline[segment], b = stream.centerline[segment + 1], t = i / 20, point = { x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t, z: a.z + (b.z - a.z) * t }, cell = base.logicalAt(point)!;
+                const actual = stream.waterFloorIds.map(id => world.sampleFloorAt(cell, id)).filter(sample => !!sample);
+                expect(actual.length).toBeGreaterThan(0);
+                for (const sample of actual) expect(sample.point.y).toBeCloseTo(point.y, 7);
+                const pool = plan.pools.find(pool => pointInWaterOutline(point, pool.outline));
+                if (pool) { expect(point.y).toBeCloseTo(pool.waterY, 7); flatPoolSamples++; }
+                if (Math.abs(a.y - b.y) > .001) fallingSamples++;
+            }
+            const surface = world.surfaces.find(surface => surface.id === JSON.stringify(['shore', `authored-water:flow:${encodeURIComponent(stream.id)}`]));
+            if (stream.falling) {
+                expect(surface).toBeDefined();
+                const group = plan.groups.find(group => stream.ownerIds.every(id => group.ownerIds.includes(id)))!;
+                const groupWaterIds = [...new Set([...plan.pools.filter(pool => group.ownerIds.includes(pool.ownerId)).map(pool => pool.waterFloorId),
+                    ...plan.streams.filter(other => other.ownerIds.every(id => group.ownerIds.includes(id))).flatMap(other => other.waterFloorIds)])];
+                for (const vertex of surface!.vertices) {
+                    // A zero-area arm boundary may belong to the other actual
+                    // junction floor. It must still be this group's same water.
+                    const cell = base.logicalAt(vertex)!, actual = groupWaterIds.map(id => world.sampleFloorAt(cell, id)).filter(sample => !!sample);
+                    expect(actual.length).toBeGreaterThan(0);
+                    for (const sample of actual) expect(vertex.y - sample.point.y).toBeCloseTo(.002, 7);
+                }
+            }
+        }
+        expect(flatPoolSamples).toBeGreaterThan(20); expect(fallingSamples).toBeGreaterThan(20);
+    });
+
+    it('keeps a bowl junction level when mapped arms overlap beyond the pool contour', () => {
+        const base = source({ carvingScope: true, sheared: true }), state = owners(base);
+        const positions: Record<string, Cell> = { b0: { x: 0, z: -2 }, b2: { x: 1, z: -2 }, b4: { x: 3, z: -2 }, c1: { x: 2, z: -2 }, c3: { x: 1, z: -3 } };
+        state.landmarks.forEach(owner => { owner.cell = cellAt(base, positions[owner.id]); });
+        const { world, plan } = composeAuthoredWaterWorld(state, base), pool = plan.pools.find(pool => pool.ownerId === 'b2')!;
+        expect(plan.pools).toHaveLength(3); expect(plan.streams).toHaveLength(4);
+        const arms = plan.streams.filter(stream => stream.ownerIds.includes('b2'));
+        const left = arms.find(stream => stream.ownerIds.includes('b0'))!, branch = arms.find(stream => stream.ownerIds.includes('c3'))!;
+        const overlaps = decomposeWaterOutline(left.outline).flatMap(a => decomposeWaterOutline(branch.outline).map(b => convexIntersection(a, b)))
+            .filter(overlap => overlap.area > 1e-8);
+        let beyondPool = 0;
+        for (const overlap of overlaps) for (let edge = 0; edge < overlap.points.length; edge++) for (let i = 1; i < 20; i++) {
+            const a = overlap.points[edge], b = overlap.points[(edge + 1) % overlap.points.length], t = i / 20,
+                p = { x: a.x + (b.x - a.x) * t, y: pool.waterY, z: a.z + (b.z - a.z) * t };
+            if (pointInWaterOutline(p, pool.outline)) continue;
+            beyondPool++;
+            const cell = base.logicalAt(p)!, floors = [...new Set([...left.waterFloorIds, ...branch.waterFloorIds])].map(id => world.sampleFloorAt(cell, id)).filter(Boolean);
+            expect(floors.length).toBeGreaterThan(0); for (const floor of floors) expect(floor!.point.y).toBeCloseTo(pool.waterY, 7);
+        }
+        expect(beyondPool).toBeGreaterThan(0);
     });
 
     it('starts from the original ground on store/split and restores the same revision and geometry', () => {
@@ -184,6 +261,32 @@ describe('pure authored water geometry composition', () => {
         const restored = composeAuthoredWaterWorld(state, base);
         expect(restored.plan).toEqual(first.plan); expect(restored.world.floors).toEqual(first.world.floors);
         expect(restored.world.definition.edges).toEqual(first.world.definition.edges);
+    });
+
+    it('derives the terminal bridge from the same cut world and removes it with its supplying owner', () => {
+        const base = source(), state = owners(base);
+        const positions: Record<string, Cell> = { b0: { x: 0, z: -2 }, b2: { x: 1, z: -2 }, b4: { x: 3, z: -2 },
+            c1: { x: 2, z: -2 }, c3: { x: 2, z: -3 } };
+        state.landmarks.forEach(owner => { owner.cell = cellAt(base, positions[owner.id]); });
+        const saved = structuredClone(state), original = structuredClone(base.definition), first = composeAuthoredWaterWorld(state, base);
+        expect(first.plan.bridges).toHaveLength(1);
+        const bridge = first.plan.bridges[0], deckCell = base.logicalAt(bridge.center)!;
+        expect(bridge.ownerId).toBe('c3'); expect(Object.isFrozen(bridge)).toBe(true);
+        expect(first.world.floorAt(deckCell)?.floorId).toBe(bridge.deckFloorId);
+        const edgeId = (edge: WorldDefinition['edges'][number]) => JSON.stringify([JSON.stringify([edge.from.districtId, edge.from.siteId]), JSON.stringify([edge.to.districtId, edge.to.siteId])].sort());
+        for (const id of bridge.restoredEdgeIds) {
+            const edge = first.world.definition.edges.find(edge => edgeId(edge) === id && edge.allows.includes('walk'))!;
+            expect(edge).toBeDefined(); expect(base.definition.edges.some(source => edgeId(source) === id && source.allows.includes('walk'))).toBe(true);
+            const [from, to] = [edge.from, edge.to].map(ref => first.world.sites.find(site => site.ref.districtId === ref.districtId && site.ref.siteId === ref.siteId)!.cell);
+            expect(isWorldWalkEdgeSupported(first.world, from, to)).toBe(true);
+        }
+        const stored = structuredClone(state); delete stored.landmarks.find(owner => owner.id === 'c3')!.cell;
+        const after = composeAuthoredWaterWorld(stored, base);
+        expect(after.plan.bridges).toEqual([]); expect(after.plan.pools).toEqual([]);
+        expect(after.world.floors).toEqual(base.floors); expect(after.world.revision).not.toBe(first.world.revision);
+        const restored = composeAuthoredWaterWorld(state, base);
+        expect(restored.plan).toEqual(first.plan); expect(restored.world.definition).toEqual(first.world.definition);
+        expect(state).toEqual(saved); expect(base.definition).toEqual(original);
     });
 
     it('does not remove existing pools when a fourth bowl and a third fed channel join', () => {
@@ -242,7 +345,7 @@ describe('pure authored water geometry composition', () => {
         state.plots.push({ id: 'neighbor-home', kind: 'home', cell: cellAt(base, { x: 5, z: -2 }), stage: 3, growth: 18, plantedAt: 0, origin: 'seed', paid: 40 });
         const near = composeAuthoredWaterWorld(state, base);
         expect(near.plan.pools).toHaveLength(3);
-        expect(near.plan.pools.find(pool => pool.ownerId === 'b4')!.radius).toBeLessThan(clear.plan.pools.find(pool => pool.ownerId === 'b4')!.radius);
+        expect(outlineArea(near.plan.pools.find(pool => pool.ownerId === 'b4')!.outerOutline)).toBeLessThan(outlineArea(clear.plan.pools.find(pool => pool.ownerId === 'b4')!.outerOutline));
         const home = state.plots[0].cell!;
         samePoint(near.world.floorAt(home)?.point, base.floorAt(home)!.point);
         samePoint(near.world.floorAt({ x: home.x, z: home.z + .75 })?.point, base.floorAt({ x: home.x, z: home.z + .75 })!.point);
@@ -261,7 +364,7 @@ describe('pure authored water geometry composition', () => {
         }
     });
 
-    it('shrinks nearby bowls to separate their water footprints with a dry foot band', () => {
+    it('adapts only the connection axis between nearby bowls while retaining wide transverse wings', () => {
         const base = source(), state = owners(base);
         const positions: Record<string, Cell> = { b0: { x: 0, z: -2 }, b2: { x: 1, z: -2 }, b4: { x: 3, z: -2 },
             c1: { x: 2, z: -2 }, c3: { x: 2, z: -3 } };
@@ -270,9 +373,53 @@ describe('pure authored water geometry composition', () => {
         expect(plan.pools).toHaveLength(3);
         for (const a of plan.pools) for (const b of plan.pools) {
             if (a.ownerId === b.ownerId) continue;
-            const max = (pool: typeof a) => Math.max(...pool.outline.map(p => Math.hypot(p.x - pool.center.x, p.z - pool.center.z)));
-            expect(max(a) + max(b) + .24).toBeLessThan(Math.hypot(a.center.x - b.center.x, a.center.z - b.center.z));
+            expect(intersection(a.outerOutline, b.outerOutline).area).toBeLessThan(1e-8);
+            const d = Math.hypot(a.center.x - b.center.x, a.center.z - b.center.z);
+            expect(a.outerOutline.every(p => ((p.x - a.center.x) * (b.center.x - a.center.x) + (p.z - a.center.z) * (b.center.z - a.center.z)) / d <= d / 2 - .024)).toBe(true);
         }
+    });
+
+    it('uses an explicit original-floor carving scope without granting new placement rights or saved state', () => {
+        const base = source({ narrowAcquisition: true, carvingScope: true }), state = owners(base), saved = structuredClone(state), original = structuredClone(base.definition);
+        const { world, plan } = composeAuthoredWaterWorld(state, base);
+        expect(plan.pools).toHaveLength(3);
+        expect(world.sites.filter(site => site.placement).map(site => site.cell)).toEqual(base.sites.filter(site => site.placement).map(site => site.cell));
+        expect(world.owns(cellAt(base, { x: 0, z: -3 }))).toBe(false);
+        expect(state).toEqual(saved); expect(base.definition).toEqual(original);
+        expect(plan.pools.some(pool => pool.outline.some(point => Math.abs(point.z - pool.center.z) > .225))).toBe(true);
+        for (const pool of plan.pools) {
+            const district = world.definition.districts.find(district => district.id === pool.districtId)!;
+            const bands = district.surfaces!.filter(surface => surface.id.startsWith(`authored-water:bank:pool%3A${pool.ownerId}`));
+            expect(bands).toHaveLength(3);
+            for (const point of pool.outerOutline) {
+                const insideBank = { x: pool.center.x + (point.x - pool.center.x) * .98, y: point.y,
+                    z: pool.center.z + (point.z - pool.center.z) * .98 };
+                const cell = base.logicalAt(insideBank)!;
+                // The outer bank annulus is removed from support and is not a
+                // walkable bed disguised as a bank surface.
+                expect(world.sampleFloorAt(cell, base.floors[0].id)).toBeUndefined();
+            }
+        }
+        expect(plan.grottos).toHaveLength(1);
+        for (const grotto of plan.grottos) {
+            const pool = plan.pools.find(pool => pool.ownerId === grotto.ownerId)!;
+            expect(grotto.scale).toBeGreaterThanOrEqual(.6);
+            expect(grotto.surfaceIds).toHaveLength(3);
+            expect(world.surfaces.filter(surface => grotto.surfaceIds.includes(surface.id)).reduce((sum, surface) => sum + surface.indices.length / 3, 0)).toBe(116);
+            expect(world.sampleFloorAt(base.logicalAt(grotto.pivot)!, pool.bedFloorId)).toBeDefined();
+        }
+    });
+
+    it('never applies an accepted stream stencil to a different district at the same physical coordinates', () => {
+        const original = source({ carvingScope: true }), definition = structuredClone(original.definition), district = definition.districts[0];
+        const foreign = { ...structuredClone(district), id: 'foreign', logicalOrigin: { x: 30, z: 0 },
+            worldOrigin: { x: 0, y: 4, z: 0 }, sites: structuredClone(district.sites), waterCarvingScopes: undefined };
+        definition.districts = [...definition.districts, foreign];
+        const base = compileWorldDefinition(definition), { world, plan } = composeAuthoredWaterWorld(owners(base), base);
+        expect(plan.pools).toHaveLength(3); expect(plan.streams).toHaveLength(4);
+        expect(world.definition.districts.find(district => district.id === 'foreign')!.floors).toEqual(foreign.floors);
+        expect(world.definition.districts.find(district => district.id === 'foreign')!.surfaces ?? []).toEqual([]);
+        expect(world.floors.filter(floor => JSON.parse(floor.id)[0] === 'foreign' && floor.kind === 'water')).toEqual([]);
     });
 
     it('refuses an enlarged shape when visible ground lacks the acquired width for a dry shore', () => {

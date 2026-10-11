@@ -1,6 +1,12 @@
 import { connectedWaterChannels } from '../islandLife/waterChannels';
-import { AUTHORED_OWNER_HALF_EXTENT, AUTHORED_WALK_HALF_WIDTH } from './authoredWorldAccess';
+import { AUTHORED_OWNER_HALF_EXTENT, AUTHORED_WALK_HALF_WIDTH, findAuthoredShoreEntries } from './authoredWorldAccess';
 import { waterLayout } from './environment';
+import { isAuthoredWaterCarvingSafe, authoredWaterCarvingFloorIds } from './authoredWaterCarving';
+import { adaptWaterContour, decomposeWaterOutline, pointInWaterOutline, waterRayExit, waterSegmentIntervals } from './authoredWaterContour';
+import { buildWaterRim, scaledWaterOutline } from './authoredWaterRim';
+import { composeAuthoredWaterBridges, type AuthoredWaterBridgePlan } from './authoredWaterBridge';
+import nativeWaterSource from './nativeWaterSource.json';
+import nativeWaterBridgeProfile from './nativeWaterBridgeProfile.json';
 import { HOUSE_CELLS } from './space';
 import type { Cell, GrowingState, Landmark } from './types';
 import { compileWorldDefinition, isWorldWalkEdgeSupported, type IslandWorld } from './worldDefinition';
@@ -18,6 +24,11 @@ export interface AuthoredWaterPool {
     waterY: number;
     bedY: number;
     outline: Outline;
+    /** Real outer-bank cut; its sloping surfaces do not grant walking support. */
+    outerOutline: Outline;
+    sourceRole: string;
+    /** Adapted positive/negative connection and transverse extents. */
+    axes: readonly number[];
     /** Compiled IDs: JSON [districtId, local floorId]. */
     waterFloorId: string;
     bedFloorId: string;
@@ -36,6 +47,8 @@ export interface AuthoredWaterStream {
     bedFloorIds: readonly string[];
     /** A visible drop, not an extra walking support or a water grant. */
     falling: boolean;
+    centerline: readonly WorldPoint[];
+    width: number;
 }
 export interface AuthoredWaterGroup {
     id: string;
@@ -45,6 +58,14 @@ export interface AuthoredWaterGroup {
     cut: boolean;
     reason?: 'individual-bodies' | 'insufficient-clearance';
 }
+export interface AuthoredWaterGrotto {
+    ownerId: string;
+    pivot: WorldPoint;
+    yaw: number;
+    scale: number;
+    footprint: Outline;
+    surfaceIds: readonly string[];
+}
 export interface AuthoredWaterPlan {
     revision: string;
     /** Only these owners' individual bodies are replaced by actual shared cuts. */
@@ -52,11 +73,13 @@ export interface AuthoredWaterPlan {
     groups: readonly AuthoredWaterGroup[];
     pools: readonly AuthoredWaterPool[];
     streams: readonly AuthoredWaterStream[];
+    grottos: readonly AuthoredWaterGrotto[];
+    bridges: readonly AuthoredWaterBridgePlan[];
 }
 
 const EPS = 1e-9;
-const SURFACE_RISE = .025, DEPTH = .18, SHORE_WIDTH = .14;
-const WATER_COLORS = ['#66bbdc', '#879fd9', '#69cfc6'];
+const SURFACE_RISE = .025, DEPTH = .18;
+const WATER_COLORS = ['#287ca6', '#287ca6', '#287ca6'];
 const BED_COLORS = ['#667e96', '#727e9c', '#647f8d'];
 const key = (cell: Cell) => `${cell.x},${cell.z}`;
 /** Match the supply graph: explicit grants still require adjacent integer cells. */
@@ -142,19 +165,6 @@ function append(floor: { vertices: WorldFloorVertex[]; indices: number[] }, poly
         floor.indices.push(offset, offset + (reverse ? i + 1 : i), offset + (reverse ? i : i + 1));
     }
 }
-function outlineAt(center: WorldPoint, radius: number, seed: number): WorldPoint[] {
-    const rotation = seed * .43;
-    return Array.from({ length: 16 }, (_, i) => {
-        const a = i * Math.PI / 8, r = radius * (1 + .035 * Math.cos(3 * a + seed));
-        const x = Math.cos(a) * r, z = Math.sin(a) * r * (.86 + seed % 3 * .025);
-        return { x: round(center.x + x * Math.cos(rotation) - z * Math.sin(rotation)), y: center.y,
-            z: round(center.z + x * Math.sin(rotation) + z * Math.cos(rotation)) };
-    });
-}
-function convex(outline: Outline) {
-    return outline.every((p, i) => cross(p, outline[(i + 1) % outline.length], outline[(i + 2) % outline.length]) > EPS);
-}
-
 interface Protection { cell: Cell; half: number }
 function protectedCells(state: GrowingState, excluded: ReadonlySet<string>): Protection[] {
     const half = AUTHORED_OWNER_HALF_EXTENT + AUTHORED_WALK_HALF_WIDTH;
@@ -166,40 +176,50 @@ function protectedCells(state: GrowingState, excluded: ReadonlySet<string>): Pro
     }
     return out;
 }
-function safePoint(base: IslandWorld, point: WorldPoint, protections: readonly Protection[], districtId?: string) {
-    const cell = base.logicalAt(point); if (!cell || !base.floorAt(cell)) return false;
-    const owned = base.sites.find(site => site.placement && Math.abs(cell.x - site.cell.x) <= .5 + EPS && Math.abs(cell.z - site.cell.z) <= .5 + EPS);
-    if (!owned || districtId && owned.ref.districtId !== districtId) return false;
-    return !protections.some(p => Math.abs(cell.x - p.cell.x) < p.half && Math.abs(cell.z - p.cell.z) < p.half);
-}
 function safeOutline(base: IslandWorld, outline: Outline, protections: readonly Protection[], districtId?: string) {
-    for (let i = 0; i < outline.length; i++) for (const t of [0, .25, .5, .75]) {
-        const a = outline[i], b = outline[(i + 1) % outline.length];
-        if (!safePoint(base, { x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t, z: a.z + (b.z - a.z) * t }, protections, districtId)) return false;
-    }
-    return true;
+    const candidates = districtId ? [districtId] : base.definition.districts.map(district => district.id);
+    return candidates.some(id => isAuthoredWaterCarvingSafe(base, id, outline, protections));
 }
 function poolFor(owner: WaterOwner, index: number, bowls: readonly WaterOwner[], base: IslandWorld, protections: readonly Protection[]): AuthoredWaterPool | undefined {
     const site = base.sites.find(site => key(site.cell) === key(owner.cell));
     const center = base.anchorAt(owner.cell) ?? base.floorAt(owner.cell)?.point;
     if (!site?.placement || !center) return;
-    const nearest = Math.min(...bowls.filter(bowl => bowl.id !== owner.id).map(bowl => horizontal(center, base.anchorAt(bowl.cell)!)));
-    const max = Math.min(.68, .54 + index * .07, nearest / 2 - SHORE_WIDTH);
-    for (let radius = max; radius >= .32 - EPS; radius -= .02) {
-        const outline = outlineAt(center, radius, index + 1);
-        // Preserve a real dry band around the pool. It cannot claim another
-        // owner's support, doorway or the unacquired side of a narrow shore.
-        const bodyProtections = protections.map(p => ({ ...p, half: Math.max(0, p.half - AUTHORED_WALK_HALF_WIDTH) }));
-        if (!convex(outline) || !safeOutline(base, outline, protections, site.ref.districtId)
-            || !safeOutline(base, outlineAt(center, radius + AUTHORED_WALK_HALF_WIDTH, index + 1), bodyProtections, site.ref.districtId)) continue;
-        const waterY = round(center.y + SURFACE_RISE), bedY = round(waterY - DEPTH);
-        return { ownerId: owner.id, ownerIds: [owner.id], districtId: site.ref.districtId, center: { ...center }, radius: round(radius), waterY, bedY,
-            outline, waterFloorId: floorId(site.ref.districtId, localId('pool-water', owner.id)),
-            bedFloorId: floorId(site.ref.districtId, localId('pool-bed', owner.id)), color: WATER_COLORS[index % 3], bedColor: BED_COLORS[index % 3] };
+    const source = nativeWaterSource.pools[index % nativeWaterSource.pools.length];
+    const neighbors = bowls.filter(bowl => bowl.id !== owner.id).map(bowl => base.anchorAt(bowl.cell)!).filter(Boolean)
+        .sort((a, b) => horizontal(center, a) - horizontal(center, b));
+    const nearest = neighbors[0], yaw = nearest ? Math.atan2(nearest.z - center.z, nearest.x - center.x) : 0;
+    const requested = [source.radiusX, source.radiusZ, source.radiusX, source.radiusZ];
+    const axes = requested.map(value => Math.min(value, .24));
+    const outerScale = nativeWaterSource.rim.rings[0].scale;
+    const shape = () => adaptWaterContour(source.outline, center, axes[0], axes[1], yaw, axes[2], axes[3]);
+    const valid = (outline: Outline) => {
+        const outer = scaledWaterOutline(outline, center, outerScale);
+        // Distinct water levels retain separate physical basins. Directional
+        // half-spaces limit the connection axis, not every transverse radius.
+        if (outer.some(p => neighbors.some(other => {
+            const d = horizontal(center, other), projection = ((p.x - center.x) * (other.x - center.x) + (p.z - center.z) * (other.z - center.z)) / d;
+            return projection > d / 2 - .025;
+        }))) return false;
+        return safeOutline(base, outer, protections, site.ref.districtId);
+    };
+    if (!valid(shape()) || !decomposeWaterOutline(shape()).length) return;
+    // Grow four directions independently, starting with the transverse wings.
+    // Each step is an exact occupied-polygon preflight, not a sampled outline.
+    for (const axis of [1, 3, 0, 2]) {
+        while (axes[axis] + .02 <= requested[axis] + EPS) {
+            axes[axis] += .02;
+            if (!valid(shape())) { axes[axis] -= .02; break; }
+        }
     }
+    const outline = shape(), waterY = round(center.y + SURFACE_RISE), bedY = round(waterY - DEPTH);
+    return { ownerId: owner.id, ownerIds: [owner.id], districtId: site.ref.districtId, center: { ...center },
+        radius: round(Math.max(...axes)), axes: axes.map(round), sourceRole: source.role,
+        waterY, bedY, outline, outerOutline: scaledWaterOutline(outline, center, outerScale),
+        waterFloorId: floorId(site.ref.districtId, localId('pool-water', owner.id)),
+        bedFloorId: floorId(site.ref.districtId, localId('pool-bed', owner.id)), color: WATER_COLORS[index % 3], bedColor: BED_COLORS[index % 3] };
 }
 
-interface Cut { id: string; outline: Outline; color: string; bedColor: string; heightAt: (point: WorldPoint) => number; ownerIds: string[]; pool?: AuthoredWaterPool; stream?: AuthoredWaterStream }
+interface Cut { id: string; outline: Outline; outerOutline?: Outline; districtIds: readonly string[]; color: string; bedColor: string; heightAt: (point: WorldPoint) => number; ownerIds: string[]; pool?: AuthoredWaterPool; stream?: AuthoredWaterStream }
 /** Keep the whole trench mouth inside the actual convex organic pool. Its
  * short rotated axis can end before a radius-based trim would reach the water. */
 function poolMouthDistance(pool: AuthoredWaterPool | undefined, dx: number, dz: number, width: number): number | undefined {
@@ -207,82 +227,107 @@ function poolMouthDistance(pool: AuthoredWaterPool | undefined, dx: number, dz: 
     let distance = Infinity;
     for (const side of [-width, width]) {
         const origin = { x: pool.center.x + dz * side, y: pool.center.y, z: pool.center.z - dx * side };
-        for (let i = 0; i < pool.outline.length; i++) {
-            const a = pool.outline[i], b = pool.outline[(i + 1) % pool.outline.length];
-            const atOrigin = cross(a, b, origin), alongRay = (b.x - a.x) * dz - (b.z - a.z) * dx;
-            if (atOrigin < -EPS) return;
-            if (alongRay < -EPS) distance = Math.min(distance, atOrigin / -alongRay);
-        }
+        const exit = waterRayExit(origin, dx, dz, pool.outline); if (exit === undefined) return;
+        distance = Math.min(distance, exit);
     }
     // The overlap is real area rather than a numerically touching boundary.
     return Number.isFinite(distance) && distance > .025 ? distance - .025 : undefined;
 }
-function streamFor(a: WaterOwner, b: WaterOwner, pools: readonly AuthoredWaterPool[], base: IslandWorld, protections: readonly Protection[]): Cut[] | undefined {
+function intersectionPoints(a: Outline, b: Outline): WorldPoint[] {
+    return [...a.filter(p => pointInWaterOutline(p, b)), ...b.filter(p => pointInWaterOutline(p, a)),
+        ...a.flatMap((p, i) => waterSegmentIntervals(p, a[(i + 1) % a.length], b).flatMap(interval => interval.map(t => ({
+            x: p.x + (a[(i + 1) % a.length].x - p.x) * t, y: p.y, z: p.z + (a[(i + 1) % a.length].z - p.z) * t,
+        }))))];
+}
+function streamFor(a: WaterOwner, b: WaterOwner, pools: readonly AuthoredWaterPool[], base: IslandWorld, protections: readonly Protection[], adjoining: readonly AuthoredWaterStream[] = []): Cut[] | undefined {
     const a0 = base.anchorAt(a.cell), b0 = base.anchorAt(b.cell); if (!a0 || !b0) return;
     const length = horizontal(a0, b0); if (length <= .05) return;
     const dx = (b0.x - a0.x) / length, dz = (b0.z - a0.z) / length;
     const aPool = pools.find(pool => pool.ownerId === a.id), bPool = pools.find(pool => pool.ownerId === b.id);
-    const width = .095, fromTrim = poolMouthDistance(aPool, dx, dz, width), toTrim = poolMouthDistance(bPool, -dx, -dz, width);
+    const width = .135, fromTrim = poolMouthDistance(aPool, dx, dz, width), toTrim = poolMouthDistance(bPool, -dx, -dz, width);
     if (fromTrim === undefined || toTrim === undefined) return;
     const from = { x: a0.x + dx * fromTrim, y: a0.y + SURFACE_RISE, z: a0.z + dz * fromTrim };
     const to = { x: b0.x - dx * toTrim, y: b0.y + SURFACE_RISE, z: b0.z - dz * toTrim };
     if (horizontal(from, to) <= .05) return;
-    const outline = [
-        { x: from.x + dz * width, y: from.y, z: from.z - dx * width },
-        { x: to.x + dz * width, y: to.y, z: to.z - dx * width },
-        { x: to.x - dz * width, y: to.y, z: to.z + dx * width },
-        { x: from.x - dz * width, y: from.y, z: from.z + dx * width },
-    ].map(p => ({ x: round(p.x), y: round(p.y), z: round(p.z) }));
-    if (!safeOutline(base, outline, protections)) return;
-    // The whole trench must be over actual original ground. Water grants alone
-    // cannot bridge an inlet or invent a physical link between two terraces.
-    for (let i = 0, steps = Math.max(8, Math.ceil(length * 16)); i <= steps; i++) for (const side of [-width, 0, width]) {
-        if (!safePoint(base, { x: from.x + (to.x - from.x) * i / steps - dz * side, y: from.y + (to.y - from.y) * i / steps,
-            z: from.z + (to.z - from.z) * i / steps + dx * side }, protections)) return;
-    }
-    const id = JSON.stringify([a.id, b.id].sort());
-    const stream: AuthoredWaterStream = { id, ownerIds: [a.id, b.id], from, to, outline, waterFloorIds: [], bedFloorIds: [], falling: Math.abs(from.y - to.y) > .06 };
+    const seed = Array.from({ length: 9 }, (_, i) => {
+        const t = i / 8, bend = .035 * Math.sin(Math.PI * t);
+        return { x: from.x + (to.x - from.x) * t + dz * bend,
+            y: from.y, z: from.z + (to.z - from.z) * t - dx * bend };
+    });
+    const seedOutline = [...seed.map(p => ({ ...p, x: p.x + dz * width, z: p.z - dx * width })),
+        ...[...seed].reverse().map(p => ({ ...p, x: p.x - dz * width, z: p.z + dx * width }))];
     const vx = to.x - from.x, vz = to.z - from.z, squared = vx * vx + vz * vz;
-    const common = { ownerIds: [...stream.ownerIds], color: '#79cbd8', bedColor: '#667e96', stream };
-    if (stream.falling) {
-        const p = { x: (outline[0].x + outline[1].x) / 2, y: from.y, z: (outline[0].z + outline[1].z) / 2 };
-        const q = { x: (outline[2].x + outline[3].x) / 2, y: to.y, z: (outline[2].z + outline[3].z) / 2 };
-        return [{ ...common, id: `stream:${id}:from`, outline: [outline[0], p, q, outline[3]], heightAt: () => from.y },
-            { ...common, id: `stream:${id}:to`, outline: [p, outline[1], outline[2], q], heightAt: () => to.y }];
-    }
-    return [{ ...common, id: `stream:${id}`, outline,
-        heightAt: point => round(from.y + (to.y - from.y) * Math.max(0, Math.min(1, ((point.x - from.x) * vx + (point.z - from.z) * vz) / squared))) }];
+    const projection = (p: WorldPoint) => ((p.x - from.x) * vx + (p.z - from.z) * vz) / squared;
+    const id = JSON.stringify([a.id, b.id].sort());
+    const junctionPoints = (ownerId: string) => adjoining.filter(other => other.id !== id && other.ownerIds.includes(ownerId))
+        .flatMap(other => intersectionPoints(seedOutline, other.outline));
+    // A pool and every same-owner junction are one horizontal water surface.
+    // Start the drop beyond their real occupied extent, rather than falling
+    // from the small overlap inserted solely to make the mouth connected.
+    const startPoints = [...aPool?.outline ?? [], ...junctionPoints(a.id)], endPoints = [...bPool?.outline ?? [], ...junctionPoints(b.id)];
+    const dropStart = Math.max(0, Math.min(1, Math.max(0, ...startPoints.map(projection))));
+    const dropEnd = Math.max(0, Math.min(1, Math.min(1, ...endPoints.map(projection))));
+    if (dropEnd - dropStart < 1e-6 && Math.abs(from.y - to.y) > EPS) return;
+    const knots = [...new Set([...seed.map((_, i) => i / 8), dropStart, dropEnd].map(round))].sort((a, b) => a - b);
+    const centerline = knots.map(t => {
+        const i = Math.min(7, Math.floor(t * 8)), u = t * 8 - i;
+        const fall = dropEnd - dropStart > EPS ? smoothFall(Math.max(0, Math.min(1, (t - dropStart) / (dropEnd - dropStart)))) : 0;
+        // Added height knots interpolate the existing straight seed segments.
+        // They do not change the accepted physical cut or widen the water.
+        return { x: seed[i].x + (seed[i + 1].x - seed[i].x) * u,
+            y: from.y + (to.y - from.y) * fall, z: seed[i].z + (seed[i + 1].z - seed[i].z) * u };
+    });
+    const left = centerline.map(p => ({ ...p, x: p.x + dz * width, z: p.z - dx * width }));
+    const right = centerline.map(p => ({ ...p, x: p.x - dz * width, z: p.z + dx * width }));
+    const outline = [...left, ...[...right].reverse()];
+    const ownerDistricts = new Set([a, b].map(owner => base.sites.find(site => key(site.cell) === key(owner.cell))?.ref.districtId));
+    // An acquired but unrelated stacked district is not this owner's support.
+    // Cross-district hydraulic sculpture needs a separate physical seam plan;
+    // until then it falls back instead of carving another district's terrain.
+    if (ownerDistricts.size !== 1 || ownerDistricts.has(undefined)) return;
+    const districtIds = base.definition.districts.filter(district => ownerDistricts.has(district.id)
+        && isAuthoredWaterCarvingSafe(base, district.id, outline, protections)).map(district => district.id);
+    if (!districtIds.length) return;
+    const stream: AuthoredWaterStream = { id, ownerIds: [a.id, b.id], from, to, outline, centerline, width: width * 2,
+        waterFloorIds: [], bedFloorIds: [], falling: Math.abs(from.y - to.y) > .06 };
+    const common = { districtIds, ownerIds: [...stream.ownerIds], color: '#50b5ca', bedColor: '#667e96', stream };
+    return centerline.slice(1).map((end, i) => ({ ...common, id: `stream:${id}:${i}`, outline: [left[i], left[i + 1], right[i + 1], right[i]],
+        heightAt: (point: WorldPoint) => {
+            const t = Math.max(0, Math.min(1, (projection(point) - knots[i]) / (knots[i + 1] - knots[i])));
+            return round(centerline[i].y + (end.y - centerline[i].y) * t);
+        } }));
 }
+
+const smoothFall = (t: number) => t * t * (3 - 2 * t);
 
 function bounds(outline: Outline) { return { minX: Math.min(...outline.map(p => p.x)), maxX: Math.max(...outline.map(p => p.x)),
     minZ: Math.min(...outline.map(p => p.z)), maxZ: Math.max(...outline.map(p => p.z)) }; }
 const overlaps = (a: ReturnType<typeof bounds>, b: ReturnType<typeof bounds>) => a.minX <= b.maxX + EPS && a.maxX + EPS >= b.minX && a.minZ <= b.maxZ + EPS && a.maxZ + EPS >= b.minZ;
 function floorIntersectsOutline(floor: WorldFloor, district: WorldDistrict, outline: Outline) {
-    const box = bounds(outline), vertices = floor.vertices.map(vertex => ({ ...vertex, point: pointToWorld(district, vertex.point) }));
+    const box = bounds(outline), pieces = decomposeWaterOutline(outline), vertices = floor.vertices.map(vertex => ({ ...vertex, point: pointToWorld(district, vertex.point) }));
     for (let i = 0; i < floor.indices.length; i += 3) {
         const triangle = floor.indices.slice(i, i + 3).map(index => vertices[index]);
-        if (overlaps(bounds(triangle.map(vertex => vertex.point)), box) && subtract(triangle, outline).inside.length) return true;
+        if (overlaps(bounds(triangle.map(vertex => vertex.point)), box) && pieces.some(piece => subtract(triangle, piece).inside.length)) return true;
     }
     return false;
 }
 /** Remove portions of a bank where another actual cut opens into this water. */
 function bankIntervals(a: WorldPoint, b: WorldPoint, outlines: readonly Outline[]) {
-    let intervals = [[0, 1]];
-    for (const outline of outlines) {
-        let min = 0, max = 1;
-        for (let i = 0; i < outline.length && min <= max; i++) {
-            const p = outline[i], q = outline[(i + 1) % outline.length], da = cross(p, q, a), db = cross(p, q, b), delta = db - da;
-            if (Math.abs(delta) <= EPS) { if (da < -EPS) { min = 1; max = 0; } }
-            else if (delta > 0) min = Math.max(min, -da / delta);
-            else max = Math.min(max, -da / delta);
-        }
-        if (min > max || max - min < 1e-8) continue;
-        intervals = intervals.flatMap(([lo, hi]) => max <= lo || min >= hi ? [[lo, hi]]
-            : [...(lo < min ? [[lo, min]] : []), ...(max < hi ? [[max, hi]] : [])]);
+    let intervals: [number, number][] = [[0, 1]];
+    for (const outline of outlines) for (const [min, max] of waterSegmentIntervals(a, b, outline)) {
+        intervals = intervals.flatMap(([lo, hi]) => max <= lo || min >= hi ? [[lo, hi] as [number, number]]
+            : [...(lo < min ? [[lo, min] as [number, number]] : []), ...(max < hi ? [[max, hi] as [number, number]] : [])]);
     }
     return intervals;
 }
-function bankFor(cut: Cut, district: WorldDistrict, base: IslandWorld, others: readonly Cut[]): WorldSurface | undefined {
+function bankFor(cut: Cut, district: WorldDistrict, base: IslandWorld, others: readonly Cut[]): WorldSurface[] {
+    if (cut.pool) {
+        const surfaces = buildWaterRim({ id: localId('bank', cut.id), outline: cut.pool.outline, center: cut.pool.center,
+            waterY: cut.pool.waterY, rings: nativeWaterSource.rim.rings,
+            groundAt: p => { const cell = base.logicalAt(p); return cell ? base.floorAt(cell)?.point.y : undefined; },
+            mouths: others.filter(other => other !== cut).map(other => other.outline), body: nativeWaterSource.rim.body, lip: nativeWaterSource.rim.lip });
+        return (surfaces ?? []).map(surface => ({ ...surface, vertices: surface.vertices.map(p => pointToLocal(district, p)) }));
+    }
     const vertices: WorldPoint[] = [], indices: number[] = [];
     for (let i = 0; i < cut.outline.length; i++) {
         const a0 = cut.outline[i], b0 = cut.outline[(i + 1) % cut.outline.length];
@@ -293,22 +338,52 @@ function bankFor(cut: Cut, district: WorldDistrict, base: IslandWorld, others: r
         for (const [from, to] of bankIntervals(a0, b0, others.filter(other => other !== cut).map(other => other.outline))) {
             const at = (t: number) => ({ x: a0.x + (b0.x - a0.x) * t, y: a0.y + (b0.y - a0.y) * t, z: a0.z + (b0.z - a0.z) * t });
             const a = at(from), b = at(to), offset = vertices.length;
+            // Adjacent exact height strips can leave a zero-width clipped rim
+            // interval after local coordinate rounding. It is no visible bank.
+            if (horizontal(a, b) <= 1e-9) continue;
             vertices.push(top(a), top(b), pointToLocal(district, { ...b, y: cut.heightAt(b) - DEPTH }), pointToLocal(district, { ...a, y: cut.heightAt(a) - DEPTH }));
             indices.push(offset, offset + 1, offset + 2, offset, offset + 2, offset + 3);
         }
     }
-    if (!indices.length) return;
-    return { id: localId('bank', cut.id), kind: 'bank', vertices, indices, material: { color: cut.bedColor, roughness: .82, metalness: 0 } };
+    if (!indices.length) return [];
+    return [{ id: localId('bank', cut.id), kind: 'bank', vertices, indices, material: { color: nativeWaterSource.rim.body.color, roughness: .56, metalness: 0 } }];
 }
 function flowFor(cut: Cut, district: WorldDistrict): WorldSurface | undefined {
     if (!cut.stream?.falling) return;
-    const { from, to } = cut.stream, middle = { x: (from.x + to.x) / 2, z: (from.z + to.z) / 2 }, length = horizontal(from, to);
-    const nx = -(to.z - from.z) / length * .095, nz = (to.x - from.x) / length * .095;
-    const y0 = Math.max(from.y, to.y), y1 = Math.min(from.y, to.y);
-    return { id: localId('flow', cut.stream.id), kind: 'flow', vertices: [
-        { x: middle.x - nx, y: y0, z: middle.z - nz }, { x: middle.x + nx, y: y0, z: middle.z + nz },
-        { x: middle.x + nx, y: y1, z: middle.z + nz }, { x: middle.x - nx, y: y1, z: middle.z - nz },
-    ].map(p => pointToLocal(district, p)), indices: [0, 1, 2, 0, 2, 3], material: { color: '#a2e0ed', roughness: .2, metalness: .08, opacity: .78 } };
+    const stream = cut.stream, length = horizontal(stream.from, stream.to), dx = (stream.to.x - stream.from.x) / length,
+        dz = (stream.to.z - stream.from.z) / length, width = stream.width / 2;
+    const vertices = stream.centerline.flatMap(p => [
+        { x: p.x + dz * width, y: p.y + .002, z: p.z - dx * width },
+        { x: p.x - dz * width, y: p.y + .002, z: p.z + dx * width },
+    ].map(p => pointToLocal(district, p)));
+    const indices = stream.centerline.slice(1).flatMap((_, i) => [i * 2, i * 2 + 2, i * 2 + 3, i * 2, i * 2 + 3, i * 2 + 1]);
+    return { id: localId('flow', stream.id), kind: 'flow', vertices, indices,
+        material: { color: '#50b5ca', roughness: .16, metalness: 0, opacity: .82 } };
+}
+
+function grottoFor(pool: AuthoredWaterPool, streams: readonly AuthoredWaterStream[], base: IslandWorld, protections: readonly Protection[]) {
+    const link = streams.find(stream => stream.ownerIds.includes(pool.ownerId));
+    if (!link) return;
+    const target = horizontal(link.from, pool.center) < horizontal(link.to, pool.center) ? link.to : link.from;
+    const length = horizontal(target, pool.center), dx = (target.x - pool.center.x) / length, dz = (target.z - pool.center.z) / length;
+    const yaw = Math.atan2(-dx, dz), sourceVertices = nativeWaterSource.grotto.primitives.flatMap(part => part.vertices);
+    for (const scale of [1, .95, .9, .85, .8, .75, .7, .65, .6]) {
+        const pivot = { x: pool.center.x - dx * .07, y: pool.bedY - .025, z: pool.center.z - dz * .07 };
+        const transform = (p: WorldPoint): WorldPoint => ({ x: pivot.x + scale * (p.x * Math.cos(yaw) - p.z * Math.sin(yaw)),
+            y: pivot.y + p.y * scale, z: pivot.z + scale * (p.x * Math.sin(yaw) + p.z * Math.cos(yaw)) });
+        const vertices = sourceVertices.map(transform), box = bounds(vertices);
+        const footprint = [{ x: box.minX, y: pivot.y, z: box.minZ }, { x: box.maxX, y: pivot.y, z: box.minZ },
+            { x: box.maxX, y: pivot.y, z: box.maxZ }, { x: box.minX, y: pivot.y, z: box.maxZ }];
+        // Both actual source feet penetrate the existing pool bed slightly;
+        // their plan positions must stay inside this owner's real wet floor.
+        if (!safeOutline(base, footprint, protections, pool.districtId)
+            || sourceVertices.filter(p => p.y < .035).some(p => !pointInWaterOutline(transform(p), pool.outline))) continue;
+        const surfaces: WorldSurface[] = nativeWaterSource.grotto.primitives.map((part, i) => ({
+            id: localId('grotto', `${pool.ownerId}:${i}`), kind: 'bank', vertices: part.vertices.map(transform), indices: part.indices, material: part.material,
+        }));
+        return { plan: { ownerId: pool.ownerId, pivot, yaw, scale, footprint,
+            surfaceIds: surfaces.map(surface => floorId(pool.districtId, surface.id)) }, surfaces };
+    }
 }
 
 /** Compose once from the immutable source and raw ownership. No final place
@@ -330,7 +405,7 @@ export function composeAuthoredWaterWorld(state: GrowingState, base: IslandWorld
             seen.add(other.id); members.push(other);
         }
         members.sort((a, b) => a.id.localeCompare(b.id));
-        const bowls = members.filter(member => member.kind === 'water-bowl'), channels = members.filter(member => member.kind === 'water-channel');
+        const bowls = members.filter(member => member.kind === 'water-bowl').sort((a, b) => (base.anchorAt(b.cell)?.y ?? 0) - (base.anchorAt(a.cell)?.y ?? 0) || a.id.localeCompare(b.id)), channels = members.filter(member => member.kind === 'water-channel');
         const group: AuthoredWaterGroup = { id: `water-group:${JSON.stringify(members.map(member => member.id))}`, ownerIds: members.map(member => member.id),
             bowlIds: bowls.map(bowl => bowl.id), channelIds: channels.map(channel => channel.id), cut: false, reason: 'individual-bodies' };
         groups.push(group);
@@ -338,48 +413,77 @@ export function composeAuthoredWaterWorld(state: GrowingState, base: IslandWorld
         const protections = protectedCells(state, new Set(group.ownerIds));
         const nextPools = bowls.map((bowl, i) => poolFor(bowl, i, bowls, base, protections));
         if (nextPools.some(pool => !pool)) { group.reason = 'insufficient-clearance'; continue; }
-        const edgeIds = new Set<string>(), nextStreams: (Cut[] | undefined)[] = [];
+        const edgeIds = new Set<string>(), links: [WaterOwner, WaterOwner][] = [];
         for (const member of members) for (const cell of waterNeighbors(base, member.cell)) {
             const other = byCell.get(key(cell)); if (!other || !group.ownerIds.includes(other.id)) continue;
             const id = JSON.stringify([member.id, other.id].sort()); if (edgeIds.has(id)) continue; edgeIds.add(id);
-            nextStreams.push(streamFor(member, other, nextPools as AuthoredWaterPool[], base, protections));
+            links.push([member, other]);
         }
+        const initialStreams = links.map(([a, b]) => streamFor(a, b, nextPools as AuthoredWaterPool[], base, protections));
+        const adjoining = initialStreams.filter((cut): cut is Cut[] => !!cut).map(cut => cut[0].stream!);
+        const nextStreams = initialStreams.some(stream => !stream) ? initialStreams
+            : links.map(([a, b]) => streamFor(a, b, nextPools as AuthoredWaterPool[], base, protections, adjoining));
         // A logical supply link must have its full physical trench. Never cut
         // pools or suppress all owner bodies for a partially disconnected garden.
         if (nextStreams.some(stream => !stream)) { group.reason = 'insufficient-clearance'; continue; }
         group.cut = true; delete group.reason;
         for (const pool of nextPools as AuthoredWaterPool[]) {
-            pools.push(pool); cuts.push({ id: `pool:${pool.ownerId}`, outline: pool.outline, color: pool.color, bedColor: pool.bedColor,
+            pools.push(pool); cuts.push({ id: `pool:${pool.ownerId}`, outline: pool.outline, outerOutline: pool.outerOutline, districtIds: [pool.districtId], color: pool.color, bedColor: pool.bedColor,
                 ownerIds: [pool.ownerId], heightAt: () => pool.waterY, pool });
         }
         for (const nextCuts of nextStreams as Cut[][]) { cuts.push(...nextCuts); streams.push(nextCuts[0].stream!); }
     }
-    const revision = `authored-water-v1:${fingerprint(JSON.stringify({ base: [base.id, base.definition.revision, base.definition.source],
+    const grottoCandidates = groups.filter(group => group.cut).flatMap(group => {
+        const upper = pools.find(pool => group.bowlIds.includes(pool.ownerId));
+        const result = upper && grottoFor(upper, streams, base, protectedCells(state, new Set(group.ownerIds)));
+        return result ? [{ districtId: upper!.districtId, ...result }] : [];
+    });
+    const revision = `authored-water-v2:${fingerprint(JSON.stringify({ base: [base.id, base.definition.revision, base.definition.source],
+        profile: nativeWaterSource, scopes: base.definition.districts.map(district => [district.id, district.waterCarvingScopes]),
         water: owners.map(owner => [owner.id, owner.kind, owner.cell, owner.growth]),
         obstacles: protectedCells(state, new Set()).map(p => [p.cell, p.half]),
-        pools: pools.map(pool => [pool.ownerId, pool.radius, pool.outline]), streams: streams.map(stream => [stream.id, stream.outline]) }))}`;
-    const plan: AuthoredWaterPlan = { revision, ownerIds: [...new Set(cuts.flatMap(cut => cut.ownerIds))], groups, pools, streams };
+        pools: pools.map(pool => [pool.ownerId, pool.axes, pool.outline, pool.outerOutline]), streams: streams.map(stream => [stream.id, stream.outline, stream.centerline]), grottos: grottoCandidates.map(grotto => grotto.plan) }))}`;
+    const plan: AuthoredWaterPlan = { revision, ownerIds: [...new Set(cuts.flatMap(cut => cut.ownerIds))], groups, pools, streams, grottos: grottoCandidates.map(grotto => grotto.plan), bridges: [] };
     const actualCuts: { cut: Cut; district: WorldDistrict; water: WorldFloor; bed: WorldFloor }[] = [];
-    const definition = structuredClone(base.definition);
+    let definition = structuredClone(base.definition);
     definition.revision = revision;
     definition.districts = definition.districts.map(district => {
-        const worldCuts = cuts.filter(cut => cut.pool ? cut.pool.districtId === district.id : true);
-        const localCuts = worldCuts.map(cut => ({ cut, outline: cut.outline.map(p => pointToLocal(district, p)), box: bounds(cut.outline.map(p => pointToLocal(district, p))) }));
+        const worldCuts = cuts.filter(cut => cut.districtIds.includes(district.id));
+        const localCuts = worldCuts.map(cut => {
+            const outline = cut.outline.map(p => pointToLocal(district, p)), outerOutline = (cut.outerOutline ?? cut.outline).map(p => pointToLocal(district, p));
+            return { cut, pieces: decomposeWaterOutline(outline), outerPieces: decomposeWaterOutline(outerOutline), box: bounds(outerOutline) };
+        });
         const additions = new Map<Cut, { water: WorldFloor & { vertices: WorldFloorVertex[]; indices: number[] }; bed: WorldFloor & { vertices: WorldFloorVertex[]; indices: number[] } }>();
         const floors = district.floors.flatMap(floor => {
-            if (floor.kind !== 'ground' || !localCuts.length) return [floor];
+            const allowedFloors = authoredWaterCarvingFloorIds(base, district.id);
+            if (floor.kind !== 'ground' || !localCuts.length || allowedFloors && !allowedFloors.includes(floorId(district.id, floor.id))) return [floor];
             const vertices = [...floor.vertices], indices: number[] = [];
             for (let i = 0; i < floor.indices.length; i += 3) {
                 const sourceIndices = floor.indices.slice(i, i + 3), triangle = sourceIndices.map(index => floor.vertices[index]);
                 const box = bounds(triangle.map(v => v.point)), applicable = localCuts.filter(cut => overlaps(box, cut.box));
                 if (!applicable.length) { indices.push(...sourceIndices); continue; }
-                let remaining = [triangle]; let changed = false;
-                for (const { cut, outline } of applicable) {
+                let remaining = [triangle], changed = false;
+                // The outer bank is a real cut and never a fake supporting floor.
+                for (const { outerPieces } of applicable) for (const outline of outerPieces) {
                     const next: WorldFloorVertex[][] = [];
                     for (const polygon of remaining) {
                         const pieces = subtract(polygon, outline);
+                        changed ||= !!pieces.inside.length; next.push(...pieces.inside.length ? pieces.outside : [polygon]);
+                    }
+                    remaining = next;
+                }
+                if (!changed) indices.push(...sourceIndices);
+                else for (const polygon of remaining) append({ vertices, indices }, polygon);
+                // Water comes from the immutable source, independently of the
+                // bank cut. A stream mouth crossing the annulus therefore has
+                // real water instead of a hole left by an earlier pool cut.
+                let wetRemaining = [triangle];
+                for (const { cut, pieces: wetPieces } of applicable) for (const outline of wetPieces) {
+                    const next: WorldFloorVertex[][] = [];
+                    for (const polygon of wetRemaining) {
+                        const pieces = subtract(polygon, outline);
                         if (!pieces.inside.length) { next.push(polygon); continue; }
-                        changed = true; next.push(...pieces.outside);
+                        next.push(...pieces.outside);
                         let addition = additions.get(cut);
                         if (!addition) {
                             const waterLocalId = cut.pool ? localId('pool-water', cut.pool.ownerId) : localId('stream-water', cut.id);
@@ -392,14 +496,12 @@ export function composeAuthoredWaterWorld(state: GrowingState, base: IslandWorld
                         append(addition.water, wet, true);
                         append(addition.bed, wet.map(vertex => ({ cell: { ...vertex.cell }, point: { ...vertex.point, y: round(vertex.point.y - DEPTH) } })), true);
                     }
-                    remaining = next;
+                    wetRemaining = next;
                 }
-                if (!changed) indices.push(...sourceIndices);
-                else for (const polygon of remaining) append({ vertices, indices }, polygon);
             }
             return indices.length ? [{ ...floor, vertices, indices }] : [];
         });
-        const surfaces = [...district.surfaces ?? []];
+        const surfaces = [...district.surfaces ?? [], ...grottoCandidates.filter(grotto => grotto.districtId === district.id).flatMap(grotto => grotto.surfaces.map(surface => ({ ...surface, vertices: surface.vertices.map(p => pointToLocal(district, p)) })))];
         for (const [cut, addition] of additions) {
             if (!addition.water.indices.length || !addition.bed.indices.length) continue;
             floors.push(addition.water, addition.bed);
@@ -410,7 +512,7 @@ export function composeAuthoredWaterWorld(state: GrowingState, base: IslandWorld
                 (cut.stream.waterFloorIds as string[]).push(floorId(district.id, addition.water.id));
                 (cut.stream.bedFloorIds as string[]).push(floorId(district.id, addition.bed.id));
             }
-            const bank = bankFor(cut, district, base, cuts); if (bank) surfaces.push(bank);
+            surfaces.push(...bankFor(cut, district, base, worldCuts));
             const flow = flowFor(cut, district);
             if (flow && !surfaces.some(surface => surface.id === flow.id)) surfaces.push(flow);
         }
@@ -434,8 +536,22 @@ export function composeAuthoredWaterWorld(state: GrowingState, base: IslandWorld
     // Compile the actual new support without trusting source walking grants;
     // restore only edges which the compiler's same foot-band helper accepts.
     definition.edges = sourceEdges.map(edge => ({ ...edge, allows: edge.allows.filter(kind => kind !== 'walk') })).filter(edge => edge.allows.length);
-    const supportWorld = compileWorldDefinition(definition), refs = new Map(supportWorld.sites.map(site => [refKey(site.ref), site.cell]));
+    const cutWorld = compileWorldDefinition(definition), bridgeComposition = composeAuthoredWaterBridges(state, base, cutWorld, plan);
+    definition = bridgeComposition.definition; plan.bridges = bridgeComposition.bridges;
+    const supportWorld = plan.bridges.length ? compileWorldDefinition(definition) : cutWorld, refs = new Map(supportWorld.sites.map(site => [refKey(site.ref), site.cell]));
     definition.edges = sourceEdges.map(edge => ({ ...edge, allows: edge.allows.filter(kind => kind !== 'walk'
         || isWorldWalkEdgeSupported(supportWorld, refs.get(refKey(edge.from))!, refs.get(refKey(edge.to))!)) })).filter(edge => edge.allows.length);
+    const dryWorld = compileWorldDefinition(definition);
+    definition.districts = definition.districts.map(district => ({ ...district, shoreAccess: owners.filter(owner => plan.ownerIds.includes(owner.id))
+        .map(owner => {
+            const site = dryWorld.sites.find(site => site.ref.districtId === district.id && key(site.cell) === key(owner.cell));
+            if (!site) return undefined;
+            const waterFloorIds = [...new Set([...pools.filter(pool => pool.ownerIds.includes(owner.id)).map(pool => pool.waterFloorId),
+                ...streams.filter(stream => stream.ownerIds.includes(owner.id)).flatMap(stream => stream.waterFloorIds)])];
+            return { ownerSiteId: site.ref.siteId, waterFloorIds: waterFloorIds.filter(id => JSON.parse(id)[0] === district.id).map(id => JSON.parse(id)[1] as string), entrySiteIds: findAuthoredShoreEntries(dryWorld, waterFloorIds)
+                .filter(ref => ref.districtId === district.id).map(ref => ref.siteId) };
+        }).filter((access): access is NonNullable<typeof access> => !!access) }));
+    const finalRevision = `${revision}:${fingerprint(JSON.stringify({ bridgeProfile: nativeWaterBridgeProfile, bridges: plan.bridges, shore: definition.districts.map(district => [district.id, district.shoreAccess]) }))}`;
+    definition.revision = finalRevision; plan.revision = finalRevision;
     return { world: compileWorldDefinition(definition), plan: freeze(plan) };
 }

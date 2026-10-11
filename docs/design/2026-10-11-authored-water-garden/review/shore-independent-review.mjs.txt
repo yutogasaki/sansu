@@ -1,0 +1,99 @@
+import { createRequire } from 'node:module';
+import { readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { performance } from 'node:perf_hooks';
+Error.stackTraceLimit = 0;
+
+const root = '/Users/yutogasaki/Projects/sansu';
+const output = '/private/tmp/sansu-shore-independent-review';
+const frozenOld = '/private/tmp/sansu-authored-world-access-before-shore.ts';
+const savedB3 = '/private/tmp/sansu-water-garden-b3-world.json';
+const expectedNew = 'a5f1d8369583b8ddbf3448390067123ff38bd41fee1af635bc8ec7a885775ea6';
+const expectedOld = '456b83acaced5b32aab0c7db6243388ad3c0a70d037efd064f890833c5c04b89';
+const native = process.argv.includes('--saved-b3');
+const { build } = createRequire(`${root}/package.json`)('esbuild');
+const sha = bytes => createHash('sha256').update(bytes).digest('hex');
+const oldSource = await readFile(frozenOld, 'utf8');
+const currentPath = `${root}/src/domain/growingIsland/authoredWorldAccess.ts`;
+const currentStart = sha(await readFile(currentPath));
+if (currentStart !== expectedNew || sha(oldSource) !== expectedOld) throw new Error('Frozen shore source differs');
+const currentBuild = await build({ stdin: { contents: "export {compileWorldDefinition} from './src/domain/growingIsland/worldDefinition'; export {findAuthoredShoreEntries,isAuthoredShoreEntrySupported} from './src/domain/growingIsland/authoredWorldAccess';", resolveDir: root }, bundle: true, platform: 'node', format: 'esm', write: false, metafile: true, logLevel: 'silent' });
+const oldBuild = await build({ stdin: { contents: oldSource, resolveDir: `${root}/src/domain/growingIsland`, loader: 'ts' }, bundle: true, platform: 'node', format: 'esm', write: false, metafile: true, logLevel: 'silent' });
+const load = built => import('data:text/javascript;base64,' + Buffer.from(built.outputFiles[0].text).toString('base64'));
+const current = await load(currentBuild), old = await load(oldBuild);
+const tracked = [...new Set([currentPath, frozenOld, `${root}/src/domain/growingIsland/authoredWorldAccessParity.test.ts`, savedB3, ...Object.keys(currentBuild.metafile.inputs).filter(path => path !== '<stdin>').map(path => `${root}/${path}`)])].sort();
+const hashes = async () => Object.fromEntries(await Promise.all(tracked.map(async path => [path, sha(await readFile(path))])));
+const startHashes = await hashes();
+let report;
+if (native) report = JSON.parse(await readFile(`${output}.json`, 'utf8'));
+else report = { schema: 'sansu-shore-independent-review-v1', reviewer: '/root/authored_world_art/bridge_support_review', scope: 'Read-only frozen shore optimization review. No app/test/docs edits and no native composition. Synthetic cases compare frozen pre-optimization predicate; saved b3 compares exact ordered five-owner oracle.', expectedSources: { current: expectedNew, old: expectedOld }, codeReview: { findings: [], checked: ['Physical XYZ foot cache keys scoped to floor-array identity', 'Physical XZ water-distance cache independent of owner water subset', 'Frozen walk-site membership cache scoped to walk-site-array identity', 'Narrow .12 triangle query restores the original .65 bucket visitation order', 'Strict subtraction shortcuts retain old per-piece area/EPS behavior', 'All wet/high interior hazards reject before early dry-union completion'] }, cases: [], savedB3: { status: 'WAITING_FOR_ROOT_B4_CPU_COMPLETION', composePerformed: false } };
+const cell = { x: 0, z: .25 }, districtId = 'review';
+const id = floor => JSON.stringify([districtId, floor]);
+const rectangle = (name, x0, x1, z0, z1, y = 1, kind = 'ground') => ({ id: name, kind, color: '#abcdef', vertices: [[x0,z0],[x1,z0],[x1,z1],[x0,z1]].map(([x,z]) => ({ cell:{x,z}, point:{x,y,z} })), indices:[0,1,2,0,2,3] });
+const original = () => rectangle('original', -1.2, 1.2, -.75, 1.2);
+const mainWater = () => rectangle('water', -.8, .8, -.6, 0, 1.025, 'water');
+function makeWorld(floors, { offsetX = 0, offsetZ = 0, foreign = [] } = {}) {
+  const sites = [];
+  for(let z=-.5;z<=1;z+=.25)for(let x=-1;x<=1;x+=.25)sites.push({id:`${x},${z}`,cell:{x,z},anchorPoint:{x,y:1,z},floorId:'original',placement:Number.isInteger(x)&&Number.isInteger(z)});
+  return current.compileWorldDefinition({version:1,id:'independent-shore',districts:[{id:districtId,templateId:'independent',logicalOrigin:{x:0,z:0},worldOrigin:{x:offsetX,y:0,z:offsetZ},turn:0,floors,anchorFloors:[original()],sites,ports:[]},...foreign],edges:[]});
+}
+function compare(name, world, ids, expected) {
+  const before = old.isAuthoredShoreEntrySupported(world, cell, ids), after = current.isAuthoredShoreEntrySupported(world, cell, ids);
+  const expectedRefs = old.findAuthoredShoreEntries(world, ids), actualRefs = current.findAuthoredShoreEntries(world, ids);
+  const exactRefs = JSON.stringify(expectedRefs) === JSON.stringify(actualRefs);
+  const allPredicates = world.walkSites.every(site => current.isAuthoredShoreEntrySupported(world,site.cell,ids) === old.isAuthoredShoreEntrySupported(world,site.cell,ids));
+  const pass = before === after && exactRefs && allPredicates && (expected === undefined || before === expected);
+  report.cases.push({ name, expected: expected ?? 'OLD_ORACLE', old: before, current: after, orderedRefCount: actualRefs.length, exactRefs, allPredicates, pass });
+  if (!pass) throw new Error(`Independent shore counterexample: ${name}`);
+}
+if (!native) {
+  const at = performance.now();
+  compare('valid whole-foot ground',makeWorld([original(),mainWater()]),[id('water')],true);
+  for(const kind of ['water','deck'])for(const reverse of [false,true]){
+    const hazard=rectangle('hazard',.025,.055,.21,.29,kind==='water'?1.025:1.4,kind);
+    const floors=[original(),mainWater(),hazard]; if(reverse)floors.reverse();
+    compare(`later interior ${kind}; reverse=${reverse}`,makeWorld(floors),[id('water')],false);
+  }
+  const foreignFloor=rectangle('foreign-water',.025,.055,.21,.29,1.025,'water');
+  const foreign={id:'foreign',templateId:'foreign',logicalOrigin:{x:100,z:100},worldOrigin:{x:0,y:0,z:0},turn:0,floors:[foreignFloor],sites:[],ports:[]};
+  compare('unrequested other-district water inside foot square',makeWorld([original(),mainWater()],{foreign:[foreign]}),[id('water')],false);
+  compare('wet bed cannot fill an internal foot gap',makeWorld([rectangle('left',-1.2,.025,-.75,1.2),rectangle('right',.055,1.2,-.75,1.2),rectangle('bed',.025,.055,.21,.29,.845),mainWater(),rectangle('interior-water',.025,.055,.21,.29,1.025,'water')]),[id('water')],false);
+  for(const gap of [1e-4,1e-8,1e-11,1e-12,1e-13])for(const reverse of [false,true])for(const shifted of [false,true]){
+    const floors=[rectangle('left',-1.2,.025,-.75,1.2),rectangle('right',.025+gap,1.2,-.75,1.2),rectangle('below',-1.2,1.2,-.75,.215),rectangle('above',-1.2,1.2,.285,1.2),mainWater()];
+    if(reverse)floors.reverse();
+    compare(`four-cover internal hole gap=${gap}; reverse=${reverse}; negativeBins=${shifted}`,makeWorld(floors,shifted?{offsetX:-.995,offsetZ:-1.001}:{}),[id('water')],gap===1e-4?false:undefined);
+  }
+  const cached=makeWorld([original(),mainWater()]);
+  compare('warm valid cache',cached,[id('water')],true);
+  const absent={...cached,walkSites:Object.freeze(cached.walkSites.filter(site=>site.cell.x!==cell.x||site.cell.z!==cell.z))};
+  compare('same floors but different frozen walk refs remove entry',absent,[id('water')],false);
+  compare('same floors with new frozen walk refs restore entry',{...cached,walkSites:Object.freeze([...cached.walkSites])},[id('water')],true);
+  for(const ids of [[id('water'),id('water')],[id('water'),'unknown'],[id('original')],[]])compare(`water id subset ${JSON.stringify(ids)}`,cached,ids);
+  const altered={...cached,floorAt:at=>{const sample=cached.floorAt(at);return sample&&{...sample,point:{...sample.point,y:sample.point.y+.2}}}};
+  compare('same floor identity with different support Y gets new foot proof',altered,[id('water')],true);
+  const alteredOriginal={...cached,anchorFloorAt:at=>{const sample=cached.anchorFloorAt(at);return sample&&{...sample,point:{...sample.point,x:sample.point.x+.01}}}};
+  compare('cached valid foot does not bypass current original-position check',alteredOriginal,[id('water')],false);
+  report.syntheticMs=performance.now()-at;
+} else {
+  const bytes=await readFile(savedB3),definition=JSON.parse(bytes),at=performance.now(),world=current.compileWorldDefinition(definition),compileMs=performance.now()-at;
+  const cold={...world,floors:structuredClone(world.floors)},results=[];
+  for(const district of definition.districts)for(const access of district.shoreAccess??[]){
+    const ids=access.waterFloorIds.map(floor=>JSON.stringify([district.id,floor])),before=performance.now(),found=current.findAuthoredShoreEntries(cold,ids).filter(ref=>ref.districtId===district.id).map(ref=>ref.siteId);
+    const exact=JSON.stringify(found)===JSON.stringify(access.entrySiteIds);
+    results.push({districtId:district.id,ownerSiteId:access.ownerSiteId,expected:access.entrySiteIds,found,exact,ms:performance.now()-before});
+    if(!exact)throw new Error(`Saved b3 ordered refs differ: ${access.ownerSiteId}`);
+    const variants=[ids.toReversed(),[...ids,ids[0]]];
+    for(const variant of variants){const repeat=current.findAuthoredShoreEntries(cold,variant).filter(ref=>ref.districtId===district.id).map(ref=>ref.siteId);if(JSON.stringify(repeat)!==JSON.stringify(access.entrySiteIds))throw new Error(`Saved b3 warm subset differs: ${access.ownerSiteId}`);}
+  }
+  report.savedB3={status:'PASS',composePerformed:false,sha256:sha(bytes),revision:definition.revision,compileMs,coldFind5Ms:results.reduce((sum,result)=>sum+result.ms,0),ownerCount:results.length,expectedCounts:results.map(result=>result.expected.length),exactAll5:results.length===5&&results.every(result=>result.exact),reorderedAndDuplicateIdsWarm:true,results};
+}
+const endHashes=await hashes();
+report.sourceVerification={startHashes,endHashes,unchanged:JSON.stringify(startHashes)===JSON.stringify(endHashes),currentSha256:currentStart};
+if(!report.sourceVerification.unchanged)throw new Error('Source changed during independent review');
+report.allSyntheticPass=report.cases.every(c=>c.pass);
+report.completed=report.savedB3.status==='PASS'&&report.allSyntheticPass;
+report.limits=['No native composition, renderer/browser, performance adoption, runtime/art/M1 completion or source geometry change was performed.','Synthetic oracle retains existing 1e-12 area and 1e-7 height tolerances; parity does not strengthen them.','Cache validity depends on immutable published compiled floor geometry; no mutable-floor support promise is added.'];
+await writeFile(`${output}.json`,JSON.stringify(report,null,2)+'\n');
+const md=`# Independent shore optimization review\n\nStatus: ${report.completed?'PASS':'SYNTHETIC PASS; saved-b3 pending root CPU completion'}.\n\nNo actionable regression found in the reviewed optimization. Current helper SHA256: ${currentStart}. Frozen old oracle SHA256: ${expectedOld}.\n\nSynthetic boundary cases: ${report.cases.length}, all pass: ${report.allSyntheticPass}. Cases cover unrequested foreign-district wet interiors, late high/wet hazards, a wet bed below an internal gap, four-cover thin interior holes near the area threshold, negative bucket boundaries and reversed order, different frozen walk-ref arrays sharing floors, support-Y cache separation and current anchor checks.\n\nSaved native b3 ordered-entry check: ${report.savedB3.status}${report.savedB3.expectedCounts?'; counts '+report.savedB3.expectedCounts.join('/'):''}. No composition performed.\n\nSource input hashes unchanged during this run: ${report.sourceVerification.unchanged}.\n\nLimits: ${report.limits.join(' ')}\n\nDetailed evidence: [sansu-shore-independent-review.json](/private/tmp/sansu-shore-independent-review.json).\n`;
+await writeFile(`${output}.md`,md);
+console.log(JSON.stringify({completed:report.completed,cases:report.cases.length,allSyntheticPass:report.allSyntheticPass,savedB3:report.savedB3.status,expectedCounts:report.savedB3.expectedCounts,currentSha256:currentStart,sourceUnchanged:report.sourceVerification.unchanged,outputs:[`${output}.md`,`${output}.json`]}));

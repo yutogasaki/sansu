@@ -1,0 +1,121 @@
+{
+  "pass": true,
+  "scope": "Same native 27-owner water garden before and after shore-search optimization; exact world definition, state, and art plan equality",
+  "previous": {
+    "world": "/private/tmp/sansu-water-garden-b3-world.json",
+    "sha256": "90d73ee9d316ec1d40fbf34d025d6c5e894bf416e4a40834e23dd160bc3cc318",
+    "composeMs": 78709.892208,
+    "timingScope": "Diagnostic Node function instrumentation; nested timings, not browser/device acceptance",
+    "stages": {
+      "isAuthoredWaterCarvingSafe": {
+        "calls": 161,
+        "ms": 2529.871501999997
+      },
+      "poolFor": {
+        "calls": 3,
+        "ms": 2425.1779170000004
+      },
+      "streamFor": {
+        "calls": 8,
+        "ms": 40.92083300000013
+      },
+      "bankFor": {
+        "calls": 42,
+        "ms": 30.79183600000033
+      },
+      "floorIntersectsOutline": {
+        "calls": 168,
+        "ms": 24.688922999999704
+      },
+      "compileWorldDefinition": {
+        "calls": 5,
+        "ms": 5050.451666000013
+      },
+      "isWorldWalkEdgeSupported": {
+        "calls": 3795,
+        "ms": 127.35709300000963
+      },
+      "dryLanding": {
+        "calls": 2,
+        "ms": 49.656293000000915
+      },
+      "makeDeck": {
+        "calls": 1,
+        "ms": 14.872708999999304
+      },
+      "composeAuthoredWaterBridges": {
+        "calls": 1,
+        "ms": 782.7693340000005
+      },
+      "findAuthoredShoreEntries": {
+        "calls": 5,
+        "ms": 70508.126959
+      },
+      "composeAuthoredWaterWorld": {
+        "calls": 1,
+        "ms": 78709.858959
+      }
+    }
+  },
+  "next": {
+    "world": "/private/tmp/sansu-water-garden-b4-world.json",
+    "sha256": "90d73ee9d316ec1d40fbf34d025d6c5e894bf416e4a40834e23dd160bc3cc318",
+    "composeMs": 7478.384875000001,
+    "timingScope": "Diagnostic Node function instrumentation; nested timings, not browser/device acceptance",
+    "stages": {
+      "isAuthoredWaterCarvingSafe": {
+        "calls": 161,
+        "ms": 2446.835045000006
+      },
+      "poolFor": {
+        "calls": 3,
+        "ms": 2340.290583
+      },
+      "streamFor": {
+        "calls": 8,
+        "ms": 41.08937600000081
+      },
+      "bankFor": {
+        "calls": 42,
+        "ms": 30.082124000000476
+      },
+      "floorIntersectsOutline": {
+        "calls": 168,
+        "ms": 24.012997999998333
+      },
+      "compileWorldDefinition": {
+        "calls": 5,
+        "ms": 3031.0797490000004
+      },
+      "isWorldWalkEdgeSupported": {
+        "calls": 3795,
+        "ms": 124.93320600001516
+      },
+      "dryLanding": {
+        "calls": 2,
+        "ms": 51.934291999999914
+      },
+      "makeDeck": {
+        "calls": 1,
+        "ms": 16.303666999999223
+      },
+      "composeAuthoredWaterBridges": {
+        "calls": 1,
+        "ms": 788.5220829999998
+      },
+      "findAuthoredShoreEntries": {
+        "calls": 5,
+        "ms": 1375.2931239999998
+      },
+      "composeAuthoredWaterWorld": {
+        "calls": 1,
+        "ms": 7478.356291
+      }
+    }
+  },
+  "excludes": [
+    "Browser or device performance acceptance",
+    "Natural acquisition or player saves",
+    "Art or independent comprehension acceptance"
+  ]
+}

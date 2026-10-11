@@ -1,5 +1,11 @@
 # Island / iPhone PWA performance
 
+## 2026-10-11 水庭の岸検索と実browser待ち
+
+[水庭b6](../../design/2026-10-11-authored-water-garden/README.md)で同じ実島のcomposeはNode診断78,710→7,478ms、岸の5回検索70,508→1,375ms。全world定義・state・art planが一致し、旧oracleとの36境界例で順序/EPS/内部水域/高い床/cache identityの結果を保った。nested instrumentationなので内訳の単純加算や実機性能への読み替えをしない。
+
+水庭のheadless browser診断は他のcore・回帰開始前に測定し、preview 12.0〜13.4秒、初回14.9秒が残る。action→評価world＋2rAFのdriver elapsedで、実GPU表示時間・FPS・実機の合格ではない。core5,164 tests、plain編集6操作、classic32、既存Growing8旅程/40通常回答はPASS。plain/legacy/classicは並行の機能回帰なのでplain timingは性能比較へ使わない。全島美術とM1、操作性能、実機性能の未達を保持する。
+
 ## 2026-10-11 編集できる全島の計算と初回shader
 
 [M1の全島性能](../../design/2026-10-11-authored-world-performance/README.md)で床の密なbucketを細分し、床・経路の支持照会を再利用した。同じ入力のNode全layer初回7,386→174 ms、13項目の形・床・経路等fingerprintが一致。scene state全体のうちapplied/placeProgressだけの同値更新はactor/camera/previewを保持し、lifeのcanonical参照を更新する。現在所有しているモデルとpreviewのshaderはready前に準備し、error checksとprogram寿命を保持した。画風・影・解像度・所有・保存・学習の規則は変更しない。

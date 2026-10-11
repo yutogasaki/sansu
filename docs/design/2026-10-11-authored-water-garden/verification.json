@@ -1,0 +1,81 @@
+{
+  "date": "2026-10-11",
+  "parentGoal": "island-construction-strategy.md v7; M1 and full goal remain unfinished",
+  "baseCommit": "a029a511f0b155a6d0b789ebd729829fe89feb44",
+  "actualTarget": "http://127.0.0.1:5344/prototypes/place-qa/authored.html?water=wide",
+  "buildRevision": "authored-water-garden-b6",
+  "nativeArtFlag": true,
+  "visualCandidate": "native05-authored-water-garden-v2",
+  "worldRevision": "authored-water-v2:3f6b964a9069c5f0:eb41954202b1926a",
+  "originalSourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+  "fixtureSha256": "9556c32d026099812d80449625d741978a0810d031b645b7fc482c9b5084abd0",
+  "evaluatedWorldSha256": "90d73ee9d316ec1d40fbf34d025d6c5e894bf416e4a40834e23dd160bc3cc318",
+  "gates": {
+    "art": "HOLD",
+    "independentComprehensionSafety": "UNASSESSED; N=0",
+    "runtime": "PARTIAL; functional checks pass, browser performance and target release incomplete"
+  },
+  "core": {
+    "report": "core/report.json",
+    "pass": true,
+    "sourceFixed": true,
+    "inputCount": 1860,
+    "testFiles": 594,
+    "tests": 5164,
+    "normalNativeArtFlag": false,
+    "assetBoundary": "core/build-boundary.json"
+  },
+  "regressions": {
+    "runtime": {
+      "report": "runtime/report.json",
+      "pass": true,
+      "sourceFixed": true,
+      "sourceCount": 1567,
+      "commonCoreInputs": 1567,
+      "commonCoreMatch": true,
+      "captureCount": 14,
+      "stepCount": 6
+    },
+    "baseline": {
+      "report": "baseline-regression/report.json",
+      "pass": true,
+      "sourceFixed": true,
+      "sourceCount": 1563,
+      "commonCoreInputs": 1563,
+      "commonCoreMatch": true,
+      "captureCount": 7,
+      "stepCount": 6
+    },
+    "legacy": {
+      "report": "legacy-regression/report.json",
+      "pass": true,
+      "sourceFixed": true,
+      "sourceCount": 1562,
+      "commonCoreInputs": 1562,
+      "commonCoreMatch": true,
+      "captureCount": 22,
+      "stepCount": 8
+    },
+    "classic": {
+      "report": "classic-smoke/report.json",
+      "pass": true,
+      "sourceFixed": true,
+      "sourceCount": 1860,
+      "commonCoreInputs": 1860,
+      "commonCoreMatch": true,
+      "captureCount": 0,
+      "stepCount": 0
+    }
+  },
+  "classicSmokeCount": 32,
+  "legacyNormalAnswers": 40,
+  "timingConditions": "Water runtime isolated before core and regressions. Baseline, legacy, and classic ran concurrently for functional regression; baseline timings are not performance comparisons. Node instrumentation is diagnostic, nested, not browser or device acceptance.",
+  "scopeExclusions": [
+    "natural authored-world acquisition",
+    "personal authored-world persistence and PWA update",
+    "physical touch hardware and device performance",
+    "independent observers",
+    "full M1 art and full goal acceptance",
+    "production release"
+  ]
+}
