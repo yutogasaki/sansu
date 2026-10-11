@@ -23,7 +23,7 @@ const ready = async page => {
     await page.locator('.growing-loading--overlay').waitFor({ state: 'hidden' });
     await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
     const world = await page.locator('[data-growing-world]').evaluate(node => ({ ...node.dataset }));
-    assert.equal(world.artCandidate, 'native05-owned-runtime-v1'); assert.equal(world.nativeKitSha256, kit.sha256);
+    assert.equal(world.artCandidate, version.island.nativeOwnedArt.candidate); assert.equal(world.nativeKitSha256, kit.sha256);
     assert.equal(await page.locator('[data-growing-world] canvas').count(), 1);
 };
 async function owned(page) {

@@ -1,0 +1,268 @@
+{
+  "target": "http://127.0.0.1:4173",
+  "harnessHash": "e43d09f0b4f8bc63eb4dc351a9d601714d43b4296d14f6934f869b054e9fe326",
+  "pass": false,
+  "scenarios": [
+    {
+      "name": "redirects to onboarding when no profile",
+      "startedAt": "2026-10-11T03:48:41.518Z",
+      "pass": false,
+      "pages": [
+        {
+          "diagnosticError": "page.evaluate: Execution context was destroyed, most likely because of a navigation"
+        }
+      ],
+      "error": "page.goto: Timeout 45000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:4173/#/\", waiting until \"domcontentloaded\"\u001b[22m\n\n    at scenarioOnboardingShown (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:555:14)\n    at async runScenario (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:418:5)\n    at async main (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:6663:18)",
+      "durationMs": 182074,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "completes onboarding, chooses a route, and opens Makimodon",
+      "startedAt": "2026-10-11T03:51:43.594Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 2395,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the classic opening playable with expanded mobile browser chrome",
+      "startedAt": "2026-10-11T03:51:45.992Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 2288,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the direct study route working",
+      "startedAt": "2026-10-11T03:51:48.281Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 2743,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the direct review route working",
+      "startedAt": "2026-10-11T03:51:51.026Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 1436,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the direct settings route working",
+      "startedAt": "2026-10-11T03:51:52.467Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 1411,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps legacy fuwafuwa album out of child records",
+      "startedAt": "2026-10-11T03:51:53.879Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 2119,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "completes confirmation test from parent settings and opens results",
+      "startedAt": "2026-10-11T03:51:55.999Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 30459,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "launches explore immediately and safely returns at a route break",
+      "startedAt": "2026-10-11T03:52:26.459Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 3205,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the 390x800 route boundary fully visible",
+      "startedAt": "2026-10-11T03:52:29.664Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 3171,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "runs Root Pull v2 inline with reduced motion and the numeric keypad",
+      "startedAt": "2026-10-11T03:52:32.837Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 3136,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "runs the Snap Root breakthrough loop at 390px",
+      "startedAt": "2026-10-11T03:52:35.977Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 5192,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the Snap Root breakthrough loop playable on tablet",
+      "startedAt": "2026-10-11T03:52:41.170Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 3046,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "can exit safely after explore start persistence fails",
+      "startedAt": "2026-10-11T03:52:44.217Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 1837,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "safely exits and retries from a pending explore problem",
+      "startedAt": "2026-10-11T03:52:46.058Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 2092,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "commits one explore answer under rapid double submit",
+      "startedAt": "2026-10-11T03:52:48.153Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 2161,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "retries the same explore attempt after a save failure",
+      "startedAt": "2026-10-11T03:52:50.315Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 2061,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "resumes fixed-ten explore across retry, route, discovery, and partial-input boundaries",
+      "startedAt": "2026-10-11T03:52:52.378Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 7667,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "finishes last-light rescue without blocking on an ordinary clue",
+      "startedAt": "2026-10-11T03:53:00.046Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 2070,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "retries voluntary return without early terminal progress",
+      "startedAt": "2026-10-11T03:53:02.117Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 3271,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "grows the immersive light bridge from an addition answer",
+      "startedAt": "2026-10-11T03:53:05.391Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 4859,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the light bridge playable on tablet",
+      "startedAt": "2026-10-11T03:53:10.255Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 4831,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the light bridge connected on a landscape tablet",
+      "startedAt": "2026-10-11T03:53:15.088Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 4905,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the light bridge playable on a 1024px portrait tablet",
+      "startedAt": "2026-10-11T03:53:19.994Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 4845,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the light bridge playable on a wide portrait tablet",
+      "startedAt": "2026-10-11T03:53:24.840Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 5068,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "retains root observation after the first same-problem retry",
+      "startedAt": "2026-10-11T03:53:29.910Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 5707,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "opens the root tangle with profile-near subtraction",
+      "startedAt": "2026-10-11T03:53:35.618Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 6237,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the root tangle playable on tablet",
+      "startedAt": "2026-10-11T03:53:41.856Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 6406,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the root tangle playable on a landscape tablet",
+      "startedAt": "2026-10-11T03:53:48.264Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 6346,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the root tangle playable on a 1024px portrait tablet",
+      "startedAt": "2026-10-11T03:53:54.612Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 6397,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the root tangle playable on a wide portrait tablet",
+      "startedAt": "2026-10-11T03:54:01.011Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 6391,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "opens /parents directly without arithmetic",
+      "startedAt": "2026-10-11T03:54:07.402Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 1580,
+      "remainingNewContexts": 0
+    }
+  ]
+}

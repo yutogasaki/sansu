@@ -1,0 +1,60 @@
+{
+  "candidate": "native05-expanding-runtime-v2",
+  "models": [
+    {
+      "file": "models/center-8.glb.gz",
+      "homes": 8,
+      "nodes": 319,
+      "meshCount": 176,
+      "pass": true
+    },
+    {
+      "file": "models/bay-16.glb.gz",
+      "homes": 16,
+      "nodes": 503,
+      "meshCount": 228,
+      "pass": true
+    },
+    {
+      "file": "models/bay-32.glb.gz",
+      "homes": 32,
+      "nodes": 749,
+      "meshCount": 277,
+      "pass": true
+    },
+    {
+      "file": "models/forest-16.glb.gz",
+      "homes": 16,
+      "nodes": 506,
+      "meshCount": 231,
+      "pass": true
+    },
+    {
+      "file": "models/forest-32.glb.gz",
+      "homes": 32,
+      "nodes": 756,
+      "meshCount": 283,
+      "pass": true
+    },
+    {
+      "file": "models/garden-16.glb.gz",
+      "homes": 16,
+      "nodes": 509,
+      "meshCount": 230,
+      "pass": true
+    },
+    {
+      "file": "models/garden-32.glb.gz",
+      "homes": 32,
+      "nodes": 763,
+      "meshCount": 286,
+      "pass": true
+    }
+  ],
+  "editable": {
+    "file": "expanding-islands.blend",
+    "bytes": 61841548,
+    "sha256": "3a7fd83c56de9afde6e2b756ea700e0b0e875a9615675adc2d4242d62e44dbb7"
+  },
+  "pass": true
+}

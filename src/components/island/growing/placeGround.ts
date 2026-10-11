@@ -7,18 +7,41 @@ export function buildPlaceGround(layout: SceneLayout) {
     const { bounds } = layout;
     const xs = [bounds.minX - .5, ...Array.from({ length: layout.width }, (_, i) => bounds.minX + i), bounds.maxX + .5];
     const zs = [-.5, ...Array.from({ length: layout.depth }, (_, i) => i), bounds.depth - .5];
-    const vertices: number[] = [], indices: number[] = [], colors: number[] = [];
+    const vertices: number[] = [], indices: number[] = [], colors: number[] = [], vertexIds = new Map<string, number>();
     const meadow = new T.Color('#9dcc88'), shade = new T.Color('#84bba1');
-    for (const z of zs) for (const x of xs) {
+    const vertex = ({ x, z }: { x: number; z: number }) => {
+        const id = `${x},${z}`, previous = vertexIds.get(id); if (previous !== undefined) return previous;
         const y = layout.heightAt({ x, z });
-        vertices.push(x - layout.center, y, z - 2);
+        const p = layout.point({ x, z }, 0);
+        const index = vertices.length / 3; vertexIds.set(id, index);
+        vertices.push(p.x, y, p.z);
         const color = meadow.clone().lerp(shade, Math.min(.28, y * .14));
         const variation = .97 + Math.sin(x * 1.37 + z * .42) * Math.sin(z * .83) * .025;
         colors.push(color.r * variation, color.g * variation, color.b * variation);
-    }
-    for (let z = 0; z < zs.length - 1; z++) for (let x = 0; x < xs.length - 1; x++) {
-        const a = z * xs.length + x, b = a + 1, c = a + xs.length, d = c + 1;
-        indices.push(a, c, b, b, c, d);
+        return index;
+    };
+    // Clip the unit-cell triangles at the half-cell shore, rather than changing
+    // their diagonal into a narrower rectangle. The same barycentric heights then
+    // remain exact even at the last fractional foot position beside the sea.
+    const floorTriangle = (points: { x: number; z: number }[]) => {
+        let polygon = points;
+        for (const [axis, bound, sign] of [['x', xs[0], 1], ['x', xs[xs.length - 1], -1], ['z', zs[0], 1], ['z', zs[zs.length - 1], -1]] as const) {
+            const clipped: { x: number; z: number }[] = [];
+            for (let i = 0; i < polygon.length; i++) {
+                const a = polygon[i], b = polygon[(i + 1) % polygon.length], insideA = (a[axis] - bound) * sign >= 0, insideB = (b[axis] - bound) * sign >= 0;
+                if (insideA) clipped.push(a);
+                if (insideA !== insideB) { const t = (bound - a[axis]) / (b[axis] - a[axis]); clipped.push({ x: a.x + (b.x - a.x) * t, z: a.z + (b.z - a.z) * t }); }
+            }
+            polygon = clipped;
+        }
+        for (let i = 1; i + 1 < polygon.length; i++) {
+            const a = polygon[0], b = polygon[i], c = polygon[i + 1];
+            if (Math.abs((b.x - a.x) * (c.z - a.z) - (b.z - a.z) * (c.x - a.x)) > 1e-10) indices.push(vertex(a), vertex(b), vertex(c));
+        }
+    };
+    for (let z = -1; z < bounds.depth; z++) for (let x = bounds.minX - 1; x <= bounds.maxX; x++) {
+        const a = { x, z }, b = { x: x + 1, z }, c = { x, z: z + 1 }, d = { x: x + 1, z: z + 1 };
+        floorTriangle([a, c, b]); floorTriangle([b, c, d]);
     }
     const geometry = new T.BufferGeometry();
     geometry.setAttribute('position', new T.Float32BufferAttribute(vertices, 3));
@@ -52,7 +75,8 @@ export function buildPlaceGround(layout: SceneLayout) {
         const width = Math.max(.45 + layout.heightAt(cell) * .82, .48 + headland * 1.30 + littleCape * .82);
         const spread = width * t;
         const fade = t * t * (3 - 2 * t), top = layout.heightAt(cell);
-        skirtVertices.push(cell.x - layout.center + cell.nx * spread, top * (1 - fade) - .075 * fade, cell.z - 2 + cell.nz * spread);
+        const p = layout.projected({ x: cell.x + cell.nx * spread, z: cell.z + cell.nz * spread });
+        skirtVertices.push(p.x - layout.center, top * (1 - fade) - .075 * fade, p.z - 2);
         const coast = T.MathUtils.smoothstep(t, .18, .90);
         const tint = meadow.clone().lerp(shade, Math.min(.28, top * .14)).lerp(new T.Color('#93b1bc'), coast * .82);
         skirtColors.push(tint.r, tint.g, tint.b);

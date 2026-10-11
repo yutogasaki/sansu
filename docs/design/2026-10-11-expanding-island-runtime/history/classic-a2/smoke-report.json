@@ -1,0 +1,1224 @@
+{
+  "target": "http://127.0.0.1:4173",
+  "harnessHash": "e43d09f0b4f8bc63eb4dc351a9d601714d43b4296d14f6934f869b054e9fe326",
+  "pass": false,
+  "scenarios": [
+    {
+      "name": "redirects to onboarding when no profile",
+      "startedAt": "2026-10-11T03:56:36.427Z",
+      "pass": false,
+      "pages": [
+        {
+          "diagnosticError": "page.evaluate: Execution context was destroyed, most likely because of a navigation"
+        }
+      ],
+      "error": "page.goto: Timeout 45000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:4173/#/\", waiting until \"domcontentloaded\"\u001b[22m\n\n    at scenarioOnboardingShown (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:555:14)\n    at async runScenario (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:418:5)\n    at async main (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:6663:18)",
+      "durationMs": 68470,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "completes onboarding, chooses a route, and opens Makimodon",
+      "startedAt": "2026-10-11T03:57:44.899Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 2143,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the classic opening playable with expanded mobile browser chrome",
+      "startedAt": "2026-10-11T03:57:47.043Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 2101,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the direct study route working",
+      "startedAt": "2026-10-11T03:57:49.145Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 2585,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the direct review route working",
+      "startedAt": "2026-10-11T03:57:51.730Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 1401,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the direct settings route working",
+      "startedAt": "2026-10-11T03:57:53.132Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 1298,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps legacy fuwafuwa album out of child records",
+      "startedAt": "2026-10-11T03:57:54.432Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 2101,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "completes confirmation test from parent settings and opens results",
+      "startedAt": "2026-10-11T03:57:56.534Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 31162,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "launches explore immediately and safely returns at a route break",
+      "startedAt": "2026-10-11T03:58:27.696Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 3151,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the 390x800 route boundary fully visible",
+      "startedAt": "2026-10-11T03:58:30.848Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 3084,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "runs Root Pull v2 inline with reduced motion and the numeric keypad",
+      "startedAt": "2026-10-11T03:58:33.933Z",
+      "pass": false,
+      "pages": [
+        {
+          "url": "http://127.0.0.1:4173/?explore_experience=root-pull-v2#/explore",
+          "history": {
+            "frames": [
+              {
+                "attemptKey": "[\"explore-attempt-v1\",\"f8ba0c0b-942c-4ee6-8f65-07b2da988fe1\",\"explore-mv3amo98-nyloo-1791691115084\",\"explore-mv3amo98-nyloo-1791691115084:node-1-0\",1]",
+                "problemId": "explore-mv3amo98-nyloo-1791691115084:node-1-0:attempt-0",
+                "gateId": "explore-mv3amo98-nyloo-1791691115084:node-1-0",
+                "saveState": "idle",
+                "persistence": "ready",
+                "steps": "0",
+                "checkpointRevision": "2",
+                "phase": "idle",
+                "question": "1 + 1 =",
+                "output": "?",
+                "outputLabel": "こたえ 未入力",
+                "keypadDisabled": "false",
+                "digitDisabled": false,
+                "submitDisabled": true,
+                "energy": 12,
+                "message": "こたえて、ぐいっ！",
+                "messageVisible": true,
+                "at": 1844.8000001907349,
+                "reason": "armed"
+              },
+              {
+                "attemptKey": "[\"explore-attempt-v1\",\"f8ba0c0b-942c-4ee6-8f65-07b2da988fe1\",\"explore-mv3amo98-nyloo-1791691115084\",\"explore-mv3amo98-nyloo-1791691115084:node-1-0\",1]",
+                "problemId": "explore-mv3amo98-nyloo-1791691115084:node-1-0:attempt-0",
+                "gateId": "explore-mv3amo98-nyloo-1791691115084:node-1-0",
+                "saveState": "idle",
+                "persistence": "ready",
+                "steps": "0",
+                "checkpointRevision": "2",
+                "phase": "idle",
+                "question": "1 + 1 =",
+                "output": "2",
+                "outputLabel": "こたえ 2",
+                "keypadDisabled": "false",
+                "digitDisabled": false,
+                "submitDisabled": false,
+                "energy": 12,
+                "message": "こたえて、ぐいっ！",
+                "messageVisible": true,
+                "at": 1857.7000000476837,
+                "reason": "mutation"
+              },
+              {
+                "attemptKey": "[\"explore-attempt-v1\",\"f8ba0c0b-942c-4ee6-8f65-07b2da988fe1\",\"explore-mv3amo98-nyloo-1791691115084\",\"explore-mv3amo98-nyloo-1791691115084:node-1-0\",1]",
+                "problemId": "explore-mv3amo98-nyloo-1791691115084:node-1-0:attempt-0",
+                "gateId": "explore-mv3amo98-nyloo-1791691115084:node-1-0",
+                "saveState": "saving",
+                "persistence": "ready",
+                "steps": "0",
+                "checkpointRevision": "2",
+                "phase": "idle",
+                "question": "1 + 1 =",
+                "output": "2",
+                "outputLabel": "こたえ 2",
+                "keypadDisabled": "true",
+                "digitDisabled": true,
+                "submitDisabled": true,
+                "energy": 12,
+                "message": "こたえて、ぐいっ！",
+                "messageVisible": true,
+                "at": 1897.7000000476837,
+                "reason": "mutation"
+              },
+              {
+                "attemptKey": "[\"explore-attempt-v1\",\"f8ba0c0b-942c-4ee6-8f65-07b2da988fe1\",\"explore-mv3amo98-nyloo-1791691115084\",\"explore-mv3amo98-nyloo-1791691115084:node-1-0\",1]",
+                "problemId": "explore-mv3amo98-nyloo-1791691115084:node-1-0:attempt-0",
+                "gateId": "explore-mv3amo98-nyloo-1791691115084:node-1-0",
+                "saveState": "idle",
+                "persistence": "ready",
+                "steps": "0",
+                "checkpointRevision": "3",
+                "phase": "complete",
+                "question": "1 + 1 =",
+                "output": "2",
+                "outputLabel": "こたえ 2",
+                "keypadDisabled": "true",
+                "digitDisabled": true,
+                "submitDisabled": true,
+                "energy": 12,
+                "message": "ぺろん！ はっぱで まえが みえない",
+                "messageVisible": true,
+                "at": 1914.4000000953674,
+                "reason": "mutation"
+              },
+              {
+                "attemptKey": "[\"explore-attempt-v1\",\"f8ba0c0b-942c-4ee6-8f65-07b2da988fe1\",\"explore-mv3amo98-nyloo-1791691115084\",\"explore-mv3amo98-nyloo-1791691115084:node-1-0\",1]",
+                "problemId": "explore-mv3amo98-nyloo-1791691115084:node-1-0:attempt-0",
+                "gateId": "explore-mv3amo98-nyloo-1791691115084:node-1-0",
+                "saveState": "idle",
+                "persistence": "checkpointing",
+                "steps": "0",
+                "checkpointRevision": "3",
+                "phase": "complete",
+                "question": "1 + 1 =",
+                "output": "2",
+                "outputLabel": "こたえ 2",
+                "keypadDisabled": "true",
+                "digitDisabled": true,
+                "submitDisabled": true,
+                "energy": 12,
+                "message": "ぺろん！ はっぱで まえが みえない",
+                "messageVisible": true,
+                "at": 2005.4000000953674,
+                "reason": "mutation"
+              },
+              {
+                "attemptKey": "[\"explore-attempt-v1\",\"f8ba0c0b-942c-4ee6-8f65-07b2da988fe1\",\"explore-mv3amo98-nyloo-1791691115084\",\"explore-mv3amo98-nyloo-1791691115084:node-2-0\",1]",
+                "problemId": "explore-mv3amo98-nyloo-1791691115084:node-2-0:attempt-0",
+                "gateId": "explore-mv3amo98-nyloo-1791691115084:node-2-0",
+                "saveState": "idle",
+                "persistence": "ready",
+                "steps": "1",
+                "checkpointRevision": "4",
+                "phase": "idle",
+                "question": "1, 2, □, 4, 5",
+                "output": "?",
+                "outputLabel": "こたえ 未入力",
+                "keypadDisabled": "false",
+                "digitDisabled": false,
+                "submitDisabled": true,
+                "energy": 11,
+                "message": "ぺろん！ はっぱで まえが みえない",
+                "messageVisible": true,
+                "exitDisabled": false,
+                "at": 2015.3000001907349,
+                "reason": "mutation"
+              },
+              {
+                "attemptKey": "[\"explore-attempt-v1\",\"f8ba0c0b-942c-4ee6-8f65-07b2da988fe1\",\"explore-mv3amo98-nyloo-1791691115084\",\"explore-mv3amo98-nyloo-1791691115084:node-2-0\",1]",
+                "problemId": "explore-mv3amo98-nyloo-1791691115084:node-2-0:attempt-0",
+                "gateId": "explore-mv3amo98-nyloo-1791691115084:node-2-0",
+                "saveState": "idle",
+                "persistence": "checkpointing",
+                "steps": "1",
+                "checkpointRevision": "4",
+                "phase": "idle",
+                "question": "1, 2, □, 4, 5",
+                "output": "?",
+                "outputLabel": "こたえ 未入力",
+                "keypadDisabled": "true",
+                "digitDisabled": true,
+                "submitDisabled": true,
+                "energy": 11,
+                "message": "ぺろん！ はっぱで まえが みえない",
+                "messageVisible": true,
+                "exitDisabled": true,
+                "at": 2024,
+                "reason": "mutation"
+              },
+              {
+                "attemptKey": "[\"explore-attempt-v1\",\"f8ba0c0b-942c-4ee6-8f65-07b2da988fe1\",\"explore-mv3amo98-nyloo-1791691115084\",\"explore-mv3amo98-nyloo-1791691115084:node-2-0\",1]",
+                "problemId": "explore-mv3amo98-nyloo-1791691115084:node-2-0:attempt-0",
+                "gateId": "explore-mv3amo98-nyloo-1791691115084:node-2-0",
+                "saveState": "idle",
+                "persistence": "ready",
+                "steps": "1",
+                "checkpointRevision": "5",
+                "acknowledgedDiscoveryId": "find-node-1-0-0",
+                "phase": "idle",
+                "question": "1, 2, □, 4, 5",
+                "output": "?",
+                "outputLabel": "こたえ 未入力",
+                "keypadDisabled": "false",
+                "digitDisabled": false,
+                "submitDisabled": true,
+                "energy": 11,
+                "message": "ぺろん！ はっぱで まえが みえない",
+                "messageVisible": true,
+                "exitDisabled": false,
+                "at": 2034.3000001907349,
+                "reason": "mutation"
+              }
+            ],
+            "keys": [
+              {
+                "at": 1851.3000001907349,
+                "key": "2",
+                "repeat": false,
+                "target": "H2",
+                "activeElement": null,
+                "attemptKey": "[\"explore-attempt-v1\",\"f8ba0c0b-942c-4ee6-8f65-07b2da988fe1\",\"explore-mv3amo98-nyloo-1791691115084\",\"explore-mv3amo98-nyloo-1791691115084:node-1-0\",1]",
+                "problemId": "explore-mv3amo98-nyloo-1791691115084:node-1-0:attempt-0",
+                "gateId": "explore-mv3amo98-nyloo-1791691115084:node-1-0",
+                "saveState": "idle",
+                "persistence": "ready",
+                "steps": "0",
+                "checkpointRevision": "2",
+                "phase": "idle",
+                "question": "1 + 1 =",
+                "output": "?",
+                "outputLabel": "こたえ 未入力",
+                "keypadDisabled": "false",
+                "digitDisabled": false,
+                "submitDisabled": true,
+                "energy": 12,
+                "message": "こたえて、ぐいっ！",
+                "messageVisible": true
+              }
+            ],
+            "gestures": [
+              {
+                "type": "pointerdown",
+                "at": 1890.2000000476837,
+                "targetDisabled": false,
+                "attemptKey": "[\"explore-attempt-v1\",\"f8ba0c0b-942c-4ee6-8f65-07b2da988fe1\",\"explore-mv3amo98-nyloo-1791691115084\",\"explore-mv3amo98-nyloo-1791691115084:node-1-0\",1]",
+                "problemId": "explore-mv3amo98-nyloo-1791691115084:node-1-0:attempt-0",
+                "gateId": "explore-mv3amo98-nyloo-1791691115084:node-1-0",
+                "saveState": "idle",
+                "persistence": "ready",
+                "steps": "0",
+                "checkpointRevision": "2",
+                "phase": "idle",
+                "question": "1 + 1 =",
+                "output": "2",
+                "outputLabel": "こたえ 2",
+                "keypadDisabled": "false",
+                "digitDisabled": false,
+                "submitDisabled": false,
+                "energy": 12,
+                "message": "こたえて、ぐいっ！",
+                "messageVisible": true
+              },
+              {
+                "type": "pointerup",
+                "at": 1890.4000000953674,
+                "targetDisabled": false,
+                "attemptKey": "[\"explore-attempt-v1\",\"f8ba0c0b-942c-4ee6-8f65-07b2da988fe1\",\"explore-mv3amo98-nyloo-1791691115084\",\"explore-mv3amo98-nyloo-1791691115084:node-1-0\",1]",
+                "problemId": "explore-mv3amo98-nyloo-1791691115084:node-1-0:attempt-0",
+                "gateId": "explore-mv3amo98-nyloo-1791691115084:node-1-0",
+                "saveState": "idle",
+                "persistence": "ready",
+                "steps": "0",
+                "checkpointRevision": "2",
+                "phase": "idle",
+                "question": "1 + 1 =",
+                "output": "2",
+                "outputLabel": "こたえ 2",
+                "keypadDisabled": "false",
+                "digitDisabled": false,
+                "submitDisabled": false,
+                "energy": 12,
+                "message": "こたえて、ぐいっ！",
+                "messageVisible": true
+              },
+              {
+                "type": "click",
+                "at": 1890.5,
+                "targetDisabled": false,
+                "attemptKey": "[\"explore-attempt-v1\",\"f8ba0c0b-942c-4ee6-8f65-07b2da988fe1\",\"explore-mv3amo98-nyloo-1791691115084\",\"explore-mv3amo98-nyloo-1791691115084:node-1-0\",1]",
+                "problemId": "explore-mv3amo98-nyloo-1791691115084:node-1-0:attempt-0",
+                "gateId": "explore-mv3amo98-nyloo-1791691115084:node-1-0",
+                "saveState": "idle",
+                "persistence": "ready",
+                "steps": "0",
+                "checkpointRevision": "2",
+                "phase": "idle",
+                "question": "1 + 1 =",
+                "output": "2",
+                "outputLabel": "こたえ 2",
+                "keypadDisabled": "false",
+                "digitDisabled": false,
+                "submitDisabled": false,
+                "energy": 12,
+                "message": "こたえて、ぐいっ！",
+                "messageVisible": true
+              }
+            ],
+            "inputs": [
+              {
+                "expected": "2",
+                "startedAt": 1850.7000000476837,
+                "actual": "2"
+              }
+            ]
+          },
+          "world": "<div class=\"explore-world relative h-full overflow-hidden\" data-run-id=\"explore-mv3amo98-nyloo-1791691115084\" data-run-status=\"active\" data-run-steps=\"1\" data-confirmed-find-count=\"0\" data-opening-experience=\"root-pull-v2\" data-opening-presentation=\"root-pull\" data-run-attempt-count=\"1\" data-run-committed-attempt-count=\"1\" data-run-persistence=\"ready\" data-checkpoint-revision=\"5\" data-suppress-nonblocking-discovery=\"true\" data-acknowledged-discovery-id=\"find-node-1-0-0\"><div class=\"explore-world-layer pointer-events-none absolute inset-0 overflow-hidden\" aria-hidden=\"true\"><svg class=\"absolute inset-0 h-full w-full\" viewBox=\"0 0 430 844\" preserveAspectRatio=\"none\" fill=\"none\"><defs><linearGradient id=\"explore-cave-ceiling\" x1=\"30\" y1=\"0\" x2=\"370\" y2=\"250\" gradientUnits=\"userSpaceOnUse\"><stop stop-color=\"#0B5262\" stop-opacity=\"0.28\"></stop><stop offset=\"1\" stop-color=\"#2D8B7D\" stop-opacity=\"0.08\"></stop></linearGradient><linearGradient id=\"explore-cave-floor\" x1=\"215\" y1=\"650\" x2=\"215\" y2=\"844\" gradientUnits=\"userSpaceOnUse\"><stop stop-color=\"#65B985\" stop-opacity=\"0\"></stop><stop offset=\"1\" stop-color=\"#2B8177\" stop-opacity=\"0.22\"></stop></linearGradient><radialGradient id=\"explore-lantern-haze\" cx=\"0\" cy=\"0\" r=\"1\" gradientTransform=\"translate(215 360) rotate(90) scale(330 260)\" gradientUnits=\"userSpaceOnUse\"><stop stop-color=\"#FFF3A8\" stop-opacity=\"0.22\"></stop><stop offset=\"1\" stop-color=\"#FFF3A8\" stop-opacity=\"0\"></stop></radialGradient></defs><path d=\"M0 0H430V56C387 42 351 70 319 91C283 114 252 88 220 70C173 44 132 77 94 96C59 114 28 88 0 73V0Z\" fill=\"url(#explore-cave-ceiling)\"></path><path d=\"M0 126C55 94 88 126 128 144C168 162 199 127 240 118C286 108 315 151 354 153C384 154 407 137 430 120\" stroke=\"#FFFFFF\" stroke-opacity=\"0.28\" stroke-width=\"1.4\"></path><path d=\"M0 163C51 141 89 171 129 185C171 201 204 163 244 159C288 155 322 194 360 192C389 190 410 173 430 159\" stroke=\"#155F70\" stroke-opacity=\"0.08\" stroke-width=\"1.2\"></path><ellipse cx=\"215\" cy=\"360\" rx=\"260\" ry=\"330\" fill=\"url(#explore-lantern-haze)\"></ellipse><path d=\"M0 694C46 673 77 701 115 714C153 727 189 704 225 694C273 681 310 723 352 722C383 721 407 704 430 689V844H0V694Z\" fill=\"url(#explore-cave-floor)\"></path><path d=\"M0 748C47 718 82 754 124 764C169 776 196 738 240 742C284 746 317 780 358 778C389 777 410 757 430 742\" stroke=\"#FFFFFF\" stroke-opacity=\"0.32\" stroke-width=\"1.3\"></path><path d=\"M30 810C48 776 66 763 88 754C88 781 72 802 42 820Z\" fill=\"#76C795\" fill-opacity=\"0.16\"></path><path d=\"M400 805C383 773 365 760 342 751C343 781 360 801 391 818Z\" fill=\"#70D2C2\" fill-opacity=\"0.13\"></path></svg><span class=\"absolute left-[8%] top-[18%] h-1.5 w-1.5 rounded-full bg-white/70 shadow-[0_0_16px_5px_rgba(255,255,255,0.34)]\"></span><span class=\"absolute right-[13%] top-[29%] h-2 w-2 rounded-full bg-cyan-100/75 shadow-[0_0_20px_6px_rgba(103,232,249,0.28)]\"></span><span class=\"absolute left-[19%] top-[56%] h-1 w-1 rounded-full bg-amber-100/85 shadow-[0_0_14px_4px_rgba(253,230,138,0.3)]\"></span><span class=\"absolute right-[22%] top-[68%] h-1.5 w-1.5 rounded-full bg-white/65 shadow-[0_0_16px_5px_rgba(255,255,255,0.24)]\"></span></div><div class=\"relative z-10 h-full\"><div class=\"relative flex h-full min-h-0 flex-col\"><div class=\"relative flex min-h-0 flex-1 flex-col\"><header data-testid=\"explore-hud\" data-variant=\"encounter\" class=\"flex shrink-0 items-center sm:gap-3 absolute inset-x-0 top-0 z-30 gap-1.5 px-2 pb-1 pt-[calc(var(--safe-area-top)+4px)] sm:px-3\"><button type=\"button\" class=\"explore-focus-ring flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/45 bg-[linear-gradient(160deg,rgba(15,88,103,0.94),rgba(28,111,105,0.9))] text-white shadow-[0_16px_30px_-22px_rgba(8,47,73,0.8)] backdrop-blur-md disabled:opacity-45\" aria-label=\"たんけんを おえて 基地へ帰る\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-chevron-left h-6 w-6\" aria-hidden=\"true\"><path d=\"m15 18-6-6 6-6\"></path></svg></button><div class=\"explore-field-sheet min-w-0 flex-1 rounded-[19px] bg-[#fff9da]/88 px-2 py-1 backdrop-blur-md sm:px-2.5\"><div class=\"flex items-center justify-between gap-2 text-[10px] font-extrabold text-[var(--explore-muted)]\"><span class=\"flex min-w-0 items-center gap-1.5\"><span class=\"flex h-6 w-6 shrink-0 items-center justify-center rounded-[9px] bg-amber-100\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"h-5 w-5\" aria-hidden=\"true\" focusable=\"false\"><circle cx=\"32\" cy=\"32\" r=\"27\" fill=\"#F1FAE6\"></circle><circle cx=\"32\" cy=\"30\" r=\"18\" fill=\"#FFF2A4\" opacity=\"0.55\"></circle><path d=\"M23 25c0-6 4-10 9-10s9 4 9 10v19H23Z\" fill=\"#FFF0A1\" stroke=\"#185B69\" stroke-width=\"2.8\"></path><path d=\"M27 16c0-4 2-7 5-7s5 3 5 7M20 44h24m-19 0-3 9m17-9 3 9\" stroke=\"#185B69\" stroke-width=\"2.7\"></path><path d=\"M28 33c0-4 2-7 4-10 3 3 5 6 4 10 0 3-2 5-4 5s-4-2-4-5Z\" fill=\"#FF9A78\" stroke=\"#185B69\" stroke-width=\"2\"></path><path d=\"m49 20 1 2.5 2.5 1-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1Z\" fill=\"#6ED9E9\" stroke=\"#185B69\" stroke-width=\"1.5\"></path></svg></span><span class=\"truncate\">ひかり</span></span><span class=\"shrink-0 text-[var(--explore-ink)]\">11 / 12</span></div><div class=\"mt-1 grid h-2.5 gap-0.5 overflow-hidden rounded-full bg-[rgba(24,63,73,0.08)] p-0.5\" role=\"progressbar\" aria-label=\"ひかり\" aria-valuemin=\"0\" aria-valuemax=\"12\" aria-valuenow=\"11\" aria-valuetext=\"のこり 11\" style=\"grid-template-columns: repeat(12, minmax(0px, 1fr));\"><span class=\"rounded-full bg-[linear-gradient(90deg,var(--explore-crystal),#78d9b3)]\" style=\"transform: none; opacity: 1;\"></span><span class=\"rounded-full bg-[linear-gradient(90deg,var(--explore-crystal),#78d9b3)]\" style=\"transform: none; opacity: 1;\"></span><span class=\"rounded-full bg-[linear-gradient(90deg,var(--explore-crystal),#78d9b3)]\" style=\"transform: none; opacity: 1;\"></span><span class=\"rounded-full bg-[linear-gradient(90deg,var(--explore-crystal),#78d9b3)]\" style=\"transform: none; opacity: 1;\"></span><span class=\"rounded-full bg-[linear-gradient(90deg,var(--explore-crystal),#78d9b3)]\" style=\"transform: none; opacity: 1;\"></span><span class=\"rounded-full bg-[linear-gradient(90deg,var(--explore-crystal),#78d9b3)]\" style=\"transform: none; opacity: 1;\"></span><span class=\"rounded-full bg-[linear-gradient(90deg,var(--explore-crystal),#78d9b3)]\" style=\"transform: none; opacity: 1;\"></span><span class=\"rounded-full bg-[linear-gradient(90deg,var(--explore-crystal),#78d9b3)]\" style=\"transform: none; opacity: 1;\"></span><span class=\"rounded-full bg-[linear-gradient(90deg,var(--explore-crystal),#78d9b3)]\" style=\"transform: none; opacity: 1;\"></span><span class=\"rounded-full bg-[linear-gradient(90deg,var(--explore-crystal),#78d9b3)]\" style=\"transform: none; opacity: 1;\"></span><span class=\"rounded-full bg-[linear-gradient(90deg,var(--explore-crystal),#78d9b3)]\" style=\"transform: none; opacity: 1;\"></span><span class=\"rounded-full bg-white/45\" style=\"transform: scaleY(0.72); opacity: 0.36;\"></span></div><span class=\"sr-only\">91.66666666666666%</span></div></header><main class=\"explore-run-grid grid min-h-0 flex-1 gap-0 px-0 pb-0\" data-phase=\"action\" data-rapid-problem=\"true\"><div class=\"explore-action-region relative z-10 -mt-5 min-h-0\" data-panel=\"action\" data-testid=\"explore-attempt\" data-run-id=\"explore-mv3amo98-nyloo-1791691115084\" data-gate-id=\"explore-mv3amo98-nyloo-1791691115084:node-2-0\" data-attempt-number=\"1\" data-attempt-key=\"[&quot;explore-attempt-v1&quot;,&quot;f8ba0c0b-942c-4ee6-8f65-07b2da988fe1&quot;,&quot;explore-mv3amo98-nyloo-1791691115084&quot;,&quot;explore-mv3amo98-nyloo-1791691115084:node-2-0&quot;,1]\" data-problem-id=\"explore-mv3amo98-nyloo-1791691115084:node-2-0:attempt-0\" data-save-state=\"idle\"><div class=\"flex h-full min-h-0 flex-col gap-2\"><div class=\"min-h-0 flex-1\"><section class=\"explore-immersive h-full min-h-0 overflow-hidden rounded-[28px]\" data-layout=\"answer\" data-state=\"idle\" data-reduced-motion=\"true\" data-question-text=\"1, 2, □, 4, 5\" data-skill-id=\"count_fill\" data-visual-lineage-id=\"legacy-mixed-v0\" data-visual-candidate-id=\"root-pull-v2\" data-visual-mode=\"legacy\" data-visual-surface-id=\"explore-opening-root-pull\" data-visual-scene-id=\"root-pull-small-pull\" data-camera-key=\"opening-root-pull-side-v1\" aria-labelledby=\"explore-problem-title\"><div class=\"explore-immersive-art explore-immersive-art--layered\" data-visual-lineage-id=\"legacy-mixed-v0\" data-visual-candidate-id=\"root-pull-v2\" data-visual-mode=\"legacy\" data-visual-surface-id=\"explore-opening-root-pull\" data-visual-scene-id=\"root-pull-small-pull\" data-camera-key=\"opening-root-pull-side-v1\"><figure class=\"root-pull-opening-art root-pull-opening-art--small-pull root-pull-opening-art--reduced-motion explore-immersive-root-pull-art\" role=\"img\" aria-labelledby=\"root-pull-title-_r_0_\" aria-describedby=\"root-pull-actor-_r_0_ root-pull-subject-_r_0_ root-pull-action-_r_0_\" data-camera-key=\"opening-root-pull-side-v1\" data-view-box=\"0 0 390 500\" data-stage=\"small-pull\" data-state-variant=\"small-pull\" data-asset-set=\"v2\" data-actor-state=\"small-brace\" data-subject-state=\"rising\" data-action-state=\"small-pull\" data-actor-anchor=\"left\" data-subject-anchor=\"right\" data-action-axis=\"shared-leaf-pull\" data-reduced-motion=\"true\" data-image-state=\"requested\"><figcaption class=\"root-pull-opening-art__semantics\"><span id=\"root-pull-title-_r_0_\">ぺろん！ まえが みえない！</span><span id=\"root-pull-actor-_r_0_\" data-semantic-role=\"actor\">相棒が葉を握ったまま少し滑り、返ってきた葉先を目の上にかぶっている。</span><span id=\"root-pull-subject-_r_0_\" data-semantic-role=\"subject\">丸い生き物が少し持ち上がり、自分でも下から押し続けながら相棒を見ている。</span><span id=\"root-pull-action-_r_0_\" data-semantic-role=\"action\">最初のひと引きで生き物が少し浮き、やわらかい葉先だけが相棒の顔へ返った。</span></figcaption><img class=\"root-pull-opening-art__image\" alt=\"\" aria-hidden=\"true\" draggable=\"false\" decoding=\"async\" loading=\"eager\" src=\"/assets/explore/opening-root-pull-v2/pull-one.webp\"><div class=\"root-pull-opening-art__fallback\" data-fallback=\"image-error\" aria-hidden=\"true\" hidden=\"\"><p class=\"root-pull-opening-art__fallback-title\">ぺろん！ まえが みえない！</p><dl class=\"root-pull-opening-art__fallback-facts\"><div><dt>あいぼう</dt><dd>相棒が葉を握ったまま少し滑り、返ってきた葉先を目の上にかぶっている。</dd></div><div><dt>ねっこの子</dt><dd>丸い生き物が少し持ち上がり、自分でも下から押し続けながら相棒を見ている。</dd></div><div><dt>いま</dt><dd>最初のひと引きで生き物が少し浮き、やわらかい葉先だけが相棒の顔へ返った。</dd></div></dl></div></figure><div class=\"explore-immersive-scrim\" aria-hidden=\"true\"></div></div><div class=\"explore-immersive-stage\"><div class=\"explore-immersive-spacer\" aria-hidden=\"true\"></div><div class=\"explore-immersive-answer-shelf has-visual-support\"><div class=\"explore-immersive-brief\"><div class=\"flex items-start justify-between gap-3\"><div class=\"min-w-0\"><p class=\"explore-immersive-kicker\">●○○ はっぱを ひっぱる</p><h2 id=\"explore-problem-title\" tabindex=\"-1\" class=\"explore-immersive-title focus:outline-none\">ぺろん！ まえが みえない！</h2></div><div class=\"explore-immersive-status-cluster\"><span class=\"explore-immersive-state\">ちょっと ういた</span></div></div><div class=\"explore-immersive-equation\" data-testid=\"rapid-loop-equation\"><span class=\"whitespace-pre-wrap break-words text-[clamp(32px,9vw,52px)] font-black leading-none text-[#173f49]\">1, 2, □, 4, 5</span><output aria-label=\"こたえ 未入力\" aria-live=\"polite\" aria-atomic=\"true\" class=\"explore-immersive-answer\">?</output></div><div class=\"explore-immersive-message is-ready\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-sparkles h-4 w-4\" aria-hidden=\"true\"><path d=\"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z\"></path><path d=\"M20 2v4\"></path><path d=\"M22 4h-4\"></path><circle cx=\"4\" cy=\"20\" r=\"2\"></circle></svg><span>ぺろん！ はっぱで まえが みえない</span></div></div><div class=\"explore-immersive-hint\" role=\"status\" aria-label=\"この問題の 数のヒント\"><span class=\"explore-immersive-hint-label\">この問題の もよう</span><div class=\"explore-immersive-hint-visual\"><div class=\"flex w-full flex-col items-center gap-4 text-center\"><div data-visual-surface=\"number-line\" class=\"flex w-full max-w-[520px] flex-col items-center gap-3 rounded-[24px] border border-white/80 bg-white/72 px-4 py-4 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]\"><div class=\"relative flex w-full items-center justify-between gap-2 px-2\"><div class=\"absolute left-6 right-6 top-1/2 h-1 -translate-y-1/2 rounded-full bg-slate-200\"></div><div class=\"relative z-10 flex flex-col items-center gap-2\"><div class=\"h-3 w-3 rounded-full bg-cyan-500\"></div><div data-visual-value=\"1\" data-visual-hidden=\"false\" class=\"flex h-10 min-w-10 items-center justify-center rounded-full px-2 text-sm font-black border border-cyan-200 bg-cyan-50 text-cyan-700\">1</div></div><div class=\"relative z-10 flex flex-col items-center gap-2\"><div class=\"h-3 w-3 rounded-full bg-slate-300\"></div><div data-visual-value=\"2\" data-visual-hidden=\"false\" class=\"flex h-10 min-w-10 items-center justify-center rounded-full px-2 text-sm font-black border border-white/80 bg-white/90 text-slate-600\">2</div></div><div class=\"relative z-10 flex flex-col items-center gap-2\"><div class=\"h-3 w-3 rounded-full bg-amber-400\"></div><div data-visual-value=\"3\" data-visual-hidden=\"true\" class=\"flex h-10 min-w-10 items-center justify-center rounded-full px-2 text-sm font-black border-2 border-dashed border-amber-300 bg-amber-50 text-amber-700\">?</div></div><div class=\"relative z-10 flex flex-col items-center gap-2\"><div class=\"h-3 w-3 rounded-full bg-slate-300\"></div><div data-visual-value=\"4\" data-visual-hidden=\"false\" class=\"flex h-10 min-w-10 items-center justify-center rounded-full px-2 text-sm font-black border border-white/80 bg-white/90 text-slate-600\">4</div></div><div class=\"relative z-10 flex flex-col items-center gap-2\"><div class=\"h-3 w-3 rounded-full bg-amber-400\"></div><div data-visual-value=\"5\" data-visual-hidden=\"false\" class=\"flex h-10 min-w-10 items-center justify-center rounded-full px-2 text-sm font-black border-2 border-dashed border-amber-300 bg-amber-50 text-amber-700\">5</div></div></div><div class=\"flex items-center gap-2 rounded-full bg-white/80 px-3 py-1 text-sm font-black text-slate-500\"><span>→</span><span>1</span></div></div><p data-visual-caption=\"true\" class=\"text-sm font-black tracking-[0.08em] text-slate-500\">□に はいる かずは？</p></div></div></div><div class=\"explore-immersive-keypad-shell\" aria-disabled=\"false\"><div role=\"group\" aria-label=\"すうじ キーパッド\" aria-disabled=\"false\" class=\"h-full w-full min-h-0 grid grid-cols-4 rounded-[28px] border border-white/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.4),rgba(255,255,255,0.18))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.28)] mobile:p-2 gap-2 mobile:gap-1.5 explore-immersive-keypad !rounded-[20px] !border-0 !bg-transparent !p-1 !shadow-none\" style=\"grid-template-rows: repeat(4, minmax(44px, 1fr));\"><button class=\"app-button app-button--ghost inline-flex items-center justify-center duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--pokomoko-blue)] focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none touch-manipulation px-5 h-full w-full border border-white/75 bg-white/72 font-bold text-slate-700 shadow-[0_14px_24px_-20px_rgba(15,23,42,0.32)] transition-all active:scale-95 hover:bg-white/84 text-lg rounded-xl mobile:text-sm\" aria-label=\"7\">7</button><button class=\"app-button app-button--ghost inline-flex items-center justify-center duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--pokomoko-blue)] focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none touch-manipulation px-5 h-full w-full border border-white/75 bg-white/72 font-bold text-slate-700 shadow-[0_14px_24px_-20px_rgba(15,23,42,0.32)] transition-all active:scale-95 hover:bg-white/84 text-lg rounded-xl mobile:text-sm\" aria-label=\"8\">8</button><button class=\"app-button app-button--ghost inline-flex items-center justify-center duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--pokomoko-blue)] focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none touch-manipulation px-5 h-full w-full border border-white/75 bg-white/72 font-bold text-slate-700 shadow-[0_14px_24px_-20px_rgba(15,23,42,0.32)] transition-all active:scale-95 hover:bg-white/84 text-lg rounded-xl mobile:text-sm\" aria-label=\"9\">9</button><button class=\"app-button app-button--ghost inline-flex items-center justify-center duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--pokomoko-blue)] focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none touch-manipulation px-5 h-full w-full border font-bold shadow-[0_14px_24px_-20px_rgba(15,23,42,0.32)] transition-all active:scale-95 text-lg rounded-xl border-rose-100/90 bg-rose-50/78 text-rose-500 hover:bg-rose-50 mobile:text-sm\" aria-label=\"こたえを けす\">C</button><button class=\"app-button app-button--ghost inline-flex items-center justify-center duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--pokomoko-blue)] focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none touch-manipulation px-5 h-full w-full border border-white/75 bg-white/72 font-bold text-slate-700 shadow-[0_14px_24px_-20px_rgba(15,23,42,0.32)] transition-all active:scale-95 hover:bg-white/84 text-lg rounded-xl mobile:text-sm\" aria-label=\"4\">4</button><button class=\"app-button app-button--ghost inline-flex items-center justify-center duration-200 focus-visible:outline-none focus-v",
+          "persistence": {
+            "runs": [
+              {
+                "runId": "explore-mv3amo98-nyloo-1791691115084",
+                "profileId": "f8ba0c0b-942c-4ee6-8f65-07b2da988fe1",
+                "seed": "mv3amo98-nyloo",
+                "status": "active",
+                "startedAt": 1791691115084,
+                "energyUsed": 0,
+                "problemsAnswered": 1,
+                "correctCount": 1,
+                "incorrectCount": 0,
+                "skippedCount": 0,
+                "discoveries": [],
+                "routeSummary": [],
+                "learningAssignments": {
+                  "explore-mv3amo98-nyloo-1791691115084:node-1-0:attempt-0": {
+                    "profileId": "f8ba0c0b-942c-4ee6-8f65-07b2da988fe1",
+                    "runId": "explore-mv3amo98-nyloo-1791691115084",
+                    "gateId": "explore-mv3amo98-nyloo-1791691115084:node-1-0",
+                    "problemId": "explore-mv3amo98-nyloo-1791691115084:node-1-0:attempt-0",
+                    "categoryId": "add_1d_1",
+                    "source": "main",
+                    "isReview": false,
+                    "isMaintenanceCheck": false,
+                    "countsTowardReviewCap": false,
+                    "affectsSrs": true,
+                    "reservedAt": 1791691115431,
+                    "learningEvidenceAssistance": "independent",
+                    "assignmentKey": "[\"explore-learning-assignment-v1\",\"f8ba0c0b-942c-4ee6-8f65-07b2da988fe1\",\"explore-mv3amo98-nyloo-1791691115084\",\"explore-mv3amo98-nyloo-1791691115084:node-1-0\",\"explore-mv3amo98-nyloo-1791691115084:node-1-0:attempt-0\"]"
+                  },
+                  "explore-mv3amo98-nyloo-1791691115084:node-2-0:attempt-0": {
+                    "profileId": "f8ba0c0b-942c-4ee6-8f65-07b2da988fe1",
+                    "runId": "explore-mv3amo98-nyloo-1791691115084",
+                    "gateId": "explore-mv3amo98-nyloo-1791691115084:node-2-0",
+                    "problemId": "explore-mv3amo98-nyloo-1791691115084:node-2-0:attempt-0",
+                    "categoryId": "count_fill",
+                    "source": "maintenance",
+                    "isReview": true,
+                    "isMaintenanceCheck": true,
+                    "countsTowardReviewCap": true,
+                    "affectsSrs": true,
+                    "reservedAt": 1791691115431,
+                    "learningEvidenceAssistance": "independent",
+                    "assignmentKey": "[\"explore-learning-assignment-v1\",\"f8ba0c0b-942c-4ee6-8f65-07b2da988fe1\",\"explore-mv3amo98-nyloo-1791691115084\",\"explore-mv3amo98-nyloo-1791691115084:node-2-0\",\"explore-mv3amo98-nyloo-1791691115084:node-2-0:attempt-0\"]"
+                  },
+                  "explore-mv3amo98-nyloo-1791691115084:node-3-0:attempt-0": {
+                    "profileId": "f8ba0c0b-942c-4ee6-8f65-07b2da988fe1",
+                    "runId": "explore-mv3amo98-nyloo-1791691115084",
+                    "gateId": "explore-mv3amo98-nyloo-1791691115084:node-3-0",
+                    "problemId": "explore-mv3amo98-nyloo-1791691115084:node-3-0:attempt-0",
+                    "categoryId": "add_1d_1_bridge",
+                    "source": "main",
+                    "isReview": false,
+                    "isMaintenanceCheck": false,
+                    "countsTowardReviewCap": false,
+                    "affectsSrs": true,
+                    "reservedAt": 1791691115431,
+                    "learningEvidenceAssistance": "independent",
+                    "assignmentKey": "[\"explore-learning-assignment-v1\",\"f8ba0c0b-942c-4ee6-8f65-07b2da988fe1\",\"explore-mv3amo98-nyloo-1791691115084\",\"explore-mv3amo98-nyloo-1791691115084:node-3-0\",\"explore-mv3amo98-nyloo-1791691115084:node-3-0:attempt-0\"]"
+                  }
+                },
+                "activeCheckpoint": {
+                  "schemaVersion": 1,
+                  "revision": 5,
+                  "openingExperienceId": "root-pull-v2",
+                  "acknowledgedDiscoveryId": "find-node-1-0-0",
+                  "state": {
+                    "runId": "explore-mv3amo98-nyloo-1791691115084",
+                    "seed": "mv3amo98-nyloo",
+                    "status": "active",
+                    "startedAt": 1791691115084,
+                    "currentNodeId": "node-1-0",
+                    "energy": 11,
+                    "maxEnergy": 12,
+                    "combo": 1,
+                    "steps": 1,
+                    "incorrectAnswers": 0,
+                    "nodes": [
+                      {
+                        "id": "start",
+                        "depth": 0,
+                        "lane": 0,
+                        "x": 50,
+                        "y": 88,
+                        "kind": "start",
+                        "title": "ひかりの入口",
+                        "hint": "ここから たんけんが はじまる"
+                      },
+                      {
+                        "id": "node-1-0",
+                        "depth": 1,
+                        "lane": 0,
+                        "x": 28,
+                        "y": 78.7,
+                        "kind": "fossil",
+                        "title": "しまもよう岩",
+                        "hint": "むかしの かけらが ありそう"
+                      },
+                      {
+                        "id": "node-1-1",
+                        "depth": 1,
+                        "lane": 1,
+                        "x": 72,
+                        "y": 78.7,
+                        "kind": "root",
+                        "title": "根っこの道",
+                        "hint": "ひかる花の かおり"
+                      },
+                      {
+                        "id": "node-2-0",
+                        "depth": 2,
+                        "lane": 0,
+                        "x": 28,
+                        "y": 69.4,
+                        "kind": "soil",
+                        "title": "やわらかい土",
+                        "hint": "ちいさな おたからの けはい"
+                      },
+                      {
+                        "id": "node-2-1",
+                        "depth": 2,
+                        "lane": 1,
+                        "x": 72,
+                        "y": 69.4,
+                        "kind": "root",
+                        "title": "根っこの道",
+                        "hint": "ひかる花の かおり"
+                      },
+                      {
+                        "id": "node-3-0",
+                        "depth": 3,
+                        "lane": 0,
+                        "x": 28,
+                        "y": 60.099999999999994,
+                        "kind": "soil",
+                        "title": "やわらかい土",
+                        "hint": "ちいさな おたからの けはい"
+                      },
+                      {
+                        "id": "node-3-1",
+                        "depth": 3,
+                        "lane": 1,
+                        "x": 72,
+                        "y": 60.099999999999994,
+                        "kind": "mystery",
+                        "title": "なぞの壁",
+                        "hint": "なにが でるかは おたのしみ"
+                      },
+                      {
+                        "id": "node-4-0",
+                        "depth": 4,
+                        "lane": 0,
+                        "x": 28,
+                        "y": 50.8,
+                        "kind": "crystal",
+                        "title": "きらきら岩",
+                        "hint": "水晶が ありそう"
+                      },
+                      {
+                        "id": "node-4-1",
+                        "depth": 4,
+                        "lane": 1,
+                        "x": 72,
+                        "y": 50.8,
+                        "kind": "mystery",
+                        "title": "なぞの壁",
+                        "hint": "なにが でるかは おたのしみ"
+                      },
+                      {
+                        "id": "node-5-0",
+                        "depth": 5,
+                        "lane": 0,
+                        "x": 50,
+                        "y": 41.5,
+                        "kind": "bridge",
+                        "title": "ちいさな水路",
+                        "hint": "橋の しかけを うごかそう"
+                      },
+                      {
+                        "id": "node-6-0",
+                        "depth": 6,
+                        "lane": 0,
+                        "x": 18,
+                        "y": 32.199999999999996,
+                        "kind": "crystal",
+                        "title": "きらきら岩",
+                        "hint": "水晶が ありそう"
+                      },
+                      {
+                        "id": "node-6-1",
+                        "depth": 6,
+                        "lane": 1,
+                        "x": 50,
+                        "y": 32.199999999999996,
+                        "kind": "soil",
+                        "title": "やわらかい土",
+                        "hint": "ちいさな おたからの けはい"
+                      },
+                      {
+                        "id": "node-6-2",
+                        "depth": 6,
+                        "lane": 2,
+                        "x": 82,
+                        "y": 32.199999999999996,
+                        "kind": "mystery",
+                        "title": "なぞの壁",
+                        "hint": "なにが でるかは おたのしみ"
+                      },
+                      {
+                        "id": "node-7-0",
+                        "depth": 7,
+                        "lane": 0,
+                        "x": 50,
+                        "y": 22.89999999999999,
+                        "kind": "root",
+                        "encounterId": "root-tangle",
+                        "title": "根っこの からまり",
+                        "hint": "根の むこうに 花のひかり"
+                      },
+                      {
+                        "id": "node-8-0",
+                        "depth": 8,
+                        "lane": 0,
+                        "x": 50,
+                        "y": 13.599999999999994,
+                        "kind": "root",
+                        "title": "根っこの道",
+                        "hint": "ひかる花の かおり"
+                      }
+                    ],
+                    "edges": [
+                      {
+                        "id": "edge-start-0",
+                        "from": "start",
+                        "to": "node-1-0"
+                      },
+                      {
+                        "id": "edge-start-1",
+                        "from": "start",
+                        "to": "node-1-1"
+                      },
+                      {
+                        "id": "edge-1-0-0",
+                        "from": "node-1-0",
+                        "to": "node-2-0"
+                      },
+                      {
+                        "id": "edge-1-0-1",
+                        "from": "node-1-0",
+                        "to": "node-2-1"
+                      },
+                      {
+                        "id": "edge-1-1-0",
+                        "from": "node-1-1",
+                        "to": "node-2-0"
+                      },
+                      {
+                        "id": "edge-1-1-1",
+                        "from": "node-1-1",
+                        "to": "node-2-1"
+                      },
+                      {
+                        "id": "edge-2-0-0",
+                        "from": "node-2-0",
+                        "to": "node-3-0"
+                      },
+                      {
+                        "id": "edge-2-0-1",
+                        "from": "node-2-0",
+                        "to": "node-3-1"
+                      },
+                      {
+                        "id": "edge-2-1-0",
+                        "from": "node-2-1",
+                        "to": "node-3-0"
+                      },
+                      {
+                        "id": "edge-2-1-1",
+                        "from": "node-2-1",
+                        "to": "node-3-1"
+                      },
+                      {
+                        "id": "edge-3-0-0",
+                        "from": "node-3-0",
+                        "to": "node-4-0"
+                      },
+                      {
+                        "id": "edge-3-0-1",
+                        "from": "node-3-0",
+                        "to": "node-4-1"
+                      },
+                      {
+                        "id": "edge-3-1-0",
+                        "from": "node-3-1",
+                        "to": "node-4-0"
+                      },
+                      {
+                        "id": "edge-3-1-1",
+                        "from": "node-3-1",
+                        "to": "node-4-1"
+                      },
+                      {
+                        "id": "edge-4-0-0",
+                        "from": "node-4-0",
+                        "to": "node-5-0"
+                      },
+                      {
+                        "id": "edge-4-1-0",
+                        "from": "node-4-1",
+                        "to": "node-5-0"
+                      },
+                      {
+                        "id": "edge-5-0-0",
+                        "from": "node-5-0",
+                        "to": "node-6-0"
+                      },
+                      {
+                        "id": "edge-5-0-1",
+                        "from": "node-5-0",
+                        "to": "node-6-1"
+                      },
+                      {
+                        "id": "edge-5-0-2",
+                        "from": "node-5-0",
+                        "to": "node-6-2"
+                      },
+                      {
+                        "id": "edge-6-0-0",
+                        "from": "node-6-0",
+                        "to": "node-7-0"
+                      },
+                      {
+                        "id": "edge-6-1-0",
+                        "from": "node-6-1",
+                        "to": "node-7-0"
+                      },
+                      {
+                        "id": "edge-6-2-0",
+                        "from": "node-6-2",
+                        "to": "node-7-0"
+                      },
+                      {
+                        "id": "edge-7-0-0",
+                        "from": "node-7-0",
+                        "to": "node-8-0"
+                      }
+                    ],
+                    "openedNodeIds": [
+                      "start",
+                      "node-1-0"
+                    ],
+                    "temporaryFinds": [
+                      {
+                        "id": "find-node-1-0-0",
+                        "kind": "fossil",
+                        "name": "うずまき貝の化石",
+                        "rarity": "common",
+                        "nodeId": "node-1-0",
+                        "source": {
+                          "attemptKey": "[\"explore-attempt-v1\",\"f8ba0c0b-942c-4ee6-8f65-07b2da988fe1\",\"explore-mv3amo98-nyloo-1791691115084\",\"explore-mv3amo98-nyloo-1791691115084:node-1-0\",1]",
+                          "gateId": "explore-mv3amo98-nyloo-1791691115084:node-1-0",
+                          "attemptNumber": 1,
+                          "nodeId": "node-1-0",
+                          "recordedSkillId": "add_1d_1",
+                          "result": "correct"
+                        }
+                      }
+                    ],
+                    "confirmedFinds": [],
+                    "attempts": [
+                      {
+                        "attemptKey": "[\"explore-attempt-v1\",\"f8ba0c0b-942c-4ee6-8f65-07b2da988fe1\",\"explore-mv3amo98-nyloo-1791691115084\",\"explore-mv3amo98-nyloo-1791691115084:node-1-0\",1]",
+                        "gateId": "explore-mv3amo98-nyloo-1791691115084:node-1-0",
+                        "nodeId": "node-1-0",
+                        "skillId": "add_1d_1",
+                        "result": "correct",
+                        "attemptNumber": 1
+                      }
+                    ],
+                    "committedAttemptKeys": [
+                      "[\"explore-attempt-v1\",\"f8ba0c0b-942c-4ee6-8f65-07b2da988fe1\",\"explore-mv3amo98-nyloo-1791691115084\",\"explore-mv3amo98-nyloo-1791691115084:node-1-0\",1]"
+                    ],
+                    "lastEvent": {
+                      "type": "node-selected",
+                      "nodeId": "node-2-0"
+                    },
+                    "rescuePending": false,
+                    "config": {
+                      "maxEnergy": 12,
+                      "correctEnergyCost": 1,
+                      "incorrectEnergyCost": 1
+                    },
+                    "profileId": "f8ba0c0b-942c-4ee6-8f65-07b2da988fe1",
+                    "pendingProblem": {
+                      "gateId": "explore-mv3amo98-nyloo-1791691115084:node-2-0",
+                      "nodeId": "node-2-0",
+                      "actionType": "dig",
+                      "attemptCount": 0,
+                      "skillId": "count_fill",
+                      "problemRefreshPending": false,
+                      "problem": {
+                        "categoryId": "count_fill",
+                        "questionText": "1, 2, □, 4, 5",
+                        "correctAnswer": "3",
+                        "inputType": "number",
+                        "questionVisual": {
+                          "kind": "number-line",
+                          "prompt": "□に はいる かずは？",
+                          "line": {
+                            "min": 1,
+                            "max": 5,
+                            "start": 1,
+                            "end": 5,
+                            "step": 1,
+                            "hiddenTarget": false,
+                            "hiddenValues": [
+                              3
+                            ]
+                          }
+                        },
+                        "learningContext": {
+                          "catalogVersion": "curriculum-v2",
+                          "subject": "math",
+                          "itemId": "count_fill",
+                          "unitId": "math.sequence-gap",
+                          "representation": "bridge",
+                          "variant": "default",
+                          "inputType": "number",
+                          "problemKey": "{\"answer\":\"3\",\"inputType\":\"number\",\"item\":\"count_fill\",\"question\":\"1, 2, □, 4, 5\",\"visual\":{\"kind\":\"number-line\",\"line\":{\"end\":5,\"hiddenTarget\":false,\"hiddenValues\":[3],\"max\":5,\"min\":1,\"start\":1,\"step\":1},\"prompt\":\"□に はいる かずは？\"}}"
+                        },
+                        "id": "explore-mv3amo98-nyloo-1791691115084:node-2-0:attempt-0",
+                        "subject": "math",
+                        "isReview": true,
+                        "isMaintenanceCheck": true
+                      },
+                      "learningAssignment": {
+                        "profileId": "f8ba0c0b-942c-4ee6-8f65-07b2da988fe1",
+                        "runId": "explore-mv3amo98-nyloo-1791691115084",
+                        "gateId": "explore-mv3amo98-nyloo-1791691115084:node-2-0",
+                        "problemId": "explore-mv3amo98-nyloo-1791691115084:node-2-0:attempt-0",
+                        "categoryId": "count_fill",
+                        "source": "maintenance",
+                        "isReview": true,
+                        "isMaintenanceCheck": true,
+                        "countsTowardReviewCap": true,
+                        "affectsSrs": true,
+                        "reservedAt": 1791691115431,
+                        "learningEvidenceAssistance": "independent",
+                        "assignmentKey": "[\"explore-learning-assignment-v1\",\"f8ba0c0b-942c-4ee6-8f65-07b2da988fe1\",\"explore-mv3amo98-nyloo-1791691115084\",\"explore-mv3amo98-nyloo-1791691115084:node-2-0\",\"explore-mv3amo98-nyloo-1791691115084:node-2-0:attempt-0\"]"
+                      }
+                    }
+                  },
+                  "updatedAt": 1791691115993
+                },
+                "updatedAt": 1791691115993,
+                "learningSegments": {
+                  "0": {
+                    "schemaVersion": 1,
+                    "segmentId": "[\"explore-learning-segment-v1\",\"explore-mv3amo98-nyloo-1791691115084\",0,3]",
+                    "segmentKey": "0",
+                    "startStep": 0,
+                    "endStepExclusive": 3,
+                    "plannedFromStep": 0,
+                    "plannerVersion": "explore-learning-planner-v3",
+                    "generatorVersion": "explore-problem-v1",
+                    "seed": "[\"explore-learning-planner-v3\",\"mv3amo98-nyloo\",\"[\\\"explore-learning-segment-v1\\\",\\\"explore-mv3amo98-nyloo-1791691115084\\\",0,3]\"]",
+                    "profileSnapshot": {
+                      "mathMainLevel": 8,
+                      "mathMaxUnlocked": 8
+                    },
+                    "plannedAt": 1791691115431,
+                    "slots": [
+                      {
+                        "step": 0,
+                        "slotIndex": 0,
+                        "sequenceOrdinal": 0,
+                        "gateId": "explore-mv3amo98-nyloo-1791691115084:node-1-0",
+                        "nodeId": "node-1-0",
+                        "actionType": "dig",
+                        "attemptCount": 0,
+                        "problem": {
+                          "categoryId": "add_1d_1",
+                          "questionText": "1 + 1 =",
+                          "correctAnswer": "2",
+                          "inputType": "number",
+                          "learningContext": {
+                            "catalogVersion": "curriculum-v2",
+                            "subject": "math",
+                            "itemId": "add_1d_1",
+                            "unitId": "math.add-small-increments",
+                            "representation": "symbol",
+                            "variant": "default",
+                            "inputType": "number",
+                            "problemKey": "{\"answer\":\"2\",\"inputType\":\"number\",\"item\":\"add_1d_1\",\"question\":\"1 + 1 =\"}"
+                          },
+                          "id": "explore-mv3amo98-nyloo-1791691115084:node-1-0:attempt-0",
+                          "subject": "math",
+                          "isReview": false,
+                          "isMaintenanceCheck": false
+                        },
+                        "assignment": {
+                          "profileId": "f8ba0c0b-942c-4ee6-8f65-07b2da988fe1",
+                          "runId": "explore-mv3amo98-nyloo-1791691115084",
+                          "gateId": "explore-mv3amo98-nyloo-1791691115084:node-1-0",
+                          "problemId": "explore-mv3amo98-nyloo-1791691115084:node-1-0:attempt-0",
+                          "categoryId": "add_1d_1",
+                          "source": "main",
+                          "isReview": false,
+                          "isMaintenanceCheck": false,
+                          "countsTowardReviewCap": false,
+                          "affectsSrs": true,
+                          "reservedAt": 1791691115431,
+                          "learningEvidenceAssistance": "independent",
+                          "assignmentKey": "[\"explore-learning-assignment-v1\",\"f8ba0c0b-942c-4ee6-8f65-07b2da988fe1\",\"explore-mv3amo98-nyloo-1791691115084\",\"explore-mv3amo98-nyloo-1791691115084:node-1-0\",\"explore-mv3amo98-nyloo-1791691115084:node-1-0:attempt-0\"]"
+                        }
+                      },
+                      {
+                        "step": 1,
+                        "slotIndex": 1,
+                        "sequenceOrdinal": 1,
+                        "gateId": "explore-mv3amo98-nyloo-1791691115084:node-2-0",
+                        "nodeId": "node-2-0",
+                        "actionType": "dig",
+                        "attemptCount": 0,
+                        "problem": {
+                          "categoryId": "count_fill",
+                          "questionText": "1, 2, □, 4, 5",
+                          "correctAnswer": "3",
+                          "inputType": "number",
+                          "questionVisual": {
+                            "kind": "number-line",
+                            "prompt": "□に はいる かずは？",
+                            "line": {
+                              "min": 1,
+                              "max": 5,
+                              "start": 1,
+                              "end": 5,
+                              "step": 1,
+                              "hiddenTarget": false,
+                              "hiddenValues": [
+                                3
+                              ]
+                            }
+                          },
+                          "learningContext": {
+                            "catalogVersion": "curriculum-v2",
+                            "subject": "math",
+                            "itemId": "count_fill",
+                            "unitId": "math.sequence-gap",
+                            "representation": "bridge",
+                            "variant": "default",
+                            "inputType": "number",
+                            "problemKey": "{\"answer\":\"3\",\"inputType\":\"number\",\"item\":\"count_fill\",\"question\":\"1, 2, □, 4, 5\",\"visual\":{\"kind\":\"number-line\",\"line\":{\"end\":5,\"hiddenTarget\":false,\"hiddenValues\":[3],\"max\":5,\"min\":1,\"start\":1,\"step\":1},\"prompt\":\"□に はいる かずは？\"}}"
+                          },
+                          "id": "explore-mv3amo98-nyloo-1791691115084:node-2-0:attempt-0",
+                          "subject": "math",
+                          "isReview": true,
+                          "isMaintenanceCheck": true
+                        },
+                        "assignment": {
+                          "profileId": "f8ba0c0b-942c-4ee6-8f65-07b2da988fe1",
+                          "runId": "explore-mv3amo98-nyloo-1791691115084",
+                          "gateId": "explore-mv3amo98-nyloo-1791691115084:node-2-0",
+                          "problemId": "explore-mv3amo98-nyloo-1791691115084:node-2-0:attempt-0",
+                          "categoryId": "count_fill",
+                          "source": "maintenance",
+                          "isReview": true,
+                          "isMaintenanceCheck": true,
+                          "countsTowardReviewCap": true,
+                          "affectsSrs": true,
+                          "reservedAt": 1791691115431,
+                          "learningEvidenceAssistance": "independent",
+                          "assignmentKey": "[\"explore-learning-assignment-v1\",\"f8ba0c0b-942c-4ee6-8f65-07b2da988fe1\",\"explore-mv3amo98-nyloo-1791691115084\",\"explore-mv3amo98-nyloo-1791691115084:node-2-0\",\"explore-mv3amo98-nyloo-1791691115084:node-2-0:attempt-0\"]"
+                        }
+                      },
+                      {
+                        "step": 2,
+                        "slotIndex": 2,
+                        "sequenceOrdinal": 2,
+                        "gateId": "explore-mv3amo98-nyloo-1791691115084:node-3-0",
+                        "nodeId": "node-3-0",
+                        "actionType": "dig",
+                        "attemptCount": 0,
+                        "problem": {
+                          "categoryId": "add_1d_1_bridge",
+                          "questionText": "1 + 1 =",
+                          "correctAnswer": "2",
+                          "inputType": "number",
+                          "questionVisual": {
+                            "kind": "addition-items",
+                            "prompt": "あわせて いくつ？",
+                            "groups": [
+                              {
+                                "emoji": "🍊",
+                                "label": "みかん",
+                                "count": 1
+                              },
+                              {
+                                "emoji": "🍊",
+                                "label": "みかん",
+                                "count": 1
+                              }
+                            ]
+                          },
+                          "learningContext": {
+                            "catalogVersion": "curriculum-v2",
+                            "subject": "math",
+                            "itemId": "add_1d_1_bridge",
+                            "unitId": "math.add-small-increments",
+                            "representation": "bridge",
+                            "variant": "default",
+                            "inputType": "number",
+                            "problemKey": "{\"answer\":\"2\",\"inputType\":\"number\",\"item\":\"add_1d_1_bridge\",\"question\":\"1 + 1 =\",\"visual\":{\"groups\":[{\"count\":1,\"emoji\":\"🍊\",\"label\":\"みかん\"},{\"count\":1,\"emoji\":\"🍊\",\"label\":\"みかん\"}],\"kind\":\"addition-items\",\"prompt\":\"あわせて いくつ？\"}}"
+                          },
+                          "id": "explore-mv3amo98-nyloo-1791691115084:node-3-0:attempt-0",
+                          "subject": "math",
+                          "isReview": false,
+                          "isMaintenanceCheck": false
+                        },
+                        "assignment": {
+                          "profileId": "f8ba0c0b-942c-4ee6-8f65-07b2da988fe1",
+                          "runId": "explore-mv3amo98-nyloo-1791691115084",
+                          "gateId": "explore-mv3amo98-nyloo-1791691115084:node-3-0",
+                          "problemId": "explore-mv3amo98-nyloo-1791691115084:node-3-0:attempt-0",
+                          "categoryId": "add_1d_1_bridge",
+                          "source": "main",
+                          "isReview": false,
+                          "isMaintenanceCheck": false,
+                          "countsTowardReviewCap": false,
+                          "affectsSrs": true,
+                          "reservedAt": 1791691115431,
+                          "learningEvidenceAssistance": "independent",
+                          "assignmentKey": "[\"explore-learning-assignment-v1\",\"f8ba0c0b-942c-4ee6-8f65-07b2da988fe1\",\"explore-mv3amo98-nyloo-1791691115084\",\"explore-mv3amo98-nyloo-1791691115084:node-3-0\",\"explore-mv3amo98-nyloo-1791691115084:node-3-0:attempt-0\"]"
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ],
+            "events": [
+              {
+                "profileId": "f8ba0c0b-942c-4ee6-8f65-07b2da988fe1",
+                "runId": "explore-mv3amo98-nyloo-1791691115084",
+                "timestamp": 1791691115084,
+                "type": "run_started",
+                "payload": {
+                  "seed": "mv3amo98-nyloo"
+                },
+                "id": 1
+              },
+              {
+                "profileId": "f8ba0c0b-942c-4ee6-8f65-07b2da988fe1",
+                "runId": "explore-mv3amo98-nyloo-1791691115084",
+                "attemptKey": "[\"explore-attempt-v1\",\"f8ba0c0b-942c-4ee6-8f65-07b2da988fe1\",\"explore-mv3amo98-nyloo-1791691115084\",\"explore-mv3amo98-nyloo-1791691115084:node-1-0\",1]",
+                "timestamp": 1791691115866,
+                "type": "problem_answered",
+                "gateId": "explore-mv3amo98-nyloo-1791691115084:node-1-0",
+                "attemptNumber": 1,
+                "recordedSkillId": "add_1d_1",
+                "result": "correct",
+                "affectsSrs": true,
+                "assignmentKey": "[\"explore-learning-assignment-v1\",\"f8ba0c0b-942c-4ee6-8f65-07b2da988fe1\",\"explore-mv3amo98-nyloo-1791691115084\",\"explore-mv3amo98-nyloo-1791691115084:node-1-0\",\"explore-mv3amo98-nyloo-1791691115084:node-1-0:attempt-0\"]",
+                "learningSource": "main",
+                "isReview": false,
+                "isMaintenanceCheck": false,
+                "learningLogId": 1,
+                "payload": null,
+                "id": 2
+              }
+            ]
+          }
+        }
+      ],
+      "error": "Error: expected a numeric addition/subtraction expression; got 1, 2, □, 4, 5\n    at getExploreNumericAnswer (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:1565:9)\n    at async solveExploreNumericProblem (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:1698:18)\n    at async scenarioRootPullV2Opening (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:805:5)\n    at async runScenario (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:418:5)\n    at async main (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:6679:18)",
+      "durationMs": 2157,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "runs the Snap Root breakthrough loop at 390px",
+      "startedAt": "2026-10-11T03:58:36.091Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 5143,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the Snap Root breakthrough loop playable on tablet",
+      "startedAt": "2026-10-11T03:58:41.241Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 3054,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "can exit safely after explore start persistence fails",
+      "startedAt": "2026-10-11T03:58:44.297Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 1822,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "safely exits and retries from a pending explore problem",
+      "startedAt": "2026-10-11T03:58:46.121Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 2099,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "commits one explore answer under rapid double submit",
+      "startedAt": "2026-10-11T03:58:48.221Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 2141,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "retries the same explore attempt after a save failure",
+      "startedAt": "2026-10-11T03:58:50.363Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 2019,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "resumes fixed-ten explore across retry, route, discovery, and partial-input boundaries",
+      "startedAt": "2026-10-11T03:58:52.383Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 7429,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "finishes last-light rescue without blocking on an ordinary clue",
+      "startedAt": "2026-10-11T03:58:59.813Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 2045,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "retries voluntary return without early terminal progress",
+      "startedAt": "2026-10-11T03:59:01.860Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 3084,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "grows the immersive light bridge from an addition answer",
+      "startedAt": "2026-10-11T03:59:04.945Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 4773,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the light bridge playable on tablet",
+      "startedAt": "2026-10-11T03:59:09.720Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 4738,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the light bridge connected on a landscape tablet",
+      "startedAt": "2026-10-11T03:59:14.459Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 4934,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the light bridge playable on a 1024px portrait tablet",
+      "startedAt": "2026-10-11T03:59:19.394Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 4721,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the light bridge playable on a wide portrait tablet",
+      "startedAt": "2026-10-11T03:59:24.117Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 4765,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "retains root observation after the first same-problem retry",
+      "startedAt": "2026-10-11T03:59:28.895Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 5455,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "opens the root tangle with profile-near subtraction",
+      "startedAt": "2026-10-11T03:59:34.351Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 5959,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the root tangle playable on tablet",
+      "startedAt": "2026-10-11T03:59:40.311Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 6032,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the root tangle playable on a landscape tablet",
+      "startedAt": "2026-10-11T03:59:46.344Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 6146,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the root tangle playable on a 1024px portrait tablet",
+      "startedAt": "2026-10-11T03:59:52.491Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 6022,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the root tangle playable on a wide portrait tablet",
+      "startedAt": "2026-10-11T03:59:58.514Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 6086,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "opens /parents directly without arithmetic",
+      "startedAt": "2026-10-11T04:00:04.601Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 1487,
+      "remainingNewContexts": 0
+    }
+  ]
+}

@@ -1,0 +1,193 @@
+{
+  "schema": "sansu-expanding-island-gate-v1",
+  "reviewedAt": "2026-10-11T04:31:51.353Z",
+  "candidate": "native05-expanding-runtime-v2",
+  "projection": "curved-owned-v1",
+  "actualTarget": "http://127.0.0.1:5337",
+  "deliveryFlag": "VITE_ISLAND_ENABLED=true; VITE_ISLAND_LIFE_ENABLED=true; VITE_ISLAND_FANTASY_ENABLED=true; VITE_NATIVE_GROWING_ART=true; normal production native default false",
+  "build": {
+    "version": "native05-expanding-a3:514ee4e9-b099-4d77-a44b-11a6f839e44f",
+    "revision": "native05-expanding-a3",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": true,
+        "candidate": "living-fantasy-garden-v2",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "nativeArtStudy": {
+        "enabled": false,
+        "candidate": "native-05-art-transfer-v1",
+        "gameplayMapped": false
+      },
+      "nativeOwnedArt": {
+        "enabled": true,
+        "candidate": "native05-expanding-runtime-v2",
+        "gameplayMapped": true
+      },
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "buildSourceSha256": "e2c80f19f4ea22545eef465e442de64f7ad58685c00eaf1d849a2a61e8ebcacc",
+  "kitSha256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+  "benchmark": {
+    "candidate": "whole-island-native-3d-05",
+    "modelSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "image": "../2026-10-10-island-final-3d/whole-island-render.png",
+    "userAdoptedDirection": true
+  },
+  "evidenceType": "Actual runtime screenshots; source benchmark shown separately. Mature 8/16/32 are explicit diagnostic ownership, not real acquired growth.",
+  "viewports": [
+    {
+      "width": 390,
+      "height": 844
+    },
+    {
+      "width": 768,
+      "height": 1024
+    }
+  ],
+  "visualAppeal": {
+    "verdict": "HOLD_DENSITY_AND_LANDSCAPE_GAP",
+    "score": 42,
+    "outOf": 60,
+    "authorOnly": true,
+    "independentObservers": 0,
+    "axes": [
+      {
+        "axis": "Enter the world",
+        "score": 7,
+        "reason": "Native forms make distinct places, but a broad rectangular plateau and sparse district edges remain."
+      },
+      {
+        "axis": "Character attachment",
+        "score": 7,
+        "reason": "Original real bodies, UV and fabric are retained; whole-island character scale remains small."
+      },
+      {
+        "axis": "Material touch",
+        "score": 8,
+        "reason": "Original tiles, leaf curves, petals and colored transmission survive. Functional court body is still a derived substitute."
+      },
+      {
+        "axis": "Composition and depth",
+        "score": 6,
+        "reason": "Continuous curved shore and three land directions improve the outline. Broad sparse districts, house rows, the deep bay and raised spring still differ from the benchmark."
+      },
+      {
+        "axis": "Pop and focal color",
+        "score": 8,
+        "reason": "Teal/lilac fan leaves, warm wood and pink petals work in day light."
+      },
+      {
+        "axis": "Incident and payoff",
+        "score": 6,
+        "reason": "Real owned places are used by actors; the still whole-island frame has limited anticipation and spatial payoff."
+      }
+    ],
+    "evidence": [
+      "production/qa-place-whole-island-v1-768-grown-real-3d.png",
+      "three-directions.jpg",
+      "benchmark-comparison.jpg"
+    ],
+    "approvedSourceParity": false,
+    "remaining": [
+      "32-home density and foreground/middle/background composition",
+      "Deep bay and narrow shore settlements",
+      "Raised mineral three-tier spring with downward water",
+      "Original hollow court stem proportion"
+    ]
+  },
+  "comprehensionSafety": {
+    "verdict": "NOT_EVALUATED_INDEPENDENTLY",
+    "independentChildren": 0,
+    "physicalFloorAndInverseChecks": "PASS",
+    "understandingAndDesireToReturnNotInferred": true
+  },
+  "runtimeIntegrity": {
+    "verdict": "PASS_SCOPED_A3",
+    "core": {
+      "files": 568,
+      "tests": 4991,
+      "log": "verification-logs/core.txt"
+    },
+    "acquired": {
+      "journeys": 3,
+      "answersPerJourney": 21,
+      "fixtureWrites": false,
+      "clockManipulation": false,
+      "report": "production/report.json"
+    },
+    "mature": {
+      "caseViewportPairs": 40,
+      "captures": 74,
+      "syntheticMaturity": true,
+      "actualOwnedActorUse": true,
+      "report": "production/report.json"
+    },
+    "expansion": {
+      "caseViewportPairs": 12,
+      "captures": 24,
+      "canvasCrops": 24,
+      "syntheticOwnershipAndMaturity": true,
+      "report": "wide/report.json"
+    },
+    "faults": {
+      "scenarios": 2,
+      "captures": 8,
+      "report": "faults/report.json"
+    },
+    "pwa": {
+      "scenarios": 4,
+      "captures": 18,
+      "saveVersionFrom": 4,
+      "saveVersionTo": 4,
+      "report": "update/report.json"
+    },
+    "classic": {
+      "scenarios": 32,
+      "target": "http://127.0.0.1:4173",
+      "harnessSha256": "40c85b53373959b0331f2a671e8e395e76e66db4ab71080dd5ac97b19f4c8396",
+      "report": "classic/smoke-report.json",
+      "note": "DEV standard suite with the actual corrected readiness helper; this is not a fixed-production art run."
+    },
+    "assetBudget": {
+      "native": {
+        "files": 144,
+        "precacheBytes": 11247904,
+        "budget": 12582912,
+        "kits": [
+          "assets/native05-owned-kit.glb-KFLD7hPA.gz"
+        ],
+        "pass": true
+      },
+      "normal": {
+        "files": 143,
+        "precacheBytes": 8596290,
+        "budget": 12582912,
+        "kits": [],
+        "pass": true
+      }
+    },
+    "sourceClosure": "source-closure.json",
+    "learningLoopUnchanged": true,
+    "coldOpenP95AndFixedTen": "Not remeasured for this island geometry scope; no fresh whole-product release pass claimed.",
+    "realDevice": "NOT_EVALUATED",
+    "natural18HourSevenDayGrowth": "NOT_EVALUATED"
+  },
+  "criticalPath": "critical-path.jpg",
+  "verdict": "HOLD_FULL_ISLAND_ACCEPTANCE",
+  "completionUnit": "Continuous owned land, three growth directions, real path/foot/bridge/hit/camera integration, runtime comparison and editable owned models. Benchmark art parity remains open."
+}

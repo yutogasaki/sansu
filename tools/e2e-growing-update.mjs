@@ -109,7 +109,7 @@ async function capture(page, label, build) {
     const world = await page.locator('[data-growing-world]').count() ? await page.locator('[data-growing-world]').evaluate(world => ({ ...world.dataset })) : undefined;
     const nativeEnabled = builds[build].version.island.nativeOwnedArt?.enabled === true;
     if (world && nativeEnabled) {
-        assert.equal(world.artCandidate, 'native05-owned-runtime-v1');
+        assert.equal(world.artCandidate, builds[build].version.island.nativeOwnedArt.candidate);
         assert.equal(world.gameplayMapped, 'true');
         assert(world.nativeKitSha256 && world.nativeSourceSha256);
     }

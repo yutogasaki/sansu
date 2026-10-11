@@ -60,13 +60,13 @@ export function addDiagnosticLayout(domain, initial, goalId, variantId, offset, 
     return { state, members };
 }
 
-function nativeCase(domain, id, state, expected) {
+export function nativeCase(domain, id, state, expected) {
     const fixedDates = value => typeof value === 'string' && /^\d{4}-\d\d-\d\dT/.test(value) ? new Date(EPOCH).toISOString()
         : Array.isArray(value) ? value.map(fixedDates) : value && typeof value === 'object' ? Object.fromEntries(Object.entries(value).map(([key, item]) => [key, fixedDates(item)])) : value;
     const profile = { ...fixedDates(domain.createInitialProfile('配置の診断', 1, 0, 1, 'math')), id, soundEnabled: false };
     const homes = state.plots.filter(plot => plot.kind === 'home' && plot.cell), home = homes[0];
     state.villagers = expected.homes ? homes.map((home, i) => ({ id: `qa-${id}-friend-${i}`, name: `なかま${i + 1}`,
-        species: ['rabbit', 'otter', 'fox', 'duck', 'squirrel', 'hedgehog', 'penguin', 'owl'][i], home: home.id,
+        species: ['rabbit', 'otter', 'fox', 'duck', 'squirrel', 'hedgehog', 'penguin', 'owl'][i % 8], home: home.id,
         variant: { color: i % 4, accessory: i % 3, sparkle: false }, trait: i % 2 ? 'lively' : 'mellow', arrivedAt: 0 }))
         : [{ id: `qa-${id}-friend`, name: 'なかま', species: 'rabbit', home: home?.id ?? 'pokomoko',
             variant: { color: 0, accessory: 0, sparkle: false }, trait: 'mellow', arrivedAt: 0 }];

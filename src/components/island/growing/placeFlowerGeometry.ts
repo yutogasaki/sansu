@@ -68,7 +68,7 @@ export function buildPlaceFlowerRoof(g: GardenGeometry, state: GrowingState, lay
     // same ear/hat clearance as the middle of the real entrance.
     let maxGround = center.y - .04;
     for (let z = -radius - .15; z <= radius + .15; z += .15) for (let x = -radius - .15; x <= radius + .15; x += .15) {
-        maxGround = Math.max(maxGround, layout.heightAt({ x: center.x + layout.center + x, z: center.z + 2 + z }));
+        maxGround = Math.max(maxGround, layout.heightAt(layout.logicalAt({ x: center.x + x, z: center.z + z })));
     }
     const roofY = maxGround + .04 + ACTOR_CLEARANCE + radius * .36 + .16;
     const roofCenter = new T.Vector3(center.x, roofY, center.z);

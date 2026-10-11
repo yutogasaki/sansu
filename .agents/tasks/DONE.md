@@ -1,5 +1,7 @@
 # Shared Done Index
 
+- 2026-10-11: [広がり方で姿が変わる島を本体へ実装](../../docs/design/2026-10-11-expanding-island-runtime/README.md)。全取得床・道・足・橋・hitを共有し、湾/森/丘の8・16・32軒を実3D比較。core4,991、固定版の取得/成熟/拡張/故障/更新とsmoke32 PASS。統合単位を完了、美術42/60 HOLD・独立観察N=0・公開は継続。詳細: `docs/done/2026-10.md`。
+
 - 2026-10-10: 宣伝サイトに利用者指定の島の完成イメージを掲載。学習の入口を保ち、全景/森/水庭/入り江と現在の実画面を明示区別。隔離core4,803・本番形式4幅がPASS。[制作・検証](../../docs/design/2026-10-10-promotion-complete-v3/README.md)
 
 - 2026-10-10: 宣伝サイトを学習中心へ改訂。算数/英語の実画面、ヒント/復習/記録、成熟した町の3段階と近景を掲載。現行mainのゲームコードを保持し、隔離core4,803・完成build4幅がPASS。[制作・検証](../../docs/design/2026-10-10-promotion-learning-v2/README.md)

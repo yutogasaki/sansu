@@ -1,0 +1,9 @@
+First external intended-index check
+Index: 57b30d4339150a26979fd7bc6c282d2e75527020
+Export: /tmp/sansu-docs-index-expansion-lhuuhjsb
+Docs: PASS
+Source closure: PASS
+3D artifacts: PASS
+Agent portal check: FAIL
+Stale: .agents/map.html
+Reason: working-tree generation includes 73 pre-existing ignored historical files. The indexed export contains none of those files. Regenerate the indexed map rather than adding unrelated evidence.

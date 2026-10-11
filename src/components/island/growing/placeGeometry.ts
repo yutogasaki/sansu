@@ -237,7 +237,7 @@ function buildGallery(g: GardenGeometry, state: GrowingState, layout: SceneLayou
         board.position.sub(new T.Vector3(0, .0275, 0).applyQuaternion(board.quaternion));
         board.userData.walkSurface = true;
         boards.push(board);
-        if (!room && i > 28 && route[i].y - layout.heightAt(route[i]) > ROOT_ROOM_ACTOR_HEIGHT + .08 && i % 3 === 0) {
+        if (!room && i > 28 && b.y - layout.heightAt(route[i]) > ROOT_ROOM_ACTOR_HEIGHT + .08 && i % 3 === 0) {
             // Supports grow from existing blocked tree/home cells. There is no new
             // column in a walkable ground cell beneath this upper branch path.
             const owners = [place.anchorId, ...place.mainIds].map(id => cellOf(state, id)).filter((cell): cell is Cell => Boolean(cell));
@@ -271,7 +271,7 @@ function buildGallery(g: GardenGeometry, state: GrowingState, layout: SceneLayou
             const positions = joint.geometry.getAttribute('position'); let safe = true;
             for (let i = 0; i < positions.count; i++) {
                 const vertex = new T.Vector3().fromBufferAttribute(positions, i).applyMatrix4(joint.matrixWorld), cell = layout.cellAt(vertex);
-                if (open.has(key(cell)) && vertex.y - layout.point({ x: vertex.x + layout.center, z: vertex.z + 2 }).y < ROOT_ROOM_ACTOR_HEIGHT) safe = false;
+                if (open.has(key(cell)) && vertex.y - layout.point(layout.logicalAt(vertex)).y < ROOT_ROOM_ACTOR_HEIGHT) safe = false;
             }
             if (!safe) { joint.geometry.dispose(); joint.removeFromParent(); continue; }
             const owner = cellOf(state, anchor.ownerId); if (owner) supportOrigins.push({ ...owner });
@@ -279,7 +279,7 @@ function buildGallery(g: GardenGeometry, state: GrowingState, layout: SceneLayou
         deck.userData.rootRoomConnected = joints.children.length === 4;
     }
     for (let i = 1; i < route.length; i++) {
-        if (route[i].y - layout.heightAt(route[i]) < .8 || route[i - 1].y - layout.heightAt(route[i - 1]) < .8) continue;
+        if (layout.floorPoint(route[i]).y - layout.heightAt(route[i]) < .8 || layout.floorPoint(route[i - 1]).y - layout.heightAt(route[i - 1]) < .8) continue;
         const a = layout.floorPoint(route[i - 1]), b = layout.floorPoint(route[i]);
         const tangent = b.clone().sub(a); tangent.y = 0; tangent.normalize();
         if (tangent.lengthSq() < .5) continue;

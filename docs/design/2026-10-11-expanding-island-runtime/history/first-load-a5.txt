@@ -1,0 +1,49 @@
+
+> pokko-fushigi-zukan-app@0.0.0 e2e:smoke
+> node tools/e2e-smoke.mjs
+
+Starting dev server on http://127.0.0.1:4173...
+
+> pokko-fushigi-zukan-app@0.0.0 dev:test-server
+> vite --host 127.0.0.1 --port 4173 --strictPort
+
+
+  VITE v7.3.1  ready in 1424 ms
+
+  ➜  Local:   http://127.0.0.1:4173/
+Browserslist: browsers data (caniuse-lite) is 9 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+Dev server ready on http://127.0.0.1:4173.
+2026-10-11T04:06:38.612Z pw:api => browserType.launch started
+2026-10-11T04:06:39.122Z pw:api <= browserType.launch succeeded
+2026-10-11T04:06:39.122Z pw:api => browser.newContext started
+2026-10-11T04:06:39.129Z pw:api <= browser.newContext succeeded
+2026-10-11T04:06:39.129Z pw:api => browserContext.newPage started
+2026-10-11T04:06:39.321Z pw:api <= browserContext.newPage succeeded
+2026-10-11T04:06:39.321Z pw:api => page.addInitScript started
+2026-10-11T04:06:39.323Z pw:api <= page.addInitScript succeeded
+2026-10-11T04:06:39.324Z pw:api => page.goto started
+2026-10-11T04:06:39.325Z pw:api navigating to "http://127.0.0.1:4173/#/", waiting until "domcontentloaded"
+2026-10-11T04:06:39.997Z pw:api   "commit" event fired
+2026-10-11T04:06:39.998Z pw:api   navigated to "http://127.0.0.1:4173/#/"
+2026-10-11T04:07:24.329Z pw:api <= page.goto failed
+FAIL redirects to onboarding when no profile: page.goto: Timeout 45000ms exceeded.
+Call log:
+[2m  - navigating to "http://127.0.0.1:4173/#/", waiting until "domcontentloaded"[22m
+
+    at scenarioOnboardingShown (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:555:14)
+    at async runScenario (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:418:5)
+    at async main (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:6560:20)
+2026-10-11T04:07:24.330Z pw:api => page.evaluate started
+2026-10-11T04:07:24.344Z pw:api <= page.evaluate succeeded
+2026-10-11T04:07:24.345Z pw:api => page.screenshot started
+2026-10-11T04:07:24.346Z pw:api taking page screenshot
+2026-10-11T04:07:24.350Z pw:api waiting for fonts to load...
+2026-10-11T04:07:54.352Z pw:api <= page.screenshot failed
+2026-10-11T04:07:54.356Z pw:api => browserContext.close started
+2026-10-11T04:07:54.366Z pw:api <= browserContext.close succeeded
+2026-10-11T04:07:54.372Z pw:api => browser.close started
+2026-10-11T04:07:54.399Z pw:api <= browser.close succeeded
+1:08:10 PM [vite] (client) hmr update /src/index.css
+1:08:10 PM [vite] (client) hmr update /src/index.css

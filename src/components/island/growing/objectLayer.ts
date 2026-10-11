@@ -21,6 +21,7 @@ import { derivePlaceRelations } from '../../../domain/growingIsland/placeRelatio
 import { buildPlaceGeometry } from './placeGeometry';
 import { buildPlacePaths } from './placePaths';
 import type { NativeGrowingKit } from './native/nativeGrowingKit';
+import { curveGroundGeometry } from './curvedGeometry';
 
 export interface Ghost { kind: SeedKind | LandmarkKind; seed: boolean; cell?: Cell; valid: boolean; style: PlotStyle; allowed: Cell[]; keepsake?: string; color?: FlowerColor; ownerId?: string }
 
@@ -179,7 +180,10 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
     for (const k of state.keepsakes) if (k.cell) add(k.id, buildKeepsake(m, keepsakeKind(k.unitId)), k.cell);
     const placeRoot = buildPlaceGeometry(state, layout, visiblePlaces, relations, false, native); root.add(placeRoot);
     root.add(buildPlacePaths(state, layout, visiblePlaces));
-    if (state.bridge) add('bridge', buildBridge(m), bridgeAnchor(state));
+    if (state.bridge) {
+        const bridge = buildBridge(m), anchor = bridgeAnchor(state);
+        curveGroundGeometry(bridge, layout, anchor); add('bridge', bridge, anchor);
+    }
     const pier = buildPier(m, layout.pierRoot.y - .02); pier.position.copy(layout.pierRoot); root.add(pier);
     const flag = buildFlag(m, state.flagColor ?? 0, state.flagPattern ?? 0, state.emblem?.image);
     flag.position.copy(layout.pierRoot).add(new T.Vector3(-.36, .02, .1));

@@ -1556,6 +1556,16 @@ const getExploreNumericAnswer = async (page) => {
   const previousNumber = questionText?.match(/(-?\d+)\s*のまえは/);
   if (previousNumber) return Number(previousNumber[1]) - 1;
 
+  const sequence = questionText?.replace(/\s/g, '').split(',');
+  if (sequence?.filter(part => part === '□').length === 1 && sequence.every(part => part === '□' || /^-?\d+$/.test(part))) {
+    const known = sequence.map((part, index) => ({ index, value: Number(part) })).filter(part => Number.isFinite(part.value));
+    if (known.length >= 2) {
+      const step = (known[1].value - known[0].value) / (known[1].index - known[0].index);
+      const at = index => known[0].value + (index - known[0].index) * step;
+      if (known.every(part => at(part.index) === part.value)) return at(sequence.indexOf('□'));
+    }
+  }
+
   if (questionText?.includes("いくつ ある")) {
     const filledCount = await problemPanel.locator('[data-count-slot="filled"]').count();
     assert(filledCount > 0, `expected visible counting slots; got ${filledCount}`);
@@ -2665,7 +2675,7 @@ const scenarioLightBridgeVerticalSlice = async (
   const rapidAttemptKey = await page.getByTestId("explore-attempt").getAttribute("data-attempt-key");
   assert(rapidAttemptKey, "ordinary rapid-loop problem should expose an attempt key");
   const rapidAnswer = await getExploreNumericAnswer(page);
-  await page.keyboard.type(String(rapidAnswer));
+  await typeExploreNumericOnce(page, rapidAnswer);
   assert(
     await ordinaryToast.count() === 0,
     "the previous ordinary clue card should remain absent while the next answer is entered",
@@ -6546,6 +6556,11 @@ const main = async () => {
     smokeBrowser = browser;
 
     const results = [];
+    if (process.env.SANSU_E2E_ONBOARDING_DIAGNOSTIC_ONLY === "1") {
+      results.push(await runScenario("redirects to onboarding when no profile", () => scenarioOnboardingShown(browser)));
+      if (!results.every(Boolean)) process.exitCode = 1;
+      return;
+    }
     if (process.env.SANSU_E2E_ROOT_TANGLE_LANDSCAPE_ONLY === "1") {
       results.push(await runScenario("Root tangle landscape event diagnosis", () => scenarioRootTangleVerticalSlice(browser, { width: 1024, height: 768 })));
       if (!results.every(Boolean)) process.exitCode = 1;

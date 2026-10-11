@@ -41,7 +41,7 @@ const meshes = (root: T.Object3D) => { const result: T.Mesh[] = []; root.travers
 
 describe('native art on the actual owned floor', () => {
     it('leaves sea in front of every viewport corner when the complete native island is framed', () => {
-        const state = fixture('P02', 'court'), layout = sceneLayout(state), ground = buildNativeGrowingGround(layout, kit.manifest.shoreProfile);
+        const state = fixture('P02', 'court'), layout = sceneLayout(state, true), ground = buildNativeGrowingGround(layout, kit.manifest.shoreProfile);
         layout.nativeArt = true; layout.cameraObjects = () => [ground.root];
         const camera = new T.OrthographicCamera(-5, 5, 5, -5, .1, 100), sea = new T.Plane(new T.Vector3(0, 1, 0), .4);
         for (const aspect of [390 / 780, 768 / 960, 1280 / 656]) for (const azimuth of [0, Math.PI / 2, Math.PI]) {
@@ -69,7 +69,7 @@ describe('native art on the actual owned floor', () => {
     it('leaves every saved cell and fractional foot position on the same real floor, including very large districts', () => {
         const state = newIsland('native-shore', 1000);
         for (const land of [state.land, { expanded: 'east' as const, extra: ['west', 'south'] as ('west' | 'south')[], capes: ['west', 'east'] as ('west' | 'east')[], districts: Array.from({ length: 12 }, () => 'east' as const) }]) {
-            state.land = land; const saved = structuredClone(state), layout = sceneLayout(state), ground = buildNativeGrowingGround(layout, kit.manifest.shoreProfile);
+            state.land = land; const saved = structuredClone(state), layout = sceneLayout(state, true), ground = buildNativeGrowingGround(layout, kit.manifest.shoreProfile);
             ground.root.updateMatrixWorld(true);
             for (const cell of landCells(state)) for (const [dx, dz] of [[0, 0], [.13, .27]]) {
                 const point = layout.point({ x: cell.x + dx, z: cell.z + dz }, 0);
@@ -78,7 +78,7 @@ describe('native art on the actual owned floor', () => {
             }
             const positions = (ground.root.getObjectByName('native05-shore-bank') as T.Mesh).geometry.getAttribute('position');
             for (let i = 0; i < positions.count; i++) {
-                const x = positions.getX(i), z = positions.getZ(i);
+                const cell = layout.logicalAt({ x: positions.getX(i), z: positions.getZ(i) }); const x = cell.x - layout.center, z = cell.z - 2;
                 expect(Math.abs(x) >= layout.width / 2 - 1e-5 || Math.abs(z - ((layout.depth - 1) / 2 - 2)) >= layout.depth / 2 - 1e-5).toBe(true);
             }
             expect(state).toEqual(saved); ground.dispose();
@@ -86,7 +86,7 @@ describe('native art on the actual owned floor', () => {
     });
     for (const goal of placeGoalCatalog.filter(goal => ['P01', 'P02', 'P04', 'P05'].includes(goal.id))) for (const variant of goal.variants) {
         it(`renders ${goal.id}/${variant.id} from actual owners and keeps the gallery floor and free entrances`, () => {
-            const state = fixture(goal.id, variant.id), saved = structuredClone(state), layout = sceneLayout(state);
+            const state = fixture(goal.id, variant.id), saved = structuredClone(state), layout = sceneLayout(state, true);
             const m = new IslandMaterials('moon-garden'), layer = buildObjectLayer(m, state, layout, undefined, undefined, [], kit);
             const place = layer.places.find(place => place.ruleId === goal.id)!;
             expect(place).toBeDefined(); expect(layer.objects.size).toBe(state.landmarks.length + state.plots.length);
@@ -125,7 +125,7 @@ describe('native art on the actual owned floor', () => {
         });
     }
     it('preview, moving and disposing one island leave the shared source geometry/materials alive and opaque', () => {
-        const state = fixture('P02', 'lane'), m = new IslandMaterials('moon-garden'), layout = sceneLayout(state);
+        const state = fixture('P02', 'lane'), m = new IslandMaterials('moon-garden'), layout = sceneLayout(state, true);
         const layer = buildObjectLayer(m, state, layout, undefined, undefined, [], kit);
         const nativeMeshes = meshes(layer.placeRoot).filter(mesh => mesh.userData.nativeSharedGeometry);
         expect(nativeMeshes.length).toBeGreaterThan(0);
@@ -140,7 +140,7 @@ describe('native art on the actual owned floor', () => {
         expect(layer.root.getObjectByName('growing-ghost')?.getObjectByName('growing-native-home')?.userData.nativePart).toBe('home-leaf');
         layer.dispose(); disposes.forEach(dispose => { expect(dispose).not.toHaveBeenCalled(); dispose.mockRestore(); });
         const moved: GrowingState = { ...state, landmarks: state.landmarks.map(l => l.id === owner.id ? { ...l, cell: { x: 1, z: 4 } } : l) };
-        const split = buildObjectLayer(m, moved, sceneLayout(moved), undefined, undefined, [], kit);
+        const split = buildObjectLayer(m, moved, sceneLayout(moved, true), undefined, undefined, [], kit);
         expect(meshes(split.root).some(mesh => mesh.userData.nativeSharedGeometry && mesh.geometry.getAttribute('position').count > 100)).toBe(true);
         split.dispose(); m.dispose();
     });

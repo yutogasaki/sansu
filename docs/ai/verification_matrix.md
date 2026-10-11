@@ -286,3 +286,13 @@ Growing balanceの行に従う。`pacing.test.ts`は建設/装飾に加え、実
 [全島造形](../design/2026-10-11-island-landscape-art/README.md)がstandaloneの美術だけを変える場合、`npm run docs:check`、`npm run lint`、`node docs/design/2026-10-11-island-landscape-art/check-artifact.mjs`、`tools/qa-landscape-art-viewer.mjs`を実行する。原本不変、実kitの家/家具、8軒・27配置物・2収納物のID・成熟・屋根色・保存セルmetadata、blend/GLB/レンダーSHAを確認する。QAへ`SANSU_LANDSCAPE_ART_URL`と新しい`SANSU_LANDSCAPE_ART_OUTPUT`を指定し、390/768幅の5視点/昼夕/同camera原本切替/キーボード/拡大と取得した実GLBのSHA、開始終了の美術入力一致を検査する。
 
 自由な造形anchorは保存位置の変形、隣接、通行、自然成長を証明しない。変更していない本体へcore/SW検査を繰り返さず、本体A6の結果と美術案の表示検査を分けて記録する。次の床写像・本体接続を変更する段階では上の所有島とGrowing/PWAの行へ戻る。
+
+### 広がり方で姿が変わる本人の島（2026-10-11）
+
+[床写像の契約](../product/island-expanding-runtime.md)に従い、coreと上の所有島／育つ場所／更新の検査を行う。現行native候補は`native05-expanding-runtime-v2`、床は`curved-owned-v1`。旧`native05-owned-runtime-v1`は履歴として保持する。`landscape.test.ts`／`curvedLandscape.test.ts`は逆写像・折返しなし・初期セル保持・追加拡張後の旧床・実床ray・分数位置・道・実橋を検査する。
+
+固定productionの`tools/e2e-growing-places.mjs`へ`SANSU_GROWING_PLACE_CANDIDATE=native05-expanding-runtime-v2`を指定する。実回答3旅程と明示成熟40組を混ぜず、通常SW、保存と同学習、実足の利用を確認する。`tools/e2e-growing-expansion.mjs --url LOOPBACK --output-dir NEW_DIRECTORY --build-dir FIXED_BUILD`は390／768幅の三案×16／32軒を別診断する。全員の一覧、表示枠外の本人の家へのfocus、1 canvas、再読込後の全権利／学習、各画面の版・候補・kit SHA・写像を照合する。`--development`はDEV診断で、固定productionの証拠へ昇格しない。
+
+実SWのOLD→NEW→ROLLBACK、中断／offlineは更新driver、破損kit／context lossは故障driverへ分ける。通常false buildのasset予算とkit除外も確認する。Tailwindの探索は`src`と本体HTML、Viteの依存入口は本体と開発prototypeに限定し、記録用美術bundleを本体CSSへ取り込まない。
+
+[全島素材](../design/2026-10-11-expanding-island-runtime/README.md)は`check-artifacts.mjs`で七つの実所有GLBとBlenderのSHA、8／16／32軒、置いた所有物のID、収納物の非描画、原本kit／exporter sourceを検証する。static GLBは実床・所有物だけで、動く住人・海・UIは本体renderer。保存fixtureを実入居や数日かけた自然成熟に読み替えない。最新の同じ固定buildでcritical-path contact sheetを作り、native-05の原本と比べる。独立した理解／安全、実機性能、公開をこの検査だけで合格にしない。

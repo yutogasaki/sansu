@@ -1,0 +1,20 @@
+{
+  "target": "http://127.0.0.1:4173",
+  "harnessHash": "573053a7cbf77dc5e02dd494c39551f33978e6dd986ff9d0e50c19f7ef356dcb",
+  "pass": false,
+  "scenarios": [
+    {
+      "name": "redirects to onboarding when no profile",
+      "startedAt": "2026-10-11T04:06:39.122Z",
+      "pass": false,
+      "pages": [
+        {
+          "url": "http://127.0.0.1:4173/#/"
+        }
+      ],
+      "error": "page.goto: Timeout 45000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:4173/#/\", waiting until \"domcontentloaded\"\u001b[22m\n\n    at scenarioOnboardingShown (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:555:14)\n    at async runScenario (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:418:5)\n    at async main (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:6560:20)",
+      "durationMs": 75244,
+      "remainingNewContexts": 0
+    }
+  ]
+}

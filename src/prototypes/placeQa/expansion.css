@@ -1,0 +1,35 @@
+* { box-sizing: border-box; }
+body { margin: 0; color: #283344; background: #f5f7fa; font-family: "Hiragino Sans", "Noto Sans JP", sans-serif; }
+button, a { -webkit-tap-highlight-color: transparent; }
+button { font: inherit; cursor: pointer; min-height: 44px; border: 1px solid #ccd6e0; border-radius: 10px; background: #fff; color: inherit; padding: 8px 14px; }
+button[aria-pressed="true"] { color: #fff; background: #476d98; border-color: #476d98; }
+button:focus-visible, a:focus-visible { outline: 3px solid #98c6f2; outline-offset: 3px; }
+.expansion-showcase { min-height: 100dvh; display: flex; flex-direction: column; }
+header { padding: 20px 24px 14px; display: flex; align-items: center; justify-content: space-between; gap: 16px; background: #fff; }
+header p { margin: 0 0 4px; font-size: 12px; color: #687b8e; }
+h1 { font-size: clamp(18px, 2vw, 25px); margin: 0 0 5px; }
+header span, header a { font-size: 12px; }
+header a { color: #476d98; padding: 12px 0; white-space: nowrap; }
+nav { display: flex; justify-content: center; gap: 8px; padding: 10px 12px; background: #fff; }
+nav button { flex: 0 1 220px; }
+main { position: relative; flex: 1; min-height: 560px; height: calc(100dvh - 234px); overflow: hidden; background: #72b4ca; }
+.growing-world { position: absolute; inset: 0; touch-action: none; }
+.growing-world canvas { display: block; width: 100%; height: 100%; }
+.expansion-controls { position: absolute; inset: auto 12px 30px; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; pointer-events: none; }
+.expansion-controls > div { display: flex; gap: 4px; padding: 4px; border-radius: 14px; background: #ffffffeb; pointer-events: auto; }
+.expansion-controls button { min-width: 44px; }
+.expansion-gesture { position: absolute; bottom: 0; width: 100%; font-size: 10px; text-align: center; pointer-events: none; color: #234f67; }
+.expansion-status { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); padding: 10px 14px; border-radius: 12px; background: #fff; font-size: 12px; }
+footer { padding: 14px 24px; background: #fff; }
+footer p { margin: 0 0 5px; font-size: 12px; }
+footer small { font-size: 10px; color: #738194; }
+@media (max-width: 600px) {
+    header { padding: 16px; align-items: flex-start; }
+    header span { display: block; max-width: 235px; line-height: 1.6; }
+    header a { font-size: 10px; }
+    nav button { font-size: 11px; padding: 8px 7px; }
+    main { min-height: 590px; }
+    .expansion-controls { gap: 4px; }
+    .expansion-controls button { padding: 7px 9px; font-size: 12px; }
+    footer { padding: 14px 16px; }
+}

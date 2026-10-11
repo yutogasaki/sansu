@@ -365,7 +365,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
                 const pose = `${camera.matrixWorld.elements.join(',')}:${camera.projectionMatrix.elements.join(',')}`;
                 if (pose !== publishedCamera) {
                     publishedCamera = pose;
-                    node.dataset.growingCamera = JSON.stringify({ matrixWorld: camera.matrixWorld.toArray(), projectionMatrix: camera.projectionMatrix.toArray(), center: layout.center });
+                    node.dataset.growingCamera = JSON.stringify({ matrixWorld: camera.matrixWorld.toArray(), projectionMatrix: camera.projectionMatrix.toArray(), center: layout.center, curved: layout.curved });
                 }
             } catch (error) { fail('render', error); return; }
             if (renderer.getContext().isContextLost()) { fail('context-lost'); return; }
@@ -570,7 +570,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
     const lastTurn = useRef(turn);
     useEffect(() => { if (turn !== lastTurn.current) { api.current?.turn(turn - lastTurn.current); lastTurn.current = turn; } }, [turn]);
 
-    return <div className="growing-world" ref={host} data-growing-world data-visual-candidate="growing-island-v1" data-art-candidate={nativeArtEnabled ? 'native05-owned-runtime-v1' : 'native-05-place-runtime-v3'} data-native-growing-art={String(nativeArtEnabled)} data-growing-feature-enabled="true">
+    return <div className="growing-world" ref={host} data-growing-world data-visual-candidate="growing-island-v1" data-art-candidate={nativeArtEnabled ? 'native05-expanding-runtime-v2' : 'native-05-place-runtime-v3'} data-landscape-projection={nativeArtEnabled ? 'curved-owned-v1' : 'linear'} data-native-growing-art={String(nativeArtEnabled)} data-growing-feature-enabled="true">
         {failed && <p className="growing-world-failed">しまを ひょうじ できなかったよ。よみなおしてみてね。</p>}
         {bridgeStage && <div className="growing-bridge-caption" data-bridge-stage={bridgeStage} role="status">
             {bridgeStage === 'building' ? 'ぽこもこが はしを つくっているよ' : bridgeStage === 'crossing' ? 'なかまが わたっているよ' : 'むこうまで いけた！'}

@@ -1,0 +1,20 @@
+{
+  "target": "http://127.0.0.1:5334",
+  "development": true,
+  "candidate": "native05-expanding-runtime-v2",
+  "projection": "curved-owned-v1",
+  "fixtureSource": "58b6b901670d527c12e3fb8c1491c919f8891444f177dd954b3ed3eea72d8c9a",
+  "fixturePayload": "6ae27f4696654a90f41f095064fa610daefb68becdd563258c2b96e759c7277d",
+  "initialQA": {
+    "tools/e2e-growing-expansion.mjs": "3b54af6b1e84348097ea4532072f5f125bc84afbaec4da8a4bf9a70205e7738d",
+    "tools/growing-expansion-fixtures.mjs": "979e3a8857df034da633fad6de08dafd44910383a1b58572b64f6366a87fbbfa",
+    "tools/growing-place-fixtures.mjs": "7c0cd2cb81f425f3f63afe89642ff2aeec8e5155ebb3f432114131a70cd951ea",
+    "tools/island-e2e-helpers.mjs": "b307f0506e17fa58af4a1dac0fcecca34e8d9bc3ded342f5227cd63d97d44baf"
+  },
+  "scope": "Explicit equal-material 16/32-home diagnostic saves; normal SW allowed. Not earned acquisition, natural maturity or real-device performance.",
+  "cases": [],
+  "captures": [],
+  "pass": false,
+  "browser": "154.0.8037.93",
+  "error": "page.goto: Timeout 60000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5334/#/island\", waiting until \"load\"\u001b[22m\n\n    at /Users/yutogasaki/Projects/sansu/tools/e2e-growing-expansion.mjs:70:24"
+}

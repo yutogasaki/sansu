@@ -9,7 +9,8 @@ import { answerUI, appRootMetadata, openGrowingMenu, readNative, runtimeMetadata
 import { disposeProductionProjection, plantProduction, productionCellPoint } from './growing-production-helpers.mjs';
 
 const CANDIDATE = process.env.SANSU_GROWING_PLACE_CANDIDATE ?? 'native-05-place-runtime-v3';
-assert(['native-05-place-runtime-v3', 'native05-owned-runtime-v1'].includes(CANDIDATE), 'Identify the actual owned rendering lineage');
+assert(['native-05-place-runtime-v3', 'native05-owned-runtime-v1', 'native05-expanding-runtime-v2'].includes(CANDIDATE), 'Identify the actual owned rendering lineage');
+const NATIVE_ART = CANDIDATE.startsWith('native05-');
 const VIEWPORTS = [{ width: 390, height: 844 }, { width: 768, height: 1024 }];
 export function parseOptions(args) {
     const result = { plan: false, diagnosticOnly: false, development: false };
@@ -441,7 +442,7 @@ async function diagnosticJourney(browser, options, report, pack, captureFactory)
                 const originalEvidence = (await read()).state.placeProgress.milestones.P01;
                 // Aim at the visible saved tree's trunk. Its floor projection can
                 // lie behind the neighboring bench in the new oblique camera.
-                await tapCell(page, (await read()).state, owner.cell, CANDIDATE === 'native05-owned-runtime-v1' ? 1.0 : .04);
+                await tapCell(page, (await read()).state, owner.cell, NATIVE_ART ? 1.0 : .04);
                 const treeSheet = page.locator('.growing-sheet[aria-label="木の なえ"]');
                 await treeSheet.waitFor(); await treeSheet.getByRole('button', { name: 'しまう', exact: true }).tap();
                 const stored = await until(page, read, record => !record.state.landmarks.find(item => item.id === ownerId).cell, 'store original tree');
@@ -492,7 +493,7 @@ export async function main(args = process.argv.slice(2)) {
         report.build = JSON.parse(await fs.readFile(path.join(options['build-dir'], 'version.json')));
         assert.deepEqual(await fetch(`${options.url}/version.json`).then(response => response.json()), report.build, 'Actual server must serve the specified fixed build');
         assert.equal(report.build.island?.enabled, true);
-        if (CANDIDATE === 'native05-owned-runtime-v1') assert.equal(report.build.island?.nativeOwnedArt?.enabled, true);
+        if (NATIVE_ART) assert.equal(report.build.island?.nativeOwnedArt?.enabled, true);
     }
     const channel = process.env.SANSU_GROWING_BROWSER_CHANNEL;
     assert(!channel || ['chrome', 'chromium'].includes(channel), 'Use an installed Chromium browser channel');
@@ -508,7 +509,7 @@ export async function main(args = process.argv.slice(2)) {
         if (report.build) { assert.equal(metadata.appRoot.version, report.build.version); assert.equal(metadata.appRoot.revision, report.build.revision); }
         const world = await page.locator('[data-growing-world]').count() ? await page.locator('[data-growing-world]').evaluate(world => ({ ...world.dataset })) : undefined;
         if (world) assert.equal(world.artCandidate, CANDIDATE);
-        if (world && CANDIDATE === 'native05-owned-runtime-v1') {
+        if (world && NATIVE_ART) {
             const kit = JSON.parse(await fs.readFile('docs/design/2026-10-11-native-owned-island/kit-manifest.json'));
             assert.equal(world.nativeKitSha256, kit.sha256); assert.equal(world.nativeSourceSha256, kit.sourceSha256); assert.equal(world.gameplayMapped, 'true');
         }

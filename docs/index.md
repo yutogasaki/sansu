@@ -1,5 +1,7 @@
 # Sansu 文書の入口
 
+2026-10-11 広がり方を本体へ実装：[8・16・32軒、三方向の実3D展示](design/2026-10-11-expanding-island-runtime/index.html) · [検証と編集素材](design/2026-10-11-expanding-island-runtime/README.md) · [実装契約](product/island-expanding-runtime.md)。土地の選択と配置から、湾を抱く岸・横へ続く森の回廊・南へ連なる低い丘を描きます。所有セル、道、分数位置の足、配置操作を同じ床へ接続。通常productionの美術flagはfalseを保持し、美術の到達・実機・独立理解／再訪は継続課題です。
+
 2026-10-11 全島の造形を先に確認：[丘と入り江・同じ家8軒の実3D](design/2026-10-11-island-landscape-art/index.html) · [制作戦略](design/2026-10-11-island-landscape-art/README.md)。本体A6と同じ27配置物・2収納物を固定し、採用原本の深い湾・丘・段泉・空洞幹へ全島の構図を組み直します。家の実mesh・成熟・屋根色と所有IDを対応させる美術案で、保存位置の連続変形や本体の通行へ実装済みとは扱いません。
 
 2026-10-11 本人の島へ接続：[採用3Dを自分の島へ移す](design/2026-10-11-native-owned-island/README.md)。原本の家・樹種・扇葉・花弁・透ける殻を、本人の所有と成熟・配置・実床から描きます。制作模型の家や人物を所有へ取り込まず、学習・取得・保存・時計を保ちます。深い入り江と高い段泉の全地形は次の主課題です。[実装契約](product/island-native-owned-art.md)。

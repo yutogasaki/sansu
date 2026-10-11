@@ -1,0 +1,20 @@
+{
+  "target": "http://127.0.0.1:4173",
+  "harnessHash": "c1ed4e8bd963dafd09da669cc83d68654b60f6664bfc14df76f096b2cda839ba",
+  "pass": false,
+  "scenarios": [
+    {
+      "name": "redirects to onboarding when no profile",
+      "startedAt": "2026-10-11T04:00:52.256Z",
+      "pass": false,
+      "pages": [
+        {
+          "diagnosticError": "page.evaluate: Execution context was destroyed, most likely because of a navigation"
+        }
+      ],
+      "error": "page.goto: Timeout 45000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:4173/#/\", waiting until \"domcontentloaded\"\u001b[22m\n\n    at scenarioOnboardingShown (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:556:14)\n    at async runScenario (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:418:5)\n    at async main (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:6561:20)",
+      "durationMs": 65945,
+      "remainingNewContexts": 0
+    }
+  ]
+}

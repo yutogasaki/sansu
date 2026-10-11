@@ -6,7 +6,7 @@ export interface CameraView { zoom: number; azimuth: number; pan: { x: number; z
 export const initialView = (): CameraView => ({ zoom: 1, azimuth: 0, pan: { x: 0, z: 0 } });
 const BASE = new T.Vector3(4.5, 7.8, 11);
 const OMIT = new Set(['life-sea', 'growing-next-boat', 'growing-boat', 'growing-ghost', 'growing-place-preview', 'growing-hint', 'growing-house-selection']);
-interface ArtSamples { roots: string; points: T.Vector3[]; projections: Map<number, { minX: number; maxX: number; minY: number; maxY: number }> }
+interface ArtSamples { roots: string; points: T.Vector3[]; bounds: T.Box3; projections: Map<number, { minX: number; maxX: number; minY: number; maxY: number }> }
 const artSamples = new WeakMap<SceneLayout, ArtSamples>();
 
 /** Samples visible static geometry, including curved leaves and the real shoreline.
@@ -46,7 +46,7 @@ function framingSamples(layout: SceneLayout): ArtSamples {
         const ground = buildPlaceGround(layout); points = cameraArtPoints([ground.root]); ground.dispose();
         points.push(layout.pierRoot.clone(), layout.pierEnd.clone(), layout.dock.clone());
     }
-    const samples = { roots: signature, points, projections: new Map() }; artSamples.set(layout, samples); return samples;
+    const samples = { roots: signature, points, bounds: new T.Box3().setFromPoints(points), projections: new Map() }; artSamples.set(layout, samples); return samples;
 }
 
 /** Fits the whole island in portrait and landscape; zoom and pan stay within the island. */
@@ -78,7 +78,9 @@ export function frameCamera(camera: T.OrthographicCamera, layout: SceneLayout, v
     }
     const half = fit / view.zoom;
     camera.left = -half * aspect; camera.right = half * aspect; camera.top = half; camera.bottom = -half;
-    const limitX = layout.width / 2, limitZ = layout.depth / 2 + 1;
+    const art = layout.curved ? framingSamples(layout).bounds : undefined;
+    const limitX = art ? Math.max(Math.abs(art.min.x - target.x), Math.abs(art.max.x - target.x)) : layout.width / 2;
+    const limitZ = art ? Math.max(Math.abs(art.min.z - target.z), Math.abs(art.max.z - target.z)) : layout.depth / 2 + 1;
     view.pan.x = Math.max(-limitX, Math.min(limitX, view.pan.x));
     view.pan.z = Math.max(-limitZ, Math.min(limitZ, view.pan.z));
     target.add(new T.Vector3(view.pan.x, 0, view.pan.z));

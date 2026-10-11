@@ -28,7 +28,7 @@ async function project() {
                 return { x: (p.x + 1) / 2 * width, y: (1 - p.y) / 2 * height };
             }
             export function actualPoint(state, cell, width, height, elevation, pose) {
-                const layout = sceneLayout(state), camera = new T.OrthographicCamera();
+                const layout = sceneLayout(state, Boolean(pose.curved)), camera = new T.OrthographicCamera();
                 camera.matrixWorld.fromArray(pose.matrixWorld); camera.matrixWorldInverse.copy(camera.matrixWorld).invert();
                 camera.projectionMatrix.fromArray(pose.projectionMatrix);
                 const p = layout.point(cell, elevation).project(camera);

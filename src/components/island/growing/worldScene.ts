@@ -14,6 +14,7 @@ import { buildPlaceGround } from './placeGround';
 import type { NativeGrowingKit } from './native/nativeGrowingKit';
 import { buildNativeGrowingGround } from './native/nativeGrowingGround';
 import { nativeGrowingLighting } from './native/nativeGrowingLighting';
+import { curveGroundGeometry } from './curvedGeometry';
 
 /** Lights, sea, garden ground, Pokomoko's cottage and the living layer, shared by one world. */
 export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowingKit) {
@@ -48,6 +49,7 @@ export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowi
         ground?.root.removeFromParent(); ground?.dispose();
         terrain?.root.removeFromParent(); terrain?.dispose();
         ground = buildGardenGround({ bounds: layout.bounds, moisture: cell => soilAt(state, cell), shelterTree: !native && layout.artMargin <= 1.1, heightAt: layout.heightAt }, layout.point);
+        curveGroundGeometry(ground.root.getObjectByName('garden-ground-details')!, layout);
         terrain = native ? buildNativeGrowingGround(layout, native.manifest.shoreProfile) : buildPlaceGround(layout); scene.add(terrain.root);
         if (layout.artMargin > 1.1 || native) {
             // The named decorative pedestal is separate from sea and floor planting.
@@ -80,7 +82,7 @@ export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowi
         scene, m, life, hemi, sun,
         groundAt(ray: T.Raycaster) { return terrain ? ray.intersectObject(terrain.floor, false)[0]?.point : undefined; },
         layout: (state: GrowingState) => {
-            const layout = sceneLayout(state); layout.nativeArt = Boolean(native); setGround(state, layout);
+            const layout = sceneLayout(state, Boolean(native)); layout.nativeArt = Boolean(native); setGround(state, layout);
             // ObjectLayer is attached immediately after layout(). Resolve it lazily
             // so this new frame contains the newly built owners and derived rooms.
             layout.cameraObjects = () => [terrain?.root, nativeCottage ?? cottage.root,

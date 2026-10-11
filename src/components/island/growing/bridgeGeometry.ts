@@ -10,7 +10,7 @@ export function buildBridge(m: IslandMaterials) {
         const mesh = new T.Mesh(new T.BoxGeometry(width, .095, depth), material);
         mesh.position.set(x, y, z); mesh.castShadow = true; mesh.receiveShadow = true; root.add(mesh); return mesh;
     };
-    for (let i = 0; i < 8; i++) plank(0, .42 + i * .25, .76, .23, wood[i % 2]).name = `bridge-board-${i}`;
+    for (let i = 0; i < 8; i++) plank(0, .42 + i * .25, .76, .255, wood[i % 2]).name = `bridge-board-${i}`;
     plank(0, 2.25, 1.04, .8, wood[0], .105).name = 'bridge-landing';
     for (const x of [-.4, .4]) {
         const post = new T.Mesh(new T.CylinderGeometry(.055, .065, .6, 8), support);

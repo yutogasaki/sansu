@@ -1,0 +1,15 @@
+{
+  "target": "http://127.0.0.1:4173",
+  "harnessHash": "573053a7cbf77dc5e02dd494c39551f33978e6dd986ff9d0e50c19f7ef356dcb",
+  "pass": true,
+  "scenarios": [
+    {
+      "name": "redirects to onboarding when no profile",
+      "startedAt": "2026-10-11T04:09:12.681Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 1284,
+      "remainingNewContexts": 0
+    }
+  ]
+}

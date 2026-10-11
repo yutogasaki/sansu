@@ -243,7 +243,7 @@ export class GrowingLife {
 
     drag(id: string, point: T.Vector3) {
         const w = this.walkers.get(id), layout = this.layout; if (!w || w.mode !== 'held' || !layout) return;
-        w.at = { x: point.x + layout.center, z: point.z + 2 };
+        w.at = layout.logicalAt(point);
     }
 
     /** Dropped on a seat, a friend uses it; otherwise they land on the nearest open cell. */
@@ -346,13 +346,14 @@ export class GrowingLife {
             if (this.concert && seat >= 0) {
                 const center = layout.point(this.concert.cell), a = seat / players.length * Math.PI * 2;
                 const ring = .75 + (players.length > 8 ? .25 : 0);
-                const x = center.x + Math.sin(a) * ring, z = center.z + Math.cos(a) * ring;
+                const at = { x: this.concert.cell.x + Math.sin(a) * ring, z: this.concert.cell.z + Math.cos(a) * ring };
+                const floor = layout.point(at), x = floor.x, z = floor.z;
                 let y = reduced ? 0 : Math.abs(Math.sin(now / 260 + seat)) * .05;
                 if (w.hopAt !== undefined && now >= w.hopAt) { const t = (now - w.hopAt) / 520; if (t >= 1) w.hopAt = undefined; else y += Math.sin(Math.PI * t) * (reduced ? .08 : .35); }
-                actor.root.position.set(x, center.y + y, z);
+                actor.root.position.set(x, floor.y + y, z);
                 actor.root.rotation.set(0, Math.atan2(center.x - x, center.z - z) + (reduced ? 0 : Math.sin(now / 400 + seat) * .15), 0);
                 this.poseArms(w, now, reduced, true);
-                w.at = { x: x + layout.center, z: z + 2 };
+                w.at = at;
                 continue;
             }
             if (id !== 'pokomoko' && id !== 'visitor' && night && w.mode !== 'held' && w.mode !== 'boat') { actor.root.visible = false; continue; }

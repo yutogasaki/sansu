@@ -11,6 +11,7 @@ export interface PlaceCase {
     id: string; synthetic: true; conditions: string[]; profile: UserProfile; island: GrowingRecord;
     expected: { places?: { ruleId: string; variant: string }[]; wholePlaces?: { ruleId: string; variant: string }[]; relations?: string[]; families?: string[]; homes?: number; homeStage?: number; realUseRequiredForP06?: boolean };
     projection: { places: ReturnType<typeof derivePlaces>; relations: ReturnType<typeof derivePlaceRelations> };
+    expansion?: { name: string; direction: 'bay' | 'forest' | 'garden'; size: 16 | 32; addedLand: string[]; oldHomeCount: number; wholeComparison: string };
 }
 export interface PlacePack {
     schema: typeof PLACE_PACK_SCHEMA; synthetic: true; epoch: number; timezone: string;
@@ -29,7 +30,7 @@ export async function parsePlacePack(text: string): Promise<PlacePack> {
     requireValue(text.length <= 6_000_000, '診断ファイルが大きすぎます。');
     const pack = JSON.parse(text) as PlacePack;
     requireValue(pack?.schema === PLACE_PACK_SCHEMA && pack.synthetic === true, '育つ場所の診断ファイルを選んでください。');
-    requireValue(Array.isArray(pack.cases) && pack.cases.length === 20, '15 配置・4 組み合わせ・島全体の 20 件が必要です。');
+    requireValue(Array.isArray(pack.cases) && (pack.cases.length === 20 || pack.cases.length === 26), '20 件の配置、または全島の比較を加えた 26 件が必要です。');
     requireValue(/^[a-f0-9]{64}$/.test(pack.sourceHash) && /^[a-f0-9]{64}$/.test(pack.payloadHash), 'ファイルの版情報がありません。');
     requireValue(await hashJSON(pack.cases) === pack.payloadHash && await hashJSON(pack.sources) === pack.sourceHash, 'ファイルの内容とハッシュが一致しません。生成し直してください。');
     const ids = new Set<string>();
@@ -58,6 +59,11 @@ export async function parsePlacePack(text: string): Promise<PlacePack> {
         requireValue(ids.has(`qa-place-${goal.id.toLowerCase()}-${variant.id}-v1`), '現在の 15 配置が揃っていません。');
     for (const relation of PLACE_CATALOG.combinations) requireValue(ids.has(`qa-place-${relation.id.toLowerCase()}-v1`), '4 組み合わせが揃っていません。');
     requireValue(ids.has('qa-place-whole-island-v1'), '島全体の診断がありません。');
+    if (pack.cases.length === 26) for (const direction of ['bay', 'forest', 'garden']) for (const size of [16, 32]) {
+        const entry = pack.cases.find(item => item.id === `qa-place-expansion-${direction}-${size}-v1`);
+        requireValue(entry?.expansion?.direction === direction && entry.expansion.size === size && entry.expected.homes === size,
+            '全島の 16・32 軒比較が揃っていません。');
+    }
     return pack;
 }
 

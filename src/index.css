@@ -1,5 +1,8 @@
-@import "tailwindcss";
+@import "tailwindcss" source("./");
 @import "./components/island/PokomokoWorld.css";
+@source "../index.html";
+
+/* Keep art archives and bundled showcase code out of the app's utility scan. */
 
 /* Tailwind v4 no longer auto-loads the legacy JS screen variants. */
 @custom-variant mobile {

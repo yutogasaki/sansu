@@ -9,15 +9,17 @@
 .asset-group>summary .group-name{white-space:normal;min-width:0}.group-name strong,.group-name small{display:block;line-height:1.5}.group-name small{font:11px/1.5 ui-monospace,monospace;color:var(--muted);overflow-wrap:anywhere}.asset-group>summary .group-name strong{font-size:15px}
 .asset-size{text-align:right}.asset-size small{display:block;color:var(--muted);font-size:11px;line-height:1.45}@media(max-width:640px){.asset-size{text-align:left}}
 .evidence-gallery{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px}.evidence-gallery .asset-item{display:block!important;padding:10px!important;border:1px solid var(--line);border-radius:9px;background:#f7f9f4}.evidence-gallery .asset-thumb{width:100%;height:250px;margin-bottom:8px}.evidence-gallery .asset-name{display:block;font-weight:700}.evidence-gallery .asset-size{display:block;text-align:left;font-size:12px}@media(max-width:640px){.evidence-gallery{grid-template-columns:1fr}.evidence-gallery .asset-thumb{height:260px}}
-</style></head><body><header><nav aria-label="メインナビゲーション"><strong>SANSU</strong><a href="../index.html">概要</a><a href="index.html" aria-current="page">タスク</a><a href="../../docs/index.html">ドキュメント</a><a href="../map.html">仕様と実装</a></nav></header><main><h1>タスク</h1><p class="subtitle">Sansu repository · Markdownから生成した閲覧用ポータル</p><label for="search">このページを検索</label><input id="search" type="search" placeholder="タイトル・ファイル名・キーワード"><p id="result" role="status" hidden></p><p>実行キューに登録された 6 件。「何の話か／現在地／次の一手」で分類しています。登録は実装済み・公開済みを意味しません。</p><section class="doc-group"><h2 class="section-title">1・統合と公開準備</h2><div class="grid"><article class="card" data-search="最新変更を一つの公開候補へまとめる：島をgrowingへ一本化し、sessionの初期読込/学習/家と配置/写真/工作・共用3d接続を分離し、共用キャラクター/庭の配置を整理。core4,766/smoke31・growing offline・旧保存1→3の実sw更新/通信切断/対応writer復旧・本人切替/履歴をlocal確認。実旧writerの正本隔離も診断pass 次：固定候補の公開urlと版、実利用者の保存、実機/子どもを照合。確認した旧版以外の保存・全写真は別。公開の実行はその依頼時に行う docs/tasks/active/2026-10-05-growing-island-release.md # 最新変更を一つの公開候補へまとめる
+</style></head><body><header><nav aria-label="メインナビゲーション"><strong>SANSU</strong><a href="../index.html">概要</a><a href="index.html" aria-current="page">タスク</a><a href="../../docs/index.html">ドキュメント</a><a href="../map.html">仕様と実装</a></nav></header><main><h1>タスク</h1><p class="subtitle">Sansu repository · Markdownから生成した閲覧用ポータル</p><label for="search">このページを検索</label><input id="search" type="search" placeholder="タイトル・ファイル名・キーワード"><p id="result" role="status" hidden></p><p>実行キューに登録された 6 件。「何の話か／現在地／次の一手」で分類しています。登録は実装済み・公開済みを意味しません。</p><section class="doc-group"><h2 class="section-title">1・統合と公開準備</h2><div class="grid"><article class="card" data-search="最新変更を一つの公開候補へまとめる：10/9固定v3のcore4,803/classic32、主要旅程・保存失敗/再試行・旧writer/実sw更新をlocal確認。source/dist archiveと実画面を保持 次：公開依頼時にurl/版/配信を照合。実利用者の保存・実機/子どもは別。確認した旧版以外の保存・全写真は未評価 docs/tasks/active/2026-10-05-growing-island-release.md # 最新変更を一つの公開候補へまとめる
 
-- 更新日: 2026-10-06
+- 更新日: 2026-10-09
 - review by: 2026-10-12
-- 状態: 固定統合候補のcore/本人切替/実sw旧保存1→3・更新中断/対応writer復旧をlocal確認。公開url・実機/利用者は未確認
+- 状態: 10/9の固定v3をcore4,803/classic32・全主要旅程・保存故障/更新・実画面・性能でlocal検証。公開url・実機/利用者は未確認
 - 正本: [憲法](../../../constitution.md)、[親仕様01](../../product/01_app_spec.md)、[ゲーム仕様52](../../product/52_growing_island_game_spec.md)、[保存13](../../product/13_data_storage_migration_spec.md)、[検証マトリクス](../../ai/verification_matrix.md)
 - 目的: 実装済み変更を重複して作らず、学習・島・家・本人切替・保護者・橋を同じ版で評価できる候補にまとめる。
 
 ## 現在地と範囲
+
+2026-10-09: ユーザーが、実機や子どもの参加を待たずこちらで改善できる範囲を[一つの品質ゴール](../archive/2026-10-09-local-quality-goal.md)として指定。最新差分の統合・一周・学習・見た目・保存更新を固定v3で検証し、同保存の性能比較とsource/dist archiveも記録した。[実画面・結果・制約](../../design/2026-10-09-local-quality/readme.md)。性能は配置応答の改善と残る待ちを分け、公開実行・実機・実利用者の引継ぎはこの親タスクに残す。
 
 2026-10-07共用3d接続: sessionのrenderer propsを家/配置/共有展示/写真/工作/遊びの型付き関数へ分割し、一つの遅延renderer/suspenseへ合成。表示条件・地面入力の優先順位・保存とsession寿命を維持。59propsの構文照合、core4,766/smoke31、growing production/offline・本人切替/履歴・配置/工作/写真の390/768幅pass。別作業の未コミットgrowing案内を除いた独立checkoutを検証し、mainの対象indexとの入力一致を確認する。公開/実機/子ども評価は別。[構成](../../architecture/island-runtime.md)。
 
@@ -60,15 +62,17 @@
 ## docs to touch
 
 共有tasks/blocked、担当タスク、検証証拠と完了履歴。挙動変更が必要な場合のみ親仕様と該当子仕様を先に更新する。今回の棚卸しは仕様・adr・運用memoryの変更不要。
-"><h2><a href="../../docs/tasks/active/2026-10-05-growing-island-release.md">最新変更を一つの公開候補へまとめる：島をGrowingへ一本化し、sessionの初期読込/学習/家と配置/写真/工作・共用3D接続を分離し、共用キャラクター/庭の配置を整理。core4,766/smoke31・Growing offline・旧保存1→3の実SW更新/通信切断/対応writer復旧・本人切替/履歴をlocal確認。実旧writerの正本隔離も診断PASS 次：固定候補の公開URLと版、実利用者の保存、実機/子どもを照合。確認した旧版以外の保存・全写真は別。公開の実行はその依頼時に行う</a></h2><p class="path">docs/tasks/active/2026-10-05-growing-island-release.md</p><p>- 更新日: 2026-10-06 - Review By: 2026-10-12</p><details><summary>詳細を読む</summary><pre># 最新変更を一つの公開候補へまとめる
+"><h2><a href="../../docs/tasks/active/2026-10-05-growing-island-release.md">最新変更を一つの公開候補へまとめる：10/9固定v3のcore4,803/classic32、主要旅程・保存失敗/再試行・旧writer/実SW更新をlocal確認。source/dist archiveと実画面を保持 次：公開依頼時にURL/版/配信を照合。実利用者の保存・実機/子どもは別。確認した旧版以外の保存・全写真は未評価</a></h2><p class="path">docs/tasks/active/2026-10-05-growing-island-release.md</p><p>- 更新日: 2026-10-09 - Review By: 2026-10-12</p><details><summary>詳細を読む</summary><pre># 最新変更を一つの公開候補へまとめる
 
-- 更新日: 2026-10-06
+- 更新日: 2026-10-09
 - Review By: 2026-10-12
-- 状態: 固定統合候補のcore/本人切替/実SW旧保存1→3・更新中断/対応writer復旧をlocal確認。公開URL・実機/利用者は未確認
+- 状態: 10/9の固定v3をcore4,803/classic32・全主要旅程・保存故障/更新・実画面・性能でlocal検証。公開URL・実機/利用者は未確認
 - 正本: [憲法](../../../CONSTITUTION.md)、[親仕様01](../../product/01_app_spec.md)、[ゲーム仕様52](../../product/52_growing_island_game_spec.md)、[保存13](../../product/13_data_storage_migration_spec.md)、[検証マトリクス](../../ai/verification_matrix.md)
 - 目的: 実装済み変更を重複して作らず、学習・島・家・本人切替・保護者・橋を同じ版で評価できる候補にまとめる。
 
 ## 現在地と範囲
+
+2026-10-09: ユーザーが、実機や子どもの参加を待たずこちらで改善できる範囲を[一つの品質ゴール](../archive/2026-10-09-local-quality-goal.md)として指定。最新差分の統合・一周・学習・見た目・保存更新を固定v3で検証し、同保存の性能比較とsource/dist archiveも記録した。[実画面・結果・制約](../../design/2026-10-09-local-quality/README.md)。性能は配置応答の改善と残る待ちを分け、公開実行・実機・実利用者の引継ぎはこの親タスクに残す。
 
 2026-10-07共用3D接続: sessionのrenderer propsを家/配置/共有展示/写真/工作/遊びの型付き関数へ分割し、一つの遅延renderer/Suspenseへ合成。表示条件・地面入力の優先順位・保存とsession寿命を維持。59propsの構文照合、core4,766/smoke31、Growing production/offline・本人切替/履歴・配置/工作/写真の390/768幅PASS。別作業の未コミットGrowing案内を除いた独立checkoutを検証し、mainの対象indexとの入力一致を確認する。公開/実機/子ども評価は別。[構成](../../architecture/island-runtime.md)。
 
@@ -111,7 +115,13 @@
 ## Docs To Touch
 
 共有TASKS/BLOCKED、担当タスク、検証証拠と完了履歴。挙動変更が必要な場合のみ親仕様と該当子仕様を先に更新する。今回の棚卸しは仕様・ADR・運用memoryの変更不要。
-</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">2・体験</h2><div class="grid"><article class="card" data-search="学習・島・家の一続きの体験：学習直行・挑戦/記録・保護者動線、島からの本人切替を実装・対象検証。保護者の役割整理もローカル候補あり 次：1の候補で本人切替→島→家/本→学習→記録/保護者→同じ問題への復帰を照合。実機の音・読み上げ、利用者確認はblockedへ docs/tasks/active/2026-09-20-whole-app-ux-coherence.md # whole-app ux/ui coherence
+</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">2・体験</h2><div class="grid"><article class="card" data-search="学習・島・家の一続きの体験：v3で実初回→取得/配置→家/本→学習・同予約復帰・本人切替を両幅確認。案内対象・本人一覧の同期競合・study重なりを修正 次：実機の音/読み上げ、利用者の無説明理解・再訪はblockedへ。確認済み経路の再実装はしない docs/tasks/active/2026-09-20-whole-app-ux-coherence.md # whole-app ux/ui coherence
+
+## 2026-10-09 ローカル品質検証の追補
+
+固定ローカル候補 `7e9a6c7a-quality-final-v3-55d331f22e94` で、背景保存中の本人一覧、studyのスキップと解答欄、初回設定の補助見出しを修正した。core 544 files / 4,803 tests、旧mode回帰のclassic smoke 32経路、現行growingの主要経路390/768幅を確認。両幅20枚の実画面を独立した作者レビューで照合し、対象主要操作の重なりや描画欠けがないことを確認した。classic smokeは現行islandの画面証拠とは分ける。
+
+版・旅程・検査条件は[10月9日のローカル品質記録](../../design/2026-10-09-local-quality/readme.md)に集約。子どもの無説明理解・安全・楽しさと実機評価はnot_evaluated、公開は未実施。対象経路のローカル確認を全画面・利用者評価の完了へ広げず、本タスクの既存履歴・完了条件を保持して継続する。
 
 ## 2026-09-29 起動・読み込みと再試行
 
@@ -388,7 +398,13 @@ main `4002e67b` から本番へ反映済み。公開urlの390/768幅で初回学
 ### risks
 
 - 「全体」を広げすぎて島v3、家、nature town、ブランド外部確認の既存ownerを複製しない。横断の証拠づくりと未所有の共通操作課題に集中する。
-"><h2><a href="../../docs/tasks/active/2026-09-20-whole-app-ux-coherence.md">学習・島・家の一続きの体験：学習直行・挑戦/記録・保護者動線、島からの本人切替を実装・対象検証。保護者の役割整理もローカル候補あり 次：1の候補で本人切替→島→家/本→学習→記録/保護者→同じ問題への復帰を照合。実機の音・読み上げ、利用者確認はBLOCKEDへ</a></h2><p class="path">docs/tasks/active/2026-09-20-whole-app-ux-coherence.md</p><p>起動前HTMLから庭/室内の実描画まで読み込み表示を接続。長い待機、module失敗、WebGL失敗と再試行を区別する。ぽこもこ/庭/室内/学習/保存の契約は維持。[実画面と検証](../../design/2026-09-29-island-loading/README.md)で4サイズの遅延・復旧・同じ学習への復帰、写真操作を確認。main `c1e3bebf` から本番へ反映し、公開両幅でも待機・復旧・同じ学習</p><details><summary>詳細を読む</summary><pre># Whole-app UX/UI Coherence
+"><h2><a href="../../docs/tasks/active/2026-09-20-whole-app-ux-coherence.md">学習・島・家の一続きの体験：v3で実初回→取得/配置→家/本→学習・同予約復帰・本人切替を両幅確認。案内対象・本人一覧の同期競合・Study重なりを修正 次：実機の音/読み上げ、利用者の無説明理解・再訪はBLOCKEDへ。確認済み経路の再実装はしない</a></h2><p class="path">docs/tasks/active/2026-09-20-whole-app-ux-coherence.md</p><p>固定ローカル候補 `7e9a6c7a-quality-final-v3-55d331f22e94` で、背景保存中の本人一覧、Studyのスキップと解答欄、初回設定の補助見出しを修正した。core 544 files / 4,803 tests、旧mode回帰のclassic smoke 32経路、現行Growingの主要経路390/768幅を確認。両幅20枚の実画面を独立した作者レビューで照合し、対象主要操作の重な</p><details><summary>詳細を読む</summary><pre># Whole-app UX/UI Coherence
+
+## 2026-10-09 ローカル品質検証の追補
+
+固定ローカル候補 `7e9a6c7a-quality-final-v3-55d331f22e94` で、背景保存中の本人一覧、Studyのスキップと解答欄、初回設定の補助見出しを修正した。core 544 files / 4,803 tests、旧mode回帰のclassic smoke 32経路、現行Growingの主要経路390/768幅を確認。両幅20枚の実画面を独立した作者レビューで照合し、対象主要操作の重なりや描画欠けがないことを確認した。classic smokeは現行Islandの画面証拠とは分ける。
+
+版・旅程・検査条件は[10月9日のローカル品質記録](../../design/2026-10-09-local-quality/README.md)に集約。子どもの無説明理解・安全・楽しさと実機評価はNOT_EVALUATED、公開は未実施。対象経路のローカル確認を全画面・利用者評価の完了へ広げず、本タスクの既存履歴・完了条件を保持して継続する。
 
 ## 2026-09-29 起動・読み込みと再試行
 
@@ -665,7 +681,13 @@ main `4002e67b` から本番へ反映済み。公開URLの390/768幅で初回学
 ### Risks
 
 - 「全体」を広げすぎて島v3、家、Nature Town、ブランド外部確認の既存ownerを複製しない。横断の証拠づくりと未所有の共通操作課題に集中する。
-</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">3・性能</h2><div class="grid"><article class="card" data-search="起動と物が増えた島の軽量化：旧lifeのraycast・頂点共有・影再利用を改善。本番反映の記録あり。旧30品desktop p95は38.2/55.6msで目標未達。growingへの改善効果は未認定 次：現行growingで起動/入室・人口と所有物増加を条件付き計測し、同じ保存で原因を絞る。iphoneの30秒待ち・電池/gpuは実機で確認 docs/tasks/active/2026-09-23-island-performance.md # island / iphone pwa performance
+</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">3・性能</h2><div class="grid"><article class="card" data-search="起動と物が増えた島の軽量化：同保存の前後36計測と混雑raf追加6回。固有資源の解放とpreview更新を改善し、配置→2rafは6条件で約5〜17%短縮。起動/入室/定常は混在 次：実時計で同期と重なる待ちを絞る。混雑390の操作可能待ちを解決済みにせず、実機の起動/電池/gpuは別確認 docs/tasks/active/2026-09-23-island-performance.md # island / iphone pwa performance
+
+## 2026-10-09 ローカル品質検証の追補
+
+固定ローカル候補 `7e9a6c7a-quality-final-v3-55d331f22e94` で、退出actorの固有描画資源と共有cacheの寿命、観測hookによるshader program keyの変化を修正した。同じstateの二重再構築を省き、配置候補・選択・ヒントの変更では建物・住人・船を保持する。資源寿命の診断とpreview保持の回帰確認は済み。資源解放の個数をgpuメモリやfps改善とは扱わない。
+
+nativeの変更前18件とv3同条件18件、混雑390のraf追加6回を完了。配置→2rafは6条件で約5〜17%短縮したが、起動/入室/定常は混在し、混雑390の保存同期に重なる操作待ちは残る。測定表・条件・中断結果の扱いは[10月9日のローカル品質記録](../../design/2026-10-09-local-quality/readme.md)を正本とし、測定成立のpassから全指標改善や本タスク完了を断定しない。実iphone/ipad・公開版の性能確認は別で、以下の履歴と完了条件を保持して継続する。
 
 ## 2026-09-29 待っている状態を表示
 
@@ -800,7 +822,13 @@ this is a performance implementation within the existing product rules, so the p
 - life-enabled `verify:core` passed: 460 files / 4,168 tests, lint (one existing islandmilestone fast-refresh warning), typecheck, build and asset budget. the production decorations journey passed at 390×844 and 768×1024 (tablet reduced motion): six real answers, earned purchase, rotate/move/store/re-place, abort/retry, offline reload and learning return, followed by a separate synthetic 30-item stress fixture. both stress scenes loaded 34 instances from eight glbs, retained 17 textures, switched lod, and had no page errors. phone placement and tablet stress screenshots were inspected for visible props/residents and controls.
 - local browser evidence: `output/playwright/runtime-props-20260924/browser/report.json`; operation-count diagnostic: `output/playwright/runtime-props-20260924/clone-count.json`. target `http://127.0.0.1:5298`, version `development-local:b761cc63-f444-40d7-8107-d092ddce3f07`, app/dist/harness fingerprint `3583321974cb0a09960d6a6867689645af002eb229fdd61c18efa28b46892671` matched at start/end. delivery island/life enabled, life preview/buildplay disabled; runtime assets `island-life-runtime-assets-v3`, home props `island-home-props-v1`.
 - this local renderer change is complete. no deployment, real iphone timing, new art approval, child comprehension/replay assessment or full release-matrix pass is claimed. ongoing per-frame rendering costs and installed-device measurement remain separate follow-ups.
-"><h2><a href="../../docs/tasks/active/2026-09-23-island-performance.md">起動と物が増えた島の軽量化：旧Lifeのraycast・頂点共有・影再利用を改善。本番反映の記録あり。旧30品desktop P95は38.2/55.6msで目標未達。Growingへの改善効果は未認定 次：現行Growingで起動/入室・人口と所有物増加を条件付き計測し、同じ保存で原因を絞る。iPhoneの30秒待ち・電池/GPUは実機で確認</a></h2><p class="path">docs/tasks/active/2026-09-23-island-performance.md</p><p>起動HTML、保存/module待機、庭/室内の実初回frameまで同じ配色の読み込み表示を実装。長い待機と失敗時の再試行を区別し、同じ保存で庭を描き直せる。[4サイズの実操作](../../design/2026-09-29-island-loading/README.md)で待機解除・保存保持・offline復帰を確認。main `c1e3bebf` を本番へ反映し、公開両幅もPASS。読み込み状態の可視化であり</p><details><summary>詳細を読む</summary><pre># Island / iPhone PWA performance
+"><h2><a href="../../docs/tasks/active/2026-09-23-island-performance.md">起動と物が増えた島の軽量化：同保存の前後36計測と混雑rAF追加6回。固有資源の解放とpreview更新を改善し、配置→2rAFは6条件で約5〜17%短縮。起動/入室/定常は混在 次：実時計で同期と重なる待ちを絞る。混雑390の操作可能待ちを解決済みにせず、実機の起動/電池/GPUは別確認</a></h2><p class="path">docs/tasks/active/2026-09-23-island-performance.md</p><p>固定ローカル候補 `7e9a6c7a-quality-final-v3-55d331f22e94` で、退出actorの固有描画資源と共有cacheの寿命、観測hookによるshader program keyの変化を修正した。同じstateの二重再構築を省き、配置候補・選択・ヒントの変更では建物・住人・船を保持する。資源寿命の診断とpreview保持の回帰確認は済み。資源解放の個数をGPUメモリやFPS改善とは扱わ</p><details><summary>詳細を読む</summary><pre># Island / iPhone PWA performance
+
+## 2026-10-09 ローカル品質検証の追補
+
+固定ローカル候補 `7e9a6c7a-quality-final-v3-55d331f22e94` で、退出actorの固有描画資源と共有cacheの寿命、観測hookによるshader program keyの変化を修正した。同じstateの二重再構築を省き、配置候補・選択・ヒントの変更では建物・住人・船を保持する。資源寿命の診断とpreview保持の回帰確認は済み。資源解放の個数をGPUメモリやFPS改善とは扱わない。
+
+nativeの変更前18件とv3同条件18件、混雑390のrAF追加6回を完了。配置→2rAFは6条件で約5〜17%短縮したが、起動/入室/定常は混在し、混雑390の保存同期に重なる操作待ちは残る。測定表・条件・中断結果の扱いは[10月9日のローカル品質記録](../../design/2026-10-09-local-quality/README.md)を正本とし、測定成立のPASSから全指標改善や本タスク完了を断定しない。実iPhone/iPad・公開版の性能確認は別で、以下の履歴と完了条件を保持して継続する。
 
 ## 2026-09-29 待っている状態を表示
 
@@ -935,7 +963,95 @@ This is a performance implementation within the existing product rules, so the p
 - Life-enabled `verify:core` passed: 460 files / 4,168 tests, lint (one existing IslandMilestone fast-refresh warning), typecheck, build and asset budget. The production decorations journey passed at 390×844 and 768×1024 (tablet reduced motion): six real answers, earned purchase, rotate/move/store/re-place, abort/retry, offline reload and learning return, followed by a separate synthetic 30-item stress fixture. Both stress scenes loaded 34 instances from eight GLBs, retained 17 textures, switched LOD, and had no page errors. Phone placement and tablet stress screenshots were inspected for visible props/residents and controls.
 - Local browser evidence: `output/playwright/runtime-props-20260924/browser/report.json`; operation-count diagnostic: `output/playwright/runtime-props-20260924/clone-count.json`. Target `http://127.0.0.1:5298`, version `development-local:b761cc63-f444-40d7-8107-d092ddce3f07`, app/dist/harness fingerprint `3583321974cb0a09960d6a6867689645af002eb229fdd61c18efa28b46892671` matched at start/end. Delivery Island/Life enabled, Life preview/BuildPlay disabled; runtime assets `island-life-runtime-assets-v3`, home props `island-home-props-v1`.
 - This local renderer change is complete. No deployment, real iPhone timing, new art approval, child comprehension/replay assessment or full release-matrix pass is claimed. Ongoing per-frame rendering costs and installed-device measurement remain separate follow-ups.
-</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">4・美術</h2><div class="grid"><article class="card" data-search="島・家・本・学習の見た目と理解を確認：メニュー・全画面・本の挿絵v6をローカル実装・撮影済み。橋も3サイズの実画面と元候補の一致を確認。仕様51/52全体の完成とは扱わない 次：1の固定候補のcritical-path接触シートを既存の採用候補と比較。視覚、理解/安全、runtimeを個別判定し、実機/利用者の未評価を残す docs/tasks/active/2026-09-27-living-fantasy-first-playable.md # 幻想の庭 — 最初の遊べる一周
+</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">4・美術</h2><div class="grid"><article class="card" data-search="島・家・本・学習の見た目と理解を確認：v3の主要20画面・同保存比較12画面を版/候補付きで保持。既存採用画面との作者レビュー、study/初回見出しの可読性を改善 次：世界全体の美術採用、子どもの魅力・理解/安全、実機は別。作者の確認と技術passで置き換えない docs/tasks/active/2026-09-27-living-fantasy-first-playable.md # 幻想の庭 — 最初の遊べる一周
+
+## 2026-10-11 三方向の拡張を本体へ実装
+
+利用者「一気に実装」を受け、[湾・森の回廊・丘と庭、8／16／32軒の実装](../../design/2026-10-11-expanding-island-runtime/readme.md)を制作。本人の全取得セルを残す連続床写像へ道・分数位置の足・回廊・橋・配置hit／移動previewを接続し、木の列は実所有に沿った複数の冠で横へ育つ。元の家・屋根色・成熟・所有id・保存4・学習・価格・時計を保持。三方向は固定タイプではなく土地選択と配置の比較。展示は本体と同じ`growingworld`でdbを書かず、編集可能な七つの実所有glbとblenderを残す。通常productionのnative美術flagはfalseを維持する。
+
+完了単位は床・成長形・操作と比較展示の統合。原本の深い湾・高い段泉・地区の密度、32軒の構図は美術hold。独立観察n=0、実機性能・実時間成熟・公開は継続する。既存の自由造形v6は目標の履歴で、今回の固定productionの実画面へ読み替えない。
+
+固定a3 `native05-expanding-a3:514ee4e9-b099-4d77-a44b-11a6f839e44f`はcore568 files／4,991 tests、通常取得3幅・各21回答、成熟40組／74画面、拡張12組／24画面、故障2組／8画面、sw通常／中断／rollback4組／18画面がpass。標準dev smoke32と、七つの実所有glb／blenderを確認。build後はqaの入力準備とdev展示の読込表示だけを補正し、現行本体のruntime入力と固定版を照合した。[完成像との差と三ゲート](../../design/2026-10-11-expanding-island-runtime/gate-review.json)は作者42／60・美術hold、独立理解／安全not_evaluated、対象runtime pass。
+
+## 2026-10-11 同じ所有物から全島の造形を確認
+
+利用者「美術やって」「続けて」を受け、[丘と入り江・同じ家8軒の全島3d](../../design/2026-10-11-island-landscape-art/readme.md)を別の編集可能な造形案v6として制作した。本体a6と同じ27配置物・2収納物を固定し、家の実mesh・成熟・屋根色と所有idを保持。原本の深い湾・丘・三段泉・空洞幹・花と殻を島全体の構図へ使う。自由な美術anchorであり、保存セルの隣接・通行・床へ投影済みとは扱わない。全景を先に確認してから、一つの共有床写像を先行試作する。24実画面の表示とファイル整合はpass。作者の美術46/60・hold、独立観察n=0、本体runtimeは未接続で、包括美術と本体への到達は継続する。
+
+## 2026-10-11 原本の部品を本人の島へ接続
+
+利用者「続けて」に対し、[採用した3dを自分の島へ移す](../../design/2026-10-11-native-owned-island/readme.md)を実装。原本の家・樹種・扇葉・花弁・透ける殻を損失なく部品化し、本人の同じ所有id・成熟・配置・屋根色へ接続する。回廊の実床と頭上の余白、選択/移動/収納/分離/再接続、読み込み失敗からの復帰を扱う。価格・取得・人口・時計・保存形式・学習は変更しない。通常productionの既定はfalse。
+
+今回の完了単位は原本部品と所有/実床の対応。深い入り江、高い三段泉、地区の密度と余白は全島目標との差として残し、地形と床の制作を次の主課題とする。技術検査、利用者の美術採用、子どもの独立観察n=0、実機/公開を分けて記録し、包括美術タスク全体は閉じない。
+
+最終固定a6はcore566 files/4,984 tests、通常取得390/768/320の各21回答、明示成熟40組/全74画面、元所有物の収納/再接続と実利用、破損kit/実context loss復帰2幅、実swの通常/中断4ケース/18画面がpass。同じ原本/kit、実root・版・flag、app/qa入力の開始終了と固定buildを照合した。保存4→4の美術切替であり、旧3→4migrationや実時間成熟へ流用しない。作者の全島美術は41/60、hold。courtの実経路に対応した空洞本体は原本の幹meshではなく、幹の比例も残る差へ明記した。[比較・判定と原証拠](../../design/2026-10-11-native-owned-island/readme.md)を現在地とする。
+
+## 2026-10-11 全島の成長美術
+
+利用者「美術やって」を受け、[小さな島・育ち途中・育った島](../../design/2026-10-11-island-growth-art/readme.md)の実3d美術を制作。成熟native-05は変更せず、若い二段階の海岸線と起伏、平らな道、下降する水路、扇葉の若木、空洞と回廊、若い花、開いた貝を編集可能なblenderとglbへ造形した。同じ全景cameraと家の縮尺、主要な場所の座標で比較し、本体の明示した美術確認へ接続した。近景の地形の縞と岸の不連続を修正し、固定a3の60昼夕画面・成熟原本との10比較組・所有不変/通常島と学習への帰還・実context lossからの復帰、core564 files/4,966 tests、通常配布へ三段階glbを含めない境界を確認。通常smokeは31/32で、未変更の回答helperが数列の穴埋めを処理できず1件失敗した記録を保持する。所有・保存形式・価格・時計・学習は変更しない。完了単位は美術と表示。新しい二段階の採用、子どもの独立観察n=0、所有/実床/通行へ同じ部品を対応させる工程は継続する。
+
+## 2026-10-10 完成全島を先に本体で確認する制作順へ
+
+利用者「なんとかして。作る順番の戦略が重要じゃない？」に対し、完成全島→地形/入口/実床→同じ部品から成長段階→組み合わせ/暮らしへ順序を改訂。[原本転写](../../design/2026-10-10-native-art-transfer/readme.md)を実装。native-05原本の3690mesh/80材質/布textureと尺度を維持し、本体内の明示した美術確認で全景・森・水庭・入り江・花庭、昼夕を描く。30部品への分類と原buffer/transform一致を記録した。通常配布へは切り替えず、モデルの15軒/人物を本人の所有や人口へ数えない。通常の所有・成長の本体v3はholdのまま。固定美術buildの390/768幅で20昼夕画面・同cameraの10比較組、所有不変、通常島/学習への帰還、読み込みと実context lossからの復帰を確認。通常buildには原本glb/美術確認jsを含めない境界も確認した。次の地形/実床と所有部品の対応、包括美術採用、実機/子どもの評価は継続する。
+
+## 2026-10-10 本体v3の美術差し戻し
+
+利用者「全く届いてないけどどうしたらいい？」を受け、作者のgo_local_v3_directionを撤回し、全島美術をholdへ戻す。仕組みの検査結果は保持するが美術合格へ広げない。[再制作方針](../../design/2026-10-10-growing-place-runtime/art-recovery.md)に従い、採用済みnative05を美術原本として本体内の完成全景を先に再現する。地形・外形・地区の配置/密度・主景の造形と素材・画角を合わせた後、既存の所有/隣接/成熟/分離へ接続する。完成全島glbを固定背景として置いて終えない。
+
+## 2026-10-10 育つ場所d1〜d4を本体へ統合
+
+利用者「一気に実装」に従い、native-05をもとに任意の6目標・15配置・4関係を本体へ接続した。接続の形と成熟から実3dの森/回廊・段泉・共同広場・花の屋根を生成し、同じ床と通行経路でぽこもこと住人が実際に使う。元の所有id・育成時計・家/見た目・学習と価格を保ち、分離では現在の利用判定を戻し、初回の記念は保持する。保存はrecord4/専用placedislandsへ移し、旧writer隔離と更新/互換復旧を検査する。[実装契約](../../product/island-place-goals.md)と[保存の決定](../../adr/2026-10-10-growing-place-runtime.md)が現在地。このd1〜d4のローカル実装単位は固定候補qaと実画面比較まで完了した。[実装の証拠](../../design/2026-10-10-growing-place-runtime/readme.md)に通常取得3旅程と成熟40組、coreと保存/更新を保存する。native05の森/庭の密度、深い入り江、段差と滝にはまだ大きな差があり、全景の美術完成と本タスク全体は継続。公開・実機・独立した子どもの理解/再訪・実時間7日成熟は別ゲートとして残す。以下は制作段階ごとの履歴。
+
+## 2026-10-10 採用した全島を目標と仕組みへ
+
+利用者「いい感じ。これをもとに…ゴール戦略や仕組みに落として」を受け、native-05を美術方向として採用。[育つ場所の目標と組み合わせ](../../product/island-place-goals.md)と初期値json、[設計ショーケース](../../design/2026-10-10-island-place-goals/index.html)へ、任意の6目標・15配置例・4つの場所の関係・d1〜d4を定義。所有物は消費せず、接続の形/既存時計の成熟/実際の利用を一緒に扱う。個数は試作初期値で、本体の価格/時計/学習/保存は未変更。次はd1/p01の実取得から接続・成熟・利用・分離の一周。資料の完成と全ゲームの統合・独立観察は別に閉じる。
+
+## 2026-10-10 白さに頼った幻想性を改める
+
+利用者「幻想的が白いだけにみえる」でnative-04を差し戻し。実物と部分検査を履歴へ保存し、native-05は青紫/翡翠の葉と琥珀色の大樹、鉱石の空洞を水源に持つ青い段泉、色を透かす貝殻状の共同屋根へ改訂した。昼の照明でも色を残し、[全景・近景と検証](../../design/2026-10-10-island-final-3d/verification.md)を同じglb revisionで記録。元の8軒/住人の頂点、住人uv/布を照合した。完了単位は実3d美術1案の改訂と独立表示。利用者の採用、取得/接続/成長状態列、包括ゲーム統合は継続する。
+
+## 2026-10-10 全島のバラエティを空間から作り直す
+
+成長後のnative-03にも「バラエティ豊かじゃない」「幻想的感がやや単調」と指摘。面積や樹種の追加だけでは解消していないため、native-04で大樹の内部/枝の回廊、連続する水の段庭、透ける貝殻状の集会所、丸い傘屋根/葉屋根の家を実造形する。元の8軒と相棒の形/布を維持し、実際に提示したnative-03を履歴保存。昼の全景と回転できる近景で形/素材/空間の差を確認する。美術1案の改訂を扱い、包括タスクの完了や採用済み成長規則にはしない。
+
+## 2026-10-10 成長後の全島を同じ縮尺で比較
+
+利用者「参考と比べて単調な感じある？」「もっと大きくなった場合のしまのほうが魅力あるかな」を受け、native-03の成長後の全島を実制作。元の8軒/住人の形と尺度を保ち、丘の集落・白木と尖塔状の森・小川/泉・入り江と共同の建物を一続きの地形に造形する。native-02の実物を保存し、同じcamera/尺度で切り替える。大きいだけで魅力が増したとは扱わず、景色の切り替わりと近景/全景の魅力を実物から判断する。美術採用とゲーム統合/成長規則/実機は引き続き別。
+
+## 2026-10-10 全島3dの幻想性を再制作
+
+利用者「参考サイトはもっと幻想的よね」でnative-01を差し戻し。[現在の全島実3d](../../design/2026-10-10-island-final-3d/readme.md)をnative-02へ改訂する。泉/段/滝と入り江、垂れる葉、共有の花の屋根、水の浅さ/反射と明るい夕の光を同じ島として造形する。元の住人を維持し、画像生成は追加しない。前版の技術passは視覚採用の証拠にせず、実物から再判断する。包括美術とゲームの成長実装は継続。
+
+## 2026-10-10 全島の完成目標を実際の3dで1案制作
+
+最新指示「実際につくる」「最終ゴールの美術3d」「例を1つ」「画像生成でうまくいかなかった」を優先し、画像生成の追加・3方向比較を終了。[全島の実3d美術](../../design/2026-10-10-island-final-3d/readme.md)として、blenderで地形/入り江/橋/接続した森の庭/花木の庭/共有広場と家々を一体で造形。住人は既存のメッシュ/uv/布atlasを機械的に移し、顔や頭身を再生成しない。編集可能なblenderファイル、glb、実モデルの全景レンダーと回転/近景表示を残す。これは制作上の成熟例。利用者の最終採用、自然な取得/配置適応/成長状態列、実ゲームへの統合は次の段階として継続する。
+
+## 2026-10-10 全島の美術へ範囲を修正（生成画像の履歴）
+
+「ひとつじゃなくて島全体」の指摘を受け、木3方向を主比較にした範囲を改めた。[全島3方向×初期/発展途中/成熟](../../design/2026-10-10-whole-island-art-directions/index.html)をbuilt-in image_genで制作。入り江/丘と水路/庭と街区の3案で、岸・起伏・水・森/庭・家の成熟/広場・往来を一体で扱う。元の家/住人/取得済み床を保持する固定版は次の作業。生成の枠幅/camera/土地/個体のずれを記録し、最終基準は未選定。**全島の美術を先に揃え、実装を分けても全景と照合する**方針へ構築/美術戦略を更新。前回の局所画像を全体承認に昇格させない。runtime実装は未着手、包括美術タスクは継続。
+
+## 2026-10-10 実装前の美術で完成像を比較
+
+「まず美術で再現して最終ゴールを揃える」に対応し、[全体像1枚と木の3方向×3段階](../../design/2026-10-10-place-growth-art-directions/index.html)をbuilt-in image_genで制作。明るい初期島と既存ぽこもこを基準に、樹冠の庭・枝の道・開けた広場を比較する。全体像は将来の水/地形/複数地区も含む相談用の仮案。選定・最終造形・runtime実装は保留。生成の本数/位置/住人の細部のずれを記録した。次は利用者の近い方向をもとに同カメラ・同所有・同造形の固定版を作り、その初期/成熟状態から実3dを照合する。b全体と包括美術タスクは継続。
+
+## 2026-10-10 根本の構築・美術戦略の改訂
+
+「デザイン戦略と島構築戦略を根本から」の依頼で、[構築戦略](../../product/island-construction-strategy.md)、[現仕様と実装の監査](../../design/2026-10-10-island-design-strategy/construction-audit.md)、[adr](../../adr/2026-10-10-place-first-island-strategy.md)を追加し、美術戦略と32枚のショーケースをv3へ改訂。単体モデルと矩形土地中心の構造を確認し、土地/水と余白/植物/集落/固有の不思議の五層、即時適応/成熟/関係からの発見を一体にした。同じ材料の配置差、同じ配置の成熟差、同じ人口の場所差を比較する。
+
+今回の完了は戦略と制作資料。runtimeコード・学習・保存・公開は変更しない。次のbは木の同材料/同成熟で離す・列・塊・中庭を最低3造形方向で比較し、cで実住人が使う成長の一周へ進む。水と新しい地区の地形はd、複数の場所と集落はe、発見と全体採用はf。[担当境界と成果物](../../product/island-construction-strategy.md#12-作る順序を変える)。最終造形・閾値・地形/保存の切替は未実装。個別の規則は52、保存は13、美術は51の担当章を先に更新する。包括美術タスク全体は継続。
+
+## 2026-10-10 全体のデザイン戦略と参考ショーケース
+
+ユーザーの「単品導入ではなく、デザイン戦略と多くの参考画像で今後改善できるように」に対応。[戦略の正本](../../product/island-art-strategy.md)と[32枚のショーケース](../../design/2026-10-10-island-design-strategy/index.html)を制作。little habitatsの9場面、補助の公式紹介8枚、sansu実画面10枚、未選定の生成4枚を区別し、観察・転用/非転用・確認仮説を付けた。初期の明るく丸い3dという好みと、灯り追加では幻想性が不足という指摘を判断の出発点にする。
+
+続く「小物が増えるだけでは魅力がない」「隣と合体して大きなものが育つ」「simcityも同様」という指摘をv2の中心へ反映。利用者提供の現状u-01を追加し計32枚。[場所の成長設計案](../../product/island-place-growth-proposal.md)に木・水・花・家の四系列、接続/分離、元の所有と育成履歴を保つ方針を記録。接続条件・個数・時計・効果は未採用。公式に確認した参考作品の規則と、sansuへの翻訳仮説を分ける。
+
+今回の資料制作は完了範囲。ゲームruntime・学習・保存・公開はこの依頼では変更しない。次の美術作業は、木の接続前→接続→大樹の庭の状態列を同じ画角で最低3方向選定→実3dの昼夜/成長3状態→入口から帰島まで同版照合→動きと独立評価の順。新たな美術採用と無説明理解/実機はnot_evaluated。美術タスク全体は継続し、灯りや粒子の追加を完成の代わりにしない。
+
+## 2026-10-09 ローカル品質検証の追補
+
+固定ローカル候補 `7e9a6c7a-quality-final-v3-55d331f22e94` の入口・島・家・本・学習を390/768幅で確認。採用済みquiet-homeと両幅20枚の実画面を独立した作者レビューで照合し、常設ui・島の見える面積・既存表現を保持し、対象主要操作の重なりや描画欠けがないことを確認した。同候補のcore 544 files / 4,803 tests、classic smoke 32経路、現行growingの主要経路両幅も確認済み。技術検査を美術評価の代わりにはしない。
+
+版・候補・旅程と視覚/runtimeの判定は[10月9日のローカル品質記録](../../design/2026-10-09-local-quality/readme.md)を参照。世界全体の新たな美術採用ではなく、子どもの無説明理解・安全・楽しさと実機評価はnot_evaluated、公開は未実施。包括仕様と本タスク全体は閉じず、以下の履歴・完了条件・独立した評価ゲートを保持する。
 
 ## 2026-09-29 入室の復元
 
@@ -1001,7 +1117,95 @@ b方向の実3d地形・家・曲がった枝葉・相棒・昼夕夜、通常�
 ## 2026-09-27 本番統合
 
 元のぽこもこを保つv2を、自然の育成・運搬・食事・水路・土とともに家庭内本番へ統合。[公開記録](../../design/2026-09-27-fantasy-production/readme.md)に固定build・旧→新/中断/互換復旧・実購入/offline・三ゲートを保存した。全v1の完成とは区別し、入口・家の美術統一、30品時の軽量化、実機・子どもの観察は継続する。
-"><h2><a href="../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md">島・家・本・学習の見た目と理解を確認：メニュー・全画面・本の挿絵v6をローカル実装・撮影済み。橋も3サイズの実画面と元候補の一致を確認。仕様51/52全体の完成とは扱わない 次：1の固定候補のcritical-path接触シートを既存の採用候補と比較。視覚、理解/安全、runtimeを個別判定し、実機/利用者の未評価を残す</a></h2><p class="path">docs/tasks/active/2026-09-27-living-fantasy-first-playable.md</p><p>家の外観だけで止まる変更を取り消し、「いえ」と庭の家から既存の室内overviewへ直接入る。床の移動・棚・アルバム・写真と庭への帰還を維持する。家の外観は庭に残す。ぽこもこの造形変更はない。[実画面と回帰確認](../../design/2026-09-29-house-interior-restore/README.md)。 main `4002e67b` から本番へ反映済み。公開URLの390/768幅で初回学</p><details><summary>詳細を読む</summary><pre># 幻想の庭 — 最初の遊べる一周
+"><h2><a href="../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md">島・家・本・学習の見た目と理解を確認：v3の主要20画面・同保存比較12画面を版/候補付きで保持。既存採用画面との作者レビュー、Study/初回見出しの可読性を改善 次：世界全体の美術採用、子どもの魅力・理解/安全、実機は別。作者の確認と技術PASSで置き換えない</a></h2><p class="path">docs/tasks/active/2026-09-27-living-fantasy-first-playable.md</p><p>利用者「一気に実装」を受け、[湾・森の回廊・丘と庭、8／16／32軒の実装](../../design/2026-10-11-expanding-island-runtime/README.md)を制作。本人の全取得セルを残す連続床写像へ道・分数位置の足・回廊・橋・配置hit／移動previewを接続し、木の列は実所有に沿った複数の冠で横へ育つ。元の家・屋根色・成熟・所有ID・保存4・学習・価格・時計を保持。三方向は</p><details><summary>詳細を読む</summary><pre># 幻想の庭 — 最初の遊べる一周
+
+## 2026-10-11 三方向の拡張を本体へ実装
+
+利用者「一気に実装」を受け、[湾・森の回廊・丘と庭、8／16／32軒の実装](../../design/2026-10-11-expanding-island-runtime/README.md)を制作。本人の全取得セルを残す連続床写像へ道・分数位置の足・回廊・橋・配置hit／移動previewを接続し、木の列は実所有に沿った複数の冠で横へ育つ。元の家・屋根色・成熟・所有ID・保存4・学習・価格・時計を保持。三方向は固定タイプではなく土地選択と配置の比較。展示は本体と同じ`GrowingWorld`でDBを書かず、編集可能な七つの実所有GLBとBlenderを残す。通常productionのnative美術flagはfalseを維持する。
+
+完了単位は床・成長形・操作と比較展示の統合。原本の深い湾・高い段泉・地区の密度、32軒の構図は美術HOLD。独立観察N=0、実機性能・実時間成熟・公開は継続する。既存の自由造形v6は目標の履歴で、今回の固定productionの実画面へ読み替えない。
+
+固定A3 `native05-expanding-a3:514ee4e9-b099-4d77-a44b-11a6f839e44f`はcore568 files／4,991 tests、通常取得3幅・各21回答、成熟40組／74画面、拡張12組／24画面、故障2組／8画面、SW通常／中断／rollback4組／18画面がPASS。標準DEV smoke32と、七つの実所有GLB／Blenderを確認。build後はQAの入力準備とDEV展示の読込表示だけを補正し、現行本体のruntime入力と固定版を照合した。[完成像との差と三ゲート](../../design/2026-10-11-expanding-island-runtime/gate-review.json)は作者42／60・美術HOLD、独立理解／安全NOT_EVALUATED、対象runtime PASS。
+
+## 2026-10-11 同じ所有物から全島の造形を確認
+
+利用者「美術やって」「続けて」を受け、[丘と入り江・同じ家8軒の全島3D](../../design/2026-10-11-island-landscape-art/README.md)を別の編集可能な造形案v6として制作した。本体A6と同じ27配置物・2収納物を固定し、家の実mesh・成熟・屋根色と所有IDを保持。原本の深い湾・丘・三段泉・空洞幹・花と殻を島全体の構図へ使う。自由な美術anchorであり、保存セルの隣接・通行・床へ投影済みとは扱わない。全景を先に確認してから、一つの共有床写像を先行試作する。24実画面の表示とファイル整合はPASS。作者の美術46/60・HOLD、独立観察N=0、本体runtimeは未接続で、包括美術と本体への到達は継続する。
+
+## 2026-10-11 原本の部品を本人の島へ接続
+
+利用者「続けて」に対し、[採用した3Dを自分の島へ移す](../../design/2026-10-11-native-owned-island/README.md)を実装。原本の家・樹種・扇葉・花弁・透ける殻を損失なく部品化し、本人の同じ所有ID・成熟・配置・屋根色へ接続する。回廊の実床と頭上の余白、選択/移動/収納/分離/再接続、読み込み失敗からの復帰を扱う。価格・取得・人口・時計・保存形式・学習は変更しない。通常productionの既定はfalse。
+
+今回の完了単位は原本部品と所有/実床の対応。深い入り江、高い三段泉、地区の密度と余白は全島目標との差として残し、地形と床の制作を次の主課題とする。技術検査、利用者の美術採用、子どもの独立観察N=0、実機/公開を分けて記録し、包括美術タスク全体は閉じない。
+
+最終固定A6はcore566 files/4,984 tests、通常取得390/768/320の各21回答、明示成熟40組/全74画面、元所有物の収納/再接続と実利用、破損kit/実context loss復帰2幅、実SWの通常/中断4ケース/18画面がPASS。同じ原本/kit、実root・版・flag、app/QA入力の開始終了と固定buildを照合した。保存4→4の美術切替であり、旧3→4migrationや実時間成熟へ流用しない。作者の全島美術は41/60、HOLD。courtの実経路に対応した空洞本体は原本の幹meshではなく、幹の比例も残る差へ明記した。[比較・判定と原証拠](../../design/2026-10-11-native-owned-island/README.md)を現在地とする。
+
+## 2026-10-11 全島の成長美術
+
+利用者「美術やって」を受け、[小さな島・育ち途中・育った島](../../design/2026-10-11-island-growth-art/README.md)の実3D美術を制作。成熟native-05は変更せず、若い二段階の海岸線と起伏、平らな道、下降する水路、扇葉の若木、空洞と回廊、若い花、開いた貝を編集可能なBlenderとGLBへ造形した。同じ全景cameraと家の縮尺、主要な場所の座標で比較し、本体の明示した美術確認へ接続した。近景の地形の縞と岸の不連続を修正し、固定A3の60昼夕画面・成熟原本との10比較組・所有不変/通常島と学習への帰還・実context lossからの復帰、core564 files/4,966 tests、通常配布へ三段階GLBを含めない境界を確認。通常smokeは31/32で、未変更の回答helperが数列の穴埋めを処理できず1件失敗した記録を保持する。所有・保存形式・価格・時計・学習は変更しない。完了単位は美術と表示。新しい二段階の採用、子どもの独立観察N=0、所有/実床/通行へ同じ部品を対応させる工程は継続する。
+
+## 2026-10-10 完成全島を先に本体で確認する制作順へ
+
+利用者「なんとかして。作る順番の戦略が重要じゃない？」に対し、完成全島→地形/入口/実床→同じ部品から成長段階→組み合わせ/暮らしへ順序を改訂。[原本転写](../../design/2026-10-10-native-art-transfer/README.md)を実装。native-05原本の3690mesh/80材質/布textureと尺度を維持し、本体内の明示した美術確認で全景・森・水庭・入り江・花庭、昼夕を描く。30部品への分類と原buffer/transform一致を記録した。通常配布へは切り替えず、モデルの15軒/人物を本人の所有や人口へ数えない。通常の所有・成長の本体v3はHOLDのまま。固定美術buildの390/768幅で20昼夕画面・同cameraの10比較組、所有不変、通常島/学習への帰還、読み込みと実context lossからの復帰を確認。通常buildには原本GLB/美術確認JSを含めない境界も確認した。次の地形/実床と所有部品の対応、包括美術採用、実機/子どもの評価は継続する。
+
+## 2026-10-10 本体v3の美術差し戻し
+
+利用者「全く届いてないけどどうしたらいい？」を受け、作者のGO_LOCAL_V3_DIRECTIONを撤回し、全島美術をHOLDへ戻す。仕組みの検査結果は保持するが美術合格へ広げない。[再制作方針](../../design/2026-10-10-growing-place-runtime/art-recovery.md)に従い、採用済みnative05を美術原本として本体内の完成全景を先に再現する。地形・外形・地区の配置/密度・主景の造形と素材・画角を合わせた後、既存の所有/隣接/成熟/分離へ接続する。完成全島GLBを固定背景として置いて終えない。
+
+## 2026-10-10 育つ場所D1〜D4を本体へ統合
+
+利用者「一気に実装」に従い、native-05をもとに任意の6目標・15配置・4関係を本体へ接続した。接続の形と成熟から実3Dの森/回廊・段泉・共同広場・花の屋根を生成し、同じ床と通行経路でぽこもこと住人が実際に使う。元の所有ID・育成時計・家/見た目・学習と価格を保ち、分離では現在の利用判定を戻し、初回の記念は保持する。保存はrecord4/専用placedIslandsへ移し、旧writer隔離と更新/互換復旧を検査する。[実装契約](../../product/island-place-goals.md)と[保存の決定](../../adr/2026-10-10-growing-place-runtime.md)が現在地。このD1〜D4のローカル実装単位は固定候補QAと実画面比較まで完了した。[実装の証拠](../../design/2026-10-10-growing-place-runtime/README.md)に通常取得3旅程と成熟40組、coreと保存/更新を保存する。native05の森/庭の密度、深い入り江、段差と滝にはまだ大きな差があり、全景の美術完成と本タスク全体は継続。公開・実機・独立した子どもの理解/再訪・実時間7日成熟は別ゲートとして残す。以下は制作段階ごとの履歴。
+
+## 2026-10-10 採用した全島を目標と仕組みへ
+
+利用者「いい感じ。これをもとに…ゴール戦略や仕組みに落として」を受け、native-05を美術方向として採用。[育つ場所の目標と組み合わせ](../../product/island-place-goals.md)と初期値JSON、[設計ショーケース](../../design/2026-10-10-island-place-goals/index.html)へ、任意の6目標・15配置例・4つの場所の関係・D1〜D4を定義。所有物は消費せず、接続の形/既存時計の成熟/実際の利用を一緒に扱う。個数は試作初期値で、本体の価格/時計/学習/保存は未変更。次はD1/P01の実取得から接続・成熟・利用・分離の一周。資料の完成と全ゲームの統合・独立観察は別に閉じる。
+
+## 2026-10-10 白さに頼った幻想性を改める
+
+利用者「幻想的が白いだけにみえる」でnative-04を差し戻し。実物と部分検査を履歴へ保存し、native-05は青紫/翡翠の葉と琥珀色の大樹、鉱石の空洞を水源に持つ青い段泉、色を透かす貝殻状の共同屋根へ改訂した。昼の照明でも色を残し、[全景・近景と検証](../../design/2026-10-10-island-final-3d/verification.md)を同じGLB revisionで記録。元の8軒/住人の頂点、住人UV/布を照合した。完了単位は実3D美術1案の改訂と独立表示。利用者の採用、取得/接続/成長状態列、包括ゲーム統合は継続する。
+
+## 2026-10-10 全島のバラエティを空間から作り直す
+
+成長後のnative-03にも「バラエティ豊かじゃない」「幻想的感がやや単調」と指摘。面積や樹種の追加だけでは解消していないため、native-04で大樹の内部/枝の回廊、連続する水の段庭、透ける貝殻状の集会所、丸い傘屋根/葉屋根の家を実造形する。元の8軒と相棒の形/布を維持し、実際に提示したnative-03を履歴保存。昼の全景と回転できる近景で形/素材/空間の差を確認する。美術1案の改訂を扱い、包括タスクの完了や採用済み成長規則にはしない。
+
+## 2026-10-10 成長後の全島を同じ縮尺で比較
+
+利用者「参考と比べて単調な感じある？」「もっと大きくなった場合のしまのほうが魅力あるかな」を受け、native-03の成長後の全島を実制作。元の8軒/住人の形と尺度を保ち、丘の集落・白木と尖塔状の森・小川/泉・入り江と共同の建物を一続きの地形に造形する。native-02の実物を保存し、同じcamera/尺度で切り替える。大きいだけで魅力が増したとは扱わず、景色の切り替わりと近景/全景の魅力を実物から判断する。美術採用とゲーム統合/成長規則/実機は引き続き別。
+
+## 2026-10-10 全島3Dの幻想性を再制作
+
+利用者「参考サイトはもっと幻想的よね」でnative-01を差し戻し。[現在の全島実3D](../../design/2026-10-10-island-final-3d/README.md)をnative-02へ改訂する。泉/段/滝と入り江、垂れる葉、共有の花の屋根、水の浅さ/反射と明るい夕の光を同じ島として造形する。元の住人を維持し、画像生成は追加しない。前版の技術PASSは視覚採用の証拠にせず、実物から再判断する。包括美術とゲームの成長実装は継続。
+
+## 2026-10-10 全島の完成目標を実際の3Dで1案制作
+
+最新指示「実際につくる」「最終ゴールの美術3D」「例を1つ」「画像生成でうまくいかなかった」を優先し、画像生成の追加・3方向比較を終了。[全島の実3D美術](../../design/2026-10-10-island-final-3d/README.md)として、Blenderで地形/入り江/橋/接続した森の庭/花木の庭/共有広場と家々を一体で造形。住人は既存のメッシュ/UV/布atlasを機械的に移し、顔や頭身を再生成しない。編集可能なBlenderファイル、GLB、実モデルの全景レンダーと回転/近景表示を残す。これは制作上の成熟例。利用者の最終採用、自然な取得/配置適応/成長状態列、実ゲームへの統合は次の段階として継続する。
+
+## 2026-10-10 全島の美術へ範囲を修正（生成画像の履歴）
+
+「ひとつじゃなくて島全体」の指摘を受け、木3方向を主比較にした範囲を改めた。[全島3方向×初期/発展途中/成熟](../../design/2026-10-10-whole-island-art-directions/index.html)をbuilt-in image_genで制作。入り江/丘と水路/庭と街区の3案で、岸・起伏・水・森/庭・家の成熟/広場・往来を一体で扱う。元の家/住人/取得済み床を保持する固定版は次の作業。生成の枠幅/camera/土地/個体のずれを記録し、最終基準は未選定。**全島の美術を先に揃え、実装を分けても全景と照合する**方針へ構築/美術戦略を更新。前回の局所画像を全体承認に昇格させない。runtime実装は未着手、包括美術タスクは継続。
+
+## 2026-10-10 実装前の美術で完成像を比較
+
+「まず美術で再現して最終ゴールを揃える」に対応し、[全体像1枚と木の3方向×3段階](../../design/2026-10-10-place-growth-art-directions/index.html)をbuilt-in image_genで制作。明るい初期島と既存ぽこもこを基準に、樹冠の庭・枝の道・開けた広場を比較する。全体像は将来の水/地形/複数地区も含む相談用の仮案。選定・最終造形・runtime実装は保留。生成の本数/位置/住人の細部のずれを記録した。次は利用者の近い方向をもとに同カメラ・同所有・同造形の固定版を作り、その初期/成熟状態から実3Dを照合する。B全体と包括美術タスクは継続。
+
+## 2026-10-10 根本の構築・美術戦略の改訂
+
+「デザイン戦略と島構築戦略を根本から」の依頼で、[構築戦略](../../product/island-construction-strategy.md)、[現仕様と実装の監査](../../design/2026-10-10-island-design-strategy/construction-audit.md)、[ADR](../../adr/2026-10-10-place-first-island-strategy.md)を追加し、美術戦略と32枚のショーケースをv3へ改訂。単体モデルと矩形土地中心の構造を確認し、土地/水と余白/植物/集落/固有の不思議の五層、即時適応/成熟/関係からの発見を一体にした。同じ材料の配置差、同じ配置の成熟差、同じ人口の場所差を比較する。
+
+今回の完了は戦略と制作資料。runtimeコード・学習・保存・公開は変更しない。次のBは木の同材料/同成熟で離す・列・塊・中庭を最低3造形方向で比較し、Cで実住人が使う成長の一周へ進む。水と新しい地区の地形はD、複数の場所と集落はE、発見と全体採用はF。[担当境界と成果物](../../product/island-construction-strategy.md#12-作る順序を変える)。最終造形・閾値・地形/保存の切替は未実装。個別の規則は52、保存は13、美術は51の担当章を先に更新する。包括美術タスク全体は継続。
+
+## 2026-10-10 全体のデザイン戦略と参考ショーケース
+
+ユーザーの「単品導入ではなく、デザイン戦略と多くの参考画像で今後改善できるように」に対応。[戦略の正本](../../product/island-art-strategy.md)と[32枚のショーケース](../../design/2026-10-10-island-design-strategy/index.html)を制作。Little Habitatsの9場面、補助の公式紹介8枚、Sansu実画面10枚、未選定の生成4枚を区別し、観察・転用/非転用・確認仮説を付けた。初期の明るく丸い3Dという好みと、灯り追加では幻想性が不足という指摘を判断の出発点にする。
+
+続く「小物が増えるだけでは魅力がない」「隣と合体して大きなものが育つ」「SimCityも同様」という指摘をv2の中心へ反映。利用者提供の現状U-01を追加し計32枚。[場所の成長設計案](../../product/island-place-growth-proposal.md)に木・水・花・家の四系列、接続/分離、元の所有と育成履歴を保つ方針を記録。接続条件・個数・時計・効果は未採用。公式に確認した参考作品の規則と、Sansuへの翻訳仮説を分ける。
+
+今回の資料制作は完了範囲。ゲームruntime・学習・保存・公開はこの依頼では変更しない。次の美術作業は、木の接続前→接続→大樹の庭の状態列を同じ画角で最低3方向選定→実3Dの昼夜/成長3状態→入口から帰島まで同版照合→動きと独立評価の順。新たな美術採用と無説明理解/実機はNOT_EVALUATED。美術タスク全体は継続し、灯りや粒子の追加を完成の代わりにしない。
+
+## 2026-10-09 ローカル品質検証の追補
+
+固定ローカル候補 `7e9a6c7a-quality-final-v3-55d331f22e94` の入口・島・家・本・学習を390/768幅で確認。採用済みquiet-homeと両幅20枚の実画面を独立した作者レビューで照合し、常設UI・島の見える面積・既存表現を保持し、対象主要操作の重なりや描画欠けがないことを確認した。同候補のcore 544 files / 4,803 tests、classic smoke 32経路、現行Growingの主要経路両幅も確認済み。技術検査を美術評価の代わりにはしない。
+
+版・候補・旅程と視覚/runtimeの判定は[10月9日のローカル品質記録](../../design/2026-10-09-local-quality/README.md)を参照。世界全体の新たな美術採用ではなく、子どもの無説明理解・安全・楽しさと実機評価はNOT_EVALUATED、公開は未実施。包括仕様と本タスク全体は閉じず、以下の履歴・完了条件・独立した評価ゲートを保持する。
 
 ## 2026-09-29 入室の復元
 
@@ -1074,6 +1278,10 @@ B方向の実3D地形・家・曲がった枝葉・相棒・昼夕夜、通常�
 - 状態: 段階1〜6実装、10/1初回本番切替済み。最新候補の公開/更新検証は公開準備タスク、実保存・実機・子どもの確認は確認待ちへ集約
 - 正本: [52 育つ島 ゲーム仕様](../../product/52_growing_island_game_spec.md)、[adr](../../adr/2026-09-29-north-star-growing-island.md)
 - 目的: 「あそぶ・しこむ → まなぶ → ひらく」の一周を、試作で終わらせず本番に載る形で作る。
+
+## 2026-10-10 育つ場所d1〜d4
+
+任意の6目標・15配置・4関係を実3dと暮らしへ統合し、record4/placedislandsへ移行。[契約](../../product/island-place-goals.md)と[ローカルの実画面・検証](../../design/2026-10-10-growing-place-runtime/readme.md)を参照。通常取得3旅程と成熟40組は同じ固定配信で検証済み。native05の全景美術の完成、独立観察/実機、自然18時間/7日成熟、公開は未完了のまま。
 
 ## 方針
 
@@ -1156,6 +1364,10 @@ B方向の実3D地形・家・曲がった枝葉・相棒・昼夕夜、通常�
 - 状態: 段階1〜6実装、10/1初回本番切替済み。最新候補の公開/更新検証は公開準備タスク、実保存・実機・子どもの確認は確認待ちへ集約
 - 正本: [52 育つ島 ゲーム仕様](../../product/52_growing_island_game_spec.md)、[ADR](../../adr/2026-09-29-north-star-growing-island.md)
 - 目的: 「あそぶ・しこむ → まなぶ → ひらく」の一周を、試作で終わらせず本番に載る形で作る。
+
+## 2026-10-10 育つ場所D1〜D4
+
+任意の6目標・15配置・4関係を実3Dと暮らしへ統合し、record4/placedIslandsへ移行。[契約](../../product/island-place-goals.md)と[ローカルの実画面・検証](../../design/2026-10-10-growing-place-runtime/README.md)を参照。通常取得3旅程と成熟40組は同じ固定配信で検証済み。native05の全景美術の完成、独立観察/実機、自然18時間/7日成熟、公開は未完了のまま。
 
 ## 方針
 
@@ -1449,6 +1661,24 @@ B方向の実3D地形・家・曲がった枝葉・相棒・昼夕夜、通常�
 共有キュー、関連仕様/タスク、Git履歴と未コミット一覧、10/1〜10/5の検証記録を照合した。アプリ実装・本番操作・実機/子どもの観察は行っていない。過去の検証を新しい候補の合格として記録しない。
 </pre></details></article><article class="card" data-search="shared done index .agents/tasks/done.md # shared done index
 
+- 2026-10-11: [広がり方で姿が変わる島を本体へ実装](../../docs/design/2026-10-11-expanding-island-runtime/readme.md)。全取得床・道・足・橋・hitを共有し、湾/森/丘の8・16・32軒を実3d比較。core4,991、固定版の取得/成熟/拡張/故障/更新とsmoke32 pass。統合単位を完了、美術42/60 hold・独立観察n=0・公開は継続。詳細: `docs/done/2026-10.md`。
+
+- 2026-10-10: 宣伝サイトに利用者指定の島の完成イメージを掲載。学習の入口を保ち、全景/森/水庭/入り江と現在の実画面を明示区別。隔離core4,803・本番形式4幅がpass。[制作・検証](../../docs/design/2026-10-10-promotion-complete-v3/readme.md)
+
+- 2026-10-10: 宣伝サイトを学習中心へ改訂。算数/英語の実画面、ヒント/復習/記録、成熟した町の3段階と近景を掲載。現行mainのゲームコードを保持し、隔離core4,803・完成build4幅がpass。[制作・検証](../../docs/design/2026-10-10-promotion-learning-v2/readme.md)
+
+- 2026-10-10: 島ホームの「しま・いえ・まなぶ・きろく・設定」5項目タブを復帰。メニューは左下に保持。4サイズの直接移動/学習復帰、core4,803がlocal pass。詳細: `docs/done/2026-10.md`。公開・実機は別。
+
+- 2026-10-10: 島の3段階・家・学習を紹介するwebを制作。coreと4幅の完成ビルド検査pass。main公開用の `/promo/` 配信を追加。[制作記録](../../docs/design/2026-10-10-promotion-website/readme.md)
+
+- 2026-10-10: [明るい丸い島に幻想感を追加](../../docs/design/2026-10-10-bright-round-fantasy/readme.md)。枝の灯り・水辺の淡い光を追加。同保存6組の比較、昼/夜、実回答/家/学習復帰、core4,803がlocal pass。公開/実機/利用者評価は別。
+
+- 2026-10-10: [島を明るく丸い初期3dの雰囲気へ戻す](../../docs/design/2026-10-10-bright-round-island/readme.md)。海/空・岸・樹冠・屋根の表現を調整。core4,803、昼/夜6撮影ずつ、両幅の実回答/家/学習復帰がlocal pass。公開/実機/利用者の美術採用は別。
+
+- 2026-10-10: 島のメニューを右上から左下へ移し104×48pxへ拡大。4サイズの実タップ/開閉/たね一覧を確認。詳細: `docs/done/2026-10.md`。公開・実機の到達性は別。
+
+- 2026-10-09: [島の一周を固定ローカル候補へ仕上げる](../../docs/design/2026-10-09-local-quality/readme.md)。案内・本人一覧・学習/初回の表示・描画資源とpreview更新を改善。v3のcore4,803/classic32、全主要旅程・保存故障/更新・実画面・同保存性能を確認。性能は混在を明記し、公開/実機/子ども評価は別。詳細: `docs/done/2026-10.md`。
+
 - 2026-10-07: [共用3dのsession接続を分割](../../docs/architecture/island-runtime.md)。家/配置/共有展示/写真/工作/遊びの型付き接続と一つの遅延rendererへ整理。59propsの構文照合、core4,766/smoke31、growing production・本人切替/履歴・配置/工作/写真の両幅がpass。公開/実機/子ども評価は別。詳細: `docs/done/2026-10.md`。
 
 - 2026-10-06: [sessionの配置・写真・工作を分割](../../docs/architecture/island-runtime.md)。保存と画面往復の契約を保持し、core4,761・smoke31・growing production・本人切替/履歴・写真/工作/配置の390/768幅をlocal確認。公開/実機/子ども評価は別。詳細: `docs/done/2026-10.md`。
@@ -1708,7 +1938,25 @@ durable completion history and verification facts still belong in `docs/done/yyy
 - 2026-10-01: しあげの条件を全20問独力正解に変更。19/20のレベル維持、新予約20/20の進級を実ui/保存で確認、4391 tests pass -&gt; `docs/done/2026-10.md`
 
 - 2026-10-01: 学習アルゴリズム監査a1〜a10修正。独力/代表出題/coverage/復習・回復・配分を整え、全4474 tests・smoke31・固定preview80実回答を確認。ローカル、本番未配布 -&gt; `docs/done/2026-10.md`
-"><h2><a href="DONE.md">Shared Done Index</a></h2><p class="path">.agents/tasks/DONE.md</p><p>- 2026-10-07: [共用3Dのsession接続を分割](../../docs/architecture/island-runtime.md)。家/配置/共有展示/写真/工作/遊びの型付き接続と一つの遅延rendererへ整理。59propsの構文照合、core4,766/smoke31、Growing production・本人切替/履歴・配置/工作/写真の両幅がPASS。公開/実機/子ども評価は別。詳細</p><details><summary>詳細を読む</summary><pre># Shared Done Index
+"><h2><a href="DONE.md">Shared Done Index</a></h2><p class="path">.agents/tasks/DONE.md</p><p>- 2026-10-11: [広がり方で姿が変わる島を本体へ実装](../../docs/design/2026-10-11-expanding-island-runtime/README.md)。全取得床・道・足・橋・hitを共有し、湾/森/丘の8・16・32軒を実3D比較。core4,991、固定版の取得/成熟/拡張/故障/更新とsmoke32 PASS。統合単位を完了、美術42/60 HOLD・独立観察N=0・</p><details><summary>詳細を読む</summary><pre># Shared Done Index
+
+- 2026-10-11: [広がり方で姿が変わる島を本体へ実装](../../docs/design/2026-10-11-expanding-island-runtime/README.md)。全取得床・道・足・橋・hitを共有し、湾/森/丘の8・16・32軒を実3D比較。core4,991、固定版の取得/成熟/拡張/故障/更新とsmoke32 PASS。統合単位を完了、美術42/60 HOLD・独立観察N=0・公開は継続。詳細: `docs/done/2026-10.md`。
+
+- 2026-10-10: 宣伝サイトに利用者指定の島の完成イメージを掲載。学習の入口を保ち、全景/森/水庭/入り江と現在の実画面を明示区別。隔離core4,803・本番形式4幅がPASS。[制作・検証](../../docs/design/2026-10-10-promotion-complete-v3/README.md)
+
+- 2026-10-10: 宣伝サイトを学習中心へ改訂。算数/英語の実画面、ヒント/復習/記録、成熟した町の3段階と近景を掲載。現行mainのゲームコードを保持し、隔離core4,803・完成build4幅がPASS。[制作・検証](../../docs/design/2026-10-10-promotion-learning-v2/README.md)
+
+- 2026-10-10: 島ホームの「しま・いえ・まなぶ・きろく・設定」5項目タブを復帰。メニューは左下に保持。4サイズの直接移動/学習復帰、core4,803がlocal PASS。詳細: `docs/done/2026-10.md`。公開・実機は別。
+
+- 2026-10-10: 島の3段階・家・学習を紹介するWebを制作。coreと4幅の完成ビルド検査PASS。main公開用の `/promo/` 配信を追加。[制作記録](../../docs/design/2026-10-10-promotion-website/README.md)
+
+- 2026-10-10: [明るい丸い島に幻想感を追加](../../docs/design/2026-10-10-bright-round-fantasy/README.md)。枝の灯り・水辺の淡い光を追加。同保存6組の比較、昼/夜、実回答/家/学習復帰、core4,803がlocal PASS。公開/実機/利用者評価は別。
+
+- 2026-10-10: [島を明るく丸い初期3Dの雰囲気へ戻す](../../docs/design/2026-10-10-bright-round-island/README.md)。海/空・岸・樹冠・屋根の表現を調整。core4,803、昼/夜6撮影ずつ、両幅の実回答/家/学習復帰がlocal PASS。公開/実機/利用者の美術採用は別。
+
+- 2026-10-10: 島のメニューを右上から左下へ移し104×48pxへ拡大。4サイズの実タップ/開閉/たね一覧を確認。詳細: `docs/done/2026-10.md`。公開・実機の到達性は別。
+
+- 2026-10-09: [島の一周を固定ローカル候補へ仕上げる](../../docs/design/2026-10-09-local-quality/README.md)。案内・本人一覧・学習/初回の表示・描画資源とpreview更新を改善。v3のcore4,803/classic32、全主要旅程・保存故障/更新・実画面・同保存性能を確認。性能は混在を明記し、公開/実機/子ども評価は別。詳細: `docs/done/2026-10.md`。
 
 - 2026-10-07: [共用3Dのsession接続を分割](../../docs/architecture/island-runtime.md)。家/配置/共有展示/写真/工作/遊びの型付き接続と一つの遅延rendererへ整理。59propsの構文照合、core4,766/smoke31、Growing production・本人切替/履歴・配置/工作/写真の両幅がPASS。公開/実機/子ども評価は別。詳細: `docs/done/2026-10.md`。
 

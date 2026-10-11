@@ -54,7 +54,7 @@ const resolveBuildMetadata = (mode: string) => {
         },
         nativeOwnedArt: {
             enabled: mode === 'development' || env.VITE_NATIVE_GROWING_ART === 'true',
-            candidate: 'native05-owned-runtime-v1',
+            candidate: 'native05-expanding-runtime-v2',
             gameplayMapped: true,
         },
         residentCandidate: 'patchwork-otter-v1',
@@ -153,6 +153,9 @@ export default defineConfig(({ mode }) => {
     const buildMetadata = resolveBuildMetadata(mode)
 
     return {
+        // Art showcases contain already-bundled Three.js copies. Crawling every
+        // documentation HTML delays a cold app launch as the archive grows.
+        optimizeDeps: { entries: ['index.html', 'prototypes/**/*.html'] },
         define: {
             __APP_VERSION__: JSON.stringify(buildMetadata.appVersion),
             __LIFE_REPLAY_VERSION__: JSON.stringify(buildMetadata.replayVersion),

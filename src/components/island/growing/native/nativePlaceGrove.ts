@@ -59,6 +59,21 @@ export function buildNativePlaceGrove(g: GardenGeometry, state: GrowingState, la
         }
     }
     if (large && grown) {
+        if (place.variant === 'lane') {
+            // A real line grows along its owners instead of receiving the same
+            // round hero crown as a court. Original colored leaves and wood remain
+            // rigid, shared meshes; overlapping sections follow the actual boughs.
+            for (let i = 0; i < owners.length; i++) {
+                const crown = kit.instance('fan-crown'); crown.name = 'place-native-lane-crown';
+                const size = .42; crown.scale.setScalar(size); crown.position.copy(points[i]);
+                crown.position.y += 2.38;
+                crown.rotation.y = Math.atan2(points[Math.min(i + 1, points.length - 1)].x - points[Math.max(0, i - 1)].x,
+                    points[Math.min(i + 1, points.length - 1)].z - points[Math.max(0, i - 1)].z);
+                crown.userData.ownerId = owners[i].id; g.root.add(crown);
+            }
+            if (place.walkSurface.length) gallery();
+            return;
+        }
         const crown = kit.instance('fan-crown'); crown.name = 'place-native-fan-crown';
         const width = room ? .72 : Math.max(.62, Math.min(1.32, Math.max(...points.map(p => Math.hypot(p.x - center.x, p.z - center.z))) / 3 + .48));
         const sourceBough = crown.getObjectByName('sculpted tree wood');

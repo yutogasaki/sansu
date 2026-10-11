@@ -1,0 +1,45 @@
+{
+  "schema": "sansu-expanding-source-closure-v1",
+  "buildVersion": "native05-expanding-a3:514ee4e9-b099-4d77-a44b-11a6f839e44f",
+  "buildSourceSha256": "e2c80f19f4ea22545eef465e442de64f7ad58685c00eaf1d849a2a61e8ebcacc",
+  "checkedInputs": 2051,
+  "byteIdenticalInputs": 2049,
+  "appRuntimeInputsUnchanged": true,
+  "appInputCount": 1495,
+  "postBuildCorrections": [
+    {
+      "path": "src/prototypes/placeQa/expansion.tsx",
+      "builtSha256": "2b8251d322a07e1b7a21947cb2b24be8ced616f6762b829f8cd538115aa06942",
+      "currentSha256": "b32bda6ea8e29269e51ec666d8c10d12679328389b6de7daab5223c55c01181c",
+      "scope": "DEV-only comparison entry: do not restart a loading label when the displayed island is unchanged."
+    },
+    {
+      "path": "tools/e2e-smoke.mjs",
+      "builtSha256": "573053a7cbf77dc5e02dd494c39551f33978e6dd986ff9d0e50c19f7ef356dcb",
+      "currentSha256": "40c85b53373959b0331f2a671e8e395e76e66db4ab71080dd5ac97b19f4c8396",
+      "scope": "QA runner only: use the existing one-input readiness helper at the next problem boundary."
+    }
+  ],
+  "classic": {
+    "report": "classic/smoke-report.json",
+    "pass": true,
+    "scenarios": 32,
+    "target": "http://127.0.0.1:4173",
+    "harnessSha256": "40c85b53373959b0331f2a671e8e395e76e66db4ab71080dd5ac97b19f4c8396"
+  },
+  "devComparison": {
+    "target": "http://127.0.0.1:5334/prototypes/place-qa/expansion.html",
+    "screenshot": "showcase-preview.png",
+    "manualChecks": [
+      "Repeated selected 16 button",
+      "Repeated selected direction",
+      "8-home common centre direction change",
+      "32 forest to garden",
+      "Return to bay 16"
+    ],
+    "browser": "Codex in-app browser, tab 14",
+    "verdict": "PASS"
+  },
+  "limitation": "The full current source tree is not identical to the A3 build snapshot. Only the listed QA/DEV entries differ; production runtime input bytes remain identical.",
+  "pass": true
+}

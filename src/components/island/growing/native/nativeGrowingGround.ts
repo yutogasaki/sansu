@@ -23,7 +23,8 @@ export function buildNativeGrowingGround(layout: SceneLayout, profile: readonly 
     }
     for (let ring = 0; ring <= rings; ring++) for (let i = 0; i < count; i++) {
         const p = edge[i], t = ring / rings, fade = t * t * (3 - 2 * t), near = Math.sin(t * Math.PI) * .055;
-        vertices.push(p.x + p.nx * t, p.top * (1 - fade) + near - .09 * fade, p.z + p.nz * t);
+        const at = layout.projected({ x: p.x + p.nx * t + layout.center, z: p.z + p.nz * t + 2 });
+        vertices.push(at.x - layout.center, p.top * (1 - fade) + near - .09 * fade, at.z - 2);
         const color = meadow.clone().lerp(mineral, Math.min(.55, p.top * .12)).lerp(sand, T.MathUtils.smoothstep(t, .72, 1) * .55);
         colors.push(color.r, color.g, color.b);
         if (ring < rings) { const a = ring * count + i, b = ring * count + (i + 1) % count; indices.push(a, b, a + count, b, b + count, a + count); }
@@ -36,7 +37,8 @@ export function buildNativeGrowingGround(layout: SceneLayout, profile: readonly 
     const rockTints = ['#c7c6ce', '#aeb6c8', '#90a3bd', '#7facc2'];
     for (let ring = 0; ring < 4; ring++) for (let i = 0; i < count; i++) {
         const p = edge[i], length = Math.hypot(p.nx, p.nz), offset = [.015, .09, .08, -.07][ring];
-        rockVertices.push(p.x + p.nx * (1 + offset / length), [-.09, -.16, -.31, -.48][ring], p.z + p.nz * (1 + offset / length));
+        const at = layout.projected({ x: p.x + p.nx * (1 + offset / length) + layout.center, z: p.z + p.nz * (1 + offset / length) + 2 });
+        rockVertices.push(at.x - layout.center, [-.09, -.16, -.31, -.48][ring], at.z - 2);
         const color = new T.Color(rockTints[ring]); rockColors.push(color.r, color.g, color.b);
         if (ring < 3) { const a = ring * count + i, b = ring * count + (i + 1) % count; rockIndices.push(a, a + count, b, b, a + count, b + count); }
     }

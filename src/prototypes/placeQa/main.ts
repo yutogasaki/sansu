@@ -23,6 +23,7 @@ async function start() {
         <p class="note">診断用のしずく・土地・成長・住人です。学習で取得した証拠、自然な 7 日成長、実描画・実使用の証拠にはしません。</p></header>
         <main><section><h2>1 · 診断ファイルを読む</h2><label for="fixture-file">生成した place fixtures JSON</label>
         <button id="read-latest">最新の20配置を読む</button>
+        <button id="read-expansion">16・32軒の全島比較を読む</button>
         <input id="fixture-file" type="file" accept="application/json,.json">
         <p id="pack-info">ファイルはまだ読み込んでいません。</p>
         <label for="fixture-case">確認する配置</label><select id="fixture-case" disabled><option>ファイルを読み込んでください</option></select>
@@ -38,14 +39,14 @@ async function start() {
         <p id="status" role="status" aria-live="polite"></p><footer>開発確認専用 · build <span id="build"></span> · production 入口なし</footer>`;
     const node = <T extends HTMLElement>(selector: string) => root.querySelector<T>(selector)!;
     const file = node<HTMLInputElement>('#fixture-file'), choices = node<HTMLSelectElement>('#fixture-case'), owners = node<HTMLSelectElement>('#preview-owner');
-    const create = node<HTMLButtonElement>('#create-preview'), refresh = node<HTMLButtonElement>('#refresh-snapshot'), restore = node<HTMLButtonElement>('#restore-selection'), latest = node<HTMLButtonElement>('#read-latest');
+    const create = node<HTMLButtonElement>('#create-preview'), refresh = node<HTMLButtonElement>('#refresh-snapshot'), restore = node<HTMLButtonElement>('#restore-selection'), latest = node<HTMLButtonElement>('#read-latest'), expansion = node<HTMLButtonElement>('#read-expansion');
     const status = node<HTMLParagraphElement>('#status');
     node('#build').textContent = `${__APP_VERSION__} / ${__BUILD_REVISION__}`;
     node('#original-owner').textContent = `元の選択: ${currentSession.original ?? 'プロフィール未選択'}`;
     let pack: PlacePack | undefined, busy = false;
     const option = (value: string, label: string) => { const element = document.createElement('option'); element.value = value; element.textContent = label; return element; };
     const controls = () => {
-        create.disabled = busy || !pack; choices.disabled = busy || !pack; file.disabled = busy; latest.disabled = busy;
+        create.disabled = busy || !pack; choices.disabled = busy || !pack; file.disabled = busy; latest.disabled = busy; expansion.disabled = busy;
         owners.disabled = busy || !currentSession.created.length; refresh.disabled = busy || !owners.value; restore.disabled = busy;
     };
     const native = async () => {
@@ -71,9 +72,9 @@ async function start() {
         pack = undefined; choices.replaceChildren(option('', 'ファイルを読み込んでください'));
         node('#pack-info').textContent = '診断ファイルを確認しています…';
         pack = await parsePlacePack(text);
-        choices.replaceChildren(...pack.cases.map(entry => option(entry.id, entry.id.replace('qa-place-', '').replace('-v1', ''))));
+        choices.replaceChildren(...pack.cases.map(entry => option(entry.id, entry.expansion ? `${entry.expansion.name} · ${entry.expansion.size}軒` : entry.id.replace('qa-place-', '').replace('-v1', ''))));
         node('#pack-info').textContent = `${pack.cases.length} 件 · source ${pack.sourceHash} · payload ${pack.payloadHash}`;
-        status.textContent = '現在の実装で 20 件の配置・所有者・経路を確認しました。';
+        status.textContent = `現在の実装で ${pack.cases.length} 件の配置・所有者・経路を確認しました。`;
     };
     file.onchange = () => { void action(async () => {
         const selected = file.files?.[0]; if (!selected) { status.textContent = 'ファイルを選んでください。'; return; }
@@ -82,6 +83,11 @@ async function start() {
     latest.onclick = () => { void action(async () => {
         const response = await fetch('/prototypes/place-qa/fixtures.json', { cache: 'no-store' });
         if (!response.ok) throw new Error('最新の診断ファイルがありません。生成してから読み直してください。');
+        await readPack(await response.text());
+    }); };
+    expansion.onclick = () => { void action(async () => {
+        const response = await fetch('/prototypes/place-qa/expansion-fixtures.json', { cache: 'no-store' });
+        if (!response.ok) throw new Error('全島比較の診断ファイルがありません。');
         await readPack(await response.text());
     }); };
     create.onclick = () => { void action(async () => {
