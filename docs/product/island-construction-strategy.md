@@ -182,6 +182,6 @@ M1の島は診断用であることを明示し、模型の家や住人を本人
 
 本書は制作方針と順序、美術戦略は形・素材・光、[育つ場所v1](island-place-goals.md)は現行の場所条件、52は遊び、13は保存、43／44は操作と画面の正本。数値を戦略文書へ複製しない。
 
-現在は、共通床のM0基盤から[編集できる全島のM1診断](../design/2026-10-11-authored-island-runtime/README.md)へ進み、原本地形と27所有物を本体の配置・歩行へ接続した。[床・道・初回描画の改善](../design/2026-10-11-authored-world-performance/README.md)で形を保って計算を短縮し、保存receiptとpreviewだけでは全layerを作り直さなくなった。初回previewの画面待ちは未解決で、性能合格とは扱わない。次は水庭の実水底・岸・渡れる床、大樹の共有deck、森林の面を同じ世界へ構成する。M1と全島美術はHOLD。以前の[拡張runtime契約](island-expanding-runtime.md)と[実画面・検証](../design/2026-10-11-expanding-island-runtime/README.md)は旧土地の互換と履歴として有効で、新工程の通過証拠へ置き換えない。M0〜M5全体、美術の再採用、独立観察、実機、公開は未完。
+現在は、共通床のM0基盤から[編集できる全島のM1診断](../design/2026-10-11-authored-island-runtime/README.md)へ進み、採用地形と27所有物を本体の配置・歩行へ接続した。[床・道・初回描画の改善](../design/2026-10-11-authored-world-performance/README.md)に続き、[水底・岸・流れの制作基盤](../design/2026-10-11-authored-water-world/README.md)を同じ世界へ構成した。水への新配置/歩行を拒否し、乾いた岸から接近し、収納で原本へ戻す。現水庭は小さい診断輪郭で、採用原本の広さ・岩組・三段の構図へ未到達。次はこの水庭の美術を全島で作り、大樹の共有deck・入口と森林の面を続ける。M1と全島美術はHOLD、software previewの待ちと実機性能も未解決。以前の[拡張runtime契約](island-expanding-runtime.md)と[実画面・検証](../design/2026-10-11-expanding-island-runtime/README.md)は旧土地の互換と履歴として有効で、新工程の通過証拠へ置き換えない。三配置・成長・地区拡張、次期の本人保存/配布、M0〜M5全体、美術の再採用、独立観察、実機、公開は未完。
 
 以前の制作順と判断は[2026-10-10 ADR](../adr/2026-10-10-place-first-island-strategy.md)、[成長美術](../design/2026-10-11-island-growth-art/README.md)、[自由造形の全島](../design/2026-10-11-island-landscape-art/README.md)、拡張候補とGit履歴に残す。現在の次工程はM0→M1であり、これらの完成ファイルの数から先へ繰り上げない。

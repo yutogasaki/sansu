@@ -245,7 +245,7 @@ export function derivePlaces(state: GrowingState, world?: IslandWorld): DerivedP
     const watersideFlowers = attachments(waterGroups, flowers, reached, world);
     const bounds = landBounds(state);
     const nearShore = (cell: Cell, radius: number) => world
-        ? Array.from({ length: 16 }, (_, i) => i * Math.PI / 8).some(angle => !world.floorAt({ x: cell.x + Math.cos(angle) * radius, z: cell.z + Math.sin(angle) * radius }))
+        ? Array.from({ length: 16 }, (_, i) => i * Math.PI / 8).some(angle => !world.anchorFloorAt({ x: cell.x + Math.cos(angle) * radius, z: cell.z + Math.sin(angle) * radius }))
         : cell.z >= bounds.depth - radius || cell.x <= bounds.minX + radius - 1 || cell.x >= bounds.maxX - radius + 1;
     waterGroups.forEach((main, index) => {
         const bowls = main.filter(w => (w as Landmark).kind === 'water-bowl');
@@ -257,11 +257,12 @@ export function derivePlaces(state: GrowingState, world?: IslandWorld): DerivedP
         if (supplied.length < count('P03', 'landmark:water-channel')) missing.push('水のとおる みずみちを つなごう');
         if (!flowersHere.some(f => (f as Landmark).growth >= BLOOM_HOURS)) missing.push('水のそばで 花を そだてよう');
         if (!seats.length) missing.push('岸のそばに ベンチを おこう');
-        const heights = bowls.map(b => terrainHeightAt(state, b.cell, world));
+        const waterHeight = (cell: Cell) => world?.anchorAt(cell)?.y ?? terrainHeightAt(state, cell, world);
+        const heights = bowls.map(b => waterHeight(b.cell));
         const descending = Math.max(...heights) - Math.min(...heights) >= .2 && supplied.every(channel => {
             const adjacent = main.filter(other => distance(channel.cell, other.cell) === 1);
-            return adjacent.length < 2 || adjacent.some(a => terrainHeightAt(state, a.cell, world) > terrainHeightAt(state, channel.cell, world) + .005)
-                && adjacent.some(a => terrainHeightAt(state, a.cell, world) < terrainHeightAt(state, channel.cell, world) - .005);
+            return adjacent.length < 2 || adjacent.some(a => waterHeight(a.cell) > waterHeight(channel.cell) + .005)
+                && adjacent.some(a => waterHeight(a.cell) < waterHeight(channel.cell) - .005);
         });
         const onShore = bowls.every(b => world ? nearShore(b.cell, 2) : b.cell.z >= bounds.depth - 3 || b.cell.x <= bounds.minX + 1 || b.cell.x >= bounds.maxX - 1);
         const variant = descending ? 'tiered' : onShore ? 'shore' : 'curve';

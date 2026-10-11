@@ -1,0 +1,63 @@
+{
+  "candidate": "native05-authored-water-m1-v1",
+  "baseId": "native05-authored-world-m0-v2",
+  "source": {
+    "artifact": "docs/design/2026-10-10-island-final-3d/whole-island.glb",
+    "sha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d"
+  },
+  "worldRevision": "authored-water-v1:c8e6505d85a8c885",
+  "owners": 27,
+  "rights": 73,
+  "pools": 3,
+  "streams": 4,
+  "reached": 1554,
+  "unreachableOwners": [],
+  "waterJoinRightsPreserved": true,
+  "anchorsPreserved": true,
+  "connections": [
+    {
+      "pool": "l20",
+      "stream": "[\"l20\",\"l21\"]",
+      "intersectionArea": 0.00883670426199501,
+      "endpoint": {
+        "x": 5.304012118784814,
+        "y": 1.678261426,
+        "z": -9
+      },
+      "poolMinX": 4.659019511
+    },
+    {
+      "pool": "l21",
+      "stream": "[\"l20\",\"l21\"]",
+      "intersectionArea": 0.006039109341049453,
+      "endpoint": {
+        "x": 5.707162764988653,
+        "y": 1.8777287839999999,
+        "z": -9
+      },
+      "poolMinX": 5.669570404
+    },
+    {
+      "pool": "l21",
+      "stream": "[\"l21\",\"l23\"]",
+      "intersectionArea": 0.008629484224666584,
+      "endpoint": {
+        "x": 6.293395494004202,
+        "y": 1.8777287839999999,
+        "z": -9
+      },
+      "poolMinX": 5.669570404
+    },
+    {
+      "pool": "l22",
+      "stream": "[\"l22\",\"l23\"]",
+      "intersectionArea": 0.0060267552349841935,
+      "endpoint": {
+        "x": 7.7143094002004595,
+        "y": 1.9870000339999998,
+        "z": -9
+      },
+      "poolMinX": 7.679554415
+    }
+  ]
+}

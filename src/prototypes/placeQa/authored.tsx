@@ -8,12 +8,16 @@ import { compileWorldDefinition, type IslandWorld } from '../../domain/growingIs
 import { applyIntent, canPlace, canReachHomePlacement } from '../../domain/growingIsland/commands';
 import { key, landCells } from '../../domain/growingIsland/space';
 import { derivePlaces } from '../../domain/growingIsland/places';
+import { authoredWaterFrame } from '../../domain/growingIsland/authoredWaterFrame';
 import type { GrowingState, Cell, Plot, Landmark } from '../../domain/growingIsland/types';
 import './authored.css';
 interface Fixture { schema: string; candidate: string; synthetic: boolean; worldId: string; state: GrowingState }
 const names: Record<string, string> = { home: 'いえ', sapling: '木', flower: '花', bench: 'ベンチ', play: 'あそびば', 'water-bowl': '泉', 'water-channel': 'みずみち' };
-function AuthoredIsland({ world, fixture }: { world: IslandWorld; fixture: Fixture }) {
+const waterAssembly = new URLSearchParams(window.location.search).get('water') === 'wide';
+function AuthoredIsland({ world: base, fixture }: { world: IslandWorld; fixture: Fixture }) {
     const [state, setState] = useState(fixture.state), [selected, setSelected] = useState<string>(), [moving, setMoving] = useState(false), [cell, setCell] = useState<Cell>();
+    const frame = useMemo(() => waterAssembly ? authoredWaterFrame(state, base) : undefined, [state, base]);
+    const world = frame?.world ?? base;
     const stateRef = useRef(fixture.state);
     const [stage, setStage] = useState('scene'), [message, setMessage] = useState('家や木を選んで、置き方を変えられます。');
     const [turn, setTurn] = useState(0), [reset, setReset] = useState(0), [time, setTime] = useState<'day' | 'dusk'>('day');
@@ -35,10 +39,10 @@ function AuthoredIsland({ world, fixture }: { world: IslandWorld; fixture: Fixtu
         } catch (error) { setMessage(error instanceof Error ? error.message : String(error)); return false; }
     };
     const places = useMemo(() => derivePlaces(state, world), [state, world]);
-    return <div className="authored-island" data-authored-island data-build-revision={__BUILD_REVISION__} data-world-id={world.id} data-authored-state={JSON.stringify(state)} data-state-owners={JSON.stringify(owners.map(item => [item.id, item.kind, item.cell]))} data-place-progress={JSON.stringify(state.placeProgress)}>
+    return <div className="authored-island" data-authored-island data-build-revision={__BUILD_REVISION__} data-visual-candidate={fixture.candidate} data-world-id={world.id} data-world-revision={world.definition.revision ?? 'base'} data-authored-state={JSON.stringify(state)} data-state-owners={JSON.stringify(owners.map(item => [item.id, item.kind, item.cell]))} data-place-progress={JSON.stringify(state.placeProgress)}>
         <header><div><p>全島3D · 制作中の診断</p><h1>入り江と丘の島を編集する</h1><span>同じ地形で、置く・選ぶ・歩く。</span></div><a href="/prototypes/place-qa/expansion.html">以前の拡張と比較</a></header>
         <main><section className="authored-stage" aria-label="編集できる島">
-            <GrowingWorld key={reset} world={world} state={state} time={time} turn={turn} cheer={0} festival={0} ghost={ghost} selectedId={selected} focus={focus}
+            <GrowingWorld key={reset} world={base} authoredWater={waterAssembly} state={state} time={time} turn={turn} cheer={0} festival={0} ghost={ghost} selectedId={selected} focus={focus}
                 onSelect={choose} onCell={at => { if (moving) {
                     const finite = Number.isFinite(at.x) && Number.isFinite(at.z);
                     setCell(finite ? at : undefined); setMessage(finite ? '置く場所を選びました。' : 'ここには置けません。');
@@ -65,6 +69,6 @@ else void Promise.all([fetch('/prototypes/place-qa/native05-world.json.gz', { ca
     if (!response.ok) throw Error('共通地形がありません。');
     const bytes = await decodeNativeGrowingKit(await response.arrayBuffer(), { sha256: worldManifest.artifact.expandedSha256, gzipSha256: worldManifest.artifact.sha256, bytes: worldManifest.artifact.expandedBytes });
     return compileWorldDefinition(JSON.parse(new TextDecoder().decode(bytes)));
-}), fetch('/prototypes/place-qa/authored-fixture.json', { cache: 'no-store' }).then(response => { if (!response.ok) throw Error('診断入力がありません。'); return response.json() as Promise<Fixture>; })])
+}), fetch(waterAssembly ? '/prototypes/place-qa/authored-water-fixture.json' : '/prototypes/place-qa/authored-fixture.json', { cache: 'no-store' }).then(response => { if (!response.ok) throw Error('診断入力がありません。'); return response.json() as Promise<Fixture>; })])
     .then(([world, fixture]) => { if (fixture.schema !== 'sansu-authored-whole-diagnostic-v1' || !fixture.synthetic || fixture.worldId !== world.id) throw Error('診断と地形が一致しません。'); root.render(<AuthoredIsland world={world} fixture={fixture} />); })
     .catch(error => root.render(<p role="alert">{String(error)}</p>));

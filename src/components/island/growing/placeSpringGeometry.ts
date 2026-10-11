@@ -86,6 +86,9 @@ function ownerGroup(g: GardenGeometry, item: WaterOwner, name: string) {
 
 /** Mature owned water becomes wide stone pools and supplied streams; no simulation state changes. */
 export function buildPlaceSpring(g: GardenGeometry, state: GrowingState, layout: SceneLayout, place: DerivedPlace, allPlaces: readonly DerivedPlace[] = [place]): void {
+    // A composed water group is already represented by its evaluated bed,
+    // banks and water floors. Keep the older renderer only for uncut groups.
+    if (layout.authoredWaterPlan?.ownerIds.some(id => place.mainIds.includes(id))) return;
     const world = layout.authored ? layout.world : undefined;
     const ids = new Set([...place.mainIds, ...place.waterRefs]), reached = connectedWaterChannels(waterLayout(state, world));
     const water = state.landmarks.filter((item): item is WaterOwner => ids.has(item.id) && Boolean(item.cell) && (!world || onLand(state, item.cell!, world))

@@ -17,9 +17,10 @@ import { nativeGrowingLighting } from './native/nativeGrowingLighting';
 import { curveGroundGeometry } from './curvedGeometry';
 import type { IslandWorld as CompiledWorld } from '../../../domain/growingIsland/worldDefinition';
 import { buildAuthoredGrowingGround, buildAuthoredGrowingSea, type AuthoredCoastSkin } from './native/authoredGrowingGround';
+import { authoredWaterFrame } from '../../../domain/growingIsland/authoredWaterFrame';
 
 /** Lights, sea, garden ground, Pokomoko's cottage and the living layer, shared by one world. */
-export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowingKit, authored?: CompiledWorld, coast?: AuthoredCoastSkin) {
+export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowingKit, authored?: CompiledWorld, coast?: AuthoredCoastSkin, waterAssembly = false) {
     const scene = new T.Scene();
     const hemi = new T.HemisphereLight('#fff7ea', '#63806c', 1.15); scene.add(hemi);
     const sun = new T.DirectionalLight('#fff4e0', 2.3); sun.castShadow = true;
@@ -37,6 +38,7 @@ export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowi
     const lighting = native ? nativeGrowingLighting(scene, renderer, hemi, sun) : undefined;
     let ground: ReturnType<typeof buildGardenGround> | ReturnType<typeof buildAuthoredGrowingSea> | undefined, groundKey = '';
     let terrain: ReturnType<typeof buildPlaceGround> | undefined;
+    let previewTerrain: ReturnType<typeof buildAuthoredGrowingGround> | undefined, previewKey = '';
     let time: GardenTime = 'day';
     const nativeSeaTime = () => {
         if (!native || !ground) return;
@@ -92,14 +94,37 @@ export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowi
         house.traverse(o => { o.userData.objectId = 'house'; });
     };
 
+    const clearPreview = () => {
+        previewTerrain?.root.removeFromParent(); previewTerrain?.dispose(); previewTerrain = undefined; previewKey = '';
+        if (terrain) terrain.root.visible = true;
+        life.root.visible = true;
+    };
+
     return {
         scene, m, life, hemi, sun,
+        hasWaterPreview: () => Boolean(previewTerrain),
+        showWaterPreview(future?: GrowingState) {
+            if (!authored || !waterAssembly || !future) { clearPreview(); return undefined; }
+            const frame = authoredWaterFrame(future, authored);
+            if (frame.world.definition.revision === groundKey.slice(authored.id.length + 1)) { clearPreview(); return undefined; }
+            if (previewKey === frame.plan.revision) return previewKey;
+            clearPreview();
+            const layout = sceneLayout(future, Boolean(native), frame.world, frame.plan, authored);
+            previewTerrain = buildAuthoredGrowingGround(layout, coast); previewKey = frame.plan.revision;
+            scene.add(previewTerrain.root); if (terrain) terrain.root.visible = false;
+            // A prospective floor is a static editing view. Live visitors retain
+            // their committed routes and receipts and return unchanged on cancel.
+            life.root.visible = false;
+            return previewKey;
+        },
         groundAt(ray: T.Raycaster) { return terrain ? ray.intersectObject(terrain.floor, false)[0]?.point : undefined; },
         layout: (state: GrowingState) => {
-            const layout = sceneLayout(state, Boolean(native), authored); layout.nativeArt = Boolean(native); setGround(state, layout);
+            clearPreview();
+            const frame = authored && waterAssembly ? authoredWaterFrame(state, authored) : undefined;
+            const layout = sceneLayout(state, Boolean(native), frame?.world ?? authored, frame?.plan, authored); layout.nativeArt = Boolean(native); setGround(state, layout);
             // ObjectLayer is attached immediately after layout(). Resolve it lazily
             // so this new frame contains the newly built owners and derived rooms.
-            layout.cameraObjects = () => [terrain?.root, nativeCottage ?? cottage.root,
+            layout.cameraObjects = () => [previewTerrain?.root ?? terrain?.root, nativeCottage ?? cottage.root,
                 ground?.root.getObjectByName('garden-ground-details'), scene.getObjectByName('growing-objects')]
                 .filter((object): object is T.Object3D => Boolean(object));
             return layout;
@@ -112,7 +137,7 @@ export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowi
         },
         animate(at: number, reduced: boolean) { ground?.animate(at, reduced); },
         dispose() {
-            life.dispose(); ground?.dispose(); terrain?.dispose(); cottage.dispose(); m.dispose(); lighting?.dispose(); native?.dispose();
+            clearPreview(); life.dispose(); ground?.dispose(); terrain?.dispose(); cottage.dispose(); m.dispose(); lighting?.dispose(); native?.dispose();
         },
     };
 }

@@ -17,8 +17,18 @@ export interface WorldSite {
     /** Planting cells are integers; dry paths may have finer, stable waypoints. */
     cell: Cell;
     floorId: string;
+    /** A composed district proves this fixed point against its original anchor floor. */
+    anchorPoint?: WorldPoint;
     /** A bridge landing can be walked on without becoming purchased planting land. */
     placement: boolean;
+}
+/** Vertical banks and falling water are visible surfaces, never supporting floors. */
+export interface WorldSurface {
+    id: string;
+    kind: 'bank' | 'flow';
+    vertices: readonly WorldPoint[];
+    indices: readonly number[];
+    material: { color: string; roughness: number; metalness: number; opacity?: number };
 }
 export interface WorldPort { id: string; siteId: string }
 export interface WorldDistrict {
@@ -28,6 +38,9 @@ export interface WorldDistrict {
     worldOrigin: WorldPoint;
     turn: 0 | 1 | 2 | 3;
     floors: readonly WorldFloor[];
+    /** Original geometry proves acquired anchors without entering hit, bounds or footing. */
+    anchorFloors?: readonly WorldFloor[];
+    surfaces?: readonly WorldSurface[];
     sites: readonly WorldSite[];
     ports: readonly WorldPort[];
 }
@@ -41,6 +54,8 @@ export interface WorldEdge {
 export interface WorldDefinition {
     version: 1;
     id: string;
+    /** Derived geometry changes independently of the stable district/source identity. */
+    revision?: string;
     districts: readonly WorldDistrict[];
     edges: readonly WorldEdge[];
     source?: { artifact: string; sha256: string };

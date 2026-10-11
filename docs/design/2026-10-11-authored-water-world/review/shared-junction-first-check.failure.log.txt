@@ -1,0 +1,97 @@
+{
+  "stream": {
+    "id": "[\"l23\",\"l24\"]",
+    "ownerIds": [
+      "l23",
+      "l24"
+    ],
+    "from": {
+      "x": 7,
+      "y": 1.8187440149999998,
+      "z": -9
+    },
+    "to": {
+      "x": 7,
+      "y": 1.69285449,
+      "z": -8
+    },
+    "outline": [
+      {
+        "x": 7.095,
+        "y": 1.818744015,
+        "z": -9
+      },
+      {
+        "x": 7.095,
+        "y": 1.69285449,
+        "z": -8
+      },
+      {
+        "x": 6.905,
+        "y": 1.69285449,
+        "z": -8
+      },
+      {
+        "x": 6.905,
+        "y": 1.818744015,
+        "z": -9
+      }
+    ],
+    "waterFloorIds": [
+      "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3Afrom\"]",
+      "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3Ato\"]"
+    ],
+    "bedFloorIds": [
+      "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3Afrom\"]",
+      "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3Ato\"]"
+    ],
+    "falling": true
+  },
+  "unsupported": [
+    {
+      "point": {
+        "x": 7,
+        "z": -9
+      },
+      "supported": false
+    },
+    {
+      "point": {
+        "x": 7,
+        "z": -8.975
+      },
+      "supported": false
+    },
+    {
+      "point": {
+        "x": 7,
+        "z": -8.95
+      },
+      "supported": false
+    },
+    {
+      "point": {
+        "x": 7,
+        "z": -8.925
+      },
+      "supported": false
+    }
+  ]
+}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Actual continuous water ["l23","l24"]
+    at file:///Users/yutogasaki/Projects/sansu/tools/growing-authored-water-fixture.mjs:52:5
+    at Array.map (<anonymous>)
+    at file:///Users/yutogasaki/Projects/sansu/tools/growing-authored-water-fixture.mjs:44:39 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.18.0

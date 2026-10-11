@@ -1,5 +1,7 @@
 # Shared Done Index
 
+- 2026-10-11: [M1水底と岸の制作基盤](../../docs/design/2026-10-11-authored-water-world/README.md)。固定anchorと現在の支持を分離し、実水面/水底/岸/流れと編集予告・収納/復元を接続。27所有物・73権利を保持。水庭の美術・全島M1・保存/配布・実機と独立理解は継続。詳細: `docs/done/2026-10.md`。
+
 - 2026-10-11: [編集できる全島の計算と初回描画を改善](../../docs/design/2026-10-11-authored-world-performance/README.md)。形・床・道等13項目一致、Node全layer7,386→174 ms。receipt保持とshader準備、最終core5,093/classic32/編集6操作/既存島touch8旅程PASS。改善単位を完了、software preview約8.6秒・M1水庭/deck/森林・美術HOLD・独立観察N=0・包括ゴールは継続。詳細: `docs/done/2026-10.md`。
 
 - 2026-10-11: [採用地形で編集する全島の統合診断](../../docs/design/2026-10-11-authored-island-runtime/README.md)。27所有物・8軒を本体の配置・明示歩行へ接続、実分離/収納/復元・core5,044/classic32/既存本体8旅程PASS。診断単位を記録。美術HOLD・約9秒の再構築・水/回廊床・M1/包括ゴールは継続。詳細: `docs/done/2026-10.md`。

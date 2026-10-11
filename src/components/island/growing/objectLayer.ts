@@ -14,7 +14,8 @@ import { buildBakery, buildFountain, buildPostbox, buildSlide, buildTrampoline }
 import { wonder } from './wonderPaint';
 import { buildColorFlower } from './flowerGeometry';
 import { buildBoat, buildPier } from './pierGeometry';
-import type { SceneLayout } from './sceneLayout';
+import { sceneLayout, type SceneLayout } from './sceneLayout';
+import { authoredWaterFrame } from '../../../domain/growingIsland/authoredWaterFrame';
 import { buildBridge } from './bridgeGeometry';
 import { derivePlaces } from '../../../domain/growingIsland/places';
 import { derivePlaceRelations } from '../../../domain/growingIsland/placeRelations';
@@ -113,6 +114,18 @@ function disposeRoots(roots: readonly T.Object3D[]) {
 }
 
 /** Saved objects persist while selection, placement and hints change. */
+export function previewGrowingState(state: GrowingState, ghost?: Ghost): GrowingState | undefined {
+    if (!ghost?.valid || !ghost.cell || ghost.keepsake) return;
+    const future = { ...state, plots: state.plots.map(p => p.id === ghost.ownerId ? { ...p, cell: ghost.cell } : p),
+        landmarks: state.landmarks.map(l => l.id === ghost.ownerId ? { ...l, cell: ghost.cell } : l) };
+    if (!ghost.ownerId) {
+        if (ghost.seed) future.plots = [...future.plots, { id: 'place-preview', kind: ghost.kind as SeedKind, cell: ghost.cell,
+            plantedAt: state.town.clock, stage: 0, style: ghost.style, growth: 0, origin: 'seed', paid: 0 }];
+        else future.landmarks = [...future.landmarks, { id: 'place-preview', kind: ghost.kind as LandmarkKind, cell: ghost.cell, growth: 0, color: ghost.color }];
+    }
+    return future;
+}
+
 export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout: SceneLayout, ghost?: Ghost, selectedId?: string, hints: readonly Cell[] = [], native?: NativeGrowingKit) {
     const root = new T.Group(); root.name = 'growing-objects';
     const objects = new Map<string, T.Object3D>(), buds = new Map<string, T.Object3D>(), seats = new Map<string, Seat>();
@@ -123,6 +136,7 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
         && (other.stage === 'grown' || other.stage === 'lived') && other.mainIds.some(id => place.mainIds.includes(id)))));
     const grownBasins = new Set(visiblePlaces.filter(place => place.ruleId === 'P03' && (place.stage === 'grown' || place.stage === 'lived'))
         .flatMap(place => [...place.mainIds, ...place.waterRefs]));
+    for (const id of layout.authoredWaterPlan?.ownerIds ?? []) grownBasins.add(id);
     const grownTrees = new Set(visiblePlaces.filter(place => (place.ruleId === 'P01' || place.ruleId === 'P02') && (place.stage === 'grown' || place.stage === 'lived'))
         .flatMap(place => place.mainIds));
     const reached = connectedWaterChannels(waterLayout(state, authoredWorld));
@@ -136,7 +150,12 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
         const holder = add(l.id, landmarkModel(m, state, l, reached, native, layout.authored, authoredWorld), l.cell);
         // The same owned water grows into a shallow pool and stream. Old raised
         // rims/strips must not protrude through it; holder and owner ID stay selectable.
-        if ((l.kind === 'water-bowl' || l.kind === 'water-channel') && grownBasins.has(l.id)) holder.children[0].visible = false;
+        if ((l.kind === 'water-bowl' || l.kind === 'water-channel') && grownBasins.has(l.id)) {
+            holder.children[0].visible = false;
+            // Three raycasts hidden descendants too. The assembled water owns
+            // this target; its old raised body must not intercept nearby taps.
+            if (layout.authoredWaterPlan?.ownerIds.includes(l.id)) holder.children[0].traverse(node => { node.raycast = () => {}; });
+        }
         if (l.kind === 'sapling') ageTree(m, state, l, holder);
         // The connected grove supplies the actual selectable tree meshes under
         // these same owner IDs. Avoid stacking the solitary crown over them.
@@ -241,17 +260,14 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
                 if (nextGhost.valid && !nextGhost.keepsake) {
                     // Predict the same owned IDs/ages used by confirmation. A purchase
                     // is shown as young; it never pretends to have earned maturity.
-                    const future = { ...state, plots: state.plots.map(p => p.id === nextGhost.ownerId ? { ...p, cell: nextGhost.cell } : p),
-                        landmarks: state.landmarks.map(l => l.id === nextGhost.ownerId ? { ...l, cell: nextGhost.cell } : l) };
-                    if (!nextGhost.ownerId) {
-                        if (nextGhost.seed) future.plots = [...future.plots, { id: 'place-preview', kind: nextGhost.kind as SeedKind, cell: nextGhost.cell,
-                            plantedAt: state.town.clock, stage: 0, style: nextGhost.style, growth: 0, origin: 'seed', paid: 0 }];
-                        else future.landmarks = [...future.landmarks, { id: 'place-preview', kind: nextGhost.kind as LandmarkKind, cell: nextGhost.cell, growth: 0, color: nextGhost.color }];
-                    }
-                    const predicted = derivePlaces(future, authoredWorld);
+                    const future = previewGrowingState(state, nextGhost)!;
+                    const frame = layout.authoredWaterPlan && layout.authoredBaseWorld ? authoredWaterFrame(future, layout.authoredBaseWorld) : undefined;
+                    const futureWorld = frame?.world ?? authoredWorld;
+                    const futureLayout = frame ? sceneLayout(future, layout.curved, frame.world, frame.plan, layout.authoredBaseWorld) : layout;
+                    const predicted = derivePlaces(future, futureWorld);
                     const changes = predicted.filter(place => !places.some(before => before.id === place.id && before.revision === place.revision));
                     if (changes.length) {
-                        const projection = buildPlaceGeometry(future, layout, changes, derivePlaceRelations(future, predicted, authoredWorld), true, native);
+                        const projection = buildPlaceGeometry(future, futureLayout, changes, derivePlaceRelations(future, predicted, futureWorld), true, native);
                         projection.userData.previewRevisions = changes.map(place => place.revision); addPreview(projection);
                     }
                 }

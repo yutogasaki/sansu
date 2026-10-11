@@ -1,0 +1,82 @@
+{
+  "keepsakeCache": {
+    "sameFrame": false,
+    "clearRadius": 0.68,
+    "cachedRadius": 0.5,
+    "freshRadius": 0.5,
+    "cachedRevision": "authored-water-v1:c5b64c9fbd5786f7",
+    "freshRevision": "authored-water-v1:c5b64c9fbd5786f7"
+  },
+  "gap": {
+    "group": {
+      "id": "water-group:[\"b0\",\"b2\",\"b4\",\"c1\",\"c3\"]",
+      "ownerIds": [
+        "b0",
+        "b2",
+        "b4",
+        "c1",
+        "c3"
+      ],
+      "bowlIds": [
+        "b0",
+        "b2",
+        "b4"
+      ],
+      "channelIds": [
+        "c1",
+        "c3"
+      ],
+      "cut": false,
+      "reason": "insufficient-clearance"
+    },
+    "pools": [],
+    "streams": [],
+    "ownerIds": [],
+    "logicalGap": null
+  },
+  "longEdge": {
+    "streams": [
+      {
+        "owners": [
+          "b0",
+          "c1"
+        ],
+        "length": 0.6175533312569093
+      },
+      {
+        "owners": [
+          "b2",
+          "c1"
+        ],
+        "length": 0.5793041238156551
+      },
+      {
+        "owners": [
+          "b2",
+          "c3"
+        ],
+        "length": 0.5680429881910096
+      },
+      {
+        "owners": [
+          "b4",
+          "c3"
+        ],
+        "length": 0.5580439630831973
+      }
+    ]
+  },
+  "highInteriorDeck": {
+    "center": {
+      "x": 0,
+      "y": 1,
+      "z": 2
+    },
+    "interior": {
+      "x": 0.15,
+      "y": 11,
+      "z": 2
+    },
+    "supported": false
+  }
+}

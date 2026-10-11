@@ -87,7 +87,7 @@ export function walkableCells(state: GrowingState, world?: IslandWorld): Set<str
     for (const k of state.keepsakes) if (k.cell) blocked.add(key(k.cell));
     if (world) {
         const ownerCells = [...blocked].map(text => { const [x, z] = text.split(',').map(Number); return { x, z }; });
-        return new Set(world.sites.filter(site => !ownerCells.some(owner => authoredPointBlocked(site.cell, owner))).map(site => key(site.cell)));
+        return new Set(world.walkSites.filter(site => !ownerCells.some(owner => authoredPointBlocked(site.cell, owner))).map(site => key(site.cell)));
     }
     const open = new Set(landCells(state).map(key).filter(k => !blocked.has(k)));
     if (state.bridge) {

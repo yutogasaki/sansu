@@ -1,0 +1,114 @@
+{
+  "worldRevision": "authored-water-v1:c8e6505d85a8c885",
+  "picks": [
+    {
+      "owner": "l20",
+      "chosen": "l20",
+      "chosenName": "authored-water-floor",
+      "chosenWorldFloor": "[\"native05-inlet-core\",\"authored-water:pool-water:l20\"]",
+      "oldModelHits": 0,
+      "ownMeshHit": true,
+      "proxyHidden": true
+    },
+    {
+      "owner": "l21",
+      "chosen": "l21",
+      "chosenName": "authored-water-floor",
+      "chosenWorldFloor": "[\"native05-inlet-core\",\"authored-water:pool-water:l21\"]",
+      "oldModelHits": 0,
+      "ownMeshHit": true,
+      "proxyHidden": true
+    },
+    {
+      "owner": "l22",
+      "chosen": "l22",
+      "chosenName": "authored-water-floor",
+      "chosenWorldFloor": "[\"native05-inlet-core\",\"authored-water:pool-water:l22\"]",
+      "oldModelHits": 0,
+      "ownMeshHit": true,
+      "proxyHidden": true
+    },
+    {
+      "owner": "l23",
+      "chosen": "l23",
+      "chosenName": "authored-water-floor",
+      "chosenWorldFloor": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D\"]",
+      "oldModelHits": 0,
+      "ownMeshHit": true,
+      "proxyHidden": true
+    },
+    {
+      "owner": "l24",
+      "chosen": "l24",
+      "chosenName": "authored-water-floor",
+      "chosenWorldFloor": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3Ato\"]",
+      "oldModelHits": 0,
+      "ownMeshHit": true,
+      "proxyHidden": true
+    }
+  ],
+  "shore": {
+    "target": {
+      "id": "l20:shore",
+      "kind": "shore",
+      "cell": {
+        "x": 6,
+        "z": -10.5
+      }
+    },
+    "open": true,
+    "reached": true,
+    "support": {
+      "x": 6,
+      "y": 1.658151312,
+      "z": -10.5
+    },
+    "actorPosition": [
+      -1.0026560304999999,
+      1.698151312,
+      -12.5
+    ],
+    "feet": [
+      {
+        "sole": [
+          -1.0866560305,
+          1.698151312,
+          -12.437
+        ],
+        "hasDrySupport": true
+      },
+      {
+        "sole": [
+          -0.9186560304999999,
+          1.698151312,
+          -12.437
+        ],
+        "hasDrySupport": true
+      }
+    ]
+  },
+  "shownBox": {
+    "empty": false,
+    "min": [
+      -2.3436365194999995,
+      1.678261426,
+      -11.378611286
+    ],
+    "max": [
+      1.3376940634999999,
+      1.987000034,
+      -10.634648443
+    ]
+  },
+  "preview": {
+    "originalHit": 1.4982614517211914,
+    "committedHitDuringPreview": 1.4982614517211914,
+    "prospectiveHit": 1.6532614297331913,
+    "bedY": 1.498261426,
+    "baseGroundY": 1.653261426,
+    "previewRevision": "authored-water-v1:53e25e6d724deba3",
+    "hiddenLife": true,
+    "restoredLife": true,
+    "terrainsAfterCancel": 1
+  }
+}

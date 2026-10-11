@@ -1,0 +1,28 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+ ❯ src/domain/growingIsland/authoredWaterWorld.test.ts (12 tests | 1 failed) 1045ms
+   × pure authored water geometry composition > falls back the whole garden when a required logical link crosses missing original ground 6ms
+     → Invalid island world: walk edge crosses missing floor or water
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/domain/growingIsland/authoredWaterWorld.test.ts > pure authored water geometry composition > falls back the whole garden when a required logical link crosses missing original ground
+Error: Invalid island world: walk edge crosses missing floor or water
+ ❯ requireWorld src/domain/growingIsland/worldDefinition.ts:11:91
+      9| const turn = (x: number, z: number, count: number): Cell => count === …
+     10|     : count === 2 ? { x: -x, z: -z } : count === 3 ? { x: z, z: -x } :…
+     11| function requireWorld(valid: unknown, message: string): asserts valid …
+       |                                                                                           ^
+     12| function freeze<T>(value: T): T {
+     13|     if (value && typeof value === 'object' && !Object.isFrozen(value))…
+ ❯ Module.compileWorldDefinition src/domain/growingIsland/worldDefinition.ts:288:13
+ ❯ source src/domain/growingIsland/authoredWaterWorld.test.ts:34:12
+ ❯ src/domain/growingIsland/authoredWaterWorld.test.ts:183:22
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 11 passed (12)
+   Start at  18:29:30
+   Duration  1.38s (transform 120ms, setup 0ms, collect 152ms, tests 1.05s, environment 0ms, prepare 35ms)

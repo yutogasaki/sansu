@@ -10,6 +10,7 @@ import { PLACE_GOAL_IDS } from './placeTypes';
 import { openTown, welcome } from './town';
 import type { Cell, Command, GrowingState, Side, TownEvent } from './types';
 import type { IslandWorld } from './worldDefinition';
+import { hasAuthoredPlacementSupport } from './authoredPlacementSupport';
 
 export interface Intent { id: string; command: Command }
 
@@ -17,7 +18,7 @@ function fail(message: string): never { throw new Error(message); }
 
 /** Seeds and landmarks may replace a spread wild plant; everything else needs an empty cell. */
 function claim(state: GrowingState, cell: Cell, except?: string, world?: IslandWorld) {
-    if (!onLand(state, cell, world)) fail('ここには おけないよ。');
+    if (!onLand(state, cell, world) || world && !hasAuthoredPlacementSupport(world, cell)) fail('ここには おけないよ。');
     const found = occupant(state, cell, except);
     if (!found) return;
     if (found.type === 'plot' && found.spread) { state.plots = state.plots.filter(p => p.id !== found.id); return; }
@@ -300,7 +301,7 @@ export function applyIntent(previous: GrowingState, intent: Intent, at?: number,
 }
 
 export function canPlace(state: GrowingState, cell: Cell, except?: string, world?: IslandWorld) {
-    if (!onLand(state, cell, world)) return false;
+    if (!onLand(state, cell, world) || world && !hasAuthoredPlacementSupport(world, cell)) return false;
     if (isVacant(state, cell, except, world)) return true;
     const found = occupant(state, cell, except);
     return found?.type === 'plot' && found.spread;

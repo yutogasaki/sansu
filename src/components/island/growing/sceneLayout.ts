@@ -6,10 +6,11 @@ import type { Cell, GrowingState } from '../../../domain/growingIsland';
 import { landscapeCell, landscapePoint, landscapeRise } from '../../../domain/growingIsland/landscape';
 import { legacyIslandWorld } from '../../../domain/growingIsland/legacyWorldDefinition';
 import type { IslandWorld as CompiledWorld } from '../../../domain/growingIsland/worldDefinition';
+import type { AuthoredWaterPlan } from '../../../domain/growingIsland/authoredWaterWorld';
 
 /** The same cell-to-world mapping as the current garden, so saved coordinates look the same. */
-export function sceneLayout(state: Pick<GrowingState, 'land'> & Partial<Pick<GrowingState, 'bridge'>>, curved = false, authored?: CompiledWorld) {
-    if (authored) return authoredSceneLayout(authored);
+export function sceneLayout(state: Pick<GrowingState, 'land'> & Partial<Pick<GrowingState, 'bridge'>>, curved = false, authored?: CompiledWorld, waterPlan?: AuthoredWaterPlan, baseWorld?: CompiledWorld) {
+    if (authored) return authoredSceneLayout(authored, waterPlan, baseWorld);
     const bounds = landBounds(state), center = (bounds.minX + bounds.maxX) / 2;
     const world = legacyIslandWorld(state, curved);
     const groundFloor = world.floors.find(floor => floor.kind === 'ground')!;
@@ -55,13 +56,14 @@ export function sceneLayout(state: Pick<GrowingState, 'land'> & Partial<Pick<Gro
         // The world supplies the actual static models after rebuilding. Camera fit
         // uses their vertices rather than placing a tall imaginary tree on every shore.
         cameraObjects: undefined as (() => readonly T.Object3D[]) | undefined,
+        authoredWaterPlan: undefined as AuthoredWaterPlan | undefined, authoredBaseWorld: undefined as CompiledWorld | undefined,
         artMargin: bounds.maxX - bounds.minX > 5 || bounds.depth > 5 ? 2.7 : 1.1,
         width: bounds.maxX - bounds.minX + 1, depth: bounds.depth };
 }
 
 /** Authored terrain owns both the physical map and its placement sites. Bounds
  * are only a framing extent; an inlet inside them never acquires a floor. */
-function authoredSceneLayout(world: CompiledWorld) {
+function authoredSceneLayout(world: CompiledWorld, waterPlan?: AuthoredWaterPlan, baseWorld?: CompiledWorld) {
     const center = (world.bounds.min.x + world.bounds.max.x) / 2;
     const bounds = { minX: Math.floor(world.bounds.min.x), maxX: Math.ceil(world.bounds.max.x), depth: Math.ceil(world.bounds.max.z - world.bounds.min.z) };
     // A layout belongs to one immutable compiled world. Geometry builders ask
@@ -79,10 +81,10 @@ function authoredSceneLayout(world: CompiledWorld) {
         if (floorPoints.size > 16_384) floorPoints.delete(floorPoints.keys().next().value!);
         return point;
     };
-    const heightAt = (cell: Cell) => floorPointAt(cell)?.y ?? 0;
+    const heightAt = (cell: Cell) => floorPointAt(cell)?.y ?? world.anchorAt(cell)?.y ?? 0;
     const projected = (cell: Cell) => { const floor = floorPointAt(cell); return floor ? { x: floor.x, z: floor.z } : cell; };
     const point = (cell: Cell, y = .04) => {
-        const floor = floorPointAt(cell);
+        const floor = floorPointAt(cell) ?? world.anchorAt(cell);
         return new T.Vector3((floor?.x ?? cell.x) - center, (floor?.y ?? 0) + y, (floor?.z ?? cell.z) - 2);
     };
     // PlacePoint.y is supplied by the same authored floor evaluator, including
@@ -107,7 +109,8 @@ function authoredSceneLayout(world: CompiledWorld) {
     const dock = pierRoot.clone().add(new T.Vector3(.62, 0, 1.3)); dock.y = -.16;
     const far = dock.clone().add(new T.Vector3(3.4, 0, 3.2)), farther = dock.clone().add(new T.Vector3(5.6, 0, 5.2));
     return { bounds, center, world, point, floorPoint, heightAt, maxHeight: world.bounds.max.y, cellAt, logicalAt, projected, curved: false, authored: true,
-        pierRoot, pierEnd, dock, far, farther, key: world.id, nativeArt: false,
+        pierRoot, pierEnd, dock, far, farther, key: `${world.id}:${world.definition.revision ?? 'base'}`, nativeArt: false,
+        authoredWaterPlan: waterPlan, authoredBaseWorld: baseWorld,
         cameraObjects: undefined as (() => readonly T.Object3D[]) | undefined, artMargin: .1,
         width: world.bounds.max.x - world.bounds.min.x, depth: world.bounds.max.z - world.bounds.min.z };
 }

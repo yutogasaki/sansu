@@ -1,0 +1,55 @@
+First focused run: npx vitest run src/domain/growingIsland/authoredWaterWorld.test.ts
+Classification: test assertion precision. Actual clipped-floor interpolation differed by 1e-9 after stable vertex rounding; fixed anchors were equal. Corrected assertions compare physical coordinates at 1e-8, stricter than compiler EPS 1e-7. No ownership/support/geometry rule was relaxed.
+
+ ❯ src/domain/growingIsland/authoredWaterWorld.test.ts (7 tests | 2 failed) 707ms
+   × pure authored water geometry composition > reduces a pool around another owner and its doorstep without changing acquired rights 124ms
+     → expected { x: 5.5, y: 0.399999999, z: -2 } to deeply equal { x: 5.5, y: 0.4, z: -2 }
+   × pure authored water geometry composition > preserves each original anchor and floor interpolation in a rotated/translated district 66ms
+     → expected { x: 22, y: 2.025, z: -9.999999999 } to deeply equal { x: 22, y: 2.025, z: -10 }
+
+ FAIL  src/domain/growingIsland/authoredWaterWorld.test.ts > pure authored water geometry composition > reduces a pool around another owner and its doorstep without changing acquired rights
+AssertionError: expected { x: 5.5, y: 0.399999999, z: -2 } to deeply equal { x: 5.5, y: 0.4, z: -2 }
+
+- Expected
++ Received
+
+  Object {
+    "x": 5.5,
+-   "y": 0.4,
++   "y": 0.399999999,
+    "z": -2,
+  }
+
+ ❯ src/domain/growingIsland/authoredWaterWorld.test.ts:132:49
+    130|         expect(near.plan.pools.find(pool => pool.ownerId === 'b4')!.ra…
+    131|         const home = state.plots[0].cell!;
+    132|         expect(near.world.floorAt(home)?.point).toEqual(base.floorAt(h…
+       |                                                 ^
+    133|         expect(near.world.floorAt({ x: home.x, z: home.z + .75 })?.poi…
+    134|         expect(near.world.sites.filter(site => site.placement).map(sit…
+
+ FAIL  src/domain/growingIsland/authoredWaterWorld.test.ts > pure authored water geometry composition > preserves each original anchor and floor interpolation in a rotated/translated district
+AssertionError: expected { x: 22, y: 2.025, z: -9.999999999 } to deeply equal { x: 22, y: 2.025, z: -10 }
+
+- Expected
++ Received
+
+  Object {
+    "x": 22,
+    "y": 2.025,
+-   "z": -10,
++   "z": -9.999999999,
+  }
+
+ ❯ src/domain/growingIsland/authoredWaterWorld.test.ts:144:73
+    142|             expect(world.anchorAt(cell)).toEqual(base.anchorAt(cell));
+    143|             expect(pool.center).toEqual(base.anchorAt(cell));
+    144|             expect(world.sampleFloorAt(cell, pool.waterFloorId)?.point…
+       |                                                                         ^
+    145|             expect(world.floorAt(cell)).toBeUndefined();
+    146|         }
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 5 passed (7)
+   Start at  18:18:10
+   Duration  1.22s (transform 127ms, setup 0ms, collect 164ms, tests 707ms, environment 0ms, prepare 34ms)

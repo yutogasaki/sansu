@@ -1,0 +1,5 @@
+Initial focused regression execution: /tmp/sansu-authored-water-unit-review-a1.log
+Result: 11 PASS / 1 FAIL before the new ground-gap test reached composition.
+Classification: test fixture construction error. The new source ground gap retained quarter-cell walking edges whose real foot band crossed the gap; compileWorldDefinition correctly rejected the invalid source world with "walk edge crosses missing floor or water".
+Correction: the gap-only source fixture now contains joining/water grants and no invalid walking grants. Production composition was not relaxed. The regression still verifies all logical water grants and fixed anchors remain while the entire enlarged group falls back to individual bodies.
+Rerun: /tmp/sansu-authored-water-unit-review-a2.log, 12 tests PASS.

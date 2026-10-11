@@ -1,0 +1,89 @@
+{
+  "recordedAt": "2026-10-11T10:05:01.004253+00:00",
+  "gitParent": "fed24d3e2c78ad129ba90e702429215fa4c6ee91",
+  "appTarget": "http://127.0.0.1:5343/prototypes/place-qa/authored.html?water=wide",
+  "buildRevision": "authored-water-m1-a3",
+  "delivery": "DEV explicit water=wide; synthetic 27-owner state; main GrowingWorld; no player DB write",
+  "candidate": "native05-authored-water-m1-v1",
+  "worldId": "native05-authored-world-m0-v2",
+  "worldRevision": "authored-water-v1:c8e6505d85a8c885",
+  "configuredFlags": {
+    "VITE_ISLAND_ENABLED": true,
+    "VITE_NATIVE_GROWING_ART": true
+  },
+  "normalProductionNativeArtDefault": false,
+  "testedInputSha256": "e3cae37215e35909e4d8c3c6fd40b21d51886d28045a7ec0a6eaf747ecc92981",
+  "inputClosure": "runtime start/end match; common application sources match core, original authored editing, legacy and classic",
+  "gates": {
+    "art": "HOLD: diagnostic contours are small and linear; original basin/rock/forest/court composition incomplete",
+    "independentUnderstandingSafety": "NOT_EVALUATED: N=0",
+    "runtime": "PARTIAL: scoped functional checks PASS; static prospective terrain only; authored player save/acquisition/update and shared decks not implemented; device performance not evaluated"
+  },
+  "checks": {
+    "core": {
+      "pass": true,
+      "files": 588,
+      "tests": 5128,
+      "sourceFixed": true,
+      "inputs": 1842,
+      "report": "core/report.json",
+      "log": "core/execution.log.txt"
+    },
+    "waterEditing": {
+      "pass": true,
+      "steps": 5,
+      "captures": 10,
+      "sourceFixed": true,
+      "report": "runtime/report.json",
+      "scope": "Desktop mouse; phone/tablet crops only"
+    },
+    "baselineEditing": {
+      "pass": true,
+      "steps": 6,
+      "captures": 7,
+      "sourceFixed": true,
+      "report": "baseline-regression/report.json",
+      "timingScope": "Functional regression only; run overlapped core/classic, no latency comparison"
+    },
+    "legacy": {
+      "pass": true,
+      "scenarios": 8,
+      "captures": 22,
+      "answers": 40,
+      "sourceFixed": true,
+      "report": "legacy-regression/report.json",
+      "scope": "Normal legacy-world/curved-owned; real UI answers, separate synthetic migration/land/resident fixtures; not authored acquisition/learning"
+    },
+    "classic": {
+      "pass": true,
+      "count": 32,
+      "sourceFixed": true,
+      "report": "classic-smoke/report.json",
+      "log": "classic-smoke/execution.log.txt",
+      "scope": "Classic Explore regression, not Growing art"
+    },
+    "waterContinuity": {
+      "pass": true,
+      "streams": 4,
+      "samplesPerStream": 41,
+      "fixture": "prototypes/place-qa/authored-water-fixture.json",
+      "scope": "Actual water floor samples; independent pool-outline overlap in review/review-native-final.json"
+    },
+    "ownedWaterSelection": {
+      "pass": true,
+      "owners": 5,
+      "oldModelHits": 0,
+      "report": "review/runtime-review.json",
+      "scope": "Node geometry; explicit shore pose; browser independently checks a pool tap"
+    }
+  },
+  "remaining": [
+    "Water garden size, contours, rockwork and composition in whole-island art",
+    "Real shared deck and entrances",
+    "Forest mass and settlement continuity",
+    "Three arrangements; solo/join/grow/use/split/reconnect",
+    "16/32+ expansion with old districts preserved",
+    "Authored player save/learning/update integration",
+    "Independent art/understanding/safety and real device performance; publication"
+  ]
+}

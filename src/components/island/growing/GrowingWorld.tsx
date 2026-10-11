@@ -5,7 +5,7 @@ import { boatProgress, docked } from '../../../domain/growingIsland';
 import type { Cell, GrowingState, Moment, Villager } from '../../../domain/growingIsland';
 import { disposeActor, makeVillagerActor } from './actors';
 import { MomentEffects } from './momentEffects';
-import { buildObjectLayer, type Ghost, type ObjectLayer } from './objectLayer';
+import { buildObjectLayer, previewGrowingState, type Ghost, type ObjectLayer } from './objectLayer';
 import { frameCamera, initialView, panFromDrag } from './growingCamera';
 import { createWorldScene } from './worldScene';
 import { WorldEffects } from './worldEffects';
@@ -51,13 +51,13 @@ export interface WorldCamera {
 }
 export interface ShownMoment { id: number; moment: Moment; cell?: Cell }
 /** `cheer` makes the waiting friend jump (a home seed was planted); `festival` celebrates a new level. */
-type Props = WorldHandlers & { state: GrowingState; world?: CompiledWorld; time: GardenTime; ghost?: Ghost; selectedId?: string; turn: number; cheer: number; festival: number;
+type Props = WorldHandlers & { state: GrowingState; world?: CompiledWorld; authoredWater?: boolean; time: GardenTime; ghost?: Ghost; selectedId?: string; turn: number; cheer: number; festival: number;
     hints?: readonly Cell[]; moment?: ShownMoment; show?: boolean; active?: boolean; compact?: boolean; qualityCeiling?: number; focus?: { id: string; n: number }; concert?: { cell: Cell; n: number }; bridgeBuild?: number; onCamera?: (camera?: WorldCamera) => void };
 
 const reducedMotion = () => typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 const nativeArtEnabled = import.meta.env.DEV || import.meta.env.VITE_NATIVE_GROWING_ART === 'true';
 
-export default function GrowingWorld({ state, world: authoredWorld, time, ghost, selectedId, turn, cheer, festival, hints, moment, show, active = true, compact, qualityCeiling = 1.25, focus, concert, bridgeBuild, onCamera, ...handlers }: Props) {
+export default function GrowingWorld({ state, world: authoredWorld, authoredWater = false, time, ghost, selectedId, turn, cheer, festival, hints, moment, show, active = true, compact, qualityCeiling = 1.25, focus, concert, bridgeBuild, onCamera, ...handlers }: Props) {
     const host = useRef<HTMLDivElement>(null);
     const handlerRef = useRef(handlers);
     useEffect(() => { handlerRef.current = handlers; });
@@ -134,7 +134,7 @@ export default function GrowingWorld({ state, world: authoredWorld, time, ghost,
             node.dataset.authoredCoastSource = coast.source.sha256;
         }
         if (released) return;
-        const world = createWorldScene(renderer, native, authoredWorld, coast); disposers.push(() => world.dispose());
+        const world = createWorldScene(renderer, native, authoredWorld, coast, authoredWater); disposers.push(() => world.dispose());
         const releaseSharedCache = retainSharedRendererCache(world.m.residentFabric());
         disposers.push(releaseSharedCache);
         let bridgeWork: { at: number; resident: string; owner: string; parts: T.Object3D[]; crossing?: boolean } | undefined;
@@ -176,6 +176,11 @@ export default function GrowingWorld({ state, world: authoredWorld, time, ghost,
             sceneCounters[kind] = Math.min(1000000, sceneCounters[kind] + 1);
             node.dataset.growingSceneCounters = JSON.stringify(sceneCounters);
         };
+        const showPreview = (next: GrowingState, nextGhost?: Ghost) => {
+            const revision = world.showWaterPreview(authoredWater ? previewGrowingState(next, nextGhost) : undefined);
+            if (revision) node.dataset.previewWorldRevision = revision;
+            else delete node.dataset.previewWorldRevision;
+        };
 
         const rebuild = (next: GrowingState, nextGhost?: Ghost, selected?: string, nextHints?: readonly Cell[]) => {
             // The first props effect follows the initial scene build with the same
@@ -189,6 +194,7 @@ export default function GrowingWorld({ state, world: authoredWorld, time, ghost,
                 world.life.adoptState(next);
                 if (rebuilt.previewKey !== previewKey) {
                     layer.updatePreview(nextGhost, selected, nextHints); counted('previewUpdate');
+                    showPreview(next, nextGhost);
                 }
                 if (rebuilt.state !== next) counted('receiptReuse');
                 rebuilt = { state: next, ghost: nextGhost, selected, hints: nextHints, stateKey, previewKey };
@@ -197,6 +203,10 @@ export default function GrowingWorld({ state, world: authoredWorld, time, ghost,
             layout = world.layout(next);
             node.dataset.growingBounds = JSON.stringify(layout.bounds);
             node.dataset.worldDefinition = layout.world.id;
+            if (layout.authored) {
+                node.dataset.worldRevision = layout.world.definition.revision ?? 'base';
+                node.dataset.authoredWater = JSON.stringify(layout.authoredWaterPlan);
+            }
             node.dataset.bridgeSaved = String(Boolean(next.bridge));
             layer?.dispose();
             layer = buildObjectLayer(world.m, next, layout, nextGhost, selected, nextHints, native);
@@ -216,6 +226,7 @@ export default function GrowingWorld({ state, world: authoredWorld, time, ghost,
             known = new Set(layer.objects.keys());
             unopened = new Set(next.unopened);
             world.life.sync(next, layout, layer);
+            showPreview(next, nextGhost);
             if (bridgeWork && (!next.bridge || bridgeWork.owner !== next.seed)) {
                 bridgeWork = undefined; window.clearTimeout(bridgeClear); setBridgeStage(undefined);
             }
@@ -362,7 +373,7 @@ export default function GrowingWorld({ state, world: authoredWorld, time, ghost,
                 frameCamera(camera, layout, view, width / height);
                 if (elapsed >= (playFocus.restoring ? 420 : DROP_PLAY_MS)) playFocus = undefined;
             }
-            world.life.tick(now, delta, reduced, latest.current.time === 'night');
+            if (!world.hasWaterPreview()) world.life.tick(now, delta, reduced, latest.current.time === 'night');
             if (bridgeWork && current.bridge) {
                 const { at, resident, parts } = bridgeWork, elapsed = now - at;
                 const buildTime = reduced ? 1500 : 3000, crossTime = reduced ? 1500 : 3000;
@@ -403,7 +414,7 @@ export default function GrowingWorld({ state, world: authoredWorld, time, ghost,
                 }
             } catch (error) { fail('render', error); return; }
             if (renderer.getContext().isContextLost()) { fail('context-lost'); return; }
-            if (layer && latest.current.active && document.visibilityState === 'visible') {
+            if (layer && !world.hasWaterPreview() && latest.current.active && document.visibilityState === 'visible') {
                 const frustum = new T.Frustum().setFromProjectionMatrix(new T.Matrix4().multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse));
                 const shownHandler = handlerRef.current.onPlaceShown;
                 if (shownHandler) for (const place of layer.places) {
@@ -414,7 +425,10 @@ export default function GrowingWorld({ state, world: authoredWorld, time, ghost,
                             return larger && place.mainIds.every(id => larger.mainIds.includes(id));
                         }) : undefined);
                     const receiptKey = `${place.ruleId}:${place.revision}`;
-                    if (!placeObject || !frustum.intersectsBox(new T.Box3().setFromObject(placeObject)) || placeShown.has(receiptKey) || (shownRetry.get(receiptKey) ?? 0) > now) continue;
+                    const pools = place.ruleId === 'P03' ? layout.authoredWaterPlan?.pools.filter(pool => place.mainIds.includes(pool.ownerId)) : undefined;
+                    const placeBox = pools?.length ? new T.Box3().setFromPoints(pools.flatMap(pool => pool.outline.map(point => new T.Vector3(point.x - layout.center, pool.waterY, point.z - 2))))
+                        : placeObject ? new T.Box3().setFromObject(placeObject) : undefined;
+                    if (!placeBox || !frustum.intersectsBox(placeBox) || placeShown.has(receiptKey) || (shownRetry.get(receiptKey) ?? 0) > now) continue;
                     placeShown.add(receiptKey);
                     Promise.resolve(shownHandler({ ruleId: place.ruleId, revision: place.revision })).then(saved => {
                         if (saved === false) { placeShown.delete(receiptKey); shownRetry.set(receiptKey, performance.now() + 1500); }
@@ -474,6 +488,7 @@ export default function GrowingWorld({ state, world: authoredWorld, time, ghost,
         };
         const ground = (event: PointerEvent) => world.groundAt(cast(event)) ?? (authoredWorld ? undefined : ray.ray.intersectPlane(plane, new T.Vector3()));
         const actorAt = (event: PointerEvent) => {
+            if (world.hasWaterPreview()) return undefined;
             const actors = world.life.objects();
             const direct = cast(event).intersectObjects(actors, true)[0]?.object.userData.actorId as string | undefined;
             if (direct) return direct;
@@ -594,7 +609,7 @@ export default function GrowingWorld({ state, world: authoredWorld, time, ghost,
         return release;
     // A retry mounts a fresh world; its graphics profile is fixed for that lifetime.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [authoredWorld]);
+    }, [authoredWorld, authoredWater]);
 
     useEffect(() => { api.current?.rebuild(state, ghost, selectedId, hints); }, [state, ghost, selectedId, hints]);
     useEffect(() => { if (moment) api.current?.moment(moment); }, [moment]);
@@ -607,7 +622,7 @@ export default function GrowingWorld({ state, world: authoredWorld, time, ghost,
     const lastTurn = useRef(turn);
     useEffect(() => { if (turn !== lastTurn.current) { api.current?.turn(turn - lastTurn.current); lastTurn.current = turn; } }, [turn]);
 
-    return <div className="growing-world" ref={host} data-growing-world data-visual-candidate="growing-island-v1" data-art-candidate={authoredWorld ? 'native05-authored-runtime-m1' : nativeArtEnabled ? 'native05-expanding-runtime-v2' : 'native-05-place-runtime-v3'} data-landscape-projection={authoredWorld ? 'authored-floor-v1' : nativeArtEnabled ? 'curved-owned-v1' : 'linear'} data-native-growing-art={String(nativeArtEnabled)} data-growing-feature-enabled="true">
+    return <div className="growing-world" ref={host} data-growing-world data-visual-candidate="growing-island-v1" data-art-candidate={authoredWorld ? authoredWater ? 'native05-authored-water-m1-v1' : 'native05-authored-runtime-m1' : nativeArtEnabled ? 'native05-expanding-runtime-v2' : 'native-05-place-runtime-v3'} data-landscape-projection={authoredWorld ? 'authored-floor-v1' : nativeArtEnabled ? 'curved-owned-v1' : 'linear'} data-native-growing-art={String(nativeArtEnabled)} data-growing-feature-enabled="true">
         {failed && <p className="growing-world-failed">しまを ひょうじ できなかったよ。よみなおしてみてね。</p>}
         {bridgeStage && <div className="growing-bridge-caption" data-bridge-stage={bridgeStage} role="status">
             {bridgeStage === 'building' ? 'ぽこもこが はしを つくっているよ' : bridgeStage === 'crossing' ? 'なかまが わたっているよ' : 'むこうまで いけた！'}

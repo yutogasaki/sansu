@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { authoredAccessWorld } from './authoredWorldAccess.fixture';
-import { authoredPointBlocked, walkPathDistance } from './authoredWorldAccess';
+import { authoredApproachCells, authoredPointBlocked, walkPathDistance } from './authoredWorldAccess';
+import { waterSupportDefinition } from './worldWaterSupport.fixture';
 import { newIsland } from './island';
 import { approachCells, HOME_CELL, isReachable, isVacant, key, landCells, onLand, passageNeighbors, reachableFromHome, walkableCells } from './space';
 import { compileWorldDefinition } from './worldDefinition';
@@ -57,5 +58,22 @@ describe('authored planting and walking access', () => {
         const quarter = Array.from({ length: 13 }, (_, i) => ({ x: i / 4, z: -1 }));
         expect(walkPathDistance(quarter)).toBe(3);
         expect(walkPathDistance([{ x: 0, z: -1 }, { x: 1, z: -1 }, { x: 2, z: -1 }, { x: 3, z: -1 }])).toBe(3);
+    });
+
+    it('approaches a wet owner on its actual dry bank without reviving a walk edge through water', () => {
+        const world = compileWorldDefinition(waterSupportDefinition());
+        expect(world.neighbors({ x: 0, z: 2 }, 'walk')).toEqual([]);
+        expect(authoredApproachCells({ x: 0, z: 2 }, world)).toEqual([{ x: 1, z: 2 }]);
+        expect(isReachable({ x: 0, z: 2 }, new Set(['1,2']), world)).toBe(true);
+    });
+
+    it('does not call a logically nearby but physically separated floor the wet owner bank', () => {
+        const definition = waterSupportDefinition(), district = definition.districts[0];
+        district.floors = district.floors.map((floor, serial) => serial ? floor : { ...floor,
+            vertices: floor.vertices.map((vertex, i) => i < 4 ? { ...vertex, point: { ...vertex.point, x: vertex.point.x + 100 } } : vertex) });
+        const world = compileWorldDefinition(definition);
+        expect(world.floorAt({ x: 1, z: 2 })?.point.x).toBe(101);
+        expect(authoredApproachCells({ x: 0, z: 2 }, world)).toEqual([]);
+        expect(isReachable({ x: 0, z: 2 }, new Set(['1,2']), world)).toBe(false);
     });
 });

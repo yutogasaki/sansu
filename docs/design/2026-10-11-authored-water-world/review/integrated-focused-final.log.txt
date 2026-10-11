@@ -1,0 +1,20 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+ ✓ src/domain/growingIsland/authoredPlacementSupport.test.ts (6 tests) 20ms
+ ✓ src/domain/growingIsland/worldWaterSupport.test.ts (10 tests) 19ms
+ ✓ src/domain/growingIsland/authoredWorldAccess.test.ts (7 tests) 180ms
+ ✓ src/domain/growingIsland/authoredWaterWorld.test.ts (13 tests) 1235ms
+stderr | src/components/island/growing/native/authoredWaterIntegration.test.ts > actual 27-owner hill water frame > keeps all acquired anchors and owner approaches while rendering the exact evaluated water and bed
+THREE.Material: parameter 'map' has value of undefined.
+
+ ✓ src/components/island/growing/native/authoredWaterIntegration.test.ts (4 tests) 8058ms
+   ✓ actual 27-owner hill water frame > keeps all acquired anchors and owner approaches while rendering the exact evaluated water and bed 1501ms
+   ✓ actual 27-owner hill water frame > stores and reconnects through real commands, restoring original dry ground and exactly the same water revision 1050ms
+   ✓ actual 27-owner hill water frame > uses the same future geometry for preview and confirmation without changing the committed frame 3032ms
+   ✓ actual 27-owner hill water frame > shows separate prospective terrain, keeps committed pointer support, and restores scene resources on cancel 2023ms
+
+ Test Files  5 passed (5)
+      Tests  40 passed (40)
+   Start at  18:45:27
+   Duration  8.82s (transform 493ms, setup 0ms, collect 988ms, tests 9.51s, environment 0ms, prepare 173ms)
