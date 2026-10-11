@@ -33,3 +33,5 @@ target `http://127.0.0.1:5350/prototypes/place-qa/authored.html?water=wide&grow=
 次は[花庭・森・回廊の制作順](next-production.md)。花庭を『4株が支える主花1つ＋低い周辺花＋その下の生活』として、元のID/成長/地面/接近を保って全景の粗形から作る。殻の内空間、森の厚み、大樹の実内床/階段/galleryは後続。三配置・成長/利用/分離・16/32軒以上の地区拡張、本人保存/通常配布、性能、独立観察、実機、公開も未完。
 
 [実装indexの照合](index-verification/implementation-index.json)では外部exportの1878 app入力が固定coreと一致し、生成索引・文書・index不変を検査した。[文書log](index-verification/docs-check.log.txt)。このproofのtreeはproof自身を追加する前のreviewed indexで、最終実装treeはGit反映後のidentity追補へ記す。生ログの末尾空行を保持するため空白検査は`core.whitespace=-blank-at-eof`を明示し、その他の標準空白エラーは検査した。
+
+実装commitは`cbb35a468e93c10a494e4a88121c2dbd76ac9cdd`、最終treeは`529e7a740a0588acd29126ef78e4e51ec9c15c24`。[証拠を含む最終index](index-verification/implementation-final-index.json)のtreeと実commit treeが一致する。[最終文書log](index-verification/implementation-final-docs-check.log.txt)。このidentity追補は文書だけで、app/モデルの1878入力を変えない。
