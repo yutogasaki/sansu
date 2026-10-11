@@ -38,4 +38,4 @@
 
 全景の大きな形・密度・余白を決める → 同じ世界に入口・足場・経路を通す → 素材と細部を仕上げる。単体回廊の詳細化を全景より先にしない。成立していない形を無所有の背景や条件緩和で補わない。その全島一例を確認してから、同じ材料の三配置、成長と利用、分離・再接続、既存地区を保持した16/32軒とその先の拡張、本人保存・配布へ進む。
 
-[初回FAILと修正](review.md)を保持。実装commitとindex検証は、確定後に文書だけの追補へ残す。
+[初回FAILと修正](review.md)を保持。実装commitは `1b64064754e547debf81661fce5cc661cf60be1c`、treeは `2efcfc49518c7ca858f05e680f71fbac31e1cc8a`。[実装indexの検証](index-verification/implementation-index.json)は1860入力がcoreと一致し、リポジトリ外で生成索引・文書を検査した。[検査log](index-verification/docs-check.log.txt)。末尾空行を含む検証済みextractorと生ログは保持し、indexの空白検査は `core.whitespace=-blank-at-eof` を明示した。commit identityの追補は文書だけのcommitで、アプリ入力を変更しない。
