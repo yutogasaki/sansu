@@ -1,0 +1,129 @@
+{
+  "candidate": "native05-authored-world-m0-v2",
+  "stage": "M0-foundation",
+  "source": {
+    "artifact": "docs/design/2026-10-10-island-final-3d/whole-island.glb",
+    "sha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d"
+  },
+  "transform": {
+    "scale": 0.45,
+    "origin": {
+      "x": 5.65,
+      "z": -1.03,
+      "y": -0.36450000000000005
+    }
+  },
+  "artifact": {
+    "file": "native05-world.json.gz",
+    "bytes": 1436001,
+    "sha256": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08",
+    "expandedBytes": 7378874,
+    "expandedSha256": "3e82313e53fba31951d7a7ed519780cc0d2e33086e5f8b05da3bb9efe3430ee3"
+  },
+  "inputs": {
+    "package-lock.json": "5c476bc2c1ede88ecc98441158df82dc139464d21ca5b3b3bf3ddaf9a416b92d",
+    "src/domain/growingIsland/worldDefinition.ts": "aa06240f2ee634024b41b7e29d040b39ddbe33d19e012ffb77a91cca3f1f55fe",
+    "src/domain/growingIsland/worldTypes.ts": "0284eb85bc09b5e8d1ad1b84af5ba9d4e2bd5f88ac44cc0f50aeefe79fcd9895",
+    "tools/build-authored-island-world.mjs": "6211df5cb3b7363139f8caf7320a112ec17f56973e1fbfc102787bcfd2fe41e3"
+  },
+  "extraction": [
+    {
+      "name": "Flowers / open sky gathering court",
+      "primitive": 0,
+      "material": "path / light sandstone",
+      "sourceTriangles": 704,
+      "floorTriangles": 352,
+      "vertices": 427
+    },
+    {
+      "name": "Garden / rounded flower terrace",
+      "primitive": 0,
+      "material": "ground / fresh soft meadow",
+      "sourceTriangles": 1956,
+      "floorTriangles": 880,
+      "vertices": 1186
+    },
+    {
+      "name": "Grove / rounded living terrace",
+      "primitive": 0,
+      "material": "ground / higher garden",
+      "sourceTriangles": 1956,
+      "floorTriangles": 880,
+      "vertices": 1186
+    },
+    {
+      "name": "Grove / sheltered open room",
+      "primitive": 0,
+      "material": "path / light sandstone",
+      "sourceTriangles": 704,
+      "floorTriangles": 352,
+      "vertices": 427
+    },
+    {
+      "name": "Harbor / shared waterfront court",
+      "primitive": 0,
+      "material": "path / light sandstone",
+      "sourceTriangles": 704,
+      "floorTriangles": 352,
+      "vertices": 427
+    },
+    {
+      "name": "Island / continuous sculpted mature terrain",
+      "primitive": 0,
+      "material": "ground / fresh soft meadow",
+      "sourceTriangles": 38007,
+      "floorTriangles": 38007,
+      "vertices": 20327
+    },
+    {
+      "name": "Island / continuous sculpted mature terrain",
+      "primitive": 1,
+      "material": "hill / silvery meadow",
+      "sourceTriangles": 30988,
+      "floorTriangles": 30988,
+      "vertices": 15972
+    },
+    {
+      "name": "Island / continuous sculpted mature terrain",
+      "primitive": 2,
+      "material": "harbor / light seaside meadow",
+      "sourceTriangles": 16973,
+      "floorTriangles": 16973,
+      "vertices": 9374
+    },
+    {
+      "name": "Village / shared sunny court",
+      "primitive": 0,
+      "material": "path / light sandstone",
+      "sourceTriangles": 704,
+      "floorTriangles": 352,
+      "vertices": 427
+    },
+    {
+      "name": "Water town / shared frontage court",
+      "primitive": 0,
+      "material": "path / light sandstone",
+      "sourceTriangles": 704,
+      "floorTriangles": 352,
+      "vertices": 427
+    }
+  ],
+  "sites": 73,
+  "walkingPoints": 1990,
+  "reachableFromHome": 73,
+  "isolatedSites": [],
+  "edges": 3865,
+  "bounds": {
+    "min": {
+      "x": -0.65,
+      "y": -0.128250011,
+      "z": -10.93
+    },
+    "max": {
+      "x": 14.655312061,
+      "y": 2.21640713,
+      "z": 2.460312457
+    }
+  },
+  "scope": "Actual native05 floor triangles and explicit diagnostic placement sites. No owner save, gameplay integration, art acceptance, earned acquisition or release claim."
+}

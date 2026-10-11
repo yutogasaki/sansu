@@ -1,0 +1,13 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+ ✓ src/components/island/growing/worldFloorGeometry.test.ts (1 test) 5ms
+ ✓ src/domain/growingIsland/worldDefinition.test.ts (17 tests) 220ms
+ ✓ src/components/island/growing/curvedLandscape.test.ts (5 tests) 513ms
+ ✓ src/domain/growingIsland/nativeWorldSource.test.ts (1 test) 5325ms
+   ✓ approved native05 terrain as a shared world input > retains the source identity, actual irregular floor, legal planting and reachable dry paths 5325ms
+
+ Test Files  4 passed (4)
+      Tests  24 passed (24)
+   Start at  14:54:37
+   Duration  5.64s (transform 331ms, setup 0ms, collect 749ms, tests 6.06s, environment 0ms, prepare 140ms)

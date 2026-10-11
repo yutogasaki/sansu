@@ -335,3 +335,9 @@ owner行の1→2は同一transactionで行い、既存所有・座標・住人�
 - 本人削除はplaced/guided/balanced/islandsの4系列と本人写真/贈り物を既存のwrite hold内の同一transactionで削除する。別本人の島へ作用しない。
 
 [実装ADR](../adr/2026-10-10-growing-place-runtime.md)。単体の移行/CAS/削除/旧writer診断と、実SW更新/offline/実利用者の引き継ぎは別の証拠として記録する。
+
+## 共通世界定義の制作境界（2026-10-11）
+
+[共通世界定義M0](island-world-contract.md)の床・地点・接続は、保存4の取得済み土地から読み取る派生データと、美術から作る明示した診断定義で制作する。本人recordへ頂点・mesh・新しい取得地区を保存しない。正本 `placedIslands` / Growing DB schema5 / 保存4と、旧writerを隔てる既存のtable境界を保持する。
+
+既存島の互換地区化は読み方の追加であり、所有・全取得セル・座標・成熟・装い・住人・時計・学習・写真・贈り物・操作と達成の原本を書き換えない。診断島は通常同期や本人保存に混ぜない。地区の取得/選択を永続化する段階で、新しい保存版、原子的な移行、旧writer拒否、rollback build、offlineとtwo-buildの検証契約を本節へ追加してから本体を切り替える。

@@ -173,6 +173,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             }
             layout = world.layout(next);
             node.dataset.growingBounds = JSON.stringify(layout.bounds);
+            node.dataset.worldDefinition = layout.world.id;
             node.dataset.bridgeSaved = String(Boolean(next.bridge));
             layer?.dispose();
             layer = buildObjectLayer(world.m, next, layout, nextGhost, selected, nextHints, native);

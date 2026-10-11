@@ -1,0 +1,72 @@
+{
+  "stage": "M0-foundation",
+  "candidate": "native05-authored-world-m0-v2",
+  "goalStatus": "ACTIVE",
+  "scope": "Common floor/rights/explicit routes and legacy DEV compatibility. Authored whole-island gameplay and release remain open.",
+  "sourceInputs": 1518,
+  "sourceInputsSHA256": "37e5bfa08cbe61aa710015336d40803d73f784272b55ad52e126220e2f48f570",
+  "changedAfterCore": [
+    "tools/e2e-growing-balance.mjs"
+  ],
+  "build": {
+    "url": "http://127.0.0.1:5338/#/island",
+    "revision": "authored-world-m0-final",
+    "version": "authored-world-m0-final:73bc0c83-0b3d-4549-b3fe-214340737a82",
+    "delivery": "mystic-island-v1",
+    "islandFeatureEnabled": true,
+    "serviceWorkerControlled": false
+  },
+  "world": {
+    "artCandidate": "native05-expanding-runtime-v2",
+    "nativeGrowingArt": "true",
+    "nativeKitSha256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+    "nativeSourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "worldDefinition": "legacy-world-v1:0,5,5:curved-owned-v1:no-bridge"
+  },
+  "checks": {
+    "core": {
+      "result": "PASS",
+      "files": 571,
+      "tests": 5010
+    },
+    "focused": {
+      "result": "PASS",
+      "files": 4,
+      "tests": 24
+    },
+    "classicSmoke": {
+      "result": "PASS",
+      "tests": 32,
+      "exitCode": 0
+    },
+    "mainDevCompatibility": {
+      "result": "PASS",
+      "scenarios": 8,
+      "captures": 22,
+      "realAnswersPerViewport": 20,
+      "viewportWidths": [
+        390,
+        768
+      ]
+    }
+  },
+  "gates": {
+    "art": "HOLD; authored whole-island gameplay not connected",
+    "independentUnderstandingSafety": "NOT_EVALUATED; N=0",
+    "runtime": "PASS within M0 and legacy DEV compatibility; authored production/save/update/device/release remain open"
+  },
+  "postVerificationTestSourceFormatting": {
+    "path": "src/domain/growingIsland/worldDefinition.fixture.ts",
+    "testedSha256": "fa6c233482778cd1c7f3cef641fd1bd032926af541bd48b3d0ab7b26a5ad8df1",
+    "commitSha256": "7593abf6873b4a83bb0ceb401f829c806f76ac0ff8354f7ab0df1c9720b810b6",
+    "change": "Remove one trailing empty line. Executable fixture body unchanged.",
+    "beforeArtifact": "history/world-fixture-tested.txt.gz",
+    "affectedRegression": {
+      "result": "PASS",
+      "files": 1,
+      "tests": 17,
+      "log": "verify-fixture-eof.txt"
+    }
+  },
+  "applicationRuntimeInputsUnchangedSinceFirstBrowserRun": true
+}

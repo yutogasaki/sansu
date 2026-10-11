@@ -2,7 +2,8 @@ import assert from 'node:assert/strict';
 import { promises as fs } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { chromium } from 'playwright';
-import { answerUI, expandGrowingIslandUI, readNative, runtimeMetadata, seedDev, waitForAsync } from './island-e2e-helpers.mjs';
+import { answerUI, expandGrowingIslandUI, openGrowingMenu, readNative, runtimeMetadata, seedDev, waitForAsync } from './island-e2e-helpers.mjs';
+import { disposeProductionProjection, productionCellPoint } from './growing-production-helpers.mjs';
 
 const base = process.env.SANSU_GROWING_URL || 'http://127.0.0.1:5260';
 const out = process.env.SANSU_GROWING_OUTPUT;
@@ -12,7 +13,7 @@ async function sources() {
     const walk = async directory => (await Promise.all((await fs.readdir(directory, { withFileTypes: true }))
         .map(entry => entry.isDirectory() ? walk(`${directory}/${entry.name}`) : [`${directory}/${entry.name}`]))).flat();
     const paths = [...await walk('src'), 'package.json', 'package-lock.json', 'vite.config.ts', 'index.html',
-        'tools/e2e-growing-balance.mjs', 'tools/island-e2e-helpers.mjs'];
+        'tools/e2e-growing-balance.mjs', 'tools/island-e2e-helpers.mjs', 'tools/growing-production-helpers.mjs'];
     return Object.fromEntries(await Promise.all(paths.sort().map(async path =>
         [path, createHash('sha256').update(await fs.readFile(path)).digest('hex')])));
 }
@@ -42,23 +43,13 @@ async function capture(page, label) {
 async function tapSeed(page) {
     // The tutorial invitation pulses continuously; use a real touch at its visible hit target.
     const button = page.getByRole('button', { name: 'たね', exact: true });
-    if (!await button.isVisible()) await page.getByRole('button', { name: 'メニュー', exact: true }).tap();
+    if (!await button.isVisible()) await openGrowingMenu(page, { touch: true });
     await button.waitFor();
     const box = await button.boundingBox(); assert(box);
     await page.touchscreen.tap(box.x + box.width / 2, box.y + box.height / 2);
 }
 async function cellTap(page, id, cell) {
-    const point = await page.evaluate(async ({ id, cell }) => {
-        const { growingDb } = await import('/src/domain/growingIsland/repository.ts');
-        const { sceneLayout } = await import('/src/components/island/growing/sceneLayout.ts');
-        const { frameCamera, initialView } = await import('/src/components/island/growing/growingCamera.ts');
-        const T = await import('/node_modules/.vite/deps/three.js');
-        const box = document.querySelector('[data-growing-world] canvas').getBoundingClientRect();
-        const layout = sceneLayout((await growingDb.islands.get(id)).state), camera = new T.OrthographicCamera();
-        frameCamera(camera, layout, initialView(), box.width / box.height); camera.updateMatrixWorld();
-        const p = layout.point(cell).project(camera);
-        return { x: box.x + (p.x + 1) / 2 * box.width, y: box.y + (1 - p.y) / 2 * box.height };
-    }, { id, cell });
+    const point = await productionCellPoint(page, (await read(page, id)).state, cell);
     await page.touchscreen.tap(point.x, point.y);
 }
 try {
@@ -147,7 +138,7 @@ try {
         assert.deepEqual((await read(page, id)).state.keepsakes.find(k => k.id === 'qa-keepsake').cell, { x: 4, z: 2 });
         report.scenarios.push({ viewport, name: 'explicit-mastery-keepsake-first-in-storage-place-reload', pass: true });
         for (const [side, price] of [['east', 1200], ['west', 1440], ['south', 1680]]) {
-            await page.getByRole('button', { name: 'メニュー', exact: true }).tap();
+            await openGrowingMenu(page, { touch: true });
             await expandGrowingIslandUI(page, side, price);
             await waitForAsync(page, async ({ id, side }) => (await (await import('/src/domain/growingIsland/repository.ts')).growingDb.islands.get(id))?.state.land.districts?.includes(side), { id, side });
         }
@@ -181,7 +172,7 @@ try {
         }, id);
         await page.reload(); await ready(page);
         const beforeFocus = await read(page, id), nativeBeforeFocus = await readNative(page, id);
-        await page.getByRole('button', { name: 'メニュー', exact: true }).tap();
+        await openGrowingMenu(page, { touch: true });
         await page.getByRole('button', { name: 'なかま', exact: true }).tap();
         await page.locator('.growing-friends').getByRole('button', { name: /みつけたいこ/ }).tap();
         await page.locator('.growing-sheet').getByText('みつけたいこ', { exact: true }).waitFor();
@@ -208,5 +199,6 @@ try {
 } finally {
     report.qaHash = createHash('sha256').update(await fs.readFile(new URL(import.meta.url))).digest('hex');
     await fs.writeFile(`${out}/report.json`, JSON.stringify(report, null, 2));
+    await disposeProductionProjection();
     await browser.close(); console.log(JSON.stringify(report, null, 2));
 }

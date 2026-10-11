@@ -1,0 +1,1155 @@
+{
+  "baseline": "2861a0e0f177316c0274a205ca05295ceda3f625",
+  "scope": "Both renderers evaluated independently on the same synthetic acquired land; actual floor, bank and rock buffers.",
+  "cases": [
+    {
+      "name": "initial",
+      "curved": false,
+      "comparisons": [
+        {
+          "object": "growing-owned-floor",
+          "attribute": "position",
+          "count": 222,
+          "oldSHA": "550e1ab6cc50dbcde4207d6febda549c89130fdb3e7087ba35c4dfa4a3735b06",
+          "newSHA": "550e1ab6cc50dbcde4207d6febda549c89130fdb3e7087ba35c4dfa4a3735b06",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "color",
+          "count": 222,
+          "oldSHA": "4e72428c4f47779c8dc4e0355de1507b80f0ca217f97c03f07edf52e6787b9da",
+          "newSHA": "4e72428c4f47779c8dc4e0355de1507b80f0ca217f97c03f07edf52e6787b9da",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "normal",
+          "count": 222,
+          "oldSHA": "af63a0cdced1447e21fe412e839ecdf1853adf1e52616c51d2b2f63d9ebcfe93",
+          "newSHA": "af63a0cdced1447e21fe412e839ecdf1853adf1e52616c51d2b2f63d9ebcfe93",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "index",
+          "count": 306,
+          "oldSHA": "3ad64159a1d36638986b39fc48e5ee7cd4a008b48f1036b81696fe554bcaebad",
+          "newSHA": "3ad64159a1d36638986b39fc48e5ee7cd4a008b48f1036b81696fe554bcaebad",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "position",
+          "count": 5724,
+          "oldSHA": "14ab636e2d6f03477d82f54e9f6c9bbcf3c8df6f96ea124d8db6e3600db84cf6",
+          "newSHA": "14ab636e2d6f03477d82f54e9f6c9bbcf3c8df6f96ea124d8db6e3600db84cf6",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "color",
+          "count": 5724,
+          "oldSHA": "fb43efaacf127326dec3653f170f0953895820cfedb4b207c679f4ee25379a90",
+          "newSHA": "fb43efaacf127326dec3653f170f0953895820cfedb4b207c679f4ee25379a90",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "normal",
+          "count": 5724,
+          "oldSHA": "24596bef756ec2bb7875fe43a07a7ca36ffb93aaa2a37ec6f49e072e4d75cde2",
+          "newSHA": "24596bef756ec2bb7875fe43a07a7ca36ffb93aaa2a37ec6f49e072e4d75cde2",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "index",
+          "count": 9888,
+          "oldSHA": "c30721ee963c79a1e5634382aa8fdbc7517432fc71a0b6cfd280f7d76c326229",
+          "newSHA": "c30721ee963c79a1e5634382aa8fdbc7517432fc71a0b6cfd280f7d76c326229",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "position",
+          "count": 2544,
+          "oldSHA": "eb4eb730a5a9b4df415d32355240c74e6d02ceb144bd9b916503adf1072f3707",
+          "newSHA": "eb4eb730a5a9b4df415d32355240c74e6d02ceb144bd9b916503adf1072f3707",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "color",
+          "count": 2544,
+          "oldSHA": "4ea21e924860dc12b2f4242a9a7fd988d228dadecececdf1c49e4c5731a992bd",
+          "newSHA": "4ea21e924860dc12b2f4242a9a7fd988d228dadecececdf1c49e4c5731a992bd",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "normal",
+          "count": 2544,
+          "oldSHA": "38e54bfc64e491865ed067f6954bc70bd9616b98b92c145f3ad853171201cdcc",
+          "newSHA": "38e54bfc64e491865ed067f6954bc70bd9616b98b92c145f3ad853171201cdcc",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "index",
+          "count": 3816,
+          "oldSHA": "c3eb6c7d8141981a75752764cca49f2d205d108c6ef1a8755f0679347df1e426",
+          "newSHA": "c3eb6c7d8141981a75752764cca49f2d205d108c6ef1a8755f0679347df1e426",
+          "identical": true,
+          "maximumDifference": 0
+        }
+      ]
+    },
+    {
+      "name": "initial",
+      "curved": true,
+      "comparisons": [
+        {
+          "object": "growing-owned-floor",
+          "attribute": "position",
+          "count": 222,
+          "oldSHA": "552b612fbbaa4bb9c73dc6e18566dc17c3ea9eb5980c419b6bfa7cacbe4d67a0",
+          "newSHA": "552b612fbbaa4bb9c73dc6e18566dc17c3ea9eb5980c419b6bfa7cacbe4d67a0",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "color",
+          "count": 222,
+          "oldSHA": "4e72428c4f47779c8dc4e0355de1507b80f0ca217f97c03f07edf52e6787b9da",
+          "newSHA": "4e72428c4f47779c8dc4e0355de1507b80f0ca217f97c03f07edf52e6787b9da",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "normal",
+          "count": 222,
+          "oldSHA": "af63a0cdced1447e21fe412e839ecdf1853adf1e52616c51d2b2f63d9ebcfe93",
+          "newSHA": "af63a0cdced1447e21fe412e839ecdf1853adf1e52616c51d2b2f63d9ebcfe93",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "index",
+          "count": 306,
+          "oldSHA": "3ad64159a1d36638986b39fc48e5ee7cd4a008b48f1036b81696fe554bcaebad",
+          "newSHA": "3ad64159a1d36638986b39fc48e5ee7cd4a008b48f1036b81696fe554bcaebad",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "position",
+          "count": 5724,
+          "oldSHA": "c57fd139a62373d41b4138186eccc66fb93649ad01d9014bea86dc7b592c52a7",
+          "newSHA": "c57fd139a62373d41b4138186eccc66fb93649ad01d9014bea86dc7b592c52a7",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "color",
+          "count": 5724,
+          "oldSHA": "fb43efaacf127326dec3653f170f0953895820cfedb4b207c679f4ee25379a90",
+          "newSHA": "fb43efaacf127326dec3653f170f0953895820cfedb4b207c679f4ee25379a90",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "normal",
+          "count": 5724,
+          "oldSHA": "9cdc029245f7f77a20fc91bbaccb61096b2cf5ef7bcfe643295b2b1c703b7d73",
+          "newSHA": "9cdc029245f7f77a20fc91bbaccb61096b2cf5ef7bcfe643295b2b1c703b7d73",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "index",
+          "count": 9888,
+          "oldSHA": "c30721ee963c79a1e5634382aa8fdbc7517432fc71a0b6cfd280f7d76c326229",
+          "newSHA": "c30721ee963c79a1e5634382aa8fdbc7517432fc71a0b6cfd280f7d76c326229",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "position",
+          "count": 2544,
+          "oldSHA": "f58ccb7c845646b1606f2e8d6da6d42dbd177ac9dc060c96a7602296d5677e6f",
+          "newSHA": "f58ccb7c845646b1606f2e8d6da6d42dbd177ac9dc060c96a7602296d5677e6f",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "color",
+          "count": 2544,
+          "oldSHA": "4ea21e924860dc12b2f4242a9a7fd988d228dadecececdf1c49e4c5731a992bd",
+          "newSHA": "4ea21e924860dc12b2f4242a9a7fd988d228dadecececdf1c49e4c5731a992bd",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "normal",
+          "count": 2544,
+          "oldSHA": "c4b04771c0f42cc9b4613b95ea695e222ad2cec9416efdac68ca92d64e4b313b",
+          "newSHA": "c4b04771c0f42cc9b4613b95ea695e222ad2cec9416efdac68ca92d64e4b313b",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "index",
+          "count": 3816,
+          "oldSHA": "c3eb6c7d8141981a75752764cca49f2d205d108c6ef1a8755f0679347df1e426",
+          "newSHA": "c3eb6c7d8141981a75752764cca49f2d205d108c6ef1a8755f0679347df1e426",
+          "identical": true,
+          "maximumDifference": 0
+        }
+      ]
+    },
+    {
+      "name": "bay",
+      "curved": false,
+      "comparisons": [
+        {
+          "object": "growing-owned-floor",
+          "attribute": "position",
+          "count": 1176,
+          "oldSHA": "867c3a7ce4da88dac0c2a40fc8f312f3391a04e1dfa654873a455cca98e1027f",
+          "newSHA": "867c3a7ce4da88dac0c2a40fc8f312f3391a04e1dfa654873a455cca98e1027f",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "color",
+          "count": 1176,
+          "oldSHA": "51ea95de5cdd9f5c287b9ef435978656a25af7cfc5c08669a11ff6781173e61f",
+          "newSHA": "51ea95de5cdd9f5c287b9ef435978656a25af7cfc5c08669a11ff6781173e61f",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "normal",
+          "count": 1176,
+          "oldSHA": "7958084bcd0bc92a91992bafe0f3a65513b545cbbeb7975831f386f1fbfc8bd3",
+          "newSHA": "7958084bcd0bc92a91992bafe0f3a65513b545cbbeb7975831f386f1fbfc8bd3",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "index",
+          "count": 1890,
+          "oldSHA": "5bf87fd1b9461197edc0fa3592215b4713eece08fc9d7b36e65afdf5575d154b",
+          "newSHA": "5bf87fd1b9461197edc0fa3592215b4713eece08fc9d7b36e65afdf5575d154b",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "position",
+          "count": 17388,
+          "oldSHA": "ef1705c5643d3716810faa44ee33c42613a29e9f8eb106012e7761db2906bdd5",
+          "newSHA": "426adee897bec38863305199a64c4a6816a0bd5e650aa80bc613325db1321e36",
+          "identical": false,
+          "maximumDifference": 2.384185791015625e-7
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "color",
+          "count": 17388,
+          "oldSHA": "91c3847264b422db34fc3916be95065a4eeccde85b376ba3be4dea0a498ffca4",
+          "newSHA": "91c3847264b422db34fc3916be95065a4eeccde85b376ba3be4dea0a498ffca4",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "normal",
+          "count": 17388,
+          "oldSHA": "c4a7e0640b70e89395cdb7d09738baa85c14f7a174cb6494f7be80b2b1b2285e",
+          "newSHA": "00cb88acbb0d4efc79bd127132e89ccc2438e96cd69178de8e59f62d0fd45d92",
+          "identical": false,
+          "maximumDifference": 4.917383193969727e-7
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "index",
+          "count": 30624,
+          "oldSHA": "9c9e3225297d1176638f09e8d2ca51bc2e3d787d489ae1efaa1c55f67cc518f4",
+          "newSHA": "9c9e3225297d1176638f09e8d2ca51bc2e3d787d489ae1efaa1c55f67cc518f4",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "position",
+          "count": 7728,
+          "oldSHA": "46d86ac8d413d57fbe9503f7e4b162a01757780d7f42004836b798c057cd54a3",
+          "newSHA": "46d86ac8d413d57fbe9503f7e4b162a01757780d7f42004836b798c057cd54a3",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "color",
+          "count": 7728,
+          "oldSHA": "9caba0e8cb62cbed41613c7d393911588db405a124b2dfad1002ca6b1989e22e",
+          "newSHA": "9caba0e8cb62cbed41613c7d393911588db405a124b2dfad1002ca6b1989e22e",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "normal",
+          "count": 7728,
+          "oldSHA": "46830f008b8019ed078ef6a36faa63f37f2c19826361a71e3f40ae3dac8f025b",
+          "newSHA": "46830f008b8019ed078ef6a36faa63f37f2c19826361a71e3f40ae3dac8f025b",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "index",
+          "count": 11592,
+          "oldSHA": "432be7fc4a36229623df569b299799280716c6f6f32b38fb234fc05793f80177",
+          "newSHA": "432be7fc4a36229623df569b299799280716c6f6f32b38fb234fc05793f80177",
+          "identical": true,
+          "maximumDifference": 0
+        }
+      ]
+    },
+    {
+      "name": "bay",
+      "curved": true,
+      "comparisons": [
+        {
+          "object": "growing-owned-floor",
+          "attribute": "position",
+          "count": 1176,
+          "oldSHA": "537157b147fa431f4375a9d209647a9ad0cb407c4d2d3de9ca6da82c5d008647",
+          "newSHA": "537157b147fa431f4375a9d209647a9ad0cb407c4d2d3de9ca6da82c5d008647",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "color",
+          "count": 1176,
+          "oldSHA": "f425f84a6dd9a2b725558f85e604c135f2726e981d5142de2e21ff012c762d3e",
+          "newSHA": "f425f84a6dd9a2b725558f85e604c135f2726e981d5142de2e21ff012c762d3e",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "normal",
+          "count": 1176,
+          "oldSHA": "0da43e71faa96de6a8fc198e0143baf60eff2052afacd08a18eab77f57a58f9b",
+          "newSHA": "0da43e71faa96de6a8fc198e0143baf60eff2052afacd08a18eab77f57a58f9b",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "index",
+          "count": 1890,
+          "oldSHA": "5bf87fd1b9461197edc0fa3592215b4713eece08fc9d7b36e65afdf5575d154b",
+          "newSHA": "5bf87fd1b9461197edc0fa3592215b4713eece08fc9d7b36e65afdf5575d154b",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "position",
+          "count": 17388,
+          "oldSHA": "cc1747ccab924822f2c35bc64b1c2523d8dc2e2d753d74867afa4bab9a23a98b",
+          "newSHA": "73c5d8eba944a6180209f9f7c39e7e1f11592b007185313e6c4c09d73b1ad3b2",
+          "identical": false,
+          "maximumDifference": 2.384185791015625e-7
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "color",
+          "count": 17388,
+          "oldSHA": "206d13693c673f27ec1a599c4788ea23fd1b6b6cb8ba4d611b37ba36ae038bd8",
+          "newSHA": "a8c1b210f3a33fa92e38920f81dea5d9709495cf0842bef9d9af5f81eab7fe9d",
+          "identical": false,
+          "maximumDifference": 2.9802322387695312e-8
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "normal",
+          "count": 17388,
+          "oldSHA": "dd0954ce03a7d3c3d0dd5702bf6093f69eaead30d37057f42ced42506aaba71f",
+          "newSHA": "67b0685323b7b4a668f8e1ed993b0e787ceb439cd5078fb7294bc60255da803a",
+          "identical": false,
+          "maximumDifference": 5.066394805908203e-7
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "index",
+          "count": 30624,
+          "oldSHA": "9c9e3225297d1176638f09e8d2ca51bc2e3d787d489ae1efaa1c55f67cc518f4",
+          "newSHA": "9c9e3225297d1176638f09e8d2ca51bc2e3d787d489ae1efaa1c55f67cc518f4",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "position",
+          "count": 7728,
+          "oldSHA": "0223bb55984b0f4b07c9516120a11042b1066028a3d916d6104e6307ad7ae885",
+          "newSHA": "0223bb55984b0f4b07c9516120a11042b1066028a3d916d6104e6307ad7ae885",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "color",
+          "count": 7728,
+          "oldSHA": "9caba0e8cb62cbed41613c7d393911588db405a124b2dfad1002ca6b1989e22e",
+          "newSHA": "9caba0e8cb62cbed41613c7d393911588db405a124b2dfad1002ca6b1989e22e",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "normal",
+          "count": 7728,
+          "oldSHA": "4c1ff612e1d41a5978d1c813d04d919d95f2830a67331b6365be2bc8e66ece19",
+          "newSHA": "4c1ff612e1d41a5978d1c813d04d919d95f2830a67331b6365be2bc8e66ece19",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "index",
+          "count": 11592,
+          "oldSHA": "432be7fc4a36229623df569b299799280716c6f6f32b38fb234fc05793f80177",
+          "newSHA": "432be7fc4a36229623df569b299799280716c6f6f32b38fb234fc05793f80177",
+          "identical": true,
+          "maximumDifference": 0
+        }
+      ]
+    },
+    {
+      "name": "forest",
+      "curved": false,
+      "comparisons": [
+        {
+          "object": "growing-owned-floor",
+          "attribute": "position",
+          "count": 1176,
+          "oldSHA": "f62adcbb8607b06b7da919f8f3233f729414244d5901667a55bcbf61c793cd70",
+          "newSHA": "f62adcbb8607b06b7da919f8f3233f729414244d5901667a55bcbf61c793cd70",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "color",
+          "count": 1176,
+          "oldSHA": "1757a39c4ce022620b3c47c3f14a551694c5dec362e89ebc2633b3d1fdcd1375",
+          "newSHA": "1757a39c4ce022620b3c47c3f14a551694c5dec362e89ebc2633b3d1fdcd1375",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "normal",
+          "count": 1176,
+          "oldSHA": "45a6ad87dbf1ff97f0807c79a2a437fa5710a737c16ff6f06eda185c340851df",
+          "newSHA": "45a6ad87dbf1ff97f0807c79a2a437fa5710a737c16ff6f06eda185c340851df",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "index",
+          "count": 1890,
+          "oldSHA": "5bf87fd1b9461197edc0fa3592215b4713eece08fc9d7b36e65afdf5575d154b",
+          "newSHA": "5bf87fd1b9461197edc0fa3592215b4713eece08fc9d7b36e65afdf5575d154b",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "position",
+          "count": 17388,
+          "oldSHA": "704d1cf3a292f29df7fcc17a3dededb8b2bf3ac3ec2fd68af02d0058c92df8c0",
+          "newSHA": "e54a92476db69422da949e44d77793464b722ed685add90250bee3f9a9798c83",
+          "identical": false,
+          "maximumDifference": 2.384185791015625e-7
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "color",
+          "count": 17388,
+          "oldSHA": "5ae72eb053624fd454de1764b2d70b77f1ac957a0c4c7f93fb10ef7ecf2c6321",
+          "newSHA": "5ae72eb053624fd454de1764b2d70b77f1ac957a0c4c7f93fb10ef7ecf2c6321",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "normal",
+          "count": 17388,
+          "oldSHA": "ab50eeb295449592c3fbcb2de4508ac8fecf36b825728dffa0461ccbcd209d7f",
+          "newSHA": "d40180cfdce68b29187cfca5d5b2e5a9e5185dd2db83efd514f5ecb308e44eef",
+          "identical": false,
+          "maximumDifference": 4.917383193969727e-7
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "index",
+          "count": 30624,
+          "oldSHA": "9c9e3225297d1176638f09e8d2ca51bc2e3d787d489ae1efaa1c55f67cc518f4",
+          "newSHA": "9c9e3225297d1176638f09e8d2ca51bc2e3d787d489ae1efaa1c55f67cc518f4",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "position",
+          "count": 7728,
+          "oldSHA": "bec77bc37fe4ffd2a3a89f073859421ae24e42e841ba694ac22fe1a3190c0036",
+          "newSHA": "bec77bc37fe4ffd2a3a89f073859421ae24e42e841ba694ac22fe1a3190c0036",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "color",
+          "count": 7728,
+          "oldSHA": "9caba0e8cb62cbed41613c7d393911588db405a124b2dfad1002ca6b1989e22e",
+          "newSHA": "9caba0e8cb62cbed41613c7d393911588db405a124b2dfad1002ca6b1989e22e",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "normal",
+          "count": 7728,
+          "oldSHA": "fad384dcbad1769241302c5a94974e84ad9d2306a3c0778b7e1bdca9a8d68ff2",
+          "newSHA": "fad384dcbad1769241302c5a94974e84ad9d2306a3c0778b7e1bdca9a8d68ff2",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "index",
+          "count": 11592,
+          "oldSHA": "432be7fc4a36229623df569b299799280716c6f6f32b38fb234fc05793f80177",
+          "newSHA": "432be7fc4a36229623df569b299799280716c6f6f32b38fb234fc05793f80177",
+          "identical": true,
+          "maximumDifference": 0
+        }
+      ]
+    },
+    {
+      "name": "forest",
+      "curved": true,
+      "comparisons": [
+        {
+          "object": "growing-owned-floor",
+          "attribute": "position",
+          "count": 1176,
+          "oldSHA": "8a8271cff60e86cbf4d47d40b9e175e8a957a0c332195ab2601913c078cc6b5d",
+          "newSHA": "8a8271cff60e86cbf4d47d40b9e175e8a957a0c332195ab2601913c078cc6b5d",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "color",
+          "count": 1176,
+          "oldSHA": "3d43ed12a1bd087444cb87db5e5b79c2ef52a558c0ff4169a9583611610b72ec",
+          "newSHA": "3d43ed12a1bd087444cb87db5e5b79c2ef52a558c0ff4169a9583611610b72ec",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "normal",
+          "count": 1176,
+          "oldSHA": "04f50ce70060f6a93756628ec4f40cc0a1413b23b4cf14c8556c9c3f712ba4da",
+          "newSHA": "04f50ce70060f6a93756628ec4f40cc0a1413b23b4cf14c8556c9c3f712ba4da",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "index",
+          "count": 1890,
+          "oldSHA": "5bf87fd1b9461197edc0fa3592215b4713eece08fc9d7b36e65afdf5575d154b",
+          "newSHA": "5bf87fd1b9461197edc0fa3592215b4713eece08fc9d7b36e65afdf5575d154b",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "position",
+          "count": 17388,
+          "oldSHA": "7512701b225edd9059c73ed45b809cc8b3a42f5ee3f8d86e7139dfcea2861f57",
+          "newSHA": "16f01d41368d559b44ebf22ddbb5f02aaae8f0a081b8e465c7f7094bf20825fc",
+          "identical": false,
+          "maximumDifference": 9.5367431640625e-7
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "color",
+          "count": 17388,
+          "oldSHA": "2c62248f70b111b7633cfc18733721c7c92a761805a0c535debb215714621186",
+          "newSHA": "435178e4087e8db68f427318047f393b29d2e05a8a84777b66c28c93776ff5fc",
+          "identical": false,
+          "maximumDifference": 2.9802322387695312e-8
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "normal",
+          "count": 17388,
+          "oldSHA": "36cb5d2d2b2078968ff9ea7b8885e52c6433e9bc0858100c875a3cf83d13bf65",
+          "newSHA": "4476e48ec84f692595511b892a417eee93111a2183662f1e1d714a3b38ab10fd",
+          "identical": false,
+          "maximumDifference": 0.0000013262033462524414
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "index",
+          "count": 30624,
+          "oldSHA": "9c9e3225297d1176638f09e8d2ca51bc2e3d787d489ae1efaa1c55f67cc518f4",
+          "newSHA": "9c9e3225297d1176638f09e8d2ca51bc2e3d787d489ae1efaa1c55f67cc518f4",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "position",
+          "count": 7728,
+          "oldSHA": "6b8b6fe7bbe09ab15bc32655ed39147c765aff17c1b030ca74f0d05103644592",
+          "newSHA": "de852513f701fbb6a5bad8e3a22a8ee52ab0013e1c3831d5eec3bcb94fb1476d",
+          "identical": false,
+          "maximumDifference": 9.5367431640625e-7
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "color",
+          "count": 7728,
+          "oldSHA": "9caba0e8cb62cbed41613c7d393911588db405a124b2dfad1002ca6b1989e22e",
+          "newSHA": "9caba0e8cb62cbed41613c7d393911588db405a124b2dfad1002ca6b1989e22e",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "normal",
+          "count": 7728,
+          "oldSHA": "ca85b99a8f2751ba631a30a71dfa583306a135898382b55f0d1c438288fbb491",
+          "newSHA": "57eca0eba0809a2b4a3cdcc683936a101fdf159bd6d2557b33957808f55725ff",
+          "identical": false,
+          "maximumDifference": 0.000003159046173095703
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "index",
+          "count": 11592,
+          "oldSHA": "432be7fc4a36229623df569b299799280716c6f6f32b38fb234fc05793f80177",
+          "newSHA": "432be7fc4a36229623df569b299799280716c6f6f32b38fb234fc05793f80177",
+          "identical": true,
+          "maximumDifference": 0
+        }
+      ]
+    },
+    {
+      "name": "garden",
+      "curved": false,
+      "comparisons": [
+        {
+          "object": "growing-owned-floor",
+          "attribute": "position",
+          "count": 1536,
+          "oldSHA": "ffe219f23ce225526fb78d02f1d6e112f1c3a2ae1c0b408dc1117cf76b30fe4c",
+          "newSHA": "ffe219f23ce225526fb78d02f1d6e112f1c3a2ae1c0b408dc1117cf76b30fe4c",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "color",
+          "count": 1536,
+          "oldSHA": "4b77f7a1460ad6f8ed69c3c40635e1dcc085eecf1fd816a0ffd26f59ab5b424f",
+          "newSHA": "4b77f7a1460ad6f8ed69c3c40635e1dcc085eecf1fd816a0ffd26f59ab5b424f",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "normal",
+          "count": 1536,
+          "oldSHA": "2c40c1d0573662af1e7490ce35d83052bb185bc9e78276a3c3036eb27ed268c9",
+          "newSHA": "2c40c1d0573662af1e7490ce35d83052bb185bc9e78276a3c3036eb27ed268c9",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "index",
+          "count": 2610,
+          "oldSHA": "549616ffabbd3e03c5489a03b3829a102f129796eb28dac1a70149a8d04bc7ac",
+          "newSHA": "549616ffabbd3e03c5489a03b3829a102f129796eb28dac1a70149a8d04bc7ac",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "position",
+          "count": 17388,
+          "oldSHA": "1574ed399a0d6a14304b28f41ddadf31ecc17b938abc91c3fba39200b7a0eb11",
+          "newSHA": "d2bcfe44caa4894aa144ef326b9bbdca2630bfab6afdf721f0bf0916137019d2",
+          "identical": false,
+          "maximumDifference": 2.384185791015625e-7
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "color",
+          "count": 17388,
+          "oldSHA": "50547a32a1dbdfa5bfe7d7e4c369732f6604e51dd6181148a4a36de701413128",
+          "newSHA": "50547a32a1dbdfa5bfe7d7e4c369732f6604e51dd6181148a4a36de701413128",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "normal",
+          "count": 17388,
+          "oldSHA": "9ed86711d67905f9abae205a062aa18e596329c81b8cf8b10154a643a61f296c",
+          "newSHA": "5df4d387d3f9cce4ea6e13ebbc33edba074a5aa156494730dbb6aee5b00cd022",
+          "identical": false,
+          "maximumDifference": 4.917383193969727e-7
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "index",
+          "count": 30624,
+          "oldSHA": "ebf3e07ffb61ec35cada55d9f35176a5720f6d054c832a106048c428e2b431eb",
+          "newSHA": "ebf3e07ffb61ec35cada55d9f35176a5720f6d054c832a106048c428e2b431eb",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "position",
+          "count": 7728,
+          "oldSHA": "a7366a0b247d9956c91cf2e66789a203433b0e9d11cb057d14288baa7e38fcbf",
+          "newSHA": "a7366a0b247d9956c91cf2e66789a203433b0e9d11cb057d14288baa7e38fcbf",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "color",
+          "count": 7728,
+          "oldSHA": "9caba0e8cb62cbed41613c7d393911588db405a124b2dfad1002ca6b1989e22e",
+          "newSHA": "9caba0e8cb62cbed41613c7d393911588db405a124b2dfad1002ca6b1989e22e",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "normal",
+          "count": 7728,
+          "oldSHA": "d322dacfcb2435069c1e439ebf5aa2c85a8e46664f593f1b875c3677171251d0",
+          "newSHA": "d322dacfcb2435069c1e439ebf5aa2c85a8e46664f593f1b875c3677171251d0",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "index",
+          "count": 11592,
+          "oldSHA": "432be7fc4a36229623df569b299799280716c6f6f32b38fb234fc05793f80177",
+          "newSHA": "432be7fc4a36229623df569b299799280716c6f6f32b38fb234fc05793f80177",
+          "identical": true,
+          "maximumDifference": 0
+        }
+      ]
+    },
+    {
+      "name": "garden",
+      "curved": true,
+      "comparisons": [
+        {
+          "object": "growing-owned-floor",
+          "attribute": "position",
+          "count": 1536,
+          "oldSHA": "fbf6fc18c94e89781ec906a4e6b8707f50d206893181f32c39c588979f6e5815",
+          "newSHA": "fbf6fc18c94e89781ec906a4e6b8707f50d206893181f32c39c588979f6e5815",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "color",
+          "count": 1536,
+          "oldSHA": "a707fe7446274504747649afa699b190da9cf5d74df19bb01667dc1046e99803",
+          "newSHA": "a707fe7446274504747649afa699b190da9cf5d74df19bb01667dc1046e99803",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "normal",
+          "count": 1536,
+          "oldSHA": "8aac103b389657ad320eb6a99885167a1a833b4f765ef858cbe84fefc9757db3",
+          "newSHA": "8aac103b389657ad320eb6a99885167a1a833b4f765ef858cbe84fefc9757db3",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "index",
+          "count": 2610,
+          "oldSHA": "549616ffabbd3e03c5489a03b3829a102f129796eb28dac1a70149a8d04bc7ac",
+          "newSHA": "549616ffabbd3e03c5489a03b3829a102f129796eb28dac1a70149a8d04bc7ac",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "position",
+          "count": 17388,
+          "oldSHA": "656f93f1bce3d06b766fb315ef2379fe0534b9b727cb9a8a75b4a9f0ba923647",
+          "newSHA": "96007913e4ba1a9ef652f5707ba6cfc286c7322d783da5e8395a0334bd6cbdb5",
+          "identical": false,
+          "maximumDifference": 5.960464477539063e-8
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "color",
+          "count": 17388,
+          "oldSHA": "4c7cfb0458a2ffa623203a503a4529afed852f50b47ad534d7ccabf72a13ebc2",
+          "newSHA": "4c7cfb0458a2ffa623203a503a4529afed852f50b47ad534d7ccabf72a13ebc2",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "normal",
+          "count": 17388,
+          "oldSHA": "c6485f15f00d990687c307c8cb6cd0065620873c2fb79bea0601ac6e0c9c9bc0",
+          "newSHA": "67eda0e119f582a80d18ac9e78266fc8d9950be90a55099b2a760b0cdea618ba",
+          "identical": false,
+          "maximumDifference": 2.682209014892578e-7
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "index",
+          "count": 30624,
+          "oldSHA": "ebf3e07ffb61ec35cada55d9f35176a5720f6d054c832a106048c428e2b431eb",
+          "newSHA": "ebf3e07ffb61ec35cada55d9f35176a5720f6d054c832a106048c428e2b431eb",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "position",
+          "count": 7728,
+          "oldSHA": "c588dbe365f3d49ca66b7970f54877879860e4a74821d0dd94ecc43d8a0753b3",
+          "newSHA": "c588dbe365f3d49ca66b7970f54877879860e4a74821d0dd94ecc43d8a0753b3",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "color",
+          "count": 7728,
+          "oldSHA": "9caba0e8cb62cbed41613c7d393911588db405a124b2dfad1002ca6b1989e22e",
+          "newSHA": "9caba0e8cb62cbed41613c7d393911588db405a124b2dfad1002ca6b1989e22e",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "normal",
+          "count": 7728,
+          "oldSHA": "46270574653ab249225e9c071888de0123dbf6867a1a74d2b79f49cade70e003",
+          "newSHA": "46270574653ab249225e9c071888de0123dbf6867a1a74d2b79f49cade70e003",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "index",
+          "count": 11592,
+          "oldSHA": "432be7fc4a36229623df569b299799280716c6f6f32b38fb234fc05793f80177",
+          "newSHA": "432be7fc4a36229623df569b299799280716c6f6f32b38fb234fc05793f80177",
+          "identical": true,
+          "maximumDifference": 0
+        }
+      ]
+    },
+    {
+      "name": "bridge",
+      "curved": false,
+      "comparisons": [
+        {
+          "object": "growing-owned-floor",
+          "attribute": "position",
+          "count": 654,
+          "oldSHA": "b2171fa45b9dfebb45200476e7bdfec76d0b3ffc63673b5f328cf32778b5f593",
+          "newSHA": "b2171fa45b9dfebb45200476e7bdfec76d0b3ffc63673b5f328cf32778b5f593",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "color",
+          "count": 654,
+          "oldSHA": "31ec56197117a82a298306a7754279f2c2e298cd6edb189ff25b9369d615eb69",
+          "newSHA": "31ec56197117a82a298306a7754279f2c2e298cd6edb189ff25b9369d615eb69",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "normal",
+          "count": 654,
+          "oldSHA": "3b6f66ef17fe7142732dbb5fb56d8f6734a4a6a4e364d90ffcbde3d086f8d8e3",
+          "newSHA": "3b6f66ef17fe7142732dbb5fb56d8f6734a4a6a4e364d90ffcbde3d086f8d8e3",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "index",
+          "count": 1026,
+          "oldSHA": "7b8ae6ecea89a8b58347d29bba544a16529101524cb105f0aa9e7fa26d44d120",
+          "newSHA": "7b8ae6ecea89a8b58347d29bba544a16529101524cb105f0aa9e7fa26d44d120",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "position",
+          "count": 10908,
+          "oldSHA": "15a0e7a08e32d24f3d0a4a8d9ce6e4076947aa433b87a344031894ac097a4ded",
+          "newSHA": "7a7540f1e68dedb64b6c4fd0b0c26602735289a6dae70fd4027eab9ce279e960",
+          "identical": false,
+          "maximumDifference": 2.9802322387695312e-8
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "color",
+          "count": 10908,
+          "oldSHA": "86ec518ae961ccac3843f6aeb6e660427a8b80d9f4fcdd32284692df51cf411d",
+          "newSHA": "86ec518ae961ccac3843f6aeb6e660427a8b80d9f4fcdd32284692df51cf411d",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "normal",
+          "count": 10908,
+          "oldSHA": "e71111bc247016e430593be80fa97a326db9c3af70dd67835e1654c267d86795",
+          "newSHA": "41bcc0532514cdc01156052dc2ecdc0018c692d4746e6e5b31f0146b1e34ea15",
+          "identical": false,
+          "maximumDifference": 1.341104507446289e-7
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "index",
+          "count": 19104,
+          "oldSHA": "e653876991ee68a09061cc17aa8005883303dc487186263fc3d2590bc5c61e52",
+          "newSHA": "e653876991ee68a09061cc17aa8005883303dc487186263fc3d2590bc5c61e52",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "position",
+          "count": 4848,
+          "oldSHA": "8c2b6d536aaa289ef4e22aee1bf589cced1f6b8b03b0d011a9e2976de82b6733",
+          "newSHA": "8c2b6d536aaa289ef4e22aee1bf589cced1f6b8b03b0d011a9e2976de82b6733",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "color",
+          "count": 4848,
+          "oldSHA": "3c926d290b2f7cc6f887f985b4803d4ed330bc214889777ecff19a385e6e1c76",
+          "newSHA": "3c926d290b2f7cc6f887f985b4803d4ed330bc214889777ecff19a385e6e1c76",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "normal",
+          "count": 4848,
+          "oldSHA": "04c0036a194c762c16504f8088d5ee59832296c968c79759837d4aa640dce3b2",
+          "newSHA": "04c0036a194c762c16504f8088d5ee59832296c968c79759837d4aa640dce3b2",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "index",
+          "count": 7272,
+          "oldSHA": "4be66187aabe02f1d0296926deb4f54a25a3467c78b15d3a5aa1bc5640608fc9",
+          "newSHA": "4be66187aabe02f1d0296926deb4f54a25a3467c78b15d3a5aa1bc5640608fc9",
+          "identical": true,
+          "maximumDifference": 0
+        }
+      ]
+    },
+    {
+      "name": "bridge",
+      "curved": true,
+      "comparisons": [
+        {
+          "object": "growing-owned-floor",
+          "attribute": "position",
+          "count": 654,
+          "oldSHA": "ad5ce28c42feaea45ee9b4fb6f8566b8e6d680cd3b7812db6d7ead2eada523e4",
+          "newSHA": "ad5ce28c42feaea45ee9b4fb6f8566b8e6d680cd3b7812db6d7ead2eada523e4",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "color",
+          "count": 654,
+          "oldSHA": "a7cb7afbf55d368c028b116a5b54e6e133b31a6e8912b310045f2a4b18ece2bd",
+          "newSHA": "a7cb7afbf55d368c028b116a5b54e6e133b31a6e8912b310045f2a4b18ece2bd",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "normal",
+          "count": 654,
+          "oldSHA": "e938ff549cbfaf8dea82a4eb78c3f7c4f20a20d0591ebff8e8192b0008c43056",
+          "newSHA": "e938ff549cbfaf8dea82a4eb78c3f7c4f20a20d0591ebff8e8192b0008c43056",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-owned-floor",
+          "attribute": "index",
+          "count": 1026,
+          "oldSHA": "7b8ae6ecea89a8b58347d29bba544a16529101524cb105f0aa9e7fa26d44d120",
+          "newSHA": "7b8ae6ecea89a8b58347d29bba544a16529101524cb105f0aa9e7fa26d44d120",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "position",
+          "count": 10908,
+          "oldSHA": "1b669defcfef63da4c3900d9eaac6038d5c81e2b986f1fd32983d5780b9ba0be",
+          "newSHA": "8ad6670c9d201ca4af7e339fae6c05fa7bfd8de40803f67226fc5b8bde16d7d3",
+          "identical": false,
+          "maximumDifference": 1.1920928955078125e-7
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "color",
+          "count": 10908,
+          "oldSHA": "63582675d62493cad0a7efb47c508463d9987ea2f19d3331e594195b61a7cfb5",
+          "newSHA": "012d09c2dc9aee8499cdadb0917ed46f9b34096c30ac289302e5f5150cf898a5",
+          "identical": false,
+          "maximumDifference": 2.9802322387695312e-8
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "normal",
+          "count": 10908,
+          "oldSHA": "5efca71877d5d22587e3dc494cd822d324e29f75bdb842c1539a10d402ec8f2e",
+          "newSHA": "ee707d7c2bbc6da10cf04608f2780581ffec4a6fa81464030fcf6a1d0d7e83f5",
+          "identical": false,
+          "maximumDifference": 4.172325134277344e-7
+        },
+        {
+          "object": "growing-terrain-bank",
+          "attribute": "index",
+          "count": 19104,
+          "oldSHA": "e653876991ee68a09061cc17aa8005883303dc487186263fc3d2590bc5c61e52",
+          "newSHA": "e653876991ee68a09061cc17aa8005883303dc487186263fc3d2590bc5c61e52",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "position",
+          "count": 4848,
+          "oldSHA": "522b7ff11a56f53f0d31edf17643f73fc25475eb8ad9b978c854e81570cddff7",
+          "newSHA": "b7256adac193e5eabbedb742432ed8573fcda6ee52e6dc303964082c1d87d9fc",
+          "identical": false,
+          "maximumDifference": 7.450580596923828e-9
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "color",
+          "count": 4848,
+          "oldSHA": "3c926d290b2f7cc6f887f985b4803d4ed330bc214889777ecff19a385e6e1c76",
+          "newSHA": "3c926d290b2f7cc6f887f985b4803d4ed330bc214889777ecff19a385e6e1c76",
+          "identical": true,
+          "maximumDifference": 0
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "normal",
+          "count": 4848,
+          "oldSHA": "eb983ed170da47085616cc6fb18d9d01963a669bc02b85250751cb1e3b15a0da",
+          "newSHA": "5e1dbf9049ccebb426c1ffe8dfde9193d29cf6ea888a10b79e75475d819bfbee",
+          "identical": false,
+          "maximumDifference": 5.960464477539063e-8
+        },
+        {
+          "object": "growing-rounded-rock-coast",
+          "attribute": "index",
+          "count": 7272,
+          "oldSHA": "4be66187aabe02f1d0296926deb4f54a25a3467c78b15d3a5aa1bc5640608fc9",
+          "newSHA": "4be66187aabe02f1d0296926deb4f54a25a3467c78b15d3a5aa1bc5640608fc9",
+          "identical": true,
+          "maximumDifference": 0
+        }
+      ]
+    }
+  ],
+  "identical": false,
+  "floorIdentical": true,
+  "byAttribute": {
+    "position": 9.5367431640625e-7,
+    "normal": 0.000003159046173095703,
+    "color": 2.9802322387695312e-8,
+    "index": 0
+  },
+  "maximumDifference": 0.000003159046173095703
+}
