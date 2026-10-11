@@ -1,0 +1,205 @@
+{
+  "events": [
+    {
+      "name": "compileWorldDefinition",
+      "ms": 7451.194417000001,
+      "counts": {},
+      "times": {}
+    },
+    {
+      "name": "makeNativeGrowingKit",
+      "ms": 46.042750000000524,
+      "counts": {},
+      "times": {}
+    },
+    {
+      "name": "sceneLayout",
+      "ms": 1.0429589999994278,
+      "counts": {
+        "floorAt": 1
+      },
+      "times": {
+        "floorAt": 0.61200000000008
+      }
+    },
+    {
+      "name": "derivePlaces",
+      "ms": 87.98029200000019,
+      "counts": {
+        "neighbors": 6665,
+        "owns": 81,
+        "floorAt": 38
+      },
+      "times": {
+        "neighbors": 11.792753000009725,
+        "owns": 0.04495699999824865,
+        "floorAt": 16.074291999997513
+      }
+    },
+    {
+      "name": "derivePlaceRelations",
+      "ms": 18.719457999999577,
+      "counts": {
+        "neighbors": 3907,
+        "owns": 18
+      },
+      "times": {
+        "neighbors": 5.462885999972968,
+        "owns": 0.004750000000058208
+      }
+    },
+    {
+      "name": "placePathEdges",
+      "ms": 1574.1292080000003,
+      "counts": {
+        "neighbors": 4749,
+        "floorAt": 17078
+      },
+      "times": {
+        "neighbors": 14.861704000004465,
+        "floorAt": 1539.5962810000801
+      }
+    },
+    {
+      "name": "buildPlacePaths",
+      "ms": 5905.948,
+      "counts": {
+        "neighbors": 4749,
+        "floorAt": 56972,
+        "logicalAt": 23544
+      },
+      "times": {
+        "neighbors": 15.047997000010582,
+        "floorAt": 4210.896889999853,
+        "logicalAt": 1636.7419669997016
+      }
+    },
+    {
+      "name": "buildObjectLayer.initial",
+      "ms": 10046.230583,
+      "counts": {
+        "neighbors": 23287,
+        "owns": 399,
+        "floorAt": 95735,
+        "logicalAt": 24220
+      },
+      "times": {
+        "neighbors": 48.117983000105596,
+        "owns": 0.1562139999914507,
+        "floorAt": 8160.190636000625,
+        "logicalAt": 1636.989032999867
+      }
+    },
+    {
+      "name": "buildObjectLayer.repeat.0",
+      "ms": 8726.835999999996,
+      "counts": {
+        "neighbors": 23287,
+        "owns": 399,
+        "floorAt": 95735,
+        "logicalAt": 24220
+      },
+      "times": {
+        "neighbors": 44.52097900024455,
+        "owns": 0.19594900001538917,
+        "floorAt": 7166.923856000532,
+        "logicalAt": 1370.219275000265
+      }
+    },
+    {
+      "name": "buildObjectLayer.repeat.1",
+      "ms": 8770.890083000006,
+      "counts": {
+        "neighbors": 23287,
+        "owns": 399,
+        "floorAt": 95735,
+        "logicalAt": 24220
+      },
+      "times": {
+        "neighbors": 35.83916500001942,
+        "owns": 0.08862999996199505,
+        "floorAt": 7044.048049000725,
+        "logicalAt": 1561.132546999601
+      }
+    },
+    {
+      "name": "buildAuthoredGrowingGround",
+      "ms": 15.947208000005048,
+      "counts": {},
+      "times": {}
+    },
+    {
+      "name": "cameraArtPoints.allVertices",
+      "ms": 17.886750000005122,
+      "counts": {},
+      "times": {}
+    },
+    {
+      "name": "frameCamera.initial",
+      "ms": 41.89112500000192,
+      "counts": {},
+      "times": {}
+    },
+    {
+      "name": "frameCamera.cached.1000",
+      "ms": 11.126458000006096,
+      "counts": {},
+      "times": {}
+    },
+    {
+      "name": "frameCamera.turn.12",
+      "ms": 46.698833000002196,
+      "counts": {},
+      "times": {}
+    },
+    {
+      "name": "GrowingLife.sync",
+      "ms": 38.770707999996375,
+      "counts": {
+        "neighbors": 1761,
+        "floorAt": 9
+      },
+      "times": {
+        "neighbors": 1.5748740000781254,
+        "floorAt": 2.8017499999987194
+      }
+    },
+    {
+      "name": "GrowingLife.tick.initial",
+      "ms": 20.254457999995793,
+      "counts": {
+        "neighbors": 196,
+        "route": 9,
+        "floorAt": 9
+      },
+      "times": {
+        "neighbors": 0.1650849999859929,
+        "route": 13.35908400000335,
+        "floorAt": 1.4170809999995981
+      }
+    },
+    {
+      "name": "GrowingLife.tick.repeat.2000",
+      "ms": 2202.583458000001,
+      "counts": {
+        "floorAt": 17999,
+        "neighbors": 1391,
+        "route": 14
+      },
+      "times": {
+        "floorAt": 2092.3117269998766,
+        "neighbors": 2.2428640001817257,
+        "route": 31.30433500000072
+      }
+    }
+  ],
+  "summary": {
+    "worldId": "native05-authored-world-m0-v2",
+    "sites": 2063,
+    "edges": 3865,
+    "cameraPoints": 364876,
+    "tickP50": 0.8737909999981639,
+    "tickP95": 2.3957080000036513,
+    "tickMax": 7.965167000002111
+  }
+}

@@ -1,10 +1,13 @@
 import type { Cell } from '../../../domain/growingIsland';
+import { approachCells } from '../../../domain/growingIsland/space';
+import type { IslandWorld } from '../../../domain/growingIsland/worldDefinition';
 
 const NEIGHBORS = [{ x: 1, z: 0 }, { x: -1, z: 0 }, { x: 0, z: 1 }, { x: 0, z: -1 }];
 const k = (c: Cell) => `${c.x},${c.z}`;
 
 /** Breadth-first walk over open cells; presentation only, never saved. */
-export function walkRoute(walkable: Set<string>, from: Cell, to: Cell): Cell[] | undefined {
+export function walkRoute(walkable: Set<string>, from: Cell, to: Cell, world?: IslandWorld): Cell[] | undefined {
+    if (world) return world.route(from, to, walkable);
     const start = { x: Math.round(from.x), z: Math.round(from.z) };
     if (!walkable.has(k(start)) || !walkable.has(k(to))) return undefined;
     const previous = new Map<string, Cell | undefined>([[k(start), undefined]]), queue = [start];
@@ -32,8 +35,8 @@ export function nearestOpen(walkable: Set<string>, point: { x: number; z: number
 }
 
 /** An open cell next to a target, so walkers stop beside furniture instead of inside it. */
-export function besideOpen(walkable: Set<string>, target: Cell, reachable?: Set<string>): Cell | undefined {
+export function besideOpen(walkable: Set<string>, target: Cell, reachable?: Set<string>, world?: IslandWorld): Cell | undefined {
     const available = (cell: Cell) => walkable.has(k(cell)) && (!reachable || reachable.has(k(cell)));
     if (available(target)) return target;
-    return NEIGHBORS.map(d => ({ x: target.x + d.x, z: target.z + d.z })).find(available);
+    return approachCells(target, world).slice(1).find(available);
 }

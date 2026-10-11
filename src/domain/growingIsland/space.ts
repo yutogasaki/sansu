@@ -1,6 +1,9 @@
 import { occupiedCells } from '../islandLife/footprint';
 import type { ItemKind } from '../islandLife/model';
 import { OWN_LANDMARKS, type Cell, type GrowingState, type Landmark, type Plot } from './types';
+import type { IslandWorld } from './worldDefinition';
+import type { WorldPassage } from './worldTypes';
+import { authoredApproachCells, authoredPointBlocked } from './authoredWorldAccess';
 
 export const HOME_CELL: Cell = { x: 2, z: 1 };
 /** Pokomoko's house covers the two north cells and the doorstep that residents leave from. */
@@ -10,6 +13,9 @@ export const same = (a: Cell, b: Cell) => a.x === b.x && a.z === b.z;
 export const distance = (a: Cell, b: Cell) => Math.abs(a.x - b.x) + Math.abs(a.z - b.z);
 const NEIGHBORS: readonly Cell[] = [{ x: 1, z: 0 }, { x: -1, z: 0 }, { x: 0, z: 1 }, { x: 0, z: -1 }];
 export const neighbors = (cell: Cell) => NEIGHBORS.map(d => ({ x: cell.x + d.x, z: cell.z + d.z }));
+/** Walking, joining and water use separate authored grants. */
+export const passageNeighbors = (cell: Cell, world?: IslandWorld, passage: WorldPassage = 'walk') => world ? world.neighbors(cell, passage) : neighbors(cell);
+export const approachCells = (cell: Cell, world?: IslandWorld) => world ? authoredApproachCells(cell, world) : [cell, ...neighbors(cell)];
 
 type LandState = Pick<GrowingState, 'land'>;
 
@@ -25,13 +31,15 @@ export function landBounds({ land }: LandState) {
     };
 }
 
-export function landCells(state: LandState): Cell[] {
+export function landCells(state: LandState, world?: IslandWorld): Cell[] {
+    if (world) return world.sites.filter(site => site.placement).map(site => ({ ...site.cell }));
     const { minX, maxX, depth } = landBounds(state), cells: Cell[] = [];
     for (let z = 0; z < depth; z++) for (let x = minX; x <= maxX; x++) cells.push({ x, z });
     return cells;
 }
 
-export function onLand(state: LandState, cell: Cell) {
+export function onLand(state: LandState, cell: Cell, world?: IslandWorld) {
+    if (world) return world.owns(cell);
     const { minX, maxX, depth } = landBounds(state);
     return Number.isInteger(cell.x) && Number.isInteger(cell.z) && cell.x >= minX && cell.x <= maxX && cell.z >= 0 && cell.z < depth;
 }
@@ -56,8 +64,8 @@ export function occupant(state: GrowingState, cell: Cell, except?: string):
     if (keepsake) return { type: 'keepsake', id: keepsake.id };
 }
 
-export function isVacant(state: GrowingState, cell: Cell, except?: string) {
-    return onLand(state, cell) && !occupant(state, cell, except);
+export function isVacant(state: GrowingState, cell: Cell, except?: string, world?: IslandWorld) {
+    return onLand(state, cell, world) && !occupant(state, cell, except);
 }
 
 /**
@@ -72,11 +80,15 @@ function plotBlocks(plot: Plot) {
 const OPEN_LANDMARKS: ReadonlySet<string> = new Set(['water-channel', 'flower-arch', 'flower']);
 function landmarkBlocks(landmark: Landmark) { return !OPEN_LANDMARKS.has(landmark.kind); }
 
-export function walkableCells(state: GrowingState): Set<string> {
+export function walkableCells(state: GrowingState, world?: IslandWorld): Set<string> {
     const blocked = new Set<string>([key({ x: 2, z: 0 }), key({ x: 3, z: 0 })]);
     for (const l of state.landmarks) if (landmarkBlocks(l)) landmarkCells(l).forEach(c => blocked.add(key(c)));
     for (const p of state.plots) if (p.cell && plotBlocks(p)) blocked.add(key(p.cell));
     for (const k of state.keepsakes) if (k.cell) blocked.add(key(k.cell));
+    if (world) {
+        const ownerCells = [...blocked].map(text => { const [x, z] = text.split(',').map(Number); return { x, z }; });
+        return new Set(world.sites.filter(site => !ownerCells.some(owner => authoredPointBlocked(site.cell, owner))).map(site => key(site.cell)));
+    }
     const open = new Set(landCells(state).map(key).filter(k => !blocked.has(k)));
     if (state.bridge) {
         const { depth } = landBounds(state);
@@ -104,11 +116,13 @@ export function bridgeSite(state: GrowingState) {
 }
 
 /** Cells reachable on foot from Pokomoko's doorstep. */
-export function reachableFromHome(state: GrowingState, walkable = walkableCells(state)): Set<string> {
+export function reachableFromHome(state: GrowingState, walkable?: Set<string>, world?: IslandWorld): Set<string> {
+    walkable ??= walkableCells(state, world);
+    if (world && !walkable.has(key(HOME_CELL))) return new Set();
     const start = key(HOME_CELL), seen = new Set<string>([start]), queue: Cell[] = [HOME_CELL];
     while (queue.length) {
         const cell = queue.shift()!;
-        for (const next of neighbors(cell)) {
+        for (const next of passageNeighbors(cell, world)) {
             const k = key(next);
             if (walkable.has(k) && !seen.has(k)) { seen.add(k); queue.push(next); }
         }
@@ -117,6 +131,6 @@ export function reachableFromHome(state: GrowingState, walkable = walkableCells(
 }
 
 /** A thing is reachable when its own cell or an orthogonal neighbour can be walked to. */
-export function isReachable(cell: Cell, reached: Set<string>) {
-    return reached.has(key(cell)) || neighbors(cell).some(n => reached.has(key(n)));
+export function isReachable(cell: Cell, reached: Set<string>, world?: IslandWorld) {
+    return approachCells(cell, world).some(n => reached.has(key(n)));
 }

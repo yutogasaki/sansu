@@ -1,6 +1,7 @@
-import { key, neighbors, onLand, walkableCells } from './space';
+import { key, passageNeighbors, onLand, walkableCells } from './space';
 import type { Cell, GrowingState } from './types';
 import type { PlacePoint } from './placeTypes';
+import type { IslandWorld } from './worldDefinition';
 
 // Native saves and diagnostic projections share these coordinates across JS engines.
 // exp/sin/cos may differ in their final bit; sub-nanometre noise must not create a
@@ -9,7 +10,8 @@ const stableCoordinate = (value: number) => Math.round(value * 1e9) / 1e9;
 
 /** Saved coordinates keep their meaning. The original six-by-five home garden stays level;
  * newly owned districts form broad gentle banks rather than object-specific platforms. */
-export function terrainHeightAt(state: Pick<GrowingState, 'land'>, cell: Cell): number {
+export function terrainHeightAt(state: Pick<GrowingState, 'land'>, cell: Cell, world?: IslandWorld): number {
+    if (world) return world.floorAt(cell)?.point.y ?? 0;
     if (!state.land.expanded && !state.land.extra.length && !state.land.capes.length && !state.land.districts?.length) return 0;
     const height = (x: number, z: number) => {
         const east = Math.max(0, x - 5), west = Math.max(0, -x), south = Math.max(0, z - 4);
@@ -33,12 +35,16 @@ export const PLACE_GALLERY_WIDTH = .42;
 
 /** Absolute physical floor positions. The stair stays in one free entrance; the upper
  * branch walk follows only its connected open footprint, then returns to that entrance. */
-export function placeGalleryRoute(state: GrowingState, place: { footprint: Cell[]; entrances: Cell[] }, anchorCell: Cell): PlacePoint[] {
+export function placeGalleryRoute(state: GrowingState, place: { footprint: Cell[]; entrances: Cell[] }, anchorCell: Cell, world?: IslandWorld): PlacePoint[] {
+    // The authored owner-to-deck assembly is not implemented yet. An unrelated
+    // bridge deck must not authorize a gallery above arbitrary ground.
+    // Enable this only after the actual shared deck and its entrances are built.
+    if (world) return [];
     const open = walkableCells(state);
     const allowed = new Set(place.footprint.filter(cell => open.has(key(cell)) && onLand(state, cell)).map(key));
     const explore = (entrance: Cell) => {
         const queue = [entrance], previous = new Map<string, Cell | undefined>([[key(entrance), undefined]]);
-        for (let i = 0; i < queue.length; i++) for (const cell of neighbors(queue[i])) {
+        for (let i = 0; i < queue.length; i++) for (const cell of passageNeighbors(queue[i])) {
             const id = key(cell);
             if (!allowed.has(id) || previous.has(id)) continue;
             previous.set(id, queue[i]); queue.push(cell);

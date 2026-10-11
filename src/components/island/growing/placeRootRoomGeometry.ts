@@ -62,10 +62,13 @@ function sweptRoute(place: DerivedPlace, layout: SceneLayout) {
  * The real gallery remains its sole floor; its full actor passage cuts the wood. */
 export function buildPlaceRootRoom(g: GardenGeometry, state: GrowingState, layout: SceneLayout, place: DerivedPlace): boolean {
     if (place.ruleId !== 'P02' || place.variant !== 'court' || !['grown', 'lived'].includes(place.stage)) return false;
-    const loop = closedCourt(place), open = walkableCells(state);
+    const world = layout.authored ? layout.world : undefined, loop = closedCourt(place), open = walkableCells(state, world);
     const owners = place.mainIds.map(id => state.landmarks.find(item => item.id === id && item.kind === 'sapling' && item.cell));
-    if (!loop || owners.length !== 4 || owners.some(owner => !owner?.cell || open.has(key(owner.cell)) || !onLand(state, owner.cell))) return false;
-    if (place.walkSurface.some(point => !Number.isFinite(point.y) || !onLand(state, layout.cellAt(layout.floorPoint(point))) || !open.has(key(layout.cellAt(layout.floorPoint(point)))))) return false;
+    if (!loop || owners.length !== 4 || owners.some(owner => !owner?.cell || open.has(key(owner.cell)) || !onLand(state, owner.cell, world))) return false;
+    const openSites = world?.sites.filter(site => open.has(key(site.cell)));
+    if (place.walkSurface.some(point => !Number.isFinite(point.y) || (world
+        ? !world.floorAt(point) || !openSites!.some(site => Math.abs(site.cell.x - point.x) <= .13 && Math.abs(site.cell.z - point.z) <= .13)
+        : !onLand(state, layout.cellAt(layout.floorPoint(point))) || !open.has(key(layout.cellAt(layout.floorPoint(point))))))) return false;
     const center = layout.point(loop.center), radius = 1.46;
     // An excessively wide or displaced ownership arrangement needs its existing
     // open-tree fallback, rather than a room resting on invented ground columns.

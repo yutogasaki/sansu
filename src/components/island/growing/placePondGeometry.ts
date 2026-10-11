@@ -1,12 +1,13 @@
 import * as T from 'three';
 import { connectedWaterChannels } from '../../../domain/islandLife/waterChannels';
 import { waterLayout } from '../../../domain/growingIsland/environment';
-import { HOME_CELL, key, neighbors, occupant, onLand, reachableFromHome, walkableCells } from '../../../domain/growingIsland/space';
+import { HOME_CELL, key, approachCells, passageNeighbors, occupant, onLand, reachableFromHome, walkableCells } from '../../../domain/growingIsland/space';
 import type { Cell, GrowingState, Landmark } from '../../../domain/growingIsland/types';
 import type { DerivedPlace } from '../../../domain/growingIsland/placeTypes';
 import { GardenGeometry } from '../three/garden/geometry';
 import { placePathEdges } from './placePaths';
 import type { SceneLayout } from './sceneLayout';
+import type { IslandWorld } from '../../../domain/growingIsland/worldDefinition';
 
 type WaterOwner = Landmark & { cell: Cell; kind: 'water-bowl' | 'water-channel' };
 type Edge = readonly [Cell, Cell];
@@ -22,10 +23,10 @@ export function pondPointSegmentDistance(point: Cell, a: Cell, b: Cell) {
     return Math.hypot(point.x - a.x - dx * t, point.z - a.z - dz * t);
 }
 
-function shoreApproach(state: GrowingState, target: Cell, open: Set<string>): Edge[] {
+function shoreApproach(state: GrowingState, target: Cell, open: Set<string>, world?: IslandWorld): Edge[] {
     const queue = [HOME_CELL], previous = new Map<string, Cell | undefined>([[key(HOME_CELL), undefined]]);
-    for (let i = 0; i < queue.length && !previous.has(key(target)); i++) for (const next of neighbors(queue[i])) {
-        if (!onLand(state, next) || !open.has(key(next)) || previous.has(key(next))) continue;
+    for (let i = 0; i < queue.length && !previous.has(key(target)); i++) for (const next of passageNeighbors(queue[i], world)) {
+        if (!(world ? world.floorAt(next) : onLand(state, next)) || !open.has(key(next)) || previous.has(key(next))) continue;
         previous.set(key(next), queue[i]); queue.push(next);
     }
     const edges: Edge[] = [];
@@ -35,22 +36,23 @@ function shoreApproach(state: GrowingState, target: Cell, open: Set<string>): Ed
 }
 
 /** The derived wet floor grants no land, navigation, soil effect or new use target. */
-export function placePondMask(state: GrowingState, place: DerivedPlace, allPlaces: readonly DerivedPlace[] = [place]) {
-    const open = walkableCells(state), reached = reachableFromHome(state, open), supplied = connectedWaterChannels(waterLayout(state));
+export function placePondMask(state: GrowingState, place: DerivedPlace, allPlaces: readonly DerivedPlace[] = [place], world?: IslandWorld) {
+    const open = walkableCells(state, world), reached = reachableFromHome(state, open, world), supplied = connectedWaterChannels(waterLayout(state, world));
     const ids = new Set([...place.mainIds, ...place.waterRefs]);
-    const owners = state.landmarks.filter((item): item is WaterOwner => ids.has(item.id) && Boolean(item.cell)
+    const owners = state.landmarks.filter((item): item is WaterOwner => ids.has(item.id) && Boolean(item.cell) && (!world || onLand(state, item.cell!, world))
         && (item.kind === 'water-bowl' || item.kind === 'water-channel' && supplied.has(key(item.cell!))))
         .sort((a, b) => a.id.localeCompare(b.id));
     const channels = new Set(owners.filter(item => item.kind === 'water-channel').map(item => key(item.cell)));
     const frontDoors = new Set([key(HOME_CELL), key({ x: HOME_CELL.x, z: HOME_CELL.z + 1 }), ...state.plots
-        .filter(plot => plot.kind === 'home' && plot.cell).map(plot => key({ x: plot.cell!.x, z: plot.cell!.z + 1 }))]);
+        .filter(plot => plot.kind === 'home' && plot.cell).flatMap(plot => world ? approachCells(plot.cell!, world).map(key)
+            : [key({ x: plot.cell!.x, z: plot.cell!.z + 1 })])]);
     const shores = place.useTargets.filter(target => target.kind === 'shore').map(target => target.cell);
     // The path builder deliberately omits paving on a water-channel crossing.
     // Protect the actual dry ribbons, together with the reachable shore approach.
-    const paths = [...placePathEdges(state, allPlaces), ...shores.flatMap(cell => shoreApproach(state, cell, open))]
+    const paths = [...placePathEdges(state, allPlaces, world), ...shores.flatMap(cell => shoreApproach(state, cell, open, world))]
         .filter(([a, b]) => !channels.has(key(a)) && !channels.has(key(b)));
     const cells = place.footprint.filter(cell => {
-        if (!onLand(state, cell) || !open.has(key(cell)) || !reached.has(key(cell)) || frontDoors.has(key(cell))) return false;
+        if (!onLand(state, cell, world) || !open.has(key(cell)) || !reached.has(key(cell)) || frontDoors.has(key(cell))) return false;
         const item = occupant(state, cell);
         return !item || item.type === 'landmark' && channels.has(key(cell)) && owners.some(owner => owner.id === item.id);
     }).sort((a, b) => a.z - b.z || a.x - b.x);
@@ -76,7 +78,7 @@ export function placePondMask(state: GrowingState, place: DerivedPlace, allPlace
         for (const cell of shores) value = Math.min(value, Math.hypot(point.x - cell.x, point.z - cell.z) - DRY_SHORE_RADIUS - .015);
         return value;
     };
-    return { owners, cells, allowed, paths, shores, field, waterField,
+    return { owners, cells, allowed, paths, shores, field, waterField, overlayAllowed: !world,
         grown: place.stage === 'grown' || place.stage === 'lived' };
 }
 
@@ -115,8 +117,10 @@ function dryTriangle(triangle: Cell[], paths: Edge[], shores: Cell[]) {
 
 /** A broad continuous shallow surface follows each actual ground triangle. */
 export function placePondGeometry(state: GrowingState, layout: SceneLayout, place: DerivedPlace, allPlaces: readonly DerivedPlace[] = [place]) {
-    const mask = placePondMask(state, place, allPlaces);
-    if (!mask.grown || !mask.owners.some(owner => owner.kind === 'water-bowl')) return undefined;
+    const mask = placePondMask(state, place, allPlaces, layout.authored ? layout.world : undefined);
+    // Authored open ground is still real dry floor. A broad water garden needs
+    // its own matched cut/water/deck overlay before it can occupy that space.
+    if (!mask.overlayAllowed || !mask.grown || !mask.owners.some(owner => owner.kind === 'water-bowl')) return undefined;
     const positions: number[] = [], colors: number[] = [], indices: number[] = [], vertices = new Map<string, number>();
     const deep = new T.Color('#398aaf'), shallow = new T.Color('#82d1dc'), color = new T.Color();
     const add = (cell: Cell) => {

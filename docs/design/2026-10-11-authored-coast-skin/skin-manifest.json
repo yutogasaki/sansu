@@ -1,0 +1,95 @@
+{
+  "worldId": "native05-authored-world-m0-v2",
+  "source": {
+    "artifact": "docs/design/2026-10-10-island-final-3d/whole-island.glb",
+    "sha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d"
+  },
+  "transform": {
+    "scale": 0.45,
+    "origin": {
+      "x": 5.65,
+      "z": -1.03,
+      "y": -0.36450000000000005
+    }
+  },
+  "extraction": [
+    {
+      "name": "Coast / continuous layered shore",
+      "primitive": 0,
+      "triangles": 1360,
+      "vertices": 950,
+      "material": "shore / pale sand"
+    },
+    {
+      "name": "Coast / continuous layered shore",
+      "primitive": 1,
+      "triangles": 124,
+      "vertices": 126,
+      "material": "ridge / dusty violet limestone"
+    },
+    {
+      "name": "Coast / continuous layered shore",
+      "primitive": 2,
+      "triangles": 124,
+      "vertices": 126,
+      "material": "ridge / light stratified stone"
+    },
+    {
+      "name": "Flowers / open sky gathering court",
+      "primitive": 0,
+      "triangles": 352,
+      "vertices": 230,
+      "material": "path / light sandstone"
+    },
+    {
+      "name": "Garden / rounded flower terrace",
+      "primitive": 0,
+      "triangles": 1076,
+      "vertices": 692,
+      "material": "ground / fresh soft meadow"
+    },
+    {
+      "name": "Grove / rounded living terrace",
+      "primitive": 0,
+      "triangles": 1076,
+      "vertices": 692,
+      "material": "ground / higher garden"
+    },
+    {
+      "name": "Grove / sheltered open room",
+      "primitive": 0,
+      "triangles": 352,
+      "vertices": 230,
+      "material": "path / light sandstone"
+    },
+    {
+      "name": "Harbor / shared waterfront court",
+      "primitive": 0,
+      "triangles": 352,
+      "vertices": 230,
+      "material": "path / light sandstone"
+    },
+    {
+      "name": "Village / shared sunny court",
+      "primitive": 0,
+      "triangles": 352,
+      "vertices": 230,
+      "material": "path / light sandstone"
+    },
+    {
+      "name": "Water town / shared frontage court",
+      "primitive": 0,
+      "triangles": 352,
+      "vertices": 230,
+      "material": "path / light sandstone"
+    }
+  ],
+  "artifact": {
+    "file": "native05-coast.json.gz",
+    "bytes": 482547,
+    "sha256": "6fafdeb53191bae654aa45e261e506f2a9df2657e1d748c6426f56f149093793",
+    "gzipBytes": 151151,
+    "gzipSha256": "758f2a5fbd29bb3a5b30f5694e236f2ee7a0c1ae638780ea9366b16f35416d8f"
+  },
+  "scope": "Exact authored coastline and non-upward support sides only. No owner, water, plant, character or placement right."
+}

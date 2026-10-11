@@ -1,7 +1,7 @@
 import * as T from 'three';
 import { connectedWaterChannels } from '../../../domain/islandLife/waterChannels';
 import { waterLayout } from '../../../domain/growingIsland/environment';
-import { key, walkableCells } from '../../../domain/growingIsland/space';
+import { key, onLand, walkableCells } from '../../../domain/growingIsland/space';
 import type { Cell, GrowingState, Landmark } from '../../../domain/growingIsland/types';
 import type { DerivedPlace } from '../../../domain/growingIsland/placeTypes';
 import { GardenGeometry, type V3 } from '../three/garden/geometry';
@@ -86,8 +86,9 @@ function ownerGroup(g: GardenGeometry, item: WaterOwner, name: string) {
 
 /** Mature owned water becomes wide stone pools and supplied streams; no simulation state changes. */
 export function buildPlaceSpring(g: GardenGeometry, state: GrowingState, layout: SceneLayout, place: DerivedPlace, allPlaces: readonly DerivedPlace[] = [place]): void {
-    const ids = new Set([...place.mainIds, ...place.waterRefs]), reached = connectedWaterChannels(waterLayout(state));
-    const water = state.landmarks.filter((item): item is WaterOwner => ids.has(item.id) && Boolean(item.cell)
+    const world = layout.authored ? layout.world : undefined;
+    const ids = new Set([...place.mainIds, ...place.waterRefs]), reached = connectedWaterChannels(waterLayout(state, world));
+    const water = state.landmarks.filter((item): item is WaterOwner => ids.has(item.id) && Boolean(item.cell) && (!world || onLand(state, item.cell!, world))
         && (item.kind === 'water-bowl' || item.kind === 'water-channel' && reached.has(key(item.cell!))))
         .sort((a, b) => a.id.localeCompare(b.id));
     const bowls = water.filter(item => item.kind === 'water-bowl');
@@ -139,11 +140,11 @@ export function buildPlaceSpring(g: GardenGeometry, state: GrowingState, layout:
             crystal.rotation.set(.07, i * .7, -.09 + i * .07); crystal.name = 'place-source-crystal';
         }
     }
-    const open = walkableCells(state);
+    const open = walkableCells(state, world);
     let shallowsMaterial: T.MeshPhysicalMaterial | undefined;
     for (const item of water) {
         if (item.kind !== 'water-channel' || !open.has(key(item.cell))) continue;
-        const group = ownerGroup(g, item, 'place-channel-crossing'); group.position.copy(layout.point(item.cell));
+        const group = ownerGroup(g, item, 'place-channel-crossing'); group.position.copy(layout.point(item.cell, world ? 0 : .04));
         const ground = (cell: Cell) => layout.heightAt({ x: item.cell.x + cell.x, z: item.cell.z + cell.z }) - layout.heightAt(item.cell);
         // A walkable water tile becomes a broad, shallow inlet between the real
         // basins. It is still one centimetre below the original actor/stone floor.
@@ -151,13 +152,19 @@ export function buildPlaceSpring(g: GardenGeometry, state: GrowingState, layout:
         shallowsMaterial.polygonOffset = true; shallowsMaterial.polygonOffsetFactor = -1; shallowsMaterial.polygonOffsetUnits = -1;
         g.mesh(basinWater(hash(item.id), ground), shallowsMaterial, [0, -.01, 0], group).name = 'place-channel-shallows';
         g.mesh(crossingGeometry(ground), g.paint('#c3d0d2', .94), [0, 0, 0], group).name = 'place-shallow-stepping-stone';
+        group.userData.groundCrossingRetained = Boolean(world);
+        group.userData.authoredWaterOverlay = world ? 'pending' : undefined;
     }
     for (let i = 0; i < water.length; i++) for (let j = i + 1; j < water.length; j++) {
         const left = water[i], right = water[j];
         if (Math.abs(left.cell.x - right.cell.x) + Math.abs(left.cell.z - right.cell.z) !== 1) continue;
+        if (world && !world.neighbors(left.cell, 'water').some(cell => key(cell) === key(right.cell))) continue;
         const high = layout.heightAt(left.cell) >= layout.heightAt(right.cell) ? left : right, low = high === left ? right : left;
         const direction = new T.Vector3(low.cell.x - high.cell.x, 0, low.cell.z - high.cell.z);
         const normal = new T.Vector3(direction.z, 0, -direction.x), phase = hash(`${high.id}:${low.id}`) % 2 ? 1 : -1;
+        // Keep authored channel routes dry until their actual terrain cut and
+        // crossing overlay are one shared world. No water sheet covers a lane.
+        if (world) continue;
         const vertices: number[] = [], indices: number[] = [], banks: [V3[], V3[]] = [[], []];
         const group = ownerGroup(g, left.kind === 'water-channel' ? left : right, 'place-owned-stream');
         group.userData.waterOwners = [high.id, low.id];

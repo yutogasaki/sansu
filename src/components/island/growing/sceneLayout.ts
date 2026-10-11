@@ -5,9 +5,11 @@ import type { PlacePoint } from '../../../domain/growingIsland/placeTypes';
 import type { Cell, GrowingState } from '../../../domain/growingIsland';
 import { landscapeCell, landscapePoint, landscapeRise } from '../../../domain/growingIsland/landscape';
 import { legacyIslandWorld } from '../../../domain/growingIsland/legacyWorldDefinition';
+import type { IslandWorld as CompiledWorld } from '../../../domain/growingIsland/worldDefinition';
 
 /** The same cell-to-world mapping as the current garden, so saved coordinates look the same. */
-export function sceneLayout(state: Pick<GrowingState, 'land'> & Partial<Pick<GrowingState, 'bridge'>>, curved = false) {
+export function sceneLayout(state: Pick<GrowingState, 'land'> & Partial<Pick<GrowingState, 'bridge'>>, curved = false, authored?: CompiledWorld) {
+    if (authored) return authoredSceneLayout(authored);
     const bounds = landBounds(state), center = (bounds.minX + bounds.maxX) / 2;
     const world = legacyIslandWorld(state, curved);
     const groundFloor = world.floors.find(floor => floor.kind === 'ground')!;
@@ -49,11 +51,49 @@ export function sceneLayout(state: Pick<GrowingState, 'land'> & Partial<Pick<Gro
     const key = `${bounds.minX},${bounds.maxX},${bounds.depth}:${curved ? 'curved-owned-v1' : 'linear'}`;
     let maxHeight = 0;
     for (let z = 0; z < bounds.depth; z++) maxHeight = Math.max(maxHeight, heightAt({ x: bounds.minX, z }), heightAt({ x: bounds.maxX, z }));
-    return { bounds, center, world, point, floorPoint, heightAt, maxHeight, cellAt, logicalAt, projected, curved, pierRoot, pierEnd, dock, far, farther, key, nativeArt: false,
+    return { bounds, center, world, point, floorPoint, heightAt, maxHeight, cellAt, logicalAt, projected, curved, authored: false, pierRoot, pierEnd, dock, far, farther, key, nativeArt: false,
         // The world supplies the actual static models after rebuilding. Camera fit
         // uses their vertices rather than placing a tall imaginary tree on every shore.
         cameraObjects: undefined as (() => readonly T.Object3D[]) | undefined,
         artMargin: bounds.maxX - bounds.minX > 5 || bounds.depth > 5 ? 2.7 : 1.1,
         width: bounds.maxX - bounds.minX + 1, depth: bounds.depth };
+}
+
+/** Authored terrain owns both the physical map and its placement sites. Bounds
+ * are only a framing extent; an inlet inside them never acquires a floor. */
+function authoredSceneLayout(world: CompiledWorld) {
+    const center = (world.bounds.min.x + world.bounds.max.x) / 2;
+    const bounds = { minX: Math.floor(world.bounds.min.x), maxX: Math.ceil(world.bounds.max.x), depth: Math.ceil(world.bounds.max.z - world.bounds.min.z) };
+    const heightAt = (cell: Cell) => world.floorAt(cell)?.point.y ?? 0;
+    const projected = (cell: Cell) => { const floor = world.floorAt(cell); return floor ? { x: floor.point.x, z: floor.point.z } : cell; };
+    const point = (cell: Cell, y = .04) => {
+        const floor = world.floorAt(cell)?.point;
+        return new T.Vector3((floor?.x ?? cell.x) - center, (floor?.y ?? 0) + y, (floor?.z ?? cell.z) - 2);
+    };
+    // PlacePoint.y is supplied by the same authored floor evaluator, including
+    // a derived gallery's actual clearance above that floor.
+    const floorPoint = (floor: PlacePoint) => {
+        const p = projected(floor); return new T.Vector3(p.x - center, floor.y, p.z - 2);
+    };
+    const logicalAt = (position: { x: number; z: number; y?: number }): Cell => world.logicalAt({ x: position.x + center, z: position.z + 2,
+        ...(position.y === undefined ? {} : { y: position.y }) })
+        ?? { x: Number.NaN, z: Number.NaN };
+    const cellAt = (position: T.Vector3): Cell => {
+        const site = world.siteAt({ x: position.x + center, y: position.y, z: position.z + 2 });
+        return site ? { ...site.cell } : { x: Number.NaN, z: Number.NaN };
+    };
+    // The diagnostic native05 template keeps its original south-facing home
+    // approach as a shore port. Other templates may supply an explicit port.
+    const port = world.definition.districts.flatMap(district => district.ports.map(port => world.sites.find(site => site.ref.districtId === district.id && site.ref.siteId === port.siteId)))
+        .find(site => site);
+    const approach = port?.cell ?? { x: 2, z: 1 };
+    const pierRoot = point(approach, -.02).add(new T.Vector3(.22, 0, .75));
+    const pierEnd = pierRoot.clone().add(new T.Vector3(0, 0, 1.2)); pierEnd.y = .09;
+    const dock = pierRoot.clone().add(new T.Vector3(.62, 0, 1.3)); dock.y = -.16;
+    const far = dock.clone().add(new T.Vector3(3.4, 0, 3.2)), farther = dock.clone().add(new T.Vector3(5.6, 0, 5.2));
+    return { bounds, center, world, point, floorPoint, heightAt, maxHeight: world.bounds.max.y, cellAt, logicalAt, projected, curved: false, authored: true,
+        pierRoot, pierEnd, dock, far, farther, key: world.id, nativeArt: false,
+        cameraObjects: undefined as (() => readonly T.Object3D[]) | undefined, artMargin: .1,
+        width: world.bounds.max.x - world.bounds.min.x, depth: world.bounds.max.z - world.bounds.min.z };
 }
 export type SceneLayout = ReturnType<typeof sceneLayout>;

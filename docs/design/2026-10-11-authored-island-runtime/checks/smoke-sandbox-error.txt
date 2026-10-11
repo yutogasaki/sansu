@@ -1,0 +1,19 @@
+
+> pokko-fushigi-zukan-app@0.0.0 e2e:smoke
+> node tools/e2e-smoke.mjs
+
+Starting dev server on http://127.0.0.1:4173...
+
+> pokko-fushigi-zukan-app@0.0.0 dev:test-server
+> vite --host 127.0.0.1 --port 4173 --strictPort
+
+error when starting dev server:
+Error: listen EPERM: operation not permitted 127.0.0.1:4173
+    at Server.setupListenHandle [as _listen2] (node:net:1987:21)
+    at listenInCluster (node:net:2066:12)
+    at node:net:2275:7
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+Error: Pokko dev server did not become ready within 45000ms: http://127.0.0.1:4173
+    at waitForServer (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:235:9)
+    at async getServerSession (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:294:7)
+    at async main (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:6550:21)

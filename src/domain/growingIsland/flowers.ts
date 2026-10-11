@@ -1,7 +1,8 @@
 import { roll } from './random';
 import { BLOOM_HOURS } from './environment';
-import { distance, isVacant, key, landCells, neighbors } from './space';
+import { distance, isVacant, key, landCells, onLand, passageNeighbors } from './space';
 import type { Cell, GrowingState, Landmark, NatureEvent } from './types';
+import type { IslandWorld } from './worldDefinition';
 
 /**
  * Flowers that mix (spec 52 §5.1). Two bloomed flowers of different colours standing close
@@ -33,30 +34,33 @@ export const flowerColor = (flower: Pick<Landmark, 'color'>): FlowerColor => flo
 
 export const MIX_EVERY = 24, MIX_CHANCE = .4, FLOWER_SHARE = .25;
 
-const bloomed = (state: GrowingState) => state.landmarks.filter(l => l.kind === 'flower' && l.cell && l.growth >= BLOOM_HOURS);
+const bloomed = (state: GrowingState, world?: IslandWorld) => state.landmarks.filter(l => l.kind === 'flower' && l.cell && (!world || onLand(state, l.cell, world)) && l.growth >= BLOOM_HOURS);
 
 /** An open cell next to both parents if there is one, otherwise next to either. */
-function seedCell(state: GrowingState, a: Cell, b: Cell, pick: number): Cell | undefined {
-    const around = (cell: Cell) => neighbors(cell).filter(n => isVacant(state, n));
-    const both = around(a).filter(n => distance(n, b) === 1);
+function seedCell(state: GrowingState, a: Cell, b: Cell, pick: number, world?: IslandWorld): Cell | undefined {
+    const around = (cell: Cell) => passageNeighbors(cell, world, 'join').filter(n => isVacant(state, n, undefined, world));
+    const besideB = new Set(passageNeighbors(b, world, 'join').map(key));
+    const both = around(a).filter(n => besideB.has(key(n)));
     const options = both.length ? both : [...around(a), ...around(b)];
     return options.length ? options[Math.floor(pick * options.length)] : undefined;
 }
 
 /** One mixing round: each close pair of different colours may seed one new flower. */
-export function mixFlowers(state: GrowingState, round: number, events: NatureEvent[]) {
-    const limit = Math.floor(landCells(state).length * FLOWER_SHARE);
-    const parents = bloomed(state).sort((x, y) => x.id.localeCompare(y.id));
+export function mixFlowers(state: GrowingState, round: number, events: NatureEvent[], world?: IslandWorld) {
+    const limit = Math.floor(landCells(state, world).length * FLOWER_SHARE);
+    const parents = bloomed(state, world).sort((x, y) => x.id.localeCompare(y.id));
     const used = new Set<string>();
     for (let i = 0; i < parents.length; i++) for (let j = i + 1; j < parents.length; j++) {
         if (state.landmarks.filter(l => l.kind === 'flower').length >= limit) return;
         const a = parents[i], b = parents[j];
         if (used.has(a.id) || used.has(b.id) || distance(a.cell!, b.cell!) > 2) continue;
+        if (world && !world.neighbors(a.cell!, 'join').some(next => key(next) === key(b.cell!)
+            || world.neighbors(next, 'join').some(after => key(after) === key(b.cell!)))) continue;
         const color = mixOf(flowerColor(a), flowerColor(b));
         if (!color) continue;
         const pair = `${a.id}+${b.id}`;
         if (roll(state.seed, 'flower-mix', pair, round) >= MIX_CHANCE) continue;
-        const cell = seedCell(state, a.cell!, b.cell!, roll(state.seed, 'flower-mix-cell', pair, round));
+        const cell = seedCell(state, a.cell!, b.cell!, roll(state.seed, 'flower-mix-cell', pair, round), world);
         if (!cell) continue;
         used.add(a.id); used.add(b.id);
         const id = `l${state.nextId++}`;
@@ -74,4 +78,4 @@ export function noteColor(state: GrowingState, color: FlowerColor, events?: Natu
     events?.push({ type: 'new-color', color });
 }
 
-export const flowerCells = (state: GrowingState) => new Set(bloomed(state).map(l => key(l.cell!)));
+export const flowerCells = (state: GrowingState, world?: IslandWorld) => new Set(bloomed(state, world).map(l => key(l.cell!)));

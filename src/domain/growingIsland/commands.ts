@@ -9,14 +9,15 @@ import { newPlaceProgress, recordPlaceShown, recordPlaceUse, syncPlaceMilestones
 import { PLACE_GOAL_IDS } from './placeTypes';
 import { openTown, welcome } from './town';
 import type { Cell, Command, GrowingState, Side, TownEvent } from './types';
+import type { IslandWorld } from './worldDefinition';
 
 export interface Intent { id: string; command: Command }
 
 function fail(message: string): never { throw new Error(message); }
 
 /** Seeds and landmarks may replace a spread wild plant; everything else needs an empty cell. */
-function claim(state: GrowingState, cell: Cell, except?: string) {
-    if (!onLand(state, cell)) fail('ここには おけないよ。');
+function claim(state: GrowingState, cell: Cell, except?: string, world?: IslandWorld) {
+    if (!onLand(state, cell, world)) fail('ここには おけないよ。');
     const found = occupant(state, cell, except);
     if (!found) return;
     if (found.type === 'plot' && found.spread) { state.plots = state.plots.filter(p => p.id !== found.id); return; }
@@ -65,7 +66,9 @@ function find(state: GrowingState, id: string) {
         ?? fail('みつからないよ。');
 }
 
-function apply(state: GrowingState, command: Command): TownEvent[] {
+function apply(state: GrowingState, command: Command, world?: IslandWorld): TownEvent[] {
+    if (world && ['expand', 'bridge-build', 'bridge-remove'].includes(command.type))
+        fail('この制作中の島では 土地とはしの編集を まだ使えないよ。');
     const events: TownEvent[] = [];
     switch (command.type) {
         case 'choose-place-goal': {
@@ -101,8 +104,8 @@ function apply(state: GrowingState, command: Command): TownEvent[] {
                 if (!state.wonderSeeds) fail('ふしぎの たねが まだ ないよ。');
             } else if (!state.unlocked.includes(`seed:${command.kind}`)) fail('まだ えらべないよ。');
             const tutorial = state.tutorial === 'first-home' && command.kind === 'home';
-            if (command.kind === 'home' && !canReachHomePlacement(state, command.cell)) fail('ここまで いけないみたい。まわりを あけてみよう');
-            claim(state, command.cell);
+            if (command.kind === 'home' && !canReachHomePlacement(state, command.cell, undefined, world)) fail('ここまで いけないみたい。まわりを あけてみよう');
+            claim(state, command.cell, undefined, world);
             const price = tutorial ? 0 : SEED_PRICE[command.kind];
             pay(state, price);
             const plot = { id: `p${state.nextId++}`, kind: command.kind, cell: { ...command.cell }, plantedAt: state.town.clock,
@@ -111,10 +114,10 @@ function apply(state: GrowingState, command: Command): TownEvent[] {
             if (command.kind === 'wonder') state.wonderSeeds = state.wonderSeeds! - 1;
             if (tutorial) {
                 // The first home shows the whole loop once without learning (§14).
-                Object.assign(plot, { stage: 1, builtAt: state.town.clock, stagedAt: state.town.clock, style: styleAt(state, plot.cell) });
+                Object.assign(plot, { stage: 1, builtAt: state.town.clock, stagedAt: state.town.clock, style: styleAt(state, plot.cell, undefined, world) });
                 state.unopened.push(plot.id);
                 events.push({ type: 'built', plotId: plot.id });
-                events.push({ type: 'arrived', villagerId: welcome(state, state.town.clock, plot).id });
+                events.push({ type: 'arrived', villagerId: welcome(state, state.town.clock, plot, world).id });
                 state.tutorial = 'done';
                 const keys = refreshUnlocks(state);
                 if (keys.length) events.push({ type: 'unlocked', keys });
@@ -130,7 +133,7 @@ function apply(state: GrowingState, command: Command): TownEvent[] {
                 const planted = PLANTED_COLORS.find(entry => entry.color === color);
                 if (command.kind !== 'flower' || !planted || islandLevel(state) < planted.level) fail('まだ えらべないよ。');
             } else if (command.kind === 'flower') color = 'red';
-            claim(state, command.cell);
+            claim(state, command.cell, undefined, world);
             pay(state, price);
             const id = `l${state.nextId++}`;
             state.landmarks.push({ id, kind: command.kind, cell: { ...command.cell }, growth: 0, ...(color ? { color } : {}) });
@@ -142,9 +145,9 @@ function apply(state: GrowingState, command: Command): TownEvent[] {
         case 'move': {
             const target = find(state, command.id);
             if (!target.cell) fail('しまってある ものは「おく」から えらんでね。');
-            if (state.plots.some(p => p.id === command.id && p.kind === 'home') && !canReachHomePlacement(state, command.cell, command.id))
+            if (state.plots.some(p => p.id === command.id && p.kind === 'home') && !canReachHomePlacement(state, command.cell, command.id, world))
                 fail('ここまで いけないみたい。まわりを あけてみよう');
-            claim(state, command.cell, command.id);
+            claim(state, command.cell, command.id, world);
             target.cell = { ...command.cell };
             break;
         }
@@ -163,9 +166,9 @@ function apply(state: GrowingState, command: Command): TownEvent[] {
         case 'unstore': {
             const target = find(state, command.id);
             if (target.cell) fail('もう おいてあるよ。');
-            if (state.plots.some(p => p.id === command.id && p.kind === 'home') && !canReachHomePlacement(state, command.cell, command.id))
+            if (state.plots.some(p => p.id === command.id && p.kind === 'home') && !canReachHomePlacement(state, command.cell, command.id, world))
                 fail('ここまで いけないみたい。まわりを あけてみよう');
-            claim(state, command.cell);
+            claim(state, command.cell, undefined, world);
             target.cell = { ...command.cell };
             break;
         }
@@ -279,35 +282,36 @@ function apply(state: GrowingState, command: Command): TownEvent[] {
  * Applies a child's action once. A repeated intent id (double tap, second tab, a lost
  * commit notice) returns the saved state unchanged.
  */
-export function applyIntent(previous: GrowingState, intent: Intent, at?: number): { state: GrowingState; events: TownEvent[] } {
+export function applyIntent(previous: GrowingState, intent: Intent, at?: number, world?: IslandWorld): { state: GrowingState; events: TownEvent[] } {
     if (previous.applied.includes(intent.id)) return { state: previous, events: [] };
     const state = structuredClone(previous);
-    const events = apply(state, intent.command);
+    const events = apply(state, intent.command, world);
     // Previously earned time also works for the next seed or a restored route.
     if (['plant', 'place', 'move', 'store', 'unstore', 'pluck', 'expand'].includes(intent.command.type) && state.town.bank > 0)
-        events.push(...openTown(state));
+        events.push(...openTown(state, world));
     noteTownBuilds(state, events);
     noteGuidanceIntent(previous, state, intent.command, intent.id, at);
     const now = at ?? state.nature.realAt;
-    if (intent.command.type === 'place-used') recordPlaceUse(state, intent.command, now);
-    if (intent.command.type === 'place-shown') recordPlaceShown(state, intent.command);
-    syncPlaceMilestones(state, now);
+    if (intent.command.type === 'place-used') recordPlaceUse(state, intent.command, now, world);
+    if (intent.command.type === 'place-shown') recordPlaceShown(state, intent.command, world);
+    syncPlaceMilestones(state, now, world);
     state.applied = [...state.applied, intent.id].slice(-RULES.appliedMemory);
     return { state, events };
 }
 
-export function canPlace(state: GrowingState, cell: Cell, except?: string) {
-    if (isVacant(state, cell, except)) return true;
+export function canPlace(state: GrowingState, cell: Cell, except?: string, world?: IslandWorld) {
+    if (!onLand(state, cell, world)) return false;
+    if (isVacant(state, cell, except, world)) return true;
     const found = occupant(state, cell, except);
     return found?.type === 'plot' && found.spread;
 }
 
 /** Preview a home's own blocking cell, rather than pretending it is an open path. */
-export function canReachHomePlacement(state: GrowingState, cell: Cell, id?: string) {
-    if (!canPlace(state, cell, id)) return false;
+export function canReachHomePlacement(state: GrowingState, cell: Cell, id?: string, world?: IslandWorld) {
+    if (!canPlace(state, cell, id, world)) return false;
     const preview = structuredClone(state);
     const home = preview.plots.find(p => p.id === id);
     if (home) home.cell = cell;
     else preview.plots.push({ id: 'placement-preview', kind: 'home', cell, stage: 0, plantedAt: 0, growth: 0, origin: 'seed', paid: 0 });
-    return isReachable(cell, reachableFromHome(preview));
+    return isReachable(cell, reachableFromHome(preview, undefined, world), world);
 }

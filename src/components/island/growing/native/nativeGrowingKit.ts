@@ -73,22 +73,23 @@ export function makeNativeGrowingKit(source: T.Group, manifest: NativeGrowingMan
     };
     return {
         manifest, instance,
-        tree(id: string, growth: number) {
+        tree(id: string, growth: number, sourceScale?: number) {
             const form = treeForm(id), name = form === 'spread' ? 'willow' : form === 'spire' ? 'spire' : 'birch';
             const root = instance(name);
             const height = growth < 6 ? .22 + Math.min(6, Math.max(0, growth)) / 6 * .45 : growth < 18 ? 1.0 : form === 'spire' ? 1.85 : 1.75;
-            root.scale.setScalar(height / (manifest.parts[name].max[1] - manifest.parts[name].min[1]));
+            const maturity = growth < 6 ? height / 1.75 : growth < 18 ? .57 : 1;
+            root.scale.setScalar(sourceScale === undefined ? height / (manifest.parts[name].max[1] - manifest.parts[name].min[1]) : sourceScale * maturity);
             root.name = `growing-tree-${form}`; root.userData.treeForm = form; return root;
         },
-        home(stage: number, style: PlotStyle, roof?: number) {
+        home(stage: number, style: PlotStyle, roof?: number, sourceScale?: number) {
             const root = instance(style === 'water' ? 'home-cap' : style === 'tree' ? 'home-leaf' : stage >= 4 ? 'home-upper' : 'home');
-            root.scale.setScalar(stage === 2 ? .30 : .34); paintRoof(root, style, roof);
+            root.scale.setScalar((stage === 2 ? .30 / .34 : 1) * (sourceScale ?? .34)); paintRoof(root, style, roof);
             // An earned upper floor keeps its height even under a native cap or
             // folded leaf roof; it never silently reverts to the small home.
             if (stage >= 4 && (style === 'water' || style === 'tree')) root.scale.y *= 1.25;
             root.name = 'growing-native-home'; root.userData.homeStage = stage; root.userData.homeStyle = style; return root;
         },
-        cottage() { const root = instance('cottage'); root.scale.setScalar(.58); return root; },
+        cottage(sourceScale = .58) { const root = instance('cottage'); root.scale.setScalar(sourceScale); return root; },
         dispose() {
             if (disposed) return; disposed = true;
             geometries.forEach(geometry => geometry.dispose()); materials.forEach(material => material.dispose()); templates.clear();

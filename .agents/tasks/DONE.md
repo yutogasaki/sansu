@@ -1,5 +1,7 @@
 # Shared Done Index
 
+- 2026-10-11: [採用地形で編集する全島の統合診断](../../docs/design/2026-10-11-authored-island-runtime/README.md)。27所有物・8軒を本体の配置・明示歩行へ接続、実分離/収納/復元・core5,044/classic32/既存本体8旅程PASS。診断単位を記録。美術HOLD・約9秒の再構築・水/回廊床・M1/包括ゴールは継続。詳細: `docs/done/2026-10.md`。
+
 - 2026-10-11: 設定に「アプリの紹介」を追加し `/promo/` を別タブで開く。やさしい表示、4幅・Enter/タップ・元URL/学習保持/再読込、core5,010がPASS。[検証と実画面](../../docs/design/2026-10-11-settings-promotion/README.md)。Git反映対象、公開はpush後に別確認。詳細: `docs/done/2026-10.md`。
 
 - 2026-10-11: [共通床と経路の制作基盤M0](../../docs/design/2026-10-11-authored-world-foundation/README.md)。原本地形・配置点・細かな歩行グラフと旧床を共有。所有床10組byte一致、core5,010/専用24/classic32、本体DEVの実回答と旧土地/人口8組・22画面PASS。基盤単位を完了、全島M1・美術/独立観察/保存と配布の包括ゴールは継続。詳細: `docs/done/2026-10.md`。

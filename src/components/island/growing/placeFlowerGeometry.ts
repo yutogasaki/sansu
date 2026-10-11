@@ -2,7 +2,7 @@ import * as T from 'three';
 import { GardenGeometry, type V3 } from '../three/garden/geometry';
 import type { Cell, GrowingState } from '../../../domain/growingIsland';
 import type { DerivedPlace } from '../../../domain/growingIsland/placeTypes';
-import { key, occupant, walkableCells } from '../../../domain/growingIsland/space';
+import { key, occupant, approachCells, walkableCells } from '../../../domain/growingIsland/space';
 import type { SceneLayout } from './sceneLayout';
 import { placeLeafGeometry } from './placeLeafGeometry';
 import type { NativeGrowingKit } from './native/nativeGrowingKit';
@@ -15,17 +15,20 @@ const tuple = (point: T.Vector3): V3 => [point.x, point.y, point.z];
 
 /** Ground colour belongs to the same open floor, never a raised garden platform. */
 function gardenFloor(g: GardenGeometry, state: GrowingState, layout: SceneLayout, place: DerivedPlace, cells: Cell[]) {
-    const open = walkableCells(state), vertices: number[] = [], indices: number[] = [];
-    const doors = new Set(state.plots.filter(plot => plot.kind === 'home' && plot.cell).map(plot => key({ x: plot.cell!.x, z: plot.cell!.z + 1 })));
+    const world = layout.authored ? layout.world : undefined, open = walkableCells(state, world), vertices: number[] = [], indices: number[] = [];
+    const doors = new Set(state.plots.filter(plot => plot.kind === 'home' && plot.cell).flatMap(plot => world
+        ? approachCells(plot.cell!, world).map(key) : [key({ x: plot.cell!.x, z: plot.cell!.z + 1 })]));
     const colored: Cell[] = [];
     for (const cell of place.footprint) {
         if (!open.has(key(cell)) || occupant(state, cell) || doors.has(key(cell))
             || !cells.some(owner => Math.hypot(owner.x - cell.x, owner.z - cell.z) <= 1.45)) continue;
         colored.push(cell);
         for (let z = 0; z < 4; z++) for (let x = 0; x < 4; x++) {
+            const quad = [[0, 0], [1, 0], [0, 1], [1, 1]].map(([dx, dz]) => ({ x: cell.x - .46 + (x + dx) * .23, z: cell.z - .46 + (z + dz) * .23 }));
+            if (world && (quad.some(point => !world.floorAt(point)) || !world.floorAt({ x: (quad[0].x + quad[3].x) / 2, z: (quad[0].z + quad[3].z) / 2 }))) continue;
             const start = vertices.length / 3;
-            for (const [dx, dz] of [[0, 0], [1, 0], [0, 1], [1, 1]]) {
-                const p = layout.point({ x: cell.x - .46 + (x + dx) * .23, z: cell.z - .46 + (z + dz) * .23 }, .004);
+            for (const point of quad) {
+                const p = layout.point(point, .004);
                 vertices.push(...tuple(p));
             }
             indices.push(start, start + 2, start + 1, start + 1, start + 2, start + 3);

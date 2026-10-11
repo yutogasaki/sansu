@@ -1,0 +1,44 @@
+{
+  "buildRevision": "authored-editable-m1-a1",
+  "appTarget": "http://127.0.0.1:5340/prototypes/place-qa/authored.html",
+  "delivery": "DEV explicit authored world and synthetic owner input; main GrowingWorld renderer; no player DB write",
+  "candidate": "native05-authored-runtime-m1",
+  "fixtureCandidate": "native05-authored-editable-m1-v1",
+  "worldId": "native05-authored-world-m0-v2",
+  "gitParent": "1069b43294a10d37d92de612f33f51c0af27dbb0",
+  "appSourceHash": "6f4d07a8188d25bab7edb8712f0e2c89de290d339175917aa5e85d843c8f7a7a",
+  "inputClosure": "runtime/report.json initialInputs=finalInputs",
+  "configuredFlags": {
+    "VITE_ISLAND_ENABLED": true,
+    "VITE_NATIVE_GROWING_ART": true
+  },
+  "renderedNativeArt": true,
+  "gates": {
+    "art": "HOLD: water/decks/forest mass and wider variation incomplete",
+    "independentUnderstandingSafety": "NOT_EVALUATED: N=0",
+    "runtime": "PARTIAL: focused UI and legacy regression PASS; layer rebuild ~9 seconds; initial headless journey interrupted; authored save/offline/update not implemented"
+  },
+  "checks": {
+    "core": {
+      "pass": true,
+      "files": 579,
+      "tests": 5044
+    },
+    "classicSmoke": {
+      "pass": true,
+      "count": 32
+    },
+    "editing": {
+      "pass": true,
+      "steps": 6,
+      "captures": 7,
+      "pointer": "desktop mouse; phone/tablet width views only"
+    },
+    "legacy": {
+      "pass": true,
+      "scenarios": 8,
+      "captures": 22,
+      "inputs": 1532
+    }
+  }
+}

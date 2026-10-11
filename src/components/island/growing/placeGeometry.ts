@@ -252,7 +252,7 @@ function buildGallery(g: GardenGeometry, state: GrowingState, layout: SceneLayou
         }
     }
     if (room) {
-        const open = walkableCells(state), joints = new T.Group(); joints.name = 'place-root-floor-connections'; supports.add(joints);
+        const open = walkableCells(state, layout.authored ? layout.world : undefined), joints = new T.Group(); joints.name = 'place-root-floor-connections'; supports.add(joints);
         g.root.updateMatrixWorld(true);
         const anchors = room.userData.floorConnectionAnchors as { ownerId: string; from: { x: number; y: number; z: number }; to: { x: number; y: number; z: number } }[];
         for (const anchor of anchors) {

@@ -21,6 +21,8 @@ import { bridgeAnchor, bridgeEnd } from '../../../domain/growingIsland/space';
 import type { DerivedPlace } from '../../../domain/growingIsland/placeTypes';
 import type { PlaceUseReceipt } from './growingLife';
 import type { NativeGrowingKit } from './native/nativeGrowingKit';
+import type { IslandWorld as CompiledWorld } from '../../../domain/growingIsland/worldDefinition';
+import type { AuthoredCoastSkin } from './native/authoredGrowingGround';
 
 export interface WorldHandlers {
     onCell: (cell: Cell) => void;
@@ -47,13 +49,13 @@ export interface WorldCamera {
 }
 export interface ShownMoment { id: number; moment: Moment; cell?: Cell }
 /** `cheer` makes the waiting friend jump (a home seed was planted); `festival` celebrates a new level. */
-type Props = WorldHandlers & { state: GrowingState; time: GardenTime; ghost?: Ghost; selectedId?: string; turn: number; cheer: number; festival: number;
+type Props = WorldHandlers & { state: GrowingState; world?: CompiledWorld; time: GardenTime; ghost?: Ghost; selectedId?: string; turn: number; cheer: number; festival: number;
     hints?: readonly Cell[]; moment?: ShownMoment; show?: boolean; active?: boolean; compact?: boolean; qualityCeiling?: number; focus?: { id: string; n: number }; concert?: { cell: Cell; n: number }; bridgeBuild?: number; onCamera?: (camera?: WorldCamera) => void };
 
 const reducedMotion = () => typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 const nativeArtEnabled = import.meta.env.DEV || import.meta.env.VITE_NATIVE_GROWING_ART === 'true';
 
-export default function GrowingWorld({ state, time, ghost, selectedId, turn, cheer, festival, hints, moment, show, active = true, compact, qualityCeiling = 1.25, focus, concert, bridgeBuild, onCamera, ...handlers }: Props) {
+export default function GrowingWorld({ state, world: authoredWorld, time, ghost, selectedId, turn, cheer, festival, hints, moment, show, active = true, compact, qualityCeiling = 1.25, focus, concert, bridgeBuild, onCamera, ...handlers }: Props) {
     const host = useRef<HTMLDivElement>(null);
     const handlerRef = useRef(handlers);
     useEffect(() => { handlerRef.current = handlers; });
@@ -123,7 +125,14 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             }
         }
         if (released) return;
-        const world = createWorldScene(renderer, native); disposers.push(() => world.dispose());
+        let coast: AuthoredCoastSkin | undefined;
+        if (authoredWorld) {
+            const { loadAuthoredCoastSkin } = await import('./native/authoredGrowingAssets');
+            coast = await loadAuthoredCoastSkin(abort.signal);
+            node.dataset.authoredCoastSource = coast.source.sha256;
+        }
+        if (released) return;
+        const world = createWorldScene(renderer, native, authoredWorld, coast); disposers.push(() => world.dispose());
         const releaseSharedCache = retainSharedRendererCache(world.m.residentFabric());
         disposers.push(releaseSharedCache);
         let bridgeWork: { at: number; resident: string; owner: string; parts: T.Object3D[]; crossing?: boolean } | undefined;
@@ -439,7 +448,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             ndc.set((event.clientX - rect.left) / rect.width * 2 - 1, -(event.clientY - rect.top) / rect.height * 2 + 1);
             ray.setFromCamera(ndc, camera); return ray;
         };
-        const ground = (event: PointerEvent) => world.groundAt(cast(event)) ?? ray.ray.intersectPlane(plane, new T.Vector3());
+        const ground = (event: PointerEvent) => world.groundAt(cast(event)) ?? (authoredWorld ? undefined : ray.ray.intersectPlane(plane, new T.Vector3()));
         const actorAt = (event: PointerEvent) => {
             const actors = world.life.objects();
             const direct = cast(event).intersectObjects(actors, true)[0]?.object.userData.actorId as string | undefined;
@@ -509,7 +518,10 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
             const h = handlerRef.current;
             if (latest.current.ghost) {
                 // While placing, every tap chooses the cell under the finger.
-                const point = ground(event); if (point) h.onCell(layout.cellAt(point)); return;
+                const point = ground(event);
+                if (point) h.onCell(layout.cellAt(point));
+                else if (authoredWorld) h.onCell({ x: Number.NaN, z: Number.NaN });
+                return;
             }
             const hits = cast(event).intersectObjects([...(layer ? [layer.root] : []), ...world.life.objects(), world.scene], true);
             // The invisible finger target of a tiny seed must never steal a visible
@@ -558,7 +570,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
         return release;
     // A retry mounts a fresh world; its graphics profile is fixed for that lifetime.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [authoredWorld]);
 
     useEffect(() => { api.current?.rebuild(state, ghost, selectedId, hints); }, [state, ghost, selectedId, hints]);
     useEffect(() => { if (moment) api.current?.moment(moment); }, [moment]);
@@ -571,7 +583,7 @@ export default function GrowingWorld({ state, time, ghost, selectedId, turn, che
     const lastTurn = useRef(turn);
     useEffect(() => { if (turn !== lastTurn.current) { api.current?.turn(turn - lastTurn.current); lastTurn.current = turn; } }, [turn]);
 
-    return <div className="growing-world" ref={host} data-growing-world data-visual-candidate="growing-island-v1" data-art-candidate={nativeArtEnabled ? 'native05-expanding-runtime-v2' : 'native-05-place-runtime-v3'} data-landscape-projection={nativeArtEnabled ? 'curved-owned-v1' : 'linear'} data-native-growing-art={String(nativeArtEnabled)} data-growing-feature-enabled="true">
+    return <div className="growing-world" ref={host} data-growing-world data-visual-candidate="growing-island-v1" data-art-candidate={authoredWorld ? 'native05-authored-runtime-m1' : nativeArtEnabled ? 'native05-expanding-runtime-v2' : 'native-05-place-runtime-v3'} data-landscape-projection={authoredWorld ? 'authored-floor-v1' : nativeArtEnabled ? 'curved-owned-v1' : 'linear'} data-native-growing-art={String(nativeArtEnabled)} data-growing-feature-enabled="true">
         {failed && <p className="growing-world-failed">しまを ひょうじ できなかったよ。よみなおしてみてね。</p>}
         {bridgeStage && <div className="growing-bridge-caption" data-bridge-stage={bridgeStage} role="status">
             {bridgeStage === 'building' ? 'ぽこもこが はしを つくっているよ' : bridgeStage === 'crossing' ? 'なかまが わたっているよ' : 'むこうまで いけた！'}

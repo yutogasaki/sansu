@@ -4,11 +4,26 @@ import { buildIslandCharacters, makePokomokoRig } from '../three/islandCharacter
 import { makeResidentRig } from '../three/residentRig';
 import { newIsland } from '../../../domain/growingIsland/island';
 import { createWorldScene } from './worldScene';
+import { compileWorldDefinition } from '../../../domain/growingIsland/worldDefinition';
 
 vi.mock('../three/islandCharacters', { spy: true });
 vi.mock('../three/residentRig', { spy: true });
 
 describe('world scene resource ownership', () => {
+    it('grounds the actual home on authored terrain and never creates a rectangular pedestal or background planting', () => {
+        const cells = [{ x: 0, z: 0 }, { x: 0, z: 2 }, { x: 4, z: 0 }, { x: 4, z: 2 }];
+        const authored = compileWorldDefinition({ version: 1, id: 'actual-home-floor', districts: [{ id: 'core', templateId: 'actual-home-floor',
+            logicalOrigin: { x: 0, z: 0 }, worldOrigin: { x: 0, y: 0, z: 0 }, turn: 0, ports: [],
+            floors: [{ id: 'floor', kind: 'ground', color: '#a4cb87', vertices: cells.map(cell => ({ cell, point: { x: cell.x, y: cell.x * .1 + cell.z * .2, z: cell.z } })), indices: [0, 1, 2, 2, 1, 3] }],
+            sites: [{ id: 'door', cell: { x: 2, z: 1 }, floorId: 'floor', placement: true }] }], edges: [] });
+        const state = newIsland('authored-home', 0), before = structuredClone(state), world = createWorldScene({} as T.WebGLRenderer, undefined, authored);
+        const layout = world.layout(state), house = world.scene.children.find(object => object.userData.objectId === 'house')!;
+        expect(layout.world).toBe(authored); expect(house.position.y).toBeCloseTo(.35, 9);
+        expect(house.position.x).toBeCloseTo(.5, 9); expect(house.position.z).toBeCloseTo(-1.5, 9);
+        expect(world.scene.getObjectByName('garden-island-pedestal')).toBeUndefined();
+        expect(world.scene.getObjectByName('garden-ground-details')).toBeUndefined();
+        expect(world.scene.getObjectByName('authored-evaluated-floor')).toBeDefined(); expect(state).toEqual(before); world.dispose();
+    });
     it('replaces only the expanded decorative pedestal and shelter tree, keeping sea and real ground planting', () => {
         const state = newIsland('shore-art', 1000), world = createWorldScene({} as T.WebGLRenderer);
         world.layout(state);

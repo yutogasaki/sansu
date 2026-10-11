@@ -8,8 +8,37 @@ import { bridgeEnd, key, landBounds, reachableFromHome, walkableCells } from '..
 import { GrowingLife, VISIBLE_WALKERS } from './growingLife';
 import { buildObjectLayer } from './objectLayer';
 import { sceneLayout } from './sceneLayout';
+import { authoredAccessWorld } from '../../../domain/growingIsland/authoredWorldAccess.fixture';
+import { authoredPointBlocked } from '../../../domain/growingIsland/authoredWorldAccess';
 
 const T0 = Date.UTC(2026, 8, 29, 9);
+
+it('keeps actual authored actors on the quarter graph around a home and preserves their saved identity', () => {
+    const state = newIsland('authored-life', T0), { world } = authoredAccessWorld(), home = { x: 1, z: -1 };
+    state.landmarks = [];
+    state.plots = [{ id: 'native-home', kind: 'home', cell: home, stage: 2, plantedAt: 0, growth: 0, origin: 'seed', paid: 4 }];
+    state.villagers = [{ id: 'native-friend', species: 'otter', home: 'native-home', arrivedAt: 0, trait: 'mellow', variant: { color: 2, accessory: 1, sparkle: false } }];
+    const before = structuredClone(state), m = new IslandMaterials('moon-garden'), layout = sceneLayout(state, false, world);
+    const life = new GrowingLife(m, { id: 'pokomoko', root: new T.Group(), body: new T.Group(), feet: [] }), layer = buildObjectLayer(m, state, layout);
+    life.sync(state, layout, layer); life.tick(0, 0, true, false);
+    const start = layout.logicalAt(life.positionOf('native-friend')!);
+    expect(start).toEqual({ x: 1, z: -.25 });
+    expect(authoredPointBlocked(start, home)).toBe(false);
+    life.pick('pokomoko'); life.drag('pokomoko', layout.point({ x: 0, z: -1 })); life.drop('pokomoko', 0);
+    const random = vi.spyOn(Math, 'random').mockReturnValue(.96), visited: { x: number; z: number }[] = [];
+    try {
+        for (let i = 0; i < 30; i++) {
+            life.tick(3000 + i * 150, 150, true, false);
+            const at = layout.logicalAt(life.positionOf('pokomoko')!);
+            expect(world.floorAt(at)).toBeDefined();
+            expect(authoredPointBlocked(at, home)).toBe(false);
+            visited.push(at);
+        }
+        expect(visited.some(at => at.x > home.x + .6)).toBe(true);
+        expect(state).toEqual(before);
+        expect(life.actorIds()).toContain('native-friend');
+    } finally { random.mockRestore(); life.dispose(); layer.dispose(); m.dispose(); }
+});
 
 function island() {
     const state = applyIntent(newIsland('kid', T0), { id: 'first', command: { type: 'plant', kind: 'home', cell: { x: 1, z: 3 } } }).state;

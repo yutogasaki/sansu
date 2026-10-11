@@ -2,18 +2,19 @@ import { islandCharacter, richness } from './environment';
 import { pick, roll } from './random';
 import { AVAILABLE_SPECIES, FAVORED, isKid, KID, KIDS, RARE, RULES } from './rules';
 import type { GrowingState, Species, Trait, Visitor } from './types';
+import type { IslandWorld } from './worldDefinition';
 
 const TRAITS: readonly Trait[] = ['lively', 'mellow', 'shy', 'hungry'];
 
-export function rareChance(state: GrowingState) {
-    return RULES.rareBase + RULES.rareBonus * Math.min(1, richness(state) / RULES.rareRichness);
+export function rareChance(state: GrowingState, world?: IslandWorld) {
+    return RULES.rareBase + RULES.rareBonus * Math.min(1, richness(state, world) / RULES.rareRichness);
 }
 
 /**
  * The visitor for a boat ordinal. Species follow the island's character when the boat
  * appears; the sparkle chance follows only the island's richness, never learning volume.
  */
-export function rollVisitor(state: GrowingState, ordinal: number, only?: readonly Species[]): Visitor {
+export function rollVisitor(state: GrowingState, ordinal: number, only?: readonly Species[], world?: IslandWorld): Visitor {
     // えま and えいた come once each: on the second and third boats, or soon after on older islands.
     const present = new Set<Species>([...state.villagers.map(v => v.species), state.pier.visitor.species, state.pier.next.species]);
     const missing = KIDS.filter(kid => !present.has(kid));
@@ -22,7 +23,7 @@ export function rollVisitor(state: GrowingState, ordinal: number, only?: readonl
         const kid = missing.includes(first) ? first : missing[0];
         return { ordinal, species: kid, variant: { ...KID[kid].variant }, trait: KID[kid].trait };
     }
-    const character = islandCharacter(state), favored = character === 'mixed' ? [] : FAVORED[character];
+    const character = islandCharacter(state, world), favored = character === 'mixed' ? [] : FAVORED[character];
     const pool = (only ?? AVAILABLE_SPECIES).filter(s => !isKid(s) || (ordinal > 0 && missing.includes(s)));
     const weight = (s: Species) => {
         const rare = RARE[s];
@@ -36,7 +37,7 @@ export function rollVisitor(state: GrowingState, ordinal: number, only?: readonl
         variant: {
             color: Math.floor(roll(state.seed, 'pier-color', 'boat', ordinal) * 6),
             accessory: Math.floor(roll(state.seed, 'pier-accessory', 'boat', ordinal) * 4),
-            sparkle: roll(state.seed, 'pier-sparkle', 'boat', ordinal) < rareChance(state),
+            sparkle: roll(state.seed, 'pier-sparkle', 'boat', ordinal) < rareChance(state, world),
         },
         trait: TRAITS[Math.floor(roll(state.seed, 'pier-trait', 'boat', ordinal) * TRAITS.length)],
     };
@@ -62,10 +63,10 @@ export function boatProgress(state: GrowingState) {
  * The waiting visitor comes ashore; the silhouette sails in next. Its crossing takes longer
  * as the village grows, which paces the island without asking for more learning.
  */
-export function advancePier(state: GrowingState, hour: number): Visitor {
+export function advancePier(state: GrowingState, hour: number, world?: IslandWorld): Visitor {
     const arriving = state.pier.visitor;
     const rolled = state.pier.rolled + 1;
-    state.pier = { visitor: state.pier.next, next: rollVisitor(state, rolled), rolled,
+    state.pier = { visitor: state.pier.next, next: rollVisitor(state, rolled, undefined, world), rolled,
         dockAt: hour + boatInterval(state.villagers.length + 1) };
     return arriving;
 }

@@ -182,6 +182,6 @@ M1の島は診断用であることを明示し、模型の家や住人を本人
 
 本書は制作方針と順序、美術戦略は形・素材・光、[育つ場所v1](island-place-goals.md)は現行の場所条件、52は遊び、13は保存、43／44は操作と画面の正本。数値を戦略文書へ複製しない。
 
-現在は、原本部品・実床・三方向の拡張を本体へ接続した段階。最新の[拡張runtime契約](island-expanding-runtime.md)と[実画面・検証](../design/2026-10-11-expanding-island-runtime/README.md)は有効だが、全島美術はHOLD。今回の完了単位は制作方針の改訂で、M0〜M5の実装、美術の再採用、独立観察、実機、公開の完了ではない。
+現在は、共通床のM0基盤から[編集できる全島のM1診断](../design/2026-10-11-authored-island-runtime/README.md)へ進み、原本地形と27所有物を本体の配置・歩行へ接続した。水庭・共有deck・森林の面と重い再構築が残り、M1と全島美術はHOLD。以前の[拡張runtime契約](island-expanding-runtime.md)と[実画面・検証](../design/2026-10-11-expanding-island-runtime/README.md)は旧土地の互換と履歴として有効で、新工程の通過証拠へ置き換えない。M0〜M5全体、美術の再採用、独立観察、実機、公開は未完。
 
 以前の制作順と判断は[2026-10-10 ADR](../adr/2026-10-10-place-first-island-strategy.md)、[成長美術](../design/2026-10-11-island-growth-art/README.md)、[自由造形の全島](../design/2026-10-11-island-landscape-art/README.md)、拡張候補とGit履歴に残す。現在の次工程はM0→M1であり、これらの完成ファイルの数から先へ繰り上げない。

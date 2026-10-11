@@ -1,6 +1,7 @@
 import { refreshUnlocks } from './community';
 import { HOME_CELL, distance, isVacant, landCells } from './space';
 import type { GrowingState, TownEvent } from './types';
+import type { IslandWorld } from './worldDefinition';
 
 /** Learning levels that bring a keepsake. The subject's main level is raised only by
  * independent evidence (spec 34), so a keepsake is never a prize for volume (§10). */
@@ -51,18 +52,18 @@ export interface FlowerGift { id: string; to: string; from: string; fromName: st
 const GIFT_MEMORY = 200;
 
 /** The open cell nearest Pokomoko's doorstep, so a gift is the first thing a child sees. */
-function giftCell(state: GrowingState) {
-    return landCells(state).filter(cell => isVacant(state, cell))
+function giftCell(state: GrowingState, world?: IslandWorld) {
+    return landCells(state, world).filter(cell => isVacant(state, cell, undefined, world))
         .sort((a, b) => distance(a, HOME_CELL) - distance(b, HOME_CELL) || a.z - b.z || a.x - b.x)[0];
 }
 
 /** Each gift for this island becomes a bloomed flower once; with no room it waits among stored things. */
-export function receiveGifts(state: GrowingState, gifts: readonly FlowerGift[]): TownEvent[] {
+export function receiveGifts(state: GrowingState, gifts: readonly FlowerGift[], world?: IslandWorld): TownEvent[] {
     const seen = new Set(state.gifts ?? []), events: TownEvent[] = [];
     for (const gift of [...gifts].sort((a, b) => a.at - b.at || a.id.localeCompare(b.id))) {
         if (seen.has(gift.id)) continue;
         seen.add(gift.id);
-        const cell = giftCell(state), id = `l${state.nextId++}`;
+        const cell = giftCell(state, world), id = `l${state.nextId++}`;
         state.landmarks.push({ id, kind: 'flower', cell, growth: 6, from: gift.fromName.slice(0, 12) });
         events.push({ type: 'gift', from: gift.fromName.slice(0, 12), landmarkId: id });
     }

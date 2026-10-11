@@ -1,18 +1,26 @@
 import { growthStage, type Cell, type LifeItem, type LifeState } from './model';
 
 /** Water and shade read only the placed items, so other island engines can share them. */
-export interface WaterLayout { items: readonly Pick<LifeItem, 'kind' | 'cell' | 'growth'>[] }
+export interface WaterLayout {
+    items: readonly Pick<LifeItem, 'kind' | 'cell' | 'growth'>[];
+    /** Authored islands supply their water graph; walking edges grant no water connection. */
+    neighbors?: (cell: Cell) => readonly Cell[];
+}
 import { cellKey, landCells } from './space';
 
 const clamp = (value: number) => Math.max(0, Math.min(1, value));
 const distance = (a: Cell, b: Cell) => Math.abs(a.x - b.x) + Math.abs(a.z - b.z);
 const MAX_CHANNEL_STEPS = 8;
+const directions = [{ x: 0, z: -1, bit: 1 }, { x: 1, z: 0, bit: 2 }, { x: 0, z: 1, bit: 4 }, { x: -1, z: 0, bit: 8 }];
+const waterNeighbors = (state: WaterLayout, cell: Cell) => (state.neighbors?.(cell)
+    ?? directions.map(({ x, z }) => ({ x: cell.x + x, z: cell.z + z })))
+    .filter(next => Number.isInteger(cell.x) && Number.isInteger(cell.z) && Number.isInteger(next.x) && Number.isInteger(next.z) && distance(cell, next) === 1);
 
 /** N/E/S/W bits describe the physical trench ends, including a neighboring bowl. */
 export function waterChannelConnections(state: WaterLayout, cell: Cell) {
-    return [{ x: 0, z: -1, bit: 1 }, { x: 1, z: 0, bit: 2 },
-        { x: 0, z: 1, bit: 4 }, { x: -1, z: 0, bit: 8 }].reduce((mask, { x, z, bit }) =>
-        state.items.some(item => item.cell?.x === cell.x + x && item.cell?.z === cell.z + z
+    const allowed = new Set(waterNeighbors(state, cell).map(cellKey));
+    return directions.reduce((mask, { x, z, bit }) =>
+        allowed.has(cellKey({ x: cell.x + x, z: cell.z + z })) && state.items.some(item => item.cell?.x === cell.x + x && item.cell?.z === cell.z + z
             && (item.kind === 'water-channel' || item.kind === 'water-bowl')) ? mask | bit : mask, 0);
 }
 
@@ -23,15 +31,15 @@ export function connectedWaterChannels(state: WaterLayout): Set<string> {
     const bowls = state.items.filter(item => item.kind === 'water-bowl' && item.cell);
     const reached = new Set<string>();
     let frontier = [...channels.entries()].filter(([key, item]) => {
-        if (!item.cell || !bowls.some(bowl => distance(bowl.cell!, item.cell!) === 1)) return false;
+        if (!item.cell || !bowls.some(bowl => waterNeighbors(state, bowl.cell!).some(next => cellKey(next) === key))) return false;
         reached.add(key); return true;
     }).map(([key]) => key);
     for (let step = 1; step < MAX_CHANNEL_STEPS && frontier.length; step++) {
         const next: string[] = [];
         for (const key of frontier) {
             const item = channels.get(key)!;
-            for (const delta of [{ x: 1, z: 0 }, { x: -1, z: 0 }, { x: 0, z: 1 }, { x: 0, z: -1 }]) {
-                const neighbor = cellKey({ x: item.cell!.x + delta.x, z: item.cell!.z + delta.z });
+            for (const nextCell of waterNeighbors(state, item.cell!)) {
+                const neighbor = cellKey(nextCell);
                 if (channels.has(neighbor) && !reached.has(neighbor)) { reached.add(neighbor); next.push(neighbor); }
             }
         }

@@ -7,11 +7,50 @@ import type { NativeGrowingKit } from './nativeGrowingKit';
 import { buildPlaceRootRoom } from '../placeRootRoomGeometry';
 
 const tuple = (point: T.Vector3): V3 => [point.x, point.y, point.z];
+const AUTHORED_SOURCE_SCALE = .45;
+
+/** A compact four-owner grove carries one source root house. Wider courts and
+ * lanes still use their existing construction; this is not a free hero anchor. */
+function buildAuthoredCompactGrove(g: GardenGeometry, state: GrowingState, layout: SceneLayout, place: DerivedPlace, kit: NativeGrowingKit) {
+    if (!layout.authored || place.ruleId !== 'P02' || place.variant !== 'cluster'
+        || !['grown', 'lived'].includes(place.stage) || place.mainIds.length !== 4) return false;
+    const owners = place.mainIds.map(id => state.landmarks.find(owner => owner.id === id && owner.kind === 'sapling' && owner.cell));
+    if (owners.some(owner => !owner?.cell || !layout.world.owns(owner.cell) || !layout.world.floorAt(owner.cell))) return false;
+    const cells = owners.map(owner => owner!.cell!), xs = [...new Set(cells.map(cell => cell.x))], zs = [...new Set(cells.map(cell => cell.z))];
+    if (xs.length !== 2 || zs.length !== 2 || Math.abs(xs[0] - xs[1]) !== 1 || Math.abs(zs[0] - zs[1]) !== 1
+        || cells.some(cell => !Number.isInteger(cell.x) || !Number.isInteger(cell.z))
+        || new Set(cells.map(cell => `${cell.x},${cell.z}`)).size !== 4) return false;
+    const logicalCenter = { x: (xs[0] + xs[1]) / 2, z: (zs[0] + zs[1]) / 2 };
+    if (!layout.world.floorAt(logicalCenter)) return false;
+    const points = cells.map(cell => layout.point(cell, 0));
+    const center = points.reduce((sum, point) => sum.add(point), new T.Vector3()).multiplyScalar(1 / points.length);
+    const shared = new T.Group(); shared.name = 'place-native-shared-tree'; shared.position.copy(center);
+    shared.userData.ownerIds = [...place.mainIds]; shared.userData.supportCells = cells.map(cell => ({ ...cell }));
+    shared.userData.sourceScale = AUTHORED_SOURCE_SCALE; shared.userData.authoredGalleryArt = 'pending';
+    const trunk = kit.instance('hollow-trunk'); trunk.scale.setScalar(AUTHORED_SOURCE_SCALE);
+    const crown = kit.instance('fan-crown'); crown.name = 'place-native-fan-crown'; crown.scale.setScalar(AUTHORED_SOURCE_SCALE);
+    // Both templates have their own minimum y baked to zero. Restore their
+    // original relative position so the fan meets the unmodified source boughs.
+    crown.position.y = (kit.manifest.parts['fan-crown'].min[1] - kit.manifest.parts['hollow-trunk'].min[1]) * AUTHORED_SOURCE_SCALE;
+    shared.add(trunk, crown);
+    let ownerIndex = 0;
+    shared.traverse(object => {
+        object.userData.ownerIds = [...place.mainIds];
+        // A material-batched source mesh represents all four owners. Give its
+        // ordinary hit a real member, while retaining the complete selection set.
+        if (object instanceof T.Mesh) object.userData.ownerId = place.mainIds[ownerIndex++ % place.mainIds.length];
+    });
+    g.root.add(shared); return true;
+}
 
 /** Native crowns above the same owned stems and actual route. The source model's
  * fixed balcony/stairs are deliberately absent; this gallery is the real route. */
 export function buildNativePlaceGrove(g: GardenGeometry, state: GrowingState, layout: SceneLayout, place: DerivedPlace,
     kit: NativeGrowingKit, gallery: (room?: T.Group) => T.Group) {
+    if (buildAuthoredCompactGrove(g, state, layout, place, kit)) {
+        if (place.walkSurface.length) gallery().userData.authoredGalleryArt = 'pending';
+        return;
+    }
     const owners = place.mainIds.map(id => ({ id, owner: state.landmarks.find(l => l.id === id && l.cell) })).filter(item => Boolean(item.owner));
     if (!owners.length) return;
     const grown = place.stage === 'grown' || place.stage === 'lived', large = place.ruleId === 'P02';

@@ -1,0 +1,27 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>全島M1 原本と実編集の比較</title><style>*{box-sizing:border-box}body{margin:0;background:#f4f7fa;color:#263e54;font:15px/1.6 system-ui,sans-serif}header,main{max-width:1500px;margin:auto;padding:24px}h1{font-size:26px;margin:4px 0}a{color:#396a9b}p{max-width:90ch}.gates{padding:14px;border:1px solid #cfdae6;border-radius:12px;background:#fff}.comparison,.journey{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}figure{margin:0;background:#fff;border:1px solid #d9e0e8;border-radius:12px;overflow:hidden}figure img{width:100%;height:450px;object-fit:contain;background:#eef3f7;display:block}figcaption{padding:12px}.journey{grid-template-columns:repeat(3,minmax(0,1fr))}.journey img{height:380px}code{font-size:12px}details{margin:18px 0}pre{overflow:auto;font-size:12px;max-height:260px;background:#fff;padding:12px}@media(max-width:800px){header,main{padding:14px}.comparison,.journey{grid-template-columns:1fr}figure img{height:auto;max-height:700px}}a:focus-visible{outline:3px solid #d07baa;outline-offset:3px}</style></head><body><header><p>本体renderer · 明示診断 · M1制作中</p><h1>完成像と、実際に編集した島</h1><p class="gates">美術：HOLD ／ 独立理解・安全：未評価 N=0 ／ runtime：PARTIAL。水庭・回廊・森の面と、重い再構築が残る。</p><p>原本と同じ地形変換・家の尺度で作った27所有物・8軒。画面の切り取りやカメラは異なるため、画面上のpixel寸法の一致は主張しません。現在の島を原本への到達と扱わず、全景の不足を比較します。</p><a href="README.md">記録と次の制作順</a> · <a href="review.md">三つのゲートと初回失敗</a> · <a href="../../../prototypes/place-qa/authored.html">実3Dを編集</a></header><main><section class="comparison"><figure><a href="../2026-10-10-island-final-3d/whole-island-render.png"><img src="../2026-10-10-island-final-3d/whole-island-render.png" alt="採用native05原本"></a><figcaption>採用native05の原本。水庭・森・集落の完成像</figcaption></figure><figure><a href="runtime/desktop-whole.png"><img src="runtime/desktop-whole.png" alt="編集できる本体rendererの全島"></a><figcaption>実際の共通床と27所有物。入り江と大樹は接続したが、水庭と森林の面は不足</figcaption></figure></section><h2>実編集の経路</h2><p>海と歩行専用地点を拒否し、移動取消、同じ木の分離・収納・復元を実操作した。phone/tabletは幅の表示確認で、実機touchの証明ではありません。</p><section class="journey"><figure><a href="runtime/desktop-whole.png"><img src="runtime/desktop-whole.png" alt="全島"></a><figcaption>全島 · 原寸画像へ</figcaption></figure><figure><a href="runtime/desktop-tree-close.png"><img src="runtime/desktop-tree-close.png" alt="大樹の近景"></a><figcaption>大樹の近景 · 原寸画像へ</figcaption></figure><figure><a href="runtime/desktop-move-preview.png"><img src="runtime/desktop-move-preview.png" alt="実移動preview"></a><figcaption>実移動preview · 原寸画像へ</figcaption></figure><figure><a href="runtime/desktop-split.png"><img src="runtime/desktop-split.png" alt="分離後"></a><figcaption>分離後 · 原寸画像へ</figcaption></figure><figure><a href="runtime/desktop-reconnected.png"><img src="runtime/desktop-reconnected.png" alt="収納・復元後"></a><figcaption>収納・復元後 · 原寸画像へ</figcaption></figure><figure><a href="runtime/phone-whole.png"><img src="runtime/phone-whole.png" alt="390幅"></a><figcaption>390幅 · 原寸画像へ</figcaption></figure><figure><a href="runtime/tablet-dusk-whole.png"><img src="runtime/tablet-dusk-whole.png" alt="768幅・夕・reduced motion"></a><figcaption>768幅・夕・reduced motion · 原寸画像へ</figcaption></figure></section><details><summary>captureの版・世界・候補</summary><pre>{
+  &quot;url&quot;: &quot;http://127.0.0.1:5340/prototypes/place-qa/authored.html&quot;,
+  &quot;viewport&quot;: {
+    &quot;width&quot;: 1280,
+    &quot;height&quot;: 900
+  },
+  &quot;build&quot;: &quot;authored-editable-m1-a1&quot;,
+  &quot;metadata&quot;: {
+    &quot;growingWorld&quot;: &quot;true&quot;,
+    &quot;visualCandidate&quot;: &quot;growing-island-v1&quot;,
+    &quot;artCandidate&quot;: &quot;native05-authored-runtime-m1&quot;,
+    &quot;landscapeProjection&quot;: &quot;authored-floor-v1&quot;,
+    &quot;nativeGrowingArt&quot;: &quot;true&quot;,
+    &quot;growingFeatureEnabled&quot;: &quot;true&quot;,
+    &quot;nativeKitSha256&quot;: &quot;7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34&quot;,
+    &quot;nativeSourceSha256&quot;: &quot;8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d&quot;,
+    &quot;nativeKitGzipBytes&quot;: &quot;2554378&quot;,
+    &quot;gameplayMapped&quot;: &quot;true&quot;,
+    &quot;authoredCoastSource&quot;: &quot;8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d&quot;,
+    &quot;growingBounds&quot;: &quot;{\&quot;minX\&quot;:-1,\&quot;maxX\&quot;:15,\&quot;depth\&quot;:14}&quot;,
+    &quot;worldDefinition&quot;: &quot;native05-authored-world-m0-v2&quot;,
+    &quot;bridgeSaved&quot;: &quot;false&quot;,
+    &quot;placeCount&quot;: &quot;5&quot;,
+    &quot;placeRelations&quot;: &quot;C02,C04&quot;,
+    &quot;placeTopology&quot;: &quot;P01:alcove:grown|P01:corner:seeded|P02:cluster:grown|P03:shore:grown|P04:bay:grown|P05:arch:grown&quot;
+  }
+}</pre></details><p><a href="runtime/report.json">新世界の編集report</a> · <a href="legacy-regression/report.json">既存島の学習・保存回帰</a> · <a href="verification.json">verification manifest</a></p></main></body></html>

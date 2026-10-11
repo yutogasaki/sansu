@@ -15,9 +15,11 @@ import type { NativeGrowingKit } from './native/nativeGrowingKit';
 import { buildNativeGrowingGround } from './native/nativeGrowingGround';
 import { nativeGrowingLighting } from './native/nativeGrowingLighting';
 import { curveGroundGeometry } from './curvedGeometry';
+import type { IslandWorld as CompiledWorld } from '../../../domain/growingIsland/worldDefinition';
+import { buildAuthoredGrowingGround, buildAuthoredGrowingSea, type AuthoredCoastSkin } from './native/authoredGrowingGround';
 
 /** Lights, sea, garden ground, Pokomoko's cottage and the living layer, shared by one world. */
-export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowingKit) {
+export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowingKit, authored?: CompiledWorld, coast?: AuthoredCoastSkin) {
     const scene = new T.Scene();
     const hemi = new T.HemisphereLight('#fff7ea', '#63806c', 1.15); scene.add(hemi);
     const sun = new T.DirectionalLight('#fff4e0', 2.3); sun.castShadow = true;
@@ -31,9 +33,9 @@ export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowi
     const life = new GrowingLife(m, wrapPokomoko(hero.hero, hero.heroBody, hero.heroFeet));
     scene.add(life.root);
     const cottage = buildGardenCottage();
-    const nativeCottage = native?.cottage();
+    const nativeCottage = native?.cottage(authored ? .45 : undefined);
     const lighting = native ? nativeGrowingLighting(scene, renderer, hemi, sun) : undefined;
-    let ground: ReturnType<typeof buildGardenGround> | undefined, groundKey = '';
+    let ground: ReturnType<typeof buildGardenGround> | ReturnType<typeof buildAuthoredGrowingSea> | undefined, groundKey = '';
     let terrain: ReturnType<typeof buildPlaceGround> | undefined;
     let time: GardenTime = 'day';
     const nativeSeaTime = () => {
@@ -48,10 +50,16 @@ export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowi
         if (layout.key === groundKey && ground) return;
         ground?.root.removeFromParent(); ground?.dispose();
         terrain?.root.removeFromParent(); terrain?.dispose();
-        ground = buildGardenGround({ bounds: layout.bounds, moisture: cell => soilAt(state, cell), shelterTree: !native && layout.artMargin <= 1.1, heightAt: layout.heightAt }, layout.point);
-        curveGroundGeometry(ground.root.getObjectByName('garden-ground-details')!, layout);
-        terrain = native ? buildNativeGrowingGround(layout, native.manifest.shoreProfile) : buildPlaceGround(layout); scene.add(terrain.root);
-        if (layout.artMargin > 1.1 || native) {
+        if (layout.authored) {
+            ground = buildAuthoredGrowingSea(layout);
+            terrain = buildAuthoredGrowingGround(layout, coast);
+        } else {
+            ground = buildGardenGround({ bounds: layout.bounds, moisture: cell => soilAt(state, cell), shelterTree: !native && layout.artMargin <= 1.1, heightAt: layout.heightAt }, layout.point);
+            curveGroundGeometry(ground.root.getObjectByName('garden-ground-details')!, layout);
+            terrain = native ? buildNativeGrowingGround(layout, native.manifest.shoreProfile) : buildPlaceGround(layout);
+        }
+        scene.add(terrain.root);
+        if (!layout.authored && (layout.artMargin > 1.1 || native)) {
             // The named decorative pedestal is separate from sea and floor planting.
             // The shared triangulated floor and its irregular bank now carry the island.
             ground.root.getObjectByName('garden-island-pedestal')!.visible = false;
@@ -62,7 +70,7 @@ export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowi
         sun.shadow.camera.updateProjectionMatrix();
         // The shared garden's 40-unit sea was sized for the old five expansions.
         // Larger districts still need sea behind the whole zoomed-out camera.
-        if (native || layout.artMargin > 1.1 || layout.width + layout.depth > 26) {
+        if (!layout.authored && (native || layout.artMargin > 1.1 || layout.width + layout.depth > 26)) {
             const sea = ground.root.getObjectByName('life-sea') as T.Mesh<T.PlaneGeometry, T.ShaderMaterial>;
             const size = Math.max(160, (layout.width + layout.depth + layout.artMargin * 2) * 12);
             sea.geometry.dispose(); sea.geometry = new T.PlaneGeometry(size, size);
@@ -73,7 +81,13 @@ export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowi
         groundKey = layout.key; scene.add(ground.root); ground.setTime(time);
         nativeSeaTime();
         const house = nativeCottage ?? cottage.root;
-        house.position.set(2.5 - layout.center, .035, -1.5); if (!nativeCottage) house.scale.setScalar(.8);
+        if (layout.authored) {
+            const anchor = { x: 2.5, z: .5 };
+            if (!layout.world.floorAt(anchor)) throw Error('Authored cottage has no physical floor');
+            house.position.copy(layout.point(anchor, 0)); house.scale.setScalar(nativeCottage ? .45 : .8);
+        } else {
+            house.position.set(2.5 - layout.center, .035, -1.5); if (!nativeCottage) house.scale.setScalar(.8);
+        }
         if (!house.parent) scene.add(house);
         house.traverse(o => { o.userData.objectId = 'house'; });
     };
@@ -82,7 +96,7 @@ export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowi
         scene, m, life, hemi, sun,
         groundAt(ray: T.Raycaster) { return terrain ? ray.intersectObject(terrain.floor, false)[0]?.point : undefined; },
         layout: (state: GrowingState) => {
-            const layout = sceneLayout(state, Boolean(native)); layout.nativeArt = Boolean(native); setGround(state, layout);
+            const layout = sceneLayout(state, Boolean(native), authored); layout.nativeArt = Boolean(native); setGround(state, layout);
             // ObjectLayer is attached immediately after layout(). Resolve it lazily
             // so this new frame contains the newly built owners and derived rooms.
             layout.cameraObjects = () => [terrain?.root, nativeCottage ?? cottage.root,

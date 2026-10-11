@@ -4,8 +4,9 @@ import { treeAge } from './nature';
 import { PLACE_CATALOG, placeInputCount } from './placeCatalog';
 import { placeGalleryRoute, terrainHeightAt } from './placeTerrain';
 import type { DerivedPlace, PlaceGoalId, PlaceStage, PlaceUseTarget } from './placeTypes';
-import { distance, key, landBounds, neighbors, onLand, reachableFromHome, walkableCells } from './space';
+import { distance, key, landBounds, neighbors, onLand, reachableFromHome, walkableCells, passageNeighbors, approachCells } from './space';
 import type { Cell, GrowingState, Landmark, Plot } from './types';
+import type { IslandWorld } from './worldDefinition';
 
 type Located = { id: string; cell: Cell };
 type LocatedLandmark = Landmark & Located;
@@ -15,42 +16,69 @@ const count = (id: PlaceGoalId, kind: string) => placeInputCount(id, kind);
 const ATTACH = PLACE_CATALOG.common.attachmentMaxWalkCells;
 const FREE = PLACE_CATALOG.common.gardenMinFreeCells;
 
-/** Shared four-way path calculation. Closed owner cells are endpoints, never walk-throughs. */
-export function placeWalkPath(open: Set<string>, from: Cell, to: Cell, maxSteps = Infinity): Cell[] | undefined {
+/** Limits remain logical cells when a narrow shore uses finer walking points. */
+export const placePathDistance = (path: readonly Cell[]) => path.slice(1).reduce((sum, cell, i) => sum + distance(path[i], cell), 0);
+/** Multi-source shortest paths share one search across the entrances of a place. */
+export function placeWalkSearch(open: Set<string>, starts: readonly Cell[], maxSteps = Infinity, world?: IslandWorld, target?: Cell) {
+    const costs = new Map<string, number>(), previous = new Map<string, Cell | undefined>();
+    type Entry = { cell: Cell; cost: number; order: number };
+    const heap: Entry[] = []; let order = 0;
+    const less = (a: Entry, b: Entry) => a.cost < b.cost || a.cost === b.cost && a.order < b.order;
+    const push = (cell: Cell, cost: number) => {
+        const entry = { cell, cost, order: order++ }; let at = heap.length; heap.push(entry);
+        while (at > 0) { const parent = Math.floor((at - 1) / 2); if (!less(entry, heap[parent])) break; heap[at] = heap[parent]; at = parent; }
+        heap[at] = entry;
+    };
+    const pop = () => {
+        const result = heap[0], tail = heap.pop()!;
+        if (heap.length) { let at = 0;
+            while (at * 2 + 1 < heap.length) {
+                let child = at * 2 + 1; if (child + 1 < heap.length && less(heap[child + 1], heap[child])) child++;
+                if (!less(heap[child], tail)) break; heap[at] = heap[child]; at = child;
+            }
+            heap[at] = tail;
+        }
+        return result;
+    };
+    const siteKeys = world ? new Set(world.sites.map(site => key(site.cell))) : undefined;
+    for (const cell of starts) if (open.has(key(cell)) && (!siteKeys || siteKeys.has(key(cell))) && !costs.has(key(cell))) {
+        costs.set(key(cell), 0); previous.set(key(cell), undefined); push(cell, 0);
+    }
+    const visited = new Set<string>();
+    while (heap.length) {
+        const { cell, cost } = pop(), id = key(cell);
+        if (visited.has(id) || cost !== costs.get(id)) continue;
+        visited.add(id);
+        if (target && id === key(target)) break;
+        for (const next of passageNeighbors(cell, world)) {
+            const nextId = key(next), nextCost = cost + distance(cell, next);
+            if (!open.has(nextId) || nextCost > maxSteps || nextCost >= (costs.get(nextId) ?? Infinity)) continue;
+            previous.set(nextId, cell); costs.set(nextId, nextCost); push(next, nextCost);
+        }
+    }
+    return { costs, path(to: Cell): Cell[] | undefined {
+        if (!costs.has(key(to))) return;
+        const path: Cell[] = []; let at: Cell | undefined = to;
+        while (at) { path.unshift(at); at = previous.get(key(at)); }
+        return path;
+    } };
+}
+export function placeWalkPath(open: Set<string>, from: Cell, to: Cell, maxSteps = Infinity, world?: IslandWorld): Cell[] | undefined {
     if (!open.has(key(from)) || !open.has(key(to))) return undefined;
-    const previous = new Map<string, Cell | undefined>([[key(from), undefined]]), queue = [from];
-    const depths = new Map<string, number>([[key(from), 0]]);
-    for (let i = 0; i < queue.length; i++) {
-        const cell = queue[i];
-        if (key(cell) === key(to)) {
-            const path: Cell[] = []; let at: Cell | undefined = cell;
-            while (at) { path.unshift(at); at = previous.get(key(at)); }
-            return path.length - 1 <= maxSteps ? path : undefined;
-        }
-        const depth = depths.get(key(cell))!;
-        if (depth >= maxSteps) continue;
-        for (const next of neighbors(cell)) if (open.has(key(next)) && !previous.has(key(next))) {
-            previous.set(key(next), cell); depths.set(key(next), depth + 1); queue.push(next);
-        }
-    }
+    return placeWalkSearch(open, [from], maxSteps, world, to).path(to);
 }
 
-const endpointCells = (cell: Cell, reached: Set<string>) => [cell, ...neighbors(cell)].filter(c => reached.has(key(c)));
-function accessDistance(a: Cell, b: Cell, reached: Set<string>, limit: number) {
-    let shortest = Infinity;
-    for (const from of endpointCells(a, reached)) for (const to of endpointCells(b, reached)) {
-        if (distance(from, to) > limit) continue;
-        const path = placeWalkPath(reached, from, to, limit);
-        if (path) shortest = Math.min(shortest, path.length - 1 + (key(from) === key(a) ? 0 : 1) + (key(to) === key(b) ? 0 : 1));
-    }
-    return shortest;
+const endpointCells = (cell: Cell, reached: Set<string>, world?: IslandWorld) => [cell, ...approachCells(cell, world)].filter(c => reached.has(key(c)));
+function accessDistanceFrom(search: ReturnType<typeof placeWalkSearch>, target: Cell, reached: Set<string>, world?: IslandWorld) {
+    return Math.min(...endpointCells(target, reached, world).map(cell => (search.costs.get(key(cell)) ?? Infinity) + distance(cell, target)));
 }
-
-/** Diagonals cannot merge trees/flowers. One *walkable* straight gap can. */
-export function placeConnected(a: Cell, b: Cell, open: Set<string>) {
+/** Only explicit join edges can merge owners; the straight free gap stays optional. */
+export function placeConnected(a: Cell, b: Cell, open: Set<string>, world?: IslandWorld) {
     const d = distance(a, b);
-    return d === 1 || d === 2 && (a.x === b.x || a.z === b.z)
-        && open.has(key({ x: (a.x + b.x) / 2, z: (a.z + b.z) / 2 }));
+    const joins = (from: Cell, to: Cell) => passageNeighbors(from, world, 'join').some(next => key(next) === key(to));
+    if (d === 1) return joins(a, b);
+    const gap = { x: (a.x + b.x) / 2, z: (a.z + b.z) / 2 };
+    return d === 2 && (a.x === b.x || a.z === b.z) && open.has(key(gap)) && joins(a, gap) && joins(gap, b);
 }
 function components(items: Located[], connects: (a: Cell, b: Cell) => boolean) {
     const remaining = new Map(stable(items).map(item => [item.id, item])), out: Located[][] = [];
@@ -65,25 +93,27 @@ function components(items: Located[], connects: (a: Cell, b: Cell) => boolean) {
     }
     return out;
 }
-function region(main: Located[], open: Set<string>, state: GrowingState) {
+function region(main: Located[], open: Set<string>, state: GrowingState, world?: IslandWorld) {
     const cells = new Map<string, Cell>();
     for (const item of main) {
         cells.set(key(item.cell), item.cell);
-        for (const near of neighbors(item.cell)) if (onLand(state, near) && open.has(key(near))) cells.set(key(near), near);
+        const nearby = world ? world.sites.filter(site => distance(site.cell, item.cell) <= 1).map(site => site.cell) : neighbors(item.cell);
+        for (const near of nearby) if ((world || onLand(state, near)) && open.has(key(near))) cells.set(key(near), near);
     }
     return [...cells.values()].sort((a, b) => a.z - b.z || a.x - b.x);
 }
-function gardenCells(main: Located[], reached: Set<string>) {
+function gardenCells(main: Located[], reached: Set<string>, world?: IslandWorld) {
     const nearby = new Map<string, Cell>();
-    for (const item of main) for (const cell of endpointCells(item.cell, reached)) nearby.set(key(cell), cell);
+    for (const item of main) for (const cell of endpointCells(item.cell, reached, world)) nearby.set(key(cell), cell);
     return [...nearby.values()];
 }
 /** Attachments belong to the nearest component, with a stable ID tie. No double-use meshes. */
-function attachments(groups: Located[][], items: Located[], reached: Set<string>) {
+function attachments(groups: Located[][], items: Located[], reached: Set<string>, world?: IslandWorld) {
     const result = groups.map(() => [] as Located[]);
+    const searches = groups.map(group => placeWalkSearch(reached, gardenCells(group, reached, world), ATTACH, world));
     for (const item of stable(items)) {
         const choices = groups.map((group, index) => ({ index, id: group[0].id,
-            distance: Math.min(...gardenCells(group, reached).map(cell => accessDistance(cell, item.cell, reached, ATTACH))) }))
+            distance: accessDistanceFrom(searches[index], item.cell, reached, world) }))
             .filter(choice => choice.distance <= ATTACH).sort((a, b) => a.distance - b.distance || a.id.localeCompare(b.id));
         if (choices[0]) result[choices[0].index].push(item);
     }
@@ -119,33 +149,33 @@ export function placeShape(main: Located[], reached: Set<string>): 'court' | 'cl
 }
 
 function derivePlace(state: GrowingState, ruleId: DerivedPlace['ruleId'], family: DerivedPlace['family'], main: Located[], attached: Located[],
-    reached: Set<string>, open: Set<string>, variant: string, connected: boolean, missing: string[]): DerivedPlace {
+    reached: Set<string>, open: Set<string>, variant: string, connected: boolean, missing: string[], world?: IslandWorld): DerivedPlace {
     const members = stable([...main, ...attached]);
     const anchor = attached.find(item => state.plots.some(p => p.id === item.id && (p.kind === 'home' || p.kind === 'play'))) ?? main[0];
-    const footprint = region([...main, ...attached], open, state);
+    const footprint = region([...main, ...attached], open, state, world);
     if (variant === 'court') {
         const included = new Set(footprint.map(key));
         // The actual open courtyard centre joins its surrounding lanes. Four-neighbour
         // owner regions alone omit this centre and leave a gallery on isolated pads.
         for (const id of reached) {
             const [x, z] = id.split(',').map(Number), cell = { x, z };
-            if (included.has(id) || !open.has(id) || !onLand(state, cell) || !enclosedByMain(main, cell)) continue;
+            if (included.has(id) || !open.has(id) || !(world ? world.floorAt(cell) : onLand(state, cell)) || !enclosedByMain(main, cell)) continue;
             footprint.push(cell); included.add(id);
         }
         footprint.sort((a, b) => a.z - b.z || a.x - b.x);
     }
     const entrances = footprint.filter(cell => reached.has(key(cell)));
-    if (entrances.length < FREE) missing.push('はいれる すきまを あけよう');
+    if ((world ? entrances.filter(cell => Number.isInteger(cell.x) && Number.isInteger(cell.z)).length : entrances.length) < FREE) missing.push('はいれる すきまを あけよう');
     const stage: PlaceStage = !connected ? 'seeded' : missing.length ? 'connected' : 'grown';
     const useTargets: PlaceUseTarget[] = [];
     for (const member of members) {
-        if (!endpointCells(member.cell, reached).length) continue;
+        if (!endpointCells(member.cell, reached, world).length) continue;
         if (state.landmarks.some(item => item.id === member.id && item.kind === 'bench')) useTargets.push({ id: member.id, kind: 'seat', cell: member.cell });
         if (state.plots.some(item => item.id === member.id && item.kind === 'play' && item.stage > 0 && !state.unopened.includes(item.id)))
             useTargets.push({ id: member.id, kind: 'play', cell: member.cell });
     }
     const walkSurface = ruleId === 'P02' && stage === 'grown'
-        ? placeGalleryRoute(state, { footprint, entrances }, anchor.cell) : [];
+        ? placeGalleryRoute(state, { footprint, entrances }, anchor.cell, world) : [];
     if (walkSurface.length) useTargets.push({ id: `${anchor.id}:gallery`, kind: 'gallery', cell: walkSurface[0], route: walkSurface });
     if (ruleId === 'P03' && entrances.length) useTargets.push({ id: `${anchor.id}:shore`, kind: 'shore', cell: entrances[0] });
     const waterRefs = members.filter(item => state.landmarks.some(l => l.id === item.id && (l.kind === 'water-bowl' || l.kind === 'water-channel'))).map(i => i.id);
@@ -157,15 +187,15 @@ function derivePlace(state: GrowingState, ruleId: DerivedPlace['ruleId'], family
 }
 
 /** Current shapes derive from owned objects only. No clocks/owners/rewards are changed here. */
-export function derivePlaces(state: GrowingState): DerivedPlace[] {
-    const open = walkableCells(state), reached = reachableFromHome(state, open), places: DerivedPlace[] = [];
-    const landmarks = stable(state.landmarks.filter((l): l is LocatedLandmark => !!l.cell && onLand(state, l.cell)));
-    const plots = stable(state.plots.filter((p): p is LocatedPlot => !!p.cell && onLand(state, p.cell) && !state.unopened.includes(p.id)));
+export function derivePlaces(state: GrowingState, world?: IslandWorld): DerivedPlace[] {
+    const open = walkableCells(state, world), reached = reachableFromHome(state, open, world), places: DerivedPlace[] = [];
+    const landmarks = stable(state.landmarks.filter((l): l is LocatedLandmark => !!l.cell && onLand(state, l.cell, world)));
+    const plots = stable(state.plots.filter((p): p is LocatedPlot => !!p.cell && onLand(state, p.cell, world) && !state.unopened.includes(p.id)));
     const benches = landmarks.filter(l => l.kind === 'bench');
     const trees = landmarks.filter(l => l.kind === 'sapling');
-    const groves = components(trees, (a, b) => placeConnected(a, b, open));
-    const groveSeats = attachments(groves, benches, reached);
-    const treeHomes = attachments(groves, plots.filter(p => p.kind === 'home' && p.style === 'tree'), reached);
+    const groves = components(trees, (a, b) => placeConnected(a, b, open, world));
+    const groveSeats = attachments(groves, benches, reached, world);
+    const treeHomes = attachments(groves, plots.filter(p => p.kind === 'home' && p.style === 'tree'), reached, world);
     groves.forEach((main, index) => {
         const homes = treeHomes[index], seats = groveSeats[index], mature = main.filter(t => (t as Landmark).growth >= TREE_MATURE_HOURS);
         const big = main.filter(t => ['big', 'lord'].includes(treeAge(state, t.id)));
@@ -175,7 +205,7 @@ export function derivePlaces(state: GrowingState): DerivedPlace[] {
             if (main.length < count(id, 'landmark:sapling')) missing.push('木を よせてみよう');
             if (mature.length < count(id, 'landmark:sapling')) missing.push('木が そだつのを たのしもう');
             if (!seats.length) missing.push('木のそばに ベンチを おこう');
-            else if (mature.length >= count(id, 'landmark:sapling') && !seats.some(seat => shadeInfluence(waterLayout(state), seat.cell) > 0))
+            else if (mature.length >= count(id, 'landmark:sapling') && !seats.some(seat => shadeInfluence(waterLayout(state, world), seat.cell) > 0))
                 missing.push('木陰へ ベンチを よせよう');
             if (id === 'P02') {
                 if (big.length < 2) missing.push('大木が そだつのを たのしもう');
@@ -190,13 +220,13 @@ export function derivePlaces(state: GrowingState): DerivedPlace[] {
                 variant = narrow ? 'corner' : edge ? 'alcove' : 'lane';
             }
             places.push(derivePlace(state, id, 'grove', main, [...(id === 'P02' ? homes : []), ...seats], reached, open, variant,
-                main.length >= count(id, 'landmark:sapling') && seats.length > 0, missing));
+                main.length >= count(id, 'landmark:sapling') && seats.length > 0, missing, world));
         }
     });
 
     const flowers = landmarks.filter(l => l.kind === 'flower');
-    const flowerGroups = components(flowers, (a, b) => placeConnected(a, b, open));
-    const flowerSeats = attachments(flowerGroups, benches, reached);
+    const flowerGroups = components(flowers, (a, b) => placeConnected(a, b, open, world));
+    const flowerSeats = attachments(flowerGroups, benches, reached, world);
     flowerGroups.forEach((main, index) => {
         if (main.length < 2) return;
         const missing: string[] = [], seats = flowerSeats[index];
@@ -205,15 +235,18 @@ export function derivePlaces(state: GrowingState): DerivedPlace[] {
         if (!seats.length) missing.push('花のそばに ベンチを おこう');
         const shape = placeShape(main, reached), variant = shape === 'lane' ? 'arch' : shape === 'cluster' ? 'canopy' : shape;
         places.push(derivePlace(state, 'P05', 'flowers', main, seats, reached, open, variant,
-            main.length >= count('P05', 'landmark:flower') && seats.length > 0, missing));
+            main.length >= count('P05', 'landmark:flower') && seats.length > 0, missing, world));
     });
 
     const water = landmarks.filter(l => l.kind === 'water-bowl' || l.kind === 'water-channel');
-    const channels = connectedWaterChannels(waterLayout(state));
-    const waterGroups = components(water.filter(l => l.kind === 'water-bowl' || channels.has(key(l.cell))), (a, b) => distance(a, b) === 1);
-    const waterSeats = attachments(waterGroups, benches, reached);
-    const watersideFlowers = attachments(waterGroups, flowers, reached);
+    const channels = connectedWaterChannels(waterLayout(state, world));
+    const waterGroups = components(water.filter(l => l.kind === 'water-bowl' || channels.has(key(l.cell))), (a, b) => passageNeighbors(a, world, 'water').some(cell => key(cell) === key(b)));
+    const waterSeats = attachments(waterGroups, benches, reached, world);
+    const watersideFlowers = attachments(waterGroups, flowers, reached, world);
     const bounds = landBounds(state);
+    const nearShore = (cell: Cell, radius: number) => world
+        ? Array.from({ length: 16 }, (_, i) => i * Math.PI / 8).some(angle => !world.floorAt({ x: cell.x + Math.cos(angle) * radius, z: cell.z + Math.sin(angle) * radius }))
+        : cell.z >= bounds.depth - radius || cell.x <= bounds.minX + radius - 1 || cell.x >= bounds.maxX - radius + 1;
     waterGroups.forEach((main, index) => {
         const bowls = main.filter(w => (w as Landmark).kind === 'water-bowl');
         if (!bowls.length || main.length < 2) return;
@@ -224,26 +257,27 @@ export function derivePlaces(state: GrowingState): DerivedPlace[] {
         if (supplied.length < count('P03', 'landmark:water-channel')) missing.push('水のとおる みずみちを つなごう');
         if (!flowersHere.some(f => (f as Landmark).growth >= BLOOM_HOURS)) missing.push('水のそばで 花を そだてよう');
         if (!seats.length) missing.push('岸のそばに ベンチを おこう');
-        const heights = bowls.map(b => terrainHeightAt(state, b.cell));
+        const heights = bowls.map(b => terrainHeightAt(state, b.cell, world));
         const descending = Math.max(...heights) - Math.min(...heights) >= .2 && supplied.every(channel => {
             const adjacent = main.filter(other => distance(channel.cell, other.cell) === 1);
-            return adjacent.length < 2 || adjacent.some(a => terrainHeightAt(state, a.cell) > terrainHeightAt(state, channel.cell) + .005)
-                && adjacent.some(a => terrainHeightAt(state, a.cell) < terrainHeightAt(state, channel.cell) - .005);
+            return adjacent.length < 2 || adjacent.some(a => terrainHeightAt(state, a.cell, world) > terrainHeightAt(state, channel.cell, world) + .005)
+                && adjacent.some(a => terrainHeightAt(state, a.cell, world) < terrainHeightAt(state, channel.cell, world) - .005);
         });
-        const nearShore = bowls.every(b => b.cell.z >= bounds.depth - 3 || b.cell.x <= bounds.minX + 1 || b.cell.x >= bounds.maxX - 1);
-        const variant = descending ? 'tiered' : nearShore ? 'shore' : 'curve';
+        const onShore = bowls.every(b => world ? nearShore(b.cell, 2) : b.cell.z >= bounds.depth - 3 || b.cell.x <= bounds.minX + 1 || b.cell.x >= bounds.maxX - 1);
+        const variant = descending ? 'tiered' : onShore ? 'shore' : 'curve';
         places.push(derivePlace(state, 'P03', 'spring', main, [...flowersHere, ...seats], reached, open, variant,
-            bowls.length >= count('P03', 'landmark:water-bowl') && supplied.length >= count('P03', 'landmark:water-channel') && seats.length > 0 && flowersHere.length > 0, missing));
+            bowls.length >= count('P03', 'landmark:water-bowl') && supplied.length >= count('P03', 'landmark:water-channel') && seats.length > 0 && flowersHere.length > 0, missing, world));
     });
 
     const plays = plots.filter(p => p.kind === 'play'), homes = plots.filter(p => p.kind === 'home');
     // A shared courtyard reaches two cells around the play; homes join its open perimeter.
-    const playRegions = plays.map(play => region([play], open, state).flatMap(cell => [cell, ...neighbors(cell)])
+    const playRegions = plays.map(play => region([play], open, state, world).flatMap(cell => [cell, ...passageNeighbors(cell, world)])
         .filter(cell => reached.has(key(cell))));
     const assignedHomes = plays.map(() => [] as LocatedPlot[]);
+    const playSearches = playRegions.map(region => placeWalkSearch(reached, region, ATTACH, world));
     for (const home of homes) {
         const closest = plays.map((play, index) => ({ index, id: play.id,
-            distance: Math.min(...playRegions[index].map(cell => accessDistance(cell, home.cell, reached, ATTACH))) }))
+            distance: accessDistanceFrom(playSearches[index], home.cell, reached, world) }))
             .filter(c => c.distance <= ATTACH).sort((a, b) => a.distance - b.distance || a.id.localeCompare(b.id))[0];
         if (closest) assignedHomes[closest.index].push(home);
     }
@@ -253,7 +287,7 @@ export function derivePlaces(state: GrowingState): DerivedPlace[] {
         const supplied = landmarks.filter(l => l.kind === 'water-bowl'
             && waterInfluence({ items: [{ kind: 'water-bowl', cell: l.cell, growth: l.growth }] }, play.cell) > 0);
         const main = stable([play, ...nearby]);
-        const onShore = main.some(item => item.cell.z >= bounds.depth - 2 || item.cell.x <= bounds.minX + 1 || item.cell.x >= bounds.maxX - 1);
+        const onShore = main.some(item => nearShore(item.cell, 2));
         const missing: string[] = [];
         if (nearby.length < count('P04', 'plot:home')) missing.push('あそびばのそばに いえを よせよう');
         if (nearby.filter(h => h.stage >= 2).length < count('P04', 'plot:home')) missing.push('いえが そだつのを たのしもう');
@@ -264,7 +298,7 @@ export function derivePlaces(state: GrowingState): DerivedPlace[] {
         const bowlBetween = supplied.some(b => b.cell.x > minX && b.cell.x < maxX);
         const variant = play.cell.z - homeZ >= 2 && !bowlBetween ? 'court' : bowlBetween ? 'bay' : 'lane';
         places.push(derivePlace(state, 'P04', 'community', main, supplied, reached, open, variant,
-            nearby.length >= count('P04', 'plot:home') && supplied.length > 0 && onShore, missing));
+            nearby.length >= count('P04', 'plot:home') && supplied.length > 0 && onShore, missing, world));
     });
     // A shared bench is still one owner. Assign it across families, not once per renderer.
     // P01/P02 are two milestones of the same grove and keep the same physical seat.
@@ -273,8 +307,7 @@ export function derivePlaces(state: GrowingState): DerivedPlace[] {
     for (const bench of benches) {
         const candidates = places.filter(p => p.memberIds.includes(bench.id) && p.stage !== 'seeded');
         const choices = candidates.map(place => ({ place, group: `${place.family}:${place.mainIds.join(',')}`,
-            distance: Math.min(...gardenCells(place.mainIds.map(id => owners.get(id)!).filter(Boolean), reached)
-                .map(cell => accessDistance(cell, bench.cell, reached, ATTACH))) }))
+            distance: accessDistanceFrom(placeWalkSearch(reached, gardenCells(place.mainIds.map(id => owners.get(id)!).filter(Boolean), reached, world), ATTACH, world), bench.cell, reached, world) }))
             .sort((a, b) => a.distance - b.distance || a.place.anchorId.localeCompare(b.place.anchorId));
         const chosen = choices[0]?.group;
         for (const candidate of choices) if (candidate.group !== chosen) {
@@ -297,8 +330,8 @@ export function derivePlaces(state: GrowingState): DerivedPlace[] {
         const missing = place.missing.filter(line => !line.includes('ベンチ'));
         if (!seats.length) missing.push('この庭の ベンチを おこう');
         else if (place.family === 'grove' && main.filter(item => (item as Landmark).growth >= TREE_MATURE_HOURS).length >= count(place.ruleId, 'landmark:sapling')
-            && !seats.some(seat => shadeInfluence(waterLayout(state), seat.cell) > 0)) missing.push('木陰へ ベンチを よせよう');
+            && !seats.some(seat => shadeInfluence(waterLayout(state, world), seat.cell) > 0)) missing.push('木陰へ ベンチを よせよう');
         return derivePlace(state, place.ruleId, place.family, main, attached, reached, open, place.variant,
-            place.stage !== 'seeded' && seats.length > 0, missing);
+            place.stage !== 'seeded' && seats.length > 0, missing, world);
     }).sort((a, b) => a.id.localeCompare(b.id));
 }

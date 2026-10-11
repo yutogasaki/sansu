@@ -1,0 +1,16 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+ ✓ src/domain/growingIsland/authoredPlaces.test.ts (4 tests) 986ms
+   ✓ authored placement and places use the actual world > limits attachments in logical cells and never invents a removed walk or join edge 431ms
+ ✓ src/domain/growingIsland/placeTerrain.test.ts (3 tests) 1576ms
+   ✓ shared owned terrain > keeps every cell slope gentle across many later districts and fractional triangle samples 1568ms
+ ✓ src/components/island/growing/authoredPlaceSurfaces.test.ts (4 tests) 2461ms
+   ✓ derived surfaces share authored floor and passage context > keeps open authored ground dry while retaining owned basins and the actual dry channel crossing 309ms
+   ✓ derived surfaces share authored floor and passage context > tints only actual unoccupied authored flower ground and preserves owners 640ms
+   ✓ derived surfaces share authored floor and passage context > validates elevated authored root galleries against their logical dry route, not a planting ray hit 1246ms
+
+ Test Files  3 passed (3)
+      Tests  11 passed (11)
+   Start at  16:06:47
+   Duration  3.88s (transform 487ms, setup 0ms, collect 1.29s, tests 5.02s, environment 1ms, prepare 254ms)

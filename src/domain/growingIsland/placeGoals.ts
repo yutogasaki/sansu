@@ -1,8 +1,9 @@
 import { placeGoalCatalog } from './placeCatalog';
 import { derivePlaces } from './places';
-import { isReachable, key, reachableFromHome } from './space';
+import { HOME_CELL, isReachable, key, onLand, reachableFromHome } from './space';
 import { PLACE_GOAL_IDS, type DerivedPlace, type PlaceEvidence, type PlaceGoalId, type PlaceProgress, type PlaceStatus, type PlaceUseEvidence } from './placeTypes';
 import type { GrowingState } from './types';
+import type { IslandWorld } from './worldDefinition';
 
 export function newPlaceProgress(): PlaceProgress {
     return { version: 1, milestones: {}, uses: {}, shown: {}, useHistory: [] };
@@ -41,27 +42,27 @@ function snapshot(place: DerivedPlace, at: number): PlaceEvidence {
     return { at, ruleId: place.ruleId, anchorId: place.anchorId, memberIds: [...place.memberIds], variant: place.variant, revision: place.revision };
 }
 
-function presentActor(state: GrowingState, id: string) {
-    if (id === 'pokomoko') return true;
+function presentActor(state: GrowingState, id: string, world?: IslandWorld) {
+    if (id === 'pokomoko') return !world || world.owns(HOME_CELL);
     const actor = state.villagers.find(actor => actor.id === id && !actor.away && !state.arrivals.includes(actor.id));
     if (!actor) return false;
-    if (actor.home === 'pokomoko') return true;
+    if (actor.home === 'pokomoko') return !world || world.owns(HOME_CELL);
     const home = state.plots.find(plot => plot.id === actor.home && plot.kind === 'home' && plot.stage > 0 && plot.cell
         && !state.unopened.includes(plot.id));
-    return Boolean(home?.cell && isReachable(home.cell, reachableFromHome(state)));
+    return Boolean(home?.cell && (!world || onLand(state, home.cell, world)) && isReachable(home.cell, reachableFromHome(state, undefined, world), world));
 }
 
-function matchesCurrentUse(state: GrowingState, place: DerivedPlace, fact?: PlaceUseEvidence) {
+function matchesCurrentUse(state: GrowingState, place: DerivedPlace, fact?: PlaceUseEvidence, world?: IslandWorld) {
     return Boolean(fact && fact.ruleId === place.ruleId && fact.revision === place.revision && fact.anchorId === place.anchorId
         && fact.memberIds.length === place.memberIds.length && fact.memberIds.every(id => place.memberIds.includes(id))
-        && place.useTargets.some(target => target.id === fact.targetId) && presentActor(state, fact.actorId));
+        && place.useTargets.some(target => target.id === fact.targetId) && presentActor(state, fact.actorId, world));
 }
 
 /** The latest actor slot is convenient for deduplication, but an older actual receipt
  * remains valid while its place/target and actor still exist in the current island. */
-function hasCurrentUse(state: GrowingState, place: DerivedPlace, actor?: 'pokomoko' | 'villager') {
+function hasCurrentUse(state: GrowingState, place: DerivedPlace, actor?: 'pokomoko' | 'villager', world?: IslandWorld) {
     const matches = (fact: PlaceUseEvidence) => (actor === undefined || (fact.actorId === 'pokomoko' ? 'pokomoko' : 'villager') === actor)
-        && matchesCurrentUse(state, place, fact);
+        && matchesCurrentUse(state, place, fact, world);
     return Boolean(state.placeProgress?.useHistory?.some(matches)
         || Object.values(state.placeProgress?.uses[place.ruleId] ?? {}).some(matches));
 }
@@ -76,31 +77,31 @@ const GOAL_HINTS: Record<PlaceGoalId, string> = {
     P03: '水ばちを みずみちで つないでみよう', P04: '海のそばに いえと あそびばを よせてみよう',
     P05: '花を よせて 花の屋根を そだてよう', P06: 'ちがう ばしょを つないで めぐってみよう',
 };
-function currentIsland(state: GrowingState, places: DerivedPlace[]) {
-    const reachable = reachableFromHome(state);
+function currentIsland(state: GrowingState, places: DerivedPlace[], world?: IslandWorld) {
+    const reachable = reachableFromHome(state, undefined, world);
     const mature = places.filter(place => grown(place) && place.entrances.some(cell => reachable.has(key(cell))));
     const families = new Set(mature.map(place => place.family));
-    const pokomoko = mature.some(place => hasCurrentUse(state, place, 'pokomoko'));
-    const villager = mature.some(place => hasCurrentUse(state, place, 'villager'));
+    const pokomoko = mature.some(place => hasCurrentUse(state, place, 'pokomoko', world));
+    const villager = mature.some(place => hasCurrentUse(state, place, 'villager', world));
     return { mature, families, pokomoko, villager };
 }
 
 /** Matches the same set that the book reports; P06 has no invented owned object. */
-export function placeRevisionForGoal(state: GrowingState, id: PlaceGoalId): string | undefined {
-    const places = derivePlaces(state);
+export function placeRevisionForGoal(state: GrowingState, id: PlaceGoalId, world?: IslandWorld): string | undefined {
+    const places = derivePlaces(state, world);
     if (id !== 'P06') return places.filter(place => place.ruleId === id && grown(place)).sort((a, b) => a.id.localeCompare(b.id))[0]?.revision;
-    const { mature, families } = currentIsland(state, places);
+    const { mature, families } = currentIsland(state, places, world);
     return families.size >= 3 ? JSON.stringify(mature.map(place => place.revision).sort()) : undefined;
 }
 
 /** Milestones retain the first exact owned snapshot, even after a garden is split or stored. */
-export function syncPlaceMilestones(state: GrowingState, now: number) {
+export function syncPlaceMilestones(state: GrowingState, now: number, world?: IslandWorld) {
     const progress = state.placeProgress ??= newPlaceProgress();
     validatePlaceProgress(progress);
-    const places = derivePlaces(state);
+    const places = derivePlaces(state, world);
     for (const place of places.filter(grown).sort((a, b) => a.id.localeCompare(b.id)))
         progress.milestones[place.ruleId] ??= snapshot(place, now);
-    const island = currentIsland(state, places);
+    const island = currentIsland(state, places, world);
     if (island.families.size >= 3 && island.pokomoko && island.villager && !progress.milestones.P06) {
         progress.milestones.P06 = { at: now, ruleId: 'P06', anchorId: state.seed,
             memberIds: [...new Set(island.mature.flatMap(place => place.memberIds))].sort(), variant: 'island',
@@ -110,14 +111,14 @@ export function syncPlaceMilestones(state: GrowingState, now: number) {
 
 export interface PlaceUseReceipt { ruleId: PlaceGoalId; placeId: string; revision: string; actorId: string; targetId: string }
 /** Called after the foreground actor reached a target; maturity alone never creates a use. */
-export function recordPlaceUse(state: GrowingState, receipt: PlaceUseReceipt, at: number) {
+export function recordPlaceUse(state: GrowingState, receipt: PlaceUseReceipt, at: number, world?: IslandWorld) {
     if (!Number.isFinite(at) || at < 0) throw new Error('ばしょの いまを もういちど たしかめてね。');
-    const place = derivePlaces(state).find(place => place.id === receipt.placeId && place.ruleId === receipt.ruleId && grown(place)
+    const place = derivePlaces(state, world).find(place => place.id === receipt.placeId && place.ruleId === receipt.ruleId && grown(place)
         && place.revision === receipt.revision && place.entrances.length > 0);
-    if (!place || !presentActor(state, receipt.actorId)) throw new Error('ばしょの いまを もういちど たしかめてね。');
+    if (!place || !presentActor(state, receipt.actorId, world)) throw new Error('ばしょの いまを もういちど たしかめてね。');
     const target = place.useTargets.find(target => target.id === receipt.targetId);
-    const reached = reachableFromHome(state);
-    if (!target || !isReachable(target.route?.[0] ?? target.cell, reached)) throw new Error('ここまで あるける ばしょを あけてみよう。');
+    const reached = reachableFromHome(state, undefined, world);
+    if (!target || !isReachable(target.route?.[0] ?? target.cell, reached, world)) throw new Error('ここまで あるける ばしょを あけてみよう。');
     const progress = state.placeProgress ??= newPlaceProgress();
     validatePlaceProgress(progress);
     const fact: PlaceUseEvidence = { ...snapshot(place, at), actorId: receipt.actorId, targetId: receipt.targetId };
@@ -126,14 +127,14 @@ export function recordPlaceUse(state: GrowingState, receipt: PlaceUseReceipt, at
     if (!original) history.push(fact);
     const latest = progress.uses[place.ruleId] ??= {};
     latest[receipt.actorId === 'pokomoko' ? 'pokomoko' : 'villager'] = original ?? fact;
-    syncPlaceMilestones(state, at);
+    syncPlaceMilestones(state, at, world);
 }
 
 /** A notice is acknowledged only for the grown revision rendered by the owner. */
-export function recordPlaceShown(state: GrowingState, receipt: { ruleId: PlaceGoalId; revision: string }) {
+export function recordPlaceShown(state: GrowingState, receipt: { ruleId: PlaceGoalId; revision: string }, world?: IslandWorld) {
     if (!goalId(receipt.ruleId) || !text(receipt.revision)) throw new Error('ばしょの いまを もういちど たしかめてね。');
-    const current = receipt.ruleId === 'P06' ? placeRevisionForGoal(state, 'P06')
-        : derivePlaces(state).find(place => place.ruleId === receipt.ruleId && grown(place) && place.revision === receipt.revision)?.revision;
+    const current = receipt.ruleId === 'P06' ? placeRevisionForGoal(state, 'P06', world)
+        : derivePlaces(state, world).find(place => place.ruleId === receipt.ruleId && grown(place) && place.revision === receipt.revision)?.revision;
     if (current !== receipt.revision) throw new Error('ばしょの いまを もういちど たしかめてね。');
     const progress = state.placeProgress ??= newPlaceProgress();
     validatePlaceProgress(progress);
@@ -141,20 +142,20 @@ export function recordPlaceShown(state: GrowingState, receipt: { ruleId: PlaceGo
 }
 
 /** Current functionality and durable achievements are independent of goal selection. */
-export function placeStatuses(state: GrowingState): PlaceStatus[] {
-    const places = derivePlaces(state);
+export function placeStatuses(state: GrowingState, world?: IslandWorld): PlaceStatus[] {
+    const places = derivePlaces(state, world);
     const score = { seeded: 0, connected: 1, grown: 2, lived: 3 };
     return placeGoalCatalog.map(goal => {
         const achieved = Boolean(state.placeProgress?.milestones[goal.id]);
         if (goal.id === 'P06') {
-            const island = currentIsland(state, places), ready = island.families.size >= 3;
+            const island = currentIsland(state, places, world), ready = island.families.size >= 3;
             const missing = [!ready && `ちがう ばしょを あと ${Math.max(0, 3 - island.families.size)}しゅるい そだててみよう`,
                 !island.pokomoko && 'ぽこもこが そだった ばしょで あそぶ', !island.villager && 'なかまが そだった ばしょで あそぶ'].filter((line): line is string => Boolean(line));
             return { id: goal.id, name: goal.name, family: 'island', hint: missing[0] ?? GOAL_HINTS.P06, achieved, missing,
                 stage: ready ? island.pokomoko && island.villager ? 'lived' : 'grown' : island.families.size >= 2 ? 'connected' : 'seeded' };
         }
         const best = places.filter(place => place.ruleId === goal.id).map(place => ({ place,
-            stage: grown(place) && hasCurrentUse(state, place) ? 'lived' as const : place.stage }))
+            stage: grown(place) && hasCurrentUse(state, place, undefined, world) ? 'lived' as const : place.stage }))
             .sort((a, b) => score[b.stage] - score[a.stage] || a.place.id.localeCompare(b.place.id))[0];
         const place = best?.place, used = best?.stage === 'lived';
         return { id: goal.id, name: goal.name, family: goal.family, hint: place?.missing[0] ?? (used ? 'また このばしょで あそぼう' : place && grown(place) ? 'そだった ばしょで あそんでみよう' : GOAL_HINTS[goal.id]), achieved, place,

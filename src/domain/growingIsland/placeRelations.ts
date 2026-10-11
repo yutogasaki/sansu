@@ -1,27 +1,25 @@
 import { shadeInfluence, waterInfluence } from '../islandLife/waterChannels';
 import { waterLayout } from './environment';
 import { PLACE_CATALOG } from './placeCatalog';
-import { derivePlaces, placeWalkPath } from './places';
+import { derivePlaces, placeWalkSearch } from './places';
 import type { DerivedPlace, PlaceRelation } from './placeTypes';
-import { distance, reachableFromHome } from './space';
+import { key, reachableFromHome } from './space';
 import type { GrowingState } from './types';
+import type { IslandWorld } from './worldDefinition';
 
 /** Existing water/shade and a real entrance path are required; effects are never added twice. */
-export function derivePlaceRelations(state: GrowingState, places = derivePlaces(state)): PlaceRelation[] {
-    const grown = places.filter(p => p.stage === 'grown' || p.stage === 'lived');
-    const reached = reachableFromHome(state), layout = waterLayout(state), relations: PlaceRelation[] = [];
+export function derivePlaceRelations(state: GrowingState, places: DerivedPlace[] | undefined = undefined, world?: IslandWorld): PlaceRelation[] {
+    const grown = (places ?? derivePlaces(state, world)).filter(p => p.stage === 'grown' || p.stage === 'lived');
+    const reached = reachableFromHome(state, undefined, world), layout = waterLayout(state, world), relations: PlaceRelation[] = [];
     const definitions: { id: PlaceRelation['id']; families: [DerivedPlace['family'], DerivedPlace['family']] }[] = [
         { id: 'C01', families: ['grove', 'spring'] }, { id: 'C02', families: ['spring', 'flowers'] },
         { id: 'C03', families: ['grove', 'community'] }, { id: 'C04', families: ['flowers', 'community'] },
     ];
     for (const definition of definitions) for (const a of grown.filter(p => p.family === definition.families[0]))
         for (const b of grown.filter(p => p.family === definition.families[1])) {
-            let best: PlaceRelation['path'] | undefined;
-            for (const from of a.entrances) for (const to of b.entrances) {
-                if (distance(from, to) > PLACE_CATALOG.common.relationMaxWalkCells) continue;
-                const path = placeWalkPath(reached, from, to, PLACE_CATALOG.common.relationMaxWalkCells);
-                if (path && (!best || path.length < best.length)) best = path;
-            }
+            const search = placeWalkSearch(reached, a.entrances, PLACE_CATALOG.common.relationMaxWalkCells, world);
+            const candidates = b.entrances.filter(cell => search.costs.has(key(cell))).sort((x, y) => search.costs.get(key(x))! - search.costs.get(key(y))!);
+            const best = candidates[0] ? search.path(candidates[0]) : undefined;
             if (!best) continue;
             if (definition.id === 'C01' && ![...a.footprint, ...b.footprint].some(c => shadeInfluence(layout, c) > 0 && waterInfluence(layout, c) > 0)) continue;
             if (definition.id === 'C02' && !state.landmarks.some(l => l.cell && l.kind === 'flower'
