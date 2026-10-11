@@ -174,7 +174,7 @@
 
 ## 6. 提案・未決事項
 
-島づくりの制作方針は[根本の構築戦略](island-construction-strategy.md)、形・素材・光は[美術戦略](island-art-strategy.md)を使う。native-05を美術方向に採用し、[育つ場所の目標と組み合わせ](island-place-goals.md)で接続・成熟・分離の具体条件を設計v1へまとめた。[成長系列](island-place-growth-proposal.md)はその背景。美術方向と、規則/保存/配信の本体適用を分ける。[構造監査と32枚の参考](../design/2026-10-10-island-design-strategy/index.html#foundation)。
+島づくりの制作方式と順序は[構築方針](island-construction-strategy.md)、形・素材・光は[美術戦略](island-art-strategy.md)を使う。現在の次工程は、美術と本体が同じ地形・場所を使う一つの全島→配置差→成長→地区拡張。[制作方式の決定](../adr/2026-10-11-authored-place-world-policy.md)は次期世界の方針で、保存や取得規則の切替ではない。採用美術はnative-05、現行の接続・成熟・分離条件は[育つ場所v1](island-place-goals.md)。[成長系列](island-place-growth-proposal.md)と[32枚の参考](../design/2026-10-10-island-design-strategy/index.html#foundation)はその背景資料。
 
 | 仕様 | 何の話か | 位置づけ |
 |---|---|---|

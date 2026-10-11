@@ -5,6 +5,8 @@
 - Related spec: [構築戦略](../product/island-construction-strategy.md), [美術戦略](../product/island-art-strategy.md), [52](../product/52_growing_island_game_spec.md), [51美術章](../product/living-fantasy/01-world-and-art.md)
 - Related task: [幻想の庭 — 最初の遊べる一周](../tasks/active/2026-09-27-living-fantasy-first-playable.md)
 
+2026-10-11、[美術と遊びが同じ地形・場所を組み立てる制作方式](2026-10-11-authored-place-world-policy.md)へ具体化。Decision 6の制作順は同ADRと現行構築方針§12が置き換える。以下は決定当時の記録。
+
 ## Context
 
 ユーザーが繰り返した「初期の明るく丸い3D」「幻想性」「小物の増加では足りない」「隣との合体で大きなものが育つ」「デザインと島構築を根本から見直す」を受けた制作方針の決定。ゲーム規則・保存・配信の切替は未実施。新しい数値と最終の造形採用は後続の比較から決める。
