@@ -101,6 +101,8 @@
 
 ### 島の次の段階
 
+- [大きく育つ島の美術・構築戦略](product/island-expansion-art-strategy.md)：8軒の中心から16・32軒の実3Dへ比較を広げる制作順。戸数は試作例で、上限や解放条件ではない。
+
 - [不思議な島 v3・仕様50](product/50_mysterious_island_discovery_spec.md)：発見を中心にした段階導入。
 - [地区・施設カタログ49](product/49_island_growth_catalog_spec.md)：次期の地区、品揃え、特殊施設。現行挙動ではない。
 - [家から育つ島47](product/47_home_island_integration_spec.md)：家の外・室内・学習の統合と引継ぎ。
