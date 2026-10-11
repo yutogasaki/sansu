@@ -1,0 +1,16 @@
+{
+  "attempt": "baseline first harness execution",
+  "failedAt": "2026-10-11T07:48:16.196Z",
+  "reason": "Node harness omitted Vite import.meta.env.DEV; GrowingLife.tick could not read DEV",
+  "action": "Set import.meta.env.DEV=false consistently in both bundled variants",
+  "frozenRevision": "a2ea3e98d8996df6fb466d2e6ce064e35589f275",
+  "completedMeasurements": {
+    "compileWorldDefinitionMs": 5423.373709,
+    "placePathEdgesMs": 1264.2153749999998,
+    "buildPlacePathsMs": 4826.825374999999,
+    "buildObjectLayerInitialMs": 7777.388249999998,
+    "buildObjectLayerRepeat0Ms": 8707.836875,
+    "buildObjectLayerRepeat1Ms": 7325.3263330000045
+  },
+  "acceptance": "Incomplete attempt; do not use for before/after performance comparison"
+}

@@ -1,5 +1,7 @@
 # Shared Done Index
 
+- 2026-10-11: [編集できる全島の計算と初回描画を改善](../../docs/design/2026-10-11-authored-world-performance/README.md)。形・床・道等13項目一致、Node全layer7,386→174 ms。receipt保持とshader準備、最終core5,093/classic32/編集6操作/既存島touch8旅程PASS。改善単位を完了、software preview約8.6秒・M1水庭/deck/森林・美術HOLD・独立観察N=0・包括ゴールは継続。詳細: `docs/done/2026-10.md`。
+
 - 2026-10-11: [採用地形で編集する全島の統合診断](../../docs/design/2026-10-11-authored-island-runtime/README.md)。27所有物・8軒を本体の配置・明示歩行へ接続、実分離/収納/復元・core5,044/classic32/既存本体8旅程PASS。診断単位を記録。美術HOLD・約9秒の再構築・水/回廊床・M1/包括ゴールは継続。詳細: `docs/done/2026-10.md`。
 
 - 2026-10-11: 設定に「アプリの紹介」を追加し `/promo/` を別タブで開く。やさしい表示、4幅・Enter/タップ・元URL/学習保持/再読込、core5,010がPASS。[検証と実画面](../../docs/design/2026-10-11-settings-promotion/README.md)。Git反映対象、公開はpush後に別確認。詳細: `docs/done/2026-10.md`。

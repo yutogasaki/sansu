@@ -19,6 +19,7 @@ async function inputs() {
     return Object.fromEntries(await Promise.all(files.sort().map(async file => [file, sha(await fs.readFile(file))])));
 }
 const read = page => page.locator('[data-authored-island]').evaluate(node => JSON.parse(node.dataset.authoredState));
+const sceneCounters = page => page.locator('[data-growing-world]').evaluate(node => JSON.parse(node.dataset.growingSceneCounters));
 const owners = state => [...state.plots, ...state.landmarks];
 function invariant(state) {
     const copy = structuredClone(state);
@@ -38,10 +39,50 @@ async function ready(page) {
 export async function run(page, output) {
     await fs.mkdir(output, { recursive: false });
     const report = { target: page.url(), condition: 'DEV synthetic 27-owner island; pointer UI on desktop plus width/reduced-motion views',
-        initialInputs: await inputs(), steps: [], captures: [], pass: false,
+        initialInputs: await inputs(), steps: [], captures: [], timings: [], pass: false,
+        timingScope: 'Visible desktop action through state/preview confirmation and two animation frames. Separately records trusted pointer arrival, driver time before arrival, and arrival to the final frame marker; these markers are not device FPS, GPU presentation time, or a performance acceptance gate. Excludes the deliberate ready() delay',
         excludes: ['Player save or acquisition', 'Learning integration in this authored world', 'Touch hardware', 'Authored gallery/water deck acceptance', 'Independent art/understanding acceptance'] };
     const errors = []; const onError = error => errors.push(error.message); page.on('pageerror', onError);
     const phase = async name => { report.phase = name; console.log(`authored-edit: ${name}`); await fs.writeFile(path.join(output, 'progress.json'), JSON.stringify({ phase: name, at: new Date().toISOString() })); };
+    const measured = async (name, action) => {
+        await page.bringToFront();
+        const start = await page.evaluate(() => {
+            const trace = { start: performance.now(), events: [] };
+            const listen = event => {
+                if (!event.isTrusted) return;
+                const target = event.target instanceof Element ? event.target : undefined;
+                trace.events.push({ type: event.type, at: performance.now(), tag: target?.tagName,
+                    button: target?.closest('button')?.textContent?.trim() });
+            };
+            for (const type of ['pointerdown', 'click']) document.addEventListener(type, listen, true);
+            window.__sansuAuthoredEditTiming = { trace, listen };
+            return trace.start;
+        });
+        try {
+            await action();
+            const frames = await page.evaluate(() => new Promise((resolve, reject) => {
+                const timeout = setTimeout(() => reject(Error('Visible edit frame timing timed out')), 10000);
+                requestAnimationFrame(() => {
+                    const first = performance.now();
+                    requestAnimationFrame(() => { clearTimeout(timeout); resolve({ first, second: performance.now() }); });
+                });
+            }));
+            const trace = await page.evaluate(() => window.__sansuAuthoredEditTiming.trace);
+            const arrival = trace.events.find(event => event.type === 'pointerdown');
+            assert(arrival, 'Measured UI action received a trusted pointer event');
+            report.timings.push({ name, ms: frames.second - start, events: trace.events,
+                driverBeforeInputMs: arrival.at - start,
+                inputToFirstFrameMarkerMs: frames.first - arrival.at,
+                inputToSecondFrameMarkerMs: frames.second - arrival.at,
+                documentVisible: await page.evaluate(() => document.visibilityState === 'visible') });
+        } finally {
+            await page.evaluate(() => {
+                const timing = window.__sansuAuthoredEditTiming;
+                for (const type of ['pointerdown', 'click']) document.removeEventListener(type, timing.listen, true);
+                delete window.__sansuAuthoredEditTiming;
+            });
+        }
+    };
     let domain, world;
     const capture = async name => {
         await page.screenshot({ path: path.join(output, `${name}.png`), scale: 'css' });
@@ -78,16 +119,22 @@ export async function run(page, output) {
         assert.equal(metadata.artCandidate, 'native05-authored-runtime-m1'); assert.equal(metadata.nativeGrowingArt, 'true');
         assert(metadata.nativeKitSha256 && metadata.authoredCoastSource); assert.equal(metadata.worldDefinition, world.id);
         const baseline = await read(page), protectedState = invariant(baseline);
+        report.initialSceneCounters = await sceneCounters(page);
         assert.equal(owners(baseline).length, 27); assert.equal(baseline.plots.filter(owner => owner.kind === 'home').length, 8);
         const tree = baseline.landmarks.find(owner => owner.kind === 'sapling' && owner.cell.x === 4 && owner.cell.z === -8); assert(tree);
         report.initialState = baseline; await capture('desktop-whole');
         await phase('tree-choice');
         await choose(tree.id); await capture('desktop-tree-close');
         await page.getByRole('button', { name: 'うごかす', exact: true }).click(); await full();
+        const beforePreview = await sceneCounters(page);
+        assert.equal(beforePreview.fullLayerBuild, report.initialSceneCounters.fullLayerBuild, 'Selection and placement controls retain the saved object layer');
         const target = world.sites.filter(site => site.placement && domain.canPlace(baseline, site.cell, tree.id, world)
             && Math.hypot(site.cell.x - tree.cell.x, site.cell.z - tree.cell.z) >= 3)
             .sort((a, b) => Math.hypot(a.cell.x - 6, a.cell.z + 6) - Math.hypot(b.cell.x - 6, b.cell.z + 6))[0].cell;
-        await tap(target); await page.getByRole('button', { name: 'ここにおく', exact: true }).waitFor();
+        await measured('move-preview', async () => {
+            await tap(target); await page.getByRole('button', { name: 'ここにおく', exact: true }).waitFor();
+            assert(await page.getByRole('button', { name: 'ここにおく', exact: true }).isEnabled());
+        });
         assert(await page.getByRole('button', { name: 'ここにおく', exact: true }).isEnabled()); await capture('desktop-move-preview');
         // Sea click clears an already valid choice; it never reuses stale placement.
         const canvas = await page.locator('[data-growing-world] canvas').boundingBox(); assert(canvas);
@@ -100,17 +147,42 @@ export async function run(page, output) {
         report.steps.push({ name: 'walking-only-site-rejects-planting', cell: walkOnly, pass: true });
         await tap(target); await page.getByRole('button', { name: 'やめる', exact: true }).click();
         assert.deepEqual(owners(await read(page)), owners(baseline)); report.steps.push({ name: 'cancel-preserves-owners', pass: true });
+        assert.equal((await sceneCounters(page)).fullLayerBuild, beforePreview.fullLayerBuild, 'Preview rejection and cancellation retain saved geometry');
         await page.getByRole('button', { name: 'うごかす', exact: true }).click(); await tap(target);
-        await page.getByRole('button', { name: 'ここにおく', exact: true }).click(); await ready(page);
+        await measured('move-tree', async () => {
+            await page.getByRole('button', { name: 'ここにおく', exact: true }).click();
+            await page.waitForFunction(({ id, cell }) => {
+                const state = JSON.parse(document.querySelector('[data-authored-island]').dataset.authoredState);
+                const actual = state.landmarks.find(owner => owner.id === id)?.cell;
+                return actual?.x === cell.x && actual?.z === cell.z;
+            }, { id: tree.id, cell: target });
+        }); await ready(page);
         const moved = await read(page); assert.deepEqual(moved.landmarks.find(owner => owner.id === tree.id), { ...tree, cell: target });
+        report.movedSceneCounters = await sceneCounters(page);
+        assert.equal(report.movedSceneCounters.fullLayerBuild, beforePreview.fullLayerBuild + 1, 'Owner movement rebuilds the actual layer once');
         assert.deepEqual(invariant(moved), protectedState); await capture('desktop-split');
         report.steps.push({ name: 'move-same-tree-splits-compact-grove', id: tree.id, from: tree.cell, to: target, pass: true });
-        await page.getByRole('button', { name: 'しまう', exact: true }).click(); await ready(page);
+        await measured('store-tree', async () => {
+            await page.getByRole('button', { name: 'しまう', exact: true }).click();
+            await page.waitForFunction(id => JSON.parse(document.querySelector('[data-authored-island]').dataset.authoredState)
+                .landmarks.find(owner => owner.id === id)?.cell === undefined, tree.id);
+        }); await ready(page);
         assert.equal((await read(page)).landmarks.find(owner => owner.id === tree.id).cell, undefined);
+        report.storedSceneCounters = await sceneCounters(page);
+        assert.equal(report.storedSceneCounters.fullLayerBuild, report.movedSceneCounters.fullLayerBuild + 1, 'Owner storage rebuilds the actual layer once');
         assert.deepEqual(invariant(await read(page)), protectedState); report.steps.push({ name: 'store-keeps-id-maturity', pass: true });
         await page.getByRole('button', { name: 'おく', exact: true }).click(); await tap(tree.cell);
-        await page.getByRole('button', { name: 'ここにおく', exact: true }).click(); await ready(page);
+        await measured('restore-tree', async () => {
+            await page.getByRole('button', { name: 'ここにおく', exact: true }).click();
+            await page.waitForFunction(({ id, cell }) => {
+                const state = JSON.parse(document.querySelector('[data-authored-island]').dataset.authoredState);
+                const actual = state.landmarks.find(owner => owner.id === id)?.cell;
+                return actual?.x === cell.x && actual?.z === cell.z;
+            }, { id: tree.id, cell: tree.cell });
+        }); await ready(page);
         const restored = await read(page); assert.deepEqual(owners(restored), owners(baseline)); assert.deepEqual(invariant(restored), protectedState);
+        report.restoredSceneCounters = await sceneCounters(page);
+        assert.equal(report.restoredSceneCounters.fullLayerBuild, report.storedSceneCounters.fullLayerBuild + 1, 'Owner restoration rebuilds the actual layer once');
         await capture('desktop-reconnected'); report.steps.push({ name: 'restore-original-owner-and-shared-shape', pass: true });
         report.finalState = restored;
         await page.setViewportSize({ width: 390, height: 844 }); await full(); await capture('phone-whole');

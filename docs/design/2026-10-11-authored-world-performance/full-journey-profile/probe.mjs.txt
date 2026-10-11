@@ -1,0 +1,13 @@
+import { chromium } from '/Users/yutogasaki/Projects/sansu/node_modules/playwright/index.mjs';
+import {run} from '/Users/yutogasaki/Projects/sansu/tools/e2e-authored-island-editing.mjs';
+import fs from 'node:fs/promises';
+const browser=await chromium.launch({headless:false});
+try {
+const page=await browser.newPage();page.setDefaultTimeout(30000);
+await page.addInitScript(()=>{globalThis.__authoredProfileLongTasks=[];new PerformanceObserver(list=>globalThis.__authoredProfileLongTasks.push(...list.getEntries().map(e=>({start:e.startTime,duration:e.duration})))).observe({type:'longtask'});});
+await page.goto('http://127.0.0.1:5342/prototypes/place-qa/authored.html');
+const cdp=await page.context().newCDPSession(page);await cdp.send('Profiler.enable');await cdp.send('Profiler.setSamplingInterval',{interval:1000});await cdp.send('Profiler.start');
+await run(page,'/tmp/sansu-authored-full-profile-a3');
+const {profile}=await cdp.send('Profiler.stop');await fs.writeFile('/tmp/sansu-authored-full-profile-a3/browser.cpuprofile',JSON.stringify(profile));
+await fs.writeFile('/tmp/sansu-authored-full-profile-a3/longtasks.json',JSON.stringify(await page.evaluate(()=>({timeOrigin:performance.timeOrigin,longtasks:globalThis.__authoredProfileLongTasks})),null,2));
+}finally{await browser.close();}

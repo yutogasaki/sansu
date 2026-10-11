@@ -23,6 +23,7 @@ import { buildPlacePaths } from './placePaths';
 import type { NativeGrowingKit } from './native/nativeGrowingKit';
 import { curveGroundGeometry } from './curvedGeometry';
 import type { IslandWorld } from '../../../domain/growingIsland/worldDefinition';
+import { cloneGrowingPreviewMaterial } from './growingShaderWarmup';
 
 export interface Ghost { kind: SeedKind | LandmarkKind; seed: boolean; cell?: Cell; valid: boolean; style: PlotStyle; allowed: Cell[]; keepsake?: string; color?: FlowerColor; ownerId?: string }
 
@@ -62,7 +63,7 @@ function ghostModel(m: IslandMaterials, ghost: Ghost, state: GrowingState, nativ
             : buildLifeItem({ id: 'ghost', kind: ghost.kind as ItemKind, growth: 18, style: 'original' }, m).root;
     model.traverse(o => {
         if (!(o instanceof T.Mesh)) return;
-        const previous = o.material as T.Material, material = previous.clone();
+        const previous = o.material as T.Material, material = cloneGrowingPreviewMaterial(previous);
         if (o.userData.ownMaterial && !o.userData.nativeSharedMaterial) previous.dispose();
         material.transparent = true; material.opacity = .5; material.depthWrite = false;
         o.material = material; o.castShadow = false; o.userData.ownMaterial = true; o.userData.nativeSharedMaterial = false;

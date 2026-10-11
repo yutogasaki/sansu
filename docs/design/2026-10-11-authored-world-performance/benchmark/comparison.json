@@ -1,0 +1,448 @@
+{
+  "schema": "sansu-authored-performance-equivalence-comparison-v1",
+  "before": "baseline",
+  "after": "optimized",
+  "sameProcessConditions": true,
+  "sameFrozenInputs": true,
+  "exactOutputEquivalence": true,
+  "components": {
+    "placePathEdges.ordered": {
+      "same": true,
+      "before": {
+        "sha256": "0ee64462ea4037ce3a8ac2dfeab924f491ab57a95a53ce91cfc7133c32960020",
+        "bytes": 6533
+      },
+      "after": {
+        "sha256": "0ee64462ea4037ce3a8ac2dfeab924f491ab57a95a53ce91cfc7133c32960020",
+        "bytes": 6533
+      }
+    },
+    "buildPlacePaths.geometry": {
+      "same": true,
+      "before": {
+        "sha256": "7a677d18e264cbbe5602171304e91a797434f382ffa7abf1ef6dacd668b9cf81",
+        "bytes": 1033
+      },
+      "after": {
+        "sha256": "7a677d18e264cbbe5602171304e91a797434f382ffa7abf1ef6dacd668b9cf81",
+        "bytes": 1033
+      }
+    },
+    "buildPlacePaths.object": {
+      "same": true,
+      "before": {
+        "sha256": "2a4426d5a73463db7c5bd7a81dd0d50e105c6ff634d6f23f267bf041f0874990",
+        "bytes": 9696
+      },
+      "after": {
+        "sha256": "2a4426d5a73463db7c5bd7a81dd0d50e105c6ff634d6f23f267bf041f0874990",
+        "bytes": 9696
+      }
+    },
+    "objectLayer.allNodes": {
+      "same": true,
+      "before": {
+        "sha256": "89fd1ff7424bd40a55ac4f94ed2e68032eb8e0ef38005217c95c592ef3c94d59",
+        "bytes": 867585
+      },
+      "after": {
+        "sha256": "89fd1ff7424bd40a55ac4f94ed2e68032eb8e0ef38005217c95c592ef3c94d59",
+        "bytes": 867585
+      }
+    },
+    "objectLayer.ownerMaps": {
+      "same": true,
+      "before": {
+        "sha256": "0193e64c3d3f231482d04d91421921d534121886c54249fa2ed219999e260b3d",
+        "bytes": 597
+      },
+      "after": {
+        "sha256": "0193e64c3d3f231482d04d91421921d534121886c54249fa2ed219999e260b3d",
+        "bytes": 597
+      }
+    },
+    "authoredGround.allNodes": {
+      "same": true,
+      "before": {
+        "sha256": "06037e1f2a75786806940bb1efc6295345852bacd6a4fae133be3bbd1eedbbb1",
+        "bytes": 35817
+      },
+      "after": {
+        "sha256": "06037e1f2a75786806940bb1efc6295345852bacd6a4fae133be3bbd1eedbbb1",
+        "bytes": 35817
+      }
+    },
+    "cottage.allNodes": {
+      "same": true,
+      "before": {
+        "sha256": "4b0d1818692a01fff92f205bc4c58eb7bcce71c009d45d136f259f3a3181faa5",
+        "bytes": 36670
+      },
+      "after": {
+        "sha256": "4b0d1818692a01fff92f205bc4c58eb7bcce71c009d45d136f259f3a3181faa5",
+        "bytes": 36670
+      }
+    },
+    "cameraArtPoints.ordered": {
+      "same": true,
+      "before": {
+        "sha256": "1dbfea3170505e4c804dc4d4a47aaf2ca6cd3c0c482722362e59eec84e93e1b4",
+        "bytes": 31809839
+      },
+      "after": {
+        "sha256": "1dbfea3170505e4c804dc4d4a47aaf2ca6cd3c0c482722362e59eec84e93e1b4",
+        "bytes": 31809839
+      }
+    },
+    "camera.final": {
+      "same": true,
+      "before": {
+        "sha256": "d02e7e61856a8e02cb0e7b58850ecc57b37c521781ec68825f3ba5f123b7f073",
+        "bytes": 436
+      },
+      "after": {
+        "sha256": "d02e7e61856a8e02cb0e7b58850ecc57b37c521781ec68825f3ba5f123b7f073",
+        "bytes": 436
+      }
+    },
+    "layout.floor-point-inverse.samples": {
+      "same": true,
+      "before": {
+        "sha256": "b4f8e4b3da29f16d2c3cd0b9cdea1ade697c5da0db2d796badb650a5ba29db9f",
+        "bytes": 3180276
+      },
+      "after": {
+        "sha256": "b4f8e4b3da29f16d2c3cd0b9cdea1ade697c5da0db2d796badb650a5ba29db9f",
+        "bytes": 3180276
+      }
+    },
+    "domain.ownership-walking": {
+      "same": true,
+      "before": {
+        "sha256": "e18699358aa02e68b511a8fdf8310f51840ef1e6a313a54cb4d8e8d5c9aa1348",
+        "bytes": 400610
+      },
+      "after": {
+        "sha256": "e18699358aa02e68b511a8fdf8310f51840ef1e6a313a54cb4d8e8d5c9aa1348",
+        "bytes": 400610
+      }
+    },
+    "domain.places": {
+      "same": true,
+      "before": {
+        "sha256": "ce8e1d0f862a83354caa88984c7b4cd3469dbfd4b10c94e5fe69a24f8b28f7ab",
+        "bytes": 29778
+      },
+      "after": {
+        "sha256": "ce8e1d0f862a83354caa88984c7b4cd3469dbfd4b10c94e5fe69a24f8b28f7ab",
+        "bytes": 29778
+      }
+    },
+    "domain.relations": {
+      "same": true,
+      "before": {
+        "sha256": "534361355f12c5a8d4316a9fc6ddddd8d8b9567cb5466e1ea437597844f22c03",
+        "bytes": 140
+      },
+      "after": {
+        "sha256": "534361355f12c5a8d4316a9fc6ddddd8d8b9567cb5466e1ea437597844f22c03",
+        "bytes": 140
+      }
+    }
+  },
+  "mismatches": [],
+  "summaryBefore": {
+    "worldId": "native05-authored-world-m0-v2",
+    "sites": 2063,
+    "plantingSites": 73,
+    "edges": 3865,
+    "floors": 10,
+    "owners": 27,
+    "villagers": 8,
+    "places": 6,
+    "pathEdges": 163,
+    "cameraPoints": 364876,
+    "layoutSamples": 4562,
+    "objectLayer": {
+      "objects": 306,
+      "meshes": 221,
+      "totalVertices": 327638,
+      "totalIndices": 1081920
+    },
+    "ground": {
+      "objects": 12,
+      "meshes": 11,
+      "totalVertices": 53916,
+      "totalIndices": 285024
+    },
+    "reachableWalkingPoints": 1580,
+    "tickP50": 0.7037080000009155,
+    "tickP95": 1.368000000002212,
+    "tickMax": 4.5214580000028946
+  },
+  "summaryAfter": {
+    "worldId": "native05-authored-world-m0-v2",
+    "sites": 2063,
+    "plantingSites": 73,
+    "edges": 3865,
+    "floors": 10,
+    "owners": 27,
+    "villagers": 8,
+    "places": 6,
+    "pathEdges": 163,
+    "cameraPoints": 364876,
+    "layoutSamples": 4562,
+    "objectLayer": {
+      "objects": 306,
+      "meshes": 221,
+      "totalVertices": 327638,
+      "totalIndices": 1081920
+    },
+    "ground": {
+      "objects": 12,
+      "meshes": 11,
+      "totalVertices": 53916,
+      "totalIndices": 285024
+    },
+    "reachableWalkingPoints": 1580,
+    "tickP50": 0.03150000000005093,
+    "tickP95": 0.05141700000012861,
+    "tickMax": 3.681040999999823
+  },
+  "timings": [
+    {
+      "name": "compileWorldDefinition",
+      "beforeMs": 5304.7495,
+      "afterMs": 432.82895800000006,
+      "speedup": 12.255994895794379,
+      "beforeCalls": {},
+      "afterCalls": {}
+    },
+    {
+      "name": "GLTFLoader.parseAsync",
+      "beforeMs": 21.839749999999185,
+      "afterMs": 12.696250000000077,
+      "speedup": 1.7201732795115923
+    },
+    {
+      "name": "makeNativeGrowingKit",
+      "beforeMs": 27.51733400000012,
+      "afterMs": 27.53612499999997,
+      "speedup": 0.9993175873511668,
+      "beforeCalls": {},
+      "afterCalls": {}
+    },
+    {
+      "name": "sceneLayout",
+      "beforeMs": 0.8632920000000013,
+      "afterMs": 0.3412500000000591,
+      "speedup": 2.529793406592972,
+      "beforeCalls": {
+        "floorAt": 1
+      },
+      "afterCalls": {
+        "floorAt": 1
+      }
+    },
+    {
+      "name": "derivePlaces",
+      "beforeMs": 54.277374999999665,
+      "afterMs": 46.298,
+      "speedup": 1.1723481575877934,
+      "beforeCalls": {
+        "neighbors": 6665,
+        "owns": 81,
+        "floorAt": 38
+      },
+      "afterCalls": {
+        "neighbors": 6665,
+        "owns": 81,
+        "floorAt": 38
+      }
+    },
+    {
+      "name": "derivePlaceRelations",
+      "beforeMs": 8.4037500000004,
+      "afterMs": 9.215416000000005,
+      "speedup": 0.9119230211637105,
+      "beforeCalls": {
+        "neighbors": 3907,
+        "owns": 18
+      },
+      "afterCalls": {
+        "neighbors": 3907,
+        "owns": 18
+      }
+    },
+    {
+      "name": "placePathEdges",
+      "beforeMs": 1257.7210830000004,
+      "afterMs": 12.136292000000026,
+      "speedup": 103.63306049327073,
+      "beforeCalls": {
+        "neighbors": 4749,
+        "floorAt": 17078
+      },
+      "afterCalls": {
+        "neighbors": 4749
+      }
+    },
+    {
+      "name": "buildPlacePaths",
+      "beforeMs": 5020.170834,
+      "afterMs": 73.07070799999997,
+      "speedup": 68.70291764519378,
+      "beforeCalls": {
+        "neighbors": 4749,
+        "floorAt": 56972,
+        "logicalAt": 23544
+      },
+      "afterCalls": {
+        "neighbors": 4749,
+        "floorAt": 24044,
+        "logicalAt": 8502
+      }
+    },
+    {
+      "name": "buildObjectLayer.initial",
+      "beforeMs": 7385.586708999999,
+      "afterMs": 188.03637500000002,
+      "speedup": 39.27743612904683,
+      "beforeCalls": {
+        "neighbors": 23287,
+        "owns": 399,
+        "floorAt": 95735,
+        "logicalAt": 24220
+      },
+      "afterCalls": {
+        "neighbors": 23287,
+        "owns": 399,
+        "floorAt": 32662,
+        "logicalAt": 9178
+      }
+    },
+    {
+      "name": "buildObjectLayer.repeat.0",
+      "beforeMs": 7462.446874999998,
+      "afterMs": 163.431958,
+      "speedup": 45.660879098077,
+      "beforeCalls": {
+        "neighbors": 23287,
+        "owns": 399,
+        "floorAt": 95735,
+        "logicalAt": 24220
+      },
+      "afterCalls": {
+        "neighbors": 23287,
+        "owns": 399,
+        "floorAt": 28106,
+        "logicalAt": 9178
+      }
+    },
+    {
+      "name": "buildObjectLayer.repeat.1",
+      "beforeMs": 7588.151083999997,
+      "afterMs": 150.59733400000005,
+      "speedup": 50.387021353246496,
+      "beforeCalls": {
+        "neighbors": 23287,
+        "owns": 399,
+        "floorAt": 95735,
+        "logicalAt": 24220
+      },
+      "afterCalls": {
+        "neighbors": 23287,
+        "owns": 399,
+        "floorAt": 28106,
+        "logicalAt": 9178
+      }
+    },
+    {
+      "name": "buildAuthoredGrowingGround",
+      "beforeMs": 18.68475000000035,
+      "afterMs": 13.789833999999928,
+      "speedup": 1.354965549259001,
+      "beforeCalls": {},
+      "afterCalls": {}
+    },
+    {
+      "name": "cameraArtPoints.allVertices",
+      "beforeMs": 10.645333000000392,
+      "afterMs": 11.401290999999901,
+      "speedup": 0.9336954034416352,
+      "beforeCalls": {},
+      "afterCalls": {}
+    },
+    {
+      "name": "frameCamera.initial",
+      "beforeMs": 43.354958000003535,
+      "afterMs": 23.819500000000062,
+      "speedup": 1.8201455949958405,
+      "beforeCalls": {},
+      "afterCalls": {}
+    },
+    {
+      "name": "frameCamera.cached.1000",
+      "beforeMs": 6.156624999995984,
+      "afterMs": 6.352624999999989,
+      "speedup": 0.9691466126201365,
+      "beforeCalls": {},
+      "afterCalls": {}
+    },
+    {
+      "name": "frameCamera.turn.12",
+      "beforeMs": 38.66345800000272,
+      "afterMs": 41.61237499999993,
+      "speedup": 0.9291336531501214,
+      "beforeCalls": {},
+      "afterCalls": {}
+    },
+    {
+      "name": "GrowingLife.sync",
+      "beforeMs": 28.02204200000415,
+      "afterMs": 31.545916000000034,
+      "speedup": 0.8882938127396307,
+      "beforeCalls": {
+        "neighbors": 1761,
+        "floorAt": 9
+      },
+      "afterCalls": {
+        "neighbors": 1761,
+        "floorAt": 9
+      }
+    },
+    {
+      "name": "GrowingLife.tick.initial",
+      "beforeMs": 18.22295799999847,
+      "afterMs": 19.596250000000055,
+      "speedup": 0.9299206735981843,
+      "beforeCalls": {
+        "neighbors": 196,
+        "route": 9,
+        "floorAt": 9
+      },
+      "afterCalls": {
+        "neighbors": 196,
+        "route": 9,
+        "floorAt": 9
+      }
+    },
+    {
+      "name": "GrowingLife.tick.repeat.2000",
+      "beforeMs": 1611.627333000004,
+      "afterMs": 102.5306250000001,
+      "speedup": 15.718497112448134,
+      "beforeCalls": {
+        "floorAt": 17999,
+        "neighbors": 1391,
+        "route": 14
+      },
+      "afterCalls": {
+        "floorAt": 10834,
+        "neighbors": 1391,
+        "route": 14
+      }
+    }
+  ],
+  "detail": {}
+}

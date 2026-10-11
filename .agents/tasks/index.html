@@ -681,7 +681,13 @@ main `4002e67b` から本番へ反映済み。公開URLの390/768幅で初回学
 ### Risks
 
 - 「全体」を広げすぎて島v3、家、Nature Town、ブランド外部確認の既存ownerを複製しない。横断の証拠づくりと未所有の共通操作課題に集中する。
-</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">3・性能</h2><div class="grid"><article class="card" data-search="起動と物が増えた島の軽量化：同保存の前後36計測と混雑raf追加6回。固有資源の解放とpreview更新を改善し、配置→2rafは6条件で約5〜17%短縮。起動/入室/定常は混在 次：実時計で同期と重なる待ちを絞る。混雑390の操作可能待ちを解決済みにせず、実機の起動/電池/gpuは別確認 docs/tasks/active/2026-09-23-island-performance.md # island / iphone pwa performance
+</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">3・性能</h2><div class="grid"><article class="card" data-search="起動と物が増えた島の軽量化：m1の形・床・道を保持しnode全layer7,386→174 ms。receiptだけの全再構築を省きshaderをready前準備。core5,093/classic32/既存島touch8旅程pass。10/9の起動/入室/定常は混在 次：software preview約8.6秒の画面待ちは未解決。実時計の同期、実機の起動/操作/電池/gpuは別確認 docs/tasks/active/2026-09-23-island-performance.md # island / iphone pwa performance
+
+## 2026-10-11 編集できる全島の計算と初回shader
+
+[m1の全島性能](../../design/2026-10-11-authored-world-performance/readme.md)で床の密なbucketを細分し、床・経路の支持照会を再利用した。同じ入力のnode全layer初回7,386→174 ms、13項目の形・床・経路等fingerprintが一致。scene state全体のうちapplied/placeprogressだけの同値更新はactor/camera/previewを保持し、lifeのcanonical参照を更新する。現在所有しているモデルとpreviewのshaderはready前に準備し、error checksとprogram寿命を保持した。画風・影・解像度・所有・保存・学習の規則は変更しない。
+
+最初の選択profileはinput→2raf 3,719→1,724 msへ短縮、cpu sampleのgetprograminfologは2,765→0 ms。ただし各版1runのheaded swiftshader診断で、起動全体・実機のfpsを示さない。固定版の全編集ではpreview約8.6秒の画面待ちが残り、その区間のcpu long taskは記録されなかった。gpu/compositor/driverの帰属は未確定、性能解決と扱わない。最終core5,093/classic32と既存島のtouch学習・保存8旅程がpass。m1水庭/deck/森林の制作、実機の起動/操作/電池、次期保存・配布は引き続き別ゲートである。
 
 ## 2026-10-09 ローカル品質検証の追補
 
@@ -822,7 +828,13 @@ this is a performance implementation within the existing product rules, so the p
 - life-enabled `verify:core` passed: 460 files / 4,168 tests, lint (one existing islandmilestone fast-refresh warning), typecheck, build and asset budget. the production decorations journey passed at 390×844 and 768×1024 (tablet reduced motion): six real answers, earned purchase, rotate/move/store/re-place, abort/retry, offline reload and learning return, followed by a separate synthetic 30-item stress fixture. both stress scenes loaded 34 instances from eight glbs, retained 17 textures, switched lod, and had no page errors. phone placement and tablet stress screenshots were inspected for visible props/residents and controls.
 - local browser evidence: `output/playwright/runtime-props-20260924/browser/report.json`; operation-count diagnostic: `output/playwright/runtime-props-20260924/clone-count.json`. target `http://127.0.0.1:5298`, version `development-local:b761cc63-f444-40d7-8107-d092ddce3f07`, app/dist/harness fingerprint `3583321974cb0a09960d6a6867689645af002eb229fdd61c18efa28b46892671` matched at start/end. delivery island/life enabled, life preview/buildplay disabled; runtime assets `island-life-runtime-assets-v3`, home props `island-home-props-v1`.
 - this local renderer change is complete. no deployment, real iphone timing, new art approval, child comprehension/replay assessment or full release-matrix pass is claimed. ongoing per-frame rendering costs and installed-device measurement remain separate follow-ups.
-"><h2><a href="../../docs/tasks/active/2026-09-23-island-performance.md">起動と物が増えた島の軽量化：同保存の前後36計測と混雑rAF追加6回。固有資源の解放とpreview更新を改善し、配置→2rAFは6条件で約5〜17%短縮。起動/入室/定常は混在 次：実時計で同期と重なる待ちを絞る。混雑390の操作可能待ちを解決済みにせず、実機の起動/電池/GPUは別確認</a></h2><p class="path">docs/tasks/active/2026-09-23-island-performance.md</p><p>固定ローカル候補 `7e9a6c7a-quality-final-v3-55d331f22e94` で、退出actorの固有描画資源と共有cacheの寿命、観測hookによるshader program keyの変化を修正した。同じstateの二重再構築を省き、配置候補・選択・ヒントの変更では建物・住人・船を保持する。資源寿命の診断とpreview保持の回帰確認は済み。資源解放の個数をGPUメモリやFPS改善とは扱わ</p><details><summary>詳細を読む</summary><pre># Island / iPhone PWA performance
+"><h2><a href="../../docs/tasks/active/2026-09-23-island-performance.md">起動と物が増えた島の軽量化：M1の形・床・道を保持しNode全layer7,386→174 ms。receiptだけの全再構築を省きshaderをready前準備。core5,093/classic32/既存島touch8旅程PASS。10/9の起動/入室/定常は混在 次：software preview約8.6秒の画面待ちは未解決。実時計の同期、実機の起動/操作/電池/GPUは別確認</a></h2><p class="path">docs/tasks/active/2026-09-23-island-performance.md</p><p>[M1の全島性能](../../design/2026-10-11-authored-world-performance/README.md)で床の密なbucketを細分し、床・経路の支持照会を再利用した。同じ入力のNode全layer初回7,386→174 ms、13項目の形・床・経路等fingerprintが一致。scene state全体のうちapplied/placeProgressだけの同値更新はactor</p><details><summary>詳細を読む</summary><pre># Island / iPhone PWA performance
+
+## 2026-10-11 編集できる全島の計算と初回shader
+
+[M1の全島性能](../../design/2026-10-11-authored-world-performance/README.md)で床の密なbucketを細分し、床・経路の支持照会を再利用した。同じ入力のNode全layer初回7,386→174 ms、13項目の形・床・経路等fingerprintが一致。scene state全体のうちapplied/placeProgressだけの同値更新はactor/camera/previewを保持し、lifeのcanonical参照を更新する。現在所有しているモデルとpreviewのshaderはready前に準備し、error checksとprogram寿命を保持した。画風・影・解像度・所有・保存・学習の規則は変更しない。
+
+最初の選択profileはinput→2rAF 3,719→1,724 msへ短縮、CPU sampleのgetProgramInfoLogは2,765→0 ms。ただし各版1runのheaded SwiftShader診断で、起動全体・実機のFPSを示さない。固定版の全編集ではpreview約8.6秒の画面待ちが残り、その区間のCPU long taskは記録されなかった。GPU/compositor/driverの帰属は未確定、性能解決と扱わない。最終core5,093/classic32と既存島のtouch学習・保存8旅程がPASS。M1水庭/deck/森林の制作、実機の起動/操作/電池、次期保存・配布は引き続き別ゲートである。
 
 ## 2026-10-09 ローカル品質検証の追補
 
@@ -963,7 +975,7 @@ This is a performance implementation within the existing product rules, so the p
 - Life-enabled `verify:core` passed: 460 files / 4,168 tests, lint (one existing IslandMilestone fast-refresh warning), typecheck, build and asset budget. The production decorations journey passed at 390×844 and 768×1024 (tablet reduced motion): six real answers, earned purchase, rotate/move/store/re-place, abort/retry, offline reload and learning return, followed by a separate synthetic 30-item stress fixture. Both stress scenes loaded 34 instances from eight GLBs, retained 17 textures, switched LOD, and had no page errors. Phone placement and tablet stress screenshots were inspected for visible props/residents and controls.
 - Local browser evidence: `output/playwright/runtime-props-20260924/browser/report.json`; operation-count diagnostic: `output/playwright/runtime-props-20260924/clone-count.json`. Target `http://127.0.0.1:5298`, version `development-local:b761cc63-f444-40d7-8107-d092ddce3f07`, app/dist/harness fingerprint `3583321974cb0a09960d6a6867689645af002eb229fdd61c18efa28b46892671` matched at start/end. Delivery Island/Life enabled, Life preview/BuildPlay disabled; runtime assets `island-life-runtime-assets-v3`, home props `island-home-props-v1`.
 - This local renderer change is complete. No deployment, real iPhone timing, new art approval, child comprehension/replay assessment or full release-matrix pass is claimed. Ongoing per-frame rendering costs and installed-device measurement remain separate follow-ups.
-</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">4・美術</h2><div class="grid"><article class="card" data-search="島・家・本・学習の見た目と理解を確認：m1制作中。採用地形・27所有物・8軒を本体の配置・歩行へ接続。実uiの分離/収納/復元を確認。全島美術hold、再構築約9秒 次：再構築を改善し、水庭の実床・大樹の共有deck・森林の面を同じ世界で仕上げる。その後に三配置・成長・地区拡張。保存/配布、美術採用、独立理解/安全、実機は継続 docs/tasks/active/2026-09-27-living-fantasy-first-playable.md # 幻想の庭 — 最初の遊べる一周
+</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">4・美術</h2><div class="grid"><article class="card" data-search="島・家・本・学習の見た目と理解を確認：m1制作中。採用地形・27所有物・8軒を本体の配置・歩行へ接続。計算改善後も実分離/収納/復元pass、全島美術hold 次：水庭の実水底・岸・渡れる床、大樹の共有deck、森林の面を同じ世界で仕上げる。その後に三配置・成長・地区拡張。保存/配布、美術採用、独立理解/安全、実機は継続 docs/tasks/active/2026-09-27-living-fantasy-first-playable.md # 幻想の庭 — 最初の遊べる一周
 
 ## 現在の次工程：美術と遊びが同じ場所を組み立てる
 
@@ -973,7 +985,9 @@ This is a performance implementation within the existing product rules, so the p
 
 2026-10-11、利用者「ゴール設定して」に基づき包括ゴールを設定。[共通世界契約m0](../../product/island-world-contract.md)を仕様52/13へ反映し、[共通床・経路の制作基盤](../../design/2026-10-11-authored-world-foundation/readme.md)を完了した。現行の床と足元が同じ三角形を読み、原本native05から89,488三角形・73配置地点・細かな歩行点と辺を抽出。初回は配置マスだけで20地点しか到達できず、歩行点を分けた現行診断では73地点すべてに地形床上の経路がある。旧所有床10組のbufferはbyte一致、core571 files／5,010 tests、専用24、classic32、本体devの390/768幅の実回答/配置/再読込と明示土地/人口診断8組・22画面がpass。古いメニュー名を探した検査の初回failと中断、現行helperへ合わせた最終結果を別に保持する。
 
-m1制作中の[編集できる全島診断](../../design/2026-10-11-authored-island-runtime/readme.md)で、採用地形・27所有物・8軒を本体rendererとdomainの配置・明示歩行・場所計算へ接続した。同じ所有木の分離/収納/復元、海と歩行専用地点の拒否を実uiで確認。core579 files/5,044 tests、classic32、既存本体の40実回答と8旅程がpass。ただしobject layer再構築は実地形のnode診断で約9秒、水庭の水底/岸/渡れる床、大樹の共有deck、森林の面が未実装・不足。美術hold、独立理解/安全n=0。次は再構築を改善し、同じ世界に水と回廊を構成して一つの全島を仕上げる。保存互換の次期切替、美術の再採用、実機・子どもの独立観察・公開は未完で、包括タスクを継続する。以下は各制作単位の履歴。
+m1制作中の[編集できる全島診断](../../design/2026-10-11-authored-island-runtime/readme.md)で、採用地形・27所有物・8軒を本体rendererとdomainの配置・明示歩行・場所計算へ接続した。同じ所有木の分離/収納/復元、海と歩行専用地点の拒否を実uiで確認。初回core579 files/5,044 tests、classic32、既存本体の40実回答と8旅程がpassした一方、当時のobject layer再構築は実地形のnode診断で約9秒だった。
+
+[床・道・初回描画の改善](../../design/2026-10-11-authored-world-performance/readme.md)では形・床・経路等13項目が完全一致し、同じfixtureのlayer初回7,386→174 msへ短縮。receiptだけの更新はlifeのstate参照を更新し、全景を再構築しない。初回shaderをready前に準備したが、software描画のpreview→2rafは約8.6秒が残り未解決。最終core584 files/5,093 tests、classic32、編集6操作/7画面、既存島の40実回答/8旅程/22画面がpassし、共通sourceのshaを照合した。水庭の水底/岸/渡れる床、大樹の共有deck、森林の面は不足し、美術hold、独立理解/安全n=0。次は同じ世界に水と回廊を構成して一つの全島を仕上げる。保存互換の次期切替、美術の再採用、実機・子どもの独立観察・公開は未完で、包括タスクを継続する。以下は各制作単位の履歴。
 
 ## 2026-10-11 三方向の拡張を本体へ実装
 
@@ -1127,7 +1141,7 @@ b方向の実3d地形・家・曲がった枝葉・相棒・昼夕夜、通常�
 ## 2026-09-27 本番統合
 
 元のぽこもこを保つv2を、自然の育成・運搬・食事・水路・土とともに家庭内本番へ統合。[公開記録](../../design/2026-09-27-fantasy-production/readme.md)に固定build・旧→新/中断/互換復旧・実購入/offline・三ゲートを保存した。全v1の完成とは区別し、入口・家の美術統一、30品時の軽量化、実機・子どもの観察は継続する。
-"><h2><a href="../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md">島・家・本・学習の見た目と理解を確認：M1制作中。採用地形・27所有物・8軒を本体の配置・歩行へ接続。実UIの分離/収納/復元を確認。全島美術HOLD、再構築約9秒 次：再構築を改善し、水庭の実床・大樹の共有deck・森林の面を同じ世界で仕上げる。その後に三配置・成長・地区拡張。保存/配布、美術採用、独立理解/安全、実機は継続</a></h2><p class="path">docs/tasks/active/2026-09-27-living-fantasy-first-playable.md</p><p>2026-10-11、利用者「完成像に近づきそうにない」「寄せるとかじゃなくて方針が必要」を受け、[島構築方針](../../product/island-construction-strategy.md)と[制作方式の決定](../../adr/2026-10-11-authored-place-world-policy.md)を改訂した。美術で地形・場所の形・入口・床を一緒に設計し、本人の土地選択・配置・成熟から</p><details><summary>詳細を読む</summary><pre># 幻想の庭 — 最初の遊べる一周
+"><h2><a href="../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md">島・家・本・学習の見た目と理解を確認：M1制作中。採用地形・27所有物・8軒を本体の配置・歩行へ接続。計算改善後も実分離/収納/復元PASS、全島美術HOLD 次：水庭の実水底・岸・渡れる床、大樹の共有deck、森林の面を同じ世界で仕上げる。その後に三配置・成長・地区拡張。保存/配布、美術採用、独立理解/安全、実機は継続</a></h2><p class="path">docs/tasks/active/2026-09-27-living-fantasy-first-playable.md</p><p>2026-10-11、利用者「完成像に近づきそうにない」「寄せるとかじゃなくて方針が必要」を受け、[島構築方針](../../product/island-construction-strategy.md)と[制作方式の決定](../../adr/2026-10-11-authored-place-world-policy.md)を改訂した。美術で地形・場所の形・入口・床を一緒に設計し、本人の土地選択・配置・成熟から</p><details><summary>詳細を読む</summary><pre># 幻想の庭 — 最初の遊べる一周
 
 ## 現在の次工程：美術と遊びが同じ場所を組み立てる
 
@@ -1137,7 +1151,9 @@ b方向の実3d地形・家・曲がった枝葉・相棒・昼夕夜、通常�
 
 2026-10-11、利用者「ゴール設定して」に基づき包括ゴールを設定。[共通世界契約M0](../../product/island-world-contract.md)を仕様52/13へ反映し、[共通床・経路の制作基盤](../../design/2026-10-11-authored-world-foundation/README.md)を完了した。現行の床と足元が同じ三角形を読み、原本native05から89,488三角形・73配置地点・細かな歩行点と辺を抽出。初回は配置マスだけで20地点しか到達できず、歩行点を分けた現行診断では73地点すべてに地形床上の経路がある。旧所有床10組のbufferはbyte一致、core571 files／5,010 tests、専用24、classic32、本体DEVの390/768幅の実回答/配置/再読込と明示土地/人口診断8組・22画面がPASS。古いメニュー名を探した検査の初回FAILと中断、現行helperへ合わせた最終結果を別に保持する。
 
-M1制作中の[編集できる全島診断](../../design/2026-10-11-authored-island-runtime/README.md)で、採用地形・27所有物・8軒を本体rendererとdomainの配置・明示歩行・場所計算へ接続した。同じ所有木の分離/収納/復元、海と歩行専用地点の拒否を実UIで確認。core579 files/5,044 tests、classic32、既存本体の40実回答と8旅程がPASS。ただしobject layer再構築は実地形のNode診断で約9秒、水庭の水底/岸/渡れる床、大樹の共有deck、森林の面が未実装・不足。美術HOLD、独立理解/安全N=0。次は再構築を改善し、同じ世界に水と回廊を構成して一つの全島を仕上げる。保存互換の次期切替、美術の再採用、実機・子どもの独立観察・公開は未完で、包括タスクを継続する。以下は各制作単位の履歴。
+M1制作中の[編集できる全島診断](../../design/2026-10-11-authored-island-runtime/README.md)で、採用地形・27所有物・8軒を本体rendererとdomainの配置・明示歩行・場所計算へ接続した。同じ所有木の分離/収納/復元、海と歩行専用地点の拒否を実UIで確認。初回core579 files/5,044 tests、classic32、既存本体の40実回答と8旅程がPASSした一方、当時のobject layer再構築は実地形のNode診断で約9秒だった。
+
+[床・道・初回描画の改善](../../design/2026-10-11-authored-world-performance/README.md)では形・床・経路等13項目が完全一致し、同じfixtureのlayer初回7,386→174 msへ短縮。receiptだけの更新はlifeのstate参照を更新し、全景を再構築しない。初回shaderをready前に準備したが、software描画のpreview→2rAFは約8.6秒が残り未解決。最終core584 files/5,093 tests、classic32、編集6操作/7画面、既存島の40実回答/8旅程/22画面がPASSし、共通sourceのSHAを照合した。水庭の水底/岸/渡れる床、大樹の共有deck、森林の面は不足し、美術HOLD、独立理解/安全N=0。次は同じ世界に水と回廊を構成して一つの全島を仕上げる。保存互換の次期切替、美術の再採用、実機・子どもの独立観察・公開は未完で、包括タスクを継続する。以下は各制作単位の履歴。
 
 ## 2026-10-11 三方向の拡張を本体へ実装
 
@@ -1681,6 +1697,8 @@ B方向の実3D地形・家・曲がった枝葉・相棒・昼夕夜、通常�
 共有キュー、関連仕様/タスク、Git履歴と未コミット一覧、10/1〜10/5の検証記録を照合した。アプリ実装・本番操作・実機/子どもの観察は行っていない。過去の検証を新しい候補の合格として記録しない。
 </pre></details></article><article class="card" data-search="shared done index .agents/tasks/done.md # shared done index
 
+- 2026-10-11: [編集できる全島の計算と初回描画を改善](../../docs/design/2026-10-11-authored-world-performance/readme.md)。形・床・道等13項目一致、node全layer7,386→174 ms。receipt保持とshader準備、最終core5,093/classic32/編集6操作/既存島touch8旅程pass。改善単位を完了、software preview約8.6秒・m1水庭/deck/森林・美術hold・独立観察n=0・包括ゴールは継続。詳細: `docs/done/2026-10.md`。
+
 - 2026-10-11: [採用地形で編集する全島の統合診断](../../docs/design/2026-10-11-authored-island-runtime/readme.md)。27所有物・8軒を本体の配置・明示歩行へ接続、実分離/収納/復元・core5,044/classic32/既存本体8旅程pass。診断単位を記録。美術hold・約9秒の再構築・水/回廊床・m1/包括ゴールは継続。詳細: `docs/done/2026-10.md`。
 
 - 2026-10-11: 設定に「アプリの紹介」を追加し `/promo/` を別タブで開く。やさしい表示、4幅・enter/タップ・元url/学習保持/再読込、core5,010がpass。[検証と実画面](../../docs/design/2026-10-11-settings-promotion/readme.md)。git反映対象、公開はpush後に別確認。詳細: `docs/done/2026-10.md`。
@@ -1966,7 +1984,9 @@ durable completion history and verification facts still belong in `docs/done/yyy
 - 2026-10-01: しあげの条件を全20問独力正解に変更。19/20のレベル維持、新予約20/20の進級を実ui/保存で確認、4391 tests pass -&gt; `docs/done/2026-10.md`
 
 - 2026-10-01: 学習アルゴリズム監査a1〜a10修正。独力/代表出題/coverage/復習・回復・配分を整え、全4474 tests・smoke31・固定preview80実回答を確認。ローカル、本番未配布 -&gt; `docs/done/2026-10.md`
-"><h2><a href="DONE.md">Shared Done Index</a></h2><p class="path">.agents/tasks/DONE.md</p><p>- 2026-10-11: [採用地形で編集する全島の統合診断](../../docs/design/2026-10-11-authored-island-runtime/README.md)。27所有物・8軒を本体の配置・明示歩行へ接続、実分離/収納/復元・core5,044/classic32/既存本体8旅程PASS。診断単位を記録。美術HOLD・約9秒の再構築・水/回廊床・M1/包括ゴールは継続。詳細: `do</p><details><summary>詳細を読む</summary><pre># Shared Done Index
+"><h2><a href="DONE.md">Shared Done Index</a></h2><p class="path">.agents/tasks/DONE.md</p><p>- 2026-10-11: [編集できる全島の計算と初回描画を改善](../../docs/design/2026-10-11-authored-world-performance/README.md)。形・床・道等13項目一致、Node全layer7,386→174 ms。receipt保持とshader準備、最終core5,093/classic32/編集6操作/既存島touch8旅程PASS。改善単位を完了、s</p><details><summary>詳細を読む</summary><pre># Shared Done Index
+
+- 2026-10-11: [編集できる全島の計算と初回描画を改善](../../docs/design/2026-10-11-authored-world-performance/README.md)。形・床・道等13項目一致、Node全layer7,386→174 ms。receipt保持とshader準備、最終core5,093/classic32/編集6操作/既存島touch8旅程PASS。改善単位を完了、software preview約8.6秒・M1水庭/deck/森林・美術HOLD・独立観察N=0・包括ゴールは継続。詳細: `docs/done/2026-10.md`。
 
 - 2026-10-11: [採用地形で編集する全島の統合診断](../../docs/design/2026-10-11-authored-island-runtime/README.md)。27所有物・8軒を本体の配置・明示歩行へ接続、実分離/収納/復元・core5,044/classic32/既存本体8旅程PASS。診断単位を記録。美術HOLD・約9秒の再構築・水/回廊床・M1/包括ゴールは継続。詳細: `docs/done/2026-10.md`。
 

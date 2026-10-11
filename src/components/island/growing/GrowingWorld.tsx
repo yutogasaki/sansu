@@ -23,6 +23,8 @@ import type { PlaceUseReceipt } from './growingLife';
 import type { NativeGrowingKit } from './native/nativeGrowingKit';
 import type { IslandWorld as CompiledWorld } from '../../../domain/growingIsland/worldDefinition';
 import type { AuthoredCoastSkin } from './native/authoredGrowingGround';
+import { makeGrowingInteractionWarmBank, warmGrowingShaders } from './growingShaderWarmup';
+import { growingSceneStateKey, growingScenePreviewKey } from './growingSceneInputs';
 
 export interface WorldHandlers {
     onCell: (cell: Cell) => void;
@@ -105,7 +107,7 @@ export default function GrowingWorld({ state, world: authoredWorld, time, ghost,
         renderer.setPixelRatio(quality?.ratio ?? Math.min(window.devicePixelRatio || 1, 1.5));
         renderer.domElement.dataset.pixelRatio = String(renderer.getPixelRatio());
         renderer.domElement.dataset.qualityCeiling = String(qualityCeiling);
-        renderer.outputColorSpace = T.SRGBColorSpace; renderer.shadowMap.enabled = !light; renderer.shadowMap.type = T.PCFSoftShadowMap;
+        renderer.outputColorSpace = T.SRGBColorSpace; renderer.shadowMap.enabled = !light; renderer.shadowMap.type = T.PCFShadowMap;
         renderer.domElement.dataset.graphicsQuality = recovery ? 'recovery' : light ? 'compact' : 'standard';
         renderer.toneMapping = T.ACESFilmicToneMapping;
         renderer.domElement.setAttribute('aria-label', 'ぽこもこと なかまが くらす しま');
@@ -167,17 +169,29 @@ export default function GrowingWorld({ state, world: authoredWorld, time, ghost,
         const reduced = reducedMotion();
         let pendingConcert: number | undefined;
         let publishedCamera = '';
-        let rebuilt: { state: GrowingState; ghost?: Ghost; selected?: string; hints?: readonly Cell[] } | undefined;
+        let rebuilt: { state: GrowingState; ghost?: Ghost; selected?: string; hints?: readonly Cell[]; stateKey: string; previewKey: string } | undefined;
+        const sceneCounters = { fullLayerBuild: 0, previewUpdate: 0, receiptReuse: 0 };
+        const counted = (kind: keyof typeof sceneCounters) => {
+            if (!import.meta.env.DEV) return;
+            sceneCounters[kind] = Math.min(1000000, sceneCounters[kind] + 1);
+            node.dataset.growingSceneCounters = JSON.stringify(sceneCounters);
+        };
 
         const rebuild = (next: GrowingState, nextGhost?: Ghost, selected?: string, nextHints?: readonly Cell[]) => {
             // The first props effect follows the initial scene build with the same
             // immutable inputs. Keep that scene (and its visitor) instead of rebuilding it.
             if (rebuilt?.state === next && rebuilt.ghost === nextGhost && rebuilt.selected === selected && rebuilt.hints === nextHints) return;
-            if (rebuilt?.state === next && layer) {
-                // Preview-only input does not change saved objects, walking paths,
-                // visitors, opening effects, bridge work or the current camera.
-                layer.updatePreview(nextGhost, selected, nextHints);
-                rebuilt = { state: next, ghost: nextGhost, selected, hints: nextHints };
+            const stateKey = growingSceneStateKey(next), previewKey = growingScenePreviewKey(nextGhost, selected, nextHints);
+            if (rebuilt?.stateKey === stateKey && layer) {
+                // Receipt-only saves and value-equivalent preview props retain
+                // physical objects, routes, life, camera and bridge work. Life
+                // still adopts the new canonical state for subsequent receipts.
+                world.life.adoptState(next);
+                if (rebuilt.previewKey !== previewKey) {
+                    layer.updatePreview(nextGhost, selected, nextHints); counted('previewUpdate');
+                }
+                if (rebuilt.state !== next) counted('receiptReuse');
+                rebuilt = { state: next, ghost: nextGhost, selected, hints: nextHints, stateKey, previewKey };
                 return;
             }
             layout = world.layout(next);
@@ -186,6 +200,7 @@ export default function GrowingWorld({ state, world: authoredWorld, time, ghost,
             node.dataset.bridgeSaved = String(Boolean(next.bridge));
             layer?.dispose();
             layer = buildObjectLayer(world.m, next, layout, nextGhost, selected, nextHints, native);
+            counted('fullLayerBuild');
             world.scene.add(layer.root);
             const now = performance.now();
             for (const id of unopened) if (!next.unopened.includes(id)) {
@@ -207,7 +222,7 @@ export default function GrowingWorld({ state, world: authoredWorld, time, ghost,
             if (!next.bridge) { window.clearTimeout(bridgeClear); setBridgeStage(undefined); }
             else if (bridgeWork) bridgeWork.parts = layer.objects.get('bridge')?.children[0]?.children.filter(o => o.name.startsWith('bridge-')) ?? [];
             frameCamera(camera, layout, view, width / height);
-            rebuilt = { state: next, ghost: nextGhost, selected, hints: nextHints };
+            rebuilt = { state: next, ghost: nextGhost, selected, hints: nextHints, stateKey, previewKey };
         };
         const resize = () => {
             const nextWidth = Math.max(1, node.clientWidth), nextHeight = Math.max(1, node.clientHeight);
@@ -289,6 +304,15 @@ export default function GrowingWorld({ state, world: authoredWorld, time, ghost,
         world.setTime(latest.current.time);
         resize();
         const observer = new ResizeObserver(resize); disposers.push(() => observer.disconnect()); observer.observe(node);
+        const shaderBank = makeGrowingInteractionWarmBank(layer!.root);
+        disposers.push(() => shaderBank.dispose());
+        const shaderWarmStarted = performance.now(), shaderWarmMeshes = shaderBank.root.children.length;
+        if (import.meta.env.DEV) node.dataset.growingShaderWarmup = JSON.stringify({ status: 'warming', meshes: shaderWarmMeshes });
+        await warmGrowingShaders(renderer, camera, world.scene, shaderBank.root, abort.signal);
+        if (released) return;
+        shaderBank.releaseMeshes();
+        if (import.meta.env.DEV) node.dataset.growingShaderWarmup = JSON.stringify({ status: 'ready', meshes: shaderWarmMeshes,
+            ms: Math.round(performance.now() - shaderWarmStarted), programs: renderer.info.programs?.length ?? 0 });
 
         const loop = () => {
             if (lost) return;

@@ -1,0 +1,30 @@
+# 全島性能の監査と検証の境界
+
+## コードの独立監査
+
+床の細分index、道の照会再利用、layoutのpoint cacheを別担当が読んだ。coarse bucketと三角形の元の順、EPS許容、極薄三角形の保守的な候補、highest/nearest-y/floorId/water遮断、返すpointの分離を確認し、修正必須の問題は見つからなかった。道の面の中心がdry floorである検査は残る。既存の13fingerprint一致と追加の重複床・境界・返却値テストは、それぞれの範囲の証拠である。
+
+shader準備の独立監査で、Three 0.185.1の初回shadow renderがPCFSoftをPCFへ変更するため、先に暖めたpreviewが別keyになる問題を発見した。初期設定を、既に実描画で使われていたPCFへ揃え、初回renderの移行を回帰テストへ加えた。影の見た目や解像度を減らしていない。修正後の再監査で残るblockerはなかった。
+
+material cloneはsourceのonBeforeCompile/customProgramCacheKeyを保持する。source自身を閉包で読むkeyと、呼び出し先のthisを読むkeyを両方検査する。bankは現在所有しているモデルのopaque/transparent variantと実選択・配置材質を持ち、可視sceneへ追加しない。借用geometryを解放せず、bankのmaterialはrenderer寿命まで保持してprogramの早期evictionを防ぐ。未知の将来のshop材質全件を暖める保証ではない。
+
+compile登録はpublic APIを使う。全programの初回reflection/LINK検査は、installed Three revision 185のadapterへ隔離し、version・API・program寿命・shader diagnostics有効を検査する。KHR completionは全件をabort/deadline付きで待つ。KHRがない場合の同期waitはloading内で発生し得る。初回実renderのshadow/background/transmissionで追加されたprogramも検査し、2回目の実renderを経てreadyに進む。error checksを無効化して待ちを隠していない。
+
+sceneのreuseはstate全体からapplied/placeProgressだけを除いた値で比較する。place revisionやcommand名だけでは旗・船・単独所有物・年齢・guidanceを取りこぼすため、使わない。新字段は既定で比較対象となる。Ghost全項目・selection・hintsと順序も別に比較する。同値時はlifeのcanonical state参照だけ更新し、visitor・経路・遊び・camera・bridge workを保持する。receipt数とfull rebuild数を同一視しない。
+
+実移動previewの独立したkey比較も行った。native willow両面、future P01のRGB vertex-colored FrontSideの透過branch、選択ringの4 keysがinitial bankの15 keysへ含まれた。この診断は共通の最終canvas/lights/environment/PCF条件でinstalled Threeのcache keyを比較したもので、実GLの時間や保持を証明しない。全旅程のprofileで残った8.6秒のpreview待ちはCPU long taskとshader reflectionで説明できず、未解決として保持する。
+
+## 最初の失敗と再検査
+
+- Node比較harness初回はDEVの環境定義がなく失敗した。両版DEV=falseで再実行し、アプリ不具合と区別した。
+- actor continuityテスト初回はThree.Euler cloneに内部callbackがコピーされないため、深いobject equalityが失敗した。実actorのidentityとtransformの値を比較する検査へ修正した。
+- port 5342の通常sandbox起動はbind EPERMで失敗した。同じローカル診断起動を許可された実行境界で再実行した。自動承認による却下ではない。
+- 床改善だけのUIは通ったが5〜13秒が残った。性能合格へ繰り上げず、CPU profileとinput到着の診断を追加した。
+
+## 非代替の判定
+
+美術はHOLD。原本の水庭・大樹の回廊・森林の面・集落の連なりが不足している。性能改善を完成美術の点数へ加えない。
+
+独立理解と安全は未評価 N=0。作者、実装者、操作テストは独立した子どもの観察ではない。
+
+runtimeはPARTIAL。これはDEVの明示fixture・同じ床/配置/歩行を使う編集診断で、本人の新世界保存・取得・学習・offline/更新・実端末の性能を保証しない。新世界のproduction配信は切り替えていない。通常productionのnative美術既定falseを維持する。

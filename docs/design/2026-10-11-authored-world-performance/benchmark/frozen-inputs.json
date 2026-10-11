@@ -1,0 +1,46 @@
+{
+  "taskRoot": "/tmp/sansu-authored-equivalence-a2ea3e98",
+  "sourceRoot": "/tmp/sansu-authored-equivalence-a2ea3e98/baseline-source",
+  "inputRoot": "/tmp/sansu-authored-equivalence-a2ea3e98/inputs",
+  "frozenRevision": "a2ea3e98d8996df6fb466d2e6ce064e35589f275",
+  "inputs": {
+    "fixture": {
+      "source": "prototypes/place-qa/authored-fixture.json",
+      "file": "/tmp/sansu-authored-equivalence-a2ea3e98/inputs/authored-fixture.json",
+      "sha256": "b3b379c9a3033b2fdcf8f5dade0b857ebb4cada1c8909bae4133e9bc2e923c11"
+    },
+    "world": {
+      "source": "prototypes/place-qa/native05-world.json.gz",
+      "file": "/tmp/sansu-authored-equivalence-a2ea3e98/inputs/native05-world.json.gz",
+      "sha256": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08"
+    },
+    "coast": {
+      "source": "prototypes/place-qa/native05-coast.json.gz",
+      "file": "/tmp/sansu-authored-equivalence-a2ea3e98/inputs/native05-coast.json.gz",
+      "sha256": "758f2a5fbd29bb3a5b30f5694e236f2ee7a0c1ae638780ea9366b16f35416d8f"
+    },
+    "kit": {
+      "source": "docs/design/2026-10-11-native-owned-island/native05-owned-kit.glb.gz",
+      "file": "/tmp/sansu-authored-equivalence-a2ea3e98/inputs/native05-owned-kit.glb.gz",
+      "sha256": "79b8ae671444bf0c4869bd8e185f8d5ac140a1d7ee3e5709c5d39e4a6735e615"
+    },
+    "manifest": {
+      "source": "docs/design/2026-10-11-native-owned-island/kit-manifest.json",
+      "file": "/tmp/sansu-authored-equivalence-a2ea3e98/inputs/kit-manifest.json",
+      "sha256": "0653ef4cd09a34102235e92726f77db772391b66d27e01da8175b8a6fd7eea8e"
+    },
+    "lock": {
+      "source": "package-lock.json",
+      "file": "/tmp/sansu-authored-equivalence-a2ea3e98/inputs/package-lock.json",
+      "sha256": "5c476bc2c1ede88ecc98441158df82dc139464d21ca5b3b3bf3ddaf9a416b92d"
+    }
+  },
+  "sourceHashes": {
+    "src/domain/growingIsland/worldDefinition.ts": "aa06240f2ee634024b41b7e29d040b39ddbe33d19e012ffb77a91cca3f1f55fe",
+    "src/domain/growingIsland/space.ts": "937cc2134783effa40dca4dcf8acbef52ef131a99b8c2c64e2ebd70c228daa38",
+    "src/domain/growingIsland/places.ts": "b3ef4eb75ef5ef77ad4ba32d5f9d0ed98bcf19d0c7f6ed1d30e33479be459929",
+    "src/components/island/growing/placePaths.ts": "475edd426b4d282a4a5a9064961bc58678e217a2366d17cc3e7d560133157bb6",
+    "src/components/island/growing/objectLayer.ts": "9dbb6929ed4733d8ee2d06f3827f9309a251e8fcc118c06317befc1ad3974043",
+    "src/components/island/growing/sceneLayout.ts": "bf910abdee6d96c832fc675dce6dea02ba29fe6cddb951af221a6c343cfbe42c"
+  }
+}

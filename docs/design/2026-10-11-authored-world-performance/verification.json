@@ -1,0 +1,69 @@
+{
+  "recordedAt": "2026-10-11T08:41:29.829647+00:00",
+  "buildRevision": "authored-editable-m1-perf-a2",
+  "appTarget": "http://127.0.0.1:5342/prototypes/place-qa/authored.html",
+  "delivery": "DEV explicit authored world and synthetic 27-owner input; main GrowingWorld renderer; no player DB write",
+  "candidate": "native05-authored-runtime-m1",
+  "fixtureCandidate": "native05-authored-editable-m1-v1",
+  "worldId": "native05-authored-world-m0-v2",
+  "gitParent": "a2ea3e98d8996df6fb466d2e6ce064e35589f275",
+  "testedInputSha256": "f15bd870e21101a14eae0e5eea4a1f05b69d0d3f57f198e8bfd97d62936563fa",
+  "inputClosure": "runtime/report.json initialInputs=finalInputs; also identical to full-journey-profile/report.json; shared src matches core and legacy",
+  "configuredFlags": {
+    "VITE_ISLAND_ENABLED": true,
+    "VITE_NATIVE_GROWING_ART": true
+  },
+  "normalProductionNativeArtDefault": false,
+  "renderedNativeArt": true,
+  "gates": {
+    "art": "HOLD: water beds/banks, shared deck, forest mass and settlement continuity incomplete",
+    "independentUnderstandingSafety": "NOT_EVALUATED: N=0",
+    "runtime": "PARTIAL: final core and focused editing/legacy PASS; software preview remains ~8.6 seconds; authored save/acquisition/offline/update not implemented; no device performance acceptance"
+  },
+  "checks": {
+    "core": {
+      "pass": true,
+      "files": 584,
+      "tests": 5093,
+      "sourceFixed": true,
+      "inputCount": 1544,
+      "pwaPrecacheMiB": 8.23,
+      "budgetMiB": 12,
+      "log": "core/execution.log.txt",
+      "report": "core/report.json"
+    },
+    "editing": {
+      "pass": true,
+      "steps": 6,
+      "captures": 7,
+      "inputs": 1540,
+      "pointer": "desktop mouse; phone/tablet width views only",
+      "report": "runtime/report.json"
+    },
+    "nodeEquivalence": {
+      "pass": true,
+      "matchedFingerprints": 13,
+      "report": "benchmark/comparison-final.json"
+    },
+    "legacy": {
+      "pass": true,
+      "scenarios": 8,
+      "captures": 22,
+      "inputs": 1539,
+      "answers": 40,
+      "pointer": "Chromium touch; phone normal motion/tablet reduced motion",
+      "world": "legacy-world-v1; curved-owned-v1; native kit enabled; no authored floor",
+      "report": "legacy-regression/report.json"
+    },
+    "classicSmoke": {
+      "pass": true,
+      "count": 32,
+      "sourceFixed": true,
+      "inputs": 1539,
+      "scope": "Explicit classic Explore; not Growing/art evidence",
+      "report": "classic-smoke/browser/smoke-report.json",
+      "executionReport": "classic-smoke/execution-report.json"
+    }
+  },
+  "profilingScope": "Single headed ANGLE SwiftShader runs with sampling overhead. rAF markers and CPU samples are not GPU presentation time or device performance."
+}

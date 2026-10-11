@@ -10,7 +10,10 @@ import type { IslandWorld } from '../../../domain/growingIsland/worldDefinition'
 export function placePathEdges(state: GrowingState, places: readonly DerivedPlace[], world?: IslandWorld): [Cell, Cell][] {
     const open = walkableCells(state, world), network = new Map<string, Cell>([[key(HOME_CELL), HOME_CELL]]);
     if (world && !open.has(key(HOME_CELL))) return [];
-    const supported = (cell: Cell) => Boolean(world ? world.floorAt(cell) : onLand(state, cell)) && open.has(key(cell));
+    // Compiled authored sites already have a real dry floor. The open set grants
+    // this graph access; checking those same nodes against the triangles again
+    // changes no route and repeats the expensive floor query for every neighbour.
+    const supported = (cell: Cell) => (world ? true : onLand(state, cell)) && open.has(key(cell));
     const targets: Cell[][] = state.plots.filter(plot => plot.kind === 'home' && plot.stage >= 2 && plot.cell)
         .map(plot => approachCells(plot.cell!, world).filter(supported));
     targets.push(...places.filter(place => place.stage === 'grown' || place.stage === 'lived')
@@ -44,6 +47,9 @@ export function buildPlacePaths(state: GrowingState, layout: SceneLayout, places
     const world = layout.authored ? layout.world : undefined, edges = placePathEdges(state, places, world);
     const water = new Set(state.landmarks.filter(item => item.kind === 'water-channel' && item.cell).map(item => key(item.cell!)));
     const vertices: number[] = [], indices: number[] = [];
+    // Adjacent triangles reuse immutable vertices. Cache both dry support and
+    // rejection, while each face still checks its own shoreline-spanning centre.
+    const vertexSupport: (Cell | false | undefined)[] = [];
     const joints = new Map<string, Cell>();
     for (const [a, b] of edges) {
         // Existing supplied channels already carry their real stepping surface.
@@ -86,8 +92,16 @@ export function buildPlacePaths(state: GrowingState, layout: SceneLayout, places
 
     function supportedFace(face: number[]) {
         if (!world) return true;
-        const cells = face.map(index => layout.logicalAt({ x: vertices[index * 3], z: vertices[index * 3 + 2] }));
-        if (cells.some(cell => !world.floorAt(cell))) return false;
+        const cells: Cell[] = [];
+        for (const index of face) {
+            let cell = vertexSupport[index];
+            if (cell === undefined) {
+                const at = layout.logicalAt({ x: vertices[index * 3], z: vertices[index * 3 + 2] });
+                cell = world.floorAt(at) ? at : false; vertexSupport[index] = cell;
+            }
+            if (cell === false) return false;
+            cells.push(cell);
+        }
         // Skin remains decoration on supported ground, never a spanning bridge.
         return world.floorAt({ x: cells.reduce((sum, cell) => sum + cell.x, 0) / 3, z: cells.reduce((sum, cell) => sum + cell.z, 0) / 3 }) !== undefined;
     }

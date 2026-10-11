@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import * as T from 'three';
 import { newIsland } from '../../../domain/growingIsland/island';
 import { compileWorldDefinition } from '../../../domain/growingIsland/worldDefinition';
@@ -26,5 +26,24 @@ describe('authored layout uses actual floor and planting rights', () => {
         for (const p of [new T.Vector3(1.45 - layout.center, -.2, 1.1 - 2), new T.Vector3(-1.2 - layout.center, 0, -2), layout.point({ x: 0, z: 0 }, .5)]) {
             const cell = layout.cellAt(p); expect(Number.isFinite(cell.x)).toBe(false); expect(world.owns(cell)).toBe(false);
         }
+    });
+    it('reuses immutable floor answers across builders without sharing their mutable output', () => {
+        const world = compileWorldDefinition(inletWorldDefinition()), floorAt = vi.fn(world.floorAt);
+        const layout = sceneLayout(newIsland('floor-reuse', 0), false, { ...world, floorAt });
+        const cell = { x: .17, z: .23 }, expected = world.floorAt(cell)!.point;
+        floorAt.mockClear();
+        const first = layout.point(cell, 0), projected = layout.projected(cell);
+        expect(layout.heightAt(cell)).toBe(expected.y);
+        expect(first.toArray()).toEqual([expected.x - layout.center, expected.y, expected.z - 2]);
+        expect(projected).toEqual({ x: expected.x, z: expected.z });
+        first.set(99, 99, 99); projected.x = 99;
+        expect(layout.point(cell, .2).toArray()).toEqual([expected.x - layout.center, expected.y + .2, expected.z - 2]);
+        expect(layout.projected(cell)).toEqual({ x: expected.x, z: expected.z });
+        expect(floorAt).toHaveBeenCalledTimes(1);
+        const missing = { x: 1, z: 1 };
+        expect(world.floorAt(missing)).toBeUndefined();
+        layout.point(missing); layout.heightAt(missing); layout.projected(missing);
+        expect(floorAt).toHaveBeenCalledTimes(2);
+        expect(Number.isNaN(layout.cellAt(layout.point(missing)).x)).toBe(true);
     });
 });

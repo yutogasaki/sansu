@@ -1,0 +1,3467 @@
+{
+  "schema": "sansu-authored-domain-action-performance-v1",
+  "measuredAt": "2026-10-11T08:03:28.603Z",
+  "node": "v24.18.0",
+  "fixtureSha": "b3b379c9a3033b2fdcf8f5dade0b857ebb4cada1c8909bae4133e9bc2e923c11",
+  "worldSha": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08",
+  "bundleSha": "47f500e20b45878c8486f68d1ce5140214f4c99161cd9f789f817281b4787577",
+  "instrumentation": [
+    {
+      "file": "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/placeGoals.ts",
+      "function": "syncPlaceMilestones"
+    },
+    {
+      "file": "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/placeGoals.ts",
+      "function": "recordPlaceShown"
+    },
+    {
+      "file": "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/placeGoals.ts",
+      "function": "recordPlaceUse"
+    },
+    {
+      "file": "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/space.ts",
+      "function": "reachableFromHome"
+    },
+    {
+      "file": "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/commands.ts",
+      "function": "canPlace"
+    },
+    {
+      "file": "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/commands.ts",
+      "function": "canReachHomePlacement"
+    },
+    {
+      "file": "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/places.ts",
+      "function": "derivePlaces"
+    }
+  ],
+  "sourceShaStart": {
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/worldDefinition.ts": "23cf7eab5d9bbd769b352a92713a45136c228b22c5860405ecdb14cfb85fd5fa",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/rules.ts": "0a4e0289c595318443683fcbcf330d397b532f433d3faa993900fc986a8e6727",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/footprint.ts": "756e569dff83698e12dc6401fb96be06a23b950b003df4b1af21b8a1aa38916b",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/types.ts": "5143e59dc2589b9330e702eeb1cdf97747d30db5d24b77418ddf7c181aa5ac7a",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/authoredWorldAccess.ts": "d87189a7356bbb5f0061080dbbabb443bd0d9cb9ae6729661d6c457bf13f5df9",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/space.ts": "937cc2134783effa40dca4dcf8acbef52ef131a99b8c2c64e2ebd70c228daa38",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/guidance.ts": "5dac8f98ca616ed23a756989b78d2d9372a993d958ad94b4746cff82d092188a",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/economyRules.ts": "2feb596641a89a83ff6fb7cd915548f3bcf9a8212ddafa75ddc05910e4091272",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/model.ts": "c373f5a532347d3f030420f40774a85e8a9434b095cb763138a34b45cd925ea3",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/decorations.ts": "5cfbccce407f289411af0f7317fa15ad96eea8f6abfb52b79a89203f4195ecb1",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/landRules.ts": "db73f083a1e73dbfa280401898a406afe9a8294d51d7aaaa5cf57140942dd774",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/walkingSpace.ts": "5143cdea48aa648b4b2b34f8920168d61b0ea0ed4034b3890e0a76a1c7b85827",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/space.ts": "699f197c86b4e7142b20a1790a6adefd3287445848c708990dc9c5c1423fff55",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/waterChannels.ts": "b98fef9f0eea7ed48e79890826689db3cbc0cd4a763c8d43eae95254a146f988",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/environment.ts": "e965f2cd29601e5ee10f5b6dd9861a937e6c4b6ce3f71c35ad9c330109ab97f5",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/community.ts": "878c1dbc8a73f2e45e1c7960201fceaf4c272d57f1a9e803d6fbc2162ff668c6",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/room.ts": "f1cfb631a26122546043ec3859926faba565e148802f498bd01fb346fa66d576",
+    "/Users/yutogasaki/Projects/sansu/src/domain/natureTown/random.ts": "45919ef8e7eb46920e60fe20b7992b96621fb9c1f889c81ddcce8d12496cbce9",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/random.ts": "2d3e35f0f26da88acc2228454193fda88b759ac9f58ce8cc96d96b2234c01175",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/flowers.ts": "74c38a6ae4239e97831e2707a4a8f75ab0e0b39f113038bc65626d6c424b561d",
+    "/Users/yutogasaki/Projects/sansu/docs/product/island-place-goals.json": "c4714aae51b3b0504ee23e999276518541aa13a0c80b05768d82112f172f4424",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/placeCatalog.ts": "af31b65939c6c58fd4471ef55de8bab4f2a792287caebd648bb7de37282bbb47",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/nature.ts": "73a7a4b2d18bfaf84b7ec0b724e07e7ec13088a36eae31b54313d597949be733",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/placeTerrain.ts": "b79248f1bf23a324b152d9e36310aeabcaa8a30abeae58b535f8c40f9cc7d28d",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/places.ts": "b3ef4eb75ef5ef77ad4ba32d5f9d0ed98bcf19d0c7f6ed1d30e33479be459929",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/placeTypes.ts": "38bc1f892b3f36a8103aec06af671bf00121b346c92fe354c4c63ef50ed0debf",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/placeGoals.ts": "a13068b746555998680b5cf2a77bfe7d11308ce1880f595ad13d7c0aa3af7fe6",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/names.ts": "56c4b4015d07f65733b373431ef6316a3ec908f6461929f5af10f4f0d6f078fc",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/pier.ts": "67a3e80f4d49bd8d8109992a7f9c12e88588ec5a86959c669f02d326c83c1bef",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/town.ts": "68b955dba55b4ca4447d90358e913eb6e1b1808141e12416dea32b1e47061fa1",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/commands.ts": "83075176c77132ff5db6691e39d914106d1f19250e79f14325885ebc502e2c79",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/placeRelations.ts": "70f261a0db7aa279a75307fd7adbb77bd0f77188209d3d88beacdfe6f1b53f09",
+    "/Users/yutogasaki/Projects/sansu/prototypes/place-qa/authored-fixture.json": "b3b379c9a3033b2fdcf8f5dade0b857ebb4cada1c8909bae4133e9bc2e923c11",
+    "/Users/yutogasaki/Projects/sansu/prototypes/place-qa/native05-world.json.gz": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08"
+  },
+  "sourceShaEnd": {
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/worldDefinition.ts": "23cf7eab5d9bbd769b352a92713a45136c228b22c5860405ecdb14cfb85fd5fa",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/rules.ts": "0a4e0289c595318443683fcbcf330d397b532f433d3faa993900fc986a8e6727",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/footprint.ts": "756e569dff83698e12dc6401fb96be06a23b950b003df4b1af21b8a1aa38916b",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/types.ts": "5143e59dc2589b9330e702eeb1cdf97747d30db5d24b77418ddf7c181aa5ac7a",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/authoredWorldAccess.ts": "d87189a7356bbb5f0061080dbbabb443bd0d9cb9ae6729661d6c457bf13f5df9",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/space.ts": "937cc2134783effa40dca4dcf8acbef52ef131a99b8c2c64e2ebd70c228daa38",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/guidance.ts": "5dac8f98ca616ed23a756989b78d2d9372a993d958ad94b4746cff82d092188a",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/economyRules.ts": "2feb596641a89a83ff6fb7cd915548f3bcf9a8212ddafa75ddc05910e4091272",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/model.ts": "c373f5a532347d3f030420f40774a85e8a9434b095cb763138a34b45cd925ea3",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/decorations.ts": "5cfbccce407f289411af0f7317fa15ad96eea8f6abfb52b79a89203f4195ecb1",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/landRules.ts": "db73f083a1e73dbfa280401898a406afe9a8294d51d7aaaa5cf57140942dd774",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/walkingSpace.ts": "5143cdea48aa648b4b2b34f8920168d61b0ea0ed4034b3890e0a76a1c7b85827",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/space.ts": "699f197c86b4e7142b20a1790a6adefd3287445848c708990dc9c5c1423fff55",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/waterChannels.ts": "b98fef9f0eea7ed48e79890826689db3cbc0cd4a763c8d43eae95254a146f988",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/environment.ts": "e965f2cd29601e5ee10f5b6dd9861a937e6c4b6ce3f71c35ad9c330109ab97f5",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/community.ts": "878c1dbc8a73f2e45e1c7960201fceaf4c272d57f1a9e803d6fbc2162ff668c6",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/room.ts": "f1cfb631a26122546043ec3859926faba565e148802f498bd01fb346fa66d576",
+    "/Users/yutogasaki/Projects/sansu/src/domain/natureTown/random.ts": "45919ef8e7eb46920e60fe20b7992b96621fb9c1f889c81ddcce8d12496cbce9",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/random.ts": "2d3e35f0f26da88acc2228454193fda88b759ac9f58ce8cc96d96b2234c01175",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/flowers.ts": "74c38a6ae4239e97831e2707a4a8f75ab0e0b39f113038bc65626d6c424b561d",
+    "/Users/yutogasaki/Projects/sansu/docs/product/island-place-goals.json": "c4714aae51b3b0504ee23e999276518541aa13a0c80b05768d82112f172f4424",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/placeCatalog.ts": "af31b65939c6c58fd4471ef55de8bab4f2a792287caebd648bb7de37282bbb47",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/nature.ts": "73a7a4b2d18bfaf84b7ec0b724e07e7ec13088a36eae31b54313d597949be733",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/placeTerrain.ts": "b79248f1bf23a324b152d9e36310aeabcaa8a30abeae58b535f8c40f9cc7d28d",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/places.ts": "b3ef4eb75ef5ef77ad4ba32d5f9d0ed98bcf19d0c7f6ed1d30e33479be459929",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/placeTypes.ts": "38bc1f892b3f36a8103aec06af671bf00121b346c92fe354c4c63ef50ed0debf",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/placeGoals.ts": "a13068b746555998680b5cf2a77bfe7d11308ce1880f595ad13d7c0aa3af7fe6",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/names.ts": "56c4b4015d07f65733b373431ef6316a3ec908f6461929f5af10f4f0d6f078fc",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/pier.ts": "67a3e80f4d49bd8d8109992a7f9c12e88588ec5a86959c669f02d326c83c1bef",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/town.ts": "68b955dba55b4ca4447d90358e913eb6e1b1808141e12416dea32b1e47061fa1",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/commands.ts": "83075176c77132ff5db6691e39d914106d1f19250e79f14325885ebc502e2c79",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/placeRelations.ts": "70f261a0db7aa279a75307fd7adbb77bd0f77188209d3d88beacdfe6f1b53f09",
+    "/Users/yutogasaki/Projects/sansu/prototypes/place-qa/authored-fixture.json": "b3b379c9a3033b2fdcf8f5dade0b857ebb4cada1c8909bae4133e9bc2e923c11",
+    "/Users/yutogasaki/Projects/sansu/prototypes/place-qa/native05-world.json.gz": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08"
+  },
+  "sourceUnchanged": true,
+  "compileMs": 426.93516600000004,
+  "tree": {
+    "id": "l13",
+    "cell": {
+      "x": 4,
+      "z": -8
+    },
+    "target": {
+      "x": 7,
+      "z": -8
+    }
+  },
+  "sites": 73,
+  "owners": 27,
+  "initialGrown": 5,
+  "preparedUseHistory": 9,
+  "results": [
+    {
+      "name": "allowed.canPlace.all73.initial",
+      "repeats": 7,
+      "p50Ms": 0.15008299999999508,
+      "minMs": 0.13212499999997362,
+      "maxMs": 0.40483400000005076,
+      "probe": {
+        "canPlace": {
+          "callsEach": [
+            73,
+            73,
+            73,
+            73,
+            73,
+            73,
+            73
+          ],
+          "p50InclusiveMs": 0.14349300000037601
+        }
+      },
+      "result": 44,
+      "runs": [
+        {
+          "ms": 0.40483400000005076,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.3661299999999983
+            }
+          }
+        },
+        {
+          "ms": 0.19862499999999272,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.18982999999968797
+            }
+          }
+        },
+        {
+          "ms": 0.15858300000002146,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.14520600000025752
+            }
+          }
+        },
+        {
+          "ms": 0.13708300000007512,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.1307509999995773
+            }
+          }
+        },
+        {
+          "ms": 0.15008299999999508,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.14349300000037601
+            }
+          }
+        },
+        {
+          "ms": 0.13212499999997362,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.12594700000022385
+            }
+          }
+        },
+        {
+          "ms": 0.1492919999999458,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.1347489999998288
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "allowed.canPlace.all73.moved",
+      "repeats": 7,
+      "p50Ms": 0.1966659999999365,
+      "minMs": 0.1323330000000169,
+      "maxMs": 0.5794579999999314,
+      "probe": {
+        "canPlace": {
+          "callsEach": [
+            73,
+            73,
+            73,
+            73,
+            73,
+            73,
+            73
+          ],
+          "p50InclusiveMs": 0.1904620000001387
+        }
+      },
+      "result": 44,
+      "runs": [
+        {
+          "ms": 0.5794579999999314,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.5672450000004119
+            }
+          }
+        },
+        {
+          "ms": 0.22641699999996945,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.21141999999997552
+            }
+          }
+        },
+        {
+          "ms": 0.3844579999999951,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.3695410000004813
+            }
+          }
+        },
+        {
+          "ms": 0.1323330000000169,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.12804599999969923
+            }
+          }
+        },
+        {
+          "ms": 0.1966659999999365,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.1904620000001387
+            }
+          }
+        },
+        {
+          "ms": 0.18062499999996362,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.17383000000040738
+            }
+          }
+        },
+        {
+          "ms": 0.1827499999999418,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.17549800000017513
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "allowed.canPlace.all73.stored",
+      "repeats": 7,
+      "p50Ms": 0.16095799999993687,
+      "minMs": 0.11879199999998491,
+      "maxMs": 0.27179100000000744,
+      "probe": {
+        "canPlace": {
+          "callsEach": [
+            73,
+            73,
+            73,
+            73,
+            73,
+            73,
+            73
+          ],
+          "p50InclusiveMs": 0.15463000000045213
+        }
+      },
+      "result": 44,
+      "runs": [
+        {
+          "ms": 0.12287500000002183,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.11870500000009088
+            }
+          }
+        },
+        {
+          "ms": 0.12008299999990868,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.11608600000022307
+            }
+          }
+        },
+        {
+          "ms": 0.21937500000001364,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.21229899999980262
+            }
+          }
+        },
+        {
+          "ms": 0.27179100000000744,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.26283300000068266
+            }
+          }
+        },
+        {
+          "ms": 0.16095799999993687,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.15463000000045213
+            }
+          }
+        },
+        {
+          "ms": 0.1955000000000382,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.1890019999998458
+            }
+          }
+        },
+        {
+          "ms": 0.11879199999998491,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.11458800000036717
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "allowed.canPlace.all73.restored",
+      "repeats": 7,
+      "p50Ms": 0.12520800000004328,
+      "minMs": 0.09516699999994671,
+      "maxMs": 0.18062499999996362,
+      "probe": {
+        "canPlace": {
+          "callsEach": [
+            73,
+            73,
+            73,
+            73,
+            73,
+            73,
+            73
+          ],
+          "p50InclusiveMs": 0.12087000000008175
+        }
+      },
+      "result": 44,
+      "runs": [
+        {
+          "ms": 0.18062499999996362,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.17550200000016503
+            }
+          }
+        },
+        {
+          "ms": 0.12520800000004328,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.12087000000008175
+            }
+          }
+        },
+        {
+          "ms": 0.16104200000006585,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.15495099999998274
+            }
+          }
+        },
+        {
+          "ms": 0.09516699999994671,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.09111699999994016
+            }
+          }
+        },
+        {
+          "ms": 0.13833299999998871,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.13437999999973727
+            }
+          }
+        },
+        {
+          "ms": 0.11374999999998181,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.10946199999978035
+            }
+          }
+        },
+        {
+          "ms": 0.10904200000004494,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.10517099999992752
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "allowed.canReachHomePlacement.all73.existingHome",
+      "repeats": 5,
+      "p50Ms": 83.47508400000004,
+      "minMs": 81.177458,
+      "maxMs": 83.83600000000001,
+      "probe": {
+        "canPlace": {
+          "callsEach": [
+            73,
+            73,
+            73,
+            73,
+            73
+          ],
+          "p50InclusiveMs": 0.1534190000002127
+        },
+        "reachableFromHome": {
+          "callsEach": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "p50InclusiveMs": 74.50887799999987
+        },
+        "canReachHomePlacement": {
+          "callsEach": [
+            73,
+            73,
+            73,
+            73,
+            73
+          ],
+          "p50InclusiveMs": 83.44629300000054
+        }
+      },
+      "result": 42,
+      "runs": [
+        {
+          "ms": 83.83600000000001,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.15029600000059418
+            },
+            "reachableFromHome": {
+              "calls": 44,
+              "ms": 74.50887799999987
+            },
+            "canReachHomePlacement": {
+              "calls": 73,
+              "ms": 83.7290380000004
+            }
+          }
+        },
+        {
+          "ms": 83.13850000000002,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.15566599999988284
+            },
+            "reachableFromHome": {
+              "calls": 44,
+              "ms": 73.87841999999989
+            },
+            "canReachHomePlacement": {
+              "calls": 73,
+              "ms": 83.09841900000083
+            }
+          }
+        },
+        {
+          "ms": 83.47508400000004,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.1534190000002127
+            },
+            "reachableFromHome": {
+              "calls": 44,
+              "ms": 74.71033499999976
+            },
+            "canReachHomePlacement": {
+              "calls": 73,
+              "ms": 83.44629300000054
+            }
+          }
+        },
+        {
+          "ms": 81.177458,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.13037400000030175
+            },
+            "reachableFromHome": {
+              "calls": 44,
+              "ms": 72.65558200000032
+            },
+            "canReachHomePlacement": {
+              "calls": 73,
+              "ms": 81.15571299999976
+            }
+          }
+        },
+        {
+          "ms": 83.82637499999998,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.161045999999601
+            },
+            "reachableFromHome": {
+              "calls": 44,
+              "ms": 74.95208399999979
+            },
+            "canReachHomePlacement": {
+              "calls": 73,
+              "ms": 83.79554299999938
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "allowed.canReachHomePlacement.all73.newHome",
+      "repeats": 5,
+      "p50Ms": 83.36383300000011,
+      "minMs": 78.81808299999989,
+      "maxMs": 91.84108300000003,
+      "probe": {
+        "canPlace": {
+          "callsEach": [
+            73,
+            73,
+            73,
+            73,
+            73
+          ],
+          "p50InclusiveMs": 0.17050300000119023
+        },
+        "reachableFromHome": {
+          "callsEach": [
+            43,
+            43,
+            43,
+            43,
+            43
+          ],
+          "p50InclusiveMs": 74.12254199999938
+        },
+        "canReachHomePlacement": {
+          "callsEach": [
+            73,
+            73,
+            73,
+            73,
+            73
+          ],
+          "p50InclusiveMs": 83.33537599999954
+        }
+      },
+      "result": 41,
+      "runs": [
+        {
+          "ms": 84.26483299999995,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.22466999999937798
+            },
+            "reachableFromHome": {
+              "calls": 43,
+              "ms": 74.9076679999996
+            },
+            "canReachHomePlacement": {
+              "calls": 73,
+              "ms": 84.16421599999944
+            }
+          }
+        },
+        {
+          "ms": 78.81808299999989,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.12466399999971145
+            },
+            "reachableFromHome": {
+              "calls": 43,
+              "ms": 70.29229199999986
+            },
+            "canReachHomePlacement": {
+              "calls": 73,
+              "ms": 78.78837700000031
+            }
+          }
+        },
+        {
+          "ms": 81.69787500000007,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.13787200000069788
+            },
+            "reachableFromHome": {
+              "calls": 43,
+              "ms": 72.83958900000039
+            },
+            "canReachHomePlacement": {
+              "calls": 73,
+              "ms": 81.65049800000111
+            }
+          }
+        },
+        {
+          "ms": 91.84108300000003,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.17050300000119023
+            },
+            "reachableFromHome": {
+              "calls": 43,
+              "ms": 83.06203999999912
+            },
+            "canReachHomePlacement": {
+              "calls": 73,
+              "ms": 91.81750099999908
+            }
+          }
+        },
+        {
+          "ms": 83.36383300000011,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.24753799999894
+            },
+            "reachableFromHome": {
+              "calls": 43,
+              "ms": 74.12254199999938
+            },
+            "canReachHomePlacement": {
+              "calls": 73,
+              "ms": 83.33537599999954
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "applyIntent.move",
+      "repeats": 7,
+      "p50Ms": 30.885917000000063,
+      "minMs": 29.638125000000173,
+      "maxMs": 31.686583000000155,
+      "probe": {
+        "reachableFromHome": {
+          "callsEach": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "p50InclusiveMs": 3.6782499999999345
+        },
+        "derivePlaces": {
+          "callsEach": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "p50InclusiveMs": 28.519542
+        },
+        "syncPlaceMilestones": {
+          "callsEach": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "p50InclusiveMs": 30.7677920000001
+        }
+      },
+      "runs": [
+        {
+          "ms": 30.947749999999814,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 2,
+              "ms": 3.6210419999999885
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 28.519542
+            },
+            "syncPlaceMilestones": {
+              "calls": 1,
+              "ms": 30.772875000000113
+            }
+          }
+        },
+        {
+          "ms": 31.686583000000155,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 2,
+              "ms": 4.378373999999894
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 28.974958000000015
+            },
+            "syncPlaceMilestones": {
+              "calls": 1,
+              "ms": 31.550875000000133
+            }
+          }
+        },
+        {
+          "ms": 31.623417000000018,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 2,
+              "ms": 3.8335819999999785
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 29.34787499999993
+            },
+            "syncPlaceMilestones": {
+              "calls": 1,
+              "ms": 31.491708000000017
+            }
+          }
+        },
+        {
+          "ms": 30.885917000000063,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 2,
+              "ms": 3.6782499999999345
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 28.820875000000115
+            },
+            "syncPlaceMilestones": {
+              "calls": 1,
+              "ms": 30.7677920000001
+            }
+          }
+        },
+        {
+          "ms": 29.80945799999995,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 2,
+              "ms": 3.6101249999999254
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 27.641083999999864
+            },
+            "syncPlaceMilestones": {
+              "calls": 1,
+              "ms": 29.698624999999993
+            }
+          }
+        },
+        {
+          "ms": 30.05145799999991,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 2,
+              "ms": 3.55275000000006
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 27.78758400000015
+            },
+            "syncPlaceMilestones": {
+              "calls": 1,
+              "ms": 29.91604099999995
+            }
+          }
+        },
+        {
+          "ms": 29.638125000000173,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 2,
+              "ms": 3.7304589999998825
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 27.219458999999915
+            },
+            "syncPlaceMilestones": {
+              "calls": 1,
+              "ms": 29.47420800000009
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "applyIntent.store",
+      "repeats": 7,
+      "p50Ms": 28.049332999999933,
+      "minMs": 27.563666000000012,
+      "maxMs": 29.17758300000014,
+      "probe": {
+        "reachableFromHome": {
+          "callsEach": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "p50InclusiveMs": 3.64387499999998
+        },
+        "derivePlaces": {
+          "callsEach": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "p50InclusiveMs": 25.809291999999914
+        },
+        "syncPlaceMilestones": {
+          "callsEach": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "p50InclusiveMs": 27.945666999999958
+        }
+      },
+      "runs": [
+        {
+          "ms": 28.04275000000007,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 2,
+              "ms": 3.6160840000000007
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 25.75258400000007
+            },
+            "syncPlaceMilestones": {
+              "calls": 1,
+              "ms": 27.8544159999999
+            }
+          }
+        },
+        {
+          "ms": 28.049332999999933,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 2,
+              "ms": 3.8005829999999605
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 25.809291999999914
+            },
+            "syncPlaceMilestones": {
+              "calls": 1,
+              "ms": 27.945666999999958
+            }
+          }
+        },
+        {
+          "ms": 28.143916999999874,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 2,
+              "ms": 3.6113339999999425
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 25.885334000000057
+            },
+            "syncPlaceMilestones": {
+              "calls": 1,
+              "ms": 28.039665999999897
+            }
+          }
+        },
+        {
+          "ms": 29.17758300000014,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 2,
+              "ms": 3.915416999999934
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 26.636416999999938
+            },
+            "syncPlaceMilestones": {
+              "calls": 1,
+              "ms": 29.06116700000007
+            }
+          }
+        },
+        {
+          "ms": 28.0920000000001,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 2,
+              "ms": 3.7022499999998217
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 25.93029200000001
+            },
+            "syncPlaceMilestones": {
+              "calls": 1,
+              "ms": 27.97395799999981
+            }
+          }
+        },
+        {
+          "ms": 27.563666000000012,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 2,
+              "ms": 3.6112080000000333
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 25.30579200000011
+            },
+            "syncPlaceMilestones": {
+              "calls": 1,
+              "ms": 27.451166000000057
+            }
+          }
+        },
+        {
+          "ms": 27.914541999999983,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 2,
+              "ms": 3.64387499999998
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 25.604500000000144
+            },
+            "syncPlaceMilestones": {
+              "calls": 1,
+              "ms": 27.77150000000006
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "applyIntent.unstore",
+      "repeats": 7,
+      "p50Ms": 30.73133299999995,
+      "minMs": 29.817708999999923,
+      "maxMs": 34.31574999999998,
+      "probe": {
+        "reachableFromHome": {
+          "callsEach": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "p50InclusiveMs": 3.9330830000001242
+        },
+        "derivePlaces": {
+          "callsEach": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "p50InclusiveMs": 28.21966599999996
+        },
+        "syncPlaceMilestones": {
+          "callsEach": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "p50InclusiveMs": 30.62258399999996
+        }
+      },
+      "runs": [
+        {
+          "ms": 30.036207999999988,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 2,
+              "ms": 3.6926249999999072
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 27.81179199999997
+            },
+            "syncPlaceMilestones": {
+              "calls": 1,
+              "ms": 29.888959000000114
+            }
+          }
+        },
+        {
+          "ms": 30.73133299999995,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 2,
+              "ms": 3.9330830000001242
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 28.245541000000003
+            },
+            "syncPlaceMilestones": {
+              "calls": 1,
+              "ms": 30.62258399999996
+            }
+          }
+        },
+        {
+          "ms": 32.359208999999964,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 2,
+              "ms": 4.320832999999993
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 29.24929199999997
+            },
+            "syncPlaceMilestones": {
+              "calls": 1,
+              "ms": 32.10208399999988
+            }
+          }
+        },
+        {
+          "ms": 34.31574999999998,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 2,
+              "ms": 3.97004099999981
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 32.14516700000013
+            },
+            "syncPlaceMilestones": {
+              "calls": 1,
+              "ms": 34.19187500000021
+            }
+          }
+        },
+        {
+          "ms": 29.817708999999923,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 2,
+              "ms": 3.852581999999984
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 27.582625000000007
+            },
+            "syncPlaceMilestones": {
+              "calls": 1,
+              "ms": 29.699916999999914
+            }
+          }
+        },
+        {
+          "ms": 30.260291999999936,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 2,
+              "ms": 3.5982080000003407
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 28.00237500000003
+            },
+            "syncPlaceMilestones": {
+              "calls": 1,
+              "ms": 30.130999999999858
+            }
+          }
+        },
+        {
+          "ms": 30.901041000000077,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 2,
+              "ms": 4.015709000000243
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 28.21966599999996
+            },
+            "syncPlaceMilestones": {
+              "calls": 1,
+              "ms": 30.77404200000001
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "render.allowedPlusDerive.initial",
+      "repeats": 7,
+      "p50Ms": 28.91300000000001,
+      "minMs": 27.790042000000085,
+      "maxMs": 29.54529199999979,
+      "probe": {
+        "canPlace": {
+          "callsEach": [
+            73,
+            73,
+            73,
+            73,
+            73,
+            73,
+            73
+          ],
+          "p50InclusiveMs": 0.12861800000018775
+        },
+        "reachableFromHome": {
+          "callsEach": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "p50InclusiveMs": 1.8288330000000315
+        },
+        "derivePlaces": {
+          "callsEach": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "p50InclusiveMs": 28.77212499999996
+        }
+      },
+      "result": 50,
+      "runs": [
+        {
+          "ms": 27.790042000000085,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.12200300000131392
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.6229999999995925
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 27.524625000000015
+            }
+          }
+        },
+        {
+          "ms": 27.846541999999772,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.12861800000018775
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.7950000000000728
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 27.704749999999876
+            }
+          }
+        },
+        {
+          "ms": 27.865374999999858,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.1283320000002277
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.8288330000000315
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 27.721457999999984
+            }
+          }
+        },
+        {
+          "ms": 29.07950000000028,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.14575299999933122
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.8306250000000546
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 28.917374999999993
+            }
+          }
+        },
+        {
+          "ms": 29.54529199999979,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.14054099999930258
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 2.1185420000001614
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 29.38933300000008
+            }
+          }
+        },
+        {
+          "ms": 28.91300000000001,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.1273750000009386
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.6773339999999735
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 28.77212499999996
+            }
+          }
+        },
+        {
+          "ms": 29.306332999999995,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.12900199999830875
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.9872080000000096
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 29.153959000000214
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "render.allowedPlusDerive.moved",
+      "repeats": 7,
+      "p50Ms": 27.718583000000308,
+      "minMs": 27.45908300000019,
+      "maxMs": 28.82787499999995,
+      "probe": {
+        "canPlace": {
+          "callsEach": [
+            73,
+            73,
+            73,
+            73,
+            73,
+            73,
+            73
+          ],
+          "p50InclusiveMs": 0.09129299999722207
+        },
+        "reachableFromHome": {
+          "callsEach": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "p50InclusiveMs": 1.8112500000002
+        },
+        "derivePlaces": {
+          "callsEach": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "p50InclusiveMs": 27.616915999999947
+        }
+      },
+      "result": 50,
+      "runs": [
+        {
+          "ms": 28.82787499999995,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.09129299999722207
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.810624999999618
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 28.726750000000266
+            }
+          }
+        },
+        {
+          "ms": 28.36216599999989,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.14433299999973315
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 2.0045420000001286
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 28.201666999999816
+            }
+          }
+        },
+        {
+          "ms": 27.6359580000003,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.08616700000175115
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.7030420000000959
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 27.530833000000257
+            }
+          }
+        },
+        {
+          "ms": 27.718583000000308,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.09016600000040853
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 2.1639169999998558
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 27.616915999999947
+            }
+          }
+        },
+        {
+          "ms": 27.57504199999994,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.09829399999898669
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.8112500000002
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 27.466249999999945
+            }
+          }
+        },
+        {
+          "ms": 28.179959000000053,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.09116099999982907
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.6806660000002012
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 28.075209000000086
+            }
+          }
+        },
+        {
+          "ms": 27.45908300000019,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.09142199999723744
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.8323340000001735
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 27.35758399999986
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "render.allowedPlusDerive.stored",
+      "repeats": 7,
+      "p50Ms": 25.844834000000446,
+      "minMs": 25.685958000000028,
+      "maxMs": 27.86929199999986,
+      "probe": {
+        "canPlace": {
+          "callsEach": [
+            73,
+            73,
+            73,
+            73,
+            73,
+            73,
+            73
+          ],
+          "p50InclusiveMs": 0.08749799999986863
+        },
+        "reachableFromHome": {
+          "callsEach": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "p50InclusiveMs": 1.826082999999926
+        },
+        "derivePlaces": {
+          "callsEach": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "p50InclusiveMs": 25.747292000000016
+        }
+      },
+      "result": 49,
+      "runs": [
+        {
+          "ms": 26.797165999999834,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.08712900000227819
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.826082999999926
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 26.702167000000372
+            }
+          }
+        },
+        {
+          "ms": 25.844834000000446,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.08749799999986863
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.7462080000000242
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 25.747292000000016
+            }
+          }
+        },
+        {
+          "ms": 27.86929199999986,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.13086999999768523
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 2.2312090000000353
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 27.724167000000307
+            }
+          }
+        },
+        {
+          "ms": 25.71033299999999,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.08395999999629566
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.7503750000000764
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 25.615041999999903
+            }
+          }
+        },
+        {
+          "ms": 25.80533299999979,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.08908800000108386
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.7959999999998217
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 25.70662500000026
+            }
+          }
+        },
+        {
+          "ms": 26.96137499999986,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.10570800000232339
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.8702080000002752
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 26.84158400000024
+            }
+          }
+        },
+        {
+          "ms": 25.685958000000028,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.08457699999917168
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.856999999999971
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 25.591875000000073
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "render.allowedPlusDerive.restored",
+      "repeats": 7,
+      "p50Ms": 28.324583000000075,
+      "minMs": 27.733708999999635,
+      "maxMs": 29.280459000000064,
+      "probe": {
+        "canPlace": {
+          "callsEach": [
+            73,
+            73,
+            73,
+            73,
+            73,
+            73,
+            73
+          ],
+          "p50InclusiveMs": 0.08137899999883302
+        },
+        "reachableFromHome": {
+          "callsEach": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "p50InclusiveMs": 1.7956659999999829
+        },
+        "derivePlaces": {
+          "callsEach": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "p50InclusiveMs": 28.232582999999977
+        }
+      },
+      "result": 50,
+      "runs": [
+        {
+          "ms": 29.280459000000064,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.08137899999883302
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.9505420000000413
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 29.192457999999988
+            }
+          }
+        },
+        {
+          "ms": 28.32537500000035,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.08191899999656016
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.6088329999997768
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 28.234666999999718
+            }
+          }
+        },
+        {
+          "ms": 28.306375000000116,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.08083100000249033
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.6877089999998134
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 28.216750000000047
+            }
+          }
+        },
+        {
+          "ms": 27.899000000000342,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.08529700000008233
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.8427499999997963
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 27.802708000000166
+            }
+          }
+        },
+        {
+          "ms": 28.909415999999965,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.07799699999850418
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.8300829999998314
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 28.82312499999989
+            }
+          }
+        },
+        {
+          "ms": 28.324583000000075,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.08078800000157571
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.69787499999984
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 28.232582999999977
+            }
+          }
+        },
+        {
+          "ms": 27.733708999999635,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.0820369999983086
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.7956659999999829
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 27.638167000000067
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "preview.domain.predictAndRelations",
+      "repeats": 7,
+      "p50Ms": 33.7782500000003,
+      "minMs": 32.14833399999998,
+      "maxMs": 37.968083000000206,
+      "probe": {
+        "reachableFromHome": {
+          "callsEach": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "p50InclusiveMs": 3.7225829999997586
+        },
+        "derivePlaces": {
+          "callsEach": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "p50InclusiveMs": 28.34862499999963
+        }
+      },
+      "result": 2,
+      "runs": [
+        {
+          "ms": 37.968083000000206,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 2,
+              "ms": 4.264791999999943
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 32.02312499999971
+            }
+          }
+        },
+        {
+          "ms": 33.894582999999784,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 2,
+              "ms": 3.736333000000286
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 28.34862499999963
+            }
+          }
+        },
+        {
+          "ms": 33.7782500000003,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 2,
+              "ms": 3.7225829999997586
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 28.43941700000005
+            }
+          }
+        },
+        {
+          "ms": 33.35283299999992,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 2,
+              "ms": 3.7214170000002014
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 28.302625000000262
+            }
+          }
+        },
+        {
+          "ms": 32.14833399999998,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 2,
+              "ms": 3.612500000000182
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 27.114792000000307
+            }
+          }
+        },
+        {
+          "ms": 32.79133300000012,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 2,
+              "ms": 3.674123999999665
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 27.541041999999834
+            }
+          }
+        },
+        {
+          "ms": 34.436709000000064,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 2,
+              "ms": 4.081958000000213
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 29.078457999999955
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "callback.placeShown.one",
+      "repeats": 7,
+      "p50Ms": 56.957332999999835,
+      "minMs": 56.09616599999981,
+      "maxMs": 62.62937499999998,
+      "probe": {
+        "reachableFromHome": {
+          "callsEach": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "p50InclusiveMs": 5.3632510000002185
+        },
+        "derivePlaces": {
+          "callsEach": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "p50InclusiveMs": 54.69537500000024
+        },
+        "recordPlaceShown": {
+          "callsEach": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "p50InclusiveMs": 27.015082999999777
+        },
+        "syncPlaceMilestones": {
+          "callsEach": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "p50InclusiveMs": 29.578583999999864
+        }
+      },
+      "runs": [
+        {
+          "ms": 56.09616599999981,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 3,
+              "ms": 5.338291000000481
+            },
+            "derivePlaces": {
+              "calls": 2,
+              "ms": 53.95791700000018
+            },
+            "recordPlaceShown": {
+              "calls": 1,
+              "ms": 26.87737500000003
+            },
+            "syncPlaceMilestones": {
+              "calls": 1,
+              "ms": 29.08620800000017
+            }
+          }
+        },
+        {
+          "ms": 62.62937499999998,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 3,
+              "ms": 5.431292000000212
+            },
+            "derivePlaces": {
+              "calls": 2,
+              "ms": 60.304167000000234
+            },
+            "recordPlaceShown": {
+              "calls": 1,
+              "ms": 29.851458000000093
+            },
+            "syncPlaceMilestones": {
+              "calls": 1,
+              "ms": 32.670208
+            }
+          }
+        },
+        {
+          "ms": 56.38487499999974,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 3,
+              "ms": 5.375750000000153
+            },
+            "derivePlaces": {
+              "calls": 2,
+              "ms": 54.09733399999959
+            },
+            "recordPlaceShown": {
+              "calls": 1,
+              "ms": 26.701000000000022
+            },
+            "syncPlaceMilestones": {
+              "calls": 1,
+              "ms": 29.578583999999864
+            }
+          }
+        },
+        {
+          "ms": 57.830541999999696,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 3,
+              "ms": 5.3632510000002185
+            },
+            "derivePlaces": {
+              "calls": 2,
+              "ms": 55.586583999999675
+            },
+            "recordPlaceShown": {
+              "calls": 1,
+              "ms": 27.639832999999726
+            },
+            "syncPlaceMilestones": {
+              "calls": 1,
+              "ms": 30.08783399999993
+            }
+          }
+        },
+        {
+          "ms": 57.203125,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 3,
+              "ms": 5.5934180000003835
+            },
+            "derivePlaces": {
+              "calls": 2,
+              "ms": 54.99045799999976
+            },
+            "recordPlaceShown": {
+              "calls": 1,
+              "ms": 27.015082999999777
+            },
+            "syncPlaceMilestones": {
+              "calls": 1,
+              "ms": 30.073167000000012
+            }
+          }
+        },
+        {
+          "ms": 56.957332999999835,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 3,
+              "ms": 5.329374000000371
+            },
+            "derivePlaces": {
+              "calls": 2,
+              "ms": 54.69537500000024
+            },
+            "recordPlaceShown": {
+              "calls": 1,
+              "ms": 27.407500000000255
+            },
+            "syncPlaceMilestones": {
+              "calls": 1,
+              "ms": 29.410415999999714
+            }
+          }
+        },
+        {
+          "ms": 56.484665999999834,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 3,
+              "ms": 5.198208999999679
+            },
+            "derivePlaces": {
+              "calls": 2,
+              "ms": 54.369416999999885
+            },
+            "recordPlaceShown": {
+              "calls": 1,
+              "ms": 26.946750000000065
+            },
+            "syncPlaceMilestones": {
+              "calls": 1,
+              "ms": 29.43379099999993
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "callback.placeShown.all5grown",
+      "repeats": 7,
+      "p50Ms": 324.40591700000004,
+      "minMs": 312.40141700000004,
+      "maxMs": 351.1682499999997,
+      "probe": {
+        "reachableFromHome": {
+          "callsEach": [
+            16,
+            16,
+            16,
+            16,
+            16,
+            16,
+            16
+          ],
+          "p50InclusiveMs": 29.828419000001304
+        },
+        "derivePlaces": {
+          "callsEach": [
+            11,
+            11,
+            11,
+            11,
+            11,
+            11,
+            11
+          ],
+          "p50InclusiveMs": 312.434083000001
+        },
+        "recordPlaceShown": {
+          "callsEach": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "p50InclusiveMs": 142.19545900000003
+        },
+        "syncPlaceMilestones": {
+          "callsEach": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "p50InclusiveMs": 150.42299999999977
+        }
+      },
+      "runs": [
+        {
+          "ms": 328.85408400000006,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 16,
+              "ms": 31.317955999999413
+            },
+            "derivePlaces": {
+              "calls": 11,
+              "ms": 316.15916599999855
+            },
+            "recordPlaceShown": {
+              "calls": 5,
+              "ms": 142.19545900000003
+            },
+            "syncPlaceMilestones": {
+              "calls": 5,
+              "ms": 156.6181259999994
+            }
+          }
+        },
+        {
+          "ms": 312.40141700000004,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 16,
+              "ms": 28.98337800000263
+            },
+            "derivePlaces": {
+              "calls": 11,
+              "ms": 300.4886659999993
+            },
+            "recordPlaceShown": {
+              "calls": 5,
+              "ms": 135.40749899999992
+            },
+            "syncPlaceMilestones": {
+              "calls": 5,
+              "ms": 148.95474900000045
+            }
+          }
+        },
+        {
+          "ms": 315.552917,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 16,
+              "ms": 28.924627000001237
+            },
+            "derivePlaces": {
+              "calls": 11,
+              "ms": 304.28562299999976
+            },
+            "recordPlaceShown": {
+              "calls": 5,
+              "ms": 136.4299579999988
+            },
+            "syncPlaceMilestones": {
+              "calls": 5,
+              "ms": 149.21854200000053
+            }
+          }
+        },
+        {
+          "ms": 324.40591700000004,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 16,
+              "ms": 29.828419000001304
+            },
+            "derivePlaces": {
+              "calls": 11,
+              "ms": 312.434083000001
+            },
+            "recordPlaceShown": {
+              "calls": 5,
+              "ms": 146.56279099999938
+            },
+            "syncPlaceMilestones": {
+              "calls": 5,
+              "ms": 150.72670899999957
+            }
+          }
+        },
+        {
+          "ms": 312.55816700000014,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 16,
+              "ms": 28.789872000001196
+            },
+            "derivePlaces": {
+              "calls": 11,
+              "ms": 301.4442909999989
+            },
+            "recordPlaceShown": {
+              "calls": 5,
+              "ms": 138.76020799999878
+            },
+            "syncPlaceMilestones": {
+              "calls": 5,
+              "ms": 146.27391700000044
+            }
+          }
+        },
+        {
+          "ms": 351.1682499999997,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 16,
+              "ms": 32.44987199999923
+            },
+            "derivePlaces": {
+              "calls": 11,
+              "ms": 339.15845700000045
+            },
+            "recordPlaceShown": {
+              "calls": 5,
+              "ms": 159.59054100000048
+            },
+            "syncPlaceMilestones": {
+              "calls": 5,
+              "ms": 164.3000830000001
+            }
+          }
+        },
+        {
+          "ms": 336.12433299999975,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 16,
+              "ms": 30.438626999998633
+            },
+            "derivePlaces": {
+              "calls": 11,
+              "ms": 324.62400199999956
+            },
+            "recordPlaceShown": {
+              "calls": 5,
+              "ms": 156.20920900000056
+            },
+            "syncPlaceMilestones": {
+              "calls": 5,
+              "ms": 150.42299999999977
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "callback.placeUsed.pokomoko",
+      "repeats": 7,
+      "p50Ms": 89.80312500000036,
+      "minMs": 86.92174999999952,
+      "maxMs": 90.55612500000007,
+      "probe": {
+        "reachableFromHome": {
+          "callsEach": [
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6
+          ],
+          "p50InclusiveMs": 10.79316899999958
+        },
+        "derivePlaces": {
+          "callsEach": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "p50InclusiveMs": 82.75216600000022
+        },
+        "syncPlaceMilestones": {
+          "callsEach": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "p50InclusiveMs": 58.623459000000366
+        },
+        "recordPlaceUse": {
+          "callsEach": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "p50InclusiveMs": 59.39141599999948
+        }
+      },
+      "runs": [
+        {
+          "ms": 90.55612500000007,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 6,
+              "ms": 11.179999999998472
+            },
+            "derivePlaces": {
+              "calls": 3,
+              "ms": 82.9700840000005
+            },
+            "syncPlaceMilestones": {
+              "calls": 2,
+              "ms": 60.07304100000056
+            },
+            "recordPlaceUse": {
+              "calls": 1,
+              "ms": 59.77891699999964
+            }
+          }
+        },
+        {
+          "ms": 90.17966700000034,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 6,
+              "ms": 10.750667000001158
+            },
+            "derivePlaces": {
+              "calls": 3,
+              "ms": 83.76095900000018
+            },
+            "syncPlaceMilestones": {
+              "calls": 2,
+              "ms": 58.623459000000366
+            },
+            "recordPlaceUse": {
+              "calls": 1,
+              "ms": 61.2318750000004
+            }
+          }
+        },
+        {
+          "ms": 90.08125000000018,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 6,
+              "ms": 11.213541999998597
+            },
+            "derivePlaces": {
+              "calls": 3,
+              "ms": 82.75216600000022
+            },
+            "syncPlaceMilestones": {
+              "calls": 2,
+              "ms": 59.21537499999977
+            },
+            "recordPlaceUse": {
+              "calls": 1,
+              "ms": 61.06158400000004
+            }
+          }
+        },
+        {
+          "ms": 86.92174999999952,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 6,
+              "ms": 10.289667000000009
+            },
+            "derivePlaces": {
+              "calls": 3,
+              "ms": 80.55654099999992
+            },
+            "syncPlaceMilestones": {
+              "calls": 2,
+              "ms": 57.351042000000234
+            },
+            "recordPlaceUse": {
+              "calls": 1,
+              "ms": 57.983666000000085
+            }
+          }
+        },
+        {
+          "ms": 89.80312500000036,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 6,
+              "ms": 10.563915000000634
+            },
+            "derivePlaces": {
+              "calls": 3,
+              "ms": 83.26299899999958
+            },
+            "syncPlaceMilestones": {
+              "calls": 2,
+              "ms": 60.61283299999923
+            },
+            "recordPlaceUse": {
+              "calls": 1,
+              "ms": 59.39141599999948
+            }
+          }
+        },
+        {
+          "ms": 88.52408300000025,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 6,
+              "ms": 11.163418000000092
+            },
+            "derivePlaces": {
+              "calls": 3,
+              "ms": 81.80616800000098
+            },
+            "syncPlaceMilestones": {
+              "calls": 2,
+              "ms": 58.24291700000049
+            },
+            "recordPlaceUse": {
+              "calls": 1,
+              "ms": 58.73937500000011
+            }
+          }
+        },
+        {
+          "ms": 87.76975000000039,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 6,
+              "ms": 10.79316899999958
+            },
+            "derivePlaces": {
+              "calls": 3,
+              "ms": 80.94799999999941
+            },
+            "syncPlaceMilestones": {
+              "calls": 2,
+              "ms": 58.4788750000007
+            },
+            "recordPlaceUse": {
+              "calls": 1,
+              "ms": 58.755333000000064
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "callback.placeUsed.villager",
+      "repeats": 7,
+      "p50Ms": 96.0647910000007,
+      "minMs": 94.13995799999975,
+      "maxMs": 106.29600000000028,
+      "probe": {
+        "reachableFromHome": {
+          "callsEach": [
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9
+          ],
+          "p50InclusiveMs": 16.470250999999735
+        },
+        "derivePlaces": {
+          "callsEach": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "p50InclusiveMs": 82.82354199999918
+        },
+        "syncPlaceMilestones": {
+          "callsEach": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "p50InclusiveMs": 63.29354200000034
+        },
+        "recordPlaceUse": {
+          "callsEach": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "p50InclusiveMs": 63.83608400000048
+        }
+      },
+      "runs": [
+        {
+          "ms": 106.29600000000028,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 9,
+              "ms": 25.019288000001325
+            },
+            "derivePlaces": {
+              "calls": 3,
+              "ms": 84.9242920000006
+            },
+            "syncPlaceMilestones": {
+              "calls": 2,
+              "ms": 74.5453750000006
+            },
+            "recordPlaceUse": {
+              "calls": 1,
+              "ms": 72.87462499999947
+            }
+          }
+        },
+        {
+          "ms": 98.04954200000066,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 9,
+              "ms": 18.310542000001988
+            },
+            "derivePlaces": {
+              "calls": 3,
+              "ms": 82.82354199999918
+            },
+            "syncPlaceMilestones": {
+              "calls": 2,
+              "ms": 65.28037500000028
+            },
+            "recordPlaceUse": {
+              "calls": 1,
+              "ms": 63.83608400000048
+            }
+          }
+        },
+        {
+          "ms": 97.08508400000028,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 9,
+              "ms": 17.205501000000368
+            },
+            "derivePlaces": {
+              "calls": 3,
+              "ms": 83.98241699999926
+            },
+            "syncPlaceMilestones": {
+              "calls": 2,
+              "ms": 62.181666999998924
+            },
+            "recordPlaceUse": {
+              "calls": 1,
+              "ms": 66.11845799999992
+            }
+          }
+        },
+        {
+          "ms": 94.13995799999975,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 9,
+              "ms": 15.987626000001
+            },
+            "derivePlaces": {
+              "calls": 3,
+              "ms": 81.66474900000048
+            },
+            "syncPlaceMilestones": {
+              "calls": 2,
+              "ms": 61.85570800000005
+            },
+            "recordPlaceUse": {
+              "calls": 1,
+              "ms": 63.01704100000006
+            }
+          }
+        },
+        {
+          "ms": 96.0647910000007,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 9,
+              "ms": 16.01720800000203
+            },
+            "derivePlaces": {
+              "calls": 3,
+              "ms": 83.09208300000046
+            },
+            "syncPlaceMilestones": {
+              "calls": 2,
+              "ms": 63.90479200000027
+            },
+            "recordPlaceUse": {
+              "calls": 1,
+              "ms": 64.6397079999997
+            }
+          }
+        },
+        {
+          "ms": 94.54433299999982,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 9,
+              "ms": 16.35845999999856
+            },
+            "derivePlaces": {
+              "calls": 3,
+              "ms": 81.32687499999975
+            },
+            "syncPlaceMilestones": {
+              "calls": 2,
+              "ms": 61.88129200000003
+            },
+            "recordPlaceUse": {
+              "calls": 1,
+              "ms": 63.30187500000011
+            }
+          }
+        },
+        {
+          "ms": 94.17854100000022,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 9,
+              "ms": 16.470250999999735
+            },
+            "derivePlaces": {
+              "calls": 3,
+              "ms": 81.57591700000012
+            },
+            "syncPlaceMilestones": {
+              "calls": 2,
+              "ms": 63.29354200000034
+            },
+            "recordPlaceUse": {
+              "calls": 1,
+              "ms": 62.34450000000015
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "callback.placeUsed.all9actors",
+      "repeats": 5,
+      "p50Ms": 862.9595410000002,
+      "minMs": 859.2923329999994,
+      "maxMs": 895.4048750000002,
+      "probe": {
+        "reachableFromHome": {
+          "callsEach": [
+            78,
+            78,
+            78,
+            78,
+            78
+          ],
+          "p50InclusiveMs": 144.91445900000144
+        },
+        "derivePlaces": {
+          "callsEach": [
+            27,
+            27,
+            27,
+            27,
+            27
+          ],
+          "p50InclusiveMs": 749.0613739999972
+        },
+        "syncPlaceMilestones": {
+          "callsEach": [
+            18,
+            18,
+            18,
+            18,
+            18
+          ],
+          "p50InclusiveMs": 576.8619139999955
+        },
+        "recordPlaceUse": {
+          "callsEach": [
+            9,
+            9,
+            9,
+            9,
+            9
+          ],
+          "p50InclusiveMs": 578.8045010000023
+        }
+      },
+      "runs": [
+        {
+          "ms": 895.4048750000002,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 78,
+              "ms": 158.34457900000234
+            },
+            "derivePlaces": {
+              "calls": 27,
+              "ms": 768.1832059999942
+            },
+            "syncPlaceMilestones": {
+              "calls": 18,
+              "ms": 606.0159599999988
+            },
+            "recordPlaceUse": {
+              "calls": 9,
+              "ms": 595.1610009999986
+            }
+          }
+        },
+        {
+          "ms": 859.2923329999994,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 78,
+              "ms": 141.83116099999643
+            },
+            "derivePlaces": {
+              "calls": 27,
+              "ms": 746.5621239999982
+            },
+            "syncPlaceMilestones": {
+              "calls": 18,
+              "ms": 572.0267100000001
+            },
+            "recordPlaceUse": {
+              "calls": 9,
+              "ms": 573.2059159999972
+            }
+          }
+        },
+        {
+          "ms": 862.6165420000016,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 78,
+              "ms": 142.5969130000085
+            },
+            "derivePlaces": {
+              "calls": 27,
+              "ms": 749.0613739999972
+            },
+            "syncPlaceMilestones": {
+              "calls": 18,
+              "ms": 576.8619139999955
+            },
+            "recordPlaceUse": {
+              "calls": 9,
+              "ms": 578.8045010000023
+            }
+          }
+        },
+        {
+          "ms": 879.0802089999997,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 78,
+              "ms": 149.5898320000033
+            },
+            "derivePlaces": {
+              "calls": 27,
+              "ms": 759.5428310000025
+            },
+            "syncPlaceMilestones": {
+              "calls": 18,
+              "ms": 591.6231650000009
+            },
+            "recordPlaceUse": {
+              "calls": 9,
+              "ms": 592.5752480000028
+            }
+          }
+        },
+        {
+          "ms": 862.9595410000002,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 78,
+              "ms": 144.91445900000144
+            },
+            "derivePlaces": {
+              "calls": 27,
+              "ms": 748.8469609999993
+            },
+            "syncPlaceMilestones": {
+              "calls": 18,
+              "ms": 576.6032050000013
+            },
+            "recordPlaceUse": {
+              "calls": 9,
+              "ms": 577.934706
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "render.with9useHistory.allowedPlusDerive",
+      "repeats": 7,
+      "p50Ms": 27.38995900000009,
+      "minMs": 26.976542000000336,
+      "maxMs": 27.556791999999405,
+      "probe": {
+        "canPlace": {
+          "callsEach": [
+            73,
+            73,
+            73,
+            73,
+            73,
+            73,
+            73
+          ],
+          "p50InclusiveMs": 0.16195800000241434
+        },
+        "reachableFromHome": {
+          "callsEach": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "p50InclusiveMs": 1.7449579999993148
+        },
+        "derivePlaces": {
+          "callsEach": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "p50InclusiveMs": 27.194875000001048
+        }
+      },
+      "runs": [
+        {
+          "ms": 27.11591700000099,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.30675600000904524
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.4283750000013242
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 26.748375000001033
+            }
+          }
+        },
+        {
+          "ms": 27.395916999999827,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.16195800000241434
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.7449579999993148
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 27.211957999999868
+            }
+          }
+        },
+        {
+          "ms": 27.419583000000785,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.16141500000230735
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.8872919999994338
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 27.24358299999949
+            }
+          }
+        },
+        {
+          "ms": 27.556791999999405,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.15512600000147359
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.9734580000003916
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 27.38824999999997
+            }
+          }
+        },
+        {
+          "ms": 27.20679199999904,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.1563389999919309
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.7387500000004366
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 27.02954200000022
+            }
+          }
+        },
+        {
+          "ms": 27.38995900000009,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.1809149999953661
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.7717499999998836
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 27.194875000001048
+            }
+          }
+        },
+        {
+          "ms": 26.976542000000336,
+          "probe": {
+            "canPlace": {
+              "calls": 73,
+              "ms": 0.17899799999213428
+            },
+            "reachableFromHome": {
+              "calls": 1,
+              "ms": 1.6727499999997235
+            },
+            "derivePlaces": {
+              "calls": 1,
+              "ms": 26.77900000000045
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "command.movePlusRenderPlusAllShownPlusRender",
+      "repeats": 5,
+      "p50Ms": 342.09820899999977,
+      "minMs": 336.11041699999987,
+      "maxMs": 355.13224999999875,
+      "probe": {
+        "reachableFromHome": {
+          "callsEach": [
+            17,
+            17,
+            17,
+            17,
+            17
+          ],
+          "p50InclusiveMs": 31.24829200000204
+        },
+        "derivePlaces": {
+          "callsEach": [
+            12,
+            12,
+            12,
+            12,
+            12
+          ],
+          "p50InclusiveMs": 330.0907059999972
+        },
+        "syncPlaceMilestones": {
+          "callsEach": [
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "p50InclusiveMs": 149.30453999999918
+        },
+        "canPlace": {
+          "callsEach": [
+            146,
+            146,
+            146,
+            146,
+            146
+          ],
+          "p50InclusiveMs": 0.23988300001110474
+        },
+        "recordPlaceShown": {
+          "callsEach": [
+            4,
+            4,
+            4,
+            4,
+            4
+          ],
+          "p50InclusiveMs": 110.89741800000047
+        }
+      },
+      "runs": [
+        {
+          "ms": 345.03120800000033,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 17,
+              "ms": 31.100582999994003
+            },
+            "derivePlaces": {
+              "calls": 12,
+              "ms": 332.9892510000009
+            },
+            "syncPlaceMilestones": {
+              "calls": 5,
+              "ms": 149.54845899999782
+            },
+            "canPlace": {
+              "calls": 146,
+              "ms": 0.3758310000084748
+            },
+            "recordPlaceShown": {
+              "calls": 4,
+              "ms": 111.14654199999859
+            }
+          }
+        },
+        {
+          "ms": 341.36083300000064,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 17,
+              "ms": 31.48304199999984
+            },
+            "derivePlaces": {
+              "calls": 12,
+              "ms": 329.7053339999984
+            },
+            "syncPlaceMilestones": {
+              "calls": 5,
+              "ms": 149.30453999999918
+            },
+            "canPlace": {
+              "calls": 146,
+              "ms": 0.22362000000248372
+            },
+            "recordPlaceShown": {
+              "calls": 4,
+              "ms": 110.89741800000047
+            }
+          }
+        },
+        {
+          "ms": 342.09820899999977,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 17,
+              "ms": 30.998168000001897
+            },
+            "derivePlaces": {
+              "calls": 12,
+              "ms": 330.0907059999972
+            },
+            "syncPlaceMilestones": {
+              "calls": 5,
+              "ms": 147.4747920000009
+            },
+            "canPlace": {
+              "calls": 146,
+              "ms": 0.23988300001110474
+            },
+            "recordPlaceShown": {
+              "calls": 4,
+              "ms": 108.95466600000145
+            }
+          }
+        },
+        {
+          "ms": 355.13224999999875,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 17,
+              "ms": 38.723335000006045
+            },
+            "derivePlaces": {
+              "calls": 12,
+              "ms": 342.0918340000044
+            },
+            "syncPlaceMilestones": {
+              "calls": 5,
+              "ms": 151.12487500000134
+            },
+            "canPlace": {
+              "calls": 146,
+              "ms": 0.24712600000384555
+            },
+            "recordPlaceShown": {
+              "calls": 4,
+              "ms": 119.87300000000141
+            }
+          }
+        },
+        {
+          "ms": 336.11041699999987,
+          "probe": {
+            "reachableFromHome": {
+              "calls": 17,
+              "ms": 31.24829200000204
+            },
+            "derivePlaces": {
+              "calls": 12,
+              "ms": 324.4092079999991
+            },
+            "syncPlaceMilestones": {
+              "calls": 5,
+              "ms": 146.75695799999812
+            },
+            "canPlace": {
+              "calls": 146,
+              "ms": 0.20478800002092612
+            },
+            "recordPlaceShown": {
+              "calls": 4,
+              "ms": 106.79604199999994
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "serialization.datasetStateOwnersProgress",
+      "repeats": 25,
+      "p50Ms": 0.2366249999995489,
+      "minMs": 0.22508399999969697,
+      "maxMs": 0.3761670000003505,
+      "probe": {},
+      "runs": [
+        {
+          "ms": 0.3761670000003505,
+          "probe": {}
+        },
+        {
+          "ms": 0.25737499999922875,
+          "probe": {}
+        },
+        {
+          "ms": 0.2486669999998412,
+          "probe": {}
+        },
+        {
+          "ms": 0.22929199999998673,
+          "probe": {}
+        },
+        {
+          "ms": 0.22783300000082818,
+          "probe": {}
+        },
+        {
+          "ms": 0.22570899999846006,
+          "probe": {}
+        },
+        {
+          "ms": 0.2548750000005384,
+          "probe": {}
+        },
+        {
+          "ms": 0.27116600000044855,
+          "probe": {}
+        },
+        {
+          "ms": 0.27391700000043784,
+          "probe": {}
+        },
+        {
+          "ms": 0.251709000000119,
+          "probe": {}
+        },
+        {
+          "ms": 0.24324999999953434,
+          "probe": {}
+        },
+        {
+          "ms": 0.23370799999975134,
+          "probe": {}
+        },
+        {
+          "ms": 0.22583300000042072,
+          "probe": {}
+        },
+        {
+          "ms": 0.22508399999969697,
+          "probe": {}
+        },
+        {
+          "ms": 0.2272499999999127,
+          "probe": {}
+        },
+        {
+          "ms": 0.22524999999950523,
+          "probe": {}
+        },
+        {
+          "ms": 0.2258750000000873,
+          "probe": {}
+        },
+        {
+          "ms": 0.22670899999866378,
+          "probe": {}
+        },
+        {
+          "ms": 0.22687500000029104,
+          "probe": {}
+        },
+        {
+          "ms": 0.24479099999916798,
+          "probe": {}
+        },
+        {
+          "ms": 0.2366249999995489,
+          "probe": {}
+        },
+        {
+          "ms": 0.23487500000010186,
+          "probe": {}
+        },
+        {
+          "ms": 0.24795799999992596,
+          "probe": {}
+        },
+        {
+          "ms": 0.3022500000006403,
+          "probe": {}
+        },
+        {
+          "ms": 0.24420899999859103,
+          "probe": {}
+        }
+      ]
+    }
+  ],
+  "scope": "Node domain-only calculations; temporary wrapper probes have inclusive timing. Renderer, GPU, React scheduling, Playwright actions and browser execution not measured."
+}

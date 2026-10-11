@@ -1,0 +1,155 @@
+{
+  "scope": "Exclusive CPU samples, one profiled headed SwiftShader run; sampling overhead; not actual device FPS",
+  "top": [
+    {
+      "function": "(idle)",
+      "url": "",
+      "line": 0,
+      "sampledMilliseconds": 5318.790000000005
+    },
+    {
+      "function": "(program)",
+      "url": "",
+      "line": 0,
+      "sampledMilliseconds": 187.78099999999995
+    },
+    {
+      "function": "sample",
+      "url": "http://127.0.0.1:5342/src/domain/growingIsland/worldDefinition.ts",
+      "line": 126,
+      "sampledMilliseconds": 41.216000000000015
+    },
+    {
+      "function": "placeWalkSearch",
+      "url": "http://127.0.0.1:5342/src/domain/growingIsland/places.ts",
+      "line": 12,
+      "sampledMilliseconds": 29.012999999999998
+    },
+    {
+      "function": "authoredApproachCells",
+      "url": "http://127.0.0.1:5342/src/domain/growingIsland/authoredWorldAccess.ts",
+      "line": 8,
+      "sampledMilliseconds": 28.61
+    },
+    {
+      "function": "barycentric",
+      "url": "http://127.0.0.1:5342/src/domain/growingIsland/worldDefinition.ts",
+      "line": 20,
+      "sampledMilliseconds": 25.912
+    },
+    {
+      "function": "(garbage collector)",
+      "url": "",
+      "line": 0,
+      "sampledMilliseconds": 22.250999999999998
+    },
+    {
+      "function": "",
+      "url": "http://127.0.0.1:5342/src/domain/growingIsland/authoredWorldAccess.ts",
+      "line": 9,
+      "sampledMilliseconds": 21.069
+    },
+    {
+      "function": "cellKey",
+      "url": "http://127.0.0.1:5342/src/domain/growingIsland/authoredWorldAccess.ts",
+      "line": 4,
+      "sampledMilliseconds": 17.064999999999998
+    },
+    {
+      "function": "floorPointAt",
+      "url": "http://127.0.0.1:5342/src/components/island/growing/sceneLayout.ts",
+      "line": 81,
+      "sampledMilliseconds": 14.154
+    },
+    {
+      "function": "reachableFromHome",
+      "url": "http://127.0.0.1:5342/src/domain/growingIsland/space.ts",
+      "line": 97,
+      "sampledMilliseconds": 10.924
+    },
+    {
+      "function": "placePathEdges",
+      "url": "http://127.0.0.1:5342/src/components/island/growing/placePaths.ts",
+      "line": 3,
+      "sampledMilliseconds": 7.574
+    },
+    {
+      "function": "region",
+      "url": "http://127.0.0.1:5342/src/domain/growingIsland/places.ts",
+      "line": 105,
+      "sampledMilliseconds": 7.023999999999999
+    },
+    {
+      "function": "floorAt",
+      "url": "http://127.0.0.1:5342/src/domain/growingIsland/worldDefinition.ts",
+      "line": 266,
+      "sampledMilliseconds": 6.49
+    },
+    {
+      "function": "_SphereGeometry",
+      "url": "http://127.0.0.1:5342/node_modules/.vite/deps/chunk-2BUXAFR3.js?v=884d2e79",
+      "line": 20275,
+      "sampledMilliseconds": 6.006
+    },
+    {
+      "function": "needsUpdate",
+      "url": "http://127.0.0.1:5342/node_modules/.vite/deps/chunk-2BUXAFR3.js?v=884d2e79",
+      "line": 32724,
+      "sampledMilliseconds": 5.7299999999999995
+    },
+    {
+      "function": "frameCamera",
+      "url": "http://127.0.0.1:5342/src/components/island/growing/growingCamera.ts",
+      "line": 50,
+      "sampledMilliseconds": 4.097
+    },
+    {
+      "function": "convertBufferAttribute",
+      "url": "http://127.0.0.1:5342/node_modules/.vite/deps/chunk-2BUXAFR3.js?v=884d2e79",
+      "line": 11171,
+      "sampledMilliseconds": 3.288
+    },
+    {
+      "function": "visit",
+      "url": "http://127.0.0.1:5342/src/components/island/growing/growingCamera.ts",
+      "line": 9,
+      "sampledMilliseconds": 3.2249999999999988
+    },
+    {
+      "function": "updateMatrixWorld",
+      "url": "http://127.0.0.1:5342/node_modules/.vite/deps/chunk-2BUXAFR3.js?v=884d2e79",
+      "line": 7265,
+      "sampledMilliseconds": 3.017
+    },
+    {
+      "function": "",
+      "url": "http://127.0.0.1:5342/src/domain/growingIsland/space.ts",
+      "line": 70,
+      "sampledMilliseconds": 3.0140000000000002
+    },
+    {
+      "function": "cellKey",
+      "url": "http://127.0.0.1:5342/src/domain/growingIsland/worldDefinition.ts",
+      "line": 3,
+      "sampledMilliseconds": 2.995
+    },
+    {
+      "function": "buildPlacePaths",
+      "url": "http://127.0.0.1:5342/src/components/island/growing/placePaths.ts",
+      "line": 37,
+      "sampledMilliseconds": 2.772
+    },
+    {
+      "function": "key",
+      "url": "http://127.0.0.1:5342/src/domain/growingIsland/space.ts",
+      "line": 6,
+      "sampledMilliseconds": 2.7009999999999996
+    },
+    {
+      "function": "supported",
+      "url": "http://127.0.0.1:5342/src/components/island/growing/placePaths.ts",
+      "line": 6,
+      "sampledMilliseconds": 2.644
+    }
+  ]
+}

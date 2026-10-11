@@ -1,0 +1,194 @@
+{
+  "scope": "CPU sampling of full headed SwiftShader journey including page reload, cleanup and viewport resize. Exclusive sampled CPU is not GPU presentation time. Single run with profiling overhead.",
+  "profileMilliseconds": 111754.026,
+  "sampleCount": 76336,
+  "exclusiveGetProgramInfoLogMilliseconds": 0.0,
+  "topExclusiveCpu": [
+    {
+      "function": "(idle)",
+      "url": "",
+      "lineNumber": -1,
+      "milliseconds": 82865.041
+    },
+    {
+      "function": "WebGLRenderer.setSize",
+      "url": "http://127.0.0.1:5342/node_modules/.vite/deps/chunk-2BUXAFR3.js?v=884d2e79",
+      "lineNumber": 41649,
+      "milliseconds": 15218.433
+    },
+    {
+      "function": "(program)",
+      "url": "",
+      "lineNumber": -1,
+      "milliseconds": 3010.767
+    },
+    {
+      "function": "WebGLRenderer.forceContextLoss",
+      "url": "http://127.0.0.1:5342/node_modules/.vite/deps/chunk-2BUXAFR3.js?v=884d2e79",
+      "lineNumber": 41630,
+      "milliseconds": 2509.752
+    },
+    {
+      "function": "",
+      "url": "http://127.0.0.1:5342/src/components/island/growing/growingShaderWarmup.ts",
+      "lineNumber": 73,
+      "milliseconds": 2029.746
+    },
+    {
+      "function": "(garbage collector)",
+      "url": "",
+      "lineNumber": -1,
+      "milliseconds": 490.158
+    },
+    {
+      "function": "sample",
+      "url": "http://127.0.0.1:5342/src/domain/growingIsland/worldDefinition.ts",
+      "lineNumber": 125,
+      "milliseconds": 471.045
+    },
+    {
+      "function": "cellKey",
+      "url": "http://127.0.0.1:5342/src/domain/growingIsland/authoredWorldAccess.ts",
+      "lineNumber": 3,
+      "milliseconds": 394.962
+    },
+    {
+      "function": "authoredApproachCells",
+      "url": "http://127.0.0.1:5342/src/domain/growingIsland/authoredWorldAccess.ts",
+      "lineNumber": 7,
+      "milliseconds": 384.758
+    },
+    {
+      "function": "digest",
+      "url": "http://127.0.0.1:5342/src/components/island/growing/native/decodeNativeGrowingKit.ts",
+      "lineNumber": 0,
+      "milliseconds": 246.199
+    },
+    {
+      "function": "placeWalkSearch",
+      "url": "http://127.0.0.1:5342/src/domain/growingIsland/places.ts",
+      "lineNumber": 11,
+      "milliseconds": 219.676
+    },
+    {
+      "function": "allocate",
+      "url": "http://127.0.0.1:5342/src/components/island/three/createIslandRenderer.ts",
+      "lineNumber": 2,
+      "milliseconds": 219.407
+    },
+    {
+      "function": "key",
+      "url": "http://127.0.0.1:5342/src/domain/growingIsland/space.ts",
+      "lineNumber": 5,
+      "milliseconds": 201.48
+    },
+    {
+      "function": "barycentric",
+      "url": "http://127.0.0.1:5342/src/domain/growingIsland/worldDefinition.ts",
+      "lineNumber": 19,
+      "milliseconds": 199.88
+    },
+    {
+      "function": "compileWorldDefinition",
+      "url": "http://127.0.0.1:5342/src/domain/growingIsland/worldDefinition.ts",
+      "lineNumber": 32,
+      "milliseconds": 179.694
+    },
+    {
+      "function": "needsUpdate",
+      "url": "http://127.0.0.1:5342/node_modules/.vite/deps/chunk-2BUXAFR3.js?v=884d2e79",
+      "lineNumber": 32723,
+      "milliseconds": 131.385
+    },
+    {
+      "function": "neighbors",
+      "url": "http://127.0.0.1:5342/src/domain/growingIsland/worldDefinition.ts",
+      "lineNumber": 216,
+      "milliseconds": 117.993
+    },
+    {
+      "function": "region",
+      "url": "http://127.0.0.1:5342/src/domain/growingIsland/places.ts",
+      "lineNumber": 104,
+      "milliseconds": 102.012
+    },
+    {
+      "function": "bins",
+      "url": "http://127.0.0.1:5342/src/domain/growingIsland/worldDefinition.ts",
+      "lineNumber": 77,
+      "milliseconds": 92.361
+    },
+    {
+      "function": "createResidentFabric",
+      "url": "http://127.0.0.1:5342/src/components/island/three/residentFabric.ts",
+      "lineNumber": 46,
+      "milliseconds": 80.819
+    },
+    {
+      "function": "",
+      "url": "http://127.0.0.1:5342/src/domain/growingIsland/worldDefinition.ts",
+      "lineNumber": 219,
+      "milliseconds": 77.695
+    },
+    {
+      "function": "cellKey",
+      "url": "http://127.0.0.1:5342/src/domain/growingIsland/worldDefinition.ts",
+      "lineNumber": 2,
+      "milliseconds": 70.622
+    },
+    {
+      "function": "getParameters",
+      "url": "http://127.0.0.1:5342/node_modules/.vite/deps/chunk-2BUXAFR3.js?v=884d2e79",
+      "lineNumber": 36174,
+      "milliseconds": 66.714
+    },
+    {
+      "function": "onFirstUse",
+      "url": "http://127.0.0.1:5342/node_modules/.vite/deps/chunk-2BUXAFR3.js?v=884d2e79",
+      "lineNumber": 35996,
+      "milliseconds": 65.54
+    },
+    {
+      "function": "floorAt",
+      "url": "http://127.0.0.1:5342/src/domain/growingIsland/worldDefinition.ts",
+      "lineNumber": 265,
+      "milliseconds": 65.46
+    },
+    {
+      "function": "reachableFromHome",
+      "url": "http://127.0.0.1:5342/src/domain/growingIsland/space.ts",
+      "lineNumber": 96,
+      "milliseconds": 52.906
+    },
+    {
+      "function": "freeze",
+      "url": "http://127.0.0.1:5342/src/domain/growingIsland/worldDefinition.ts",
+      "lineNumber": 9,
+      "milliseconds": 51.227
+    },
+    {
+      "function": "visit",
+      "url": "http://127.0.0.1:5342/src/components/island/growing/growingCamera.ts",
+      "lineNumber": 8,
+      "milliseconds": 47.752
+    },
+    {
+      "function": "",
+      "url": "http://127.0.0.1:5342/src/domain/growingIsland/worldDefinition.ts",
+      "lineNumber": 79,
+      "milliseconds": 45.568
+    },
+    {
+      "function": "nearestOpen",
+      "url": "http://127.0.0.1:5342/src/components/island/growing/walkers.ts",
+      "lineNumber": 28,
+      "milliseconds": 43.109
+    }
+  ],
+  "previewMarkerWindow": {
+    "inputMs": 25228.3,
+    "secondRafMs": 33822.7,
+    "cpuLongTasksOverlapping": []
+  },
+  "longTaskCount": 15
+}

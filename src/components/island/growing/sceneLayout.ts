@@ -64,10 +64,25 @@ export function sceneLayout(state: Pick<GrowingState, 'land'> & Partial<Pick<Gro
 function authoredSceneLayout(world: CompiledWorld) {
     const center = (world.bounds.min.x + world.bounds.max.x) / 2;
     const bounds = { minX: Math.floor(world.bounds.min.x), maxX: Math.ceil(world.bounds.max.x), depth: Math.ceil(world.bounds.max.z - world.bounds.min.z) };
-    const heightAt = (cell: Cell) => world.floorAt(cell)?.point.y ?? 0;
-    const projected = (cell: Cell) => { const floor = world.floorAt(cell); return floor ? { x: floor.point.x, z: floor.point.z } : cell; };
+    // A layout belongs to one immutable compiled world. Geometry builders ask
+    // for the same floor through point, projection and height; reuse that answer
+    // locally, while keeping their returned vectors and objects independent.
+    const floorPoints = new Map<string, { x: number; y: number; z: number } | undefined>();
+    const floorPointAt = (cell: Cell & { y?: number }) => {
+        if (!Number.isFinite(cell.x) || !Number.isFinite(cell.z) || ('y' in cell && !Number.isFinite(cell.y))) return undefined;
+        const id = `${cell.x},${cell.z}`;
+        if (floorPoints.has(id)) return floorPoints.get(id);
+        const floor = world.floorAt(cell)?.point, point = floor ? { ...floor } : undefined;
+        floorPoints.set(id, point);
+        // Arbitrary pointer and curve samples must not accumulate for the
+        // lifetime of an island. Eviction changes work, never floor semantics.
+        if (floorPoints.size > 16_384) floorPoints.delete(floorPoints.keys().next().value!);
+        return point;
+    };
+    const heightAt = (cell: Cell) => floorPointAt(cell)?.y ?? 0;
+    const projected = (cell: Cell) => { const floor = floorPointAt(cell); return floor ? { x: floor.x, z: floor.z } : cell; };
     const point = (cell: Cell, y = .04) => {
-        const floor = world.floorAt(cell)?.point;
+        const floor = floorPointAt(cell);
         return new T.Vector3((floor?.x ?? cell.x) - center, (floor?.y ?? 0) + y, (floor?.z ?? cell.z) - 2);
     };
     // PlacePoint.y is supplied by the same authored floor evaluator, including

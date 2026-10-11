@@ -22,6 +22,10 @@ interface Triangle {
     cells: readonly [Cell, Cell, Cell];
     points: readonly [WorldPoint, WorldPoint, WorldPoint];
 }
+interface FloorBucket { indices: number[]; fine?: Map<number, number[]> }
+const FINE_DIVISIONS = 16;
+const FINE_THRESHOLD = 64;
+const fineCell = (value: number) => Math.max(0, Math.min(FINE_DIVISIONS - 1, Math.floor(value * FINE_DIVISIONS)));
 export interface WorldFloorSample { cell: Cell; point: WorldPoint; floorId: string; triangle: number }
 export interface CompiledWorldSite {
     ref: WorldSiteRef;
@@ -98,16 +102,55 @@ export function compileWorldDefinition(input: WorldDefinition) {
         }
     }
     const bins = (physical: boolean) => {
-        const buckets = new Map<string, number[]>();
-        triangles.forEach((triangle, index) => {
+        const buckets = new Map<string, FloorBucket>();
+        const bounds = triangles.map(triangle => {
             const points = physical ? triangle.points : triangle.cells;
-            const x0 = Math.floor(Math.min(...points.map(p => p.x))), x1 = Math.floor(Math.max(...points.map(p => p.x)));
-            const z0 = Math.floor(Math.min(...points.map(p => p.z))), z1 = Math.floor(Math.max(...points.map(p => p.z)));
+            const minX = Math.min(...points.map(p => p.x)), maxX = Math.max(...points.map(p => p.x));
+            const minZ = Math.min(...points.map(p => p.z)), maxZ = Math.max(...points.map(p => p.z));
+            // Barycentric tolerance admits a thin band outside the triangle. Keep
+            // it in the fine index too, including coordinate rounding at seams.
+            const pad = (min: number, max: number) => EPSILON * (1 + 2 * (max - min))
+                + Number.EPSILON * Math.max(1, Math.abs(min), Math.abs(max)) * 8;
+            const area = Math.abs((points[1].x - points[0].x) * (points[2].z - points[0].z)
+                - (points[2].x - points[0].x) * (points[1].z - points[0].z));
+            // Very thin triangles retain the coarse candidate list's coverage,
+            // rather than depending on a numerically sensitive bounding band.
+            const broad = area <= Math.max(maxX - minX, maxZ - minZ) ** 2 * 1e-8;
+            return { minX, maxX, minZ, maxZ, padX: pad(minX, maxX), padZ: pad(minZ, maxZ), broad };
+        });
+        bounds.forEach((box, index) => {
+            const x0 = Math.floor(box.minX), x1 = Math.floor(box.maxX);
+            const z0 = Math.floor(box.minZ), z1 = Math.floor(box.maxZ);
             requireWorld((x1 - x0 + 1) * (z1 - z0 + 1) <= 100_000, 'floor triangle spans an excessive search area');
             for (let z = z0; z <= z1; z++) for (let x = x0; x <= x1; x++) {
-                const id = cellKey({ x, z }), list = buckets.get(id) ?? []; list.push(index); buckets.set(id, list);
+                const id = cellKey({ x, z }), bucket = buckets.get(id) ?? { indices: [] };
+                bucket.indices.push(index); buckets.set(id, bucket);
             }
         });
+        for (const [id, bucket] of buckets) {
+            if (bucket.indices.length <= FINE_THRESHOLD) continue;
+            const [x, z] = id.split(',').map(Number);
+            const ranges = bucket.indices.map(index => {
+                const box = bounds[index];
+                return { index,
+                    x0: box.broad ? 0 : fineCell(box.minX - box.padX - x), x1: box.broad ? FINE_DIVISIONS - 1 : fineCell(box.maxX + box.padX - x),
+                    z0: box.broad ? 0 : fineCell(box.minZ - box.padZ - z), z1: box.broad ? FINE_DIVISIONS - 1 : fineCell(box.maxZ + box.padZ - z) };
+            });
+            // Broad overlapping floors gain no filtering from subdivision. Avoid
+            // expanding their coarse lists into hundreds of redundant copies.
+            if (ranges.reduce((count, box) => count + (box.x1 - box.x0 + 1) * (box.z1 - box.z0 + 1), 0)
+                >= bucket.indices.length * FINE_DIVISIONS ** 2 / 4) continue;
+            const fine = new Map<number, number[]>();
+            // Each filtered list keeps the original coarse bucket's triangle
+            // order. Neighbouring coarse buckets still have the same priority.
+            for (const { index, x0, x1, z0, z1 } of ranges) {
+                for (let fz = z0; fz <= z1; fz++) for (let fx = x0; fx <= x1; fx++) {
+                    const cell = fz * FINE_DIVISIONS + fx, list = fine.get(cell) ?? [];
+                    list.push(index); fine.set(cell, list);
+                }
+            }
+            bucket.fine = fine;
+        }
         return buckets;
     };
     const logicalBins = bins(false), physicalBins = bins(true);
@@ -119,8 +162,15 @@ export function compileWorldDefinition(input: WorldDefinition) {
         // Include the neighbouring bucket at exact shared edges, so a rounded
         // floating point hit does not turn a genuine floor boundary into sea.
         const candidates = new Set<number>();
-        for (const dx of [0, -EPSILON, EPSILON]) for (const dz of [0, -EPSILON, EPSILON])
-            for (const id of buckets.get(cellKey({ x: Math.floor(at.x + dx), z: Math.floor(at.z + dz) })) ?? []) candidates.add(id);
+        const seenBuckets = new Set<string>();
+        for (const dx of [0, -EPSILON, EPSILON]) for (const dz of [0, -EPSILON, EPSILON]) {
+            const x = Math.floor(at.x + dx), z = Math.floor(at.z + dz), id = cellKey({ x, z });
+            if (seenBuckets.has(id)) continue;
+            seenBuckets.add(id);
+            const bucket = buckets.get(id); if (!bucket) continue;
+            const list = bucket.fine ? bucket.fine.get(fineCell(at.z - z) * FINE_DIVISIONS + fineCell(at.x - x)) : bucket.indices;
+            for (const index of list ?? []) candidates.add(index);
+        }
         for (const index of candidates) {
             const triangle = triangles[index]; if (floorId && triangle.floorId !== floorId && triangle.kind !== 'water') continue;
             const weights = barycentric(at, ...(physical ? triangle.points : triangle.cells)); if (!weights) continue;

@@ -14,6 +14,7 @@ import { disposeGeometry } from '../three/primitives';
 import { walkableCells } from '../../../domain/growingIsland/space';
 import type { NativeGrowingKit } from './native/nativeGrowingKit';
 import { buildNativePlaceGrove } from './native/nativePlaceGrove';
+import { cloneGrowingPreviewMaterial } from './growingShaderWarmup';
 
 const LEAVES = ['#6779cf', '#8f79d6', '#6bc5b5', '#92cfae', '#a395e6'];
 const JADE = ['#5c9c80', '#74ba94', '#9acbab', '#80bcae', '#639e9b'];
@@ -324,7 +325,7 @@ export function buildPlaceGeometry(state: GrowingState, layout: SceneLayout, pla
             if (preview) {
                 object.castShadow = false;
                 if (object.userData.nativeSharedMaterial) {
-                    object.material = Array.isArray(object.material) ? object.material.map(material => material.clone()) : object.material.clone();
+                    object.material = Array.isArray(object.material) ? object.material.map(cloneGrowingPreviewMaterial) : cloneGrowingPreviewMaterial(object.material);
                     object.userData.nativeSharedMaterial = false; object.userData.ownMaterial = true;
                 }
                 const materials = Array.isArray(object.material) ? object.material : [object.material];

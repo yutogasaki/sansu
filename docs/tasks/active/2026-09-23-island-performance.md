@@ -1,5 +1,11 @@
 # Island / iPhone PWA performance
 
+## 2026-10-11 編集できる全島の計算と初回shader
+
+[M1の全島性能](../../design/2026-10-11-authored-world-performance/README.md)で床の密なbucketを細分し、床・経路の支持照会を再利用した。同じ入力のNode全layer初回7,386→174 ms、13項目の形・床・経路等fingerprintが一致。scene state全体のうちapplied/placeProgressだけの同値更新はactor/camera/previewを保持し、lifeのcanonical参照を更新する。現在所有しているモデルとpreviewのshaderはready前に準備し、error checksとprogram寿命を保持した。画風・影・解像度・所有・保存・学習の規則は変更しない。
+
+最初の選択profileはinput→2rAF 3,719→1,724 msへ短縮、CPU sampleのgetProgramInfoLogは2,765→0 ms。ただし各版1runのheaded SwiftShader診断で、起動全体・実機のFPSを示さない。固定版の全編集ではpreview約8.6秒の画面待ちが残り、その区間のCPU long taskは記録されなかった。GPU/compositor/driverの帰属は未確定、性能解決と扱わない。最終core5,093/classic32と既存島のtouch学習・保存8旅程がPASS。M1水庭/deck/森林の制作、実機の起動/操作/電池、次期保存・配布は引き続き別ゲートである。
+
 ## 2026-10-09 ローカル品質検証の追補
 
 固定ローカル候補 `7e9a6c7a-quality-final-v3-55d331f22e94` で、退出actorの固有描画資源と共有cacheの寿命、観測hookによるshader program keyの変化を修正した。同じstateの二重再構築を省き、配置候補・選択・ヒントの変更では建物・住人・船を保持する。資源寿命の診断とpreview保持の回帰確認は済み。資源解放の個数をGPUメモリやFPS改善とは扱わない。

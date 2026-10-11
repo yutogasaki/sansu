@@ -1,0 +1,77 @@
+import assert from 'node:assert/strict';
+import { readFileSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { gunzipSync } from 'node:zlib';
+import { performance } from 'node:perf_hooks';
+import * as T from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { compileWorldDefinition } from 'sansu-source/domain/growingIsland/worldDefinition.ts';
+import { derivePlaces } from 'sansu-source/domain/growingIsland/places.ts';
+import { derivePlaceRelations } from 'sansu-source/domain/growingIsland/placeRelations.ts';
+import { key, walkableCells, reachableFromHome, approachCells, HOME_CELL } from 'sansu-source/domain/growingIsland/space.ts';
+import { buildObjectLayer } from 'sansu-source/components/island/growing/objectLayer.ts';
+import { GrowingLife } from 'sansu-source/components/island/growing/growingLife.ts';
+import { IslandMaterials } from 'sansu-source/components/island/three/primitives.ts';
+import { sceneLayout } from 'sansu-source/components/island/growing/sceneLayout.ts';
+import { buildPlacePaths, placePathEdges } from 'sansu-source/components/island/growing/placePaths.ts';
+import { makeNativeGrowingKit } from 'sansu-source/components/island/growing/native/nativeGrowingKit.ts';
+import { guardNativeTransmission } from 'sansu-source/components/island/growing/native/nativeTransmission.ts';
+import { buildAuthoredGrowingGround } from 'sansu-source/components/island/growing/native/authoredGrowingGround.ts';
+import { cameraArtPoints, frameCamera, initialView } from 'sansu-source/components/island/growing/growingCamera.ts';
+
+const configPath=process.argv[2], config=JSON.parse(readFileSync(configPath,'utf8'));
+const sha=(bytes:any)=>createHash('sha256').update(bytes).digest('hex');
+const fileSha=(file:string)=>sha(readFileSync(file));
+const activeFiles=[...config.sourceFiles,...Object.values(config.inputs).map((v:any)=>v.file),config.bundle,config.entry,configPath];
+const guardStart=Object.fromEntries(activeFiles.map(file=>[file,fileSha(file)]));
+const events:any[]=[];let counts:Record<string,number>={},times:Record<string,number>={};
+function measure(name:string,run:()=>any){counts={};times={};console.log(JSON.stringify({start:name}));const start=performance.now(),result=run();const event={name,ms:performance.now()-start,counts:{...counts},times:{...times}};events.push(event);console.log(JSON.stringify(event));return result;}
+let randomSeed=382139;const seedRandom=()=>{randomSeed=382139;Math.random=()=>{randomSeed=(Math.imul(randomSeed,1664525)+1013904223)>>>0;return randomSeed/4294967296;};};seedRandom();
+function typed(value:any){const bytes=Buffer.from(value.buffer,value.byteOffset,value.byteLength);return {type:value.constructor.name,length:value.length,byteLength:value.byteLength,sha256:sha(bytes)};}
+function clean(value:any,seen=new Set<any>()):any {
+    if(value===undefined)return '[undefined]';if(value===null||typeof value==='string'||typeof value==='boolean')return value;
+    if(typeof value==='number')return Number.isFinite(value)?Object.is(value,-0)?0:value:String(value);
+    if(typeof value==='function')return `[function:${value.name}]`;if(ArrayBuffer.isView(value))return typed(value);
+    if(value instanceof T.Color)return {kind:'Color',value:value.toArray()};
+    if(value.isVector2||value.isVector3||value.isVector4||value.isQuaternion||value.isMatrix3||value.isMatrix4)return {kind:value.constructor.name,value:value.toArray().map((n:number)=>clean(n))};
+    if(value.isTexture)return texture(value);
+    if(value.isObject3D)return {kind:value.type,name:value.name};if(value.isMaterial)return material(value);
+    if(seen.has(value))return '[cycle]';seen.add(value);
+    const out=Array.isArray(value)?value.map(v=>clean(v,seen)):Object.fromEntries(Object.keys(value).sort().filter(k=>k!=='uuid'&&k!=='_listeners').map(k=>[k,clean(value[k],seen)]));seen.delete(value);return out;
+}
+function texture(t:any){return clean({type:t.constructor.name,name:t.name,image:t.image,format:t.format,typeValue:t.type,mapping:t.mapping,channel:t.channel,wrapS:t.wrapS,wrapT:t.wrapT,magFilter:t.magFilter,minFilter:t.minFilter,anisotropy:t.anisotropy,colorSpace:t.colorSpace,flipY:t.flipY,premultiplyAlpha:t.premultiplyAlpha,unpackAlignment:t.unpackAlignment,offset:t.offset,repeat:t.repeat,center:t.center,rotation:t.rotation,matrix:t.matrix});}
+function material(m:any){const values:any={};for(const k of Object.keys(m).sort())if(!['uuid','id','version','_listeners'].includes(k))values[k]=clean(m[k]);return values;}
+const geometryCache=new WeakMap<T.BufferGeometry,any>();
+function geometry(g:T.BufferGeometry){const prior=geometryCache.get(g);if(prior)return prior;const attribute=(a:any)=>({itemSize:a.itemSize,count:a.count,normalized:a.normalized,name:a.name,array:typed(a.array??a.data.array),offset:a.offset,stride:a.data?.stride,meshPerAttribute:a.meshPerAttribute});const result=clean({type:g.type,name:g.name,attributes:Object.fromEntries(Object.keys(g.attributes).sort().map(name=>[name,attribute(g.attributes[name])])),index:g.index&&attribute(g.index),morphAttributes:Object.fromEntries(Object.keys(g.morphAttributes).sort().map(name=>[name,g.morphAttributes[name].map(attribute)])),morphTargetsRelative:g.morphTargetsRelative,groups:g.groups,drawRange:g.drawRange,userData:g.userData});geometryCache.set(g,result);return result;}
+function objectTree(root:T.Object3D){root.updateMatrixWorld(true);const records:any[]=[];const paths=new Map<T.Object3D,string>();let totalVertices=0,totalIndices=0,meshes=0;function visit(o:any,path:string){paths.set(o,path);const record:any={path,type:o.type,name:o.name,visible:o.visible,position:o.position.toArray(),quaternion:o.quaternion.toArray(),scale:o.scale.toArray(),matrix:o.matrix.toArray(),matrixWorld:o.matrixWorld.toArray(),matrixAutoUpdate:o.matrixAutoUpdate,castShadow:o.castShadow,receiveShadow:o.receiveShadow,renderOrder:o.renderOrder,frustumCulled:o.frustumCulled,userData:clean(o.userData),children:o.children.length};if(o.isMesh||o.isLine||o.isPoints){record.geometry=geometry(o.geometry);record.material=(Array.isArray(o.material)?o.material:[o.material]).map(material);meshes++;totalVertices+=o.geometry.getAttribute('position')?.count??0;totalIndices+=o.geometry.index?.count??0;}records.push(record);o.children.forEach((child:any,i:number)=>visit(child,`${path}/${i}`));}visit(root,'root');return {records,summary:{objects:records.length,meshes,totalVertices,totalIndices},paths};}
+const fingerprints:any={};function fingerprint(name:string,value:any){const serialized=JSON.stringify(clean(value));const result={sha256:sha(serialized),bytes:Buffer.byteLength(serialized)};fingerprints[name]=result;return result;}
+const fixture=JSON.parse(readFileSync(config.inputs.fixture.file,'utf8')),state=fixture.state,definition=JSON.parse(gunzipSync(readFileSync(config.inputs.world.file)).toString());
+const original=measure('compileWorldDefinition',()=>compileWorldDefinition(definition));const world:any={...original};for(const name of ['floorAt','logicalAt','siteAt','neighbors','route','owns'])world[name]=(...args:any[])=>{counts[name]=(counts[name]??0)+1;const start=performance.now();try{return (original as any)[name](...args);}finally{times[name]=(times[name]??0)+performance.now()-start;}};
+const raw=gunzipSync(readFileSync(config.inputs.kit.file));const gltf=await measureAsync('GLTFLoader.parseAsync',()=>new GLTFLoader().parseAsync(raw.buffer.slice(raw.byteOffset,raw.byteOffset+raw.byteLength),''));
+async function measureAsync(name:string,run:()=>Promise<any>){console.log(JSON.stringify({start:name}));const start=performance.now(),result=await run();const event={name,ms:performance.now()-start};events.push(event);console.log(JSON.stringify(event));return result;}
+gltf.scene.traverse((o:any)=>{if(o instanceof T.Mesh)for(const mat of Array.isArray(o.material)?o.material:[o.material])if(mat instanceof T.MeshPhysicalMaterial)guardNativeTransmission(mat);});
+const manifest=JSON.parse(readFileSync(config.inputs.manifest.file,'utf8')),native=measure('makeNativeGrowingKit',()=>makeNativeGrowingKit(gltf.scene,manifest)),m=new IslandMaterials('moon-garden');
+const layout=measure('sceneLayout',()=>sceneLayout(state,true,world));layout.nativeArt=true;
+const places=measure('derivePlaces',()=>derivePlaces(state,world)),relations=measure('derivePlaceRelations',()=>derivePlaceRelations(state,places,world)),edges=measure('placePathEdges',()=>placePathEdges(state,places,world)),paths=measure('buildPlacePaths',()=>buildPlacePaths(state,layout,places));
+fingerprint('placePathEdges.ordered',edges);fingerprint('buildPlacePaths.geometry',geometry(paths.geometry));fingerprint('buildPlacePaths.object',objectTree(paths).records);paths.geometry.dispose();(paths.material as T.Material).dispose();
+let layer=measure('buildObjectLayer.initial',()=>buildObjectLayer(m,state,layout,undefined,undefined,[],native));const objectSnapshot=objectTree(layer.root);fingerprint('objectLayer.allNodes',objectSnapshot.records);fingerprint('objectLayer.ownerMaps',{objects:[...layer.objects].map(([id,o])=>[id,objectSnapshot.paths.get(o)]),buds:[...layer.buds].map(([id,o])=>[id,objectSnapshot.paths.get(o)]),seats:[...layer.seats],swingPivots:[...layer.swingPivots].map(([id,o])=>[id,objectSnapshot.paths.get(o)]),fingerTargets:layer.fingerTargets.map(o=>objectSnapshot.paths.get(o))});
+writeFileSync(config.outPrefix+'.object-nodes.json',JSON.stringify(objectSnapshot.records));
+for(let i=0;i<2;i++){layer.dispose();layer=measure('buildObjectLayer.repeat.'+i,()=>buildObjectLayer(m,state,layout,undefined,undefined,[],native));}
+const coast=JSON.parse(gunzipSync(readFileSync(config.inputs.coast.file)).toString()),ground=measure('buildAuthoredGrowingGround',()=>buildAuthoredGrowingGround(layout,coast)),groundSnapshot=objectTree(ground.root);fingerprint('authoredGround.allNodes',groundSnapshot.records);
+const cottage=native.cottage(.45);cottage.position.copy(layout.point({x:2.5,z:.5},0));fingerprint('cottage.allNodes',objectTree(cottage).records);layout.cameraObjects=()=>[ground.root,cottage,layer.root];
+const camera=new T.OrthographicCamera(-5,5,5,-5,.1,100),view=initialView(),points=measure('cameraArtPoints.allVertices',()=>cameraArtPoints(layout.cameraObjects!()));fingerprint('cameraArtPoints.ordered',points);
+measure('frameCamera.initial',()=>frameCamera(camera,layout,view,1280/720));measure('frameCamera.cached.1000',()=>{for(let i=0;i<1000;i++)frameCamera(camera,layout,view,1280/(i%2?900:720));});measure('frameCamera.turn.12',()=>{for(let i=0;i<12;i++){view.azimuth=i*Math.PI/6;frameCamera(camera,layout,view,1280/900);}});fingerprint('camera.final',{position:camera.position,quaternion:camera.quaternion,projection:camera.projectionMatrix,view});
+seedRandom();const life=new GrowingLife(m,{id:'pokomoko',root:new T.Group(),body:new T.Group(),feet:[]});measure('GrowingLife.sync',()=>life.sync(state,layout,layer));measure('GrowingLife.tick.initial',()=>life.tick(1000,16,false,false));const durations:number[]=[];measure('GrowingLife.tick.repeat.2000',()=>{for(let i=1;i<=2000;i++){const t=performance.now();life.tick(1000+i*16,16,false,false);durations.push(performance.now()-t);}});durations.sort((a,b)=>a-b);
+console.log(JSON.stringify({start:'fingerprints.layout-domain'}));
+const samples=new Map<string,{x:number;z:number}>(),add=(cell:{x:number;z:number})=>samples.set(key(cell),cell);
+for(const site of world.sites)add(site.cell);
+for(const floor of world.floors){const stride=Math.max(1,Math.floor(floor.vertices.length/24));for(let i=0;i<floor.vertices.length;i+=stride){const c=floor.vertices[i].cell;for(const [dx,dz] of [[0,0],[1e-8,0],[-1e-8,0],[0,1e-8],[0,-1e-8],[.12,0],[0,.12]])add({x:c.x+dx,z:c.z+dz});}}
+for(let x=Math.floor(world.bounds.min.x)-1;x<=Math.ceil(world.bounds.max.x)+1;x+=.5)for(let z=Math.floor(world.bounds.min.z)-1;z<=Math.ceil(world.bounds.max.z)+1;z+=.5)add({x,z});
+for(const owner of [...state.plots,...state.landmarks])if(owner.cell)for(const [dx,dz] of [[.46,0],[-.46,0],[0,.46],[0,-.46],[.58,0],[0,.58],[.75,0],[0,.75]])add({x:owner.cell.x+dx,z:owner.cell.z+dz});
+const layoutRecords=[...samples.values()].map(cell=>{const floor=world.floorAt(cell),point=layout.point(cell),floorPoint=floor&&layout.floorPoint({...cell,y:floor.point.y}),inverse=layout.logicalAt({x:point.x,z:point.z}),withHeight=layout.logicalAt(point),site=floor&&world.siteAt(floor.point),cellAt=floor&&layout.cellAt(layout.point(cell,0));return {cell,owned:world.owns(cell),floor,height:layout.heightAt(cell),projected:layout.projected(cell),point:point.toArray(),zeroPoint:layout.point(cell,0).toArray(),raisedPoint:layout.point(cell,.008).toArray(),floorPoint:floorPoint?.toArray(),inverse,withHeight,site,cellAt};});
+fingerprint('layout.floor-point-inverse.samples',layoutRecords);writeFileSync(config.outPrefix+'.layout-samples.json',JSON.stringify(clean(layoutRecords)));
+const open=walkableCells(state,world),reached=reachableFromHome(state,open,world),walking={open:[...open].sort(),reached:[...reached].sort(),owners:[...state.plots,...state.landmarks].filter(x=>x.cell).map(owner=>{const approaches=approachCells(owner.cell,world),supported=approaches.filter(c=>reached.has(key(c)));return {id:owner.id,cell:owner.cell,approaches,supported,route:supported.length?world.route(HOME_CELL,supported[0],open):undefined};}),graphs:world.sites.map(site=>({cell:site.cell,placement:site.placement,walk:world.neighbors(site.cell,'walk'),join:world.neighbors(site.cell,'join'),water:world.neighbors(site.cell,'water')}))};
+fingerprint('domain.ownership-walking',walking);fingerprint('domain.places',places);fingerprint('domain.relations',relations);
+const guardEnd=Object.fromEntries(activeFiles.map(file=>[file,fileSha(file)]));assert.deepEqual(guardEnd,guardStart,'Exact input/source/bundle SHA unchanged while measuring');
+const summary={worldId:world.id,sites:world.sites.length,plantingSites:world.sites.filter(s=>s.placement).length,edges:definition.edges.length,floors:world.floors.length,owners:state.plots.length+state.landmarks.length,villagers:state.villagers.length,places:places.length,pathEdges:edges.length,cameraPoints:points.length,layoutSamples:layoutRecords.length,objectLayer:objectSnapshot.summary,ground:groundSnapshot.summary,reachableWalkingPoints:reached.size,tickP50:durations[1000],tickP95:durations[1900],tickMax:durations[1999]};
+const output={schema:'sansu-authored-performance-equivalence-v1',variant:config.variant,frozenRevision:config.frozenRevision,measuredAt:new Date().toISOString(),node:process.version,versions:process.versions,events,summary,fingerprints,inputShaStart:guardStart,inputShaEnd:guardEnd,exactInputsUnchanged:true};writeFileSync(config.outPrefix+'.results.json',JSON.stringify(output,null,2));console.log(JSON.stringify({finished:config.variant,summary,fingerprints,exactInputsUnchanged:true}));life.dispose();layer.dispose();ground.dispose();native.dispose();m.dispose();

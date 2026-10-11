@@ -54,6 +54,9 @@ export class GrowingLife {
     actorIds() { return [...this.walkers.keys()]; }
     objects() { return [...this.walkers.values()].filter(w => w.actor.root.visible).map(w => w.actor.root); }
 
+    /** Use only after equal scene inputs: saved receipts do not reset ongoing life. */
+    adoptState(state: GrowingState) { this.state = state; }
+
     sync(state: GrowingState, layout: SceneLayout, layer: ObjectLayer) {
         this.state = state; this.layout = layout; this.layer = layer;
         this.world = layout.authored ? layout.world : undefined;
