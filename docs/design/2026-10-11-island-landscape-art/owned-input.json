@@ -1,0 +1,2559 @@
+{
+  "candidate": "native05-landscape-owned-art-v6",
+  "artOnly": true,
+  "gameplayMapped": false,
+  "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+  "kitSha256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+  "sample": "qa-place-whole-island-v1",
+  "synthetic": true,
+  "conditions": [
+    "Explicit diagnostic credit/land/maturity/population",
+    "Normal domain purchase commands create individual ownership",
+    "No invented learning completion and no natural seven-day-growth claim",
+    "Whole-island final maturity diagnostic: every home is existing stage 4; individual layouts use minimum stage 2"
+  ],
+  "owners": [
+    {
+      "id": "p5",
+      "kind": "home",
+      "cell": {
+        "x": 11,
+        "z": 4
+      },
+      "stage": 4,
+      "growth": 0,
+      "style": "tree",
+      "roof": null
+    },
+    {
+      "id": "p14",
+      "kind": "home",
+      "cell": {
+        "x": 1,
+        "z": 7
+      },
+      "stage": 4,
+      "growth": 0,
+      "style": "plain",
+      "roof": null
+    },
+    {
+      "id": "p15",
+      "kind": "home",
+      "cell": {
+        "x": 5,
+        "z": 7
+      },
+      "stage": 4,
+      "growth": 0,
+      "style": "plain",
+      "roof": null
+    },
+    {
+      "id": "p17",
+      "kind": "play",
+      "cell": {
+        "x": 3,
+        "z": 9
+      },
+      "stage": 1,
+      "growth": 0,
+      "style": "plain",
+      "roof": null
+    },
+    {
+      "id": "p23",
+      "kind": "home",
+      "cell": {
+        "x": 1,
+        "z": 1
+      },
+      "stage": 4,
+      "growth": 0,
+      "style": "flower",
+      "roof": 1
+    },
+    {
+      "id": "p24",
+      "kind": "home",
+      "cell": {
+        "x": 4,
+        "z": 1
+      },
+      "stage": 4,
+      "growth": 0,
+      "style": "light",
+      "roof": 2
+    },
+    {
+      "id": "p25",
+      "kind": "home",
+      "cell": {
+        "x": 0,
+        "z": 4
+      },
+      "stage": 4,
+      "growth": 0,
+      "style": "water",
+      "roof": 3
+    },
+    {
+      "id": "p26",
+      "kind": "home",
+      "cell": {
+        "x": 4,
+        "z": 4
+      },
+      "stage": 4,
+      "growth": 0,
+      "style": "plain",
+      "roof": 5
+    },
+    {
+      "id": "p27",
+      "kind": "home",
+      "cell": {
+        "x": 13,
+        "z": 9
+      },
+      "stage": 4,
+      "growth": 0,
+      "style": "water",
+      "roof": 6
+    },
+    {
+      "id": "starter-flower",
+      "kind": "flower",
+      "cell": null,
+      "stage": null,
+      "growth": 6,
+      "style": null,
+      "roof": null
+    },
+    {
+      "id": "starter-bench",
+      "kind": "bench",
+      "cell": null,
+      "stage": null,
+      "growth": 0,
+      "style": null,
+      "roof": null
+    },
+    {
+      "id": "l1",
+      "kind": "sapling",
+      "cell": {
+        "x": 7,
+        "z": 2
+      },
+      "stage": null,
+      "growth": 18,
+      "style": null,
+      "roof": null
+    },
+    {
+      "id": "l2",
+      "kind": "sapling",
+      "cell": {
+        "x": 9,
+        "z": 2
+      },
+      "stage": null,
+      "growth": 18,
+      "style": null,
+      "roof": null
+    },
+    {
+      "id": "l3",
+      "kind": "sapling",
+      "cell": {
+        "x": 7,
+        "z": 4
+      },
+      "stage": null,
+      "growth": 18,
+      "style": null,
+      "roof": null
+    },
+    {
+      "id": "l4",
+      "kind": "sapling",
+      "cell": {
+        "x": 9,
+        "z": 4
+      },
+      "stage": null,
+      "growth": 18,
+      "style": null,
+      "roof": null
+    },
+    {
+      "id": "l6",
+      "kind": "bench",
+      "cell": {
+        "x": 8,
+        "z": 5
+      },
+      "stage": null,
+      "growth": 0,
+      "style": null,
+      "roof": null
+    },
+    {
+      "id": "l7",
+      "kind": "water-bowl",
+      "cell": {
+        "x": 7,
+        "z": 7
+      },
+      "stage": null,
+      "growth": 0,
+      "style": null,
+      "roof": null
+    },
+    {
+      "id": "l8",
+      "kind": "water-channel",
+      "cell": {
+        "x": 8,
+        "z": 7
+      },
+      "stage": null,
+      "growth": 0,
+      "style": null,
+      "roof": null
+    },
+    {
+      "id": "l9",
+      "kind": "water-bowl",
+      "cell": {
+        "x": 9,
+        "z": 7
+      },
+      "stage": null,
+      "growth": 0,
+      "style": null,
+      "roof": null
+    },
+    {
+      "id": "l10",
+      "kind": "water-channel",
+      "cell": {
+        "x": 10,
+        "z": 7
+      },
+      "stage": null,
+      "growth": 0,
+      "style": null,
+      "roof": null
+    },
+    {
+      "id": "l11",
+      "kind": "water-bowl",
+      "cell": {
+        "x": 11,
+        "z": 7
+      },
+      "stage": null,
+      "growth": 0,
+      "style": null,
+      "roof": null
+    },
+    {
+      "id": "l12",
+      "kind": "flower",
+      "cell": {
+        "x": 9,
+        "z": 9
+      },
+      "stage": null,
+      "growth": 6,
+      "style": null,
+      "roof": null
+    },
+    {
+      "id": "l13",
+      "kind": "bench",
+      "cell": {
+        "x": 11,
+        "z": 9
+      },
+      "stage": null,
+      "growth": 0,
+      "style": null,
+      "roof": null
+    },
+    {
+      "id": "l16",
+      "kind": "water-bowl",
+      "cell": {
+        "x": 3,
+        "z": 7
+      },
+      "stage": null,
+      "growth": 0,
+      "style": null,
+      "roof": null
+    },
+    {
+      "id": "l18",
+      "kind": "flower",
+      "cell": {
+        "x": 12,
+        "z": 2
+      },
+      "stage": null,
+      "growth": 6,
+      "style": null,
+      "roof": null
+    },
+    {
+      "id": "l19",
+      "kind": "flower",
+      "cell": {
+        "x": 14,
+        "z": 2
+      },
+      "stage": null,
+      "growth": 6,
+      "style": null,
+      "roof": null
+    },
+    {
+      "id": "l20",
+      "kind": "flower",
+      "cell": {
+        "x": 12,
+        "z": 4
+      },
+      "stage": null,
+      "growth": 6,
+      "style": null,
+      "roof": null
+    },
+    {
+      "id": "l21",
+      "kind": "flower",
+      "cell": {
+        "x": 14,
+        "z": 4
+      },
+      "stage": null,
+      "growth": 6,
+      "style": null,
+      "roof": null
+    },
+    {
+      "id": "l22",
+      "kind": "bench",
+      "cell": {
+        "x": 13,
+        "z": 5
+      },
+      "stage": null,
+      "growth": 0,
+      "style": null,
+      "roof": null
+    }
+  ],
+  "homes": 8,
+  "placed": 27,
+  "stored": 2,
+  "partsSha256": "b0717112b8849c65b61d23bd06fbc9c2af9b22eb3fed382d4b2d914f822e9f8b",
+  "appInputs": {
+    "docs/product/island-place-goals.json": "c4714aae51b3b0504ee23e999276518541aa13a0c80b05768d82112f172f4424",
+    "src/components/island/growing/bridgeGeometry.ts": "dbf56cf1e4b5d5ae3aa785ffca8811b5c2be54adb870d6f627f7867ba36a5b7b",
+    "src/components/island/growing/fieldGeometry.ts": "733315eb60d43a3f5de0724ca3218382921f837bdfb8b9c747c04c99d1382934",
+    "src/components/island/growing/flowerGeometry.ts": "652b97d16a02b23b09f5fe7c810641bd411f800dd4b372d129dc88744eebda26",
+    "src/components/island/growing/homeGeometry.ts": "32b4d71332082a780fa0ca41bcd30a9862e60a911f04e20a6e85f07d8f0a4f78",
+    "src/components/island/growing/homeSurfaceGeometry.ts": "51c11987dfa71d6c8a6bfb95b9e5c6a9444be1512c219581424b6448f2636f55",
+    "src/components/island/growing/keepsakeGeometry.ts": "8d1efdbefb29064de4eb4aa0e774e2436d39ef59f5c6927214d659006e86249f",
+    "src/components/island/growing/native/nativeGrowingKit.ts": "e11c0ddf886163fd7351b134d0941d86682690e656c865936252cd68349d1a2b",
+    "src/components/island/growing/native/nativePlaceGrove.ts": "32a77cdb2b31cc7627b722e040c48935c3bc632dc2ad32750b76b2c911f0df80",
+    "src/components/island/growing/objectLayer.ts": "ec98fda1642ff5504586deda35da319edfefe7eb48dd0bb4a938f9c42b5e239d",
+    "src/components/island/growing/ownLandmarks.ts": "834dc4822479d05b88b83f50ab11b10f26b573b0325ba4ecbc169add56863704",
+    "src/components/island/growing/pierGeometry.ts": "37d259dcb9cccc258c3e0f5af1212e0186d5d6dd7e2137f9051de156a0aefaea",
+    "src/components/island/growing/placeFlowerGeometry.ts": "02afd19eed274db1c29a2f9f60f94d4772d03e115ef3d34921e1ac9e4cd86206",
+    "src/components/island/growing/placeGeometry.ts": "7460a3237f8644d3d0ec0fd2e2c7b6af389d95a15188b1cd6324fcbd87db3ee2",
+    "src/components/island/growing/placeLeafGeometry.ts": "9b8c9c24331a1ecaf9a2586470ef3d05f8de6c02695882cfe1fc99c5cd680b7c",
+    "src/components/island/growing/placePaths.ts": "f50d9dc65717660c3f44905a35e436217b15572889e7bd1b26ffc4bd3ad6de6d",
+    "src/components/island/growing/placePondGeometry.ts": "ca54ab37f7831bf0a6a4ba3b3d5c8c5271925ba21671e195506626db2554155c",
+    "src/components/island/growing/placeRootRoomGeometry.ts": "65a814ba0faaaa53bbd353d03ea3b6f88d8999325c711f8cb0c1c3f01dd76ecf",
+    "src/components/island/growing/placeShellGeometry.ts": "5bb7b7d1099b4ea9c0bf84c5ddc079e8c6e0fa0ccf9b7580f5887b37c359da46",
+    "src/components/island/growing/placeSpringGeometry.ts": "2bdfabb3565c6b3fd43a856e256368f73b4251822f4827f8ea1a1023855c4b5b",
+    "src/components/island/growing/plotGeometry.ts": "87819d84f27a4716651c72899de665fbc19c3ec3145cc2314794a720ffe61aaa",
+    "src/components/island/growing/plotParts.ts": "dcd1ce1f3f4b98439f5063f45e21286998d69163e56834dc1a319da7fd2614de",
+    "src/components/island/growing/sceneLayout.ts": "3d5123d760ba06510365e7188e95302527a7b38edfe1a1c0f619e2a4e51b51eb",
+    "src/components/island/growing/treeSilhouettes.ts": "922fa3a9cf29193a35043afb7748b5ad88f511c77a174ace4cbfb5d513cadbe6",
+    "src/components/island/growing/wonderPaint.ts": "ad55bf214601e1565d2e19405b312862f4aba4100c2885290b472b2d3dc0c40e",
+    "src/components/island/life/decorationGeometry.ts": "1ecc1ed682e99984b4c418c3c518a4d2baa3fff116acb557f7b049f3b3e6998e",
+    "src/components/island/life/facilityGeometry.ts": "ae8bdf3daff929d7c9a8afbd307e6f95c9fc20a2cfea945a5d8dbf11f75c1609",
+    "src/components/island/life/itemGeometry.ts": "5464930ed25bd35b4c89c606cf0c71736d862c421757900566e3c159e89cc1db",
+    "src/components/island/life/sandboxGeometry.ts": "c999bca5b86c632bd52deb363fd275f340ad8105638a4044c18fcf722cf5de5f",
+    "src/components/island/life/windArchGeometry.ts": "372151e1016966733d8e86f3a706974ff4144f03ef793279a40f17909f892de3",
+    "src/components/island/three/garden/geometry.ts": "b2a84d837adc4a946a5a3f5370f9663216fa71299bf65032b249c5f95fb6b51c",
+    "src/components/island/three/garden/staticRaycast.ts": "64cd1be538743b11d12bc136a244312019ba7fd26f933cf5317f6e4e94107bb1",
+    "src/components/island/three/primitives.ts": "024f55cd70eeb753dccc5610613221c29e3fddae05385b2403ee53d85dce1e24",
+    "src/components/island/three/residentFabric.ts": "94aac1f3650bb7ffe82f395519370e91664d173efa868c97b95b943144ea0f87",
+    "src/components/island/three/worldPalette.ts": "00ad2759a32e5664ab88d4bde483fa261d54401ce37228368763a41b4c8b24e6",
+    "src/domain/growingIsland/commands.ts": "7d41c1dd6b3f649e32a2ac26cb1400f299b50061a72dd15682f628f53f052fb8",
+    "src/domain/growingIsland/community.ts": "e50bbca28062e15b264b35febc7433847949b48ca199d249ef5f0f5587484266",
+    "src/domain/growingIsland/environment.ts": "c30932435e641c77598b762bea4c1bc654d27c4cd78a347f141018338e901c70",
+    "src/domain/growingIsland/flowers.ts": "23aadbd5349364aded5b2e8424b26f9e99fdcfa6f1c3f2f491c9a38d149c9c18",
+    "src/domain/growingIsland/gifts.ts": "2fa22d2c93486d6eff2be9539d40ba636b566192e056869a32911cf0a33c42af",
+    "src/domain/growingIsland/guidance.ts": "5dac8f98ca616ed23a756989b78d2d9372a993d958ad94b4746cff82d092188a",
+    "src/domain/growingIsland/index.ts": "dd40bd7caa1428a1c351d4e661f691e7e605aa8070faa313a9d48e61696d3cb2",
+    "src/domain/growingIsland/island.ts": "b8a2d70d356b5bc783df3fc678e4e3a51ae361f14c04ce140c1430479604b1e1",
+    "src/domain/growingIsland/moments.ts": "04495d7ac7a98129cbd62666c8b1dcec570d77c89a71991ec4d6277054ac4812",
+    "src/domain/growingIsland/names.ts": "56c4b4015d07f65733b373431ef6316a3ec908f6461929f5af10f4f0d6f078fc",
+    "src/domain/growingIsland/nature.ts": "591389c83ec276c85d500cb32d61643ca2a478678a5de4b6b78ea063a31d6c21",
+    "src/domain/growingIsland/pier.ts": "31588f6b8a4c2a02b669e9c5240a2c966ae2a7840fdd947f0ab369c85f7fafd3",
+    "src/domain/growingIsland/placeCatalog.ts": "af31b65939c6c58fd4471ef55de8bab4f2a792287caebd648bb7de37282bbb47",
+    "src/domain/growingIsland/placeGoals.ts": "763fe14a599fa51fef7e092e15bc1f3ec3db26adc93d6b818e08c745f67daf45",
+    "src/domain/growingIsland/placeRelations.ts": "e12765255b06da5fec4397c75427b81071d7c6c95933d8ccfc2e8d5aac338f60",
+    "src/domain/growingIsland/placeTerrain.ts": "09b802ca8eabcfd87c76f04ed9edee82ec4cac79ca802172fc746e36643dbf17",
+    "src/domain/growingIsland/placeTypes.ts": "38bc1f892b3f36a8103aec06af671bf00121b346c92fe354c4c63ef50ed0debf",
+    "src/domain/growingIsland/places.ts": "03582a5fd3f45127d8ab093a494ecff20e0ad5b6f9dc411641eb08596e293eb0",
+    "src/domain/growingIsland/random.ts": "2d3e35f0f26da88acc2228454193fda88b759ac9f58ce8cc96d96b2234c01175",
+    "src/domain/growingIsland/room.ts": "f1cfb631a26122546043ec3859926faba565e148802f498bd01fb346fa66d576",
+    "src/domain/growingIsland/rules.ts": "0a4e0289c595318443683fcbcf330d397b532f433d3faa993900fc986a8e6727",
+    "src/domain/growingIsland/space.ts": "ff45383fd6270928ad52811af20495d4fb22541a5ddc06b42c79ee1c1ee2b21c",
+    "src/domain/growingIsland/town.ts": "c0d49aa8bb35c15fe0f2d1ccdd3d3d899ef4ca525097392f4027e8a937adf723",
+    "src/domain/growingIsland/types.ts": "5143e59dc2589b9330e702eeb1cdf97747d30db5d24b77418ddf7c181aa5ac7a",
+    "src/domain/islandLife/decorations.ts": "5cfbccce407f289411af0f7317fa15ad96eea8f6abfb52b79a89203f4195ecb1",
+    "src/domain/islandLife/economyRules.ts": "2feb596641a89a83ff6fb7cd915548f3bcf9a8212ddafa75ddc05910e4091272",
+    "src/domain/islandLife/footprint.ts": "756e569dff83698e12dc6401fb96be06a23b950b003df4b1af21b8a1aa38916b",
+    "src/domain/islandLife/landRules.ts": "db73f083a1e73dbfa280401898a406afe9a8294d51d7aaaa5cf57140942dd774",
+    "src/domain/islandLife/model.ts": "c373f5a532347d3f030420f40774a85e8a9434b095cb763138a34b45cd925ea3",
+    "src/domain/islandLife/space.ts": "699f197c86b4e7142b20a1790a6adefd3287445848c708990dc9c5c1423fff55",
+    "src/domain/islandLife/walkingSpace.ts": "5143cdea48aa648b4b2b34f8920168d61b0ea0ed4034b3890e0a76a1c7b85827",
+    "src/domain/islandLife/waterChannels.ts": "379e6d748fa9ffcd02862e776fe7d0240ac948c7454426db181c858a0a5eedea",
+    "src/domain/natureTown/random.ts": "45919ef8e7eb46920e60fe20b7992b96621fb9c1f889c81ddcce8d12496cbce9"
+  },
+  "places": [
+    {
+      "id": "P01:l1",
+      "ruleId": "P01",
+      "family": "grove",
+      "anchorId": "l1",
+      "memberIds": [
+        "l1",
+        "l2",
+        "l3",
+        "l4",
+        "l6"
+      ],
+      "mainIds": [
+        "l1",
+        "l2",
+        "l3",
+        "l4"
+      ],
+      "variant": "lane",
+      "stage": "grown",
+      "footprint": [
+        {
+          "x": 7,
+          "z": 1
+        },
+        {
+          "x": 9,
+          "z": 1
+        },
+        {
+          "x": 6,
+          "z": 2
+        },
+        {
+          "x": 7,
+          "z": 2
+        },
+        {
+          "x": 8,
+          "z": 2
+        },
+        {
+          "x": 9,
+          "z": 2
+        },
+        {
+          "x": 10,
+          "z": 2
+        },
+        {
+          "x": 7,
+          "z": 3
+        },
+        {
+          "x": 9,
+          "z": 3
+        },
+        {
+          "x": 6,
+          "z": 4
+        },
+        {
+          "x": 7,
+          "z": 4
+        },
+        {
+          "x": 8,
+          "z": 4
+        },
+        {
+          "x": 9,
+          "z": 4
+        },
+        {
+          "x": 10,
+          "z": 4
+        },
+        {
+          "x": 7,
+          "z": 5
+        },
+        {
+          "x": 8,
+          "z": 5
+        },
+        {
+          "x": 9,
+          "z": 5
+        },
+        {
+          "x": 8,
+          "z": 6
+        }
+      ],
+      "entrances": [
+        {
+          "x": 7,
+          "z": 1
+        },
+        {
+          "x": 9,
+          "z": 1
+        },
+        {
+          "x": 6,
+          "z": 2
+        },
+        {
+          "x": 8,
+          "z": 2
+        },
+        {
+          "x": 10,
+          "z": 2
+        },
+        {
+          "x": 7,
+          "z": 3
+        },
+        {
+          "x": 9,
+          "z": 3
+        },
+        {
+          "x": 6,
+          "z": 4
+        },
+        {
+          "x": 8,
+          "z": 4
+        },
+        {
+          "x": 10,
+          "z": 4
+        },
+        {
+          "x": 7,
+          "z": 5
+        },
+        {
+          "x": 9,
+          "z": 5
+        },
+        {
+          "x": 8,
+          "z": 6
+        }
+      ],
+      "walkSurface": [],
+      "waterRefs": [],
+      "shadeRefs": [
+        "l1",
+        "l2",
+        "l3",
+        "l4"
+      ],
+      "useTargets": [
+        {
+          "id": "l6",
+          "kind": "seat",
+          "cell": {
+            "x": 8,
+            "z": 5
+          }
+        }
+      ],
+      "revision": "[1,\"P01\",\"lane\",\"grown\",[[\"l1\",7,2],[\"l2\",9,2],[\"l3\",7,4],[\"l4\",9,4],[\"l6\",8,5]],[{\"x\":7,\"z\":1},{\"x\":9,\"z\":1},{\"x\":6,\"z\":2},{\"x\":7,\"z\":2},{\"x\":8,\"z\":2},{\"x\":9,\"z\":2},{\"x\":10,\"z\":2},{\"x\":7,\"z\":3},{\"x\":9,\"z\":3},{\"x\":6,\"z\":4},{\"x\":7,\"z\":4},{\"x\":8,\"z\":4},{\"x\":9,\"z\":4},{\"x\":10,\"z\":4},{\"x\":7,\"z\":5},{\"x\":8,\"z\":5},{\"x\":9,\"z\":5},{\"x\":8,\"z\":6}],[{\"x\":7,\"z\":1},{\"x\":9,\"z\":1},{\"x\":6,\"z\":2},{\"x\":8,\"z\":2},{\"x\":10,\"z\":2},{\"x\":7,\"z\":3},{\"x\":9,\"z\":3},{\"x\":6,\"z\":4},{\"x\":8,\"z\":4},{\"x\":10,\"z\":4},{\"x\":7,\"z\":5},{\"x\":9,\"z\":5},{\"x\":8,\"z\":6}],[],[{\"id\":\"l6\",\"kind\":\"seat\",\"cell\":{\"x\":8,\"z\":5}}]]",
+      "missing": []
+    },
+    {
+      "id": "P02:p5",
+      "ruleId": "P02",
+      "family": "grove",
+      "anchorId": "p5",
+      "memberIds": [
+        "l1",
+        "l2",
+        "l3",
+        "l4",
+        "l6",
+        "p5"
+      ],
+      "mainIds": [
+        "l1",
+        "l2",
+        "l3",
+        "l4"
+      ],
+      "variant": "court",
+      "stage": "grown",
+      "footprint": [
+        {
+          "x": 7,
+          "z": 1
+        },
+        {
+          "x": 9,
+          "z": 1
+        },
+        {
+          "x": 6,
+          "z": 2
+        },
+        {
+          "x": 7,
+          "z": 2
+        },
+        {
+          "x": 8,
+          "z": 2
+        },
+        {
+          "x": 9,
+          "z": 2
+        },
+        {
+          "x": 10,
+          "z": 2
+        },
+        {
+          "x": 7,
+          "z": 3
+        },
+        {
+          "x": 8,
+          "z": 3
+        },
+        {
+          "x": 9,
+          "z": 3
+        },
+        {
+          "x": 11,
+          "z": 3
+        },
+        {
+          "x": 6,
+          "z": 4
+        },
+        {
+          "x": 7,
+          "z": 4
+        },
+        {
+          "x": 8,
+          "z": 4
+        },
+        {
+          "x": 9,
+          "z": 4
+        },
+        {
+          "x": 10,
+          "z": 4
+        },
+        {
+          "x": 11,
+          "z": 4
+        },
+        {
+          "x": 12,
+          "z": 4
+        },
+        {
+          "x": 7,
+          "z": 5
+        },
+        {
+          "x": 8,
+          "z": 5
+        },
+        {
+          "x": 9,
+          "z": 5
+        },
+        {
+          "x": 11,
+          "z": 5
+        },
+        {
+          "x": 8,
+          "z": 6
+        }
+      ],
+      "entrances": [
+        {
+          "x": 7,
+          "z": 1
+        },
+        {
+          "x": 9,
+          "z": 1
+        },
+        {
+          "x": 6,
+          "z": 2
+        },
+        {
+          "x": 8,
+          "z": 2
+        },
+        {
+          "x": 10,
+          "z": 2
+        },
+        {
+          "x": 7,
+          "z": 3
+        },
+        {
+          "x": 8,
+          "z": 3
+        },
+        {
+          "x": 9,
+          "z": 3
+        },
+        {
+          "x": 11,
+          "z": 3
+        },
+        {
+          "x": 6,
+          "z": 4
+        },
+        {
+          "x": 8,
+          "z": 4
+        },
+        {
+          "x": 10,
+          "z": 4
+        },
+        {
+          "x": 12,
+          "z": 4
+        },
+        {
+          "x": 7,
+          "z": 5
+        },
+        {
+          "x": 9,
+          "z": 5
+        },
+        {
+          "x": 11,
+          "z": 5
+        },
+        {
+          "x": 8,
+          "z": 6
+        }
+      ],
+      "walkSurface": [
+        {
+          "x": 9,
+          "y": 1.066709143,
+          "z": 3
+        },
+        {
+          "x": 9.275,
+          "y": 1.066709143,
+          "z": 3
+        },
+        {
+          "x": 9.268105176,
+          "y": 1.114923429,
+          "z": 3.061193257
+        },
+        {
+          "x": 9.247766439,
+          "y": 1.163137714,
+          "z": 3.119318028
+        },
+        {
+          "x": 9.215003658,
+          "y": 1.211352,
+          "z": 3.171459696
+        },
+        {
+          "x": 9.171459696,
+          "y": 1.259566286,
+          "z": 3.215003658
+        },
+        {
+          "x": 9.119318028,
+          "y": 1.307780572,
+          "z": 3.247766439
+        },
+        {
+          "x": 9.061193257,
+          "y": 1.355994857,
+          "z": 3.268105176
+        },
+        {
+          "x": 9,
+          "y": 1.404209143,
+          "z": 3.275
+        },
+        {
+          "x": 8.938806743,
+          "y": 1.452423429,
+          "z": 3.268105176
+        },
+        {
+          "x": 8.880681972,
+          "y": 1.500637714,
+          "z": 3.247766439
+        },
+        {
+          "x": 8.828540304,
+          "y": 1.548852,
+          "z": 3.215003658
+        },
+        {
+          "x": 8.784996342,
+          "y": 1.597066286,
+          "z": 3.171459696
+        },
+        {
+          "x": 8.752233561,
+          "y": 1.645280572,
+          "z": 3.119318028
+        },
+        {
+          "x": 8.731894824,
+          "y": 1.693494857,
+          "z": 3.061193257
+        },
+        {
+          "x": 8.725,
+          "y": 1.741709143,
+          "z": 3
+        },
+        {
+          "x": 8.731894824,
+          "y": 1.789923429,
+          "z": 2.938806743
+        },
+        {
+          "x": 8.752233561,
+          "y": 1.838137714,
+          "z": 2.880681972
+        },
+        {
+          "x": 8.784996342,
+          "y": 1.886352,
+          "z": 2.828540304
+        },
+        {
+          "x": 8.828540304,
+          "y": 1.934566286,
+          "z": 2.784996342
+        },
+        {
+          "x": 8.880681972,
+          "y": 1.982780572,
+          "z": 2.752233561
+        },
+        {
+          "x": 8.938806743,
+          "y": 2.030994857,
+          "z": 2.731894824
+        },
+        {
+          "x": 9,
+          "y": 2.079209143,
+          "z": 2.725
+        },
+        {
+          "x": 9.061193257,
+          "y": 2.127423429,
+          "z": 2.731894824
+        },
+        {
+          "x": 9.119318028,
+          "y": 2.175637714,
+          "z": 2.752233561
+        },
+        {
+          "x": 9.171459696,
+          "y": 2.223852,
+          "z": 2.784996342
+        },
+        {
+          "x": 9.215003658,
+          "y": 2.272066286,
+          "z": 2.828540304
+        },
+        {
+          "x": 9.247766439,
+          "y": 2.320280572,
+          "z": 2.880681972
+        },
+        {
+          "x": 9.268105176,
+          "y": 2.368494857,
+          "z": 2.938806743
+        },
+        {
+          "x": 9.275,
+          "y": 2.416709143,
+          "z": 3
+        },
+        {
+          "x": 9,
+          "y": 2.416709143,
+          "z": 3
+        },
+        {
+          "x": 8,
+          "y": 2.213859573,
+          "z": 3
+        },
+        {
+          "x": 8.46,
+          "y": 2.307170375,
+          "z": 3
+        },
+        {
+          "x": 8.456064636,
+          "y": 2.303186749,
+          "z": 3.060042048
+        },
+        {
+          "x": 8.44432588,
+          "y": 2.297674711,
+          "z": 3.119056761
+        },
+        {
+          "x": 8.424984585,
+          "y": 2.290728572,
+          "z": 3.176034379
+        },
+        {
+          "x": 8.398371686,
+          "y": 2.282467184,
+          "z": 3.23
+        },
+        {
+          "x": 8.364942537,
+          "y": 2.2730319,
+          "z": 3.280030257
+        },
+        {
+          "x": 8.325269119,
+          "y": 2.262584161,
+          "z": 3.325269119
+        },
+        {
+          "x": 8.280030257,
+          "y": 2.251302731,
+          "z": 3.364942537
+        },
+        {
+          "x": 8.23,
+          "y": 2.239380638,
+          "z": 3.398371686
+        },
+        {
+          "x": 8.176034379,
+          "y": 2.227021873,
+          "z": 3.424984585
+        },
+        {
+          "x": 8.119056761,
+          "y": 2.214437897,
+          "z": 3.44432588
+        },
+        {
+          "x": 8.060042048,
+          "y": 2.201844026,
+          "z": 3.456064636
+        },
+        {
+          "x": 8,
+          "y": 2.189455744,
+          "z": 3.46
+        },
+        {
+          "x": 7.939957952,
+          "y": 2.176282675,
+          "z": 3.456064636
+        },
+        {
+          "x": 7.880943239,
+          "y": 2.163752557,
+          "z": 3.44432588
+        },
+        {
+          "x": 7.823965621,
+          "y": 2.152079784,
+          "z": 3.424984585
+        },
+        {
+          "x": 7.77,
+          "y": 2.14146408,
+          "z": 3.398371686
+        },
+        {
+          "x": 7.719969743,
+          "y": 2.132087083,
+          "z": 3.364942537
+        },
+        {
+          "x": 7.674730881,
+          "y": 2.124109236,
+          "z": 3.325269119
+        },
+        {
+          "x": 7.635057463,
+          "y": 2.116623369,
+          "z": 3.280030257
+        },
+        {
+          "x": 7.601628314,
+          "y": 2.11080124,
+          "z": 3.23
+        },
+        {
+          "x": 7.575015415,
+          "y": 2.106742468,
+          "z": 3.176034379
+        },
+        {
+          "x": 7.55567412,
+          "y": 2.1045165,
+          "z": 3.119056761
+        },
+        {
+          "x": 7.543935364,
+          "y": 2.104161422,
+          "z": 3.060042048
+        },
+        {
+          "x": 7.54,
+          "y": 2.105683309,
+          "z": 3
+        },
+        {
+          "x": 7.543935364,
+          "y": 2.106608772,
+          "z": 2.939957952
+        },
+        {
+          "x": 7.55567412,
+          "y": 2.109369326,
+          "z": 2.880943239
+        },
+        {
+          "x": 7.575015415,
+          "y": 2.113917737,
+          "z": 2.823965621
+        },
+        {
+          "x": 7.601628314,
+          "y": 2.12017618,
+          "z": 2.77
+        },
+        {
+          "x": 7.635057463,
+          "y": 2.128037573,
+          "z": 2.719969743
+        },
+        {
+          "x": 7.674730881,
+          "y": 2.137367403,
+          "z": 2.674730881
+        },
+        {
+          "x": 7.719969743,
+          "y": 2.148006036,
+          "z": 2.635057463
+        },
+        {
+          "x": 7.77,
+          "y": 2.159771441,
+          "z": 2.601628314
+        },
+        {
+          "x": 7.823965621,
+          "y": 2.172462309,
+          "z": 2.575015415
+        },
+        {
+          "x": 7.880943239,
+          "y": 2.185861495,
+          "z": 2.55567412
+        },
+        {
+          "x": 7.939957952,
+          "y": 2.199739737,
+          "z": 2.543935364
+        },
+        {
+          "x": 8,
+          "y": 2.213859573,
+          "z": 2.54
+        },
+        {
+          "x": 8.060042048,
+          "y": 2.226039076,
+          "z": 2.543935364
+        },
+        {
+          "x": 8.119056761,
+          "y": 2.238010185,
+          "z": 2.55567412
+        },
+        {
+          "x": 8.176034379,
+          "y": 2.249568071,
+          "z": 2.575015415
+        },
+        {
+          "x": 8.23,
+          "y": 2.260514974,
+          "z": 2.601628314
+        },
+        {
+          "x": 8.280030257,
+          "y": 2.27066359,
+          "z": 2.635057463
+        },
+        {
+          "x": 8.325269119,
+          "y": 2.279840274,
+          "z": 2.674730881
+        },
+        {
+          "x": 8.364942537,
+          "y": 2.287888009,
+          "z": 2.719969743
+        },
+        {
+          "x": 8.398371686,
+          "y": 2.294669098,
+          "z": 2.77
+        },
+        {
+          "x": 8.424984585,
+          "y": 2.300067513,
+          "z": 2.823965621
+        },
+        {
+          "x": 8.44432588,
+          "y": 2.303990887,
+          "z": 2.880943239
+        },
+        {
+          "x": 8.456064636,
+          "y": 2.306372088,
+          "z": 2.939957952
+        },
+        {
+          "x": 8.46,
+          "y": 2.307170375,
+          "z": 3
+        },
+        {
+          "x": 8,
+          "y": 2.213859573,
+          "z": 3
+        },
+        {
+          "x": 9,
+          "y": 2.416709143,
+          "z": 3
+        },
+        {
+          "x": 9,
+          "y": 2.416709143,
+          "z": 3
+        },
+        {
+          "x": 8,
+          "y": 2.213859573,
+          "z": 3
+        },
+        {
+          "x": 8,
+          "y": 2.213859573,
+          "z": 2
+        },
+        {
+          "x": 8,
+          "y": 2.213859573,
+          "z": 3
+        },
+        {
+          "x": 9,
+          "y": 2.416709143,
+          "z": 3
+        },
+        {
+          "x": 9.275,
+          "y": 2.416709143,
+          "z": 3
+        },
+        {
+          "x": 9.268105176,
+          "y": 2.368494857,
+          "z": 2.938806743
+        },
+        {
+          "x": 9.247766439,
+          "y": 2.320280572,
+          "z": 2.880681972
+        },
+        {
+          "x": 9.215003658,
+          "y": 2.272066286,
+          "z": 2.828540304
+        },
+        {
+          "x": 9.171459696,
+          "y": 2.223852,
+          "z": 2.784996342
+        },
+        {
+          "x": 9.119318028,
+          "y": 2.175637714,
+          "z": 2.752233561
+        },
+        {
+          "x": 9.061193257,
+          "y": 2.127423429,
+          "z": 2.731894824
+        },
+        {
+          "x": 9,
+          "y": 2.079209143,
+          "z": 2.725
+        },
+        {
+          "x": 8.938806743,
+          "y": 2.030994857,
+          "z": 2.731894824
+        },
+        {
+          "x": 8.880681972,
+          "y": 1.982780572,
+          "z": 2.752233561
+        },
+        {
+          "x": 8.828540304,
+          "y": 1.934566286,
+          "z": 2.784996342
+        },
+        {
+          "x": 8.784996342,
+          "y": 1.886352,
+          "z": 2.828540304
+        },
+        {
+          "x": 8.752233561,
+          "y": 1.838137714,
+          "z": 2.880681972
+        },
+        {
+          "x": 8.731894824,
+          "y": 1.789923429,
+          "z": 2.938806743
+        },
+        {
+          "x": 8.725,
+          "y": 1.741709143,
+          "z": 3
+        },
+        {
+          "x": 8.731894824,
+          "y": 1.693494857,
+          "z": 3.061193257
+        },
+        {
+          "x": 8.752233561,
+          "y": 1.645280572,
+          "z": 3.119318028
+        },
+        {
+          "x": 8.784996342,
+          "y": 1.597066286,
+          "z": 3.171459696
+        },
+        {
+          "x": 8.828540304,
+          "y": 1.548852,
+          "z": 3.215003658
+        },
+        {
+          "x": 8.880681972,
+          "y": 1.500637714,
+          "z": 3.247766439
+        },
+        {
+          "x": 8.938806743,
+          "y": 1.452423429,
+          "z": 3.268105176
+        },
+        {
+          "x": 9,
+          "y": 1.404209143,
+          "z": 3.275
+        },
+        {
+          "x": 9.061193257,
+          "y": 1.355994857,
+          "z": 3.268105176
+        },
+        {
+          "x": 9.119318028,
+          "y": 1.307780572,
+          "z": 3.247766439
+        },
+        {
+          "x": 9.171459696,
+          "y": 1.259566286,
+          "z": 3.215003658
+        },
+        {
+          "x": 9.215003658,
+          "y": 1.211352,
+          "z": 3.171459696
+        },
+        {
+          "x": 9.247766439,
+          "y": 1.163137714,
+          "z": 3.119318028
+        },
+        {
+          "x": 9.268105176,
+          "y": 1.114923429,
+          "z": 3.061193257
+        },
+        {
+          "x": 9.275,
+          "y": 1.066709143,
+          "z": 3
+        },
+        {
+          "x": 9,
+          "y": 1.066709143,
+          "z": 3
+        }
+      ],
+      "waterRefs": [],
+      "shadeRefs": [
+        "l1",
+        "l2",
+        "l3",
+        "l4"
+      ],
+      "useTargets": [
+        {
+          "id": "l6",
+          "kind": "seat",
+          "cell": {
+            "x": 8,
+            "z": 5
+          }
+        },
+        {
+          "id": "p5:gallery",
+          "kind": "gallery",
+          "cell": {
+            "x": 9,
+            "y": 1.066709143,
+            "z": 3
+          },
+          "route": [
+            {
+              "x": 9,
+              "y": 1.066709143,
+              "z": 3
+            },
+            {
+              "x": 9.275,
+              "y": 1.066709143,
+              "z": 3
+            },
+            {
+              "x": 9.268105176,
+              "y": 1.114923429,
+              "z": 3.061193257
+            },
+            {
+              "x": 9.247766439,
+              "y": 1.163137714,
+              "z": 3.119318028
+            },
+            {
+              "x": 9.215003658,
+              "y": 1.211352,
+              "z": 3.171459696
+            },
+            {
+              "x": 9.171459696,
+              "y": 1.259566286,
+              "z": 3.215003658
+            },
+            {
+              "x": 9.119318028,
+              "y": 1.307780572,
+              "z": 3.247766439
+            },
+            {
+              "x": 9.061193257,
+              "y": 1.355994857,
+              "z": 3.268105176
+            },
+            {
+              "x": 9,
+              "y": 1.404209143,
+              "z": 3.275
+            },
+            {
+              "x": 8.938806743,
+              "y": 1.452423429,
+              "z": 3.268105176
+            },
+            {
+              "x": 8.880681972,
+              "y": 1.500637714,
+              "z": 3.247766439
+            },
+            {
+              "x": 8.828540304,
+              "y": 1.548852,
+              "z": 3.215003658
+            },
+            {
+              "x": 8.784996342,
+              "y": 1.597066286,
+              "z": 3.171459696
+            },
+            {
+              "x": 8.752233561,
+              "y": 1.645280572,
+              "z": 3.119318028
+            },
+            {
+              "x": 8.731894824,
+              "y": 1.693494857,
+              "z": 3.061193257
+            },
+            {
+              "x": 8.725,
+              "y": 1.741709143,
+              "z": 3
+            },
+            {
+              "x": 8.731894824,
+              "y": 1.789923429,
+              "z": 2.938806743
+            },
+            {
+              "x": 8.752233561,
+              "y": 1.838137714,
+              "z": 2.880681972
+            },
+            {
+              "x": 8.784996342,
+              "y": 1.886352,
+              "z": 2.828540304
+            },
+            {
+              "x": 8.828540304,
+              "y": 1.934566286,
+              "z": 2.784996342
+            },
+            {
+              "x": 8.880681972,
+              "y": 1.982780572,
+              "z": 2.752233561
+            },
+            {
+              "x": 8.938806743,
+              "y": 2.030994857,
+              "z": 2.731894824
+            },
+            {
+              "x": 9,
+              "y": 2.079209143,
+              "z": 2.725
+            },
+            {
+              "x": 9.061193257,
+              "y": 2.127423429,
+              "z": 2.731894824
+            },
+            {
+              "x": 9.119318028,
+              "y": 2.175637714,
+              "z": 2.752233561
+            },
+            {
+              "x": 9.171459696,
+              "y": 2.223852,
+              "z": 2.784996342
+            },
+            {
+              "x": 9.215003658,
+              "y": 2.272066286,
+              "z": 2.828540304
+            },
+            {
+              "x": 9.247766439,
+              "y": 2.320280572,
+              "z": 2.880681972
+            },
+            {
+              "x": 9.268105176,
+              "y": 2.368494857,
+              "z": 2.938806743
+            },
+            {
+              "x": 9.275,
+              "y": 2.416709143,
+              "z": 3
+            },
+            {
+              "x": 9,
+              "y": 2.416709143,
+              "z": 3
+            },
+            {
+              "x": 8,
+              "y": 2.213859573,
+              "z": 3
+            },
+            {
+              "x": 8.46,
+              "y": 2.307170375,
+              "z": 3
+            },
+            {
+              "x": 8.456064636,
+              "y": 2.303186749,
+              "z": 3.060042048
+            },
+            {
+              "x": 8.44432588,
+              "y": 2.297674711,
+              "z": 3.119056761
+            },
+            {
+              "x": 8.424984585,
+              "y": 2.290728572,
+              "z": 3.176034379
+            },
+            {
+              "x": 8.398371686,
+              "y": 2.282467184,
+              "z": 3.23
+            },
+            {
+              "x": 8.364942537,
+              "y": 2.2730319,
+              "z": 3.280030257
+            },
+            {
+              "x": 8.325269119,
+              "y": 2.262584161,
+              "z": 3.325269119
+            },
+            {
+              "x": 8.280030257,
+              "y": 2.251302731,
+              "z": 3.364942537
+            },
+            {
+              "x": 8.23,
+              "y": 2.239380638,
+              "z": 3.398371686
+            },
+            {
+              "x": 8.176034379,
+              "y": 2.227021873,
+              "z": 3.424984585
+            },
+            {
+              "x": 8.119056761,
+              "y": 2.214437897,
+              "z": 3.44432588
+            },
+            {
+              "x": 8.060042048,
+              "y": 2.201844026,
+              "z": 3.456064636
+            },
+            {
+              "x": 8,
+              "y": 2.189455744,
+              "z": 3.46
+            },
+            {
+              "x": 7.939957952,
+              "y": 2.176282675,
+              "z": 3.456064636
+            },
+            {
+              "x": 7.880943239,
+              "y": 2.163752557,
+              "z": 3.44432588
+            },
+            {
+              "x": 7.823965621,
+              "y": 2.152079784,
+              "z": 3.424984585
+            },
+            {
+              "x": 7.77,
+              "y": 2.14146408,
+              "z": 3.398371686
+            },
+            {
+              "x": 7.719969743,
+              "y": 2.132087083,
+              "z": 3.364942537
+            },
+            {
+              "x": 7.674730881,
+              "y": 2.124109236,
+              "z": 3.325269119
+            },
+            {
+              "x": 7.635057463,
+              "y": 2.116623369,
+              "z": 3.280030257
+            },
+            {
+              "x": 7.601628314,
+              "y": 2.11080124,
+              "z": 3.23
+            },
+            {
+              "x": 7.575015415,
+              "y": 2.106742468,
+              "z": 3.176034379
+            },
+            {
+              "x": 7.55567412,
+              "y": 2.1045165,
+              "z": 3.119056761
+            },
+            {
+              "x": 7.543935364,
+              "y": 2.104161422,
+              "z": 3.060042048
+            },
+            {
+              "x": 7.54,
+              "y": 2.105683309,
+              "z": 3
+            },
+            {
+              "x": 7.543935364,
+              "y": 2.106608772,
+              "z": 2.939957952
+            },
+            {
+              "x": 7.55567412,
+              "y": 2.109369326,
+              "z": 2.880943239
+            },
+            {
+              "x": 7.575015415,
+              "y": 2.113917737,
+              "z": 2.823965621
+            },
+            {
+              "x": 7.601628314,
+              "y": 2.12017618,
+              "z": 2.77
+            },
+            {
+              "x": 7.635057463,
+              "y": 2.128037573,
+              "z": 2.719969743
+            },
+            {
+              "x": 7.674730881,
+              "y": 2.137367403,
+              "z": 2.674730881
+            },
+            {
+              "x": 7.719969743,
+              "y": 2.148006036,
+              "z": 2.635057463
+            },
+            {
+              "x": 7.77,
+              "y": 2.159771441,
+              "z": 2.601628314
+            },
+            {
+              "x": 7.823965621,
+              "y": 2.172462309,
+              "z": 2.575015415
+            },
+            {
+              "x": 7.880943239,
+              "y": 2.185861495,
+              "z": 2.55567412
+            },
+            {
+              "x": 7.939957952,
+              "y": 2.199739737,
+              "z": 2.543935364
+            },
+            {
+              "x": 8,
+              "y": 2.213859573,
+              "z": 2.54
+            },
+            {
+              "x": 8.060042048,
+              "y": 2.226039076,
+              "z": 2.543935364
+            },
+            {
+              "x": 8.119056761,
+              "y": 2.238010185,
+              "z": 2.55567412
+            },
+            {
+              "x": 8.176034379,
+              "y": 2.249568071,
+              "z": 2.575015415
+            },
+            {
+              "x": 8.23,
+              "y": 2.260514974,
+              "z": 2.601628314
+            },
+            {
+              "x": 8.280030257,
+              "y": 2.27066359,
+              "z": 2.635057463
+            },
+            {
+              "x": 8.325269119,
+              "y": 2.279840274,
+              "z": 2.674730881
+            },
+            {
+              "x": 8.364942537,
+              "y": 2.287888009,
+              "z": 2.719969743
+            },
+            {
+              "x": 8.398371686,
+              "y": 2.294669098,
+              "z": 2.77
+            },
+            {
+              "x": 8.424984585,
+              "y": 2.300067513,
+              "z": 2.823965621
+            },
+            {
+              "x": 8.44432588,
+              "y": 2.303990887,
+              "z": 2.880943239
+            },
+            {
+              "x": 8.456064636,
+              "y": 2.306372088,
+              "z": 2.939957952
+            },
+            {
+              "x": 8.46,
+              "y": 2.307170375,
+              "z": 3
+            },
+            {
+              "x": 8,
+              "y": 2.213859573,
+              "z": 3
+            },
+            {
+              "x": 9,
+              "y": 2.416709143,
+              "z": 3
+            },
+            {
+              "x": 9,
+              "y": 2.416709143,
+              "z": 3
+            },
+            {
+              "x": 8,
+              "y": 2.213859573,
+              "z": 3
+            },
+            {
+              "x": 8,
+              "y": 2.213859573,
+              "z": 2
+            },
+            {
+              "x": 8,
+              "y": 2.213859573,
+              "z": 3
+            },
+            {
+              "x": 9,
+              "y": 2.416709143,
+              "z": 3
+            },
+            {
+              "x": 9.275,
+              "y": 2.416709143,
+              "z": 3
+            },
+            {
+              "x": 9.268105176,
+              "y": 2.368494857,
+              "z": 2.938806743
+            },
+            {
+              "x": 9.247766439,
+              "y": 2.320280572,
+              "z": 2.880681972
+            },
+            {
+              "x": 9.215003658,
+              "y": 2.272066286,
+              "z": 2.828540304
+            },
+            {
+              "x": 9.171459696,
+              "y": 2.223852,
+              "z": 2.784996342
+            },
+            {
+              "x": 9.119318028,
+              "y": 2.175637714,
+              "z": 2.752233561
+            },
+            {
+              "x": 9.061193257,
+              "y": 2.127423429,
+              "z": 2.731894824
+            },
+            {
+              "x": 9,
+              "y": 2.079209143,
+              "z": 2.725
+            },
+            {
+              "x": 8.938806743,
+              "y": 2.030994857,
+              "z": 2.731894824
+            },
+            {
+              "x": 8.880681972,
+              "y": 1.982780572,
+              "z": 2.752233561
+            },
+            {
+              "x": 8.828540304,
+              "y": 1.934566286,
+              "z": 2.784996342
+            },
+            {
+              "x": 8.784996342,
+              "y": 1.886352,
+              "z": 2.828540304
+            },
+            {
+              "x": 8.752233561,
+              "y": 1.838137714,
+              "z": 2.880681972
+            },
+            {
+              "x": 8.731894824,
+              "y": 1.789923429,
+              "z": 2.938806743
+            },
+            {
+              "x": 8.725,
+              "y": 1.741709143,
+              "z": 3
+            },
+            {
+              "x": 8.731894824,
+              "y": 1.693494857,
+              "z": 3.061193257
+            },
+            {
+              "x": 8.752233561,
+              "y": 1.645280572,
+              "z": 3.119318028
+            },
+            {
+              "x": 8.784996342,
+              "y": 1.597066286,
+              "z": 3.171459696
+            },
+            {
+              "x": 8.828540304,
+              "y": 1.548852,
+              "z": 3.215003658
+            },
+            {
+              "x": 8.880681972,
+              "y": 1.500637714,
+              "z": 3.247766439
+            },
+            {
+              "x": 8.938806743,
+              "y": 1.452423429,
+              "z": 3.268105176
+            },
+            {
+              "x": 9,
+              "y": 1.404209143,
+              "z": 3.275
+            },
+            {
+              "x": 9.061193257,
+              "y": 1.355994857,
+              "z": 3.268105176
+            },
+            {
+              "x": 9.119318028,
+              "y": 1.307780572,
+              "z": 3.247766439
+            },
+            {
+              "x": 9.171459696,
+              "y": 1.259566286,
+              "z": 3.215003658
+            },
+            {
+              "x": 9.215003658,
+              "y": 1.211352,
+              "z": 3.171459696
+            },
+            {
+              "x": 9.247766439,
+              "y": 1.163137714,
+              "z": 3.119318028
+            },
+            {
+              "x": 9.268105176,
+              "y": 1.114923429,
+              "z": 3.061193257
+            },
+            {
+              "x": 9.275,
+              "y": 1.066709143,
+              "z": 3
+            },
+            {
+              "x": 9,
+              "y": 1.066709143,
+              "z": 3
+            }
+          ]
+        }
+      ],
+      "revision": "[1,\"P02\",\"court\",\"grown\",[[\"l1\",7,2],[\"l2\",9,2],[\"l3\",7,4],[\"l4\",9,4],[\"l6\",8,5],[\"p5\",11,4]],[{\"x\":7,\"z\":1},{\"x\":9,\"z\":1},{\"x\":6,\"z\":2},{\"x\":7,\"z\":2},{\"x\":8,\"z\":2},{\"x\":9,\"z\":2},{\"x\":10,\"z\":2},{\"x\":7,\"z\":3},{\"x\":8,\"z\":3},{\"x\":9,\"z\":3},{\"x\":11,\"z\":3},{\"x\":6,\"z\":4},{\"x\":7,\"z\":4},{\"x\":8,\"z\":4},{\"x\":9,\"z\":4},{\"x\":10,\"z\":4},{\"x\":11,\"z\":4},{\"x\":12,\"z\":4},{\"x\":7,\"z\":5},{\"x\":8,\"z\":5},{\"x\":9,\"z\":5},{\"x\":11,\"z\":5},{\"x\":8,\"z\":6}],[{\"x\":7,\"z\":1},{\"x\":9,\"z\":1},{\"x\":6,\"z\":2},{\"x\":8,\"z\":2},{\"x\":10,\"z\":2},{\"x\":7,\"z\":3},{\"x\":8,\"z\":3},{\"x\":9,\"z\":3},{\"x\":11,\"z\":3},{\"x\":6,\"z\":4},{\"x\":8,\"z\":4},{\"x\":10,\"z\":4},{\"x\":12,\"z\":4},{\"x\":7,\"z\":5},{\"x\":9,\"z\":5},{\"x\":11,\"z\":5},{\"x\":8,\"z\":6}],[{\"x\":9,\"y\":1.066709143,\"z\":3},{\"x\":9.275,\"y\":1.066709143,\"z\":3},{\"x\":9.268105176,\"y\":1.114923429,\"z\":3.061193257},{\"x\":9.247766439,\"y\":1.163137714,\"z\":3.119318028},{\"x\":9.215003658,\"y\":1.211352,\"z\":3.171459696},{\"x\":9.171459696,\"y\":1.259566286,\"z\":3.215003658},{\"x\":9.119318028,\"y\":1.307780572,\"z\":3.247766439},{\"x\":9.061193257,\"y\":1.355994857,\"z\":3.268105176},{\"x\":9,\"y\":1.404209143,\"z\":3.275},{\"x\":8.938806743,\"y\":1.452423429,\"z\":3.268105176},{\"x\":8.880681972,\"y\":1.500637714,\"z\":3.247766439},{\"x\":8.828540304,\"y\":1.548852,\"z\":3.215003658},{\"x\":8.784996342,\"y\":1.597066286,\"z\":3.171459696},{\"x\":8.752233561,\"y\":1.645280572,\"z\":3.119318028},{\"x\":8.731894824,\"y\":1.693494857,\"z\":3.061193257},{\"x\":8.725,\"y\":1.741709143,\"z\":3},{\"x\":8.731894824,\"y\":1.789923429,\"z\":2.938806743},{\"x\":8.752233561,\"y\":1.838137714,\"z\":2.880681972},{\"x\":8.784996342,\"y\":1.886352,\"z\":2.828540304},{\"x\":8.828540304,\"y\":1.934566286,\"z\":2.784996342},{\"x\":8.880681972,\"y\":1.982780572,\"z\":2.752233561},{\"x\":8.938806743,\"y\":2.030994857,\"z\":2.731894824},{\"x\":9,\"y\":2.079209143,\"z\":2.725},{\"x\":9.061193257,\"y\":2.127423429,\"z\":2.731894824},{\"x\":9.119318028,\"y\":2.175637714,\"z\":2.752233561},{\"x\":9.171459696,\"y\":2.223852,\"z\":2.784996342},{\"x\":9.215003658,\"y\":2.272066286,\"z\":2.828540304},{\"x\":9.247766439,\"y\":2.320280572,\"z\":2.880681972},{\"x\":9.268105176,\"y\":2.368494857,\"z\":2.938806743},{\"x\":9.275,\"y\":2.416709143,\"z\":3},{\"x\":9,\"y\":2.416709143,\"z\":3},{\"x\":8,\"y\":2.213859573,\"z\":3},{\"x\":8.46,\"y\":2.307170375,\"z\":3},{\"x\":8.456064636,\"y\":2.303186749,\"z\":3.060042048},{\"x\":8.44432588,\"y\":2.297674711,\"z\":3.119056761},{\"x\":8.424984585,\"y\":2.290728572,\"z\":3.176034379},{\"x\":8.398371686,\"y\":2.282467184,\"z\":3.23},{\"x\":8.364942537,\"y\":2.2730319,\"z\":3.280030257},{\"x\":8.325269119,\"y\":2.262584161,\"z\":3.325269119},{\"x\":8.280030257,\"y\":2.251302731,\"z\":3.364942537},{\"x\":8.23,\"y\":2.239380638,\"z\":3.398371686},{\"x\":8.176034379,\"y\":2.227021873,\"z\":3.424984585},{\"x\":8.119056761,\"y\":2.214437897,\"z\":3.44432588},{\"x\":8.060042048,\"y\":2.201844026,\"z\":3.456064636},{\"x\":8,\"y\":2.189455744,\"z\":3.46},{\"x\":7.939957952,\"y\":2.176282675,\"z\":3.456064636},{\"x\":7.880943239,\"y\":2.163752557,\"z\":3.44432588},{\"x\":7.823965621,\"y\":2.152079784,\"z\":3.424984585},{\"x\":7.77,\"y\":2.14146408,\"z\":3.398371686},{\"x\":7.719969743,\"y\":2.132087083,\"z\":3.364942537},{\"x\":7.674730881,\"y\":2.124109236,\"z\":3.325269119},{\"x\":7.635057463,\"y\":2.116623369,\"z\":3.280030257},{\"x\":7.601628314,\"y\":2.11080124,\"z\":3.23},{\"x\":7.575015415,\"y\":2.106742468,\"z\":3.176034379},{\"x\":7.55567412,\"y\":2.1045165,\"z\":3.119056761},{\"x\":7.543935364,\"y\":2.104161422,\"z\":3.060042048},{\"x\":7.54,\"y\":2.105683309,\"z\":3},{\"x\":7.543935364,\"y\":2.106608772,\"z\":2.939957952},{\"x\":7.55567412,\"y\":2.109369326,\"z\":2.880943239},{\"x\":7.575015415,\"y\":2.113917737,\"z\":2.823965621},{\"x\":7.601628314,\"y\":2.12017618,\"z\":2.77},{\"x\":7.635057463,\"y\":2.128037573,\"z\":2.719969743},{\"x\":7.674730881,\"y\":2.137367403,\"z\":2.674730881},{\"x\":7.719969743,\"y\":2.148006036,\"z\":2.635057463},{\"x\":7.77,\"y\":2.159771441,\"z\":2.601628314},{\"x\":7.823965621,\"y\":2.172462309,\"z\":2.575015415},{\"x\":7.880943239,\"y\":2.185861495,\"z\":2.55567412},{\"x\":7.939957952,\"y\":2.199739737,\"z\":2.543935364},{\"x\":8,\"y\":2.213859573,\"z\":2.54},{\"x\":8.060042048,\"y\":2.226039076,\"z\":2.543935364},{\"x\":8.119056761,\"y\":2.238010185,\"z\":2.55567412},{\"x\":8.176034379,\"y\":2.249568071,\"z\":2.575015415},{\"x\":8.23,\"y\":2.260514974,\"z\":2.601628314},{\"x\":8.280030257,\"y\":2.27066359,\"z\":2.635057463},{\"x\":8.325269119,\"y\":2.279840274,\"z\":2.674730881},{\"x\":8.364942537,\"y\":2.287888009,\"z\":2.719969743},{\"x\":8.398371686,\"y\":2.294669098,\"z\":2.77},{\"x\":8.424984585,\"y\":2.300067513,\"z\":2.823965621},{\"x\":8.44432588,\"y\":2.303990887,\"z\":2.880943239},{\"x\":8.456064636,\"y\":2.306372088,\"z\":2.939957952},{\"x\":8.46,\"y\":2.307170375,\"z\":3},{\"x\":8,\"y\":2.213859573,\"z\":3},{\"x\":9,\"y\":2.416709143,\"z\":3},{\"x\":9,\"y\":2.416709143,\"z\":3},{\"x\":8,\"y\":2.213859573,\"z\":3},{\"x\":8,\"y\":2.213859573,\"z\":2},{\"x\":8,\"y\":2.213859573,\"z\":3},{\"x\":9,\"y\":2.416709143,\"z\":3},{\"x\":9.275,\"y\":2.416709143,\"z\":3},{\"x\":9.268105176,\"y\":2.368494857,\"z\":2.938806743},{\"x\":9.247766439,\"y\":2.320280572,\"z\":2.880681972},{\"x\":9.215003658,\"y\":2.272066286,\"z\":2.828540304},{\"x\":9.171459696,\"y\":2.223852,\"z\":2.784996342},{\"x\":9.119318028,\"y\":2.175637714,\"z\":2.752233561},{\"x\":9.061193257,\"y\":2.127423429,\"z\":2.731894824},{\"x\":9,\"y\":2.079209143,\"z\":2.725},{\"x\":8.938806743,\"y\":2.030994857,\"z\":2.731894824},{\"x\":8.880681972,\"y\":1.982780572,\"z\":2.752233561},{\"x\":8.828540304,\"y\":1.934566286,\"z\":2.784996342},{\"x\":8.784996342,\"y\":1.886352,\"z\":2.828540304},{\"x\":8.752233561,\"y\":1.838137714,\"z\":2.880681972},{\"x\":8.731894824,\"y\":1.789923429,\"z\":2.938806743},{\"x\":8.725,\"y\":1.741709143,\"z\":3},{\"x\":8.731894824,\"y\":1.693494857,\"z\":3.061193257},{\"x\":8.752233561,\"y\":1.645280572,\"z\":3.119318028},{\"x\":8.784996342,\"y\":1.597066286,\"z\":3.171459696},{\"x\":8.828540304,\"y\":1.548852,\"z\":3.215003658},{\"x\":8.880681972,\"y\":1.500637714,\"z\":3.247766439},{\"x\":8.938806743,\"y\":1.452423429,\"z\":3.268105176},{\"x\":9,\"y\":1.404209143,\"z\":3.275},{\"x\":9.061193257,\"y\":1.355994857,\"z\":3.268105176},{\"x\":9.119318028,\"y\":1.307780572,\"z\":3.247766439},{\"x\":9.171459696,\"y\":1.259566286,\"z\":3.215003658},{\"x\":9.215003658,\"y\":1.211352,\"z\":3.171459696},{\"x\":9.247766439,\"y\":1.163137714,\"z\":3.119318028},{\"x\":9.268105176,\"y\":1.114923429,\"z\":3.061193257},{\"x\":9.275,\"y\":1.066709143,\"z\":3},{\"x\":9,\"y\":1.066709143,\"z\":3}],[{\"id\":\"l6\",\"kind\":\"seat\",\"cell\":{\"x\":8,\"z\":5}},{\"id\":\"p5:gallery\",\"kind\":\"gallery\",\"cell\":{\"x\":9,\"y\":1.066709143,\"z\":3},\"route\":[{\"x\":9,\"y\":1.066709143,\"z\":3},{\"x\":9.275,\"y\":1.066709143,\"z\":3},{\"x\":9.268105176,\"y\":1.114923429,\"z\":3.061193257},{\"x\":9.247766439,\"y\":1.163137714,\"z\":3.119318028},{\"x\":9.215003658,\"y\":1.211352,\"z\":3.171459696},{\"x\":9.171459696,\"y\":1.259566286,\"z\":3.215003658},{\"x\":9.119318028,\"y\":1.307780572,\"z\":3.247766439},{\"x\":9.061193257,\"y\":1.355994857,\"z\":3.268105176},{\"x\":9,\"y\":1.404209143,\"z\":3.275},{\"x\":8.938806743,\"y\":1.452423429,\"z\":3.268105176},{\"x\":8.880681972,\"y\":1.500637714,\"z\":3.247766439},{\"x\":8.828540304,\"y\":1.548852,\"z\":3.215003658},{\"x\":8.784996342,\"y\":1.597066286,\"z\":3.171459696},{\"x\":8.752233561,\"y\":1.645280572,\"z\":3.119318028},{\"x\":8.731894824,\"y\":1.693494857,\"z\":3.061193257},{\"x\":8.725,\"y\":1.741709143,\"z\":3},{\"x\":8.731894824,\"y\":1.789923429,\"z\":2.938806743},{\"x\":8.752233561,\"y\":1.838137714,\"z\":2.880681972},{\"x\":8.784996342,\"y\":1.886352,\"z\":2.828540304},{\"x\":8.828540304,\"y\":1.934566286,\"z\":2.784996342},{\"x\":8.880681972,\"y\":1.982780572,\"z\":2.752233561},{\"x\":8.938806743,\"y\":2.030994857,\"z\":2.731894824},{\"x\":9,\"y\":2.079209143,\"z\":2.725},{\"x\":9.061193257,\"y\":2.127423429,\"z\":2.731894824},{\"x\":9.119318028,\"y\":2.175637714,\"z\":2.752233561},{\"x\":9.171459696,\"y\":2.223852,\"z\":2.784996342},{\"x\":9.215003658,\"y\":2.272066286,\"z\":2.828540304},{\"x\":9.247766439,\"y\":2.320280572,\"z\":2.880681972},{\"x\":9.268105176,\"y\":2.368494857,\"z\":2.938806743},{\"x\":9.275,\"y\":2.416709143,\"z\":3},{\"x\":9,\"y\":2.416709143,\"z\":3},{\"x\":8,\"y\":2.213859573,\"z\":3},{\"x\":8.46,\"y\":2.307170375,\"z\":3},{\"x\":8.456064636,\"y\":2.303186749,\"z\":3.060042048},{\"x\":8.44432588,\"y\":2.297674711,\"z\":3.119056761},{\"x\":8.424984585,\"y\":2.290728572,\"z\":3.176034379},{\"x\":8.398371686,\"y\":2.282467184,\"z\":3.23},{\"x\":8.364942537,\"y\":2.2730319,\"z\":3.280030257},{\"x\":8.325269119,\"y\":2.262584161,\"z\":3.325269119},{\"x\":8.280030257,\"y\":2.251302731,\"z\":3.364942537},{\"x\":8.23,\"y\":2.239380638,\"z\":3.398371686},{\"x\":8.176034379,\"y\":2.227021873,\"z\":3.424984585},{\"x\":8.119056761,\"y\":2.214437897,\"z\":3.44432588},{\"x\":8.060042048,\"y\":2.201844026,\"z\":3.456064636},{\"x\":8,\"y\":2.189455744,\"z\":3.46},{\"x\":7.939957952,\"y\":2.176282675,\"z\":3.456064636},{\"x\":7.880943239,\"y\":2.163752557,\"z\":3.44432588},{\"x\":7.823965621,\"y\":2.152079784,\"z\":3.424984585},{\"x\":7.77,\"y\":2.14146408,\"z\":3.398371686},{\"x\":7.719969743,\"y\":2.132087083,\"z\":3.364942537},{\"x\":7.674730881,\"y\":2.124109236,\"z\":3.325269119},{\"x\":7.635057463,\"y\":2.116623369,\"z\":3.280030257},{\"x\":7.601628314,\"y\":2.11080124,\"z\":3.23},{\"x\":7.575015415,\"y\":2.106742468,\"z\":3.176034379},{\"x\":7.55567412,\"y\":2.1045165,\"z\":3.119056761},{\"x\":7.543935364,\"y\":2.104161422,\"z\":3.060042048},{\"x\":7.54,\"y\":2.105683309,\"z\":3},{\"x\":7.543935364,\"y\":2.106608772,\"z\":2.939957952},{\"x\":7.55567412,\"y\":2.109369326,\"z\":2.880943239},{\"x\":7.575015415,\"y\":2.113917737,\"z\":2.823965621},{\"x\":7.601628314,\"y\":2.12017618,\"z\":2.77},{\"x\":7.635057463,\"y\":2.128037573,\"z\":2.719969743},{\"x\":7.674730881,\"y\":2.137367403,\"z\":2.674730881},{\"x\":7.719969743,\"y\":2.148006036,\"z\":2.635057463},{\"x\":7.77,\"y\":2.159771441,\"z\":2.601628314},{\"x\":7.823965621,\"y\":2.172462309,\"z\":2.575015415},{\"x\":7.880943239,\"y\":2.185861495,\"z\":2.55567412},{\"x\":7.939957952,\"y\":2.199739737,\"z\":2.543935364},{\"x\":8,\"y\":2.213859573,\"z\":2.54},{\"x\":8.060042048,\"y\":2.226039076,\"z\":2.543935364},{\"x\":8.119056761,\"y\":2.238010185,\"z\":2.55567412},{\"x\":8.176034379,\"y\":2.249568071,\"z\":2.575015415},{\"x\":8.23,\"y\":2.260514974,\"z\":2.601628314},{\"x\":8.280030257,\"y\":2.27066359,\"z\":2.635057463},{\"x\":8.325269119,\"y\":2.279840274,\"z\":2.674730881},{\"x\":8.364942537,\"y\":2.287888009,\"z\":2.719969743},{\"x\":8.398371686,\"y\":2.294669098,\"z\":2.77},{\"x\":8.424984585,\"y\":2.300067513,\"z\":2.823965621},{\"x\":8.44432588,\"y\":2.303990887,\"z\":2.880943239},{\"x\":8.456064636,\"y\":2.306372088,\"z\":2.939957952},{\"x\":8.46,\"y\":2.307170375,\"z\":3},{\"x\":8,\"y\":2.213859573,\"z\":3},{\"x\":9,\"y\":2.416709143,\"z\":3},{\"x\":9,\"y\":2.416709143,\"z\":3},{\"x\":8,\"y\":2.213859573,\"z\":3},{\"x\":8,\"y\":2.213859573,\"z\":2},{\"x\":8,\"y\":2.213859573,\"z\":3},{\"x\":9,\"y\":2.416709143,\"z\":3},{\"x\":9.275,\"y\":2.416709143,\"z\":3},{\"x\":9.268105176,\"y\":2.368494857,\"z\":2.938806743},{\"x\":9.247766439,\"y\":2.320280572,\"z\":2.880681972},{\"x\":9.215003658,\"y\":2.272066286,\"z\":2.828540304},{\"x\":9.171459696,\"y\":2.223852,\"z\":2.784996342},{\"x\":9.119318028,\"y\":2.175637714,\"z\":2.752233561},{\"x\":9.061193257,\"y\":2.127423429,\"z\":2.731894824},{\"x\":9,\"y\":2.079209143,\"z\":2.725},{\"x\":8.938806743,\"y\":2.030994857,\"z\":2.731894824},{\"x\":8.880681972,\"y\":1.982780572,\"z\":2.752233561},{\"x\":8.828540304,\"y\":1.934566286,\"z\":2.784996342},{\"x\":8.784996342,\"y\":1.886352,\"z\":2.828540304},{\"x\":8.752233561,\"y\":1.838137714,\"z\":2.880681972},{\"x\":8.731894824,\"y\":1.789923429,\"z\":2.938806743},{\"x\":8.725,\"y\":1.741709143,\"z\":3},{\"x\":8.731894824,\"y\":1.693494857,\"z\":3.061193257},{\"x\":8.752233561,\"y\":1.645280572,\"z\":3.119318028},{\"x\":8.784996342,\"y\":1.597066286,\"z\":3.171459696},{\"x\":8.828540304,\"y\":1.548852,\"z\":3.215003658},{\"x\":8.880681972,\"y\":1.500637714,\"z\":3.247766439},{\"x\":8.938806743,\"y\":1.452423429,\"z\":3.268105176},{\"x\":9,\"y\":1.404209143,\"z\":3.275},{\"x\":9.061193257,\"y\":1.355994857,\"z\":3.268105176},{\"x\":9.119318028,\"y\":1.307780572,\"z\":3.247766439},{\"x\":9.171459696,\"y\":1.259566286,\"z\":3.215003658},{\"x\":9.215003658,\"y\":1.211352,\"z\":3.171459696},{\"x\":9.247766439,\"y\":1.163137714,\"z\":3.119318028},{\"x\":9.268105176,\"y\":1.114923429,\"z\":3.061193257},{\"x\":9.275,\"y\":1.066709143,\"z\":3},{\"x\":9,\"y\":1.066709143,\"z\":3}]}]]",
+      "missing": []
+    },
+    {
+      "id": "P03:l10",
+      "ruleId": "P03",
+      "family": "spring",
+      "anchorId": "l10",
+      "memberIds": [
+        "l10",
+        "l11",
+        "l12",
+        "l13",
+        "l7",
+        "l8",
+        "l9"
+      ],
+      "mainIds": [
+        "l10",
+        "l11",
+        "l7",
+        "l8",
+        "l9"
+      ],
+      "variant": "tiered",
+      "stage": "grown",
+      "footprint": [
+        {
+          "x": 7,
+          "z": 6
+        },
+        {
+          "x": 8,
+          "z": 6
+        },
+        {
+          "x": 9,
+          "z": 6
+        },
+        {
+          "x": 10,
+          "z": 6
+        },
+        {
+          "x": 11,
+          "z": 6
+        },
+        {
+          "x": 6,
+          "z": 7
+        },
+        {
+          "x": 7,
+          "z": 7
+        },
+        {
+          "x": 8,
+          "z": 7
+        },
+        {
+          "x": 9,
+          "z": 7
+        },
+        {
+          "x": 10,
+          "z": 7
+        },
+        {
+          "x": 11,
+          "z": 7
+        },
+        {
+          "x": 12,
+          "z": 7
+        },
+        {
+          "x": 7,
+          "z": 8
+        },
+        {
+          "x": 8,
+          "z": 8
+        },
+        {
+          "x": 9,
+          "z": 8
+        },
+        {
+          "x": 10,
+          "z": 8
+        },
+        {
+          "x": 11,
+          "z": 8
+        },
+        {
+          "x": 8,
+          "z": 9
+        },
+        {
+          "x": 9,
+          "z": 9
+        },
+        {
+          "x": 10,
+          "z": 9
+        },
+        {
+          "x": 11,
+          "z": 9
+        },
+        {
+          "x": 12,
+          "z": 9
+        },
+        {
+          "x": 9,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "z": 10
+        }
+      ],
+      "entrances": [
+        {
+          "x": 7,
+          "z": 6
+        },
+        {
+          "x": 8,
+          "z": 6
+        },
+        {
+          "x": 9,
+          "z": 6
+        },
+        {
+          "x": 10,
+          "z": 6
+        },
+        {
+          "x": 11,
+          "z": 6
+        },
+        {
+          "x": 6,
+          "z": 7
+        },
+        {
+          "x": 8,
+          "z": 7
+        },
+        {
+          "x": 10,
+          "z": 7
+        },
+        {
+          "x": 12,
+          "z": 7
+        },
+        {
+          "x": 7,
+          "z": 8
+        },
+        {
+          "x": 8,
+          "z": 8
+        },
+        {
+          "x": 9,
+          "z": 8
+        },
+        {
+          "x": 10,
+          "z": 8
+        },
+        {
+          "x": 11,
+          "z": 8
+        },
+        {
+          "x": 8,
+          "z": 9
+        },
+        {
+          "x": 9,
+          "z": 9
+        },
+        {
+          "x": 10,
+          "z": 9
+        },
+        {
+          "x": 12,
+          "z": 9
+        },
+        {
+          "x": 9,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "z": 10
+        }
+      ],
+      "walkSurface": [],
+      "waterRefs": [
+        "l10",
+        "l11",
+        "l7",
+        "l8",
+        "l9"
+      ],
+      "shadeRefs": [],
+      "useTargets": [
+        {
+          "id": "l13",
+          "kind": "seat",
+          "cell": {
+            "x": 11,
+            "z": 9
+          }
+        },
+        {
+          "id": "l10:shore",
+          "kind": "shore",
+          "cell": {
+            "x": 7,
+            "z": 6
+          }
+        }
+      ],
+      "revision": "[1,\"P03\",\"tiered\",\"grown\",[[\"l10\",10,7],[\"l11\",11,7],[\"l12\",9,9],[\"l13\",11,9],[\"l7\",7,7],[\"l8\",8,7],[\"l9\",9,7]],[{\"x\":7,\"z\":6},{\"x\":8,\"z\":6},{\"x\":9,\"z\":6},{\"x\":10,\"z\":6},{\"x\":11,\"z\":6},{\"x\":6,\"z\":7},{\"x\":7,\"z\":7},{\"x\":8,\"z\":7},{\"x\":9,\"z\":7},{\"x\":10,\"z\":7},{\"x\":11,\"z\":7},{\"x\":12,\"z\":7},{\"x\":7,\"z\":8},{\"x\":8,\"z\":8},{\"x\":9,\"z\":8},{\"x\":10,\"z\":8},{\"x\":11,\"z\":8},{\"x\":8,\"z\":9},{\"x\":9,\"z\":9},{\"x\":10,\"z\":9},{\"x\":11,\"z\":9},{\"x\":12,\"z\":9},{\"x\":9,\"z\":10},{\"x\":11,\"z\":10}],[{\"x\":7,\"z\":6},{\"x\":8,\"z\":6},{\"x\":9,\"z\":6},{\"x\":10,\"z\":6},{\"x\":11,\"z\":6},{\"x\":6,\"z\":7},{\"x\":8,\"z\":7},{\"x\":10,\"z\":7},{\"x\":12,\"z\":7},{\"x\":7,\"z\":8},{\"x\":8,\"z\":8},{\"x\":9,\"z\":8},{\"x\":10,\"z\":8},{\"x\":11,\"z\":8},{\"x\":8,\"z\":9},{\"x\":9,\"z\":9},{\"x\":10,\"z\":9},{\"x\":12,\"z\":9},{\"x\":9,\"z\":10},{\"x\":11,\"z\":10}],[],[{\"id\":\"l13\",\"kind\":\"seat\",\"cell\":{\"x\":11,\"z\":9}},{\"id\":\"l10:shore\",\"kind\":\"shore\",\"cell\":{\"x\":7,\"z\":6}}]]",
+      "missing": []
+    },
+    {
+      "id": "P04:p14",
+      "ruleId": "P04",
+      "family": "community",
+      "anchorId": "p14",
+      "memberIds": [
+        "l16",
+        "p14",
+        "p15",
+        "p17"
+      ],
+      "mainIds": [
+        "p14",
+        "p15",
+        "p17"
+      ],
+      "variant": "bay",
+      "stage": "grown",
+      "footprint": [
+        {
+          "x": 1,
+          "z": 6
+        },
+        {
+          "x": 3,
+          "z": 6
+        },
+        {
+          "x": 5,
+          "z": 6
+        },
+        {
+          "x": 0,
+          "z": 7
+        },
+        {
+          "x": 1,
+          "z": 7
+        },
+        {
+          "x": 2,
+          "z": 7
+        },
+        {
+          "x": 3,
+          "z": 7
+        },
+        {
+          "x": 4,
+          "z": 7
+        },
+        {
+          "x": 5,
+          "z": 7
+        },
+        {
+          "x": 6,
+          "z": 7
+        },
+        {
+          "x": 1,
+          "z": 8
+        },
+        {
+          "x": 3,
+          "z": 8
+        },
+        {
+          "x": 5,
+          "z": 8
+        },
+        {
+          "x": 2,
+          "z": 9
+        },
+        {
+          "x": 3,
+          "z": 9
+        },
+        {
+          "x": 4,
+          "z": 9
+        },
+        {
+          "x": 3,
+          "z": 10
+        }
+      ],
+      "entrances": [
+        {
+          "x": 1,
+          "z": 6
+        },
+        {
+          "x": 3,
+          "z": 6
+        },
+        {
+          "x": 5,
+          "z": 6
+        },
+        {
+          "x": 0,
+          "z": 7
+        },
+        {
+          "x": 2,
+          "z": 7
+        },
+        {
+          "x": 4,
+          "z": 7
+        },
+        {
+          "x": 6,
+          "z": 7
+        },
+        {
+          "x": 1,
+          "z": 8
+        },
+        {
+          "x": 3,
+          "z": 8
+        },
+        {
+          "x": 5,
+          "z": 8
+        },
+        {
+          "x": 2,
+          "z": 9
+        },
+        {
+          "x": 4,
+          "z": 9
+        },
+        {
+          "x": 3,
+          "z": 10
+        }
+      ],
+      "walkSurface": [],
+      "waterRefs": [
+        "l16"
+      ],
+      "shadeRefs": [],
+      "useTargets": [
+        {
+          "id": "p17",
+          "kind": "play",
+          "cell": {
+            "x": 3,
+            "z": 9
+          }
+        }
+      ],
+      "revision": "[1,\"P04\",\"bay\",\"grown\",[[\"l16\",3,7],[\"p14\",1,7],[\"p15\",5,7],[\"p17\",3,9]],[{\"x\":1,\"z\":6},{\"x\":3,\"z\":6},{\"x\":5,\"z\":6},{\"x\":0,\"z\":7},{\"x\":1,\"z\":7},{\"x\":2,\"z\":7},{\"x\":3,\"z\":7},{\"x\":4,\"z\":7},{\"x\":5,\"z\":7},{\"x\":6,\"z\":7},{\"x\":1,\"z\":8},{\"x\":3,\"z\":8},{\"x\":5,\"z\":8},{\"x\":2,\"z\":9},{\"x\":3,\"z\":9},{\"x\":4,\"z\":9},{\"x\":3,\"z\":10}],[{\"x\":1,\"z\":6},{\"x\":3,\"z\":6},{\"x\":5,\"z\":6},{\"x\":0,\"z\":7},{\"x\":2,\"z\":7},{\"x\":4,\"z\":7},{\"x\":6,\"z\":7},{\"x\":1,\"z\":8},{\"x\":3,\"z\":8},{\"x\":5,\"z\":8},{\"x\":2,\"z\":9},{\"x\":4,\"z\":9},{\"x\":3,\"z\":10}],[],[{\"id\":\"p17\",\"kind\":\"play\",\"cell\":{\"x\":3,\"z\":9}}]]",
+      "missing": []
+    },
+    {
+      "id": "P05:l18",
+      "ruleId": "P05",
+      "family": "flowers",
+      "anchorId": "l18",
+      "memberIds": [
+        "l18",
+        "l19",
+        "l20",
+        "l21",
+        "l22"
+      ],
+      "mainIds": [
+        "l18",
+        "l19",
+        "l20",
+        "l21"
+      ],
+      "variant": "court",
+      "stage": "grown",
+      "footprint": [
+        {
+          "x": 12,
+          "z": 1
+        },
+        {
+          "x": 14,
+          "z": 1
+        },
+        {
+          "x": 11,
+          "z": 2
+        },
+        {
+          "x": 12,
+          "z": 2
+        },
+        {
+          "x": 13,
+          "z": 2
+        },
+        {
+          "x": 14,
+          "z": 2
+        },
+        {
+          "x": 12,
+          "z": 3
+        },
+        {
+          "x": 13,
+          "z": 3
+        },
+        {
+          "x": 14,
+          "z": 3
+        },
+        {
+          "x": 12,
+          "z": 4
+        },
+        {
+          "x": 13,
+          "z": 4
+        },
+        {
+          "x": 14,
+          "z": 4
+        },
+        {
+          "x": 12,
+          "z": 5
+        },
+        {
+          "x": 13,
+          "z": 5
+        },
+        {
+          "x": 14,
+          "z": 5
+        },
+        {
+          "x": 13,
+          "z": 6
+        }
+      ],
+      "entrances": [
+        {
+          "x": 12,
+          "z": 1
+        },
+        {
+          "x": 14,
+          "z": 1
+        },
+        {
+          "x": 11,
+          "z": 2
+        },
+        {
+          "x": 12,
+          "z": 2
+        },
+        {
+          "x": 13,
+          "z": 2
+        },
+        {
+          "x": 14,
+          "z": 2
+        },
+        {
+          "x": 12,
+          "z": 3
+        },
+        {
+          "x": 13,
+          "z": 3
+        },
+        {
+          "x": 14,
+          "z": 3
+        },
+        {
+          "x": 12,
+          "z": 4
+        },
+        {
+          "x": 13,
+          "z": 4
+        },
+        {
+          "x": 14,
+          "z": 4
+        },
+        {
+          "x": 12,
+          "z": 5
+        },
+        {
+          "x": 14,
+          "z": 5
+        },
+        {
+          "x": 13,
+          "z": 6
+        }
+      ],
+      "walkSurface": [],
+      "waterRefs": [],
+      "shadeRefs": [],
+      "useTargets": [
+        {
+          "id": "l22",
+          "kind": "seat",
+          "cell": {
+            "x": 13,
+            "z": 5
+          }
+        }
+      ],
+      "revision": "[1,\"P05\",\"court\",\"grown\",[[\"l18\",12,2],[\"l19\",14,2],[\"l20\",12,4],[\"l21\",14,4],[\"l22\",13,5]],[{\"x\":12,\"z\":1},{\"x\":14,\"z\":1},{\"x\":11,\"z\":2},{\"x\":12,\"z\":2},{\"x\":13,\"z\":2},{\"x\":14,\"z\":2},{\"x\":12,\"z\":3},{\"x\":13,\"z\":3},{\"x\":14,\"z\":3},{\"x\":12,\"z\":4},{\"x\":13,\"z\":4},{\"x\":14,\"z\":4},{\"x\":12,\"z\":5},{\"x\":13,\"z\":5},{\"x\":14,\"z\":5},{\"x\":13,\"z\":6}],[{\"x\":12,\"z\":1},{\"x\":14,\"z\":1},{\"x\":11,\"z\":2},{\"x\":12,\"z\":2},{\"x\":13,\"z\":2},{\"x\":14,\"z\":2},{\"x\":12,\"z\":3},{\"x\":13,\"z\":3},{\"x\":14,\"z\":3},{\"x\":12,\"z\":4},{\"x\":13,\"z\":4},{\"x\":14,\"z\":4},{\"x\":12,\"z\":5},{\"x\":14,\"z\":5},{\"x\":13,\"z\":6}],[],[{\"id\":\"l22\",\"kind\":\"seat\",\"cell\":{\"x\":13,\"z\":5}}]]",
+      "missing": []
+    }
+  ]
+}

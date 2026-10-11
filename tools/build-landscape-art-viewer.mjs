@@ -1,0 +1,30 @@
+import assert from 'node:assert/strict';
+import { readFile, writeFile } from 'node:fs/promises';
+import { build } from 'esbuild';
+
+const out = 'docs/design/2026-10-11-island-landscape-art';
+const manifest = JSON.parse(await readFile(`${out}/art-manifest.json`, 'utf8'));
+let viewer = await readFile('docs/design/2026-10-10-island-final-3d/viewer.js', 'utf8');
+const replace = (before, after) => { assert(viewer.includes(before), `Viewer template differs: ${before}`); viewer = viewer.replaceAll(before, after); };
+replace("const MODEL_REVISION = '8398eda9ac084a6e';", `const MODEL_REVISION = '${manifest.sha256.slice(0,16)}';`);
+replace("const PREVIOUS_REVISION = '1699f584c55e5644';", "const PREVIOUS_REVISION = '8398eda9ac084a6e';");
+replace("new URL('./history/native-02/whole-island.glb', import.meta.url)", "new URL('../2026-10-10-island-final-3d/whole-island.glb', import.meta.url)");
+replace("new URL('./history/native-02/whole-island.blend', import.meta.url)", "new URL('../2026-10-10-island-final-3d/whole-island.blend', import.meta.url)");
+replace("new URL('./history/native-02/whole-island-render.png', import.meta.url)", "new URL('../2026-10-10-island-final-3d/whole-island-render.png', import.meta.url)");
+replace("'whole-island-native-3d-02'", "'whole-island-native-3d-05'");
+replace("new URL('./whole-island.glb', import.meta.url)", "new URL('./whole-landscape.glb', import.meta.url)");
+replace("new URL('./whole-island.blend', import.meta.url)", "new URL('./whole-landscape.blend', import.meta.url)");
+replace("new URL('./whole-island-render.png', import.meta.url)", "new URL('./whole-landscape-render.png', import.meta.url)");
+replace("candidate: 'whole-island-native-3d-05' },\n  previous:", `candidate: '${manifest.candidate}' },\n  previous:`);
+replace("grove: { position: [8, 23, 8], target: [-5.0, 6.2, -15.7], span: 18 }", "grove: { position: [8, 23, 8], target: [-4.8, 7.5, -15.4], span: 21 }");
+replace("name === 'grown' ? '丘・森・入り江へ育った島' : 'これまでの庭（同じ縮尺）'", "name === 'grown' ? '家8軒・同じ27個の配置物から作った全島の造形案' : '採用native-05の原本。家15軒の完成美術' ");
+replace("stage.dataset.phase = name;", `stage.dataset.phase = name;\n    stage.dataset.gameplayMapped = 'false';\n    stage.dataset.sourceSha256 = '${manifest.sourceGlbSha256}';\n    stage.dataset.modelSha256 = name === 'grown' ? '${manifest.sha256}' : '${manifest.sourceGlbSha256}';`);
+replace('function loadPhase(name) {', 'async function loadPhase(name) {');
+replace('new GLTFLoader().load(url.href, gltf => {', `try {\n    const response = await fetch(url.href, { cache: 'no-store' });\n    if (!response.ok) throw new Error('Model request failed');\n    const bytes = await response.arrayBuffer();\n    const loadedHash = [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))].map(n => n.toString(16).padStart(2, '0')).join('');\n    const expectedHash = name === 'grown' ? '${manifest.sha256}' : '${manifest.sourceGlbSha256}';\n    if (loadedHash !== expectedHash) throw new Error('Model revision differs');\n    const gltf = await new GLTFLoader().parseAsync(bytes, new URL('.', url).href);`);
+replace("stage.dataset.phase = name;", "stage.dataset.phase = name;\n    stage.dataset.loadedModelSha256 = loadedHash;\n    stage.dataset.loadedModelBytes = String(bytes.byteLength);");
+replace('}, undefined, error => {', '} catch (error) {');
+replace('console.error(error);\n  });\n}', 'console.error(error);\n  }\n}');
+await writeFile(`${out}/viewer.js`, viewer);
+await build({ entryPoints: [`${out}/viewer.js`], outfile: `${out}/viewer.bundle.js`, bundle: true, minify: true,
+    platform: 'browser', format: 'esm', target: 'es2022', logLevel: 'silent' });
+console.log(JSON.stringify({ candidate: manifest.candidate, modelSha256: manifest.sha256, built: true }));

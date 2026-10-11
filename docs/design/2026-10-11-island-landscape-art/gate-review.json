@@ -1,0 +1,124 @@
+{
+  "schema": "sansu-landscape-art-gate-v1",
+  "reviewedAt": "2026-10-11T01:14:22.861Z",
+  "candidate": "native05-landscape-owned-art-v6",
+  "actualTarget": "http://127.0.0.1:8230/design/2026-10-11-island-landscape-art/",
+  "delivery": "standalone-art-viewer",
+  "gameplayMapped": false,
+  "buildRevision": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+  "modelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+  "appRevisionUnchanged": "ac0ff3668b023114a22c9911aa0d9faf7b86b4e7",
+  "appDeliveryFlag": "Normal production native-owned-art default false; this proposal is not in the app",
+  "evidenceType": "Real Blender art and standalone browser screenshots, not the actual owned island",
+  "benchmark": {
+    "candidate": "whole-island-native-3d-05",
+    "sha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "userAdoptedDirection": true,
+    "sourceBytesUnchanged": true
+  },
+  "visualAppeal": {
+    "verdict": "HOLD_FOR_WHOLE_ISLAND_ADOPTION",
+    "score": 46,
+    "outOf": 60,
+    "authorOnly": true,
+    "independentObservers": 0,
+    "axes": [
+      {
+        "axis": "Enter the world",
+        "score": 8,
+        "reason": "Deep bays, raised water and the hollow tree give the eye distinct destinations."
+      },
+      {
+        "axis": "Character attachment",
+        "score": 6,
+        "reason": "The original figures remain specific, but only three are visible and the full frame has little relational acting."
+      },
+      {
+        "axis": "Material touch",
+        "score": 9,
+        "reason": "Actual original bark, tiles, colored leaves, mineral bowls and transmissive shell are distinct."
+      },
+      {
+        "axis": "Composition and depth",
+        "score": 8,
+        "reason": "Hill / water / flower room / bay settle into separate layers; the left grove remains sparse."
+      },
+      {
+        "axis": "Pop and focal color",
+        "score": 9,
+        "reason": "Fan leaves, pink petals, blue water and owned roof colors remain readable in daylight."
+      },
+      {
+        "axis": "Incident and payoff",
+        "score": 6,
+        "reason": "A still authored proposal suggests shared places but shows no actual owner growth or actor use."
+      }
+    ],
+    "evidence": [
+      "showcase-preview.png",
+      "water-garden-preview.png",
+      "verification-v6/390-grown-whole-day-01.png",
+      "verification-v6/768-grown-whole-day-13.png"
+    ],
+    "sourceParityApproved": false,
+    "fullImplementationVisualGatePassed": false
+  },
+  "continuityScreen": {
+    "verdict": "PASS_SCOPED_ART_IDENTITIES",
+    "silhouettes": [
+      "proposal-silhouette-64.png",
+      "source-silhouette-64.png"
+    ],
+    "fixedRegionOverlay": "house-surface-overlay.svg",
+    "actualHouseSurfaceTolerance": 0.00001,
+    "sameCameraSourceSwitch": true,
+    "expectedComparisonCandidates": 2,
+    "unexpectedMixedCandidates": 0,
+    "visibleFigureSubsetOnly": true,
+    "savedLayoutContinuityNotProven": true
+  },
+  "comprehensionSafety": {
+    "verdict": "NOT_EVALUATED_INDEPENDENTLY",
+    "independentChildren": 0,
+    "understoodCount": null,
+    "wantMoreCount": null,
+    "dangerInterpretations": null
+  },
+  "runtimeIntegrity": {
+    "verdict": "NOT_APPLICABLE_TO_GAME",
+    "viewerVerdict": "PASS_SCOPED_ART_VIEWER_V6",
+    "report": "verification-v6/report.json",
+    "captures": 24,
+    "widths": [
+      390,
+      768
+    ],
+    "artifactReport": "artifact-check.json",
+    "appSaveOrWalkMappingProven": false,
+    "mobileAppAssetBudgetMeasured": false,
+    "gameCoreOrPwaRerun": false,
+    "previousAppEvidence": "../2026-10-11-native-owned-island/gate-review.json"
+  },
+  "artifactLog": {
+    "fixed": [
+      "Oversized furniture in draft 01",
+      "Furniture buried by real court caps in draft 02",
+      "p26 on a steep cliff in draft 03",
+      "Road-edge clipping in draft 04",
+      "Convex hill cutting through wide road quads in draft 05"
+    ],
+    "intentional": [
+      "Close views crop portions of the distant fan crown; the whole view contains the full island",
+      "Uniform art sizing and new anchors differ from the saved gameplay layout",
+      "Ground meadow flowers are scenery, not newly bought mature plants"
+    ],
+    "remaining": [
+      "Sparse grove and thin interpersonal story compared with the target",
+      "One shared cell-to-floor map, placement hits, entrances, roads and walk paths are not implemented for this proposal",
+      "Natural growth, independent child comprehension, device performance and PWA delivery are not measured here"
+    ]
+  },
+  "contactSheet": "contact-sheet.html",
+  "verdict": "HOLD_FULL_ISLAND_RUNTIME_ACCEPTANCE",
+  "completionUnit": "One editable whole-island art proposal using the same 8 homes / 27 placed / 2 stored diagnostic owners. Actual app whole-island integration remains open."
+}

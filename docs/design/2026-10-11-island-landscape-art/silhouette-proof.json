@@ -1,0 +1,21 @@
+{
+  "evidenceType": "3D silhouette render, not a retouched screenshot",
+  "candidate": "native05-landscape-owned-art-v6",
+  "sameCamera": true,
+  "resolution": [
+    64,
+    64
+  ],
+  "evidence": [
+    {
+      "label": "proposal",
+      "blendSha256": "b333ffe1286cb6ab4123b0308be330ced4e835d9982b2448d0bc6c7bd6ea61bc",
+      "image": "proposal-silhouette-64.png"
+    },
+    {
+      "label": "source",
+      "blendSha256": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+      "image": "source-silhouette-64.png"
+    }
+  ]
+}

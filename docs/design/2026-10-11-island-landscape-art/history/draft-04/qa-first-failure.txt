@@ -1,0 +1,10 @@
+node:internal/process/promises:394
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+response.body: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache
+    at Page.<anonymous> (/Users/yutogasaki/Projects/sansu/tools/qa-landscape-art-viewer.mjs:41:123) {
+  name: 'Error'
+}
+
+Node.js v24.18.0

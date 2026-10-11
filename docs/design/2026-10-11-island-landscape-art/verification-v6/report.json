@@ -1,0 +1,956 @@
+{
+  "target": "http://127.0.0.1:8230/design/2026-10-11-island-landscape-art/",
+  "candidate": "native05-landscape-owned-art-v6",
+  "evidenceType": "actual standalone art viewer, not the game",
+  "initialInputs": {
+    "index.html": "d965427fb932747ab7d28ab36e2fadc0bd2f2a7550f4c9fa61b12c0cd624e4b9",
+    "viewer.js": "4c93a1d7c1f1cb67026791f1d4ff2c936d43933810ff9ec42976f3e71062ef84",
+    "viewer.bundle.js": "9b68abf53d1410db249b70c5d1ac4ca6962a8d3a437de3bbef25f77e2520f4e4",
+    "whole-landscape.glb": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+    "whole-landscape.blend": "b333ffe1286cb6ab4123b0308be330ced4e835d9982b2448d0bc6c7bd6ea61bc",
+    "whole-landscape-render.png": "340f3611cafe265002cc5704e70f2a19f89fdacac7669e209cc2fd9b0504c94f",
+    "owned-input.json": "240a18eee8d05284cb8b56144556626f174c98b41df501bb1dafa2e2e74adbf0",
+    "art-manifest.json": "99b4e4247ec2db18caba1ed8d0d6afd6bbff0b54681490014e9a97244ffe91ef"
+  },
+  "qaSha256": "2cf42a6c5182b9ad21272252eba01547a394da00ccf3459cb99f7723fb26e941",
+  "captures": [
+    {
+      "file": "390-grown-whole-day-01.png",
+      "width": 390,
+      "delivery": "standalone-art-viewer",
+      "evidenceType": "native-3d-art-proposal",
+      "view": "whole",
+      "loading": "false",
+      "camera": "{\"position\":[39,43,46],\"target\":[3,3.2,-6.3],\"zoom\":1,\"frustum\":[-23,23,35.85641025641026,-35.85641025641026]}",
+      "model": "native05-landscape-owned-art-v6",
+      "revision": "b768b085afd83bbe",
+      "phase": "grown",
+      "loadedModelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "loadedModelBytes": "46361832",
+      "gameplayMapped": "false",
+      "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "modelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "lighting": "day",
+      "rect": {
+        "x": 0,
+        "y": 103,
+        "width": 390,
+        "height": 607.671875,
+        "top": 103,
+        "right": 390,
+        "bottom": 710.671875,
+        "left": 0
+      }
+    },
+    {
+      "file": "390-grown-grove-day-02.png",
+      "width": 390,
+      "delivery": "standalone-art-viewer",
+      "evidenceType": "native-3d-art-proposal",
+      "view": "grove",
+      "loading": "false",
+      "camera": "{\"position\":[8,23,7.9999999999999964],\"target\":[-4.8,7.5,-15.400000000000002],\"zoom\":1,\"frustum\":[-10.5,10.5,16.369230769230768,-16.369230769230768]}",
+      "model": "native05-landscape-owned-art-v6",
+      "revision": "b768b085afd83bbe",
+      "phase": "grown",
+      "loadedModelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "loadedModelBytes": "46361832",
+      "gameplayMapped": "false",
+      "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "modelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "lighting": "day",
+      "rect": {
+        "x": 0,
+        "y": 103,
+        "width": 390,
+        "height": 607.671875,
+        "top": 103,
+        "right": 390,
+        "bottom": 710.671875,
+        "left": 0
+      }
+    },
+    {
+      "file": "390-grown-village-day-03.png",
+      "width": 390,
+      "delivery": "standalone-art-viewer",
+      "evidenceType": "native-3d-art-proposal",
+      "view": "village",
+      "loading": "false",
+      "camera": "{\"position\":[23.999999999999996,24,8],\"target\":[3.1,4.9,-15.8],\"zoom\":1,\"frustum\":[-8,8,12.471794871794872,-12.471794871794872]}",
+      "model": "native05-landscape-owned-art-v6",
+      "revision": "b768b085afd83bbe",
+      "phase": "grown",
+      "loadedModelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "loadedModelBytes": "46361832",
+      "gameplayMapped": "false",
+      "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "modelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "lighting": "day",
+      "rect": {
+        "x": 0,
+        "y": 103,
+        "width": 390,
+        "height": 607.671875,
+        "top": 103,
+        "right": 390,
+        "bottom": 710.671875,
+        "left": 0
+      }
+    },
+    {
+      "file": "390-grown-harbor-day-04.png",
+      "width": 390,
+      "delivery": "standalone-art-viewer",
+      "evidenceType": "native-3d-art-proposal",
+      "view": "harbor",
+      "loading": "false",
+      "camera": "{\"position\":[30.000000000000004,21,20.000000000000004],\"target\":[14.100000000000001,2.1000000000000005,-2],\"zoom\":1,\"frustum\":[-8.5,8.5,13.25128205128205,-13.25128205128205]}",
+      "model": "native05-landscape-owned-art-v6",
+      "revision": "b768b085afd83bbe",
+      "phase": "grown",
+      "loadedModelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "loadedModelBytes": "46361832",
+      "gameplayMapped": "false",
+      "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "modelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "lighting": "day",
+      "rect": {
+        "x": 0,
+        "y": 103,
+        "width": 390,
+        "height": 607.671875,
+        "top": 103,
+        "right": 390,
+        "bottom": 710.671875,
+        "left": 0
+      }
+    },
+    {
+      "file": "390-grown-garden-day-05.png",
+      "width": 390,
+      "delivery": "standalone-art-viewer",
+      "evidenceType": "native-3d-art-proposal",
+      "view": "garden",
+      "loading": "false",
+      "camera": "{\"position\":[19,15,12],\"target\":[5.6,3.1000000000000005,-4.2],\"zoom\":1,\"frustum\":[-6.5,6.5,10.133333333333333,-10.133333333333333]}",
+      "model": "native05-landscape-owned-art-v6",
+      "revision": "b768b085afd83bbe",
+      "phase": "grown",
+      "loadedModelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "loadedModelBytes": "46361832",
+      "gameplayMapped": "false",
+      "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "modelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "lighting": "day",
+      "rect": {
+        "x": 0,
+        "y": 103,
+        "width": 390,
+        "height": 607.671875,
+        "top": 103,
+        "right": 390,
+        "bottom": 710.671875,
+        "left": 0
+      }
+    },
+    {
+      "file": "390-grown-whole-dusk-06.png",
+      "width": 390,
+      "delivery": "standalone-art-viewer",
+      "evidenceType": "native-3d-art-proposal",
+      "view": "whole",
+      "loading": "false",
+      "camera": "{\"position\":[39,43,46],\"target\":[3,3.2,-6.3],\"zoom\":1,\"frustum\":[-23,23,35.85641025641026,-35.85641025641026]}",
+      "model": "native05-landscape-owned-art-v6",
+      "revision": "b768b085afd83bbe",
+      "phase": "grown",
+      "loadedModelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "loadedModelBytes": "46361832",
+      "gameplayMapped": "false",
+      "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "modelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "lighting": "dusk",
+      "rect": {
+        "x": 0,
+        "y": 103,
+        "width": 390,
+        "height": 607.671875,
+        "top": 103,
+        "right": 390,
+        "bottom": 710.671875,
+        "left": 0
+      }
+    },
+    {
+      "file": "390-grown-grove-dusk-07.png",
+      "width": 390,
+      "delivery": "standalone-art-viewer",
+      "evidenceType": "native-3d-art-proposal",
+      "view": "grove",
+      "loading": "false",
+      "camera": "{\"position\":[8,23,7.9999999999999964],\"target\":[-4.8,7.5,-15.400000000000002],\"zoom\":1,\"frustum\":[-10.5,10.5,16.369230769230768,-16.369230769230768]}",
+      "model": "native05-landscape-owned-art-v6",
+      "revision": "b768b085afd83bbe",
+      "phase": "grown",
+      "loadedModelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "loadedModelBytes": "46361832",
+      "gameplayMapped": "false",
+      "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "modelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "lighting": "dusk",
+      "rect": {
+        "x": 0,
+        "y": 103,
+        "width": 390,
+        "height": 607.671875,
+        "top": 103,
+        "right": 390,
+        "bottom": 710.671875,
+        "left": 0
+      }
+    },
+    {
+      "file": "390-grown-village-dusk-08.png",
+      "width": 390,
+      "delivery": "standalone-art-viewer",
+      "evidenceType": "native-3d-art-proposal",
+      "view": "village",
+      "loading": "false",
+      "camera": "{\"position\":[23.999999999999996,24,8],\"target\":[3.1,4.9,-15.8],\"zoom\":1,\"frustum\":[-8,8,12.471794871794872,-12.471794871794872]}",
+      "model": "native05-landscape-owned-art-v6",
+      "revision": "b768b085afd83bbe",
+      "phase": "grown",
+      "loadedModelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "loadedModelBytes": "46361832",
+      "gameplayMapped": "false",
+      "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "modelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "lighting": "dusk",
+      "rect": {
+        "x": 0,
+        "y": 103,
+        "width": 390,
+        "height": 607.671875,
+        "top": 103,
+        "right": 390,
+        "bottom": 710.671875,
+        "left": 0
+      }
+    },
+    {
+      "file": "390-grown-harbor-dusk-09.png",
+      "width": 390,
+      "delivery": "standalone-art-viewer",
+      "evidenceType": "native-3d-art-proposal",
+      "view": "harbor",
+      "loading": "false",
+      "camera": "{\"position\":[30.000000000000004,21,20.000000000000004],\"target\":[14.100000000000001,2.1000000000000005,-2],\"zoom\":1,\"frustum\":[-8.5,8.5,13.25128205128205,-13.25128205128205]}",
+      "model": "native05-landscape-owned-art-v6",
+      "revision": "b768b085afd83bbe",
+      "phase": "grown",
+      "loadedModelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "loadedModelBytes": "46361832",
+      "gameplayMapped": "false",
+      "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "modelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "lighting": "dusk",
+      "rect": {
+        "x": 0,
+        "y": 103,
+        "width": 390,
+        "height": 607.671875,
+        "top": 103,
+        "right": 390,
+        "bottom": 710.671875,
+        "left": 0
+      }
+    },
+    {
+      "file": "390-grown-garden-dusk-10.png",
+      "width": 390,
+      "delivery": "standalone-art-viewer",
+      "evidenceType": "native-3d-art-proposal",
+      "view": "garden",
+      "loading": "false",
+      "camera": "{\"position\":[19,15,12],\"target\":[5.6,3.1000000000000005,-4.2],\"zoom\":1,\"frustum\":[-6.5,6.5,10.133333333333333,-10.133333333333333]}",
+      "model": "native05-landscape-owned-art-v6",
+      "revision": "b768b085afd83bbe",
+      "phase": "grown",
+      "loadedModelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "loadedModelBytes": "46361832",
+      "gameplayMapped": "false",
+      "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "modelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "lighting": "dusk",
+      "rect": {
+        "x": 0,
+        "y": 103,
+        "width": 390,
+        "height": 607.671875,
+        "top": 103,
+        "right": 390,
+        "bottom": 710.671875,
+        "left": 0
+      }
+    },
+    {
+      "file": "390-previous-whole-day-11.png",
+      "width": 390,
+      "delivery": "standalone-art-viewer",
+      "evidenceType": "native-3d-art-proposal",
+      "view": "whole",
+      "loading": "false",
+      "camera": "{\"position\":[39,43,46],\"target\":[3,3.2,-6.3],\"zoom\":1,\"frustum\":[-23,23,35.85641025641026,-35.85641025641026]}",
+      "model": "whole-island-native-3d-05",
+      "revision": "8398eda9ac084a6e",
+      "phase": "previous",
+      "loadedModelSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "loadedModelBytes": "34930176",
+      "gameplayMapped": "false",
+      "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "modelSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "lighting": "day",
+      "rect": {
+        "x": 0,
+        "y": 103,
+        "width": 390,
+        "height": 607.671875,
+        "top": 103,
+        "right": 390,
+        "bottom": 710.671875,
+        "left": 0
+      }
+    },
+    {
+      "file": "390-grown-whole-day-12.png",
+      "width": 390,
+      "delivery": "standalone-art-viewer",
+      "evidenceType": "native-3d-art-proposal",
+      "view": "whole",
+      "loading": "false",
+      "camera": "{\"position\":[39,43,46],\"target\":[3,3.2,-6.3],\"zoom\":1,\"frustum\":[-23,23,35.85641025641026,-35.85641025641026]}",
+      "model": "native05-landscape-owned-art-v6",
+      "revision": "b768b085afd83bbe",
+      "phase": "grown",
+      "loadedModelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "loadedModelBytes": "46361832",
+      "gameplayMapped": "false",
+      "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "modelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "lighting": "day",
+      "rect": {
+        "x": 0,
+        "y": 103,
+        "width": 390,
+        "height": 607.671875,
+        "top": 103,
+        "right": 390,
+        "bottom": 710.671875,
+        "left": 0
+      }
+    },
+    {
+      "file": "768-grown-whole-day-13.png",
+      "width": 768,
+      "delivery": "standalone-art-viewer",
+      "evidenceType": "native-3d-art-proposal",
+      "view": "whole",
+      "loading": "false",
+      "camera": "{\"position\":[39,43,46],\"target\":[3,3.2,-6.3],\"zoom\":1,\"frustum\":[-23,23,23.928385416666668,-23.928385416666668]}",
+      "model": "native05-landscape-owned-art-v6",
+      "revision": "b768b085afd83bbe",
+      "phase": "grown",
+      "loadedModelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "loadedModelBytes": "46361832",
+      "gameplayMapped": "false",
+      "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "modelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "lighting": "day",
+      "rect": {
+        "x": 0,
+        "y": 88,
+        "width": 768,
+        "height": 798.71875,
+        "top": 88,
+        "right": 768,
+        "bottom": 886.71875,
+        "left": 0
+      }
+    },
+    {
+      "file": "768-grown-grove-day-14.png",
+      "width": 768,
+      "delivery": "standalone-art-viewer",
+      "evidenceType": "native-3d-art-proposal",
+      "view": "grove",
+      "loading": "false",
+      "camera": "{\"position\":[8,23,7.9999999999999964],\"target\":[-4.8,7.5,-15.400000000000002],\"zoom\":1,\"frustum\":[-10.5,10.5,10.923828125,-10.923828125]}",
+      "model": "native05-landscape-owned-art-v6",
+      "revision": "b768b085afd83bbe",
+      "phase": "grown",
+      "loadedModelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "loadedModelBytes": "46361832",
+      "gameplayMapped": "false",
+      "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "modelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "lighting": "day",
+      "rect": {
+        "x": 0,
+        "y": 88,
+        "width": 768,
+        "height": 798.71875,
+        "top": 88,
+        "right": 768,
+        "bottom": 886.71875,
+        "left": 0
+      }
+    },
+    {
+      "file": "768-grown-village-day-15.png",
+      "width": 768,
+      "delivery": "standalone-art-viewer",
+      "evidenceType": "native-3d-art-proposal",
+      "view": "village",
+      "loading": "false",
+      "camera": "{\"position\":[23.999999999999996,24,8],\"target\":[3.1,4.9,-15.8],\"zoom\":1,\"frustum\":[-7.999999999999999,7.999999999999999,8.322916666666666,-8.322916666666666]}",
+      "model": "native05-landscape-owned-art-v6",
+      "revision": "b768b085afd83bbe",
+      "phase": "grown",
+      "loadedModelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "loadedModelBytes": "46361832",
+      "gameplayMapped": "false",
+      "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "modelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "lighting": "day",
+      "rect": {
+        "x": 0,
+        "y": 88,
+        "width": 768,
+        "height": 798.71875,
+        "top": 88,
+        "right": 768,
+        "bottom": 886.71875,
+        "left": 0
+      }
+    },
+    {
+      "file": "768-grown-harbor-day-16.png",
+      "width": 768,
+      "delivery": "standalone-art-viewer",
+      "evidenceType": "native-3d-art-proposal",
+      "view": "harbor",
+      "loading": "false",
+      "camera": "{\"position\":[30.000000000000004,21,20.000000000000004],\"target\":[14.100000000000001,2.1000000000000005,-2],\"zoom\":1,\"frustum\":[-8.5,8.5,8.843098958333334,-8.843098958333334]}",
+      "model": "native05-landscape-owned-art-v6",
+      "revision": "b768b085afd83bbe",
+      "phase": "grown",
+      "loadedModelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "loadedModelBytes": "46361832",
+      "gameplayMapped": "false",
+      "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "modelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "lighting": "day",
+      "rect": {
+        "x": 0,
+        "y": 88,
+        "width": 768,
+        "height": 798.71875,
+        "top": 88,
+        "right": 768,
+        "bottom": 886.71875,
+        "left": 0
+      }
+    },
+    {
+      "file": "768-grown-garden-day-17.png",
+      "width": 768,
+      "delivery": "standalone-art-viewer",
+      "evidenceType": "native-3d-art-proposal",
+      "view": "garden",
+      "loading": "false",
+      "camera": "{\"position\":[19,15,12],\"target\":[5.6,3.1000000000000005,-4.2],\"zoom\":1,\"frustum\":[-6.5,6.5,6.762369791666667,-6.762369791666667]}",
+      "model": "native05-landscape-owned-art-v6",
+      "revision": "b768b085afd83bbe",
+      "phase": "grown",
+      "loadedModelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "loadedModelBytes": "46361832",
+      "gameplayMapped": "false",
+      "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "modelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "lighting": "day",
+      "rect": {
+        "x": 0,
+        "y": 88,
+        "width": 768,
+        "height": 798.71875,
+        "top": 88,
+        "right": 768,
+        "bottom": 886.71875,
+        "left": 0
+      }
+    },
+    {
+      "file": "768-grown-whole-dusk-18.png",
+      "width": 768,
+      "delivery": "standalone-art-viewer",
+      "evidenceType": "native-3d-art-proposal",
+      "view": "whole",
+      "loading": "false",
+      "camera": "{\"position\":[39,43,46],\"target\":[3,3.2,-6.3],\"zoom\":1,\"frustum\":[-23,23,23.928385416666668,-23.928385416666668]}",
+      "model": "native05-landscape-owned-art-v6",
+      "revision": "b768b085afd83bbe",
+      "phase": "grown",
+      "loadedModelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "loadedModelBytes": "46361832",
+      "gameplayMapped": "false",
+      "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "modelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "lighting": "dusk",
+      "rect": {
+        "x": 0,
+        "y": 88,
+        "width": 768,
+        "height": 798.71875,
+        "top": 88,
+        "right": 768,
+        "bottom": 886.71875,
+        "left": 0
+      }
+    },
+    {
+      "file": "768-grown-grove-dusk-19.png",
+      "width": 768,
+      "delivery": "standalone-art-viewer",
+      "evidenceType": "native-3d-art-proposal",
+      "view": "grove",
+      "loading": "false",
+      "camera": "{\"position\":[8,23,7.9999999999999964],\"target\":[-4.8,7.5,-15.400000000000002],\"zoom\":1,\"frustum\":[-10.5,10.5,10.923828125,-10.923828125]}",
+      "model": "native05-landscape-owned-art-v6",
+      "revision": "b768b085afd83bbe",
+      "phase": "grown",
+      "loadedModelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "loadedModelBytes": "46361832",
+      "gameplayMapped": "false",
+      "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "modelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "lighting": "dusk",
+      "rect": {
+        "x": 0,
+        "y": 88,
+        "width": 768,
+        "height": 798.71875,
+        "top": 88,
+        "right": 768,
+        "bottom": 886.71875,
+        "left": 0
+      }
+    },
+    {
+      "file": "768-grown-village-dusk-20.png",
+      "width": 768,
+      "delivery": "standalone-art-viewer",
+      "evidenceType": "native-3d-art-proposal",
+      "view": "village",
+      "loading": "false",
+      "camera": "{\"position\":[23.999999999999996,24,8],\"target\":[3.1,4.9,-15.8],\"zoom\":1,\"frustum\":[-7.999999999999999,7.999999999999999,8.322916666666666,-8.322916666666666]}",
+      "model": "native05-landscape-owned-art-v6",
+      "revision": "b768b085afd83bbe",
+      "phase": "grown",
+      "loadedModelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "loadedModelBytes": "46361832",
+      "gameplayMapped": "false",
+      "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "modelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "lighting": "dusk",
+      "rect": {
+        "x": 0,
+        "y": 88,
+        "width": 768,
+        "height": 798.71875,
+        "top": 88,
+        "right": 768,
+        "bottom": 886.71875,
+        "left": 0
+      }
+    },
+    {
+      "file": "768-grown-harbor-dusk-21.png",
+      "width": 768,
+      "delivery": "standalone-art-viewer",
+      "evidenceType": "native-3d-art-proposal",
+      "view": "harbor",
+      "loading": "false",
+      "camera": "{\"position\":[30.000000000000004,21,20.000000000000004],\"target\":[14.100000000000001,2.1000000000000005,-2],\"zoom\":1,\"frustum\":[-8.5,8.5,8.843098958333334,-8.843098958333334]}",
+      "model": "native05-landscape-owned-art-v6",
+      "revision": "b768b085afd83bbe",
+      "phase": "grown",
+      "loadedModelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "loadedModelBytes": "46361832",
+      "gameplayMapped": "false",
+      "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "modelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "lighting": "dusk",
+      "rect": {
+        "x": 0,
+        "y": 88,
+        "width": 768,
+        "height": 798.71875,
+        "top": 88,
+        "right": 768,
+        "bottom": 886.71875,
+        "left": 0
+      }
+    },
+    {
+      "file": "768-grown-garden-dusk-22.png",
+      "width": 768,
+      "delivery": "standalone-art-viewer",
+      "evidenceType": "native-3d-art-proposal",
+      "view": "garden",
+      "loading": "false",
+      "camera": "{\"position\":[19,15,12],\"target\":[5.6,3.1000000000000005,-4.2],\"zoom\":1,\"frustum\":[-6.5,6.5,6.762369791666667,-6.762369791666667]}",
+      "model": "native05-landscape-owned-art-v6",
+      "revision": "b768b085afd83bbe",
+      "phase": "grown",
+      "loadedModelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "loadedModelBytes": "46361832",
+      "gameplayMapped": "false",
+      "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "modelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "lighting": "dusk",
+      "rect": {
+        "x": 0,
+        "y": 88,
+        "width": 768,
+        "height": 798.71875,
+        "top": 88,
+        "right": 768,
+        "bottom": 886.71875,
+        "left": 0
+      }
+    },
+    {
+      "file": "768-previous-whole-day-23.png",
+      "width": 768,
+      "delivery": "standalone-art-viewer",
+      "evidenceType": "native-3d-art-proposal",
+      "view": "whole",
+      "loading": "false",
+      "camera": "{\"position\":[39,43,46],\"target\":[3,3.2,-6.3],\"zoom\":1,\"frustum\":[-23,23,23.928385416666668,-23.928385416666668]}",
+      "model": "whole-island-native-3d-05",
+      "revision": "8398eda9ac084a6e",
+      "phase": "previous",
+      "loadedModelSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "loadedModelBytes": "34930176",
+      "gameplayMapped": "false",
+      "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "modelSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "lighting": "day",
+      "rect": {
+        "x": 0,
+        "y": 88,
+        "width": 768,
+        "height": 798.71875,
+        "top": 88,
+        "right": 768,
+        "bottom": 886.71875,
+        "left": 0
+      }
+    },
+    {
+      "file": "768-grown-whole-day-24.png",
+      "width": 768,
+      "delivery": "standalone-art-viewer",
+      "evidenceType": "native-3d-art-proposal",
+      "view": "whole",
+      "loading": "false",
+      "camera": "{\"position\":[39,43,46],\"target\":[3,3.2,-6.3],\"zoom\":1,\"frustum\":[-23,23,23.928385416666668,-23.928385416666668]}",
+      "model": "native05-landscape-owned-art-v6",
+      "revision": "b768b085afd83bbe",
+      "phase": "grown",
+      "loadedModelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "loadedModelBytes": "46361832",
+      "gameplayMapped": "false",
+      "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "modelSha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+      "lighting": "day",
+      "rect": {
+        "x": 0,
+        "y": 88,
+        "width": 768,
+        "height": 798.71875,
+        "top": 88,
+        "right": 768,
+        "bottom": 886.71875,
+        "left": 0
+      }
+    }
+  ],
+  "scenarios": [
+    {
+      "width": 390,
+      "passed": true,
+      "controls": [
+        {
+          "label": "今回の造形",
+          "width": 82,
+          "height": 44
+        },
+        {
+          "label": "採用原本",
+          "width": 73,
+          "height": 44
+        },
+        {
+          "label": "昼",
+          "width": 46,
+          "height": 44
+        },
+        {
+          "label": "夕",
+          "width": 46,
+          "height": 44
+        },
+        {
+          "label": "拡大",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "縮小",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "島全体",
+          "width": 50,
+          "height": 44
+        },
+        {
+          "label": "大樹",
+          "width": 49,
+          "height": 44
+        },
+        {
+          "label": "水の庭",
+          "width": 50,
+          "height": 44
+        },
+        {
+          "label": "入り江",
+          "width": 50,
+          "height": 44
+        },
+        {
+          "label": "花の庭",
+          "width": 50,
+          "height": 44
+        }
+      ],
+      "downloadedModels": [
+        {
+          "phase": "grown",
+          "sha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+          "bytes": 46361832
+        },
+        {
+          "phase": "grown",
+          "sha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+          "bytes": 46361832
+        },
+        {
+          "phase": "grown",
+          "sha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+          "bytes": 46361832
+        },
+        {
+          "phase": "grown",
+          "sha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+          "bytes": 46361832
+        },
+        {
+          "phase": "grown",
+          "sha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+          "bytes": 46361832
+        },
+        {
+          "phase": "grown",
+          "sha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+          "bytes": 46361832
+        },
+        {
+          "phase": "grown",
+          "sha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+          "bytes": 46361832
+        },
+        {
+          "phase": "grown",
+          "sha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+          "bytes": 46361832
+        },
+        {
+          "phase": "grown",
+          "sha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+          "bytes": 46361832
+        },
+        {
+          "phase": "grown",
+          "sha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+          "bytes": 46361832
+        },
+        {
+          "phase": "previous",
+          "sha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+          "bytes": 34930176
+        },
+        {
+          "phase": "grown",
+          "sha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+          "bytes": 46361832
+        }
+      ],
+      "reducedMotion": false,
+      "errors": [],
+      "failedRequests": []
+    },
+    {
+      "width": 768,
+      "passed": true,
+      "controls": [
+        {
+          "label": "今回の造形",
+          "width": 82,
+          "height": 44
+        },
+        {
+          "label": "採用原本",
+          "width": 80,
+          "height": 44
+        },
+        {
+          "label": "昼",
+          "width": 46,
+          "height": 44
+        },
+        {
+          "label": "夕",
+          "width": 46,
+          "height": 44
+        },
+        {
+          "label": "拡大",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "縮小",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "島全体",
+          "width": 65,
+          "height": 44
+        },
+        {
+          "label": "大樹",
+          "width": 60,
+          "height": 44
+        },
+        {
+          "label": "水の庭",
+          "width": 65,
+          "height": 44
+        },
+        {
+          "label": "入り江",
+          "width": 65,
+          "height": 44
+        },
+        {
+          "label": "花の庭",
+          "width": 65,
+          "height": 44
+        }
+      ],
+      "downloadedModels": [
+        {
+          "phase": "grown",
+          "sha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+          "bytes": 46361832
+        },
+        {
+          "phase": "grown",
+          "sha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+          "bytes": 46361832
+        },
+        {
+          "phase": "grown",
+          "sha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+          "bytes": 46361832
+        },
+        {
+          "phase": "grown",
+          "sha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+          "bytes": 46361832
+        },
+        {
+          "phase": "grown",
+          "sha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+          "bytes": 46361832
+        },
+        {
+          "phase": "grown",
+          "sha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+          "bytes": 46361832
+        },
+        {
+          "phase": "grown",
+          "sha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+          "bytes": 46361832
+        },
+        {
+          "phase": "grown",
+          "sha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+          "bytes": 46361832
+        },
+        {
+          "phase": "grown",
+          "sha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+          "bytes": 46361832
+        },
+        {
+          "phase": "grown",
+          "sha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+          "bytes": 46361832
+        },
+        {
+          "phase": "previous",
+          "sha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+          "bytes": 34930176
+        },
+        {
+          "phase": "grown",
+          "sha256": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+          "bytes": 46361832
+        }
+      ],
+      "reducedMotion": true,
+      "errors": [],
+      "failedRequests": []
+    }
+  ],
+  "errors": [],
+  "pass": true,
+  "finalInputs": {
+    "index.html": "d965427fb932747ab7d28ab36e2fadc0bd2f2a7550f4c9fa61b12c0cd624e4b9",
+    "viewer.js": "4c93a1d7c1f1cb67026791f1d4ff2c936d43933810ff9ec42976f3e71062ef84",
+    "viewer.bundle.js": "9b68abf53d1410db249b70c5d1ac4ca6962a8d3a437de3bbef25f77e2520f4e4",
+    "whole-landscape.glb": "b768b085afd83bbe5f31415d91adb9be3bde2611786ca65917c0ed7f0f2454f3",
+    "whole-landscape.blend": "b333ffe1286cb6ab4123b0308be330ced4e835d9982b2448d0bc6c7bd6ea61bc",
+    "whole-landscape-render.png": "340f3611cafe265002cc5704e70f2a19f89fdacac7669e209cc2fd9b0504c94f",
+    "owned-input.json": "240a18eee8d05284cb8b56144556626f174c98b41df501bb1dafa2e2e74adbf0",
+    "art-manifest.json": "99b4e4247ec2db18caba1ed8d0d6afd6bbff0b54681490014e9a97244ffe91ef"
+  }
+}

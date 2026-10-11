@@ -280,3 +280,9 @@ Growing balanceの行に従う。`pacing.test.ts`は建設/装飾に加え、実
 固定productionで `VITE_NATIVE_GROWING_ART=true` を指定し、`tools/e2e-growing-places.mjs` の `SANSU_GROWING_PLACE_CANDIDATE=native05-owned-runtime-v1` で通常取得3旅程と明示成熟40組を確認する。実際に描いたcandidate・原本/kit SHA・版/flagを画面ごとに記録する。`SANSU_GROWING_BROWSER_CHANNEL=chrome` はインストール済みChromeでの隔離検査。software rendererの遅さを実機FPSと扱わない。
 
 `tools/e2e-native-owned-island.mjs` は `SANSU_NATIVE_OWNED_URL`/`SANSU_NATIVE_OWNED_OUTPUT`/`SANSU_NATIVE_OWNED_BUILD` で破損kit・再試行・実context loss・1 canvas・本人の権利/学習保持を両幅で確認する。この故障診断だけSWをblockする。通常の実SW/offline/更新中断/rollbackは `tools/e2e-growing-update.mjs` を独立したOLD/NEW/ROLLBACKへ実行する。今回は保存4→4の美術flag切替で、旧版3→4のmigration検証へ流用しない。NEWのkit precacheと通常false buildからkit/全島GLBを除外する境界も照合する。深い入り江・高い段泉の全地形への到達と独立観察N=0は別に記録する。
+
+### 所有物を固定した全島の造形案（2026-10-11）
+
+[全島造形](../design/2026-10-11-island-landscape-art/README.md)がstandaloneの美術だけを変える場合、`npm run docs:check`、`npm run lint`、`node docs/design/2026-10-11-island-landscape-art/check-artifact.mjs`、`tools/qa-landscape-art-viewer.mjs`を実行する。原本不変、実kitの家/家具、8軒・27配置物・2収納物のID・成熟・屋根色・保存セルmetadata、blend/GLB/レンダーSHAを確認する。QAへ`SANSU_LANDSCAPE_ART_URL`と新しい`SANSU_LANDSCAPE_ART_OUTPUT`を指定し、390/768幅の5視点/昼夕/同camera原本切替/キーボード/拡大と取得した実GLBのSHA、開始終了の美術入力一致を検査する。
+
+自由な造形anchorは保存位置の変形、隣接、通行、自然成長を証明しない。変更していない本体へcore/SW検査を繰り返さず、本体A6の結果と美術案の表示検査を分けて記録する。次の床写像・本体接続を変更する段階では上の所有島とGrowing/PWAの行へ戻る。
