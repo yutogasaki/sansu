@@ -65,5 +65,16 @@
       "executionReport": "classic-smoke/execution-report.json"
     }
   },
-  "profilingScope": "Single headed ANGLE SwiftShader runs with sampling overhead. rAF markers and CPU samples are not GPU presentation time or device performance."
+  "profilingScope": "Single headed ANGLE SwiftShader runs with sampling overhead. rAF markers and CPU samples are not GPU presentation time or device performance.",
+  "implementationCommit": "bf07bb5d6e2e22cbde392d6809e1b6c0c3c70eff",
+  "implementationTree": "4f6171c6b376c369139f43041d9f2b135f488714",
+  "implementationIndexVerification": {
+    "docsCheck": true,
+    "portalsCheck": true,
+    "appInputsMatchCore": true,
+    "inputCount": 1544,
+    "indexUnchanged": true,
+    "report": "index-verification/implementation-index-check.json",
+    "log": "index-verification/implementation-docs-check.log.txt"
+  }
 }
