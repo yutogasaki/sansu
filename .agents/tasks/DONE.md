@@ -1,5 +1,7 @@
 # Shared Done Index
 
+- 2026-10-11: 設定に「アプリの紹介」を追加し `/promo/` を別タブで開く。やさしい表示、4幅・Enter/タップ・元URL/学習保持/再読込、core5,010がPASS。[検証と実画面](../../docs/design/2026-10-11-settings-promotion/README.md)。Git反映対象、公開はpush後に別確認。詳細: `docs/done/2026-10.md`。
+
 - 2026-10-11: [共通床と経路の制作基盤M0](../../docs/design/2026-10-11-authored-world-foundation/README.md)。原本地形・配置点・細かな歩行グラフと旧床を共有。所有床10組byte一致、core5,010/専用24/classic32、本体DEVの実回答と旧土地/人口8組・22画面PASS。基盤単位を完了、全島M1・美術/独立観察/保存と配布の包括ゴールは継続。詳細: `docs/done/2026-10.md`。
 
 - 2026-10-11: [島構築方針を制作方式から改訂](../../docs/product/island-construction-strategy.md)。美術で地形・場所・床・入口を設計し、配置から同じ世界を組み立てる。一つの全島→配置差→成長→地区拡張へ制作順を統一。文書のみ完了、新世界・保存互換・美術到達は継続。詳細: `docs/done/2026-10.md`。

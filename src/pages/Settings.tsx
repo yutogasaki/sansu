@@ -1,4 +1,4 @@
-import { BookOpen, ShieldCheck, UserRound, Volume2 } from "lucide-react";
+import { BookOpen, ExternalLink, ShieldCheck, UserRound, Volume2 } from "lucide-react";
 import { islandEnabled } from "../domain/island/feature";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -234,6 +234,23 @@ export const Settings: React.FC = () => {
         );
     };
 
+    const promotionLink = (
+        <a
+            href="/promo/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="pokomoko-setting-trigger flex min-h-11 w-full items-center justify-between gap-3 rounded-[20px] px-5 py-4 text-left transition-colors hover:bg-white/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-pokomoko-blue"
+        >
+            {islandEnabled() && <span className="pokomoko-setting-patch" aria-hidden="true"><BookOpen size={23} strokeWidth={1.8} /></span>}
+            <div className="min-w-0 flex-1">
+                <div className="text-[15px] font-black text-slate-800">{t("アプリの しょうかい", "アプリの紹介")}</div>
+                <div className="mt-0.5 text-xs text-pokomoko-muted">{t("さんすう・えいごと そだつしま", "算数・英語と育つ島")}</div>
+                <div className="mt-0.5 text-xs text-pokomoko-muted">{t("べつの タブで ひらく", "別のタブで開きます")}</div>
+            </div>
+            <span className="shrink-0 text-pokomoko-muted" aria-hidden="true"><ExternalLink size={18} /></span>
+        </a>
+    );
+
     if (section === 'parent') return <Navigate to="/parents" replace />;
 
     return (
@@ -299,6 +316,7 @@ export const Settings: React.FC = () => {
                     {sectionButton("learning", t("べんきょう", "学習"), `${subjectLabel} · ${hissanLabel}`)}
                     {sectionButton("display", t("みため と おと", "表示とサウンド"), `${soundLabel} · ${textLabel} · ${kanjiLabel}`)}
                     {sectionButton("parent", t("ほごしゃ", "保護者"), t("きろく · はんい · テスト", "学習記録 · 範囲変更 · 確認テスト"))}
+                    {promotionLink}
                 </nav>}
                 <div className={navigation ? "settings-panels" : "space-y-3"}>
                 {navigation && !openSection && <div className="settings-empty-selection">
@@ -414,6 +432,7 @@ export const Settings: React.FC = () => {
 
                 </div>
                 {!navigation && sectionButton("parent", t("ほごしゃ", "保護者"), t("きろく · はんい · テスト", "学習記録 · 範囲変更 · 確認テスト"))}
+                {!navigation && promotionLink}
             </div>
         </ScreenScaffold>
     );

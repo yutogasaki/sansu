@@ -1,0 +1,124 @@
+{
+  "target": "http://127.0.0.1:5377",
+  "candidate": "settings-promotion-link-v1",
+  "scope": "Fresh Chromium profiles; real onboarding, Settings link, popup, keyboard, original route and native learning-store retention. No child or physical device evaluation.",
+  "cases": [
+    {
+      "width": 320,
+      "pass": true,
+      "metadata": {
+        "revision": "88570e47efa1af169490d98a1ad723e7020a27c6",
+        "version": "88570e47efa1af169490d98a1ad723e7020a27c6:cb35a21a-85ef-4747-91a5-e7d08b2d5b58",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "layout": {
+        "width": 286,
+        "height": 99.796875,
+        "overflow": false
+      },
+      "original": "http://127.0.0.1:5377/#/settings",
+      "popup": "http://127.0.0.1:5377/promo/",
+      "learningRetained": true
+    },
+    {
+      "width": 390,
+      "pass": true,
+      "easyCopy": true,
+      "metadata": {
+        "revision": "88570e47efa1af169490d98a1ad723e7020a27c6",
+        "version": "88570e47efa1af169490d98a1ad723e7020a27c6:cb35a21a-85ef-4747-91a5-e7d08b2d5b58",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "layout": {
+        "width": 356,
+        "height": 107.796875,
+        "overflow": false
+      },
+      "original": "http://127.0.0.1:5377/#/settings",
+      "popup": "http://127.0.0.1:5377/promo/",
+      "learningRetained": true
+    },
+    {
+      "width": 768,
+      "pass": true,
+      "metadata": {
+        "revision": "88570e47efa1af169490d98a1ad723e7020a27c6",
+        "version": "88570e47efa1af169490d98a1ad723e7020a27c6:cb35a21a-85ef-4747-91a5-e7d08b2d5b58",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "layout": {
+        "width": 246,
+        "height": 99.796875,
+        "overflow": false
+      },
+      "original": "http://127.0.0.1:5377/#/settings",
+      "popup": "http://127.0.0.1:5377/promo/",
+      "learningRetained": true
+    },
+    {
+      "width": 1440,
+      "pass": true,
+      "metadata": {
+        "revision": "88570e47efa1af169490d98a1ad723e7020a27c6",
+        "version": "88570e47efa1af169490d98a1ad723e7020a27c6:cb35a21a-85ef-4747-91a5-e7d08b2d5b58",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "layout": {
+        "width": 246,
+        "height": 99.796875,
+        "overflow": false
+      },
+      "original": "http://127.0.0.1:5377/#/settings",
+      "popup": "http://127.0.0.1:5377/promo/",
+      "learningRetained": true
+    }
+  ],
+  "pass": true,
+  "version": {
+    "version": "88570e47efa1af169490d98a1ad723e7020a27c6:cb35a21a-85ef-4747-91a5-e7d08b2d5b58",
+    "revision": "88570e47efa1af169490d98a1ad723e7020a27c6",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": false,
+        "candidate": "island-life-v1",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "nativeArtStudy": {
+        "enabled": false,
+        "candidate": "native-05-art-transfer-v1",
+        "gameplayMapped": false
+      },
+      "nativeOwnedArt": {
+        "enabled": false,
+        "candidate": "native05-expanding-runtime-v2",
+        "gameplayMapped": true
+      },
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "target": "http://127.0.0.1:5377",
+  "candidate": "settings-promotion-link-v1",
+  "scope": "Fresh Chromium profiles; real onboarding, Settings link, popup, keyboard, original route and native learning-store retention. No child or physical device evaluation.",
+  "cases": [
+    {
+      "width": 320,
+      "pass": false,
+      "error": "page.waitForFunction: Timeout 30000ms exceeded.\n    at /private/tmp/sansu-settings-promo-20261011/output/settings-promotion/runner.mjs:39:16",
+      "url": "http://127.0.0.1:5377/#/settings",
+      "errors": [],
+      "screen": "ぽこもこと不思議な島\n設定\nだれが あそぶ？\n\nなまえを おすと、その人の しまへ。\n\nプ\nプレイヤー\n✓ いま あそんでいる\n\nプロフィール\nプレイヤー · 小学1年生\n学習\n算数 · 筆算ON\n表示とサウンド\nサウンドON · 標準 · ひらがな\n保護者\n学習記録 · 範囲変更 · 確認テスト\nアプリの紹介\n算数・英語と育つ島\n別のタブで開きます\nしま\nいえ\nまなぶ\nきろく\n設定"
+    }
+  ],
+  "pass": false,
+  "version": {
+    "version": "development-local:6017b43e-a259-4552-861a-ddbeec4ec6a1",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": false,
+        "candidate": "island-life-v1",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "nativeArtStudy": {
+        "enabled": false,
+        "candidate": "native-05-art-transfer-v1",
+        "gameplayMapped": false
+      },
+      "nativeOwnedArt": {
+        "enabled": false,
+        "candidate": "native05-expanding-runtime-v2",
+        "gameplayMapped": true
+      },
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  }
+}
