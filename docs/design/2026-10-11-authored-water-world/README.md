@@ -30,6 +30,8 @@
 
 [元の全島編集](baseline-regression/report.json)は6操作/7画面、[classic smoke](classic-smoke/report.json)は32/32、[既存本体の回帰](legacy-regression/report.json)は8旅程/22画面・40通常回答が PASS。全て開始/終了のsourceが一致し、今回のcore・水庭と共通の入力を照合した。classicと既存本体は authored 世界の取得/学習の証明ではない。元の編集はcore/classicと一部並行した機能回帰で、時間を性能比較へ使わない。[検証identity](verification.json)を参照。本人の次期保存・SW更新・公開の検査へ今回の DEV 結果を流用しない。実機性能は未評価で、前回の software preview 約8.6秒の未解決を合格へ変更しない。
 
+実装 commit は `d1513e84eca7133646d9021dd12743e741d85750`、tree は `f56b55749ba145d6dd4b4e37eb39726fbcd433c1`。[その実装の index 検証](index-verification/implementation-index.json)では、コミット予定の1842アプリ入力がcore検証と一致し、リポジトリ外で生成索引・文書を検査した。[検査 log](index-verification/docs-check.log.txt)とcommit/treeを固定した記録は、実装後の文書だけのcommitへ残す。
+
 ## 修正と検査の限界
 
 [レビュー記録](review.md)と生の診断を残した。池と流れの接続端が半径だけで決まり、実輪郭との間に乾いた隙間があったため実輪郭の内側へ接続した。途中の原本床が欠ける group は一部だけ掘らず全体を個別形へ戻す。遠距離の論理 water edge から水路を作らない。

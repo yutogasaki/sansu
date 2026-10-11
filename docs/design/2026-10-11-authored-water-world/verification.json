@@ -75,6 +75,14 @@
       "oldModelHits": 0,
       "report": "review/runtime-review.json",
       "scope": "Node geometry; explicit shore pose; browser independently checks a pool tap"
+    },
+    "implementationIndex": {
+      "pass": true,
+      "report": "index-verification/implementation-index.json",
+      "log": "index-verification/docs-check.log.txt",
+      "appInputsMatchCore": true,
+      "inputCount": 1842,
+      "scope": "Exact implementation commit tree; staged export outside watched repository; portal/doc checks and unchanged index"
     }
   },
   "remaining": [
@@ -85,5 +93,7 @@
     "16/32+ expansion with old districts preserved",
     "Authored player save/learning/update integration",
     "Independent art/understanding/safety and real device performance; publication"
-  ]
+  ],
+  "implementationCommit": "d1513e84eca7133646d9021dd12743e741d85750",
+  "implementationTree": "f56b55749ba145d6dd4b4e37eb39726fbcd433c1"
 }
